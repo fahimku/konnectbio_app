@@ -113,32 +113,34 @@ export function receiveToken(token) {
 }
 
 export function loginUser(creds) {
-
   return (dispatch) => {
-    localStorage.setItem("dashboardTheme", "light");
+    localStorage.setItem("dashboardTheme", "black");
     localStorage.setItem("navbarColor", "#fff");
     localStorage.setItem("navbarType", "static");
 
-      dispatch({
-        type: LOGIN_REQUEST,
-      });
-      if (creds.social) {
-        window.location.href = config.baseURLApi + "/auth/signin/" + creds.social + "?app=" + config.redirectUrl;
-      } else if (creds.email.length > 0 && creds.password.length > 0) {
-        axios
-          .post("/signin/user", creds)
-          .then((res) => {
-            const token = res.data.message.token;
-            dispatch(receiveToken(token));
-            dispatch(doInit());
-            dispatch(push("/app"));
-          })
-          .catch((err) => {
-           dispatch(authError(err.response.data.message));
-          });
-      } else {
-        dispatch(authError("Something was wrong. Try again"));
-      }
+    dispatch({
+      type: LOGIN_REQUEST,
+    });
+    if (creds.email.length > 0 && creds.password.length > 0) {
+      axios
+        .post("/signin/user", creds)
+        .then((res) => {
+          const token = res.data.message.token;
+          const userInfo = {
+            id: res.data.message.id,
+            accessToken: res.data.message.accessToken,
+          };
+          localStorage.setItem("userInfo", userInfo);
+          dispatch(receiveToken(token));
+          dispatch(doInit());
+          dispatch(push("/app"));
+        })
+        .catch((err) => {
+          dispatch(authError(err.response.data.message));
+        });
+    } else {
+      dispatch(authError("Something was wrong. Try again"));
+    }
   };
 }
 
@@ -214,25 +216,24 @@ export function sendPasswordResetEmail(email) {
 
 export function registerUser(creds) {
   return (dispatch) => {
-      dispatch({
-        type: REGISTER_REQUEST,
-      });
-      if (creds.email.length > 0 && creds.password.length > 0) {
-        axios
-          .post("/signup/user", creds)
-          .then((res) => {
-            dispatch({
-              type: REGISTER_SUCCESS,
-            });
-            toast.success("You've been registered successfully.");
-           dispatch(push("/user/profile"));
-          })
-          .catch((err) => {
-            dispatch(authError(err.response.data.message));
+    dispatch({
+      type: REGISTER_REQUEST,
+    });
+    if (creds.email.length > 0 && creds.password.length > 0) {
+      axios
+        .post("/signup/user", creds)
+        .then((res) => {
+          dispatch({
+            type: REGISTER_SUCCESS,
           });
-      } else {
-        dispatch(authError("Something was wrong. Try again"));
-      }
-    
+          toast.success("You've been registered successfully.");
+          dispatch(push("/user/profile"));
+        })
+        .catch((err) => {
+          dispatch(authError(err.response.data.message));
+        });
+    } else {
+      dispatch(authError("Something was wrong. Try again"));
+    }
   };
 }
