@@ -41,9 +41,9 @@ class LinkinBio extends React.Component {
     // let username = userInfo.username;
     let accessToken = localStorage.getItem("accessToken");
 
-    console.log(userInfo);
+    // console.log(userInfo);
 
-    if (this.props.match.params.code) {
+    if (this.props.match.params.code && accessToken == null) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
   //    this.updateAccessToken(id, username, accessTokenCode);
