@@ -62,7 +62,6 @@ class LinkinBio extends React.Component {
   async fetchInstagramPostsFirstTime(token) {
     await axios.get(`/social/data/${token}`).then((response) => {
       //Removed Logged In Access Token
-      localStorage.removeItem("accessToken");
       //Set Access Token
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("username", response.data.username);
