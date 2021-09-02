@@ -1,0 +1,103 @@
+.Sidebar_sidebarWrapper__3Uxng {
+  border-right: 1px solid;
+}
+/** Remove Setting Bar Floating**/
+
+.Helper_themeHelper__3ZaE7 .Helper_themeHelperBtn__6wGnv,
+.Helper_themeHelper__3ZaE7 .Helper_themeHelperBtn__6wGnv:not(.Helper_active__1l-fc) {
+  display: none;
+}
+
+/** Connect Page */
+
+.connect-page .social-auth {
+  max-width: 500px !important;
+  border:1px solid black;
+}
+
+.connect-page .widget-auth .social-buttons .social-button {
+  border: 1px solid #c8c8c8;
+  padding: 34px;
+  margin-bottom: 10px;
+}
+
+.connect-page .widget-auth .social-buttons .social-microsoft {
+  background-size: 100%;
+}
+
+.connect-page .widget-auth .social-buttons .social-icon {
+  left: 100px;
+}
+
+.connect-page .social-links {
+  margin-top: 8px;
+}
+
+.connect-page .social-links i {
+  background-repeat: no-repeat;
+  background-size: 76%;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  width: 38px;
+  height: 38px;
+  display: inline-block;
+  padding: 0;
+  transition: all .2s ease-in-out;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+/*End Connect Page */
+
+/*Theme */
+.single-dashboard:first-child {
+  border: 1px solid black !important;
+}
+
+
+
+/**Scroll Css */
+body::-webkit-scrollbar {
+  width: 5px;
+  /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #c8c8c8;
+  /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #c8c8c8;
+  /* color of the scroll thumb */
+  border-radius: 10px;
+  /* roundness of the scroll thumb */
+  /* border: 3px solid black */
+  ;
+  /* creates padding around scroll thumb */
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #c8c8c8;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c8c8c8;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c8c8c8
+}
+
+/*End Scroll Css */

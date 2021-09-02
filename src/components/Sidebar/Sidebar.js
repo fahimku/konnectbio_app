@@ -1,0 +1,158 @@
+import React from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+//import {Progress, Alert} from "reactstrap";
+import {withRouter} from "react-router-dom";
+import {dismissAlert} from "../../actions/alerts";
+import s from "./Sidebar.module.scss";
+import LinksGroup from "./LinksGroup/LinksGroup";
+import { openSidebar,closeSidebar,changeActiveSidebarItem} from "../../actions/navigation";
+import isScreen from "../../core/screenHelper";
+import {logoutUser} from "../../actions/auth";
+
+class Sidebar extends React.Component {
+  
+  static propTypes = {
+    sidebarStatic: PropTypes.bool,
+    sidebarOpened: PropTypes.bool,
+    dispatch: PropTypes.func.isRequired,
+    activeItem: PropTypes.string,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }).isRequired,
+  };
+
+  static defaultProps = {
+    sidebarStatic: true,
+    sidebarOpened: false,
+    activeItem: "",
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.onMouseEnter = this.onMouseEnter.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.doLogout = this.doLogout.bind(this);
+  }
+
+  onMouseEnter() {
+    if (!this.props.sidebarStatic && (isScreen("lg") || isScreen("xl"))) {
+      const paths = this.props.location.pathname.split("/");
+      paths.pop();
+      this.props.dispatch(openSidebar());
+      this.props.dispatch(changeActiveSidebarItem(paths.join("/")));
+    }
+  }
+
+  onMouseLeave() {
+    if (!this.props.sidebarStatic && (isScreen("lg") || isScreen("xl"))) {
+      this.props.dispatch(closeSidebar());
+      this.props.dispatch(changeActiveSidebarItem(null));
+    }
+  }
+
+  dismissAlert(id) {
+    this.props.dispatch(dismissAlert(id));
+  }
+
+  doLogout() {
+    this.props.dispatch(logoutUser());
+  }
+
+  render() {
+    return (
+      <div
+        className={`${
+          !this.props.sidebarOpened && !this.props.sidebarStatic
+            ? s.sidebarClose
+            : ""
+        } ${s.sidebarWrapper}`}
+      >
+        <nav
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          className={s.root}
+        >
+          <header className={s.logo}>
+            <a href="#">
+              <span className={s.logoStyle}>KONNECT BIO</span>{" "}
+            </a>
+          </header>
+          <ul className={s.nav}>
+            <LinksGroup
+              header="Media Library"
+              link="/app/extra/gallery"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-picture" />}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              header="Conversions"
+              link="/app/chat"
+              isHeader
+              iconElement={<span className="fa fa-money"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              header="Analytics"
+              link="/app/main/analytics"
+              isHeader
+              iconElement={<span className="fa fa-bar-chart-o"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              header="Collect Media"
+              link="/app/tables/static"
+              isHeader
+              iconElement={
+                <span className="glyphicon glyphicon-download-alt"></span>
+              }
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              header="Linkin.bio"
+              link="/app/linkinbio"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-link"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+
+            <LinksGroup
+              header="Sign Out"
+              link="/logout"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-log-out"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+
+          </ul>
+        </nav>
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(store) {
+  return {
+    sidebarOpened: store.navigation.sidebarOpened,
+    sidebarStatic: store.navigation.sidebarStatic,
+    alertsList: store.alerts.alertsList,
+    activeItem: store.navigation.activeItem,
+    navbarType: store.navigation.navbarType,
+    sidebarColor: store.layout.sidebarColor,
+  };
+}
+export default withRouter(connect(mapStateToProps)(Sidebar));
