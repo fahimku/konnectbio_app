@@ -81,7 +81,7 @@ class App extends React.PureComponent {
               <AuthRoute path="/forgot" exact component={Forgot} />
               <Route path="/error" exact component={ErrorPage} />
               {/* <Redirect from="*" to="/app/main/analytics"/>*/}
-              {/* <Redirect from="*" to="/app/main/analytics" /> */}
+              <Redirect from="*" to="/connect" />
             </Switch>
           </HashRouter>
         </ConnectedRouter>
