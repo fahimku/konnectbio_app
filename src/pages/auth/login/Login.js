@@ -67,12 +67,12 @@ class Login extends React.Component {
   componentDidMount() {
     const params = new URLSearchParams(this.props.location.search);
     const token = params.get("token");
-    const instagramCodeUrl = window.location.href;
+    //    const instagramCodeUrl = window.location.href;
 
-    if (instagramCodeUrl.includes("code")) {
-      const code = instagramCodeUrl.split("?")[1].split("=");
-      this.props.dispatch(push("/app/linkinbio/" + code[1]));
-    }
+    // if (instagramCodeUrl.includes("code")) {
+    //   const code = instagramCodeUrl.split("?")[1].split("=");
+    //   this.props.dispatch(push("/app/linkinbio/" + code[1]));
+    // }
 
     if (token) {
       this.props.dispatch(receiveToken(token));
