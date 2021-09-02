@@ -40,7 +40,8 @@ class Connect extends React.Component {
   }
 
   componentDidMount() {
-    const accessToken = localStorage.getItem("accessToken");
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let accessToken = userInfo.accessToken;
     if (accessToken !== "") {
       this.props.dispatch(push("/app/linkinbio/"));
     }
