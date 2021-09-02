@@ -160,7 +160,7 @@ class LinkinBio extends React.Component {
     return (
       <div className="linkin-bio">
         <div className="header">
-          <div className="linkin-text">Linkin.bio</div>
+          <div className="linkin-text">Konnect.Bio</div>
           <div className="profile">
             <div className="placeholder">
               <img src={placeholder} />
@@ -177,7 +177,7 @@ class LinkinBio extends React.Component {
             <div className="left-top-bar">
               <div className="your-copy-link">
                 <div className="item-a">
-                  Your Link: <a href="#">https://linkin.bio/username</a>
+                  Your Link: <a href="#">https://konnect.bio/roidemo</a>
                 </div>
                 <div className="item-b">Copy</div>
               </div>
@@ -249,7 +249,7 @@ class LinkinBio extends React.Component {
                       <div className="pane-info">
                         <h4>Featured Media</h4>
                         <p>
-                          Feature the latest post on your Linkin.bio page to
+                          Feature the latest post on your Konnect.bio page to
                           make it stand out.
                         </p>
                       </div>
@@ -287,7 +287,7 @@ class LinkinBio extends React.Component {
                       <div className="pane-info">
                         <h4>Featured Media</h4>
                         <p>
-                          Feature the latest post on your Linkin.bio page to
+                          Feature the latest post on your Konnect.bio page to
                           make it stand out.
                         </p>
                       </div>

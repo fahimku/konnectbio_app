@@ -119,7 +119,7 @@ class Sidebar extends React.Component {
               labelColor="info"
             />
             <LinksGroup
-              header="Linkin.bio"
+              header="Konnect.bio"
               link="/app/linkinbio"
               isHeader
               iconElement={<span className="glyphicon glyphicon-link"></span>}
