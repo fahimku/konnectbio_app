@@ -49,11 +49,13 @@ class LinkinBio extends React.Component {
       let username = localStorage.getItem("username");
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
-      this.updateAccessToken(id, username, accessToken);
+      // this.updateAccessToken(id, username, accessToken);
     } else {
       if (savedAccessToken) {
         accessToken = savedAccessToken;
+        console.log("Saved Access Token" + accessToken);
       }
+
       this.fetchInstagramPosts(accessToken);
     }
   }
@@ -66,18 +68,24 @@ class LinkinBio extends React.Component {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("nextPageUrl", response.data.paging.next);
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      axios.put(`/update/usersocial/instagram`, {
+        id: userInfo.id,
+        username: response.data.username,
+        accessToken: response.data.accessToken,
+      });
       this.setState({instagramPosts: response.data});
     });
   }
 
-  //First Request From User
-  async updateAccessToken(id, username, accessToken) {
-    await axios.put(`/update/usersocial/instagram`, {
-      id: id,
-      username: username,
-      accessToken: accessToken,
-    });
-  }
+  // //First Request From User
+  // async updateAccessToken(id, username, accessToken) {
+  //   await axios.put(`/update/usersocial/instagram`, {
+  //     id: id,
+  //     username: username,
+  //     accessToken: accessToken,
+  //   });
+  // }
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios.get(`/social/media/${token}`).then((response) => {
