@@ -131,7 +131,7 @@ export function loginUser(creds) {
             id: res.data.message.id,
             accessToken: res.data.message.accessToken,
           };
-          localStorage.setItem('accessToken',res.data.message.accessToken)
+          localStorage.setItem('accessToken', res.data.message.accessToken);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
