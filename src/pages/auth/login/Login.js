@@ -34,8 +34,6 @@ class Login extends React.Component {
     };
 
     this.doLogin = this.doLogin.bind(this);
-    this.googleLogin = this.googleLogin.bind(this);
-    this.microsoftLogin = this.microsoftLogin.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.signUp = this.signUp.bind(this);
@@ -56,24 +54,9 @@ class Login extends React.Component {
     );
   }
 
-  googleLogin() {
-    this.props.dispatch(loginUser({social: "google"}));
-  }
-
-  microsoftLogin() {
-    this.props.dispatch(loginUser({social: "microsoft"}));
-  }
-
   componentDidMount() {
     const params = new URLSearchParams(this.props.location.search);
     const token = params.get("token");
-    //    const instagramCodeUrl = window.location.href;
-
-    // if (instagramCodeUrl.includes("code")) {
-    //   const code = instagramCodeUrl.split("?")[1].split("=");
-    //   this.props.dispatch(push("/app/linkinbio/" + code[1]));
-    // }
-
     if (token) {
       this.props.dispatch(receiveToken(token));
       this.props.dispatch(doInit());
@@ -97,15 +80,6 @@ class Login extends React.Component {
             className="widget-auth mx-auto"
             title={<h3 className="mt-0">Login</h3>}
           >
-            {/*<p className="widget-auth-info">Use your email to sign in.</p>
-            Join over 3,000,000 of the world's top brands, agencies & influencers  <Alert className="alert-sm text-center mt-2" color="secondary">
-              Join over 3,000,000 of the world's top brands, agencies &
-              influencers
-              <br />
-             <span className="font-weight-bold">"admin@flatlogic.com / password"</span>
-                            <br/>
-                            to login! 
-            </Alert>*/}
             <form className="mt" onSubmit={this.doLogin}>
               {this.props.errorMessage && (
                 <Alert className="alert-sm" color="danger">
@@ -145,18 +119,6 @@ class Login extends React.Component {
               >
                 {this.props.isFetching ? "Loading..." : "Login"}
               </Button>
-              {/* <p className="widget-auth-info">or sign in with</p> */}
-              <div className="social-buttons">
-                {/* <Button onClick={this.googleLogin} color="primary" className="social-button mb-2">
-                                    <i className="social-icon social-google"/>
-                                    <p className="social-text">GOOGLE</p>
-                                </Button>
-                                <Button onClick={this.microsoftLogin} color="success" className="social-button">
-                                    <i className="social-icon social-microsoft"
-                                       style={{backgroundImage: `url(${microsoft})`}}/>
-                                    <p className="social-text">MICROSOFT</p>
-                                </Button> */}
-              </div>
             </form>
             <p className="widget-auth-info">
               Don't have an account? Sign up now!
@@ -170,7 +132,6 @@ class Login extends React.Component {
     );
   }
 }
-
 function mapStateToProps(state) {
   return {
     isFetching: state.auth.isFetching,

@@ -25,6 +25,8 @@ class LinkinBio extends React.Component {
     this.toggleAccordionFirst = this.toggleAccordionFirst.bind(this);
     this.state = {
       instagramPosts: null,
+      // accessToken: localStorage.getItem('accessToken'),
+      // username: localStorage.getItem('username'),
       activeFirstTab: "tab11",
       activeSecondTab: "tab22",
       activeThirdTab: "tab31",
@@ -35,20 +37,18 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-    //if user is requesting very first request
-    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // let id = userInfo.id;
-    // let username = userInfo.username;
     let accessToken = localStorage.getItem("accessToken");
-
-    // console.log(userInfo);
-
-    if (this.props.match.params.code && accessToken == null) {
+    if (
+      (this.props.match.params.code && accessToken == null) ||
+      accessToken == ""
+    ) {
+      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+      let id = userInfo.id;
+      let username = localStorage.getItem("username");
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
-  //    this.updateAccessToken(id, username, accessTokenCode);
+      this.updateAccessToken(id, username, accessTokenCode);
     } else {
-      //else connected user through his token
       this.fetchInstagramPosts(accessToken);
     }
   }
@@ -71,7 +71,6 @@ class LinkinBio extends React.Component {
       accessToken: accessToken,
     });
   }
-
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios.get(`/social/media/${token}`).then((response) => {
@@ -87,7 +86,6 @@ class LinkinBio extends React.Component {
       let nextPageInstagramPosts = response.data;
       let PreviousInstagramPosts = this.state.instagramPosts;
       for (let i = 0; i < nextPageInstagramPosts.length; i++) {}
-
       const object3 = {...this.state.instagramPosts, ...nextPageInstagramPosts};
       this.setState({instagramPost: nextPageInstagramPosts});
       console.log(this.state.instagramPosts);

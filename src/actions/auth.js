@@ -114,6 +114,7 @@ export function receiveToken(token) {
 
 export function loginUser(creds) {
   return (dispatch) => {
+ 
     localStorage.setItem("dashboardTheme", "black");
     localStorage.setItem("navbarColor", "#fff");
     localStorage.setItem("navbarType", "static");
@@ -130,7 +131,8 @@ export function loginUser(creds) {
             id: res.data.message.id,
             accessToken: res.data.message.accessToken,
           };
-          localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          localStorage.setItem('accessToken',res.data.message.accessToken)
+          localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
           dispatch(push("/app"));
