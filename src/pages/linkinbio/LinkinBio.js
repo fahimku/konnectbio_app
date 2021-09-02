@@ -38,14 +38,22 @@ class LinkinBio extends React.Component {
 
   componentWillMount() {
     let accessToken = localStorage.getItem("accessToken");
-    if (this.props.match.params.code && accessToken == '' || accessToken == null) {
-      let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let savedAccessToken = userInfo.accessToken;
+    if (
+      this.props.match.params.code &&
+      accessToken == null &&
+      savedAccessToken == ""
+    ) {
       let id = userInfo.id;
       let username = localStorage.getItem("username");
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
       this.updateAccessToken(id, username, accessToken);
     } else {
+      if (savedAccessToken) {
+        accessToken = savedAccessToken;
+      }
       this.fetchInstagramPosts(accessToken);
     }
   }
@@ -54,7 +62,7 @@ class LinkinBio extends React.Component {
   async fetchInstagramPostsFirstTime(token) {
     await axios.get(`/social/data/${token}`).then((response) => {
       //Removed Logged In Access Token
-      localStorage.removeItem('accessToken');
+      localStorage.removeItem("accessToken");
       //Set Access Token
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("username", response.data.username);
