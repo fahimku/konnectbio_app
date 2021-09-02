@@ -130,7 +130,7 @@ export function loginUser(creds) {
             id: res.data.message.id,
             accessToken: res.data.message.accessToken,
           };
-          localStorage.setItem("userInfo", userInfo);
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
           dispatch(push("/app"));

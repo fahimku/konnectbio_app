@@ -36,16 +36,17 @@ class LinkinBio extends React.Component {
 
   componentWillMount() {
     //if user is requesting very first request
-   
-    // let userInfo = localStorage.getItem("userInfo");
+    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // let id = userInfo.id;
     // let username = userInfo.username;
     let accessToken = localStorage.getItem("accessToken");
 
-    if (this.props.match.params.code && accessToken == null) {
+    console.log(userInfo);
+
+    if (this.props.match.params.code) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
-   //   this.updateAccessToken(id, username, accessToken);
+  //    this.updateAccessToken(id, username, accessTokenCode);
     } else {
       //else connected user through his token
       this.fetchInstagramPosts(accessToken);
@@ -56,6 +57,7 @@ class LinkinBio extends React.Component {
   async fetchInstagramPostsFirstTime(token) {
     await axios.get(`/social/data/${token}`).then((response) => {
       localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("username", response.data.username);
       localStorage.setItem("nextPageUrl", response.data.paging.next);
       this.setState({instagramPosts: response.data});
     });
