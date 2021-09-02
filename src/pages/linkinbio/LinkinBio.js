@@ -34,32 +34,6 @@ class LinkinBio extends React.Component {
     };
   }
 
-  //First Request From User
-  async fetchInstagramPostsFirstTime(token) {
-    await axios.get(`/social/data/${token}`).then((response) => {
-      let accessToken = response.data.accessToken;
-      localStorage.setItem("accessToken", accessToken);
-      this.setState({instagramPosts: response.data});
-    });
-  }
-
-  //Second Request From User
-  async fetchInstagramPosts(token) {
-    await axios.get(`/social/media/${token}`).then((response) => {
-      this.setState({instagramPosts: response.data});
-    });
-  }
-
-  async pagingInstagramPosts(token) {
-    await axios
-      .get(
-        `https://graph.instagram.com/v11.0/17841449354596981/media?access_token=IGQVJYeFAtX3p6OEVlZAVhhVWVDMVBaSTU1ZAjB6bnVIeUpQWTB1VWdUXzFYZAE5KcDF6R3daZAlRRcVlhdnZAMZA1J2UzBWX2pYMlZAFcm1rLURUTTVWWjNqZAU1OekRDYW82YlRiOGpDYlFPNkZACazBKWnVGUHZAmZAFlCSHFnM0g4&fields=id%2Ccaption%2Cusername%2Cmedia_type%2Cmedia_url%2Cthumbnail_url%2Ctimestamp&limit=25&after=QVFIUnY1UTdCbE1VQzNPb3BLcEhLOVF2WlJaQngwQmhrdlg3UUV3cUhXczkweVA5TEpCZA2JKc1BWYmc3akNDS1B2YmJIV2wyWlpOSC1LZAHlUMlZACWGxhYVZA3`
-      )
-      .then((response) => {
-         // this.setState({instagramPosts: [..,response.data]});
-      });
-  }
-
   componentWillMount() {
     //if user is requesting very first request
     let accessToken = localStorage.getItem("accessToken");
@@ -72,6 +46,46 @@ class LinkinBio extends React.Component {
     }
   }
 
+  //First Request From User
+  async fetchInstagramPostsFirstTime(token) {
+    await axios.get(`/social/data/${token}`).then((response) => {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("nextPageUrl", response.data.paging.next);
+      this.setState({instagramPosts: response.data});
+    });
+  }
+
+  //Second Request From User
+  async fetchInstagramPosts(token) {
+    await axios.get(`/social/media/${token}`).then((response) => {
+      localStorage.removeItem("nextPageUrl");
+      localStorage.setItem("nextPageUrl", response.data.paging.next);
+      this.setState({instagramPosts: response.data});
+    });
+  }
+
+  //Next Page Instagram Posts Request From User
+  async nextPageInstagramPosts(url) {
+    await axios.get(url).then((response) => {
+      let nextPageInstagramPosts = response.data;
+      let PreviousInstagramPosts = this.state.instagramPosts;
+      for (let i = 0; i < nextPageInstagramPosts.length; i++) {
+       
+      }
+
+      const object3 = {...this.state.instagramPosts, ...nextPageInstagramPosts}
+       this.setState({instagramPost:nextPageInstagramPosts})
+      console.log(this.state.instagramPosts);
+
+      // let mergedInstagramPosts = {
+      //   ...this.state.instagramPosts,
+      //   ...nextPageInstagramPosts,
+      // };
+      // console.log(mergedInstagramPosts);
+      // this.setState({instagramPosts: mergedInstagramPosts});
+    });
+  }
+
   paneDidMount = (node) => {
     if (node) {
       node.addEventListener("scroll", this.handleScroll.bind(this));
@@ -80,9 +94,10 @@ class LinkinBio extends React.Component {
 
   handleScroll = (event) => {
     let node = event.target;
+    let nextPageUrl = localStorage.getItem("nextPageUrl");
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
-      this.fetchInstagramPosts();
+      this.nextPageInstagramPosts(nextPageUrl);
       console.log("BOTTOM REACHED:", bottom);
     }
   };
