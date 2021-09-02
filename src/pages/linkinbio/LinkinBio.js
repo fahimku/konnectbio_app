@@ -69,23 +69,23 @@ class LinkinBio extends React.Component {
       localStorage.setItem("username", response.data.username);
       localStorage.setItem("nextPageUrl", response.data.paging.next);
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-      axios.put(`/update/usersocial/instagram`, {
-        id: userInfo.id,
-        username: response.data.username,
-        accessToken: response.data.accessToken,
-      });
+      this.updateAccessToken(
+        userInfo.id,
+        response.data.username,
+        response.data.accessToken
+      );
       this.setState({instagramPosts: response.data});
     });
   }
 
-  // //First Request From User
-  // async updateAccessToken(id, username, accessToken) {
-  //   await axios.put(`/update/usersocial/instagram`, {
-  //     id: id,
-  //     username: username,
-  //     accessToken: accessToken,
-  //   });
-  // }
+  //First Request From User
+  async updateAccessToken(id, username, accessToken) {
+    await axios.put(`/update/usersocial/instagram`, {
+      id: id,
+      username: username,
+      accessToken: accessToken,
+    });
+  }
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios.get(`/social/media/${token}`).then((response) => {
