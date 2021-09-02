@@ -15,7 +15,6 @@ import HighchartsReact from "highcharts-react-official";
 import mock from "./mock";
 import s from "./Analitycs.module.scss";
 import {receiveDataRequest} from "../../actions/analytics";
-import {push} from "connected-react-router";
 class Analytics extends Component {
   static propTypes = {
     visits: PropTypes.any,
@@ -99,11 +98,7 @@ class Analytics extends Component {
   };
 
   componentDidMount() {
-    const instagramCodeUrl = window.location.href;
-    if (instagramCodeUrl.includes("code")) {
-      const code = instagramCodeUrl.split("?")[1].split("=");
-      this.props.dispatch(push("/app/linkinbio/" + code[1]));
-    }
+   
 
     this.props.dispatch(receiveDataRequest());
   }

@@ -32,18 +32,19 @@ class Connect extends React.Component {
       .get(`/social/url/instagram`)
       .then((response) => {
         this.setState({url: response.data});
-      }).then((response) => {
+      })
+      .then((response) => {
         this.setState({url: response.data});
       })
       .catch(function (error) {});
   }
 
   componentDidMount() {
-    // let token = localStorage.getItem("token");
-    // axios.defaults.headers.common = {
-    //   Authorization: "Bearer " + token,
-    // };
-
+    const instagramCodeUrl = window.location.href;
+    if (instagramCodeUrl.includes("code")) {
+      const code = instagramCodeUrl.split("?")[1].split("=");
+      this.props.dispatch(push("/app/linkinbio/" + code[1]));
+    }
     this.getInstagramUrl();
   }
 
