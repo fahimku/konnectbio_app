@@ -97,7 +97,7 @@
      position: relative;
      margin: auto;
      height: 600px;
-     overflow-x: hidden;
+
      width: 320px;
      background: url(../images/mobile-preview.svg) no-repeat;
      text-align: center;
@@ -137,6 +137,7 @@
      .mobile-gallery {
          height: 437px;
          overflow: scroll;
+         overflow-x: hidden;
          width: 93%;
      }
 
