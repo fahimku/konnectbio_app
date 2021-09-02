@@ -108,9 +108,9 @@ class Register extends React.Component {
             className="widget-auth mx-auto"
             title={<h3 className="mt-0">Create an account</h3>}
           >
-            <p className="widget-auth-info">
+            {/* <p className="widget-auth-info">
               Free forever. No credit card required.
-            </p>
+            </p> */}
             <form className="mt" onSubmit={this.doRegister}>
               {this.props.errorMessage && (
                 <Alert className="alert-sm" color="danger">
