@@ -38,7 +38,7 @@ class LinkinBio extends React.Component {
 
   componentWillMount() {
     let accessToken = localStorage.getItem("accessToken");
-    if (this.props.match.params.code && accessToken.length > 0) {
+    if (this.props.match.params.code && accessToken == '' || accessToken == null) {
       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
       let id = userInfo.id;
       let username = localStorage.getItem("username");
