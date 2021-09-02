@@ -54,7 +54,7 @@ class Forgot extends React.Component {
                   )
                 }
                 <div className="form-group">
-                  <input className="form-control no-border" value={this.state.email}
+                  <input className="form-control" value={this.state.email}
                          onChange={this.changeEmail} type="email" required name="email"
                          placeholder="Email"/>
                 </div>

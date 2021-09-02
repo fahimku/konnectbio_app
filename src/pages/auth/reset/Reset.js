@@ -89,12 +89,12 @@ class Reset extends React.Component {
                   )
                 }
                 <div className="form-group">
-                  <input className="form-control no-border" value={this.state.password}
+                  <input className="form-control" value={this.state.password}
                          onChange={this.changePassword} type="password" required name="password"
                          placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                  <input className="form-control no-border" value={this.state.confirmPassword}
+                  <input className="form-control" value={this.state.confirmPassword}
                          onChange={this.changeConfirmPassword} onBlur={this.checkPassword} type="password" required
                          name="confirmPassword"
                          placeholder="Confirm"/>

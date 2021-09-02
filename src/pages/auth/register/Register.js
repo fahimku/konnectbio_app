@@ -119,7 +119,7 @@ class Register extends React.Component {
               )}
               <div className="form-group">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.name}
                   onChange={this.changeName}
                   type="text"
@@ -130,7 +130,7 @@ class Register extends React.Component {
               </div>
               <div className="form-group">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.email}
                   onChange={this.changeEmail}
                   type="text"
@@ -141,7 +141,7 @@ class Register extends React.Component {
               </div>
               <div className="form-group">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.password}
                   onChange={this.changePassword}
                   type="password"
@@ -152,7 +152,7 @@ class Register extends React.Component {
               </div>
               <div className="form-group">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.confirmPassword}
                   onChange={this.changeConfirmPassword}
                   onBlur={this.checkPassword}

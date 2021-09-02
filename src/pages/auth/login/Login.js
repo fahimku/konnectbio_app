@@ -114,7 +114,7 @@ class Login extends React.Component {
               )}
               <div className="form-group">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.email}
                   onChange={this.changeEmail}
                   type="email"
@@ -125,7 +125,7 @@ class Login extends React.Component {
               </div>
               <div className="form-group mb-0">
                 <input
-                  className="form-control no-border"
+                  className="form-control"
                   value={this.state.password}
                   onChange={this.changePassword}
                   type="password"
