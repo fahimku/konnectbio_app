@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {withRouter, Link, useLocation} from "react-router-dom";
-import {Redirect} from "react-router";
+//import {Redirect} from "react-router";
 import config from "../../../config";
 import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
@@ -68,7 +68,7 @@ class Login extends React.Component {
     const params = new URLSearchParams(this.props.location.search);
     const token = params.get("token");
     const instagramCodeUrl = window.location.href;
- 
+
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
       this.props.dispatch(push("/app/linkinbio/" + code[1]));

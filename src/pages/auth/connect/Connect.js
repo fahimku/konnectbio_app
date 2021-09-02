@@ -26,20 +26,25 @@ class Connect extends React.Component {
       url: "",
     };
   }
+
+  async getInstagramUrl() {
+    await axios
+      .get(`/social/url/instagram`)
+      .then((response) => {
+        this.setState({url: response.data});
+      }).then((response) => {
+        this.setState({url: response.data});
+      })
+      .catch(function (error) {});
+  }
+
   componentDidMount() {
     // let token = localStorage.getItem("token");
     // axios.defaults.headers.common = {
     //   Authorization: "Bearer " + token,
     // };
-    axios
-      .get(`/social/url/instagram`)
-      .then((response) => {
-        this.setState({url: response.data});
-      })
-      .then((response) => {
-        this.setState({url: response.data});
-      })
-      .catch(function (error) {});
+
+    this.getInstagramUrl();
   }
 
   render() {
@@ -94,10 +99,10 @@ class Connect extends React.Component {
             </p>
 
             <div className="social-links text-center">
-               <i
+              <i
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${tiktok})`}}
-              /> 
+              />
               <i
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${instagram})`}}
@@ -106,19 +111,19 @@ class Connect extends React.Component {
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${twitter})`}}
               />
-                
+
               <i
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${facebook})`}}
               />
-               <i
+              <i
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${youtube})`}}
               />
               <i
                 className="social-icon social-microsoft"
                 style={{backgroundImage: `url(${snapchat})`}}
-              /> 
+              />
             </div>
           </Widget>
         </Container>
