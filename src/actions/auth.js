@@ -227,7 +227,7 @@ export function registerUser(creds) {
             type: REGISTER_SUCCESS,
           });
           toast.success("You've been registered successfully.");
-          dispatch(push("/user/profile"));
+          dispatch(push("/login"));
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));

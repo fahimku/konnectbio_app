@@ -36,10 +36,16 @@ class LinkinBio extends React.Component {
 
   componentWillMount() {
     //if user is requesting very first request
+   
+    // let userInfo = localStorage.getItem("userInfo");
+    // let id = userInfo.id;
+    // let username = userInfo.username;
     let accessToken = localStorage.getItem("accessToken");
+
     if (this.props.match.params.code && accessToken == null) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
+   //   this.updateAccessToken(id, username, accessToken);
     } else {
       //else connected user through his token
       this.fetchInstagramPosts(accessToken);
@@ -52,6 +58,15 @@ class LinkinBio extends React.Component {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("nextPageUrl", response.data.paging.next);
       this.setState({instagramPosts: response.data});
+    });
+  }
+
+  //First Request From User
+  async updateAccessToken(id, username, accessToken) {
+    await axios.put(`/update/usersocial/instagram`, {
+      id: id,
+      username: username,
+      accessToken: accessToken,
     });
   }
 
@@ -69,12 +84,10 @@ class LinkinBio extends React.Component {
     await axios.get(url).then((response) => {
       let nextPageInstagramPosts = response.data;
       let PreviousInstagramPosts = this.state.instagramPosts;
-      for (let i = 0; i < nextPageInstagramPosts.length; i++) {
-       
-      }
+      for (let i = 0; i < nextPageInstagramPosts.length; i++) {}
 
-      const object3 = {...this.state.instagramPosts, ...nextPageInstagramPosts}
-       this.setState({instagramPost:nextPageInstagramPosts})
+      const object3 = {...this.state.instagramPosts, ...nextPageInstagramPosts};
+      this.setState({instagramPost: nextPageInstagramPosts});
       console.log(this.state.instagramPosts);
 
       // let mergedInstagramPosts = {
