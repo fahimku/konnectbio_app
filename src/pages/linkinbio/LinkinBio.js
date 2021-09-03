@@ -25,6 +25,7 @@ class LinkinBio extends React.Component {
     this.toggleAccordionFirst = this.toggleAccordionFirst.bind(this);
     this.state = {
       instagramPosts: null,
+      nextPageUrl: "",
       // accessToken: localStorage.getItem('accessToken'),
       // username: localStorage.getItem('username'),
       activeFirstTab: "tab11",
@@ -45,8 +46,8 @@ class LinkinBio extends React.Component {
       accessToken == null &&
       savedAccessToken == ""
     ) {
-      let id = userInfo.id;
-      let username = localStorage.getItem("username");
+      // let id = userInfo.id;
+      // let username = localStorage.getItem("username");
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
       // this.updateAccessToken(id, username, accessToken);
@@ -63,7 +64,6 @@ class LinkinBio extends React.Component {
   //First Request From User
   async fetchInstagramPostsFirstTime(token) {
     await axios.get(`/social/data/${token}`).then((response) => {
-      //Removed Logged In Access Token
       //Set Access Token
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("username", response.data.username);
@@ -75,6 +75,7 @@ class LinkinBio extends React.Component {
         response.data.accessToken
       );
       this.setState({instagramPosts: response.data});
+      this.setState({nextPageUrl: response.data.paging.next});
     });
   }
 
@@ -88,29 +89,33 @@ class LinkinBio extends React.Component {
   }
   //Second Request From User
   async fetchInstagramPosts(token) {
+    //    token ="IGQVJYbFF2dlhKY3ktTVJodUFTc2FYMXBoNnVtbWtRUTNUVlBHa3ItdWZAkZAGkwS2JqS3pkLXRkdEZAWSXdwTEktenlxSjJJZAXBIem9KQUw3c0ZAxS2JkMVdLbElkczJGZAEdZAWDQxMUdfSURvT0R5NlZAyS3Flb1VyUjBJVzFz";
     await axios.get(`/social/media/${token}`).then((response) => {
-      localStorage.removeItem("nextPageUrl");
-      localStorage.setItem("nextPageUrl", response.data.paging.next);
+      //    localStorage.removeItem("nextPageUrl");
+      //  localStorage.setItem("nextPageUrl", response.data.paging.next);
       this.setState({instagramPosts: response.data});
+      this.setState({nextPageUrl: response.data.paging.next});
     });
   }
 
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url) {
     await axios.get(url).then((response) => {
+      let post = [];
       let nextPageInstagramPosts = response.data;
       let PreviousInstagramPosts = this.state.instagramPosts;
-      for (let i = 0; i < nextPageInstagramPosts.length; i++) {}
-      const object3 = {...this.state.instagramPosts, ...nextPageInstagramPosts};
-      this.setState({instagramPost: nextPageInstagramPosts});
-      console.log(this.state.instagramPosts);
 
-      // let mergedInstagramPosts = {
-      //   ...this.state.instagramPosts,
-      //   ...nextPageInstagramPosts,
-      // };
-      // console.log(mergedInstagramPosts);
-      // this.setState({instagramPosts: mergedInstagramPosts});
+      //Check Instagram has more posts
+      if (nextPageInstagramPosts.paging.hasOwnProperty("next")) {
+        this.setState({nextPageUrl: nextPageInstagramPosts.paging.next});
+      } else {
+        this.setState({nextPageUrl: ""});
+      }
+      post.push(PreviousInstagramPosts);
+      for (let i = 0; i < nextPageInstagramPosts.data.length; i++) {
+        post[0].data.push(nextPageInstagramPosts.data[i]);
+      }
+      this.setState({instagramPost: post});
     });
   }
 
@@ -122,11 +127,11 @@ class LinkinBio extends React.Component {
 
   handleScroll = (event) => {
     let node = event.target;
-    let nextPageUrl = localStorage.getItem("nextPageUrl");
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
-      this.nextPageInstagramPosts(nextPageUrl);
-      console.log("BOTTOM REACHED:", bottom);
+      if (this.state.nextPageUrl) {
+        this.nextPageInstagramPosts(this.state.nextPageUrl);
+      }
     }
   };
 
