@@ -25,8 +25,6 @@ class Register extends React.Component {
     };
 
     this.doRegister = this.doRegister.bind(this);
-    this.googleLogin = this.googleLogin.bind(this);
-    this.microsoftLogin = this.microsoftLogin.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
     this.changePassword = this.changePassword.bind(this);
@@ -87,14 +85,6 @@ class Register extends React.Component {
     }
   }
 
-  googleLogin() {
-    this.props.dispatch(loginUser({social: "google"}));
-  }
-
-  microsoftLogin() {
-    this.props.dispatch(loginUser({social: "microsoft"}));
-  }
-
   render() {
     return (
       <div className="auth-page">
@@ -133,7 +123,7 @@ class Register extends React.Component {
                   className="form-control"
                   value={this.state.email}
                   onChange={this.changeEmail}
-                  type="text"
+                  type="email"
                   required
                   name="email"
                   placeholder="Email"
