@@ -11,13 +11,19 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import {Link} from "react-router-dom";
+
+import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import classnames from "classnames";
 import s from "./LinkinBio.module.scss";
+import moment from "moment";
 // import {push} from "connected-react-router";
 
 class LinkinBio extends React.Component {
   constructor(props) {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let username = userInfo.username;
     super(props);
     this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
@@ -26,8 +32,9 @@ class LinkinBio extends React.Component {
     this.state = {
       instagramPosts: null,
       singlePost: "",
+      currentPost: "",
       nextPageUrl: "",
-      username: "",
+      username: username,
       redirectedUrl: "",
       selectPost: false,
       activeFirstTab: "tab11",
@@ -41,14 +48,11 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-    let accessToken = localStorage.getItem("accessToken");
+    let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    let savedAccessToken = userInfo.accessToken;
-    if (
-      this.props.match.params.code &&
-      accessToken == null &&
-      savedAccessToken == ""
-    ) {
+    let savedAccessToken = userInfo.access_token;
+
+    if (this.props.match.params.code && !accessToken && !savedAccessToken) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
     } else {
@@ -65,12 +69,22 @@ class LinkinBio extends React.Component {
       .get(`/social/data/${token}`)
       .then((response) => {
         //Set Access Token
-        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("access_token", response.data.access_token);
+
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        //    Retrieves the string and converts it to a JavaScript object
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
+        parseUserInformation.username = response.data.username;
+        //Store User Information
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+
         this.updateAccessToken(
           userInfo.id,
           response.data.username,
-          response.data.accessToken
+          response.data.access_token
         );
         this.setState({instagramPosts: response.data});
         this.setState({nextPageUrl: response.data.paging.next});
@@ -81,7 +95,8 @@ class LinkinBio extends React.Component {
           this.setState({
             error: {
               type: "accountExist",
-              message:"This account is already connected to another KonnectBio account. Please contact support for further assistance.",
+              message:
+                "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
             },
           });
         }
@@ -93,14 +108,13 @@ class LinkinBio extends React.Component {
     await axios.put(`/update/usersocial/instagram`, {
       id: id,
       username: username,
-      accessToken: accessToken,
+      access_token: accessToken,
     });
   }
   //Second Request From User
   async fetchInstagramPosts(token) {
-    //    token ="IGQVJYbFF2dlhKY3ktTVJodUFTc2FYMXBoNnVtbWtRUTNUVlBHa3ItdWZAkZAGkwS2JqS3pkLXRkdEZAWSXdwTEktenlxSjJJZAXBIem9KQUw3c0ZAxS2JkMVdLbElkczJGZAEdZAWDQxMUdfSURvT0R5NlZAyS3Flb1VyUjBJVzFz";
     await axios
-      .get(`/social/media/${token}`)
+      .get(`/social/media/${token}?username=${this.state.username}`)
       .then((response) => {
         this.setState({instagramPosts: response.data});
         if (response.data)
@@ -108,6 +122,15 @@ class LinkinBio extends React.Component {
       })
       .catch((err) => {
         if (err.response.data.message.type) {
+          //    Retrieves the string and converts it to a JavaScript object
+          const userInformation = localStorage.getItem("userInfo");
+          const parseUserInformation = JSON.parse(userInformation);
+          // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
+          parseUserInformation.access_token = "";
+          //Store User Information
+          const storeUserInformation = JSON.stringify(parseUserInformation);
+          localStorage.setItem("userInfo", storeUserInformation);
+          localStorage.removeItem("access_token");
           this.setState({
             error: {
               type: "InstagramAuthFail",
@@ -120,9 +143,12 @@ class LinkinBio extends React.Component {
   }
 
   //Next Page Instagram Posts Request From User
-  async nextPageInstagramPosts(url) {
+  async nextPageInstagramPosts(url, username) {
     await axios
-      .get(url)
+      .post("/social/next/media", {
+        url: url,
+        username: username,
+      })
       .then((response) => {
         let instagramPosts = [];
         let nextPageInstagramPosts = response.data;
@@ -141,6 +167,8 @@ class LinkinBio extends React.Component {
       })
       .catch((err) => {
         if (err.response.data.message.type) {
+          localStorage.removeItem("access_token");
+
           this.setState({
             error: {
               type: "InstagramAuthFail",
@@ -152,33 +180,80 @@ class LinkinBio extends React.Component {
       });
   }
 
-  async savePost(text) {
-    await axios
-      .post(`/create/posts`, {
-        id: "17909693902793032",
-        caption: " ⁣",
-        media_url:
-          "https://scontent.cdninstagram.com/v/t51.29350-15/200220013_859644918240771_5291876149984783041_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=8ae9d6&_nc_ohc=oaiTkT4EMpcAX-lHbzA&_nc_ht=scontent.cdninstagram.com&edm=ANo9K5cEAAAA&oh=a01cff2e96bb3b64dcb3823f6be021a4&oe=6137E4E0",
-        timestamp: "2021-06-12T06:57:35+0000",
-        redirectedUrl: "http:dl1961.com",
-        username: "roidemo",
-      })
-      .then((response) => {});
-  }
+  savePost = () => {
+    this.setState(
+      (previousState) => ({
+        currentPost: previousState.singlePost,
+      }),
+      async () => {
+        await axios
+          .post(`/create/posts`, {
+            id: this.state.currentPost.id,
+            caption: this.state.currentPost.caption,
+            media_url: this.state.currentPost.media_url,
+            timestamp: this.state.currentPost.timestamp,
+            redirected_url: this.state.redirectedUrl,
+            username: this.state.currentPost.username,
+          })
+          .then((response) => {
+            let singlePostIndex = this.state.instagramPosts.data.findIndex(
+              (item) => item.id === this.state.currentPost.id
+            );
 
-  async updatePost(text) {
-    await axios
-      .put(`/update/posts/17909693902793032`, {
-        redirectedUrl: "http://dl1961.com",
-      })
-      .then((response) => {});
-  }
+            let currentPost = this.state.currentPost;
+            currentPost.redirected_url = this.state.redirectedUrl;
+            currentPost.linked = true;
+            let instagramPosts = JSON.parse(
+              JSON.stringify(this.state.instagramPosts)
+            );
+            instagramPosts.data[singlePostIndex] = currentPost;
+            this.setState({instagramPosts: instagramPosts}, () => {});
+            toast.success("Your Post is Linked Successfully");
+          })
+          .catch((err) => {
+            toast.error(err);
+          });
+      }
+    );
+  };
 
-  async deletePost(text) {
-    await axios
-      .delete(`/create/posts/17909693902793032`)
-      .then((response) => {});
-  }
+  updatePost = async (id, url) => {
+    if (url == "") this.deletePost(id);
+    else
+      await axios
+        .put(`/update/posts/${id}`, {
+          redirected_url: url,
+        })
+        .then((response) => {
+          let singlePostIndex = this.state.instagramPosts.data.findIndex(
+            (item) => item.id === id
+          );
+          let currentPost = this.state.singlePost;
+          currentPost.redirected_url = url;
+          let instagramPosts = JSON.parse(
+            JSON.stringify(this.state.instagramPosts)
+          );
+          instagramPosts.data[singlePostIndex] = currentPost;
+          this.setState({instagramPosts: instagramPosts});
+          toast.success("Your Post Link is Updated");
+        });
+  };
+
+  deletePost = async (id) => {
+    await axios.delete(`/delete/posts/${id}`).then((response) => {
+      let singlePostIndex = this.state.instagramPosts.data.findIndex(
+        (item) => item.id === id
+      );
+      let currentPost = this.state.singlePost;
+      currentPost.linked = false;
+      let instagramPosts = JSON.parse(
+        JSON.stringify(this.state.instagramPosts)
+      );
+      instagramPosts.data[singlePostIndex] = currentPost;
+      this.setState({instagramPosts: instagramPosts});
+      toast.success("Your Post is Unlinked Successfully");
+    });
+  };
 
   paneDidMount = (node) => {
     if (node) {
@@ -191,7 +266,10 @@ class LinkinBio extends React.Component {
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
       if (this.state.nextPageUrl) {
-        this.nextPageInstagramPosts(this.state.nextPageUrl);
+        this.nextPageInstagramPosts(
+          this.state.nextPageUrl,
+          this.state.username
+        );
       }
     }
   };
@@ -220,14 +298,39 @@ class LinkinBio extends React.Component {
     }
   }
 
-  selectPost(state, postIndex) {
+  selectPost = (state, postIndex) => {
     if (postIndex !== "") {
-      this.setState({
-        singlePost: this.state.instagramPosts.data[postIndex],
-      });
+      //make border appear on post image
+      let currentPost = this.state.instagramPosts.data[postIndex];
+      let lastPost = this.state.singlePost;
+      //unlinked last selected post
+      if (lastPost) {
+        lastPost.select = false;
+      }
+      //link current post
+      currentPost.select = true;
+      currentPost.timestamp = moment(currentPost.timestamp).isValid()
+        ? moment(currentPost.timestamp).format("MMM Do YYYY")
+        : "";
+      let instagramPosts = JSON.parse(
+        JSON.stringify(this.state.instagramPosts)
+      );
+      instagramPosts.data[postIndex] = currentPost;
+      this.setState({instagramPosts: instagramPosts});
+      //link current post
+      this.setState(
+        {
+          singlePost: currentPost,
+        },
+        () => {
+          if (currentPost.redirected_url)
+            this.setState({redirectedUrl: currentPost.redirected_url});
+          else this.setState({redirectedUrl: ""});
+        }
+      );
     }
     this.setState({selectPost: state});
-  }
+  };
 
   error(error) {
     this.setState({error: error});
@@ -240,11 +343,22 @@ class LinkinBio extends React.Component {
         instagramPosts.push(
           <Col key={i} xs="4">
             <img
+              className={
+                this.state.instagramPosts.data[i].linked ||
+                this.state.instagramPosts.data[i].select
+                  ? "linked"
+                  : ""
+              }
               key={i}
-              id={i}
+              id={"img" + i}
               onClick={(ev) => this.selectPost(true, i)}
               src={this.state.instagramPosts.data[i].media_url}
             />
+            {this.state.instagramPosts.data[i].linked ? (
+              <span>LINKED</span>
+            ) : (
+              ""
+            )}
           </Col>
         );
       }
@@ -270,7 +384,9 @@ class LinkinBio extends React.Component {
               <div className="your-copy-link">
                 <div className="item-a">
                   Your Link:{" "}
-                  <a href="#">https://konnect.bio/{this.state.username}</a>
+                  <a target="_blank" href="https://konnect.bio/roidemo">
+                    https://konnect.bio/{this.state.username}
+                  </a>
                 </div>
                 <div className="item-b">Copy</div>
               </div>
@@ -288,7 +404,7 @@ class LinkinBio extends React.Component {
                 <div className="error">
                   {this.state.error.message}
                   <br></br>
-                  <a href="#">Connect Instagram</a>
+                  <Link to="/connect">Connect Instagram</Link>
                 </div>
               ) : (
                 <div>
@@ -342,11 +458,11 @@ class LinkinBio extends React.Component {
                     >
                       <div className="image-box-info">
                         <span
-                          onClick={() => this.selectPost()}
+                          onClick={() => this.selectPost(false, "")}
                           className="glyphicon glyphicon-arrow-left"
                         ></span>
                         <h4>Edit Links</h4>
-                        <p>Posted on Aug 30, 2021</p>
+                        <p>Posted on {this.state.singlePost.timestamp}</p>
                       </div>
                       <div className="image-wrapper">
                         <div className="image-box">
@@ -358,20 +474,51 @@ class LinkinBio extends React.Component {
                             <input
                               required
                               type="url"
+                              value={this.state.redirectedUrl}
                               placeholder="Add a link to any web page"
                               className="form-control"
                               onChange={(evt) => {
-                                this.setState({link: evt.target.value});
+                                this.setState({
+                                  redirectedUrl: evt.target.value,
+                                });
                               }}
                             />
                             <div className="pane-button">
-                              <Button
-                                onClick={(ev) => this.savePost(this)}
-                                //onClick={this.savePost}
-                                color=""
-                              >
-                                &nbsp;&nbsp;Save&nbsp;&nbsp;
-                              </Button>
+                              {this.state.singlePost.linked ? (
+                                <>
+                                  <Button
+                                    onClick={(ev) =>
+                                      this.updatePost(
+                                        this.state.singlePost.id,
+                                        this.state.redirectedUrl
+                                      )
+                                    }
+                                    color=""
+                                  >
+                                    &nbsp;&nbsp;Update&nbsp;&nbsp;
+                                  </Button>
+                                  <div className="remove-link">
+                                    <a
+                                      href="javascript:void(0)"
+                                      onClick={(param) =>
+                                        this.deletePost(
+                                          this.state.singlePost.id
+                                        )
+                                      }
+                                    >
+                                      <span className="glyphicon glyphicon-trash"></span>
+                                      Remove Link
+                                    </a>
+                                  </div>
+                                </>
+                              ) : (
+                                <Button
+                                  onClick={(ev) => this.savePost(this)}
+                                  color=""
+                                >
+                                  &nbsp;&nbsp;Save&nbsp;&nbsp;
+                                </Button>
+                              )}
                             </div>
                           </div>
                         </form>

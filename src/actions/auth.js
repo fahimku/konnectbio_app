@@ -77,8 +77,9 @@ export function logoutUser() {
       type: LOGOUT_REQUEST,
     });
     localStorage.removeItem("token");
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem("access_token");
     localStorage.removeItem("user");
+    localStorage.removeItem("userInfo");
     axios.defaults.headers.common["Authorization"] = "";
     dispatch({
       type: LOGOUT_SUCCESS,
@@ -114,7 +115,6 @@ export function receiveToken(token) {
 
 export function loginUser(creds) {
   return (dispatch) => {
- 
     localStorage.setItem("dashboardTheme", "black");
     localStorage.setItem("navbarColor", "#fff");
     localStorage.setItem("navbarType", "static");
@@ -129,9 +129,9 @@ export function loginUser(creds) {
           const token = res.data.message.token;
           const userInfo = {
             id: res.data.message.id,
-            accessToken: res.data.message.accessToken,
+            access_token: res.data.message.access_token,
+            username: res.data.message.username,
           };
-          // localStorage.setItem('accessToken', res.data.message.accessToken);
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());

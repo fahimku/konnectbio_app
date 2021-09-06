@@ -16,8 +16,9 @@
     }
 
     .linkin-text {
-        font-size: 20px;
+        font-size: 23px;
         padding: 14px;
+        font-weight: 600;
 
     }
 }
@@ -42,9 +43,8 @@
             padding: 15px;
 
             a {
-                color: black;
-                font-weight: bold;
-                ;
+                color: #25c6fe;
+                font-weight: 400;
             }
         }
 
@@ -156,15 +156,37 @@
         overflow: scroll;
         overflow-x: hidden;
         width: 93%;
-    }
 
-    .mobile-gallery img {
-        width: 70px;
-        height: 80px;
-        -webkit-filter: grayscale(100%);
-        filter: grayscale(100%);
-        opacity: 0.5;
-        cursor: pointer;
+        span {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: white;
+            background: rgba(50, 59, 67, 0.5);
+            font-size: 9px;
+            font-weight: bold;
+            left: 8px;
+            text-align: center;
+            padding: 10px;
+            margin: 0 auto;
+            padding: 0;
+            width: 52px;
+        }
+        img {
+            width: 83px;
+            height: 104px;
+            -webkit-filter: grayscale(100%);
+            filter: grayscale(100%);
+            opacity: 0.5;
+            cursor: pointer;
+        }
+        .linked {
+            border: 2px solid #1bc3fe;
+            -webkit-filter: none;
+            filter: none;
+            opacity: 1;
+    
+        }
     }
 
     .mobile-preview .mobile-gallery .border {
@@ -220,11 +242,25 @@
 
 .pane-button {
     margin-left: auto;
+    display: flex;
 
     button {
         margin-top: 18px;
         margin-right: 23px;
         border: 1px solid #c8c8c8;
+    }
+
+    .remove-link {
+        margin-left: auto;
+        margin-top: 18px;
+        a {
+            font-size: 15px;
+            color: black;
+            span {
+                padding-right: 10px;
+            }
+
+        }
     }
 }
 

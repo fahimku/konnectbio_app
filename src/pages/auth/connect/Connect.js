@@ -41,8 +41,8 @@ class Connect extends React.Component {
 
   componentDidMount() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    let accessToken = userInfo.accessToken;
-    if (accessToken !== "") {
+    let access_token = userInfo.access_token;
+    if (access_token !== "") {
       this.props.dispatch(push("/app/linkinbio/"));
     }
     const instagramCodeUrl = window.location.href;
