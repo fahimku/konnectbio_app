@@ -18,6 +18,7 @@ import placeholder from "../../images/placeholder.png";
 import classnames from "classnames";
 import s from "./LinkinBio.module.scss";
 import moment from "moment";
+import config from "../../config";
 // import {push} from "connected-react-router";
 
 class LinkinBio extends React.Component {
@@ -33,6 +34,7 @@ class LinkinBio extends React.Component {
       instagramPosts: null,
       singlePost: "",
       currentPost: "",
+      url: config.hostApi + "/" + username,
       nextPageUrl: "",
       username: username,
       redirectedUrl: "",
@@ -61,6 +63,7 @@ class LinkinBio extends React.Component {
       }
       this.fetchInstagramPosts(accessToken);
     }
+    this.fetchTest();
   }
 
   //First Request From User
@@ -104,6 +107,15 @@ class LinkinBio extends React.Component {
   }
 
   //First Request From User
+  async fetchTest() {
+    await axios
+      .get(`https://www.instagram.com/artisticdenimmills/?__a=1`)
+      .then((response) => {
+        console.log("instagramapi");
+        console.log(response);
+      });
+  }
+  //First Request From User
   async updateAccessToken(id, username, accessToken) {
     await axios.put(`/update/usersocial/instagram`, {
       id: id,
@@ -141,6 +153,16 @@ class LinkinBio extends React.Component {
         }
       });
   }
+
+  copyToClipboard = (e) => {
+    let textField = document.createElement("textarea");
+    textField.innerText = this.state.url;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    toast.success("Copied to Clipboard!");
+  };
 
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url, username) {
@@ -309,9 +331,6 @@ class LinkinBio extends React.Component {
       }
       //link current post
       currentPost.select = true;
-      currentPost.timestamp = moment(currentPost.timestamp).isValid()
-        ? moment(currentPost.timestamp).format("MMM Do YYYY")
-        : "";
       let instagramPosts = JSON.parse(
         JSON.stringify(this.state.instagramPosts)
       );
@@ -384,11 +403,13 @@ class LinkinBio extends React.Component {
               <div className="your-copy-link">
                 <div className="item-a">
                   Your Link:{" "}
-                  <a target="_blank" href="https://konnect.bio/roidemo">
-                    https://konnect.bio/{this.state.username}
+                  <a target="_blank" href={this.state.url}>
+                    {this.state.url}
                   </a>
                 </div>
-                <div className="item-b">Copy</div>
+                <div onClick={this.copyToClipboard} className="item-b">
+                  Copy
+                </div>
               </div>
 
               <div className="instagram-bio">
@@ -462,7 +483,12 @@ class LinkinBio extends React.Component {
                           className="glyphicon glyphicon-arrow-left"
                         ></span>
                         <h4>Edit Links</h4>
-                        <p>Posted on {this.state.singlePost.timestamp}</p>
+                        <p>
+                          Posted on{" "}
+                          {moment(this.state.singlePost.timestamp).format(
+                            "MMM Do YYYY"
+                          )}
+                        </p>
                       </div>
                       <div className="image-wrapper">
                         <div className="image-box">
