@@ -115,9 +115,9 @@ export function receiveToken(token) {
 
 export function loginUser(creds) {
   return (dispatch) => {
-    localStorage.setItem("dashboardTheme", "black");
+    localStorage.setItem("dashboardTheme", "dark");
     localStorage.setItem("navbarColor", "#fff");
-    localStorage.setItem("navbarType", "static");
+    localStorage.setItem("navbarType", "fixed");
 
     dispatch({
       type: LOGIN_REQUEST,

@@ -59,7 +59,7 @@ class Login extends React.Component {
     const token = params.get("token");
     if (token) {
       this.props.dispatch(receiveToken(token));
-      this.props.dispatch(doInit());
+//      this.props.dispatch(doInit());
     }
   }
 

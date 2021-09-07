@@ -50,6 +50,7 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
+    this.fetchDataTest();
     let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
@@ -63,7 +64,27 @@ class LinkinBio extends React.Component {
       }
       this.fetchInstagramPosts(accessToken);
     }
-    this.fetchTest();
+  }
+
+  async fetchDataTest() {
+    const headers = {
+      "Access-Control-Allow-Origin": "*",
+    };
+    await axios
+      .get("https://www.instagram.com/artisticdenimmills/?__a=1", {headers})
+      .then((response) => {
+        console.log("Success ========>", response);
+      })
+      .catch((error) => {
+        console.log("Error ========>", error);
+      });
+
+    // await axios
+    //   .get(`https://www.instagram.com/roidemo/?__a=1`)
+    //   .then((response) => {
+    //     setData(response.message.data);
+    //   })
+    //   .catch(function (error) {});
   }
 
   //First Request From User
@@ -107,14 +128,7 @@ class LinkinBio extends React.Component {
   }
 
   //First Request From User
-  async fetchTest() {
-    await axios
-      .get(`https://www.instagram.com/artisticdenimmills/?__a=1`)
-      .then((response) => {
-        console.log("instagramapi");
-        console.log(response);
-      });
-  }
+
   //First Request From User
   async updateAccessToken(id, username, accessToken) {
     await axios.put(`/update/usersocial/instagram`, {
