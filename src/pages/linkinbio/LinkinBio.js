@@ -33,7 +33,7 @@ class LinkinBio extends React.Component {
       instagramPosts: null,
       singlePost: "",
       currentPost: "",
-      url: config.visitorUrl + "/" + username,
+      url: config.visitorUrl + "/" ,
       nextPageUrl: "",
       username: username,
       redirectedUrl: "",
@@ -84,7 +84,7 @@ class LinkinBio extends React.Component {
         localStorage.setItem("userInfo", storeUserInformation);
 
         this.updateAccessToken(
-          userInfo.id,
+          userInfo.user_id,
           response.data.username,
           response.data.access_token
         );
@@ -108,10 +108,10 @@ class LinkinBio extends React.Component {
   //First Request From User
 
   //First Request From User
-  async updateAccessToken(id, username, accessToken) {
+  async updateAccessToken(user_id, username, accessToken) {
     await axios.put(`/update/usersocial/instagram`, {
-      id: id,
-      username: username,
+      user_id: user_id,
+      username: username, 
       access_token: accessToken,
     });
   }
@@ -148,7 +148,7 @@ class LinkinBio extends React.Component {
 
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
-    textField.innerText = this.state.url;
+    textField.innerText = this.state.url+this.state.username;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand("copy");
@@ -394,8 +394,8 @@ class LinkinBio extends React.Component {
               <div className="your-copy-link">
                 <div className="item-a">
                   Your Link:{" "}
-                  <a target="_blank" href={this.state.url}>
-                    {this.state.url}
+                  <a target="_blank" href={this.state.url+this.state.username}>
+                    {this.state.url+this.state.username}
                   </a>
                 </div>
                 <div onClick={this.copyToClipboard} className="item-b">

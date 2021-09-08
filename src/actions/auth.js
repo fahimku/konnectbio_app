@@ -130,7 +130,7 @@ export function loginUser(creds) {
         .then((res) => {
           const token = res.data.message.token;
           const userInfo = {
-            id: res.data.message.id,
+            user_id: res.data.message.user_id,
             access_token: res.data.message.access_token,
             username: res.data.message.username,
             email: res.data.message.email,
