@@ -33,7 +33,7 @@ class LinkinBio extends React.Component {
       instagramPosts: null,
       singlePost: "",
       currentPost: "",
-      url: config.hostApi + "/" + username,
+      url: config.visitorUrl + "/" + username,
       nextPageUrl: "",
       username: username,
       redirectedUrl: "",
@@ -182,7 +182,6 @@ class LinkinBio extends React.Component {
       .catch((err) => {
         if (err.response.data.message.type) {
           localStorage.removeItem("access_token");
-
           this.setState({
             error: {
               type: "InstagramAuthFail",

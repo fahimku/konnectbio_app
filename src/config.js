@@ -3,12 +3,14 @@ const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85" : 
 const portApi = process.env.NODE_ENV === "development" ?  '9000' : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const redirectUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://app.konnect.bio";
+const visitorUrl = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://konnect.bio";
 
 export default {
   redirectUrl,
   hostApi,
   portApi,
   baseURLApi,
+  visitorUrl,
   remote: "https://api.konnect.bio",
   isBackend: process.env.REACT_APP_BACKEND,
   auth: {
