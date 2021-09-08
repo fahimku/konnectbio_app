@@ -6,12 +6,15 @@ import {withRouter} from "react-router-dom";
 import {dismissAlert} from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
-import { openSidebar,closeSidebar,changeActiveSidebarItem} from "../../actions/navigation";
+import {
+  openSidebar,
+  closeSidebar,
+  changeActiveSidebarItem,
+} from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
 import {logoutUser} from "../../actions/auth";
 
 class Sidebar extends React.Component {
-  
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -67,7 +70,7 @@ class Sidebar extends React.Component {
           !this.props.sidebarOpened && !this.props.sidebarStatic
             ? s.sidebarClose
             : ""
-        } ${s.sidebarWrapper}`}
+        } ${s.sidebarWrapper} sidebar`}
       >
         <nav
           onMouseEnter={this.onMouseEnter}
@@ -132,12 +135,13 @@ class Sidebar extends React.Component {
               header="Sign Out"
               link="/logout"
               isHeader
-              iconElement={<span className="glyphicon glyphicon-log-out"></span>}
+              iconElement={
+                <span className="glyphicon glyphicon-log-out"></span>
+              }
               // label="Awesome"
               iconName="flaticon-users"
               labelColor="info"
             />
-
           </ul>
         </nav>
       </div>

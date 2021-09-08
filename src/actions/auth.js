@@ -115,13 +115,15 @@ export function receiveToken(token) {
 
 export function loginUser(creds) {
   return (dispatch) => {
-    localStorage.setItem("dashboardTheme", "dark");
+    
+    localStorage.setItem("dashboardTheme", "white");
     localStorage.setItem("navbarColor", "#fff");
     localStorage.setItem("navbarType", "fixed");
 
     dispatch({
       type: LOGIN_REQUEST,
     });
+
     if (creds.email.length > 0 && creds.password.length > 0) {
       axios
         .post("/signin/user", creds)
@@ -131,6 +133,7 @@ export function loginUser(creds) {
             id: res.data.message.id,
             access_token: res.data.message.access_token,
             username: res.data.message.username,
+            email: res.data.message.email,
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));

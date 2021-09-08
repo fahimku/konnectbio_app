@@ -1,18 +1,8 @@
-.Sidebar_sidebarWrapper__3Uxng {
-  border-right: 1px solid;
-}
-/** Remove Setting Bar Floating**/
-
-.Helper_themeHelper__3ZaE7 .Helper_themeHelperBtn__6wGnv,
-.Helper_themeHelper__3ZaE7 .Helper_themeHelperBtn__6wGnv:not(.Helper_active__1l-fc) {
-  display: none;
-}
-
 /** Connect Page */
 
 .connect-page .social-auth {
   max-width: 500px !important;
-  border:1px solid black;
+  border: 1px solid black;
 }
 
 .connect-page .widget-auth .social-buttons .social-button {
@@ -102,9 +92,14 @@ body::-webkit-scrollbar-thumb {
 
 /*End Scroll Css */
 
-.hidden{
-  display:none;
+.hidden {
+  display: none;
 }
+
 .show {
-  display:block;
+  display: block;
+}
+
+.sidebar {
+  border-right: 1px solid #c8c8c8;
 }

@@ -54,15 +54,12 @@ class Layout extends React.Component {
 
 
   componentDidMount() {
-    const staticSidebar = JSON.parse(localStorage.getItem('staticSidebar'));
-    if (staticSidebar) {
-      this.props.dispatch(toggleSidebar());
-    } else if (this.props.sidebarOpened) {
+
       setTimeout(() => {
         this.props.dispatch(closeSidebar());
         this.props.dispatch(changeActiveSidebarItem(null));
       }, 2500);
-    }
+    
 
     window.addEventListener('resize', this.handleResize.bind(this));
   }

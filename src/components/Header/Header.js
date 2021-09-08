@@ -60,7 +60,7 @@ class Header extends React.Component {
       menuOpen: false,
       notificationsOpen: false,
       notificationsTabSelected: 1,
-      focus: false,
+      focus: true,
       showNewMessage: false,
       hideMessage: true,
       run: false,
@@ -92,6 +92,8 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
+    
+    this.toggleSidebar()
     if (window.location.href.includes('main')) {
       this.setState({ run: false })
     }
@@ -165,7 +167,9 @@ class Header extends React.Component {
     const user = this.props.currentUser;
     const avatar = user && user.avatar && user.avatar.length && user.avatar[0].publicUrl;
     const firstUserLetter = user && (user.firstName|| user.email)[0].toUpperCase();
-  {/*  <Navbar className={`${s.root} d-print-none ${navbarType === NavbarTypes.FLOATING ? s.navbarFloatingType : ''}`}  style={{zIndex: !openUsersList ? 100 : 0}}>
+  
+    return (<>
+       {/* <Navbar className={`${s.root} d-print-none ${navbarType === NavbarTypes.FLOATING ? s.navbarFloatingType : ''}`}  style={{zIndex: !openUsersList ? 100 : 0}}>
         <Joyride
           callback={this.handleJoyrideCallback}
           continuous={true}
@@ -262,7 +266,7 @@ class Header extends React.Component {
 
         </Nav>
 
-        {/* <Form className={`d-sm-down-none ml-5 ${s.headerSearchInput}`} inline>
+         <Form className={`d-sm-down-none ml-5 ${s.headerSearchInput}`} inline>
           <FormGroup>
             <InputGroup onFocus={this.toggleFocus} onBlur={this.toggleFocus} className={
               cx('input-group-no-border', {'focus' : !!focus})
@@ -319,8 +323,8 @@ class Header extends React.Component {
             </DropdownMenu>
           </Dropdown>
         </Nav>
-      </Navbar > */}
-    return (<></>);
+      </Navbar >  */}
+    </>);
   }
 }
 

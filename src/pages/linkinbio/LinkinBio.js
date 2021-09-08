@@ -12,7 +12,6 @@ import {
   NavLink,
 } from "reactstrap";
 import {Link} from "react-router-dom";
-
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import classnames from "classnames";
@@ -50,7 +49,6 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-    this.fetchDataTest();
     let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
@@ -66,39 +64,19 @@ class LinkinBio extends React.Component {
     }
   }
 
-  async fetchDataTest() {
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-    };
-    await axios
-      .get("https://www.instagram.com/artisticdenimmills/?__a=1", {headers})
-      .then((response) => {
-        console.log("Success ========>", response);
-      })
-      .catch((error) => {
-        console.log("Error ========>", error);
-      });
-
-    // await axios
-    //   .get(`https://www.instagram.com/roidemo/?__a=1`)
-    //   .then((response) => {
-    //     setData(response.message.data);
-    //   })
-    //   .catch(function (error) {});
-  }
-
   //First Request From User
   async fetchInstagramPostsFirstTime(token) {
+    const userInformation = localStorage.getItem("userInfo");
+    const parseUserInformation = JSON.parse(userInformation);
+
     await axios
-      .get(`/social/data/${token}`)
+      .get(`/social/data/${token}?email=${parseUserInformation.email}`)
       .then((response) => {
         //Set Access Token
         localStorage.setItem("access_token", response.data.access_token);
 
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         //    Retrieves the string and converts it to a JavaScript object
-        const userInformation = localStorage.getItem("userInfo");
-        const parseUserInformation = JSON.parse(userInformation);
         // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
         parseUserInformation.username = response.data.username;
         //Store User Information
@@ -148,7 +126,7 @@ class LinkinBio extends React.Component {
       })
       .catch((err) => {
         if (err.response.data.message.type) {
-          //    Retrieves the string and converts it to a JavaScript object
+          //  Retrieves the string and converts it to a JavaScript object
           const userInformation = localStorage.getItem("userInfo");
           const parseUserInformation = JSON.parse(userInformation);
           // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
@@ -370,32 +348,32 @@ class LinkinBio extends React.Component {
   }
 
   render() {
-    const instagramPosts = [];
-    if (this.state.instagramPosts) {
-      for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
-        instagramPosts.push(
-          <Col key={i} xs="4">
-            <img
-              className={
-                this.state.instagramPosts.data[i].linked ||
-                this.state.instagramPosts.data[i].select
-                  ? "linked"
-                  : ""
-              }
-              key={i}
-              id={"img" + i}
-              onClick={(ev) => this.selectPost(true, i)}
-              src={this.state.instagramPosts.data[i].media_url}
-            />
-            {this.state.instagramPosts.data[i].linked ? (
-              <span>LINKED</span>
-            ) : (
-              ""
-            )}
-          </Col>
-        );
+      const instagramPosts = [];
+      if (this.state.instagramPosts) {
+        for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
+          instagramPosts.push(
+            <Col key={i} xs="4">
+              <img
+                className={
+                  this.state.instagramPosts.data[i].linked ||
+                  this.state.instagramPosts.data[i].select
+                    ? "linked"
+                    : ""
+                }
+                key={i}
+                id={"img" + i}
+                onClick={(ev) => this.selectPost(true, i)}
+                src={this.state.instagramPosts.data[i].media_url}
+              />
+              {this.state.instagramPosts.data[i].linked ? (
+                <span>LINKED</span>
+              ) : (
+                ""
+              )}
+            </Col>
+          );
+        }
       }
-    }
     return (
       <div className="linkin-bio">
         <div className="header">
