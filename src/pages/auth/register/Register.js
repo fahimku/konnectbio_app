@@ -41,10 +41,10 @@ class Register extends React.Component {
     await this.getCountries();
   }
 
-  async getCountries(ip) {
+  async getCountries() {
     await axios
       .post(`/common/receive/countries`, {
-        ip: ip,
+        
       })
       .then((response) => {
         const selectCountries = [];
