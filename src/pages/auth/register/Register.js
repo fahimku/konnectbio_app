@@ -36,9 +36,9 @@ class Register extends React.Component {
   }
 
   async componentDidMount() {
-    const visitor = await this.visitorData();
-    const ip = visitor.query;
-    await this.getCountries(ip);
+    // const visitor = await this.visitorData();
+    // const ip = visitor.query;
+    await this.getCountries();
   }
 
   async getCountries(ip) {
@@ -59,13 +59,13 @@ class Register extends React.Component {
       });
   }
 
-  async visitorData() {
-    let data = [];
-    await axios("http://ip-api.com/json").then((response) => {
-      data.push(response.data);
-    });
-    return data[0];
-  }
+  // async visitorData() {
+  //   let data = [];
+  //   await axios("http://ip-api.com/json").then((response) => {
+  //     data.push(response.data);
+  //   });
+  //   return data[0];
+  // }
 
   changeName(event) {
     this.setState({name: event.target.value});
