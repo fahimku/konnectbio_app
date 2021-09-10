@@ -28,11 +28,7 @@ class Connect extends React.Component {
   }
 
   async getInstagramUrl() {
-    await axios
-      .get(`/social/url/instagram`)
-      .then((response) => {
-        this.setState({url: response.data});
-      })
+    await axios.post(`/social/ig/url/instagram`)
       .then((response) => {
         this.setState({url: response.data});
       })

@@ -1,11 +1,12 @@
+import axios from "axios";
 import React from "react";
 import PropTypes from "prop-types";
 import {withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
-import {registerUser, authError, loginUser} from "../../../actions/auth";
-import microsoft from "../../../images/microsoft.png";
+import {registerUser, authError} from "../../../actions/auth";
+import Select from "react-select";
 
 class Register extends React.Component {
   static propTypes = {
@@ -18,19 +19,52 @@ class Register extends React.Component {
     this.state = {
       name: "",
       email: "",
+      countries: "",
       country: "",
       city: "",
       password: "",
       confirmPassword: "",
     };
-
     this.doRegister = this.doRegister.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
+    this.changeCountry = this.changeCountry.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.changeConfirmPassword = this.changeConfirmPassword.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
     this.isPasswordValid = this.isPasswordValid.bind(this);
+  }
+
+  async componentDidMount() {
+    const visitor = await this.visitorData();
+    const ip = visitor.query;
+    await this.getCountries(ip);
+  }
+
+  async getCountries(ip) {
+    await axios
+      .post(`/common/receive/countries`, {
+        ip: ip,
+      })
+      .then((response) => {
+        const selectCountries = [];
+        const countries = response.data.message;
+        countries.map(({name}) =>
+          selectCountries.push({value: name, label: name})
+        );
+        this.setState({countries: selectCountries});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  async visitorData() {
+    let data = [];
+    await axios("http://ip-api.com/json").then((response) => {
+      data.push(response.data);
+    });
+    return data[0];
   }
 
   changeName(event) {
@@ -39,6 +73,10 @@ class Register extends React.Component {
 
   changeEmail(event) {
     this.setState({email: event.target.value});
+  }
+
+  changeCountry(event) {
+    this.setState({country: event.value});
   }
 
   changePassword(event) {
@@ -77,7 +115,7 @@ class Register extends React.Component {
         registerUser({
           name: this.state.name,
           email: this.state.email,
-          country: "pakistan",
+          country: this.state.country,
           city: "karachi",
           password: this.state.password,
         })
@@ -98,9 +136,6 @@ class Register extends React.Component {
             className="widget-auth mx-auto"
             title={<h3 className="mt-0">Create an account</h3>}
           >
-            {/* <p className="widget-auth-info">
-              Free forever. No credit card required.
-            </p> */}
             <form className="mt" onSubmit={this.doRegister}>
               {this.props.errorMessage && (
                 <Alert className="alert-sm" color="danger">
@@ -127,6 +162,13 @@ class Register extends React.Component {
                   required
                   name="email"
                   placeholder="Email"
+                />
+              </div>
+              <div className="form-group">
+                <Select
+                  onChange={this.changeCountry}
+                  placeholder="Select Country"
+                  options={this.state.countries}
                 />
               </div>
               <div className="form-group">
@@ -160,18 +202,6 @@ class Register extends React.Component {
               >
                 {this.props.isFetching ? "Loading..." : "Register"}
               </Button>
-              {/*<p className="widget-auth-info">or sign up with</p>
-                            <div className="social-buttons">
-                                <Button onClick={this.googleLogin} color="primary" className="social-button mb-2">
-                                    <i className="social-icon social-google"/>
-                                    <p className="social-text">GOOGLE</p>
-                                </Button>
-                                <Button onClick={this.microsoftLogin} color="success" className="social-button">
-                                    <i className="social-icon social-microsoft"
-                                       style={{backgroundImage: `url(${microsoft})`}}/>
-                                    <p className="social-text">MICROSOFT</p>
-                                </Button>
-                            </div> */}
             </form>
             <p className="widget-auth-info">
               Already have the account? Login now!
@@ -181,9 +211,6 @@ class Register extends React.Component {
             </Link>
           </Widget>
         </Container>
-        {/* <footer className="auth-footer">
-                    {new Date().getFullYear()} &copy; Sing App - React Admin Dashboard Template. By <a rel="noopener noreferrer" target="_blank" href="https://flatlogic.com">Flatlogic</a>
-                </footer> */}
       </div>
     );
   }

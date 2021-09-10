@@ -56,7 +56,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     const params = new URLSearchParams(this.props.location.search);
-    const token = params.get("token");
+    const token = localStorage.getItem('token');
     if (token) {
       this.props.dispatch(receiveToken(token));
 //      this.props.dispatch(doInit());

@@ -33,7 +33,7 @@ class LinkinBio extends React.Component {
       instagramPosts: null,
       singlePost: "",
       currentPost: "",
-      url: config.visitorUrl + "/" ,
+      url: config.visitorURL + "/",
       nextPageUrl: "",
       username: username,
       redirectedUrl: "",
@@ -52,7 +52,6 @@ class LinkinBio extends React.Component {
     let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
-
     if (this.props.match.params.code && !accessToken && !savedAccessToken) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
@@ -70,13 +69,14 @@ class LinkinBio extends React.Component {
     const parseUserInformation = JSON.parse(userInformation);
 
     await axios
-      .get(`/social/data/${token}?email=${parseUserInformation.email}`)
+      .post(`/social/ig/data/${token}`, {
+        email: parseUserInformation.email,
+      })
       .then((response) => {
         //Set Access Token
         localStorage.setItem("access_token", response.data.access_token);
-
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        //    Retrieves the string and converts it to a JavaScript object
+        // Retrieves the string and converts it to a JavaScript object
         // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
         parseUserInformation.username = response.data.username;
         //Store User Information
@@ -109,16 +109,18 @@ class LinkinBio extends React.Component {
 
   //First Request From User
   async updateAccessToken(user_id, username, accessToken) {
-    await axios.put(`/update/usersocial/instagram`, {
+    await axios.put(`/users/revise/ig/instagram`, {
       user_id: user_id,
-      username: username, 
+      username: username,
       access_token: accessToken,
     });
   }
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios
-      .get(`/social/media/${token}?username=${this.state.username}`)
+      .post(`/social/ig/media/${token}`, {
+        username: this.state.username,
+      })
       .then((response) => {
         this.setState({instagramPosts: response.data});
         if (response.data)
@@ -146,22 +148,11 @@ class LinkinBio extends React.Component {
       });
   }
 
-  copyToClipboard = (e) => {
-    let textField = document.createElement("textarea");
-    textField.innerText = this.state.url+this.state.username;
-    document.body.appendChild(textField);
-    textField.select();
-    document.execCommand("copy");
-    textField.remove();
-    toast.success("Copied to Clipboard!");
-  };
-
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url, username) {
     await axios
-      .post("/social/next/media", {
+      .post(`/social/ig/nextMedia/${username}`, {
         url: url,
-        username: username,
       })
       .then((response) => {
         let instagramPosts = [];
@@ -200,7 +191,7 @@ class LinkinBio extends React.Component {
       }),
       async () => {
         await axios
-          .post(`/create/posts`, {
+          .post(`/posts/reserve`, {
             id: this.state.currentPost.id,
             caption: this.state.currentPost.caption,
             media_url: this.state.currentPost.media_url,
@@ -234,7 +225,7 @@ class LinkinBio extends React.Component {
     if (url == "") this.deletePost(id);
     else
       await axios
-        .put(`/update/posts/${id}`, {
+        .put(`/posts/revise/${id}`, {
           redirected_url: url,
         })
         .then((response) => {
@@ -253,15 +244,13 @@ class LinkinBio extends React.Component {
   };
 
   deletePost = async (id) => {
-    await axios.delete(`/delete/posts/${id}`).then((response) => {
+    await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
       );
       let currentPost = this.state.singlePost;
       currentPost.linked = false;
-      let instagramPosts = JSON.parse(
-        JSON.stringify(this.state.instagramPosts)
-      );
+      let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
@@ -346,33 +335,43 @@ class LinkinBio extends React.Component {
     this.setState({error: error});
   }
 
+  copyToClipboard = (e) => {
+    let textField = document.createElement("textarea");
+    textField.innerText = this.state.url + this.state.username;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    toast.success("Copied to Clipboard!");
+  };
+
   render() {
-      const instagramPosts = [];
-      if (this.state.instagramPosts) {
-        for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
-          instagramPosts.push(
-            <Col key={i} xs="4">
-              <img
-                className={
-                  this.state.instagramPosts.data[i].linked ||
-                  this.state.instagramPosts.data[i].select
-                    ? "linked"
-                    : ""
-                }
-                key={i}
-                id={"img" + i}
-                onClick={(ev) => this.selectPost(true, i)}
-                src={this.state.instagramPosts.data[i].media_url}
-              />
-              {this.state.instagramPosts.data[i].linked ? (
-                <span>LINKED</span>
-              ) : (
-                ""
-              )}
-            </Col>
-          );
-        }
+    const instagramPosts = [];
+    if (this.state.instagramPosts) {
+      for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
+        instagramPosts.push(
+          <Col key={i} xs="4">
+            <img
+              className={
+                this.state.instagramPosts.data[i].linked ||
+                this.state.instagramPosts.data[i].select
+                  ? "linked"
+                  : ""
+              }
+              key={i}
+              id={"img" + i}
+              onClick={(ev) => this.selectPost(true, i)}
+              src={this.state.instagramPosts.data[i].media_url}
+            />
+            {this.state.instagramPosts.data[i].linked ? (
+              <span>LINKED</span>
+            ) : (
+              ""
+            )}
+          </Col>
+        );
       }
+    }
     return (
       <div className="linkin-bio">
         <div className="header">
@@ -394,8 +393,11 @@ class LinkinBio extends React.Component {
               <div className="your-copy-link">
                 <div className="item-a">
                   Your Link:{" "}
-                  <a target="_blank" href={this.state.url+this.state.username}>
-                    {this.state.url+this.state.username}
+                  <a
+                    target="_blank"
+                    href={this.state.url + this.state.username}
+                  >
+                    {this.state.url + this.state.username}
                   </a>
                 </div>
                 <div onClick={this.copyToClipboard} className="item-b">
