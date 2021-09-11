@@ -1,12 +1,12 @@
 import axios from "axios";
 import React from "react";
+import Select from "react-select";
 import PropTypes from "prop-types";
 import {withRouter, Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
-import Select from "react-select";
 
 class Register extends React.Component {
   static propTypes = {
@@ -21,10 +21,12 @@ class Register extends React.Component {
       email: "",
       countries: "",
       country: "",
+
       city: "",
       password: "",
       confirmPassword: "",
     };
+
     this.doRegister = this.doRegister.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
@@ -36,36 +38,28 @@ class Register extends React.Component {
   }
 
   async componentDidMount() {
-    // const visitor = await this.visitorData();
-    // const ip = visitor.query;
     await this.getCountries();
   }
 
-  async getCountries() {
+  getCountries = async () => {
     await axios
-      .post(`/common/receive/countries`, {
-        
-      })
+      .post(`/common/receive/countries`)
       .then((response) => {
         const selectCountries = [];
+
         const countries = response.data.message;
-        countries.map(({name}) =>
-          selectCountries.push({value: name, label: name})
-        );
+        countries.map(({name, selected}) => {
+          selectCountries.push({value: name, label: name});
+          if (selected) {
+            this.setState({country: name});
+          }
+        });
         this.setState({countries: selectCountries});
       })
       .catch(function (error) {
         console.log(error);
       });
-  }
-
-  // async visitorData() {
-  //   let data = [];
-  //   await axios("http://ip-api.com/json").then((response) => {
-  //     data.push(response.data);
-  //   });
-  //   return data[0];
-  // }
+  };
 
   changeName(event) {
     this.setState({name: event.target.value});
@@ -165,11 +159,19 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <Select
-                  onChange={this.changeCountry}
-                  placeholder="Select Country"
-                  options={this.state.countries}
-                />
+                {this.state.country ? (
+                  <Select
+                    onChange={this.changeCountry}
+                    placeholder="Select Country"
+                    options={this.state.countries}
+                    defaultValue={{
+                      label: this.state.country,
+                      value: this.state.country,
+                    }}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
               <div className="form-group">
                 <input

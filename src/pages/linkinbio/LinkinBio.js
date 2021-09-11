@@ -150,8 +150,7 @@ class LinkinBio extends React.Component {
 
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url, username) {
-    await axios
-      .post(`/social/ig/nextMedia/${username}`, {
+    await axios.post(`/social/ig/nextMedia/${username}`, {
         url: url,
       })
       .then((response) => {
@@ -250,7 +249,9 @@ class LinkinBio extends React.Component {
       );
       let currentPost = this.state.singlePost;
       currentPost.linked = false;
-      let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
+      let instagramPosts = JSON.parse(
+        JSON.stringify(this.state.instagramPosts)
+      );
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
