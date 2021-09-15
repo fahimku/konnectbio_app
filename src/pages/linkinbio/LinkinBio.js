@@ -106,8 +106,6 @@ class LinkinBio extends React.Component {
   }
 
   //First Request From User
-
-  //First Request From User
   async updateAccessToken(user_id, username, accessToken) {
     await axios.put(`/users/revise/ig/instagram`, {
       user_id: user_id,
@@ -150,7 +148,8 @@ class LinkinBio extends React.Component {
 
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url, username) {
-    await axios.post(`/social/ig/nextMedia/${username}`, {
+    await axios
+      .post(`/social/ig/nextMedia/${username}`, {
         url: url,
       })
       .then((response) => {
@@ -194,6 +193,7 @@ class LinkinBio extends React.Component {
             id: this.state.currentPost.id,
             caption: this.state.currentPost.caption,
             media_url: this.state.currentPost.media_url,
+            media_type: this.state.currentPost.media_type,
             timestamp: this.state.currentPost.timestamp,
             redirected_url: this.state.redirectedUrl,
             username: this.state.currentPost.username,
@@ -350,27 +350,60 @@ class LinkinBio extends React.Component {
     const instagramPosts = [];
     if (this.state.instagramPosts) {
       for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
-        instagramPosts.push(
-          <Col key={i} xs="4">
-            <img
-              className={
-                this.state.instagramPosts.data[i].linked ||
-                this.state.instagramPosts.data[i].select
-                  ? "linked"
-                  : ""
-              }
-              key={i}
-              id={"img" + i}
-              onClick={(ev) => this.selectPost(true, i)}
-              src={this.state.instagramPosts.data[i].media_url}
-            />
-            {this.state.instagramPosts.data[i].linked ? (
-              <span>LINKED</span>
-            ) : (
-              ""
-            )}
-          </Col>
-        );
+        if (this.state.instagramPosts.data[i].media_type == "IMAGE") {
+          instagramPosts.push(
+            <Col key={i} xs="4">
+              <img
+                className={
+                  this.state.instagramPosts.data[i].linked ||
+                  this.state.instagramPosts.data[i].select
+                    ? "linked"
+                    : ""
+                }
+                key={i}
+                id={"img" + i}  
+                onClick={(ev) => this.selectPost(true, i)}
+                src={this.state.instagramPosts.data[i].media_url}
+              />
+              {this.state.instagramPosts.data[i].linked ? (
+                <span>LINKED</span>
+              ) : (
+                ""
+              )}
+            </Col>
+          );
+        } else {
+          instagramPosts.push(
+            <Col key={i} xs="4">
+              <video
+                oncontextmenu="return false;"
+                id="myVideo"
+                autoplay
+                controls
+                controlsList="nodownload"
+                className={
+                  this.state.instagramPosts.data[i].linked ||
+                  this.state.instagramPosts.data[i].select
+                    ? "linked"
+                    : ""
+                }
+                key={i}
+                id={"img" + i}
+                onClick={(ev) => this.selectPost(true, i)}
+              >
+                <source
+                  src={this.state.instagramPosts.data[i].media_url}
+                  type="video/mp4"
+                ></source>
+              </video>
+              {this.state.instagramPosts.data[i].linked ? (
+                <span>LINKED</span>
+              ) : (
+                ""
+              )}
+            </Col>
+          );
+        }
       }
     }
     return (
@@ -388,8 +421,8 @@ class LinkinBio extends React.Component {
           </div>
         </div>
         {/* Tabs */}
-        <Row>
-          <Col md="6" xs="12">
+        <Row className="main-container">
+          <Col className="left-column" md="6" xs="12">
             <div className="left-top-bar">
               <div className="your-copy-link">
                 <div className="item-a">
@@ -423,7 +456,7 @@ class LinkinBio extends React.Component {
                 </div>
               ) : (
                 <div>
-                  <div className="visit-website">Visit Website</div>
+                  {/* <div className="visit-website">Visit Website</div> */}
                   <div ref={this.paneDidMount} className="mobile-gallery">
                     <Row>{instagramPosts}</Row>
                   </div>
@@ -486,7 +519,22 @@ class LinkinBio extends React.Component {
                       </div>
                       <div className="image-wrapper">
                         <div className="image-box">
-                          <img src={`${this.state.singlePost.media_url}`} />
+                          {this.state.singlePost.media_type == "IMAGE" ? (
+                            <img src={`${this.state.singlePost.media_url}`} />
+                          ) : (
+                            <video
+                              oncontextmenu="return false;"
+                              id="myVideo"
+                              autoplay
+                              controls
+                              controlsList="nodownload"
+                            >
+                              <source
+                                src={`${this.state.singlePost.media_url}`}
+                                type="video/mp4"
+                              ></source>
+                            </video>
+                          )}
                         </div>
                         <form onSubmit={this.submited}>
                           <div className="image-edit-links">

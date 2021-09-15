@@ -84,6 +84,7 @@ class Sidebar extends React.Component {
           </header>
           <ul className={s.nav}>
             <LinksGroup
+              className="sidebar-nav-links"
               header="Media Library"
               link="/app/extra/gallery"
               isHeader
@@ -92,7 +93,9 @@ class Sidebar extends React.Component {
               iconName="flaticon-users"
               labelColor="info"
             />
+
             <LinksGroup
+              className="sidebar-nav-links"
               header="Conversions"
               link="/app/chat"
               isHeader
@@ -102,8 +105,9 @@ class Sidebar extends React.Component {
               labelColor="info"
             />
             <LinksGroup
+              className="sidebar-nav-links"
               header="Analytics"
-              link="/app/main/analytics"
+              link="/app/analysis"
               isHeader
               iconElement={<span className="fa fa-bar-chart-o"></span>}
               // label="Awesome"
@@ -111,6 +115,7 @@ class Sidebar extends React.Component {
               labelColor="info"
             />
             <LinksGroup
+              className="sidebar-nav-links"
               header="Collect Media"
               link="/app/tables/static"
               isHeader
@@ -122,6 +127,7 @@ class Sidebar extends React.Component {
               labelColor="info"
             />
             <LinksGroup
+              className="sidebar-nav-links"
               header="Konnect.bio"
               link="/app/linkinbio"
               isHeader
@@ -132,6 +138,7 @@ class Sidebar extends React.Component {
             />
 
             <LinksGroup
+              className="sidebar-nav-links"
               header="Sign Out"
               link="/logout"
               isHeader

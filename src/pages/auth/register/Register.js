@@ -20,8 +20,7 @@ class Register extends React.Component {
       name: "",
       email: "",
       countries: "",
-      country: "",
-
+      country: "pakistan",
       city: "",
       password: "",
       confirmPassword: "",
@@ -46,12 +45,11 @@ class Register extends React.Component {
       .post(`/common/receive/countries`)
       .then((response) => {
         const selectCountries = [];
-
         const countries = response.data.message;
-        countries.map(({name, selected}) => {
-          selectCountries.push({value: name, label: name});
+        countries.map(({name,code1,selected}) => {
+          selectCountries.push({value: code1, label: name});
           if (selected) {
-            this.setState({country: name});
+            this.setState({country: code1});
           }
         });
         this.setState({countries: selectCountries});

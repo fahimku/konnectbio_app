@@ -15,7 +15,9 @@ import HighchartsReact from "highcharts-react-official";
 import mock from "./mock";
 import s from "./Analitycs.module.scss";
 import {receiveDataRequest} from "../../actions/analytics";
+
 class Analytics extends Component {
+
   static propTypes = {
     visits: PropTypes.any,
     performance: PropTypes.any,
@@ -47,6 +49,7 @@ class Analytics extends Component {
         }),
       },
     ];
+
     return {
       chart: {
         type: "pie",
@@ -98,8 +101,6 @@ class Analytics extends Component {
   };
 
   componentDidMount() {
-   
-
     this.props.dispatch(receiveDataRequest());
   }
 

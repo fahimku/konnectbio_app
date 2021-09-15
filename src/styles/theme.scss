@@ -2,6 +2,7 @@
  * Customized version of bootstrap using variables from _variables.scss.
  * This file is loaded via separate loader thus allowing to use original bootstrap classes (e.g. .btn-default) through out the app.
  */
+ 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700,800');
 @import '../../node_modules/bootstrap/scss/functions';
 @import 'variables';
@@ -29,5 +30,6 @@
 @import 'overrides';
 @import 'general';
 @import 'utils';
-@import 'custom';
+@import 'analytics';
 @import 'linkinbio';
+@import 'custom';

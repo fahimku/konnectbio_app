@@ -15,8 +15,6 @@ import Select from 'react-select';
 import MaskedInput from 'react-maskedinput';
 import Datetime from 'react-datetime';
 import { select2CountriesData, select2ShipmentData, cardTypesData } from './data';
-
-
 import InputValidation from '../../../components/InputValidation/InputValidation';
 import Widget from '../../../components/Widget';
 import s from './Wizard.module.scss';

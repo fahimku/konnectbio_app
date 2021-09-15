@@ -1,0 +1,32 @@
+.analytics-page {
+    .nav-tabs {
+        background: white;
+        border-top: 1px solid #c8c8c8;
+        border-bottom: 1px solid #c8c8c8;
+    }
+
+    .nav-tabs>.nav-item {
+        font-size: 14px;
+
+        font-weight: bold;
+        flex-grow: 0 !important;
+        text-align: left;
+        border-bottom: none;
+
+        .nav-link.active {
+            border: none !important;
+            color: teal;
+        }
+
+        .nav-link {
+            font-family: unset;
+            background: none !important;
+
+        }
+    }
+
+
+
+
+
+}

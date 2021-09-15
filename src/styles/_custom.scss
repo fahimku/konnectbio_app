@@ -1,5 +1,25 @@
 /** Connect Page */
 
+@font-face {
+  font-family: "Segoe UI";
+  src: url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.eot");
+  /* IE9*/
+  src: url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.eot?#iefix") format("embedded-opentype"),
+    /* IE6-IE8 */
+    url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.woff2") format("woff2"),
+    /* chrome、firefox */
+    url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.woff") format("woff"),
+    /* chrome、firefox */
+    url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.ttf") format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    url("../fonts/segoui/623c7118249e082fe87a78e08506cb4b.svg#Segoe UI") format("svg");
+  /* iOS 4.1- */
+}
+
+body {
+  font-family: "Segoe UI" !important;
+}
+
 .connect-page .social-auth {
   max-width: 500px !important;
   border: 1px solid black;
@@ -100,6 +120,35 @@ body::-webkit-scrollbar-thumb {
   display: block;
 }
 
+/**Handling Video*/
+video::-internal-media-controls-download-button {
+  display: none;
+}
+
+video::-webkit-media-controls-enclosure {
+  display: none;
+}
+
+video::-webkit-media-controls-panel {
+  width: calc(100% + 30px);
+  display:none;
+}
+
 .sidebar {
   border-right: 1px solid #c8c8c8;
+}
+
+.sidebar-nav-links a {
+  font-size: 18px;
+  line-height: 50px;
+  padding-top: -3px;
+  border-top: 1px solid #c8c8c8 !important;
+
+  span {
+    font-size: 20px;
+  }
+}
+
+hr {
+  border-top: 1px solid black;
 }

@@ -1,6 +1,6 @@
-//const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85" : "https://api.konnect.bio";
-const hostApi = "https://api.konnect.bio";
-const portApi = process.env.NODE_ENV === "development" ?  '' : "";
+const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85" : "https://api.konnect.bio";
+//const hostApi = "https://api.konnect.bio";
+const portApi = process.env.NODE_ENV === "development" ?  '9000' : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const redirectURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://app.konnect.bio";
 const visitorURL = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://konnect.bio";
@@ -18,14 +18,24 @@ export default {
     password: '123'
   },
   endPoint: {
-    login: '',
-    register: '',
-    forgotPassword:'',
+    global: {
+      countries: 'common/receive/countries',
+      connect:'social/ig/url/instagram',
+   }, 
+  auth: {
+    login: 'signin/user',
+    register: 'signup/user',
+    forgotPassword: '',
+    },
     posts: {
       create: '',
       update: '',
       delete: '',
       getAll: '',
+    },
+    analytics: {
+      profileViews: '',
+      postClicks:'',
     },
     getAllCountries:''
   },
