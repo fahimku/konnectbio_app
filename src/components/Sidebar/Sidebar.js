@@ -86,7 +86,8 @@ class Sidebar extends React.Component {
             <LinksGroup
               className="sidebar-nav-links"
               header="Media Library"
-              link="/app/extra/gallery"
+              // link="/app/extra/gallery"
+              link="/app/extra/coupons"
               isHeader
               iconElement={<span className="glyphicon glyphicon-picture" />}
               // label="Awesome"
@@ -96,10 +97,10 @@ class Sidebar extends React.Component {
 
             <LinksGroup
               className="sidebar-nav-links"
-              header="Conversions"
-              link="/app/chat"
+              header="Coupon"
+              link="/app/extra/coupon"
               isHeader
-              iconElement={<span className="fa fa-money"></span>}
+              iconElement={<span className="fa fa-gift"></span>}
               // label="Awesome"
               iconName="flaticon-users"
               labelColor="info"
@@ -117,7 +118,8 @@ class Sidebar extends React.Component {
             <LinksGroup
               className="sidebar-nav-links"
               header="Collect Media"
-              link="/app/tables/static"
+              // link="/app/tables/static"
+              link="/app/extra/couponss"
               isHeader
               iconElement={
                 <span className="glyphicon glyphicon-download-alt"></span>
