@@ -191,7 +191,7 @@ export function resetPassword(token, password) {
         .catch((err) => {
           dispatch(authError(err.response.data));
         });
-    }
+     }
   };
 }
 

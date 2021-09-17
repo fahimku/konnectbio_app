@@ -79,7 +79,7 @@ class Sidebar extends React.Component {
         >
           <header className={s.logo}>
             <a href="#">
-              <span className={s.logoStyle}>KONNECT BIO</span>{" "}
+              <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
           </header>
           <ul className={s.nav}>

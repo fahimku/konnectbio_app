@@ -20,6 +20,11 @@ class Register extends React.Component {
       name: "",
       email: "",
       countries: "",
+      userType: "",
+      accountTypes: [
+        {value: "Influencer", label: "Influencer"},
+        {value: "Brand", label: "Brand"},
+      ],
       country: "pakistan",
       city: "",
       password: "",
@@ -29,7 +34,9 @@ class Register extends React.Component {
     this.doRegister = this.doRegister.bind(this);
     this.changeName = this.changeName.bind(this);
     this.changeEmail = this.changeEmail.bind(this);
+    this.changeUserType = this.changeUserType.bind(this);
     this.changeCountry = this.changeCountry.bind(this);
+    this.changeCity = this.changeCity.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.changeConfirmPassword = this.changeConfirmPassword.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
@@ -46,7 +53,7 @@ class Register extends React.Component {
       .then((response) => {
         const selectCountries = [];
         const countries = response.data.message;
-        countries.map(({name,code1,selected}) => {
+        countries.map(({name, code1, selected}) => {
           selectCountries.push({value: code1, label: name});
           if (selected) {
             this.setState({country: code1});
@@ -67,8 +74,16 @@ class Register extends React.Component {
     this.setState({email: event.target.value});
   }
 
+  changeUserType(event) {
+    this.setState({userType: event.value});
+  }
+
   changeCountry(event) {
     this.setState({country: event.value});
+  }
+
+  changeCity(event) {
+    this.setState({city: event.target.value});
   }
 
   changePassword(event) {
@@ -100,18 +115,23 @@ class Register extends React.Component {
 
   doRegister(e) {
     e.preventDefault();
-    if (!this.isPasswordValid()) {
-      this.checkPassword();
-    } else {
-      this.props.dispatch(
-        registerUser({
-          name: this.state.name,
-          email: this.state.email,
-          country: this.state.country,
-          city: "karachi",
-          password: this.state.password,
-        })
-      );
+    if (this.state.userType == "")
+      this.props.dispatch(authError("Please Select Account Type"));
+    else {
+      if (!this.isPasswordValid()) {
+        this.checkPassword();
+      } else {
+        this.props.dispatch(
+          registerUser({
+            name: this.state.name,
+            email: this.state.email,
+            user_type: this.state.userType,
+            country: this.state.country,
+            city: this.state.city,
+            password: this.state.password,
+          })
+        );
+      }
     }
   }
 
@@ -157,6 +177,18 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-group">
+                <Select
+                  rules={{required: "Please select an option"}}
+                  onChange={this.changeUserType}
+                  placeholder="Select Account Type"
+                  options={this.state.accountTypes}
+                  // defaultValue={{
+                  //   label: this.state.country,
+                  //   value: this.state.country,
+                  // }}
+                />
+              </div>
+              <div className="form-group">
                 {this.state.country ? (
                   <Select
                     onChange={this.changeCountry}
@@ -170,6 +202,17 @@ class Register extends React.Component {
                 ) : (
                   ""
                 )}
+              </div>
+              <div className="form-group">
+                <input
+                  className="form-control"
+                  value={this.state.city}
+                  onChange={this.changeCity}
+                  type="text"
+                  required
+                  name="city"
+                  placeholder="City"
+                />
               </div>
               <div className="form-group">
                 <input
@@ -222,5 +265,4 @@ function mapStateToProps(state) {
     errorMessage: state.auth.errorMessage,
   };
 }
-
 export default withRouter(connect(mapStateToProps)(Register));

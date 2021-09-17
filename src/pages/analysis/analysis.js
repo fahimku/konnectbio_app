@@ -10,20 +10,26 @@ import {
   Button,
 } from "reactstrap";
 import HighCharts from "./highcharts/HighCharts";
+import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
+import {connect} from "react-redux";
 import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 
 class Analysis extends React.Component {
   constructor(props) {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let username = userInfo.username;
     super(props);
-
+    console.log("I am a user");
+    console.log(props.user);
     this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
 
     this.state = {
       activeFirstTab: "tab11",
       activeSecondTab: "tab22",
+      username: username,
     };
   }
 
@@ -64,7 +70,7 @@ class Analysis extends React.Component {
               <Row>
                 <Col xs="12" className="mb-5">
                   <Nav tabs className={`${s.coloredNav}`}>
-                  <NavItem>
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab22",
@@ -73,9 +79,10 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Konnect.bio Analytics</span>
+                        <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
+
                     <NavItem>
                       <NavLink
                         className={classnames({
@@ -85,10 +92,9 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab21");
                         }}
                       >
-                        <span>Post Performance</span>
+                        <span>Konnect.bio Analytics</span>
                       </NavLink>
                     </NavItem>
-                  
                   </Nav>
 
                   <TabContent
@@ -96,10 +102,10 @@ class Analysis extends React.Component {
                     activeTab={this.state.activeSecondTab}
                   >
                     <TabPane tabId="tab22">
-                      <HighCharts />
+                      <PostPerfomance username={this.state.username} />
                     </TabPane>
                     <TabPane tabId="tab21">
-                      <p></p>
+                      <HighCharts username={this.state.username} />
                     </TabPane>
                   </TabContent>
                 </Col>
@@ -111,4 +117,8 @@ class Analysis extends React.Component {
     );
   }
 }
-export default Analysis;
+
+const mapStateToProps = (store) => ({
+  user: store.user,
+});
+export default connect(mapStateToProps)(Analysis);

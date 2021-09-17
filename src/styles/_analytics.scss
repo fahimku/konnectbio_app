@@ -6,9 +6,7 @@
     }
 
     .nav-tabs>.nav-item {
-        font-size: 14px;
-
-        font-weight: bold;
+        font-size: 16px;
         flex-grow: 0 !important;
         text-align: left;
         border-bottom: none;
@@ -16,17 +14,42 @@
         .nav-link.active {
             border: none !important;
             color: teal;
+            font-weight: normal;
         }
 
         .nav-link {
             font-family: unset;
             background: none !important;
+            font-weight: normal;
 
         }
     }
 
+    .ant-table table {
+        width: 100%;
+        border: 1px solid #c8c8c8;
+    }
+
+    .ant-table-thead>tr>th {
+        border-bottom: 1px solid #c8c8c8 !important;
+        font-weight: 600;
+    }
 
 
+    .ant-table-tbody>tr>td:first-child,
+    .ant-table-thead>tr>th:first-child {}
+
+    .ant-table-pagination.ant-pagination {
+        justify-content: end;
+    }
 
 
+    .ant-table-tbody>tr>td {
+        padding: 10px;
+        border-bottom: 1px solid #c8c8c8;
+    }
+
+    .ant-table table {
+        border-bottom:none;
+    }
 }

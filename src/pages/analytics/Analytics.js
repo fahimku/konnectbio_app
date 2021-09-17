@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import cx from "classnames";
 import {Col, Row, Progress} from "reactstrap";
-import {Switch, Route, withRouter, Redirect} from "react-router";
+//import {Switch, Route, withRouter, Redirect} from "react-router";
 import Widget from "../../components/Widget";
 import Trend from "react-trend";
 import MainChart from "./components/Charts/MainChart";

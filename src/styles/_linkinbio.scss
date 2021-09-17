@@ -24,7 +24,7 @@
 }
 
 .main-container {
-    margin-left: -40px;
+    margin-left: 0px;
 }
 
 .left-column {
@@ -174,8 +174,8 @@
 
         span {
             position: absolute;
-            bottom: 8px;
-            right: 0;
+            bottom: 0px;
+            right: -6px;
             color: white;
             background: rgba(50, 59, 67, 0.5);
             font-size: 9px;
@@ -199,7 +199,7 @@
         }
 
         .linked {
-            border: 2px solid #1bc3fe;
+            border: 1px solid #1bc3fe;
             -webkit-filter: none;
             filter: none;
             opacity: 1;
@@ -250,7 +250,7 @@
 
     .pane-info h4 {
         font-weight: 600;
-        font-size: 1.3rem;
+        font-size: 1.1rem;
     }
 
     .pane-info p {

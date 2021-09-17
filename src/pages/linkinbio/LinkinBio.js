@@ -18,12 +18,15 @@ import classnames from "classnames";
 import s from "./LinkinBio.module.scss";
 import moment from "moment";
 import config from "../../config";
+import {connect} from "react-redux";
+import {addUserInfo} from "../../actions/user";
 // import {push} from "connected-react-router";
 
 class LinkinBio extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
+
     super(props);
     this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
@@ -46,6 +49,8 @@ class LinkinBio extends React.Component {
       accordionSecond: [false, true, false],
       error: "",
     };
+
+    this.props.addUserInfo("test");
   }
 
   componentWillMount() {
@@ -361,7 +366,7 @@ class LinkinBio extends React.Component {
                     : ""
                 }
                 key={i}
-                id={"img" + i}  
+                id={"img" + i}
                 onClick={(ev) => this.selectPost(true, i)}
                 src={this.state.instagramPosts.data[i].media_url}
               />
@@ -682,4 +687,10 @@ class LinkinBio extends React.Component {
     );
   }
 }
-export default LinkinBio;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUserInfo: (text) => dispatch(addUserInfo(text)),
+  };
+};
+export default connect(null, mapDispatchToProps)(LinkinBio);

@@ -7,6 +7,7 @@ import config from '../config';
 import { mockUser } from '../actions/mock';
 
 const actions = {
+
   doNew: () => {
     return {
       type: 'USERS_FORM_RESET',

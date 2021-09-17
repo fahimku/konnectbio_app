@@ -19,7 +19,7 @@
   text-transform: uppercase;
   font-weight: 400;
   font-size: 16.5px;
-  text-shadow: 4px 4px 15px rgba(92, 176, 255, .3);
+
 }
 
 .sidebarWrapper {
@@ -35,7 +35,8 @@
 }
 
 .sidebarClose.sidebarWrapper {
-  width: $sidebar-width-closed; 
+  width: $sidebar-width-closed;
+
   @include media-breakpoint-down(sm) {
     width: 0;
   }
@@ -44,11 +45,15 @@
 
 .logo {
   margin: 15px 0;
-  font-size: 18px;
+  font-size: 36px;
   width: 100%;
   font-weight: $font-weight-thin;
   text-align: center;
   transition: width $sidebar-transition-time ease-in-out;
+  background-image: url(../../images/logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 219px;
 
   a {
     color: var(--logo-color);
@@ -67,7 +72,7 @@
 }
 
 .nav {
-  padding: 30px 0 10px;
+  padding: 2px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -121,17 +126,17 @@
   padding: 11px;
   padding-right: 15px;
 
-  & > li {
+  &>li {
     margin: 25px 0
   }
 
-  li > a {
+  li>a {
     font-size: $font-size-mini;
     color: var(--sidebar-color);
     text-decoration: none;
 
 
-    > i {
+    >i {
       font-size: 11px;
       vertical-align: 1px;
       transition: margin-left $sidebar-transition-time ease-in-out;
@@ -140,14 +145,14 @@
 }
 
 .sidebarClose {
-  .sidebarLabels > li > a > i {
+  .sidebarLabels>li>a>i {
     margin-left: 8px;
     transition: margin-left $sidebar-transition-time ease-in-out;
   }
 }
 
 .staticSidebar {
-  .sidebarLabels > li > a > i {
+  .sidebarLabels>li>a>i {
     transition: none;
     margin-left: 0;
   }
@@ -173,7 +178,8 @@
   margin-bottom: 0;
   padding: 0.5rem 11px;
   padding-right: 15px;
-  & > button > span {
+
+  &>button>span {
     font-size: 32px;
     color: var(--sidebar-icon-bg);
   }
@@ -201,13 +207,13 @@
 
 :global {
   .sidebar-bottom-aler-danger {
-    & > .progress-bar {
+    &>.progress-bar {
       background-color: var(--sidebar-sales);
     }
   }
 
   .sidebar-bottom-aler-primary {
-    & > .progress-bar {
+    &>.progress-bar {
       background-color: var(--sideba-responsibility);
     }
   }

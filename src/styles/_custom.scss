@@ -139,7 +139,7 @@ video::-webkit-media-controls-panel {
 }
 
 .sidebar-nav-links a {
-  font-size: 18px;
+  font-size: 15px;
   line-height: 50px;
   padding-top: -3px;
   border-top: 1px solid #c8c8c8 !important;
@@ -151,4 +151,13 @@ video::-webkit-media-controls-panel {
 
 hr {
   border-top: 1px solid black;
+}
+
+/*Antd Images */
+
+.ant-table img {
+  width:30%;
+}
+main {
+  padding:12px 0 0 0 !important;
 }

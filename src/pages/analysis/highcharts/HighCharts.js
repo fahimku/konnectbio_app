@@ -15,11 +15,12 @@ class HighCharts extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      username:this.props.username,
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
       totalClicks: "",
       totalProfileViews: "",
-      totalClickThrough:"",
+      totalClickThrough: "",
       fromDate: "",
       toDate: "",
       postClicks: {
@@ -229,14 +230,14 @@ class HighCharts extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchPostClicks("roidemo", this.state.lastSevenDays, this.state.today);
+    this.fetchPostClicks(this.state.username, this.state.lastSevenDays, this.state.today);
     this.fetchProfileViews(
-      "roidemo",
+      this.state.username,
       this.state.lastSevenDays,
       this.state.today
     );
     this.fetchClickThrough(
-      "roidemo",
+      this.state.username,
       this.state.lastSevenDays,
       this.state.today
     );
@@ -310,9 +311,9 @@ class HighCharts extends PureComponent {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({fromDate: fromDate, toDate: toDate});
-    this.fetchPostClicks("roidemo", fromDate, toDate);
-    this.fetchProfileViews("roidemo", fromDate, toDate);
-    this.fetchClickThrough("roidemo", fromDate, toDate);
+    this.fetchPostClicks(this.state.username, fromDate, toDate);
+    this.fetchProfileViews(this.state.username, fromDate, toDate);
+    this.fetchClickThrough(this.state.username, fromDate, toDate);
   }
 
   render() {
@@ -322,113 +323,117 @@ class HighCharts extends PureComponent {
       profileViews,
       totalProfileViews,
       clickThrough,
-      totalClickThrough
-      ,
+      totalClickThrough,
     } = this.state;
 
     return (
-      <div className="container">
-        <h3 className="page-title">
-          <span className="fw-semi-bold">Linkin.bio Interactions</span>
-        </h3>
-        <p>
-          See how people are interacting with your Linkin.bio page over time.
-        </p>
-        <RangePicker
-          key={1}
-          defaultValue={[
-            moment(this.state.lastSevenDays),
-            moment(this.state.today),
-          ]}
-          defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-          allowClear={false}
-          ranges={{
-            Today: [moment(), moment()],
-            "Get All Records": [
-              moment().subtract(200, "month"),
-              moment().add(200, "month"),
-            ],
-            Today: [moment(), moment()],
-            Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
-            Yesterday: [
-              moment().subtract(1, "days"),
-              moment().subtract(1, "days"),
-            ],
-            "This Month": [moment().startOf("month"), moment().endOf("month")],
-            "Last Month": [
-              moment().subtract(1, "month").startOf("month"),
-              moment().subtract(1, "month").endOf("month"),
-            ],
-          }}
-          style={{width: "20%"}}
-          format={dateFormat}
-          onChange={this.dateRangePickerChanger.bind(this)}
-        />
-        <hr />
-        <Row>
-          <Col lg={12} xs={12}>
-            <Row className="analytics-heading">
-              <Col lg={10} xs={12}>
-                <h5>
-                  <span className="fw-semi-bold">Page Views</span>
-                </h5>
-              </Col>
-              <Col lg={2} xs={12}>
-                <h5>
-                  <span className="right-views fw-semi-bold">
-                    {totalProfileViews}
-                  </span>
-                </h5>
-                <span className="">Page Views</span>
-              </Col>
-            </Row>
-            <HighchartsReact highcharts={Highcharts} options={profileViews} />
-          </Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col lg={12} xs={12}>
-            <Row className="analytics-heading">
-              <Col lg={10} xs={12}>
-                <h5>
-                  <span className="fw-semi-bold">Post Clicks</span>
-                </h5>
-              </Col>
-              <Col lg={2} xs={12}>
-                <h5>
-                  <span className="right-views fw-semi-bold">
-                    {totalClicks}
-                  </span>
-                </h5>
-                <span className="">Post Clicks</span>
-              </Col>
-            </Row>
-            <HighchartsReact highcharts={Highcharts} options={postClicks} />
-          </Col>
-        </Row>
+      <>
+        <div className="container-fluid">
+          <h3 className="page-title">
+            Linkin.bio Interactions
+          </h3>
+          <p>
+            See how people are interacting with your Linkin.bio page over time.
+          </p>
+          <RangePicker
+            key={1}
+            defaultValue={[
+              moment(this.state.lastSevenDays),
+              moment(this.state.today),
+            ]}
+            defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+            allowClear={false}
+            ranges={{
+              Today: [moment(), moment()],
+              "Get All Records": [
+                moment().subtract(200, "month"),
+                moment().add(200, "month"),
+              ],
+              Today: [moment(), moment()],
+              Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
+              Yesterday: [
+                moment().subtract(1, "days"),
+                moment().subtract(1, "days"),
+              ],
+              "This Month": [
+                moment().startOf("month"),
+                moment().endOf("month"),
+              ],
+              "Last Month": [
+                moment().subtract(1, "month").startOf("month"),
+                moment().subtract(1, "month").endOf("month"),
+              ],
+            }}
+            style={{width: "20%"}}
+            format={dateFormat}
+            onChange={this.dateRangePickerChanger.bind(this)}
+          />
+          <hr />
+          <Row>
+            <Col lg={12} xs={12}>
+              <Row className="analytics-heading">
+                <Col lg={10} xs={12}>
+                  <h5>
+                    <span className="fw-semi-bold">Page Views</span>
+                  </h5>
+                </Col>
+                <Col lg={2} xs={12}>
+                  <h5>
+                    <span className="right-views fw-semi-bold">
+                      {totalProfileViews}
+                    </span>
+                  </h5>
+                  <span className="">Page Views</span>
+                </Col>
+              </Row>
+              <HighchartsReact highcharts={Highcharts} options={profileViews} />
+            </Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col lg={12} xs={12}>
+              <Row className="analytics-heading">
+                <Col lg={10} xs={12}>
+                  <h5>
+                    <span className="fw-semi-bold">Post Clicks</span>
+                  </h5>
+                </Col>
+                <Col lg={2} xs={12}>
+                  <h5>
+                    <span className="right-views fw-semi-bold">
+                      {totalClicks}
+                    </span>
+                  </h5>
+                  <span className="">Post Clicks</span>
+                </Col>
+              </Row>
+              <HighchartsReact highcharts={Highcharts} options={postClicks} />
+            </Col>
+          </Row>
 
-        <hr />
-        <Row>
-          <Col lg={12} xs={12}>
-            <Row className="analytics-heading">
-              <Col lg={10} xs={12}>
-                <h5>
-                  <span className="fw-semi-bold">CLICK-THROUGH %</span>
-                </h5>
-              </Col>
-              <Col lg={2} xs={12}>
-                <h5>
-                  <span className="right-views fw-semi-bold">
-                    {totalClickThrough}
-                  </span>
-                </h5>
-                <span className="">AVG. CLICK-THROUGH %</span>
-              </Col>
-            </Row>
-            <HighchartsReact highcharts={Highcharts} options={clickThrough} />
-          </Col>
-        </Row>
-      </div>
+          <hr />
+          <Row>
+            <Col lg={12} xs={12}>
+              <Row className="analytics-heading">
+                <Col lg={10} xs={12}>
+                  <h5>
+                    <span className="fw-semi-bold">CLICK-THROUGH %</span>
+                  </h5>
+                </Col>
+                <Col lg={2} xs={12}>
+                  <h5>
+                    <span className="right-views fw-semi-bold">
+                      {totalClickThrough}
+                    </span>
+                  </h5>
+                  <span className="">AVG. CLICK-THROUGH %</span>
+                </Col>
+              </Row>
+              <HighchartsReact highcharts={Highcharts} options={clickThrough} />
+            </Col>
+          </Row>
+        </div>
+      </>
     );
   }
 }
