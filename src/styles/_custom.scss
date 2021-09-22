@@ -153,7 +153,16 @@ hr {
   border-top: 1px solid black;
 }
 
-
 main {
   padding:12px 0 0 0 !important;
+}
+
+.myshop-iframe{
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.no-padding{
+  padding: 0px;
 }

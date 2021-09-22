@@ -4,42 +4,29 @@ import React from "react";
 import {
   Row,
   Col,
-  Button,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
 } from "reactstrap";
-import {Link} from "react-router-dom";
+
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
-import classnames from "classnames";
-import s from "./LinkinBio.module.scss";
-import moment from "moment";
 import config from "../../config";
 import {connect} from "react-redux";
 import {addUserInfo} from "../../actions/user";
-import SelectBox from "../../components/SelectBox";
+import  TopBar  from "./component/TopBar";
+import MobilePreview from "./component/MobilePreview";
+import ShopRightBar from "./component/ShopRightBar/index";
+import Header from "./component/Header";
 
-import {Select} from "antd";
-const {Option} = Select;
-
-// import {push} from "connected-react-router";
 
 class LinkinBio extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
-    this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
-    this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
-    this.toggleThirdTabs = this.toggleThirdTabs.bind(this);
+
     this.error = this.error.bind(this);
     this.state = {
       instagramPosts: null,
       categories: [],
-      abc: "",
       category: "",
       subCategories: [],
       subCategory: [],
@@ -54,9 +41,6 @@ class LinkinBio extends React.Component {
       username: username,
       redirectedUrl: "",
       selectPost: false,
-      activeFirstTab: "tab11",
-      activeSecondTab: "tab22",
-      activeThirdTab: "tab31",
       dropdownOpen: false,
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
@@ -66,9 +50,11 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-    let accessToken = localStorage.getItem("access_token");
-    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    let savedAccessToken = userInfo.access_token;
+
+    let accessToken       = localStorage.getItem("access_token");
+    let userInfo          = JSON.parse(localStorage.getItem("userInfo"));
+    let savedAccessToken  = userInfo.access_token;
+
     if (this.props.match.params.code && !accessToken && !savedAccessToken) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
       this.fetchInstagramPostsFirstTime(accessTokenCode);
@@ -142,6 +128,7 @@ class LinkinBio extends React.Component {
           this.setState({nextPageUrl: response.data.paging.next});
       })
       .catch((err) => {
+        console.log(err)
         if (err.response.data.message.type) {
           //  Retrieves the string and converts it to a JavaScript object
           const userInformation = localStorage.getItem("userInfo");
@@ -336,30 +323,6 @@ class LinkinBio extends React.Component {
     }
   };
 
-  toggleFirstTabs(tab) {
-    if (this.state.activeFirstTab !== tab) {
-      this.setState({
-        activeFirstTab: tab,
-      });
-    }
-  }
-
-  toggleSecondTabs(tab) {
-    if (this.state.activeSecondTab !== tab) {
-      this.setState({
-        activeSecondTab: tab,
-      });
-    }
-  }
-
-  toggleThirdTabs(tab) {
-    if (this.state.activeThirdTab !== tab) {
-      this.setState({
-        activeThirdTab: tab,
-      });
-    }
-  }
-
   selectPost = (state, postIndex) => {
     this.fetchCategories();
     if (postIndex !== "") {
@@ -419,371 +382,48 @@ class LinkinBio extends React.Component {
   };
 
   render() {
-    const instagramPosts = [];
-    if (this.state.instagramPosts) {
-      for (let i = 0; i < this.state.instagramPosts.data.length; i++) {
-        if (this.state.instagramPosts.data[i].media_type == "IMAGE") {
-          instagramPosts.push(
-            <Col key={i} xs="4">
-              <img
-                className={
-                  this.state.instagramPosts.data[i].linked ||
-                  this.state.instagramPosts.data[i].select
-                    ? "linked"
-                    : ""
-                }
-                key={i}
-                id={"img" + i}
-                onClick={(ev) => this.selectPost(true, i)}
-                src={this.state.instagramPosts.data[i].media_url}
-              />
-              {this.state.instagramPosts.data[i].linked ? (
-                <span>LINKED</span>
-              ) : (
-                ""
-              )}
-            </Col>
-          );
-        } else {
-          instagramPosts.push(
-            <Col key={i} xs="4">
-              <video
-                oncontextmenu="return false;"
-                id="myVideo"
-                autoplay
-                controls
-                controlsList="nodownload"
-                className={
-                  this.state.instagramPosts.data[i].linked ||
-                  this.state.instagramPosts.data[i].select
-                    ? "linked"
-                    : ""
-                }
-                key={i}
-                id={"img" + i}
-                onClick={(ev) => this.selectPost(true, i)}
-              >
-                <source
-                  src={this.state.instagramPosts.data[i].media_url}
-                  type="video/mp4"
-                ></source>
-              </video>
-              {this.state.instagramPosts.data[i].linked ? (
-                <span>LINKED</span>
-              ) : (
-                ""
-              )}
-            </Col>
-          );
-        }
-      }
-    }
+
     return (
       <div className="linkin-bio">
-        <div className="header">
-          <div className="linkin-text">Konnect.Bio</div>
-          <div className="profile">
-            <div className="placeholder">
-              <img src={placeholder} />
-            </div>
-            <div className="instagram-account">
-              <div className="instagram-username">@{this.state.username}</div>
-              <div className="instagram-label">Instagram</div>
-            </div>
-          </div>
-        </div>
-        {/* Tabs */}
+        
+        <Header username={this.state.username} placeholder={placeholder} />
+
         <Row className="main-container">
           <Col className="left-column" md="6" xs="12">
-            <div className="left-top-bar">
-              <div className="your-copy-link">
-                <div className="item-a">
-                  Your Link:{" "}
-                  <a
-                    target="_blank"
-                    href={this.state.url + this.state.username}
-                  >
-                    {this.state.url + this.state.username}
-                  </a>
-                </div>
-                <div onClick={this.copyToClipboard} className="item-b">
-                  Copy
-                </div>
-              </div>
+            <TopBar username={this.state.username} url={this.state.url} copyToClipboard={this.copyToClipboard} />
+            <MobilePreview  
+                  placeholder={placeholder} 
+                  username={this.state.username} 
+                  error={this.state.error} 
+                  paneDidMount={this.paneDidMount} 
+                  instagramPosts={this.state.instagramPosts}
+                  selectPost={this.selectPost}              
+              />
 
-              <div className="instagram-bio">
-                <button>Add to Instagram Bio</button>
-              </div>
-            </div>
-            <div className="mobile-preview">
-              <div className="mobile-header">
-                <img className="place-holder-image" src={placeholder} />
-                <span className="place-holder-name">{this.state.username}</span>
-              </div>
-              {this.state.error ? (
-                <div className="error">
-                  {this.state.error.message}
-                  <br></br>
-                  <Link to="/connect">Connect Instagram</Link>
-                </div>
-              ) : (
-                <div>
-                  <div className="visit-website">Visit Website</div>
-                  <div ref={this.paneDidMount} className="mobile-gallery">
-                    <Row>{instagramPosts}</Row>
-                  </div>
-                </div>
-              )}
-            </div>
           </Col>
-          <Col className="right-bar" md="6" xs="12">
-            <Row>
-              <Col xs="12">
-                <Nav className={`${s.coloredNav}`} tabs>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeThirdTab === "tab31",
-                      })}
-                      onClick={() => {
-                        this.toggleThirdTabs("tab31");
-                      }}
-                    >
-                      <span>Blocks</span>
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeThirdTab === "tab32",
-                      })}
-                      onClick={() => {
-                        this.toggleThirdTabs("tab32");
-                      }}
-                    >
-                      <span>Settings</span>
-                    </NavLink>
-                  </NavItem>
-                </Nav>
+          <Col className={`right-bar bg-white ${ !this.state.selectPost ? "no-padding" : "" } `} md="6" xs="12">
 
-                <TabContent
-                  className="mb-lg"
-                  activeTab={this.state.activeThirdTab}
-                >
-                  <TabPane tabId="tab31">
-                    <div
-                      className={`image-edit-box ${
-                        this.state.selectPost ? "show" : "hidden"
-                      }`}
-                    >
-                      <div className="image-box-info">
-                        <span
-                          onClick={() => this.selectPost(false, "")}
-                          className="glyphicon glyphicon-arrow-left"
-                        ></span>
-                        <h4>Edit Links</h4>
-                        <p>
-                          Posted on{" "}
-                          {moment(this.state.singlePost.timestamp).format(
-                            "MMM Do YYYY"
-                          )}
-                        </p>
-                      </div>
-                      <div className="image-wrapper">
-                        <div className="image-box">
-                          {this.state.singlePost.media_type == "IMAGE" ? (
-                            <img src={`${this.state.singlePost.media_url}`} />
-                          ) : (
-                            <video
-                              oncontextmenu="return false;"
-                              id="myVideo"
-                              autoplay
-                              controls
-                              controlsList="nodownload"
-                            >
-                              <source
-                                src={`${this.state.singlePost.media_url}`}
-                                type="video/mp4"
-                              ></source>
-                            </video>
-                          )}
-                        </div>
-                        <form onSubmit={this.submited}>
-                          <div className="image-edit-links">
-                            <span>Konnect.Bio</span>
-                            <input
-                              required
-                              type="url"
-                              value={this.state.redirectedUrl}
-                              placeholder="Add a link to any web page"
-                              className="form-control"
-                              onChange={(evt) => {
-                                this.setState({
-                                  redirectedUrl: evt.target.value,
-                                });
-                              }}
-                            />
-                            <div className="select-categories mt-3">
-                              <SelectBox
-                                key={Date.now()}
-                                data={this.state.categories}
-                                selected={this.state.dbCategoryId}
-                                callBack={(a) => {
-                                  this.changeCategory(a);
-                                }}
-                              />
-                            </div>
-                            <div className="select-categories mt-3">
-                              <Select
-                                key={Date.now()}
-                                mode="tags"
-                                defaultValue={[]}
-                                showSearch
-                                style={{width: "100%"}}
-                                placeholder="Select a person"
-                                optionFilterProp="children"
-                                onChange={this.changeSubCategory}
-                                // onFocus={onFocus}
-                                // onBlur={onBlur}
-                                // onSearch={onSearch}
-                                filterOption={(input, option) =>
-                                  option.children
-                                    .toLowerCase()
-                                    .indexOf(input.toLowerCase()) >= 0
-                                }
-                              >
-                                {this.state.subCategories.map(
-                                  ({value, label}, i) => (
-                                    <Option value={value}>{label}</Option>
-                                  )
-                                )}
-                              </Select>
-                            </div>
-                            <div className="pane-button">
-                              {this.state.singlePost.linked ? (
-                                <>
-                                  <Button
-                                    onClick={(ev) =>
-                                      this.updatePost(
-                                        this.state.singlePost.id,
-                                        this.state.redirectedUrl
-                                      )
-                                    }
-                                    color=""
-                                  >
-                                    &nbsp;&nbsp;Update&nbsp;&nbsp;
-                                  </Button>
-                                  <div className="remove-link">
-                                    <a
-                                      href="javascript:void(0)"
-                                      onClick={(param) =>
-                                        this.deletePost(
-                                          this.state.singlePost.id
-                                        )
-                                      }
-                                    >
-                                      <span className="glyphicon glyphicon-trash"></span>
-                                      Remove Link
-                                    </a>
-                                  </div>
-                                </>
-                              ) : (
-                                <Button
-                                  onClick={(ev) => this.savePost(this)}
-                                  color=""
-                                >
-                                  &nbsp;&nbsp;Save&nbsp;&nbsp;
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                    <div
-                      className={`pane-wrapper ${
-                        this.state.selectPost ? "hidden" : "show"
-                      }`}
-                    >
-                      <div className="pane">
-                        <div className="pane-info">
-                          <h4>Buttons</h4>
-                          <p>
-                            Drive traffic to your website, blog, online store,
-                            or any other web pages.
-                          </p>
-                        </div>
-                        <div className="pane-button">
-                          <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                        </div>
-                      </div>
-                      <div className="pane">
-                        <div className="pane-info">
-                          <h4>Featured Media</h4>
-                          <p>
-                            Feature the latest post on your Konnect.bio page to
-                            make it stand out.
-                          </p>
-                        </div>
-                        <div className="pane-button">
-                          <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                        </div>
-                      </div>
-                      <div className="pane">
-                        <div className="pane-info">
-                          <h4>Linked Instagram Posts</h4>
-                          <p>
-                            Select a post to add a link and direct your audience
-                            to the right content.
-                          </p>
-                        </div>
-                        <div className="pane-button">
-                          <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                        </div>
-                      </div>
-                    </div>
-                  </TabPane>
-                  <TabPane tabId="tab32">
-                    <div className="pane">
-                      <div className="pane-info">
-                        <h4>Buttons</h4>
-                        <p>
-                          Drive traffic to your website, blog, online store, or
-                          any other web pages.
-                        </p>
-                      </div>
-                      <div className="pane-button">
-                        <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                      </div>
-                    </div>
-                    <div className="pane">
-                      <div className="pane-info">
-                        <h4>Featured Media</h4>
-                        <p>
-                          Feature the latest post on your Konnect.bio page to
-                          make it stand out.
-                        </p>
-                      </div>
-                      <div className="pane-button">
-                        <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                      </div>
-                    </div>
-                    <div className="pane">
-                      <div className="pane-info">
-                        <h4>Linked Instagram Posts</h4>
-                        <p>
-                          Select a post to add a link and direct your audience
-                          to the right content.
-                        </p>
-                      </div>
-                      <div className="pane-button">
-                        <Button color="">&nbsp;&nbsp;Edit&nbsp;&nbsp;</Button>
-                      </div>
-                    </div>
-                  </TabPane>
-                </TabContent>
-              </Col>
-            </Row>
+              <div className={`${ !this.state.selectPost ? "show" : "hidden" }`} style={{height : '100%',width:"100%",paddingTop: '29px'}}>
+                <iframe src={`${this.state.url + this.state.username}?coupon=no&brand=no&iframe=yes`} title="" className="myshop-iframe"></iframe>
+              </div>
+
+              <Row>
+                <Col xs="12" className="p-5">
+                <ShopRightBar
+                  isSelectPost={this.state.selectPost} 
+                  selectPost={this.selectPost} 
+                  singlePost={this.state.singlePost} 
+                  submited ={this.submited}
+                  redirectedUrl={this.state.redirectedUrl}
+                  categories={this.state.categories} 
+                  dbCategoryId={this.state.dbCategoryId} 
+                  changeCategory={this.changeCategory} 
+                  changeSubCategory={this.changeSubCategory} 
+                  subCategories={this.state.subCategories} 
+                  savePost={this.savePost}>
+                  </ShopRightBar> 
+                </Col>
+              </Row>
           </Col>
         </Row>
       </div>
@@ -796,4 +436,5 @@ const mapDispatchToProps = (dispatch) => {
     addUserInfo: (text) => dispatch(addUserInfo(text)),
   };
 };
+
 export default connect(null, mapDispatchToProps)(LinkinBio);

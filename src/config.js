@@ -3,7 +3,7 @@ const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85" : 
 const portApi = process.env.NODE_ENV === "development" ?  '9000' : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const redirectURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://app.konnect.bio";
-const visitorURL = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://konnect.bio";
+const visitorURL = process.env.NODE_ENV === "development" ? "http://172.16.1.87:3000" : "https://konnect.bio";
 
 export default {
   redirectURL,

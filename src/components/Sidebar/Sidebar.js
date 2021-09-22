@@ -86,7 +86,17 @@ class Sidebar extends React.Component {
           <ul className={s.nav}>
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Catalogue"
+              header="My Shop"
+              link="/app/linkinbio"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-link"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              className="sidebar-nav-links"
+              header="My Post"
               link="/app/linkinbio"
               isHeader
               iconElement={<span className="glyphicon glyphicon-link"></span>}
