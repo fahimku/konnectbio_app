@@ -86,7 +86,7 @@ class Sidebar extends React.Component {
           <ul className={s.nav}>
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Shop"
+              header="My Post"
               link="/app/linkinbio"
               isHeader
               iconElement={<span className="glyphicon glyphicon-link"></span>}
@@ -96,8 +96,8 @@ class Sidebar extends React.Component {
             />
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Post"
-              link="/app/linkinbio"
+              header="My Shop"
+              link="/app/linkinbio-shop"
               isHeader
               iconElement={<span className="glyphicon glyphicon-link"></span>}
               // label="Awesome"

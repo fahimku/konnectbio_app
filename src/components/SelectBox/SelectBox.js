@@ -42,8 +42,8 @@ const SelectBox = (props) => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {props.data.map(function ({value, label}) {
-            return <Option value={value}>{label}</Option>;
+          {props.data.map(function ({value, label},index) {
+            return <Option value={value} key={index}>{label}</Option>;
           })}
         </Select>
       )}
