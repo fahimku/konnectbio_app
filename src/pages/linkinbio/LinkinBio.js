@@ -20,13 +20,17 @@ import moment from "moment";
 import config from "../../config";
 import {connect} from "react-redux";
 import {addUserInfo} from "../../actions/user";
+import SelectBox from "../../components/SelectBox";
+
+import {Select} from "antd";
+const {Option} = Select;
+
 // import {push} from "connected-react-router";
 
 class LinkinBio extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
-
     super(props);
     this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
@@ -34,7 +38,16 @@ class LinkinBio extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       instagramPosts: null,
+      categories: [],
+      abc: "",
+      category: "",
+      subCategories: [],
+      subCategory: [],
       singlePost: "",
+      dbSinglePost: "",
+      dbCategoryId: "",
+      dbCategoryName: "",
+      dbSubCategory: "",
       currentPost: "",
       url: config.visitorURL + "/",
       nextPageUrl: "",
@@ -49,7 +62,6 @@ class LinkinBio extends React.Component {
       accordionSecond: [false, true, false],
       error: "",
     };
-
     this.props.addUserInfo("test");
   }
 
@@ -66,6 +78,7 @@ class LinkinBio extends React.Component {
       }
       this.fetchInstagramPosts(accessToken);
     }
+    this.fetchCategories();
   }
 
   //First Request From User
@@ -87,7 +100,6 @@ class LinkinBio extends React.Component {
         //Store User Information
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-
         this.updateAccessToken(
           userInfo.user_id,
           response.data.username,
@@ -150,7 +162,6 @@ class LinkinBio extends React.Component {
         }
       });
   }
-
   //Next Page Instagram Posts Request From User
   async nextPageInstagramPosts(url, username) {
     await axios
@@ -186,6 +197,48 @@ class LinkinBio extends React.Component {
         }
       });
   }
+  // Fetch Single Post
+  fetchSinglePost = async (media_id) => {
+    await axios
+      .get(`/posts/retrieve/${media_id}`)
+      .then((response) => {
+        this.setState({
+          dbCategoryId: response.data.message.categories[0].category_id,
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          dbCategoryId: "",
+        });
+      });
+  };
+  //Fetch Categories
+  fetchCategories = async () => {
+    await axios.post(`/common/receive/categories`).then((response) => {
+      const selectCategories = [];
+      const categories = response.data.message;
+      categories.map(({category_id, category_name}) => {
+        selectCategories.push({value: category_id, label: category_name});
+      });
+      this.setState({categories: selectCategories});
+    });
+  };
+  //Fetch Sub Categories
+  async fetchSubCategories(category_id) {
+    await axios
+      .post(`/common/receive/subCategories`, {category_id: category_id})
+      .then((response) => {
+        const selectSubCategories = [];
+        const subCategories = response.data.message;
+        subCategories.map(({sub_category_id, sub_category_name}) => {
+          selectSubCategories.push({
+            value: sub_category_id,
+            label: sub_category_name,
+          });
+        });
+        //  this.setState({subCategories: selectSubCategories});
+      });
+  }
 
   savePost = () => {
     this.setState(
@@ -202,12 +255,13 @@ class LinkinBio extends React.Component {
             timestamp: this.state.currentPost.timestamp,
             redirected_url: this.state.redirectedUrl,
             username: this.state.currentPost.username,
+            categories: [this.state.category],
+            sub_categories: this.state.subCategory,
           })
           .then((response) => {
             let singlePostIndex = this.state.instagramPosts.data.findIndex(
               (item) => item.id === this.state.currentPost.id
             );
-
             let currentPost = this.state.currentPost;
             currentPost.redirected_url = this.state.redirectedUrl;
             currentPost.linked = true;
@@ -307,15 +361,17 @@ class LinkinBio extends React.Component {
   }
 
   selectPost = (state, postIndex) => {
+    this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
+      let mediaId = currentPost.id;
+      this.fetchSinglePost(mediaId);
       let lastPost = this.state.singlePost;
       //unlinked last selected post
       if (lastPost) {
         lastPost.select = false;
       }
-      //link current post
       currentPost.select = true;
       let instagramPosts = JSON.parse(
         JSON.stringify(this.state.instagramPosts)
@@ -340,6 +396,17 @@ class LinkinBio extends React.Component {
   error(error) {
     this.setState({error: error});
   }
+
+  changeCategory = (category) => {
+    if (category) {
+//      this.setState({category: category});
+      this.fetchSubCategories(category);
+    }
+  };
+
+  changeSubCategory = (subCategories) => {
+    this.setState({subCategory: subCategories});
+  };
 
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
@@ -461,7 +528,7 @@ class LinkinBio extends React.Component {
                 </div>
               ) : (
                 <div>
-                  {/* <div className="visit-website">Visit Website</div> */}
+                  <div className="visit-website">Visit Website</div>
                   <div ref={this.paneDidMount} className="mobile-gallery">
                     <Row>{instagramPosts}</Row>
                   </div>
@@ -556,6 +623,42 @@ class LinkinBio extends React.Component {
                                 });
                               }}
                             />
+                            <div className="select-categories mt-3">
+                              <SelectBox
+                                key={Date.now()}
+                                data={this.state.categories}
+                                selected={this.state.dbCategoryId}
+                                callBack={(a) => {
+                                  this.changeCategory(a);
+                                }}
+                              />
+                            </div>
+                            <div className="select-categories mt-3">
+                              <Select
+                                key={Date.now()}
+                                mode="tags"
+                                defaultValue={[]}
+                                showSearch
+                                style={{width: "100%"}}
+                                placeholder="Select a person"
+                                optionFilterProp="children"
+                                onChange={this.changeSubCategory}
+                                // onFocus={onFocus}
+                                // onBlur={onBlur}
+                                // onSearch={onSearch}
+                                filterOption={(input, option) =>
+                                  option.children
+                                    .toLowerCase()
+                                    .indexOf(input.toLowerCase()) >= 0
+                                }
+                              >
+                                {this.state.subCategories.map(
+                                  ({value, label}, i) => (
+                                    <Option value={value}>{label}</Option>
+                                  )
+                                )}
+                              </Select>
+                            </div>
                             <div className="pane-button">
                               {this.state.singlePost.linked ? (
                                 <>

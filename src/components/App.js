@@ -40,7 +40,6 @@ class App extends React.PureComponent {
         <ConnectedRouter history={getHistory()}>
           <HashRouter>
             <Switch>
-              
               {/* <Route
                 path="/"
                 exact
@@ -71,7 +70,10 @@ class App extends React.PureComponent {
                   <Redirect to="/documentation/getting-started/overview" />
                 )}
               />
-              <Route path="/documentation" component={DocumentationLayoutComponent}/>
+              <Route
+                path="/documentation"
+                component={DocumentationLayoutComponent}
+              />
               <Route path="/connect" exact component={Connect} />
               <Route path="/logout" exact component={Logout} />
               <AuthRoute path="/register" exact component={Register} />
@@ -89,8 +91,10 @@ class App extends React.PureComponent {
     );
   }
 }
+
 const mapStateToProps = (store) => ({
   currentUser: store.auth.currentUser,
   loadingInit: store.auth.loadingInit,
 });
+
 export default connect(mapStateToProps)(App);

@@ -15,6 +15,7 @@ import isScreen from "../../core/screenHelper";
 import {logoutUser} from "../../actions/auth";
 
 class Sidebar extends React.Component {
+
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -85,19 +86,17 @@ class Sidebar extends React.Component {
           <ul className={s.nav}>
             <LinksGroup
               className="sidebar-nav-links"
-              header="Media Library"
-              // link="/app/extra/gallery"
-              link="/app/extra/coupons"
+              header="My Catalogue"
+              link="/app/linkinbio"
               isHeader
-              iconElement={<span className="glyphicon glyphicon-picture" />}
+              iconElement={<span className="glyphicon glyphicon-link"></span>}
               // label="Awesome"
               iconName="flaticon-users"
               labelColor="info"
             />
-
             <LinksGroup
               className="sidebar-nav-links"
-              header="Coupon"
+              header="My Coupon"
               link="/app/extra/coupon"
               isHeader
               iconElement={<span className="fa fa-gift"></span>}
@@ -105,6 +104,18 @@ class Sidebar extends React.Component {
               iconName="flaticon-users"
               labelColor="info"
             />
+            <LinksGroup
+              className="sidebar-nav-links"
+              header="Media Library"
+              // link="/app/extra/gallery"
+              link="/app/media/library"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-picture" />}
+              //label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+
             <LinksGroup
               className="sidebar-nav-links"
               header="Analytics"
@@ -124,16 +135,6 @@ class Sidebar extends React.Component {
               iconElement={
                 <span className="glyphicon glyphicon-download-alt"></span>
               }
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Konnect.bio"
-              link="/app/linkinbio"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
               // label="Awesome"
               iconName="flaticon-users"
               labelColor="info"

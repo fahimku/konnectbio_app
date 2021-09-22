@@ -12,10 +12,11 @@ const {RangePicker} = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 class HighCharts extends PureComponent {
+
   constructor(props) {
     super(props);
     this.state = {
-      username:this.props.username,
+      username: this.props.username,
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
       totalClicks: "",
@@ -230,7 +231,11 @@ class HighCharts extends PureComponent {
   }
 
   componentDidMount() {
-    this.fetchPostClicks(this.state.username, this.state.lastSevenDays, this.state.today);
+    this.fetchPostClicks(
+      this.state.username,
+      this.state.lastSevenDays,
+      this.state.today
+    );
     this.fetchProfileViews(
       this.state.username,
       this.state.lastSevenDays,
@@ -328,12 +333,10 @@ class HighCharts extends PureComponent {
 
     return (
       <>
-        <div className="container-fluid">
-          <h3 className="page-title">
-            Linkin.bio Interactions
-          </h3>
+        <div className="container-fluid highchart-container">
+          <h3 className="page-title">Konnect.bio Interactions</h3>
           <p>
-            See how people are interacting with your Linkin.bio page over time.
+            See how people are interacting with your Konnect.Bio page over time.
           </p>
           <RangePicker
             key={1}
@@ -410,7 +413,6 @@ class HighCharts extends PureComponent {
               <HighchartsReact highcharts={Highcharts} options={postClicks} />
             </Col>
           </Row>
-
           <hr />
           <Row>
             <Col lg={12} xs={12}>

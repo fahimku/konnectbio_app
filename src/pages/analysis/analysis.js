@@ -17,6 +17,7 @@ import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 
 class Analysis extends React.Component {
+
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -117,7 +118,6 @@ class Analysis extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (store) => ({
   user: store.user,
 });
