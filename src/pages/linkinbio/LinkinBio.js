@@ -1,21 +1,17 @@
 /* eslint-disable */
 import axios from "axios";
 import React from "react";
-import {
-  Row,
-  Col,
-} from "reactstrap";
+import {Row, Col} from "reactstrap";
 
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import {connect} from "react-redux";
 import {addUserInfo} from "../../actions/user";
-import  TopBar  from "./component/TopBar";
+import TopBar from "./component/TopBar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 import Header from "./component/Header";
-
 
 class LinkinBio extends React.Component {
   constructor(props) {
@@ -25,6 +21,7 @@ class LinkinBio extends React.Component {
 
     this.error = this.error.bind(this);
     this.state = {
+      media_id: "",
       instagramPosts: null,
       categories: [],
       category: "",
@@ -50,10 +47,9 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-
-    let accessToken       = localStorage.getItem("access_token");
-    let userInfo          = JSON.parse(localStorage.getItem("userInfo"));
-    let savedAccessToken  = userInfo.access_token;
+    let accessToken = localStorage.getItem("access_token");
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let savedAccessToken = userInfo.access_token;
 
     if (this.props.match.params.code && !accessToken && !savedAccessToken) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
@@ -116,6 +112,7 @@ class LinkinBio extends React.Component {
       access_token: accessToken,
     });
   }
+
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios
@@ -128,7 +125,7 @@ class LinkinBio extends React.Component {
           this.setState({nextPageUrl: response.data.paging.next});
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         if (err.response.data.message.type) {
           //  Retrieves the string and converts it to a JavaScript object
           const userInformation = localStorage.getItem("userInfo");
@@ -189,16 +186,18 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+        this.setState({media_id: media_id});
         this.setState({
           dbCategoryId: response.data.message.categories[0].category_id,
         });
       })
       .catch((err) => {
-        this.setState({
-          dbCategoryId: "",
-        });
+        // this.setState({
+        //   dbCategoryId: "",
+        // });
       });
   };
+
   //Fetch Categories
   fetchCategories = async () => {
     await axios.post(`/common/receive/categories`).then((response) => {
@@ -210,6 +209,7 @@ class LinkinBio extends React.Component {
       this.setState({categories: selectCategories});
     });
   };
+
   //Fetch Sub Categories
   async fetchSubCategories(category_id) {
     await axios
@@ -217,13 +217,16 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectSubCategories = [];
         const subCategories = response.data.message;
+
         subCategories.map(({sub_category_id, sub_category_name}) => {
           selectSubCategories.push({
             value: sub_category_id,
             label: sub_category_name,
           });
         });
-        //  this.setState({subCategories: selectSubCategories});
+        console.log("this sub categories");
+        console.log(subCategories);
+        this.setState({subCategories: selectSubCategories});
       });
   }
 
@@ -340,6 +343,9 @@ class LinkinBio extends React.Component {
         JSON.stringify(this.state.instagramPosts)
       );
       instagramPosts.data[postIndex] = currentPost;
+
+      console.log('current post');
+      console.log(currentPost)
       this.setState({instagramPosts: instagramPosts});
       //link current post
       this.setState(
@@ -362,7 +368,7 @@ class LinkinBio extends React.Component {
 
   changeCategory = (category) => {
     if (category) {
-//      this.setState({category: category});
+      this.setState({category: category});
       this.fetchSubCategories(category);
     }
   };
@@ -382,48 +388,69 @@ class LinkinBio extends React.Component {
   };
 
   render() {
-
     return (
       <div className="linkin-bio">
-        
         <Header username={this.state.username} placeholder={placeholder} />
-
         <Row className="main-container">
           <Col className="left-column" md="6" xs="12">
-            <TopBar username={this.state.username} url={this.state.url} copyToClipboard={this.copyToClipboard} />
-            <MobilePreview  
-                  placeholder={placeholder} 
-                  username={this.state.username} 
-                  error={this.state.error} 
-                  paneDidMount={this.paneDidMount} 
-                  instagramPosts={this.state.instagramPosts}
-                  selectPost={this.selectPost}              
-              />
-
+            <TopBar
+              username={this.state.username}
+              url={this.state.url}
+              copyToClipboard={this.copyToClipboard}
+            />
+            <MobilePreview
+              placeholder={placeholder}
+              username={this.state.username}
+              error={this.state.error}
+              paneDidMount={this.paneDidMount}
+              instagramPosts={this.state.instagramPosts}
+              selectPost={this.selectPost}
+            />
           </Col>
-          <Col className={`right-bar bg-white ${ !this.state.selectPost ? "no-padding" : "" } `} md="6" xs="12">
+          <Col
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
+            md="6"
+            xs="12"
+          >
+            <div
+              className={`${!this.state.selectPost ? "show" : "hidden"}`}
+              style={{height: "100%", width: "100%", paddingTop: "29px"}}
+            >
+              <iframe
+                src={`${
+                  this.state.url + this.state.username
+                }?coupon=no&brand=no&iframe=yes`}
+                title=""
+                className="myshop-iframe"
+              ></iframe>
+            </div>
 
-              <div className={`${ !this.state.selectPost ? "show" : "hidden" }`} style={{height : '100%',width:"100%",paddingTop: '29px'}}>
-                <iframe src={`${this.state.url + this.state.username}?coupon=no&brand=no&iframe=yes`} title="" className="myshop-iframe"></iframe>
-              </div>
-
-              <Row>
-                <Col xs="12" className="p-5">
+            <Row>
+              <Col xs="12" className="p-5">
                 <ShopRightBar
-                  isSelectPost={this.state.selectPost} 
-                  selectPost={this.selectPost} 
-                  singlePost={this.state.singlePost} 
-                  submited ={this.submited}
+                  isSelectPost={this.state.selectPost}
+                  selectPost={this.selectPost}
+                  singlePost={this.state.singlePost}
                   redirectedUrl={this.state.redirectedUrl}
-                  categories={this.state.categories} 
-                  dbCategoryId={this.state.dbCategoryId} 
-                  changeCategory={this.changeCategory} 
-                  changeSubCategory={this.changeSubCategory} 
-                  subCategories={this.state.subCategories} 
-                  savePost={this.savePost}>
-                  </ShopRightBar> 
-                </Col>
-              </Row>
+                  categories={this.state.categories}
+                  dbCategoryId={this.state.dbCategoryId}
+                  changeCategory={this.changeCategory}
+                  changeSubCategory={this.changeSubCategory}
+                  subCategories={this.state.subCategories}
+                  savePost={this.savePost}
+                  updatePost={(val1, val2) => {
+                    this.updatePost(val1, val2);
+                  }}
+                  media_id={this.state.media_id}
+                  deletePost={this.deletePost}
+                  callBack={(value) => {
+                    this.setState({redirectedUrl: value});
+                  }}
+                ></ShopRightBar>
+              </Col>
+            </Row>
           </Col>
         </Row>
       </div>

@@ -15,7 +15,6 @@ import isScreen from "../../core/screenHelper";
 import {logoutUser} from "../../actions/auth";
 
 class Sidebar extends React.Component {
-
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -86,6 +85,16 @@ class Sidebar extends React.Component {
           <ul className={s.nav}>
             <LinksGroup
               className="sidebar-nav-links"
+              header="My Shop"
+              link="/app/linkinbio-shop"
+              isHeader
+              iconElement={<span className="glyphicon glyphicon-link"></span>}
+              // label="Awesome"
+              iconName="flaticon-users"
+              labelColor="info"
+            />
+            <LinksGroup
+              className="sidebar-nav-links"
               header="My Post"
               link="/app/linkinbio"
               isHeader
@@ -96,10 +105,10 @@ class Sidebar extends React.Component {
             />
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Shop"
-              link="/app/linkinbio-shop"
+              header="Analytics"
+              link="/app/analysis"
               isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
+              iconElement={<span className="fa fa-bar-chart-o"></span>}
               // label="Awesome"
               iconName="flaticon-users"
               labelColor="info"
@@ -126,16 +135,6 @@ class Sidebar extends React.Component {
               labelColor="info"
             />
 
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Analytics"
-              link="/app/analysis"
-              isHeader
-              iconElement={<span className="fa fa-bar-chart-o"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
             <LinksGroup
               className="sidebar-nav-links"
               header="Collect Media"

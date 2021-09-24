@@ -4,6 +4,8 @@ const {Option} = Select;
 
 const SelectBox = (props) => {
   const [selection, setSelection] = useState([props.selected]);
+  console.log("selection");
+  console.log(props.selected);
 
   function categoryChange(val) {
     props.callBack(val);
@@ -14,7 +16,7 @@ const SelectBox = (props) => {
     <>
       {props.selected ? (
         <Select
-          value={selection}
+          value={props.selected}
           key={Date.now()}
           showSearch
           style={{width: "100%"}}
@@ -42,8 +44,12 @@ const SelectBox = (props) => {
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         >
-          {props.data.map(function ({value, label},index) {
-            return <Option value={value} key={index}>{label}</Option>;
+          {props.data.map(function ({value, label}, index) {
+            return (
+              <Option value={value} key={index}>
+                {label}
+              </Option>
+            );
           })}
         </Select>
       )}
