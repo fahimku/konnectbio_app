@@ -351,6 +351,7 @@ class LinkinBioShop extends React.Component {
                 className="myshop-iframe"
               ></iframe>
             </div>
+            
             <Row>
               <Col xs="12" className="p-5">
               <ShopRightBar
