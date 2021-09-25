@@ -193,7 +193,8 @@ class LinkinBioShop extends React.Component {
     );
   };
   updatePost = async (id, url) => {
-    if (url == "") this.deletePost(id);
+    if (url == "")
+      this.deletePost(id);
     else
       await axios
         .put(`/posts/revise/${id}`, {
@@ -340,12 +341,12 @@ class LinkinBioShop extends React.Component {
           >
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
-              style={{height: "100%", width: "100%", paddingTop: "29px"}}
+              style={{height: "100%", width: "100%", paddingTop: ""}}
             >
               <iframe
                 src={`${
                   this.state.url + this.state.username
-                }?coupon=no&brand=no&iframe=yes`}
+                }?iframe=yes`}
                 title=""
                 className="myshop-iframe"
               ></iframe>

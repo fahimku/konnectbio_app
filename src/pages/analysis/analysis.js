@@ -17,7 +17,6 @@ import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 
 class Analysis extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -80,7 +79,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Post Performance</span>
+                        <span>Konnect.bio Analytics</span>
                       </NavLink>
                     </NavItem>
 
@@ -93,7 +92,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab21");
                         }}
                       >
-                        <span>Konnect.bio Analytics</span>
+                        <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -103,10 +102,10 @@ class Analysis extends React.Component {
                     activeTab={this.state.activeSecondTab}
                   >
                     <TabPane tabId="tab22">
-                      <PostPerfomance username={this.state.username} />
+                      <HighCharts username={this.state.username} />
                     </TabPane>
                     <TabPane tabId="tab21">
-                      <HighCharts username={this.state.username} />
+                      <PostPerfomance username={this.state.username} />
                     </TabPane>
                   </TabContent>
                 </Col>

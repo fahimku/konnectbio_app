@@ -429,12 +429,12 @@ class LinkinBio extends React.Component {
           >
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
-              style={{height: "100%", width: "100%", paddingTop: "29px"}}
+              style={{height: "100%", width: "100%", paddingTop: ""}}
             >
               <iframe
                 src={`${
                   this.state.url + this.state.username
-                }?coupon=no&brand=no&iframe=yes`}
+                }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                 title=""
                 className="myshop-iframe"
               ></iframe>

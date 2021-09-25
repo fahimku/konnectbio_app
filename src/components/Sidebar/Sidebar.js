@@ -95,7 +95,7 @@ class Sidebar extends React.Component {
             />
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Post"
+              header="My Posts"
               link="/app/linkinbio"
               isHeader
               iconElement={<span className="glyphicon glyphicon-link"></span>}
