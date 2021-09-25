@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button} from "reactstrap";
 import moment from "moment";
-import SelectBox from "../../../../components/SelectBox";
 import {Select} from "antd";
 
 const {Option} = Select;
@@ -48,7 +47,7 @@ const ShopRightBar = (props) => {
               </video>
             )}
           </div>
-          <form onSubmit={props.submited}>
+          <form onSubmit={props.submitted}>
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
               <input

@@ -20,9 +20,10 @@ class LinkinBioShop extends React.Component {
 
     this.error = this.error.bind(this);
     this.state = {
+      media_id: "",
       instagramPosts: null,
       categories: [],
-      category: "",
+      category: [],
       subCategories: [],
       subCategory: [],
       singlePost: "",
@@ -42,6 +43,8 @@ class LinkinBioShop extends React.Component {
       error: "",
     };
     this.props.addUserInfo("test");
+    this.changeCategory = this.changeCategory.bind(this);
+    this.changeSubCategory = this.changeSubCategory.bind(this);
   }
 
   componentDidMount() {
@@ -104,16 +107,23 @@ class LinkinBioShop extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
-        // console.log("DB category ID");
-        // console.log(response.data.message.categories[0].category_id);
-        this.setState({
-          dbCategoryId: response.data.message.categories[0].category_id,
+        this.setState({media_id: media_id});
+        let category = response.data.message.categories[0].category_id;
+        this.setState({category: category});
+        let subCategory = [];
+        let that = this;
+        this.fetchSubCategories(category).then(function () {
+          response.data.message.sub_categories.map((subCategoryId) => {
+            return subCategory.push(subCategoryId.sub_category_id);
+          });
+          that.setState({subCategory: subCategory});
         });
       })
       .catch((err) => {
         this.setState({
-          //  dbCategoryId: "",
+          category: [],
         });
+        this.setState({subCategory: []});
       });
   };
   //Fetch Categories
@@ -127,6 +137,7 @@ class LinkinBioShop extends React.Component {
       this.setState({categories: selectCategories});
     });
   };
+
   //Fetch Sub Categories
   async fetchSubCategories(category_id) {
     await axios
@@ -140,10 +151,9 @@ class LinkinBioShop extends React.Component {
             label: sub_category_name,
           });
         });
-        // this.setState({subCategories: selectSubCategories});
+        this.setState({subCategories: selectSubCategories});
       });
   }
-
   savePost = () => {
     this.setState(
       (previousState) => ({
@@ -182,13 +192,14 @@ class LinkinBioShop extends React.Component {
       }
     );
   };
-
   updatePost = async (id, url) => {
     if (url == "") this.deletePost(id);
     else
       await axios
         .put(`/posts/revise/${id}`, {
           redirected_url: url,
+          categories: [this.state.category],
+          sub_categories: this.state.subCategory,
         })
         .then((response) => {
           let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -247,7 +258,7 @@ class LinkinBioShop extends React.Component {
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.media_id;
       let lastPost = this.state.singlePost;
-      
+
       this.fetchSinglePost(mediaId);
       //unlinked last selected post
       if (lastPost) {
@@ -278,9 +289,10 @@ class LinkinBioShop extends React.Component {
     this.setState({error: error});
   }
 
+
   changeCategory = (category) => {
     if (category) {
-      // this.setState({category: category});
+      this.setState({category: category});
       this.fetchSubCategories(category);
     }
   };
@@ -340,8 +352,8 @@ class LinkinBioShop extends React.Component {
             </div>
             <Row>
               <Col xs="12" className="p-5">
-                <ShopRightBar
-                  updatePage={true}
+              <ShopRightBar
+                  submitted={this.submitted}
                   isSelectPost={this.state.selectPost}
                   selectPost={this.selectPost}
                   singlePost={this.state.singlePost}
@@ -349,12 +361,15 @@ class LinkinBioShop extends React.Component {
                   categories={this.state.categories}
                   dbCategoryId={this.state.dbCategoryId}
                   changeCategory={this.changeCategory}
+                  category={this.state.category}
+                  subCategory={this.state.subCategory}
                   changeSubCategory={this.changeSubCategory}
                   subCategories={this.state.subCategories}
                   savePost={this.savePost}
                   updatePost={(val1, val2) => {
                     this.updatePost(val1, val2);
                   }}
+                  media_id={this.state.media_id}
                   deletePost={this.deletePost}
                   callBack={(value) => {
                     this.setState({redirectedUrl: value});

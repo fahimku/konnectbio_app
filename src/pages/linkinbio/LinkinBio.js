@@ -237,42 +237,45 @@ class LinkinBio extends React.Component {
   }
 
   savePost = () => {
-    this.setState(
-      (previousState) => ({
-        currentPost: previousState.singlePost,
-      }),
-      async () => {
-        await axios
-          .post(`/posts/reserve`, {
-            id: this.state.currentPost.id,
-            caption: this.state.currentPost.caption,
-            media_url: this.state.currentPost.media_url,
-            media_type: this.state.currentPost.media_type,
-            timestamp: this.state.currentPost.timestamp,
-            redirected_url: this.state.redirectedUrl,
-            username: this.state.currentPost.username,
-            categories: [this.state.category],
-            sub_categories: this.state.subCategory,
-          })
-          .then((response) => {
-            let singlePostIndex = this.state.instagramPosts.data.findIndex(
-              (item) => item.id === this.state.currentPost.id
-            );
-            let currentPost = this.state.currentPost;
-            currentPost.redirected_url = this.state.redirectedUrl;
-            currentPost.linked = true;
-            let instagramPosts = JSON.parse(
-              JSON.stringify(this.state.instagramPosts)
-            );
-            instagramPosts.data[singlePostIndex] = currentPost;
-            this.setState({instagramPosts: instagramPosts}, () => {});
-            toast.success("Your Post is Linked Successfully");
-          })
-          .catch((err) => {
-            toast.error(err);
-          });
-      }
-    );
+    if (this.state.redirectedUrl) {
+      this.setState(
+        (previousState) => ({
+          currentPost: previousState.singlePost,
+        }),
+        async () => {
+          await axios
+            .post(`/posts/reserve`, {
+              id: this.state.currentPost.id,
+              caption: this.state.currentPost.caption,
+              media_url: this.state.currentPost.media_url,
+              media_type: this.state.currentPost.media_type,
+              timestamp: this.state.currentPost.timestamp,
+              redirected_url: this.state.redirectedUrl,
+              username: this.state.currentPost.username,
+              categories: [this.state.category],
+              sub_categories: this.state.subCategory,
+            })
+            .then((response) => {
+              let singlePostIndex = this.state.instagramPosts.data.findIndex(
+                (item) => item.id === this.state.currentPost.id
+              );
+              let currentPost = this.state.currentPost;
+              currentPost.redirected_url = this.state.redirectedUrl;
+              currentPost.linked = true;
+              let instagramPosts = JSON.parse(
+                JSON.stringify(this.state.instagramPosts)
+              );
+              instagramPosts.data[singlePostIndex] = currentPost;
+              this.setState({ instagramPosts: instagramPosts }, () => { });
+              toast.success("Your Post is Linked Successfully");
+            })
+            .catch((err) => {
+              toast.error(err);
+            });
+        }
+
+      );
+    }
   };
 
   updatePost = async (id, url) => {
@@ -351,9 +354,6 @@ class LinkinBio extends React.Component {
         JSON.stringify(this.state.instagramPosts)
       );
       instagramPosts.data[postIndex] = currentPost;
-
-      console.log("current post");
-      console.log(currentPost);
       this.setState({instagramPosts: instagramPosts});
       //link current post
       this.setState(
@@ -394,6 +394,11 @@ class LinkinBio extends React.Component {
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
+
+
+  submitted = (e) => {
+    e.preventDefault();
+  }
 
   render() {
     return (
@@ -438,6 +443,7 @@ class LinkinBio extends React.Component {
             <Row>
               <Col xs="12" className="p-5">
                 <ShopRightBar
+                  submitted={this.submitted}
                   isSelectPost={this.state.selectPost}
                   selectPost={this.selectPost}
                   singlePost={this.state.singlePost}
