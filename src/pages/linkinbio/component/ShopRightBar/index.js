@@ -8,12 +8,11 @@ const {Option} = Select;
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
+  const media_id = props.singlePost.id ? props.singlePost.id: props.singlePost.media_id;
 
   useEffect(() => {
-    console.log("props");
     setSubCategories(props.subCategories);
-  }, []);
+  }, [props.subCategories, props.changeSubCategory]);
 
   return (
     <>
@@ -63,14 +62,17 @@ const ShopRightBar = (props) => {
                 }}
               />
               <div className="select-categories mt-3">
-                {/* <Select
+                <Select
                   key={Date.now()}
-                  //value={props.dbCategoryId}
+                  value={props.category}
                   showSearch
                   style={{width: "100%"}}
-                  placeholder="Select a person"
+                  placeholder="Select Category"
                   optionFilterProp="children"
-                  //      onChange={props.changeSubCategory}
+                  clearable={false}
+                  searchable={false}
+                  required
+                  onChange={props.changeCategory}
                   // onFocus={onFocus}
                   // onBlur={onBlur}
                   // onSearch={onSearch}
@@ -83,25 +85,29 @@ const ShopRightBar = (props) => {
                   {props.categories.map(({value, label}, i) => (
                     <Option value={value}>{label}</Option>
                   ))}
-                </Select> */}
+                </Select>
 
-                <SelectBox
+                {/* <SelectBox
                   key={Date.now()}
                   data={props.categories}
                   selected={props.dbCategoryId}
                   callBack={(a) => {
                     props.changeCategory(a);
                   }}
-                />
+                /> */}
               </div>
               <div className="select-categories mt-3">
                 <Select
                   key={Date.now()}
                   mode="tags"
-                  defaultValue={[]}
-                  showSearch
+                  clearable={false}
+                  searchable={false}
+                  required
+                  //  \
+                  value={props.subCategory}
+                  // showSearch
                   style={{width: "100%"}}
-                  placeholder="Select a person"
+                  placeholder="Select Sub Category"
                   optionFilterProp="children"
                   onChange={props.changeSubCategory}
                   // onFocus={onFocus}
@@ -119,14 +125,11 @@ const ShopRightBar = (props) => {
                 </Select>
               </div>
               <div className="pane-button">
-                {props.singlePost.linked  || props.updatePage ? (
+                {props.singlePost.linked || props.updatePage ? (
                   <>
                     <Button
                       onClick={(ev) =>
-                        props.updatePost(
-                          media_id,
-                          props.redirectedUrl
-                        )
+                        props.updatePost(media_id, props.redirectedUrl)
                       }
                     >
                       &nbsp;&nbsp;Update&nbsp;&nbsp;

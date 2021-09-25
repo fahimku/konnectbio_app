@@ -2,7 +2,6 @@
 import axios from "axios";
 import React from "react";
 import {Row, Col} from "reactstrap";
-
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -24,7 +23,7 @@ class LinkinBio extends React.Component {
       media_id: "",
       instagramPosts: null,
       categories: [],
-      category: "",
+      category: [],
       subCategories: [],
       subCategory: [],
       singlePost: "",
@@ -44,6 +43,8 @@ class LinkinBio extends React.Component {
       error: "",
     };
     this.props.addUserInfo("test");
+    this.changeCategory = this.changeCategory.bind(this);
+    this.changeSubCategory = this.changeSubCategory.bind(this);
   }
 
   componentWillMount() {
@@ -187,14 +188,22 @@ class LinkinBio extends React.Component {
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
         this.setState({media_id: media_id});
-        this.setState({
-          dbCategoryId: response.data.message.categories[0].category_id,
+        let category = response.data.message.categories[0].category_id;
+        this.setState({category: category});
+        let subCategory = [];
+        let that = this;
+        this.fetchSubCategories(category).then(function () {
+          response.data.message.sub_categories.map((subCategoryId) => {
+            return subCategory.push(subCategoryId.sub_category_id);
+          });
+          that.setState({subCategory: subCategory});
         });
       })
       .catch((err) => {
-        // this.setState({
-        //   dbCategoryId: "",
-        // });
+        this.setState({
+          category: [],
+        });
+        this.setState({subCategory: []});
       });
   };
 
@@ -217,15 +226,12 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectSubCategories = [];
         const subCategories = response.data.message;
-
         subCategories.map(({sub_category_id, sub_category_name}) => {
           selectSubCategories.push({
             value: sub_category_id,
             label: sub_category_name,
           });
         });
-        console.log("this sub categories");
-        console.log(subCategories);
         this.setState({subCategories: selectSubCategories});
       });
   }
@@ -275,6 +281,8 @@ class LinkinBio extends React.Component {
       await axios
         .put(`/posts/revise/${id}`, {
           redirected_url: url,
+          categories: [this.state.category],
+          sub_categories: this.state.subCategory,
         })
         .then((response) => {
           let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -332,8 +340,8 @@ class LinkinBio extends React.Component {
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.id;
-      this.fetchSinglePost(mediaId);
       let lastPost = this.state.singlePost;
+      this.fetchSinglePost(mediaId);
       //unlinked last selected post
       if (lastPost) {
         lastPost.select = false;
@@ -344,8 +352,8 @@ class LinkinBio extends React.Component {
       );
       instagramPosts.data[postIndex] = currentPost;
 
-      console.log('current post');
-      console.log(currentPost)
+      console.log("current post");
+      console.log(currentPost);
       this.setState({instagramPosts: instagramPosts});
       //link current post
       this.setState(
@@ -437,6 +445,8 @@ class LinkinBio extends React.Component {
                   categories={this.state.categories}
                   dbCategoryId={this.state.dbCategoryId}
                   changeCategory={this.changeCategory}
+                  category={this.state.category}
+                  subCategory={this.state.subCategory}
                   changeSubCategory={this.changeSubCategory}
                   subCategories={this.state.subCategories}
                   savePost={this.savePost}

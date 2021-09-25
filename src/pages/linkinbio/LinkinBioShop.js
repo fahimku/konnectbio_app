@@ -21,7 +21,6 @@ class LinkinBioShop extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       instagramPosts: null,
-      media_id: "",
       categories: [],
       category: "",
       subCategories: [],
@@ -107,7 +106,6 @@ class LinkinBioShop extends React.Component {
       .then((response) => {
         // console.log("DB category ID");
         // console.log(response.data.message.categories[0].category_id);
-        this.setState({media_id: media_id});
         this.setState({
           dbCategoryId: response.data.message.categories[0].category_id,
         });
@@ -249,9 +247,8 @@ class LinkinBioShop extends React.Component {
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.media_id;
       let lastPost = this.state.singlePost;
-
+      
       this.fetchSinglePost(mediaId);
-
       //unlinked last selected post
       if (lastPost) {
         lastPost.select = false;

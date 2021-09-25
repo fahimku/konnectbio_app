@@ -16,7 +16,7 @@ const SelectBox = (props) => {
     <>
       {props.selected ? (
         <Select
-          value={props.selected}
+          //  value={props.selected}
           key={Date.now()}
           showSearch
           style={{width: "100%"}}
@@ -33,7 +33,7 @@ const SelectBox = (props) => {
         </Select>
       ) : (
         <Select
-          value={selection}
+          //    value={selection}
           key={Date.now()}
           showSearch
           style={{width: "100%"}}
