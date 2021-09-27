@@ -7,11 +7,20 @@ const {Option} = Select;
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id ? props.singlePost.id: props.singlePost.media_id;
+  const media_id = props.singlePost.id
+    ? props.singlePost.id
+    : props.singlePost.media_id;
 
   useEffect(() => {
+    console.log("post Type");
+    console.log(props.postType);
     setSubCategories(props.subCategories);
-  }, [props.subCategories, props.changeSubCategory]);
+  }, [
+    props.subCategories,
+    props.changeSubCategory,
+    props.changePostType,
+    props.postType,
+  ]);
 
   return (
     <>
@@ -95,6 +104,7 @@ const ShopRightBar = (props) => {
                   }}
                 /> */}
               </div>
+
               <div className="select-categories mt-3">
                 <Select
                   key={Date.now()}
@@ -123,6 +133,42 @@ const ShopRightBar = (props) => {
                   ))}
                 </Select>
               </div>
+
+              {props.singlePost.media_type == "VIDEO" && (
+                <>
+                  <div className="form-check form-check-inline mt-3">
+                    <input
+                      onChange={props.changePostType}
+                      className="form-check-input"
+                      type="radio"
+                      checked={props.postType == "video" ? "checked" : ""}
+                      name="postType"
+                      id="inlineRadio1"
+                      value="video"
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio1">
+                      Video
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      onChange={props.changePostType}
+                      className="form-check-input"
+                      type="radio"
+                      checked={
+                        props.postType == "advertisement" ? "checked" : ""
+                      }
+                      name="postType"
+                      id="inlineRadio2"
+                      value="advertisement"
+                    />
+                    <label className="form-check-label" htmlFor="inlineRadio2">
+                      Advertisement
+                    </label>
+                  </div>
+                </>
+              )}
+
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (
                   <>

@@ -10,6 +10,7 @@ const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,s
         if (instagramPosts.data[i].media_type == "IMAGE") {
           instaPosts.push(
             <Col key={i} xs="4">
+             <div className="mobile-image-box">
               <img
                 className={
                   instagramPosts.data[i].linked ||
@@ -27,16 +28,19 @@ const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,s
               ) : (
                 ""
               )}
+            </div>
             </Col>
+            
           );
         } else {
           instaPosts.push(
             <Col key={i} xs="4">
+              <div className="mobile-image-box">
               <video
                 oncontextmenu="return false;"
                 id="myVideo"
                 autoplay
-                controls
+ 
                 controlsList="nodownload"
                 className={
                   instagramPosts.data[i].linked ||
@@ -58,6 +62,7 @@ const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,s
               ) : (
                 ""
               )}
+              </div>
             </Col>
           );
         }

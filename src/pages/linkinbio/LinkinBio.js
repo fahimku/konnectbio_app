@@ -22,6 +22,7 @@ class LinkinBio extends React.Component {
     this.state = {
       media_id: "",
       instagramPosts: null,
+      postType: "image",
       categories: [],
       category: [],
       subCategories: [],
@@ -45,6 +46,7 @@ class LinkinBio extends React.Component {
     this.props.addUserInfo("test");
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
+    this.changePostType = this.changePostType.bind(this);
   }
 
   componentWillMount() {
@@ -187,23 +189,29 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+        let that = this;
+        this.setState({postType: response.data.message.post_type});
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
         let subCategory = [];
-        let that = this;
+
         this.fetchSubCategories(category).then(function () {
+          console.log(response.data.message);
           response.data.message.sub_categories.map((subCategoryId) => {
             return subCategory.push(subCategoryId.sub_category_id);
           });
           that.setState({subCategory: subCategory});
         });
+   
+     
       })
       .catch((err) => {
         this.setState({
           category: [],
         });
-        this.setState({subCategory: []});
+        this.setState({ subCategory: [] });
+       this.setState({ postType: 'image' });
       });
   };
 
@@ -254,6 +262,7 @@ class LinkinBio extends React.Component {
               username: this.state.currentPost.username,
               categories: [this.state.category],
               sub_categories: this.state.subCategory,
+              post_type: this.state.postType,
             })
             .then((response) => {
               let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -266,14 +275,13 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({instagramPosts: instagramPosts}, () => {});
               toast.success("Your Post is Linked Successfully");
             })
             .catch((err) => {
               toast.error(err);
             });
         }
-
       );
     }
   };
@@ -286,6 +294,7 @@ class LinkinBio extends React.Component {
           redirected_url: url,
           categories: [this.state.category],
           sub_categories: this.state.subCategory,
+          post_type:this.state.postType,
         })
         .then((response) => {
           let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -293,8 +302,7 @@ class LinkinBio extends React.Component {
           );
           let currentPost = this.state.singlePost;
           currentPost.redirected_url = url;
-          let instagramPosts = JSON.parse(
-            JSON.stringify(this.state.instagramPosts)
+          let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts)
           );
           instagramPosts.data[singlePostIndex] = currentPost;
           this.setState({instagramPosts: instagramPosts});
@@ -344,15 +352,20 @@ class LinkinBio extends React.Component {
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.id;
       let lastPost = this.state.singlePost;
+      
+
       this.fetchSinglePost(mediaId);
-      //unlinked last selected post
+
       if (lastPost) {
         lastPost.select = false;
       }
+
       currentPost.select = true;
+
       let instagramPosts = JSON.parse(
         JSON.stringify(this.state.instagramPosts)
       );
+
       instagramPosts.data[postIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       //link current post
@@ -367,7 +380,7 @@ class LinkinBio extends React.Component {
         }
       );
     }
-    this.setState({selectPost: state});
+    this.setState({ selectPost: state });
   };
 
   error(error) {
@@ -385,6 +398,13 @@ class LinkinBio extends React.Component {
     this.setState({subCategory: subCategories});
   };
 
+  changePostType = (e) => {
+    if (e.target.checked) {
+      console.log(e.target.value);
+      this.setState({postType: e.target.value});
+    }
+  };
+
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
     textField.innerText = this.state.url + this.state.username;
@@ -395,10 +415,9 @@ class LinkinBio extends React.Component {
     toast.success("Copied to Clipboard!");
   };
 
-
   submitted = (e) => {
     e.preventDefault();
-  }
+  };
 
   render() {
     return (
@@ -455,6 +474,8 @@ class LinkinBio extends React.Component {
                   subCategory={this.state.subCategory}
                   changeSubCategory={this.changeSubCategory}
                   subCategories={this.state.subCategories}
+                  changePostType={this.changePostType}
+                  postType={this.state.postType}
                   savePost={this.savePost}
                   updatePost={(val1, val2) => {
                     this.updatePost(val1, val2);

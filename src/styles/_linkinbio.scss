@@ -172,6 +172,11 @@
         overflow-x: hidden;
         width: 93%;
 
+        .mobile-image-box {
+            width: 83px;
+            height: 104px;
+        }
+
         span {
             position: absolute;
             bottom: 0px;
@@ -190,8 +195,8 @@
 
         img,
         video {
-            width: 83px;
-            height: 104px;
+            width: 100%;
+            height: 100%;
             -webkit-filter: grayscale(100%);
             filter: grayscale(100%);
             opacity: 0.5;

@@ -22,6 +22,7 @@ class LinkinBioShop extends React.Component {
     this.state = {
       media_id: "",
       instagramPosts: null,
+      post_type: "",
       categories: [],
       category: [],
       subCategories: [],
@@ -193,8 +194,7 @@ class LinkinBioShop extends React.Component {
     );
   };
   updatePost = async (id, url) => {
-    if (url == "")
-      this.deletePost(id);
+    if (url == "") this.deletePost(id);
     else
       await axios
         .put(`/posts/revise/${id}`, {
@@ -290,7 +290,6 @@ class LinkinBioShop extends React.Component {
     this.setState({error: error});
   }
 
-
   changeCategory = (category) => {
     if (category) {
       this.setState({category: category});
@@ -300,6 +299,14 @@ class LinkinBioShop extends React.Component {
 
   changeSubCategory = (subCategories) => {
     this.setState({subCategory: subCategories});
+  };
+
+  changePostType = (e) => {
+    console.log("radio change");
+    if (e.target.checked) {
+      console.log(e.target.value);
+      this.setState({postType: e.target.value});
+    }
   };
 
   copyToClipboard = (e) => {
@@ -344,17 +351,15 @@ class LinkinBioShop extends React.Component {
               style={{height: "100%", width: "100%", paddingTop: ""}}
             >
               <iframe
-                src={`${
-                  this.state.url + this.state.username
-                }?iframe=yes`}
+                src={`${this.state.url + this.state.username}?iframe=yes`}
                 title=""
                 className="myshop-iframe"
               ></iframe>
             </div>
-            
+
             <Row>
               <Col xs="12" className="p-5">
-              <ShopRightBar
+                <ShopRightBar
                   submitted={this.submitted}
                   isSelectPost={this.state.selectPost}
                   selectPost={this.selectPost}
@@ -366,6 +371,7 @@ class LinkinBioShop extends React.Component {
                   category={this.state.category}
                   subCategory={this.state.subCategory}
                   changeSubCategory={this.changeSubCategory}
+                  changePostType={this.changePostType}
                   subCategories={this.state.subCategories}
                   savePost={this.savePost}
                   updatePost={(val1, val2) => {
