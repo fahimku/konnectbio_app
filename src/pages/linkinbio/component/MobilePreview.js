@@ -1,20 +1,25 @@
-import React  from 'react';
-import {Row, Col } from "reactstrap";
+import React from "react";
+import {Row, Col} from "reactstrap";
 import {Link} from "react-router-dom";
 
-const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,selectPost}) => {
-
-    const instaPosts = [];
-    if (instagramPosts) {
-      for (let i = 0; i < instagramPosts.data.length; i++) {
-        if (instagramPosts.data[i].media_type == "IMAGE") {
-          instaPosts.push(
-            <Col key={i} xs="4">
-             <div className="mobile-image-box">
+const MobilePreview = ({
+  placeholder,
+  username,
+  error,
+  paneDidMount,
+  instagramPosts,
+  selectPost,
+}) => {
+  const instaPosts = [];
+  if (instagramPosts) {
+    for (let i = 0; i < instagramPosts.data.length; i++) {
+      if (instagramPosts.data[i].media_type == "IMAGE") {
+        instaPosts.push(
+          <Col key={i} xs="4">
+            <div className="mobile-image-box">
               <img
                 className={
-                  instagramPosts.data[i].linked ||
-                  instagramPosts.data[i].select
+                  instagramPosts.data[i].linked || instagramPosts.data[i].select
                     ? "linked"
                     : ""
                 }
@@ -23,28 +28,21 @@ const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,s
                 onClick={(ev) => selectPost(true, i)}
                 src={instagramPosts.data[i].media_url}
               />
-              {instagramPosts.data[i].linked ? (
-                <span>LINKED</span>
-              ) : (
-                ""
-              )}
+              {instagramPosts.data[i].linked ? <span>LINKED</span> : ""}
             </div>
-            </Col>
-            
-          );
-        } else {
-          instaPosts.push(
-            <Col key={i} xs="4">
-              <div className="mobile-image-box">
+          </Col>
+        );
+      } else {
+        instaPosts.push(
+          <Col key={i} xs="4">
+            <div className="mobile-image-box">
               <video
                 oncontextmenu="return false;"
                 id="myVideo"
                 autoplay
- 
                 controlsList="nodownload"
                 className={
-                  instagramPosts.data[i].linked ||
-                  instagramPosts.data[i].select
+                  instagramPosts.data[i].linked || instagramPosts.data[i].select
                     ? "linked"
                     : ""
                 }
@@ -57,41 +55,34 @@ const MobilePreview = ({placeholder,username,error,paneDidMount,instagramPosts,s
                   type="video/mp4"
                 ></source>
               </video>
-              {instagramPosts.data[i].linked ? (
-                <span>LINKED</span>
-              ) : (
-                ""
-              )}
-              </div>
-            </Col>
-          );
-        }
+              {instagramPosts.data[i].linked ? <span>LINKED</span> : ""}
+            </div>
+          </Col>
+        );
       }
     }
-        
-    return(
-        <div className="mobile-preview">
-        <div className="mobile-header">
-          <img className="place-holder-image" src={placeholder} />
-          <span className="place-holder-name">{username}</span>
-        </div>
-        {error ? (
-          <div className="error">
-            {error.message}
-            <br></br>
-            <Link to="/connect">Connect Instagram</Link>
-          </div>
-        ) : (
-          <div>
-            <div className="visit-website">Visit Website</div>
-            <div ref={paneDidMount} className="mobile-gallery">
-              <Row>{instaPosts}</Row>
-            </div>
-          </div>
-        )}
+  }
+  return (
+    <div className="mobile-preview">
+      <div className="mobile-header">
+        <img className="place-holder-image" src={placeholder} />
+        <span className="place-holder-name">{username}</span>
       </div>
-    )
-}
-
-
-export default MobilePreview
+      {error ? (
+        <div className="error">
+          {error.message}
+          <br></br>
+          <Link to="/connect">Connect Instagram</Link>
+        </div>
+      ) : (
+        <div>
+          <div className="visit-website">Visit Website</div>
+          <div ref={paneDidMount} className="mobile-gallery">
+            <Row>{instaPosts}</Row>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+export default MobilePreview;

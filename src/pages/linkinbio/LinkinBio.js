@@ -13,7 +13,9 @@ import ShopRightBar from "./component/ShopRightBar/index";
 import Header from "./component/Header";
 
 class LinkinBio extends React.Component {
+
   constructor(props) {
+
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
@@ -29,7 +31,6 @@ class LinkinBio extends React.Component {
       subCategory: [],
       singlePost: "",
       dbSinglePost: "",
-      dbCategoryId: "",
       dbCategoryName: "",
       dbSubCategory: "",
       currentPost: "",
@@ -41,6 +42,7 @@ class LinkinBio extends React.Component {
       dropdownOpen: false,
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
+      autoFocus: false,
       error: "",
     };
     this.props.addUserInfo("test");
@@ -115,7 +117,6 @@ class LinkinBio extends React.Component {
       access_token: accessToken,
     });
   }
-
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios
@@ -195,23 +196,19 @@ class LinkinBio extends React.Component {
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
         let subCategory = [];
-
         this.fetchSubCategories(category).then(function () {
-          console.log(response.data.message);
           response.data.message.sub_categories.map((subCategoryId) => {
             return subCategory.push(subCategoryId.sub_category_id);
           });
           that.setState({subCategory: subCategory});
         });
-   
-     
       })
       .catch((err) => {
         this.setState({
           category: [],
         });
-        this.setState({ subCategory: [] });
-       this.setState({ postType: 'image' });
+        this.setState({subCategory: []});
+        this.setState({postType: "image"});
       });
   };
 
@@ -294,7 +291,7 @@ class LinkinBio extends React.Component {
           redirected_url: url,
           categories: [this.state.category],
           sub_categories: this.state.subCategory,
-          post_type:this.state.postType,
+          post_type: this.state.postType,
         })
         .then((response) => {
           let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -302,7 +299,8 @@ class LinkinBio extends React.Component {
           );
           let currentPost = this.state.singlePost;
           currentPost.redirected_url = url;
-          let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts)
+          let instagramPosts = JSON.parse(
+            JSON.stringify(this.state.instagramPosts)
           );
           instagramPosts.data[singlePostIndex] = currentPost;
           this.setState({instagramPosts: instagramPosts});
@@ -346,13 +344,13 @@ class LinkinBio extends React.Component {
   };
 
   selectPost = (state, postIndex) => {
+    this.setState((prevState) => ({autoFocus: !prevState.autoFocus}));
     this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.id;
       let lastPost = this.state.singlePost;
-      
 
       this.fetchSinglePost(mediaId);
 
@@ -380,7 +378,7 @@ class LinkinBio extends React.Component {
         }
       );
     }
-    this.setState({ selectPost: state });
+    this.setState({selectPost: state});
   };
 
   error(error) {
@@ -463,12 +461,12 @@ class LinkinBio extends React.Component {
               <Col xs="12" className="p-5">
                 <ShopRightBar
                   submitted={this.submitted}
+                  autoFocus={this.state.autoFocus}
                   isSelectPost={this.state.selectPost}
                   selectPost={this.selectPost}
                   singlePost={this.state.singlePost}
                   redirectedUrl={this.state.redirectedUrl}
                   categories={this.state.categories}
-                  dbCategoryId={this.state.dbCategoryId}
                   changeCategory={this.changeCategory}
                   category={this.state.category}
                   subCategory={this.state.subCategory}
@@ -494,11 +492,9 @@ class LinkinBio extends React.Component {
     );
   }
 }
-
 const mapDispatchToProps = (dispatch) => {
   return {
     addUserInfo: (text) => dispatch(addUserInfo(text)),
   };
 };
-
 export default connect(null, mapDispatchToProps)(LinkinBio);

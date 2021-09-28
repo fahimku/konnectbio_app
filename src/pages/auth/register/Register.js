@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
+import logo from '../../../images/logo.png';
 
 class Register extends React.Component {
   static propTypes = {
@@ -141,7 +142,7 @@ class Register extends React.Component {
         <Container>
           <h5 className="auth-logo">
             <i className="la la-circle text-gray" />
-            KONNECT BIO
+            <img src={logo}/>
             <i className="la la-circle text-warning" />
           </h5>
           <Widget

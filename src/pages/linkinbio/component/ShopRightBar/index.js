@@ -1,24 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {Button} from "reactstrap";
 import moment from "moment";
 import {Select} from "antd";
-
-const {Option} = Select;
+const { Option } = Select;
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id
-    ? props.singlePost.id
-    : props.singlePost.media_id;
+  const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
+
+  const redirectedUrlRef = useRef(null);
 
   useEffect(() => {
-    console.log("post Type");
-    console.log(props.postType);
     setSubCategories(props.subCategories);
   }, [
     props.subCategories,
     props.changeSubCategory,
     props.changePostType,
+    props.postType,
+  ]);
+
+  useEffect(() => {
+    redirectedUrlRef.current.focus();
+  }, [
     props.postType,
   ]);
 
@@ -60,7 +63,9 @@ const ShopRightBar = (props) => {
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
               <input
+                ref={redirectedUrlRef}
                 required
+                autoFocus
                 type="url"
                 value={props.redirectedUrl}
                 placeholder="Add a link to any web page"

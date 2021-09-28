@@ -22,14 +22,15 @@ class LinkinBioShop extends React.Component {
     this.state = {
       media_id: "",
       instagramPosts: null,
-      post_type: "",
+      postType: "image",
+      page: 1,
+      limit: 12,
       categories: [],
       category: [],
       subCategories: [],
       subCategory: [],
       singlePost: "",
       dbSinglePost: "",
-      dbCategoryId: "",
       dbCategoryName: "",
       dbSubCategory: "",
       currentPost: "",
@@ -42,91 +43,63 @@ class LinkinBioShop extends React.Component {
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
       error: "",
+      autoFocus:false,
     };
     this.props.addUserInfo("test");
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
+    this.changePostType = this.changePostType.bind(this);
   }
 
   componentDidMount() {
-    this.fetchInstagramPosts();
+    this.fetchInstagramPosts(
+      this.state.username,
+      this.state.limit,
+      this.state.page
+    );
     this.fetchCategories();
   }
 
   //Second Request From User
-  async fetchInstagramPosts() {
+  async fetchInstagramPosts(username, limit, page) {
     await axios
-      .get(`profile/${this.state.username}`)
+      .get(`profile/${username}?limit=${limit}&page=${page}`)
       .then((response) => {
         this.setState({instagramPosts: response.data.message.result});
-        if (response.data)
-          this.setState({
-            nextPageUrl: response.data.message.result.paging.next,
-          });
+        if (response.data.message.result.hasOwnProperty("next")) {
+          console.log("next");
+          console.log(response.data.message.result.next.page);
+          this.setState({page: response.data.message.result.next.page});
+        }
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  //Next Page Instagram Posts Request From User
-  // async nextPageInstagramPosts(url, username) {
-  //   await axios
-  //     .post(`/social/ig/nextMedia/${username}`, {
-  //       url: url,
-  //     })
-  //     .then((response) => {
-  //       let instagramPosts = [];
-  //       let nextPageInstagramPosts = response.data;
-  //       let PreviousInstagramPosts = this.state.instagramPosts;
-  //       //Check Instagram has more posts
-  //       if (nextPageInstagramPosts.paging.hasOwnProperty("next")) {
-  //         this.setState({nextPageUrl: nextPageInstagramPosts.paging.next});
-  //       } else {
-  //         this.setState({nextPageUrl: ""});
-  //       }
-  //       instagramPosts.push(PreviousInstagramPosts);
-  //       for (let i = 0; i < nextPageInstagramPosts.data.length; i++) {
-  //         instagramPosts[0].data.push(nextPageInstagramPosts.data[i]);
-  //       }
-  //       this.setState({instagramPost: instagramPosts});
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.data.message.type) {
-  //         localStorage.removeItem("access_token");
-  //         this.setState({
-  //           error: {
-  //             type: "InstagramAuthFail",
-  //             message:
-  //               "Your Instagram connection is expired. pleased connect in again",
-  //           },
-  //         });
-  //       }
-  //     });
-  // }
-  // Fetch Single Post
-  fetchSinglePost = async (media_id) => {
+  //
+  async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`/posts/retrieve/${media_id}`)
+      .get(`profile/${username}?limit=${limit}&page=${page}`)
       .then((response) => {
-        this.setState({media_id: media_id});
-        let category = response.data.message.categories[0].category_id;
-        this.setState({category: category});
-        let subCategory = [];
-        let that = this;
-        this.fetchSubCategories(category).then(function () {
-          response.data.message.sub_categories.map((subCategoryId) => {
-            return subCategory.push(subCategoryId.sub_category_id);
-          });
-          that.setState({subCategory: subCategory});
-        });
+        // console.log(response.data.message.result);
+        if (response.data.message.result.hasOwnProperty("next")) {
+          this.setState({page: response.data.message.result.next.page});
+        } else {
+          this.setState({page: 0});
+        }
+        let instagramPosts = [];
+        let nextPageInstagramPosts = response.data.message.result.data;
+        let PreviousInstagramPosts = this.state.instagramPosts;
+        instagramPosts.push(PreviousInstagramPosts);
+        for (let i = 0; i < nextPageInstagramPosts.length; i++) {
+          instagramPosts[0].data.push(nextPageInstagramPosts[i]);
+        }
+        this.setState({instagramPosts: instagramPosts[0]});
       })
       .catch((err) => {
-        this.setState({
-          category: [],
-        });
-        this.setState({subCategory: []});
+        console.log(err);
       });
-  };
+  }
   //Fetch Categories
   fetchCategories = async () => {
     await axios.post(`/common/receive/categories`).then((response) => {
@@ -193,6 +166,7 @@ class LinkinBioShop extends React.Component {
       }
     );
   };
+
   updatePost = async (id, url) => {
     if (url == "") this.deletePost(id);
     else
@@ -201,6 +175,7 @@ class LinkinBioShop extends React.Component {
           redirected_url: url,
           categories: [this.state.category],
           sub_categories: this.state.subCategory,
+          post_type: this.state.postType,
         })
         .then((response) => {
           let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -242,19 +217,51 @@ class LinkinBioShop extends React.Component {
   handleScroll = (event) => {
     let node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    // if (bottom) {
-    //   if (this.state.nextPageUrl) {
-    //     this.nextPageInstagramPosts(
-    //       this.state.nextPageUrl,
-    //       this.state.username
-    //     );
-    //   }
-    // }
+    if (bottom) {
+      if (this.state.page) {
+        this.nextPageInstagramPosts(
+          this.state.username,
+          this.state.limit,
+          this.state.page
+        );
+      }
+    }
+  };
+
+  // Fetch Single Post
+  fetchSinglePost = async (media_id) => {
+    await axios
+      .get(`/posts/retrieve/${media_id}`)
+      .then((response) => {
+        let that = this;
+        this.setState({postType: response.data.message.post_type});
+        this.setState({media_id: media_id});
+        let category = response.data.message.categories[0].category_id;
+        this.setState({category: category});
+        let subCategory = [];
+
+        this.fetchSubCategories(category).then(function () {
+          response.data.message.sub_categories.map((subCategoryId) => {
+            return subCategory.push(subCategoryId.sub_category_id);
+          });
+          that.setState({subCategory: subCategory});
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          category: [],
+        });
+        this.setState({subCategory: []});
+        this.setState({postType: "image"});
+      });
   };
 
   selectPost = (state, postIndex) => {
     this.fetchCategories();
     if (postIndex !== "") {
+      this.setState((prevState) => ({
+        autoFocus: !prevState.autoFocus,
+      }));
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.media_id;
@@ -302,9 +309,7 @@ class LinkinBioShop extends React.Component {
   };
 
   changePostType = (e) => {
-    console.log("radio change");
     if (e.target.checked) {
-      console.log(e.target.value);
       this.setState({postType: e.target.value});
     }
   };
@@ -360,19 +365,20 @@ class LinkinBioShop extends React.Component {
             <Row>
               <Col xs="12" className="p-5">
                 <ShopRightBar
+                  autoFocus={this.state.autoFocus}
                   submitted={this.submitted}
                   isSelectPost={this.state.selectPost}
                   selectPost={this.selectPost}
                   singlePost={this.state.singlePost}
                   redirectedUrl={this.state.redirectedUrl}
                   categories={this.state.categories}
-                  dbCategoryId={this.state.dbCategoryId}
                   changeCategory={this.changeCategory}
                   category={this.state.category}
                   subCategory={this.state.subCategory}
                   changeSubCategory={this.changeSubCategory}
-                  changePostType={this.changePostType}
                   subCategories={this.state.subCategories}
+                  changePostType={this.changePostType}
+                  postType={this.state.postType}
                   savePost={this.savePost}
                   updatePost={(val1, val2) => {
                     this.updatePost(val1, val2);
