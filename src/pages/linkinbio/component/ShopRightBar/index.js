@@ -1,13 +1,14 @@
 import React, {useEffect, useState, useRef} from "react";
+import Video from "../../../../components/Video";
 import {Button} from "reactstrap";
 import moment from "moment";
 import {Select} from "antd";
-const { Option } = Select;
+const {Option} = Select;
 
 const ShopRightBar = (props) => {
+
   const [subCategories, setSubCategories] = useState([]);
   const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
-
   const redirectedUrlRef = useRef(null);
 
   useEffect(() => {
@@ -21,9 +22,7 @@ const ShopRightBar = (props) => {
 
   useEffect(() => {
     redirectedUrlRef.current.focus();
-  }, [
-    props.postType,
-  ]);
+  }, [props.postType]);
 
   return (
     <>
@@ -42,23 +41,14 @@ const ShopRightBar = (props) => {
         </div>
         <div className="image-wrapper">
           <div className="image-box">
-            {props.singlePost.media_type == "IMAGE" ? (
+            {props.singlePost.media_type == "IMAGE" && (
               <img src={`${props.singlePost.media_url}`} />
-            ) : (
-              <video
-                oncontextmenu="return false;"
-                id="myVideo"
-                autoplay
-                controls
-                controlsList="nodownload"
-              >
-                <source
-                  src={`${props.singlePost.media_url}`}
-                  type="video/mp4"
-                ></source>
-              </video>
+            )}
+            {props.singlePost.media_type == "VIDEO" && (
+              <Video src={props.singlePost.media_url} />
             )}
           </div>
+
           <form onSubmit={props.submitted}>
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
@@ -173,7 +163,6 @@ const ShopRightBar = (props) => {
                   </div>
                 </>
               )}
-
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (
                   <>

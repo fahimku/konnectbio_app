@@ -13,11 +13,11 @@ import ShopRightBar from "./component/ShopRightBar/index";
 import Header from "./component/Header";
 
 class LinkinBioShop extends React.Component {
+
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
-
     this.error = this.error.bind(this);
     this.state = {
       media_id: "",
@@ -43,7 +43,7 @@ class LinkinBioShop extends React.Component {
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
       error: "",
-      autoFocus:false,
+      autoFocus: false,
     };
     this.props.addUserInfo("test");
     this.changeCategory = this.changeCategory.bind(this);
@@ -67,8 +67,6 @@ class LinkinBioShop extends React.Component {
       .then((response) => {
         this.setState({instagramPosts: response.data.message.result});
         if (response.data.message.result.hasOwnProperty("next")) {
-          console.log("next");
-          console.log(response.data.message.result.next.page);
           this.setState({page: response.data.message.result.next.page});
         }
       })
@@ -128,6 +126,7 @@ class LinkinBioShop extends React.Component {
         this.setState({subCategories: selectSubCategories});
       });
   }
+
   savePost = () => {
     this.setState(
       (previousState) => ({
@@ -239,7 +238,6 @@ class LinkinBioShop extends React.Component {
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
         let subCategory = [];
-
         this.fetchSubCategories(category).then(function () {
           response.data.message.sub_categories.map((subCategoryId) => {
             return subCategory.push(subCategoryId.sub_category_id);

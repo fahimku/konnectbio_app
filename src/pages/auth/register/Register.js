@@ -26,7 +26,7 @@ class Register extends React.Component {
         {value: "Influencer", label: "Influencer"},
         {value: "Brand", label: "Brand"},
       ],
-      country: "pakistan",
+      country: "",
       city: "",
       password: "",
       confirmPassword: "",
