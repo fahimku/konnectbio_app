@@ -74,6 +74,8 @@ import LinkinBio from "../../pages/linkinbio/LinkinBio";
 import Analysis from "../../pages/analysis/analysis";
 import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
+import Coupons from "../../pages/coupons";
+
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
   static propTypes = {
@@ -419,6 +421,8 @@ class Layout extends React.Component {
                     <Route path="/app/analysis" exact component={Analysis} />
                     <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
                     <Route path="/app/media/library" exact component={MediaLibrary} />
+                    <Route path="/app/coupons" exact component={Coupons} />
+                    
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

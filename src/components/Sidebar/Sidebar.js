@@ -115,8 +115,8 @@ class Sidebar extends React.Component {
             />
             <LinksGroup
               className="sidebar-nav-links"
-              header="My Coupon"
-              link="/app/extra/coupon"
+              header="My Coupons"
+              link="/app/coupons"
               isHeader
               iconElement={<span className="fa fa-gift"></span>}
               // label="Awesome"
