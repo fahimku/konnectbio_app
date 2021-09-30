@@ -13,13 +13,13 @@ import ShopRightBar from "./component/ShopRightBar/index";
 import Header from "./component/Header";
 
 class LinkinBioShop extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      loading:false,
       media_id: "",
       instagramPosts: null,
       postType: "image",
@@ -74,7 +74,7 @@ class LinkinBioShop extends React.Component {
         console.log(err);
       });
   }
-  //
+  //nextPageInstagramPosts
   async nextPageInstagramPosts(username, limit, page) {
     await axios
       .get(`profile/${username}?limit=${limit}&page=${page}`)
@@ -128,47 +128,53 @@ class LinkinBioShop extends React.Component {
   }
 
   savePost = () => {
-    this.setState(
-      (previousState) => ({
-        currentPost: previousState.singlePost,
-      }),
-      async () => {
-        await axios
-          .post(`/posts/reserve`, {
-            id: this.state.currentPost.id,
-            caption: this.state.currentPost.caption,
-            media_url: this.state.currentPost.media_url,
-            media_type: this.state.currentPost.media_type,
-            timestamp: this.state.currentPost.timestamp,
-            redirected_url: this.state.redirectedUrl,
-            username: this.state.currentPost.username,
-            categories: [this.state.category],
-            sub_categories: this.state.subCategory,
-          })
-          .then((response) => {
-            let singlePostIndex = this.state.instagramPosts.data.findIndex(
-              (item) => item.id === this.state.currentPost.id
-            );
-            let currentPost = this.state.currentPost;
-            currentPost.redirected_url = this.state.redirectedUrl;
-            currentPost.linked = true;
-            let instagramPosts = JSON.parse(
-              JSON.stringify(this.state.instagramPosts)
-            );
-            instagramPosts.data[singlePostIndex] = currentPost;
-            this.setState({instagramPosts: instagramPosts}, () => {});
-            toast.success("Your Post is Linked Successfully");
-          })
-          .catch((err) => {
-            toast.error(err);
-          });
-      }
-    );
+    if (this.state.redirectedUrl) {
+      this.setState(
+        (previousState) => ({
+          currentPost: previousState.singlePost,
+        }),
+        async () => {
+          this.setState({loading: true});
+          await axios
+            .post(`/posts/reserve`, {
+              id: this.state.currentPost.id,
+              caption: this.state.currentPost.caption,
+              media_url: this.state.currentPost.media_url,
+              media_type: this.state.currentPost.media_type,
+              timestamp: this.state.currentPost.timestamp,
+              redirected_url: this.state.redirectedUrl,
+              username: this.state.currentPost.username,
+              categories: [this.state.category],
+              sub_categories: this.state.subCategory,
+              post_type: this.state.postType,
+            })
+            .then((response) => {
+              this.setState({loading: false});
+              let singlePostIndex = this.state.instagramPosts.data.findIndex(
+                (item) => item.id === this.state.currentPost.id
+              );
+              let currentPost = this.state.currentPost;
+              currentPost.redirected_url = this.state.redirectedUrl;
+              currentPost.linked = true;
+              let instagramPosts = JSON.parse(
+                JSON.stringify(this.state.instagramPosts)
+              );
+              instagramPosts.data[singlePostIndex] = currentPost;
+              this.setState({instagramPosts: instagramPosts}, () => {});
+              toast.success("Your Post is Linked Successfully");
+            })
+            .catch((err) => {
+              this.setState({loading: false});
+              toast.error(err);
+            });
+        }
+      );
+    }
   };
 
+
   updatePost = async (id, url) => {
-    if (url == "") this.deletePost(id);
-    else
+      this.setState({loading:true})
       await axios
         .put(`/posts/revise/${id}`, {
           redirected_url: url,
@@ -188,10 +194,12 @@ class LinkinBioShop extends React.Component {
           instagramPosts.data[singlePostIndex] = currentPost;
           this.setState({instagramPosts: instagramPosts});
           toast.success("Your Post Link is Updated");
+          this.setState({loading:false})
         });
   };
 
   deletePost = async (id) => {
+    this.setState({loading:true})
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -204,6 +212,7 @@ class LinkinBioShop extends React.Component {
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
+      this.setState({loading:false})
     });
   };
 
@@ -364,6 +373,7 @@ class LinkinBioShop extends React.Component {
             <Row>
               <Col xs="12" className="p-5">
                 <ShopRightBar
+                  loading={this.state.loading}
                   autoFocus={this.state.autoFocus}
                   submitted={this.submitted}
                   isSelectPost={this.state.selectPost}
@@ -378,7 +388,7 @@ class LinkinBioShop extends React.Component {
                   subCategories={this.state.subCategories}
                   changePostType={this.changePostType}
                   postType={this.state.postType}
-                  savePost={this.savePost}
+                //  savePost={this.savePost}
                   updatePost={(val1, val2) => {
                     this.updatePost(val1, val2);
                   }}

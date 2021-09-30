@@ -72,8 +72,10 @@ import BreadcrumbHistory from "../BreadcrumbHistory";
 import LinkinBio from "../../pages/linkinbio/LinkinBio";
 //import Analytic from '../../pages/analytic/Analytic';
 import Analysis from "../../pages/analysis/analysis";
+import Brands from "../../pages/brands/search";
 import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
+
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
   static propTypes = {
@@ -416,6 +418,7 @@ class Layout extends React.Component {
                     <Route path="/app/core/grid" exact component={CoreGrid} />
                     <Route path="/app/linkinbio" exact component={LinkinBio} />
                     <Route path="/app/linkinbio-shop" exact component={LinkinBioShop} />
+                    <Route path="/app/brands" exact component={Brands} />
                     <Route path="/app/analysis" exact component={Analysis} />
                     <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
                     <Route path="/app/media/library" exact component={MediaLibrary} />
