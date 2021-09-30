@@ -1,4 +1,3 @@
-/* eslint-disable */
 import axios from "axios";
 import React from "react";
 import {Row, Col} from "reactstrap";
@@ -13,16 +12,14 @@ import ShopRightBar from "./component/ShopRightBar/index";
 import Header from "./component/Header";
 
 class LinkinBio extends React.Component {
-
   constructor(props) {
-
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
-
     this.error = this.error.bind(this);
     this.state = {
       media_id: "",
+      loading: false,
       instagramPosts: null,
       postType: "image",
       categories: [],
@@ -248,6 +245,7 @@ class LinkinBio extends React.Component {
           currentPost: previousState.singlePost,
         }),
         async () => {
+          this.setState({loading: true});
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
@@ -262,6 +260,7 @@ class LinkinBio extends React.Component {
               post_type: this.state.postType,
             })
             .then((response) => {
+              this.setState({loading: false});
               let singlePostIndex = this.state.instagramPosts.data.findIndex(
                 (item) => item.id === this.state.currentPost.id
               );
@@ -276,6 +275,7 @@ class LinkinBio extends React.Component {
               toast.success("Your Post is Linked Successfully");
             })
             .catch((err) => {
+              this.setState({loading: false});
               toast.error(err);
             });
         }
@@ -284,31 +284,32 @@ class LinkinBio extends React.Component {
   };
 
   updatePost = async (id, url) => {
-    if (url == "") this.deletePost(id);
-    else
-      await axios
-        .put(`/posts/revise/${id}`, {
-          redirected_url: url,
-          categories: [this.state.category],
-          sub_categories: this.state.subCategory,
-          post_type: this.state.postType,
-        })
-        .then((response) => {
-          let singlePostIndex = this.state.instagramPosts.data.findIndex(
-            (item) => item.id === id
-          );
-          let currentPost = this.state.singlePost;
-          currentPost.redirected_url = url;
-          let instagramPosts = JSON.parse(
-            JSON.stringify(this.state.instagramPosts)
-          );
-          instagramPosts.data[singlePostIndex] = currentPost;
-          this.setState({instagramPosts: instagramPosts});
-          toast.success("Your Post Link is Updated");
-        });
+    this.setState({loading: true});
+    await axios
+      .put(`/posts/revise/${id}`, {
+        redirected_url: url,
+        categories: [this.state.category],
+        sub_categories: this.state.subCategory,
+        post_type: this.state.postType,
+      })
+      .then((response) => {
+        this.setState({loading: false});
+        let singlePostIndex = this.state.instagramPosts.data.findIndex(
+          (item) => item.id === id
+        );
+        let currentPost = this.state.singlePost;
+        currentPost.redirected_url = url;
+        let instagramPosts = JSON.parse(
+          JSON.stringify(this.state.instagramPosts)
+        );
+        instagramPosts.data[singlePostIndex] = currentPost;
+        this.setState({instagramPosts: instagramPosts});
+        toast.success("Your Post Link is Updated");
+      });
   };
 
   deletePost = async (id) => {
+    this.setState({loading:true})
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -321,6 +322,7 @@ class LinkinBio extends React.Component {
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
+      this.setState({loading:false})
     });
   };
 
@@ -460,6 +462,7 @@ class LinkinBio extends React.Component {
             <Row>
               <Col xs="12" className="p-5">
                 <ShopRightBar
+                  loading={this.state.loading}
                   submitted={this.submitted}
                   autoFocus={this.state.autoFocus}
                   isSelectPost={this.state.selectPost}

@@ -27,16 +27,23 @@ class Sidebar extends React.Component {
 
   static defaultProps = {
     sidebarStatic: true,
-    sidebarOpened: false,
+    sidebarOpened: true,
     activeItem: "",
   };
 
   constructor(props) {
     super(props);
-
+    this.state = {
+      userType: "",
+    };
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.doLogout = this.doLogout.bind(this);
+  }
+
+  componentDidMount() {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.setState({userType: userInfo.user_type});
   }
 
   onMouseEnter() {
@@ -82,85 +89,187 @@ class Sidebar extends React.Component {
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
           </header>
+
           <ul className={s.nav}>
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Shop"
-              link="/app/linkinbio-shop"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Posts"
-              link="/app/linkinbio"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Analytics"
-              link="/app/analysis"
-              isHeader
-              iconElement={<span className="fa fa-bar-chart-o"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Coupon"
-              link="/app/extra/coupon"
-              isHeader
-              iconElement={<span className="fa fa-gift"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Media Library"
-              // link="/app/extra/gallery"
-              link="/app/media/library"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-picture" />}
-              //label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Collect Media"
-              // link="/app/tables/static"
-              link="/app/extra/couponss"
-              isHeader
-              iconElement={
-                <span className="glyphicon glyphicon-download-alt"></span>
-              }
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Sign Out"
-              link="/logout"
-              isHeader
-              iconElement={
-                <span className="glyphicon glyphicon-log-out"></span>
-              }
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
+            {this.state.userType == "Brand" ? (
+              <>
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Shop"
+                  link="/app/linkinbio-shop"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Posts"
+                  link="/app/linkinbio"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Brand"
+                  link="/app/linkinbioss"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Analytics"
+                  link="/app/analysis"
+                  isHeader
+                  iconElement={<span className="fa fa-bar-chart-o"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Coupon"
+                  link="/app/extra/coupon"
+                  isHeader
+                  iconElement={<span className="fa fa-gift"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Media Library"
+                  // link="/app/extra/gallery"
+                  link="/app/media/library"
+                  isHeader
+                  iconElement={<span className="glyphicon glyphicon-picture" />}
+                  //label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Collect Media"
+                  // link="/app/tables/static"
+                  link="/app/extra/couponss"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-download-alt"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Sign Out"
+                  link="/logout"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-log-out"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              </>
+            ) : (
+              <>
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Shop"
+                  link="/app/linkinbio-shop"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Posts"
+                  link="/app/linkinbio"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Analytics"
+                  link="/app/analysis"
+                  isHeader
+                  iconElement={<span className="fa fa-bar-chart-o"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Coupon"
+                  link="/app/extra/coupon"
+                  isHeader
+                  iconElement={<span className="fa fa-gift"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Media Library"
+                  // link="/app/extra/gallery"
+                  link="/app/media/library"
+                  isHeader
+                  iconElement={<span className="glyphicon glyphicon-picture" />}
+                  //label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Collect Media"
+                  // link="/app/tables/static"
+                  link="/app/extra/couponss"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-download-alt"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Sign Out"
+                  link="/logout"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-log-out"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              </>
+            )}
           </ul>
         </nav>
       </div>
