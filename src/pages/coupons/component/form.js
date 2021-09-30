@@ -11,10 +11,11 @@ import {
   InputGroupAddon,
 } from 'reactstrap';
 import Select from 'react-select';
-
+import InputValidation from '../../../components/InputValidation';
+import Formsy from 'formsy-react';
 import s from '../../forms/elements/Elements.module.scss';
 
-const CouponForm = ({categories,brands,countries}) => {
+const CouponForm = ({categories,brands,countries,onChangeInputImage,imageFiles,handleInput,Submit}) => {
 
      const couponTypeOptions = [
         {  
@@ -46,32 +47,16 @@ const CouponForm = ({categories,brands,countries}) => {
         }
     ]
 
-    const onChangeInputImage = (e) => {
-        const files = [];
-        const reader = new FileReader();
-        files.push(e.target.files[0]);
-        reader.onloadend = () => {
-          files[0].preview = reader.result;
-          files[0].toUpload = true;
-          this.setState({
-            imageFiles: files,
-          });
-        };
-        reader.readAsDataURL(e.target.files[0]);
-      }
-
-    const imageFiles = []  
-
     return (
 
-        <Form className={s.root}>
+        <Formsy.Form className={s.root} onValidSubmit={ (e) => Submit(e) }>
             <FormGroup row>
                 <Label md="4" className="text-md-right">
                 Coupon Image
                 </Label>
                 <Col md="8">
                 <input
-                    accept="image/*" onChange={onChangeInputImage}
+                    accept="image/*" onChange={(e) => onChangeInputImage(e)}
                     id="fileupload2"
                     type="file" name="file" className="display-none"
                 />
@@ -79,15 +64,18 @@ const CouponForm = ({categories,brands,countries}) => {
                     <div className="fileinput-new thumbnail">
                     {imageFiles.length > 0 ? <div>
                         {imageFiles.map((file, idx) => (
-                        <img alt="..." src={file.preview} key={`img-id-${idx.toString()}`} />))}
+                        <img alt="..." src={file.preview} key={`img-id-${idx.toString()}`} style={{width : "200px", height : "150px"}} />))}
                     </div> : <img
                         alt="..."
                         src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                        style={{width : "200px", height : "150px"}}            
                     />}
                     </div>
                 </div>
                 <div>
-                    <Button type="button" color="default">Select image</Button>
+                    <Button type="button" color="default">
+                        <label for="fileupload2" className="">Select image</label>
+                    </Button>
                 </div>
                 </Col>
             </FormGroup>
@@ -96,7 +84,14 @@ const CouponForm = ({categories,brands,countries}) => {
                 Coupon Code
             </Label>
             <Col md={7}>
-                <Input type="text" placeholder="Coupon Code" />
+                <InputValidation 
+                    type="text" 
+                    name="coupon_code" 
+                    placeholder="Coupon Code" 
+                    id="coupon_code" 
+                    onChange={(e) => handleInput(e)} 
+                    validationError="Coupon Code is required"
+                    required />
             </Col>
             </FormGroup>
             <FormGroup row>
@@ -104,12 +99,23 @@ const CouponForm = ({categories,brands,countries}) => {
                 Redirected URL
             </Label>
             <Col md={7}>
-                <Input type="text" name="redirected_url" placeholder="Redirected URL" />
+                <InputValidation 
+                type="text" 
+                name="redirected_url" 
+                placeholder="Redirected URL" 
+                id="redirected_url" 
+                onChange={(e) => handleInput(e)} 
+                validations="isUrl"
+                required
+                validationError={{
+                    isUrl: 'This value should be a valid url.',
+                }}
+                 />
             </Col>
             </FormGroup>
 
             <FormGroup row>
-            <Label for="redirected-url" md={4} className="text-md-right">
+            <Label for="brand" md={4} className="text-md-right">
                 Brand
             </Label>
             <Col md={7}>
@@ -118,6 +124,7 @@ const CouponForm = ({categories,brands,countries}) => {
                       className="selectCustomization"
                       options={brands}
                       placeholder="Select Brand"
+                      id="brands" onChange={(e) => handleInput(e,'brands')} 
                     />
             </Col>
             </FormGroup>
@@ -131,7 +138,8 @@ const CouponForm = ({categories,brands,countries}) => {
                       name="coupon_type"
                       className="selectCustomization"
                       options={couponTypeOptions}
-                      placeholder="Select Coupon Type" />
+                      placeholder="Select Coupon Type" 
+                      id="coupon_type" onChange={(e) => handleInput(e,'coupon_type')} />
             </Col>
             </FormGroup>
 
@@ -144,7 +152,8 @@ const CouponForm = ({categories,brands,countries}) => {
                       name="discount_type"
                       className="selectCustomization"
                       options={discountTypeOptions}
-                      placeholder="Select Discount Type" />
+                      placeholder="Select Discount Type" 
+                      id="discount_type" onChange={(e) => handleInput(e,'discount_type')} />
             </Col>
             </FormGroup>
 
@@ -158,6 +167,7 @@ const CouponForm = ({categories,brands,countries}) => {
                       className="selectCustomization"
                       options={categories}
                       placeholder="Select Category"
+                      id="categories" onChange={(e) => handleInput(e,'categories')} 
                     />
             </Col>
             </FormGroup>
@@ -172,17 +182,20 @@ const CouponForm = ({categories,brands,countries}) => {
                       className="selectCustomization"
                       options={countries}
                       placeholder="Select Country"
+                      id="country" onChange={(e) => handleInput(e,'country')} 
                     />
             </Col>
             </FormGroup>
-
 
             <FormGroup row>
             <Label for="city" md={4} className="text-md-right">
                 City
             </Label>
             <Col md={7}>
-                <Input type="text" name="City" placeholder="City"/>
+                <Input 
+                    type="text" name="City" placeholder="City"
+                    id="city" onChange={(e) => handleInput(e)} 
+                />
             </Col>
             </FormGroup>
 
@@ -191,7 +204,10 @@ const CouponForm = ({categories,brands,countries}) => {
                 Zip code
             </Label>
             <Col md={7}>
-                <Input type="text" name="zip_code" placeholder="Zip Code"/>
+                <Input 
+                    type="text" name="zip_code" placeholder="Zip Code"
+                    id="zip_code" onChange={(e) => handleInput(e)} 
+                />
             </Col>
             </FormGroup>
 
@@ -203,7 +219,9 @@ const CouponForm = ({categories,brands,countries}) => {
 
                 <InputGroup>
                         <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-                        <Input id="budget-input" bsSize="16" type="text" name="budget" placeholder="Budget"/>
+                        <Input bsSize="16" type="text" name="budget" placeholder="Budget"
+                        id="budget" onChange={(e) => handleInput(e)} 
+                        />
                         <InputGroupAddon addonType="append">.00</InputGroupAddon>
                 </InputGroup>
             </Col>
@@ -216,9 +234,13 @@ const CouponForm = ({categories,brands,countries}) => {
             <Col md={7}>
                 <InputGroup>
                     <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-                    <Input id="commission-input" bsSize="16" type="text" name="commission" placeholder="Amount"/>
+                    <Input bsSize="16" type="text" name="commission" placeholder="Amount"
+                    id="commission" onChange={(e) => handleInput(e)} 
+                    />
                     <InputGroupAddon addonType="append">Per</InputGroupAddon>
-                    <Input id="clicks-input" bsSize="16" type="text" name="clicks" placeholder="Clicks"/>
+                    <Input bsSize="16" type="text" name="clicks" placeholder="Clicks"
+                    id="clicks" onChange={(e) => handleInput(e)} 
+                    />
                     <InputGroupAddon addonType="append">Clicks</InputGroupAddon>
                 </InputGroup>
             </Col>
@@ -229,7 +251,8 @@ const CouponForm = ({categories,brands,countries}) => {
                 Traffic
             </Label>
             <Col md={7}>
-                <Input type="text" name="traffic" placeholder="Traffic"/>
+                <Input type="text" name="traffic" placeholder="Traffic"
+                id="traffic" onChange={(e) => handleInput(e)} />
             </Col>
             </FormGroup>  
 
@@ -238,7 +261,8 @@ const CouponForm = ({categories,brands,countries}) => {
                 Start Date
             </Label>
             <Col md={7}>
-                <Input type="text" name="start_date" placeholder="Start Date"/>
+                <Input type="text" name="start_date" placeholder="Start Date"
+                id="start_date" onChange={(e) => handleInput(e)} />
             </Col>
             </FormGroup>
 
@@ -247,7 +271,8 @@ const CouponForm = ({categories,brands,countries}) => {
                 End Date
             </Label>
             <Col md={7}>
-                <Input type="text" name="end_date" placeholder="End Date"/>
+                <Input type="text" name="end_date" placeholder="End Date"
+                id="end_date" onChange={(e) => handleInput(e)} />
             </Col>
             </FormGroup>   
 
@@ -256,17 +281,18 @@ const CouponForm = ({categories,brands,countries}) => {
                 Policy
             </Label>
             <Col md={7}>
-                <Input rows="4" type="textarea" name="policy" id="policy-textarea" placeholder="Policy"/>
+                <Input rows="4" type="textarea" name="policy" placeholder="Policy"
+                id="policy" onChange={(e) => handleInput(e)} />
             </Col>
             </FormGroup>              
             <FormGroup row>
             <Label md={4} />
             <Col md={7}>
-                <Button color="primary" type="submit" className="mr-xs">Save Changes</Button>
-                <Button color="inverse">Cancel</Button>
+                <Button color="primary" type="submit" className="btn-rounded btn btn-primary mr-2">Save Changes</Button>
+                <Button color="inverse" className="btn-rounded btn btn-default">Cancel</Button>
             </Col>
             </FormGroup>
-        </Form>
+        </Formsy.Form>
     )
 }
 

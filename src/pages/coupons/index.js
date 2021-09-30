@@ -1,23 +1,3 @@
-//coupon collection
-// {
-//     user_id: body.user_id, (R)
-//     coupon_code: body.coupon_code, (R)
-//     redirected_url: body.redirected_url, (R)
-//     brand: body.brand, (R)
-//     coupon_type: body.coupon_type, => [Disount %, Cashback]
-//     discount_type: body.discount_type, => [Onsite, Online, Takeaway, Delivery]
-//     categories: body.categories, => [Array]
-//     country: body.country, => [PK,US,]
-//     city: body.city, => [NY]
-//     zip: body.zip, => [111,222]
-//     budget: body.budget,
-//     commission: body.commission,
-//     traffic: body.traffic,
-//     policies: body.policies,
-//     start_date: body.start_date,
-//     end_date: body.end_date,
-// }
-
 import React, { useEffect, useState } from "react"
 import axios from "axios";
 import {Row, Col} from "reactstrap";
@@ -35,13 +15,13 @@ const Coupons = () => {
 
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-
-    const [username,setUsername] = useState(userInfo.username)
-    const [selectCoupon,setSelectCoupon] = useState(false)
-
+    const [username,setUsername]      = useState(userInfo.username)
     const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]);
-    const [countries,setCountries] = useState([])
+    const [brands, setBrands]         = useState([]);
+    const [countries,setCountries]    = useState([])
+
+    const [imageFiles,setImageFiles] = useState([])  
+    const [data,setData]             = useState([]) 
 
     const [couponItems,setCouponItems] = useState([
         {
@@ -111,25 +91,25 @@ const Coupons = () => {
 
     const FetchBrands = async () => {
 
-        const holdBrands = [];
-        await axios
-          .get(config.endPoint.getAllBrands)
-          .then((response) => {
-            if (response.data.message.length > 0)
-              response.data.message.map((brand) => {
-                holdBrands.push({
-                  value: brand.brand_id,
-                  label: brand.brand_name,
-                });
-              });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      
-        return holdBrands 
-    }
+      const holdBrands = [];
 
+      await axios
+        .get(config.endPoint.getAllBrands)
+        .then((response) => {
+          if (response.data.message.length > 0)
+            response.data.message.map((brand) => {
+              holdBrands.push({
+                value: brand.brand_id,
+                label: brand.brand_name,
+              });
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    
+      return holdBrands 
+    }
 
     const FetchCountries = async () => {
 
@@ -151,6 +131,64 @@ const Coupons = () => {
       
         return holdCountries 
     }    
+    
+    const onChangeInputImage = (e) => {
+      
+      const files = [];
+      const reader = new FileReader();
+      files.push(e.target.files[0]);
+      reader.onloadend = () => {
+        files[0].preview = reader.result;
+        files[0].toUpload = true;
+        setImageFiles(files);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+
+    }
+
+    const handleInput = (e,id = '') => {
+
+      let newData = data
+
+      if(id === ''){
+        newData[e.target.id] = e.target.value
+      }else{
+        newData[id] = e.value
+      }
+      
+      setData(newData)
+
+    }
+
+    const Submit = (e) => {
+
+      e.preventDefault();
+
+      const formData = new FormData();
+
+      for ( let k in data ) {
+        formData.append(k, data[k]);
+      }
+
+      formData.append("image", imageFiles)
+      formData.append("user_id",userInfo.user_id)
+
+
+      console.log(formData)
+
+      //validation
+      
+      //     coupon_code:  (R)
+      //     redirected_url:  (R)
+      //     brand:  (R)
+      //     budget:  (R)
+      //     commission:  (R)
+      //     start_date: (R)
+      //     end_date: (R)      
+
+      //post request
+
+    }
 
     return (
         <div className={s.root} >
@@ -166,7 +204,11 @@ const Coupons = () => {
                 <CouponForm 
                     categories={categories} 
                     brands={brands}
-                    countries={countries}></CouponForm>
+                    countries={countries}
+                    onChangeInputImage={onChangeInputImage}
+                    imageFiles={imageFiles} 
+                    handleInput={handleInput} 
+                    Submit={Submit} ></CouponForm>
             </Widget>        
         </Col>
         </Row>        
