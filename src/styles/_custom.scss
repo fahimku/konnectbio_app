@@ -139,11 +139,11 @@ video::-webkit-media-controls-panel {
 }
 
 .sidebar-nav-links a {
-  font-size: 15px;
-  line-height: 50px;
-  padding-top: -3px;
-  border-top: 1px solid #c8c8c8 !important;
+  font-size: 13px;
 
+  padding-top: -3px;
+  font-weight: bold !important;
+  letter-spacing: 1px;
   span {
     font-size: 20px;
   }
@@ -154,7 +154,7 @@ hr {
 }
 
 main {
-  padding:12px 0 0 0 !important;
+  padding:0px 0 0 0 !important;
 }
 
 .myshop-iframe{

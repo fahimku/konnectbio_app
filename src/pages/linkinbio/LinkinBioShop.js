@@ -327,7 +327,7 @@ class LinkinBioShop extends React.Component {
       <div className="linkin-bio">
         <Header username={this.state.username} placeholder={placeholder} />
         <Row className="main-container">
-          <Col className="left-column" md="6" xs="12">
+          <Col className="left-column" md="4" xs="12">
             <TopBar
               username={this.state.username}
               url={this.state.url}
@@ -346,12 +346,13 @@ class LinkinBioShop extends React.Component {
             className={`right-bar bg-white ${
               !this.state.selectPost ? "no-padding" : ""
             } `}
-            md="6"
+            md="8"
             xs="12"
           >
+
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
-              style={{height: "100%", width: "100%", paddingTop: ""}}
+              style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
                 src={`${this.state.url + this.state.username}?iframe=yes`}

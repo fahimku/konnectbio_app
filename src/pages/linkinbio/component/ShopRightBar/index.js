@@ -30,14 +30,18 @@ const ShopRightBar = (props) => {
         className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
       >
         <div className="image-box-info">
+          <h4>
+            Edit Links
+
           <span
             onClick={() => props.selectPost(false, "")}
-            className="glyphicon glyphicon-arrow-left"
+            className="fa fa-times"
           ></span>
-          <h4>Edit Links</h4>
+          </h4>
           <p>
             Posted on {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
           </p>
+
         </div>
         <div className="image-wrapper">
           <div className="image-box">
