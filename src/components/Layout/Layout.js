@@ -75,6 +75,7 @@ import Analysis from "../../pages/analysis/analysis";
 import Brands from "../../pages/brands/search";
 import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
+import Coupons from "../../pages/coupons";
 
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
@@ -422,6 +423,8 @@ class Layout extends React.Component {
                     <Route path="/app/analysis" exact component={Analysis} />
                     <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
                     <Route path="/app/media/library" exact component={MediaLibrary} />
+                    <Route path="/app/coupons" exact component={Coupons} />
+                    
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

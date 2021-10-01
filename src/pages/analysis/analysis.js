@@ -117,7 +117,7 @@ class Analysis extends React.Component {
     );
   }
 }
-const mapStateToProps = (store) => ({
-  user: store.user,
-});
-export default connect(mapStateToProps)(Analysis);
+// const mapStateToProps = (store) => ({
+//   user: store.user,
+// });
+export default Analysis;
