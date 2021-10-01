@@ -3,12 +3,15 @@ import Video from "../../../../components/Video";
 import {Button} from "reactstrap";
 import moment from "moment";
 import {Select} from "antd";
+import Loader from "../../../../components/Loader";
+
 const {Option} = Select;
 
 const ShopRightBar = (props) => {
-
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
+  const media_id = props.singlePost.id
+    ? props.singlePost.id
+    : props.singlePost.media_id;
   const redirectedUrlRef = useRef(null);
 
   useEffect(() => {
@@ -30,14 +33,18 @@ const ShopRightBar = (props) => {
         className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
       >
         <div className="image-box-info">
+          <h4>
+            Edit Links
+
           <span
             onClick={() => props.selectPost(false, "")}
-            className="glyphicon glyphicon-arrow-left"
+            className="fa fa-times"
           ></span>
-          <h4>Edit Links</h4>
+          </h4>
           <p>
             Posted on {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
           </p>
+
         </div>
         <div className="image-wrapper">
           <div className="image-box">
@@ -89,15 +96,6 @@ const ShopRightBar = (props) => {
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
-
-                {/* <SelectBox
-                  key={Date.now()}
-                  data={props.categories}
-                  selected={props.dbCategoryId}
-                  callBack={(a) => {
-                    props.changeCategory(a);
-                  }}
-                /> */}
               </div>
 
               <div className="select-categories mt-3">
@@ -107,9 +105,7 @@ const ShopRightBar = (props) => {
                   clearable={false}
                   searchable={false}
                   required
-                  //  \
                   value={props.subCategory}
-                  // showSearch
                   style={{width: "100%"}}
                   placeholder="Select Sub Category"
                   optionFilterProp="children"
@@ -166,13 +162,19 @@ const ShopRightBar = (props) => {
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (
                   <>
-                    <Button
-                      onClick={(ev) =>
-                        props.updatePost(media_id, props.redirectedUrl)
-                      }
-                    >
-                      &nbsp;&nbsp;Update&nbsp;&nbsp;
-                    </Button>
+                    {props.loading ? (
+                      <Button>
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={(ev) =>
+                          props.updatePost(media_id, props.redirectedUrl)
+                        }
+                      >
+                        &nbsp;&nbsp;Update&nbsp;&nbsp;
+                      </Button>
+                    )}
                     <div className="remove-link">
                       <a
                         href="javascript:void(0)"
@@ -184,9 +186,17 @@ const ShopRightBar = (props) => {
                     </div>
                   </>
                 ) : (
-                  <Button onClick={(ev) => props.savePost(this)} color="">
-                    &nbsp;&nbsp;Save&nbsp;&nbsp;
-                  </Button>
+                  <>
+                    {props.loading ? (
+                      <Button>
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button onClick={(ev) => props.savePost && props.savePost (this)} color="">
+                        &nbsp;&nbsp;Save&nbsp;&nbsp;
+                      </Button>
+                    )}
+                  </>
                 )}
               </div>
             </div>

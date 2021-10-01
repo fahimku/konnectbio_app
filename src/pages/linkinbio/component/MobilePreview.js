@@ -28,13 +28,17 @@ const MobilePreview = ({
                 onClick={(ev) => selectPost(true, i)}
                 src={instagramPosts.data[i].media_url}
               />
-              {instagramPosts.data[i].linked ? <span>LINKED</span> : ""}
+              {instagramPosts.data[i].linked ? (
+                <span className="linked-label">LINKED</span>
+              ) : (
+                ""
+              )}
             </div>
           </Col>
         );
       } else {
         instaPosts.push(
-          <Col key={i} xs="4">
+          <Col key={i} xs="4"   onClick={(ev) => selectPost(true, i)}>
             <div className="mobile-image-box">
               <video
                 oncontextmenu="return false;"
@@ -48,14 +52,19 @@ const MobilePreview = ({
                 }
                 key={i}
                 id={"img" + i}
-                onClick={(ev) => selectPost(true, i)}
+              
               >
                 <source
                   src={instagramPosts.data[i].media_url}
                   type="video/mp4"
                 ></source>
               </video>
-              {instagramPosts.data[i].linked ? <span>LINKED</span> : ""}
+              <span className="video-label fa fa-play" aria-hidden="true"></span>
+              {instagramPosts.data[i].linked ? (
+                <span className="linked-label">LINKED</span>
+              ) : (
+                ""
+              )}
             </div>
           </Col>
         );

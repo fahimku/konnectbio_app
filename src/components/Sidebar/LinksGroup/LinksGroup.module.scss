@@ -1,7 +1,6 @@
 @import '../../../styles/app';
 
 .headerLink {
-  overflow-x: hidden;
 
   @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height),
   (max-width: map_get($grid-breakpoints, md) - 1px) {
@@ -11,7 +10,7 @@
   a {
     display: block;
     //    color: var(--sidebar-color);
-    color: black;
+    color: #364554;
     font-weight: 500;
     transition: all .35s ease;
     text-decoration: none;
@@ -31,7 +30,7 @@
   >a {
     position: relative;
     align-items: center;
-    padding-left: 50px;
+    padding-left: 3.8rem;
     line-height: 35px;
     border-top: 1px solid $sidebar-item-border-color;
 
@@ -45,7 +44,7 @@
 
     @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height),
     (max-width: map_get($grid-breakpoints, md) - 1px) {
-      line-height: 55px;
+      line-height: 35px;
     }
   }
 
@@ -69,7 +68,7 @@
 
     @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height),
     (max-width: map_get($grid-breakpoints, md) - 1px) {
-      top: 12px;
+      top: 3px;
     }
   }
 
