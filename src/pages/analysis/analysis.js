@@ -12,7 +12,7 @@ import {
 import HighCharts from "./highcharts/HighCharts";
 import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
-import {connect} from "react-redux";
+//import {connect} from "react-redux";
 import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 

@@ -76,6 +76,7 @@ import Brands from "../../pages/brands/search";
 import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
+import AccountDelete from "../../pages/accountdelete/AccountDelete"
 
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
@@ -424,6 +425,7 @@ class Layout extends React.Component {
                     <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
                     <Route path="/app/media/library" exact component={MediaLibrary} />
                     <Route path="/app/coupons" exact component={Coupons} />
+                    <Route path="/app/account/delete" exact component={AccountDelete} />
                     
                   </Switch>
                 </CSSTransition>

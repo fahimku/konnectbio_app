@@ -89,73 +89,6 @@ class Sidebar extends React.Component {
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
           </header>
-          
-          <ul className={s.nav}>
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Shop"
-              link="/app/linkinbio-shop"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Posts"
-              link="/app/linkinbio"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-link"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Analytics"
-              link="/app/analysis"
-              isHeader
-              iconElement={<span className="fa fa-bar-chart-o"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="My Coupons"
-              link="/app/coupons"
-              isHeader
-              iconElement={<span className="fa fa-gift"></span>}
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Media Library"
-              // link="/app/extra/gallery"
-              link="/app/media/library"
-              isHeader
-              iconElement={<span className="glyphicon glyphicon-picture" />}
-              //label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
-
-            <LinksGroup
-              className="sidebar-nav-links"
-              header="Collect Media"
-              // link="/app/tables/static"
-              link="/app/extra/couponss"
-              isHeader
-              iconElement={
-                <span className="glyphicon glyphicon-download-alt"></span>
-              }
-              // label="Awesome"
-              iconName="flaticon-users"
-              labelColor="info"
-            />
 
           <ul className={s.nav}>
             {this.state.userType == "Brand" ? (
@@ -291,16 +224,6 @@ class Sidebar extends React.Component {
                 />
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="My Coupon"
-                  link="/app/extra/coupon"
-                  isHeader
-                  iconElement={<span className="fa fa-gift"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
                   header="Media Library"
                   // link="/app/extra/gallery"
                   link="/app/media/library"
@@ -314,7 +237,7 @@ class Sidebar extends React.Component {
                   className="sidebar-nav-links"
                   header="Collect Media"
                   // link="/app/tables/static"
-                  link="/app/extra/couponss"
+                  link="/app/couponsss"
                   isHeader
                   iconElement={
                     <span className="glyphicon glyphicon-download-alt"></span>
@@ -322,6 +245,32 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="Settings"
+                  isHeader
+                  labelColor="danger"
+                  iconElement={
+                    <span
+                      className="fa fa-cogs	
+                    "
+                    ></span>
+                  }
+                  iconName="flaticon-user"
+                  link="/admin"
+                  index="admin"
+                  exact={false}
+                  childrenLinks={[
+                    {
+                      header: "Delete Account",
+                      link: "/app/account/delete",
+                    },
+                  ]}
                 />
                 <LinksGroup
                   className="sidebar-nav-links"
