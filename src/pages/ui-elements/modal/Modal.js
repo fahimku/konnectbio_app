@@ -221,6 +221,7 @@ class ModalExample extends React.Component {
             <Button color="primary">Save changes</Button>
           </ModalFooter>
         </Modal>
+    
       </div>
     );
   }

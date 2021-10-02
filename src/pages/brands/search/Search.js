@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/href-no-hash */
 import React from "react";
+import axios from "axios";
 import {
   Row,
   Col,
@@ -20,29 +21,46 @@ import {
 
 import Header from "../../linkinbio/component/Header";
 import placeholder from "../../../images/placeholder.png";
-
 import s from "./Search.module.scss";
-import i1 from "../../../images/search/1.jpg";
-import i2 from "../../../images/search/5.jpg";
-import i3 from "../../../images/search/3.jpg";
-import i4 from "../../../images/search/13.jpg";
 
 class Search extends React.Component {
   constructor(props) {
+    super(props);
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
-    super(props);
+    let country = userInfo.country;
+    let city = userInfo.city;
+    let zip = userInfo.zip;
     this.state = {
       username: username,
+      country: country,
+      city: city,
+      zip: zip ? zip : [],
+      brands: [],
     };
   }
+
+  componentDidMount() {
+    this.fetchBrands(this.state.country, this.state.city, this.state.zip);
+  }
+
+  async fetchBrands(country, city, zip) {
+    await axios
+      .post("brands/receive", {
+        country: [],
+        city: [],
+        zip: [],
+      })
+      .then((res) => {
+        this.setState({brands: res.data.message});
+      });
+  }
+
   render() {
     return (
-      <div className={s.root}>
-        <div className="container-fluid">
-          <Header username={this.state.username} placeholder={placeholder} />
-          <hr />
-
+      <div className={`${s.root}`}>
+        <Header username={this.state.username} placeholder={placeholder} />
+        <div className={s.brandPage}>
           <h1 className="page-title">
             Brands - <span className="fw-semi-bold">Results</span>
           </h1>
@@ -76,126 +94,45 @@ class Search extends React.Component {
               <p className={s.searchResultsCount}>
                 About 94 700 000 (0.39 sec.) results
               </p>
-              <section className={`${s.searchResultItem}`}>
-                <button className={`btn-link ${s.imageLink}`}>
-                  <img className={s.image} src={i1} alt="" />
-                </button>
-                <div className={s.searchResultItemBody}>
-                  <Row>
-                    <Col md={9}>
-                      <h4 className={s.searchResultItemHeading}>
-                        <button className="btn-link">
-                          Next generation admin template
-                        </button>
-                      </h4>
-                      <p className={s.info}>New York, NY 20188</p>
-                      <p className={s.description}>
-                        Not just usual Metro. But something bigger. Not just
-                        usual widgets, but real widgets. Not just yet another
-                        admin template, but next generation admin template.
-                      </p>
-                    </Col>
-                    <Col md={3} xs={12} className="text-center">
-                      <p className="value3 mt-sm">$9, 700</p>
-                      <p className="fs-mini text-muted">PER WEEK</p>
-                      <Button color="info" size="sm">
-                        Learn More
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </section>
-              <section className={s.searchResultItem}>
-                <button className={`btn-link ${s.imageLink}`}>
-                  <img className={s.image} src={i2} alt="" />
-                </button>
-                <div className={s.searchResultItemBody}>
-                  <Row>
-                    <Col md={9}>
-                      <h4 className={s.searchResultItemHeading}>
-                        <button className="btn-link">
-                          Try. Posted by Okendoken
-                        </button>
-                        <small>
-                          <span className="badge badge-pill badge-danger float-right">
-                            <span className="fw-normal"> Best Deal!</span>
-                          </span>
-                        </small>
-                      </h4>
-                      <p className={s.info}>Los Angeles, NY 20188</p>
-                      <p className={s.description}>
-                        You will never know exactly how something will go until
-                        you try it. You can think three hundred times and still
-                        have no precise result.
-                      </p>
-                    </Col>
-                    <Col md={3} xs={12} className="text-center">
-                      <p className="value3 mt-sm">$10, 300</p>
-                      <p className="fs-mini text-muted">PER WEEK</p>
-                      <Button color="info" size="sm">
-                        Learn More
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </section>
-              <section className={s.searchResultItem}>
-                <button className={`btn-link ${s.imageLink}`}>
-                  <img className={s.image} src={i3} alt="" />
-                </button>
-                <div className={s.searchResultItemBody}>
-                  <Row>
-                    <Col md={9}>
-                      <h4 className={s.searchResultItemHeading}>
-                        <button className="btn-link">Vitaut the Great</button>
-                      </h4>
-                      <p className={s.info}>New York, NY 20188</p>
-                      <p className={s.description}>
-                        The Great Prince of the Grand Duchy of Lithuania he had
-                        stopped the invasion to Europe of Timur (Tamerlan) from
-                        Asia heading a big Army of Belarusians, Lithuanians.
-                      </p>
-                    </Col>
-                    <Col md={3} xs={12} className="text-center">
-                      <p className="value3 mt-sm">$3, 200</p>
-                      <p className="fs-mini text-muted">PER WEEK</p>
-                      <Button color="info" size="sm">
-                        Learn More
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </section>
-              <section className={s.searchResultItem}>
-                <button className={`btn-link ${s.imageLink}`}>
-                  <img className={s.image} src={i4} alt="" />
-                </button>
-                <div className={s.searchResultItemBody}>
-                  <Row>
-                    <Col md={9}>
-                      <h4 className={s.searchResultItemHeading}>
-                        <button className="btn-link">
-                          Can I use CSS3 Radial-Gradient?
-                        </button>
-                      </h4>
-                      <p className={s.info}>Minsk, NY 20188</p>
-                      <p className={s.description}>
-                        Yes you can! Further more, you should! It let&#39;s you
-                        create really beautiful images either for elements or
-                        for the entire background.
-                      </p>
-                    </Col>
-                    <Col md={3} xs={12} className="text-center">
-                      <p className="value3 mt-sm">$2, 400</p>
-                      <p className="fs-mini text-muted">PER MONTH</p>
-                      <Button color="info" size="sm">
-                        Learn More
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              </section>
-              <div className="d-flex justify-content-center mt-3">
+              {this.state.brands.map((item, i) => (
+                <section key={i} className={`${s.searchResultItem}`}>
+                  <a
+                    href={item.website}
+                    target="_blank"
+                    className={`link-primary ${s.imageLink}`}
+                  >
+                    <img className={s.image} src={item.logo_url} alt="" />
+                  </a>
+                  <div className={s.searchResultItemBody}>
+                    <Row>
+                      <Col md={9}>
+                        <h4 className={s.searchResultItemHeading}>
+                          <a
+                            href={item.website}
+                            target="_blank"
+                            className="link-primary"
+                          >
+                            {item.brand_name}
+                          </a>
+                        </h4>
+                        <p className={s.info}>
+                          {item.country}, {item.city} {item.zip}
+                        </p>
+                        <p className={s.description}>{item.description}</p>
+                      </Col>
+                      <Col md={3} xs={12} className="text-center mt-5">
+                        {/* <p className="value3 mt-sm hidden">$9, 700</p>
+                        <p className="fs-mini text-muted hidden">COUPONS</p> */}
+                        <Button color="info" size="sm">
+                          ADD TO MY BRAND
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+                </section>
+              ))}
+
+              <div className="d-flex justify-content-center mt-3 hide">
                 <Pagination>
                   <PaginationItem disabled>
                     <PaginationLink previous href="#">

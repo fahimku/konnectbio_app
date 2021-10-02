@@ -32,6 +32,11 @@
   overflow-x: hidden;
   width: $sidebar-width-open;
   transition: width $sidebar-transition-time ease-in-out;
+
+  .bottomLinks {
+    position: absolute;
+    bottom: 60px;
+  }
 }
 
 .sidebarClose.sidebarWrapper {
@@ -121,6 +126,7 @@
   font-size: 9px;
 }
 
+
 .sidebarLabels {
   list-style-type: none;
   padding: 11px;
@@ -143,6 +149,7 @@
     }
   }
 }
+
 
 .sidebarClose {
   .sidebarLabels>li>a>i {
@@ -218,3 +225,4 @@
     }
   }
 }
+

@@ -120,7 +120,7 @@ class Sidebar extends React.Component {
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="My Brand"
-                  link="/app/linkinbioss"
+                  link="/app/brands"
                   isHeader
                   iconElement={
                     <span className="glyphicon glyphicon-link"></span>
@@ -214,6 +214,19 @@ class Sidebar extends React.Component {
                 />
                 <LinksGroup
                   className="sidebar-nav-links"
+                  header="My Brand"
+                  link="/app/brands"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  className="sidebar-nav-links"
                   header="Analytics"
                   link="/app/analysis"
                   isHeader
@@ -246,44 +259,46 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  onActiveSidebarItemChange={(activeItem) =>
-                    this.props.dispatch(changeActiveSidebarItem(activeItem))
-                  }
-                  activeItem={this.props.activeItem}
-                  header="Settings"
-                  isHeader
-                  labelColor="danger"
-                  iconElement={
-                    <span
-                      className="fa fa-cogs	
+                <div className={s.bottomLinks}>
+                  <LinksGroup
+                    className="sidebar-nav-links"
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    header="Settings"
+                    isHeader
+                    labelColor="danger"
+                    iconElement={
+                      <span
+                        className="fa fa-cogs	
                     "
-                    ></span>
-                  }
-                  iconName="flaticon-user"
-                  link="/admin"
-                  index="admin"
-                  exact={false}
-                  childrenLinks={[
-                    {
-                      header: "Delete Account",
-                      link: "/app/account/delete",
-                    },
-                  ]}
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Sign Out"
-                  link="/logout"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
+                      ></span>
+                    }
+                    iconName="flaticon-user"
+                    link="/admin"
+                    index="admin"
+                    exact={false}
+                    childrenLinks={[
+                      {
+                        header: "Delete Account",
+                        link: "/app/account/delete",
+                      },
+                    ]}
+                  />
+                  <LinksGroup
+                    className="sidebar-nav-links"
+                    header="Sign Out"
+                    link="/logout"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-log-out"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                </div>
               </>
             )}
           </ul>

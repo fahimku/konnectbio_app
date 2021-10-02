@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
-import logo from '../../../images/logo.png';
+import logo from "../../../images/logo.png";
 
 class Register extends React.Component {
   static propTypes = {
@@ -57,7 +57,7 @@ class Register extends React.Component {
         countries.map(({name, code1, selected}) => {
           selectCountries.push({value: code1, label: name});
           if (selected) {
-            this.setState({country: code1});
+            this.setState({country: name});
           }
         });
         this.setState({countries: selectCountries});
@@ -142,7 +142,7 @@ class Register extends React.Component {
         <Container>
           <h5 className="auth-logo">
             <i className="la la-circle text-gray" />
-            <img src={logo}/>
+            <img src={logo} />
             <i className="la la-circle text-warning" />
           </h5>
           <Widget

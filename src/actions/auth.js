@@ -115,7 +115,6 @@ export function receiveToken(token) {
 
 export function loginUser(creds) {
   return (dispatch) => {
-    
     localStorage.setItem("dashboardTheme", "white");
     localStorage.setItem("navbarColor", "#fff");
     localStorage.setItem("navbarType", "fixed");
@@ -134,7 +133,10 @@ export function loginUser(creds) {
             access_token: res.data.message.access_token,
             username: res.data.message.username,
             email: res.data.message.email,
-            user_type:res.data.message.user_type
+            user_type: res.data.message.user_type,
+            country: res.data.message.country,
+            city: res.data.message.city,
+            zip: res.data.message.zip,
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
@@ -192,7 +194,7 @@ export function resetPassword(token, password) {
         .catch((err) => {
           dispatch(authError(err.response.data));
         });
-     }
+    }
   };
 }
 

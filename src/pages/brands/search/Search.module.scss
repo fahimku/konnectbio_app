@@ -2,7 +2,7 @@
 
 .root {
   .searchResultCategories {
-    > li > a {
+    >li>a {
       color: $gray-600;
       font-weight: $font-weight-normal;
 
@@ -11,6 +11,10 @@
         background-color: $gray-400;
       }
     }
+  }
+
+  .brandPage {
+    padding: 20px;
   }
 
   .searchResultsCount {
@@ -62,7 +66,7 @@
       margin-bottom: -5px;
     }
 
-    + .searchResultItem {
+    +.searchResultItem {
       margin-top: 20px;
     }
 
@@ -81,8 +85,8 @@
     .searchResultItemHeading {
       font-weight: $font-weight-normal;
 
-      > a {
-        color: $text-color;
+      >a {
+        color:#0d6efd;
       }
 
       @include media-breakpoint-up(md) {
