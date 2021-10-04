@@ -13,10 +13,8 @@ class MyLinks extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
-
     super(props);
     this.error = this.error.bind(this);
-
     this.state = {
       loading: false,
       updatePage: false,
@@ -28,7 +26,7 @@ class MyLinks extends React.Component {
       url: config.visitorURL + "/",
       nextPageUrl: "",
       username: username,
-      selectPost: false,
+      preview: false,
       dropdownOpen: false,
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
@@ -67,7 +65,7 @@ class MyLinks extends React.Component {
     await axios
       .get(`links/retrieve?id=${linkId}`)
       .then((res) => {
-        this.setState({selectPost: true});
+        this.setState({preview: true});
         this.setState({title: res.data.data[0].title});
         this.setState({redirectedUrl: res.data.data[0].redirected_url});
         this.setState({updatePage: true});
@@ -90,6 +88,7 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
+        
         this.addNewLink();
       })
       .catch((error) => {
@@ -122,7 +121,8 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
-        this.setState({loading: false});
+        this.setState({ loading: false });
+        this.addNewLink();
       })
       .catch((error) => {
         console.log(error);
@@ -145,8 +145,8 @@ class MyLinks extends React.Component {
     }
   };
 
-  selectPost = (state, postIndex) => {
-    this.setState((prevState) => ({autoFocus: !prevState.autoFocus}));
+  preview = (state, postIndex) => {
+    this.setState({ preview: false });
   };
 
   error(error) {
@@ -156,7 +156,7 @@ class MyLinks extends React.Component {
   addNewLink = () => {
     this.setState({title: ""});
     this.setState({redirectedUrl: ""});
-    this.setState({selectPost: true});
+    this.setState({preview: true});
     this.setState({updatePage: false});
     this.setState({loading: false});
   };
@@ -194,18 +194,18 @@ class MyLinks extends React.Component {
               paneDidMount={this.paneDidMount}
               myLinks={this.state.myLinks}
               fetchSingleLink={this.fetchSingleLink}
-              selectPost={this.selectPost}
+        
             />
           </Col>
           <Col
             className={`right-bar bg-white ${
-              !this.state.selectPost ? "no-padding" : ""
+              !this.state.preview ? "no-padding" : ""
             } `}
             md="8"
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show" : "hidden"}`}
+              className={`${!this.state.preview ? "show" : "hidden"}`}
               style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
@@ -226,8 +226,8 @@ class MyLinks extends React.Component {
                   redirectedUrl={this.state.redirectedUrl}
                   submitted={this.submitted}
                   autoFocus={this.state.autoFocus}
-                  isSelectPost={this.state.selectPost}
-                  selectPost={this.selectPost}
+                  isPreview={this.state.preview}
+                  preview={this.preview}
                   singlePost={this.state.singlePost}
                   saveLink={this.saveLink}
                   updatePage={this.state.updatePage}

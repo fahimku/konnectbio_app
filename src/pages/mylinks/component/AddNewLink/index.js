@@ -1,19 +1,16 @@
-import React, {useEffect, useState, useRef} from "react";
+import React from "react";
 import {Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
 
 const AddNewLink = (props) => {
-  const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
   return (
     <>
-      <div
-        className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
-      >
+      <div className={`image-edit-box ${props.isPreview ? "show" : "hidden"}`}>
         <div className="image-box-info">
           <h4>
             Add New Link
             <span
-              onClick={() => props.selectPost(false, "")}
+              onClick={() => props.preview(false, "")}
               className="fa fa-times"
             ></span>
           </h4>
@@ -53,19 +50,12 @@ const AddNewLink = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button
-                        onClick={(ev) =>
-                          props.updateLink(media_id)
-                        }
-                      >
+                      <Button onClick={props.updateLink}>
                         &nbsp;&nbsp;Update&nbsp;&nbsp;
                       </Button>
                     )}
                     <div className="remove-link">
-                      <a
-                        href="javascript:void(0)"
-                        onClick={() => props.deleteLink(media_id)}
-                      >
+                      <a href="javascript:void(0)" onClick={props.deleteLink}>
                         <span className="glyphicon glyphicon-trash"></span>
                         Remove Link
                       </a>

@@ -8,7 +8,6 @@ const MobilePreview = ({
   error,
   paneDidMount,
   myLinks,
-  selectPost,
   addNewLink,
   fetchSingleLink,
   style,
@@ -23,9 +22,12 @@ const MobilePreview = ({
     for (let i = 0; i < myLinks.data.length; i++) {
       links.push(
         <Col key={i} xs="12">
-          <div onClick={() => {
-            fetchSingleLink(myLinks.data[i].link_id)
-          }} className={style.links}>
+          <div
+            onClick={() => {
+              fetchSingleLink(myLinks.data[i].link_id);
+            }}
+            className={style.links}
+          >
             {myLinks.data[i].title}
           </div>
         </Col>
