@@ -10,7 +10,6 @@ import {addUserInfo} from "../../actions/user";
 import TopBar from "./component/TopBar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
-import Header from "./component/Header";
 
 class LinkinBioShop extends React.Component {
   constructor(props) {
@@ -19,7 +18,7 @@ class LinkinBioShop extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
-      loading:false,
+      loading: false,
       media_id: "",
       instagramPosts: null,
       postType: "image",
@@ -172,34 +171,33 @@ class LinkinBioShop extends React.Component {
     }
   };
 
-
   updatePost = async (id, url) => {
-      this.setState({loading:true})
-      await axios
-        .put(`/posts/revise/${id}`, {
-          redirected_url: url,
-          categories: [this.state.category],
-          sub_categories: this.state.subCategory,
-          post_type: this.state.postType,
-        })
-        .then((response) => {
-          let singlePostIndex = this.state.instagramPosts.data.findIndex(
-            (item) => item.id === id
-          );
-          let currentPost = this.state.singlePost;
-          currentPost.redirected_url = url;
-          let instagramPosts = JSON.parse(
-            JSON.stringify(this.state.instagramPosts)
-          );
-          instagramPosts.data[singlePostIndex] = currentPost;
-          this.setState({instagramPosts: instagramPosts});
-          toast.success("Your Post Link is Updated");
-          this.setState({loading:false})
-        });
+    this.setState({loading: true});
+    await axios
+      .put(`/posts/revise/${id}`, {
+        redirected_url: url,
+        categories: [this.state.category],
+        sub_categories: this.state.subCategory,
+        post_type: this.state.postType,
+      })
+      .then((response) => {
+        let singlePostIndex = this.state.instagramPosts.data.findIndex(
+          (item) => item.id === id
+        );
+        let currentPost = this.state.singlePost;
+        currentPost.redirected_url = url;
+        let instagramPosts = JSON.parse(
+          JSON.stringify(this.state.instagramPosts)
+        );
+        instagramPosts.data[singlePostIndex] = currentPost;
+        this.setState({instagramPosts: instagramPosts});
+        toast.success("Your Post Link is Updated");
+        this.setState({loading: false});
+      });
   };
 
   deletePost = async (id) => {
-    this.setState({loading:true})
+    this.setState({loading: true});
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -212,7 +210,7 @@ class LinkinBioShop extends React.Component {
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
-      this.setState({loading:false})
+      this.setState({loading: false});
     });
   };
 
@@ -334,7 +332,6 @@ class LinkinBioShop extends React.Component {
   render() {
     return (
       <div className="linkin-bio">
-        <Header username={this.state.username} placeholder={placeholder} />
         <Row className="main-container">
           <Col className="left-column" md="4" xs="12">
             <TopBar
@@ -358,7 +355,6 @@ class LinkinBioShop extends React.Component {
             md="8"
             xs="12"
           >
-
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
               style={{height: "100%", width: "100%", padding: "0px"}}
@@ -388,7 +384,7 @@ class LinkinBioShop extends React.Component {
                   subCategories={this.state.subCategories}
                   changePostType={this.changePostType}
                   postType={this.state.postType}
-                //  savePost={this.savePost}
+                  //  savePost={this.savePost}
                   updatePost={(val1, val2) => {
                     this.updatePost(val1, val2);
                   }}

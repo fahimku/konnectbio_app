@@ -173,7 +173,6 @@ const Coupons = () => {
 
   return (
     <div className={s.root}>
-      <Header username={username} placeholder={placeholder} />
       <Row className="main-container">
         <Col md="6" xs="12">
           <Widget title={<h5> Coupons </h5>}>

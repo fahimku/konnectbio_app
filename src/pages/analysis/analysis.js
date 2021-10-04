@@ -53,18 +53,6 @@ class Analysis extends React.Component {
     return (
       <>
         <div className="analytics-page">
-          <div className="header">
-            <div className="linkin-text">Konnect.Bio</div>
-            <div className="profile">
-              <div className="placeholder">
-                <img src={placeholder} />
-              </div>
-              <div className="instagram-account">
-                <div className="instagram-username">@{this.state.username}</div>
-                <div className="instagram-label">Instagram</div>
-              </div>
-            </div>
-          </div>
           <Row className="tab-section">
             <Col md="12" xs="12">
               <Row>

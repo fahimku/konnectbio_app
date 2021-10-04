@@ -71,7 +71,7 @@ class AccountDelete extends React.Component {
                 color="warning"
               >
                 Yes Delete My Account{" "}
-                <i className="fa fa-trash text-white ml-xs" />
+                {/* <i className="fa fa-trash text-white ml-xs" /> */}
               </Button>
             </Link>
           </div>

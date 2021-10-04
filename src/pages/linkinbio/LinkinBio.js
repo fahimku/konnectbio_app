@@ -9,7 +9,6 @@ import {addUserInfo} from "../../actions/user";
 import TopBar from "./component/TopBar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
-import Header from "./component/Header";
 
 class LinkinBio extends React.Component {
   constructor(props) {
@@ -309,7 +308,7 @@ class LinkinBio extends React.Component {
   };
 
   deletePost = async (id) => {
-    this.setState({loading:true})
+    this.setState({loading: true});
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -322,7 +321,7 @@ class LinkinBio extends React.Component {
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
-      this.setState({loading:false})
+      this.setState({loading: false});
     });
   };
 
@@ -422,7 +421,6 @@ class LinkinBio extends React.Component {
   render() {
     return (
       <div className="linkin-bio">
-        <Header username={this.state.username} placeholder={placeholder} />
         <Row className="main-container">
           <Col className="left-column" md="4" xs="12">
             <TopBar
@@ -446,7 +444,6 @@ class LinkinBio extends React.Component {
             md="8"
             xs="12"
           >
-            
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
               style={{height: "100%", width: "100%", padding: "0px"}}
@@ -496,7 +493,6 @@ class LinkinBio extends React.Component {
     );
   }
 }
-
 
 const mapDispatchToProps = (dispatch) => {
   return {

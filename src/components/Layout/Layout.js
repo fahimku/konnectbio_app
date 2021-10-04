@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { Switch, Route, withRouter, Redirect } from "react-router";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import {connect} from "react-redux";
+import {Switch, Route, withRouter, Redirect} from "react-router";
+import {TransitionGroup, CSSTransition} from "react-transition-group";
 import Hammer from "rc-hammerjs";
 import Profile from "../../pages/profile";
 import Login from "../../pages/login";
@@ -54,17 +54,18 @@ import UserFormPage from "../Users/form/UsersFormPage";
 import UserListPage from "../Users/list/UsersListPage";
 import UserViewPage from "../Users/view/UsersViewPage";
 import ChangePasswordFormPage from "../Users/changePassword/ChangePasswordFormPage";
-import { SidebarTypes } from "../../reducers/layout";
+import {SidebarTypes} from "../../reducers/layout";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Helper from "../Helper";
+import placeholder from "../../images/placeholder.png";
 import {
   openSidebar,
   closeSidebar,
   toggleSidebar,
 } from "../../actions/navigation";
 import s from "./Layout.module.scss";
-import { DashboardThemes } from "../../reducers/layout";
+import {DashboardThemes} from "../../reducers/layout";
 import ProductEdit from "../../pages/management/components/productEdit";
 import BreadcrumbHistory from "../BreadcrumbHistory";
 
@@ -76,8 +77,8 @@ import Brands from "../../pages/brands/search";
 import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
-import AccountDelete from "../../pages/accountdelete/AccountDelete"
-
+import AccountDelete from "../../pages/accountdelete/AccountDelete";
+import MyLinks from "../../pages/mylinks/MyLinks";
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
   static propTypes = {
@@ -94,9 +95,13 @@ class Layout extends React.Component {
   };
 
   constructor(props) {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const username = userInfo.username;
     super(props);
-
     this.handleSwipe = this.handleSwipe.bind(this);
+    this.state = {
+      username: username,
+    };
   }
 
   componentDidMount() {
@@ -117,7 +122,7 @@ class Layout extends React.Component {
   handleSwipe(e) {
     if ("ontouchstart" in window) {
       if (e.direction === 4) {
-        this.props.dispatch(openSidebar());
+        //     this.props.dispatch(openSidebar());
         return;
       }
 
@@ -136,19 +141,21 @@ class Layout extends React.Component {
           this.props.sidebarStatic ? `${s.sidebarStatic}` : "",
           !this.props.sidebarOpened ? s.sidebarClose : "",
           "sing-dashboard",
-          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-            ? "light"
-            : localStorage.getItem("dashboardTheme")
+          `dashboard-${
+            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+              ? "light"
+              : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${localStorage.getItem("navbarColor")
-            ? localStorage.getItem("navbarColor").replace("#", "")
-            : "FFFFFF"
+          `header-${
+            localStorage.getItem("navbarColor")
+              ? localStorage.getItem("navbarColor").replace("#", "")
+              : "FFFFFF"
           }`,
         ].join(" ")}
       >
         <Sidebar />
         <div className={s.wrap}>
-          <Header />
+          <Header username={this.state.username} placeholder={placeholder} />
           <Helper />
 
           <Hammer onSwipe={this.handleSwipe}>
@@ -419,14 +426,27 @@ class Layout extends React.Component {
                     />
                     <Route path="/app/core/grid" exact component={CoreGrid} />
                     <Route path="/app/linkinbio" exact component={LinkinBio} />
-                    <Route path="/app/linkinbio-shop" exact component={LinkinBioShop} />
+                    <Route
+                      path="/app/linkinbio-shop"
+                      exact
+                      component={LinkinBioShop}
+                    />
                     <Route path="/app/brands" exact component={Brands} />
                     <Route path="/app/analysis" exact component={Analysis} />
-                    <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
-                    <Route path="/app/media/library" exact component={MediaLibrary} />
+                    <Route
+                      path="/app/linkinbio/:code"
+                      exact
+                      component={LinkinBio}
+                    />
+                    <Route
+                      path="/app/media/library"
+                      exact
+                      component={MediaLibrary}
+                    />
                     <Route path="/app/coupons" exact component={Coupons} />
-                    <Route path="/app/account/delete" exact component={AccountDelete} />
-                    
+                    <Route path="/app/account/delete" exact component={AccountDelete}/>
+                    <Route path="/app/my/links" exact component={MyLinks}/>
+ 
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>

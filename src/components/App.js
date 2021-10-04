@@ -11,7 +11,7 @@ import ErrorPage from "../pages/error";
 /* eslint-enable */
 import "../styles/theme.scss";
 import LayoutComponent from "../components/Layout";
-import DocumentationLayoutComponent from "../documentation/DocumentationLayout";
+
 import Login from "../pages/auth/login";
 import Logout from "../pages/auth/logout";
 import Connect from "../pages/auth/connect";
@@ -63,17 +63,8 @@ class App extends React.PureComponent {
                 dispatch={this.props.dispatch}
                 component={LayoutComponent}
               />
-              <Route
-                path="/documentation"
-                exact
-                render={() => (
-                  <Redirect to="/documentation/getting-started/overview" />
-                )}
-              />
-              <Route
-                path="/documentation"
-                component={DocumentationLayoutComponent}
-              />
+         
+          
               <Route path="/connect" exact component={Connect} />
               <Route path="/logout" exact component={Logout} />
               <AuthRoute path="/register" exact component={Register} />

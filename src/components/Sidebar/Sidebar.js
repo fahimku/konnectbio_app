@@ -117,7 +117,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <LinksGroup
+                {/* <LinksGroup
                   className="sidebar-nav-links"
                   header="My Brand"
                   link="/app/brands"
@@ -128,7 +128,7 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
-                />
+                /> */}
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Analytics"
@@ -190,6 +190,18 @@ class Sidebar extends React.Component {
               <>
                 <LinksGroup
                   className="sidebar-nav-links"
+                  header="My Links"
+                  link="/app/my/links"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
                   header="My Shop"
                   link="/app/linkinbio-shop"
                   isHeader
@@ -212,7 +224,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <LinksGroup
+                {/* <LinksGroup
                   className="sidebar-nav-links"
                   header="My Brand"
                   link="/app/brands"
@@ -223,7 +235,7 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
-                />
+                /> */}
 
                 <LinksGroup
                   className="sidebar-nav-links"

@@ -59,7 +59,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className={`${s.root}`}>
-        <Header username={this.state.username} placeholder={placeholder} />
+        {/* <Header username={this.state.username} placeholder={placeholder} /> */}
         <div className={s.brandPage}>
           <h1 className="page-title">
             Brands - <span className="fw-semi-bold">Results</span>
