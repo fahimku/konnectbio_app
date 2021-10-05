@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {push} from "connected-react-router";
 import Errors from "../components/FormItems/error/errors";
 import {mockUser} from "./mock";
+import {createBrowserHistory} from "history";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -19,6 +20,10 @@ export const AUTH_INIT_SUCCESS = "AUTH_INIT_SUCCESS";
 export const AUTH_INIT_ERROR = "AUTH_INIT_ERROR";
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 
 async function findMe() {
   if (config.isBackend) {
@@ -84,7 +89,7 @@ export function logoutUser() {
     dispatch({
       type: LOGOUT_SUCCESS,
     });
-    dispatch(push("/login"));
+    history.push("/login");
   };
 }
 
@@ -109,7 +114,7 @@ export function receiveToken(token) {
     dispatch({
       type: LOGIN_SUCCESS,
     });
-    dispatch(push("/app"));
+    history.push("/app");
   };
 }
 
@@ -141,7 +146,7 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          dispatch(push("/app"));
+          history.push("/app");
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
@@ -155,7 +160,7 @@ export function loginUser(creds) {
 export function verifyEmail(token) {
   return (dispatch) => {
     if (!config.isBackend) {
-      dispatch(push("/login"));
+      history.push("/login");
     } else {
       axios
         .put("/auth/verify-email", {token})
@@ -168,7 +173,7 @@ export function verifyEmail(token) {
           toast.error(err.response.data);
         })
         .finally(() => {
-          dispatch(push("/login"));
+          history.push("/login");
         });
     }
   };
@@ -189,7 +194,7 @@ export function resetPassword(token, password) {
             type: RESET_SUCCESS,
           });
           toast.success("Password has been updated");
-          dispatch(push("/login"));
+          history.push("/login");
         })
         .catch((err) => {
           dispatch(authError(err.response.data));
@@ -201,7 +206,7 @@ export function resetPassword(token, password) {
 export function sendPasswordResetEmail(email) {
   return (dispatch) => {
     if (!config.isBackend) {
-      dispatch(push("/login"));
+      history.push("/login");
     } else {
       dispatch({
         type: PASSWORD_RESET_EMAIL_REQUEST,
@@ -213,7 +218,7 @@ export function sendPasswordResetEmail(email) {
             type: PASSWORD_RESET_EMAIL_SUCCESS,
           });
           toast.success("Email with resetting instructions has been sent");
-          dispatch(push("/login"));
+          history.push("/login");
         })
         .catch((err) => {
           dispatch(authError(err.response.data));
@@ -235,7 +240,7 @@ export function registerUser(creds) {
             type: REGISTER_SUCCESS,
           });
           toast.success("You've been registered successfully.");
-          dispatch(push("/login"));
+          history.push("/login");
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));

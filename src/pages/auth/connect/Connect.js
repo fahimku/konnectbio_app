@@ -1,13 +1,13 @@
 import axios from "axios";
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import {withRouter, Link, Route} from "react-router-dom";
-import config from "../../../config";
+//import config from "../../../config";
 import {connect} from "react-redux";
 import {Container, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
-import {loginUser, receiveToken, doInit} from "../../../actions/auth";
-import jwt from "jsonwebtoken";
+//import {loginUser, receiveToken, doInit} from "../../../actions/auth";
+//import jwt from "jsonwebtoken";
 import clap from "../../../images/clap.png";
 import instagram from "../../../images/socialIcons/instagram.png";
 import tiktok from "../../../images/socialIcons/tiktok.png";
@@ -17,7 +17,7 @@ import snapchat from "../../../images/socialIcons/snapchat.png";
 import facebook from "../../../images/socialIcons/facebook.png";
 import {push} from "connected-react-router";
 
-import s from "./Connect.module.scss";
+
 
 class Connect extends React.Component {
   constructor(props) {
@@ -39,12 +39,12 @@ class Connect extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let access_token = userInfo.access_token;
     if (access_token !== "") {
-      this.props.dispatch(push("/app/linkinbio/"));
+      this.props.history.push("/app/linkinbio/");
     }
     const instagramCodeUrl = window.location.href;
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
-      this.props.dispatch(push("/app/linkinbio/" + code[1]));
+      this.props.history.push("/app/linkinbio/" + code[1]);
     }
     this.getInstagramUrl();
   }

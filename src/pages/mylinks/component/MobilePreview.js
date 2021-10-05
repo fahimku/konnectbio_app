@@ -18,17 +18,17 @@ const MobilePreview = ({
   }, [myLinks]);
 
   const links = [];
-  if (myLinks.data) {
-    for (let i = 0; i < myLinks.data.length; i++) {
+  if (myLinks) {
+    for (let i = 0; i < myLinks.length; i++) {
       links.push(
         <Col key={i} xs="12">
           <div
             onClick={() => {
-              fetchSingleLink(myLinks.data[i].link_id);
+              fetchSingleLink(myLinks[i].media_id);
             }}
             className={style.links}
           >
-            {myLinks.data[i].title}
+            {myLinks[i].caption}
           </div>
         </Col>
       );

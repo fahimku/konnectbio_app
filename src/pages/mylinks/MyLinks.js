@@ -44,9 +44,9 @@ class MyLinks extends React.Component {
 
   fetchMyLinks = async (username) => {
     await axios
-      .get(`/links/receive?user=${username}`)
+      .get(`/posts/receive?user=${username}&post_type=link`)
       .then((response) => {
-        this.setState({myLinks: response.data});
+        this.setState({myLinks: response.data.message});
       })
       .catch((error) => {
         console.log(error);
@@ -63,11 +63,11 @@ class MyLinks extends React.Component {
 
   fetchSingleLink = async (linkId) => {
     await axios
-      .get(`links/retrieve?id=${linkId}`)
+      .get(`posts/retrieve/${linkId}?post_type=link `)
       .then((res) => {
         this.setState({preview: true});
-        this.setState({title: res.data.data[0].title});
-        this.setState({redirectedUrl: res.data.data[0].redirected_url});
+        this.setState({title: res.data.message.caption});
+        this.setState({redirectedUrl: res.data.message.redirected_url});
         this.setState({updatePage: true});
         this.setState({linkId: linkId});
       })
@@ -79,16 +79,17 @@ class MyLinks extends React.Component {
   saveLink = async () => {
     this.setState({loading: true});
     await axios
-      .post("links/reserve", {
-        title: this.state.title,
+      .post("posts/reserve", {
+        caption: this.state.title,
         redirected_url: this.state.redirectedUrl,
         username: this.state.username,
         timestamp: this.state.timestamp,
+        post_type: "link",
       })
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
-        
+
         this.addNewLink();
       })
       .catch((error) => {
@@ -99,10 +100,10 @@ class MyLinks extends React.Component {
   updateLink = async (id, title, redirectedUrl) => {
     this.setState({loading: true});
     await axios
-      .put(`links/revise/${id}`, {
-        id: id,
-        title: title,
+      .put(`posts/revise/${id}`, {
+        caption: title,
         redirected_url: redirectedUrl,
+        post_type: "link",
       })
       .then(() => {
         this.fetchMyLinks(this.state.username);
@@ -117,11 +118,11 @@ class MyLinks extends React.Component {
   deleteLink = async (id) => {
     this.setState({loading: true});
     await axios
-      .delete(`links/remove/${id}`)
+      .delete(`posts/remove/${id}?post_type=link`)
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
-        this.setState({ loading: false });
+        this.setState({loading: false});
         this.addNewLink();
       })
       .catch((error) => {
@@ -146,7 +147,7 @@ class MyLinks extends React.Component {
   };
 
   preview = (state, postIndex) => {
-    this.setState({ preview: false });
+    this.setState({preview: false});
   };
 
   error(error) {
@@ -194,7 +195,6 @@ class MyLinks extends React.Component {
               paneDidMount={this.paneDidMount}
               myLinks={this.state.myLinks}
               fetchSingleLink={this.fetchSingleLink}
-        
             />
           </Col>
           <Col

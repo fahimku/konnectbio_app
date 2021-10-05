@@ -1,7 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Switch, Route, Redirect} from "react-router";
-import {HashRouter} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter,
+  Redirect,
+} from "react-router-dom";
+//import {HashRouter} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import {ConnectedRouter} from "connected-react-router";
 import {getHistory} from "../index";
@@ -11,7 +17,6 @@ import ErrorPage from "../pages/error";
 /* eslint-enable */
 import "../styles/theme.scss";
 import LayoutComponent from "../components/Layout";
-
 import Login from "../pages/auth/login";
 import Logout from "../pages/auth/logout";
 import Connect from "../pages/auth/connect";
@@ -19,8 +24,13 @@ import Verify from "../pages/auth/verify";
 import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
+import { createBrowserHistory } from 'history';
 
-const CloseButton = ({closeToast}) => (
+export const history = createBrowserHistory({
+  forceRefresh: true
+  })
+
+const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
 );
 
@@ -37,8 +47,9 @@ class App extends React.PureComponent {
           hideProgressBar
           closeButton={<CloseButton />}
         />
-        <ConnectedRouter history={getHistory()}>
-          <HashRouter>
+        {/* <ConnectedRouter history={getHistory()}> */}
+        <Router history={history}>
+
             <Switch>
               {/* <Route
                 path="/"
@@ -76,8 +87,8 @@ class App extends React.PureComponent {
               {/* <Redirect from="*" to="/app/main/analytics"/>*/}
               <Redirect from="*" to="/connect" />
             </Switch>
-          </HashRouter>
-        </ConnectedRouter>
+          </Router>
+        {/* </ConnectedRouter> */}
       </div>
     );
   }

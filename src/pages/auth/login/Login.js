@@ -13,6 +13,7 @@ import {push} from "connected-react-router";
 import logo from '../../../images/logo.png';
 
 class Login extends React.Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };

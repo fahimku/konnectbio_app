@@ -76,7 +76,7 @@ class LinkinBioShop extends React.Component {
   //nextPageInstagramPosts
   async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`profile/${username}?limit=${limit}&page=${page}`)
+      .get(`profile/posts${username}?limit=${limit}&page=${page}`)
       .then((response) => {
         // console.log(response.data.message.result);
         if (response.data.message.result.hasOwnProperty("next")) {
