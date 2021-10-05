@@ -110,7 +110,7 @@ class Layout extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize.bind(this));
+  //  window.removeEventListener("resize", this.handleResize.bind(this));
   }
 
   handleResize() {
@@ -445,8 +445,7 @@ class Layout extends React.Component {
                     />
                     <Route path="/app/coupons" exact component={Coupons} />
                     <Route path="/app/account/delete" exact component={AccountDelete}/>
-                    <Route path="/app/my/links" exact component={MyLinks}/>
- 
+                    <Route path="/app/my/links" exact component={MyLinks}/> 
                   </Switch>
                 </CSSTransition>
               </TransitionGroup>
