@@ -9,6 +9,7 @@ import MobilePreview from "./component/MobilePreview";
 import AddNewLink from "./component/AddNewLink/index";
 import style from "./MyLinks.module.scss";
 
+
 class MyLinks extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));

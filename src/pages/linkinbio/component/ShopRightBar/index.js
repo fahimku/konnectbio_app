@@ -56,7 +56,7 @@ const ShopRightBar = (props) => {
             )}
           </div>
 
-          <form onSubmit={props.submitted}>
+
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
               <input
@@ -200,7 +200,6 @@ const ShopRightBar = (props) => {
                 )}
               </div>
             </div>
-          </form>
         </div>
       </div>
     </>
