@@ -1,9 +1,16 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 import {Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
-import InputValidation from '../../../../components/InputValidation';
+import InputValidation from "../../../../components/InputValidation";
+import Formsy from "formsy-react";
 
 const AddNewLink = (props) => {
+  const formRef = useRef("");
+
+  function resetForm() {
+    formRef.current.reset();
+  }
+
   return (
     <>
       <div className={`image-edit-box ${props.isPreview ? "show" : "hidden"}`}>
@@ -17,35 +24,48 @@ const AddNewLink = (props) => {
           </h4>
         </div>
         <div className="image-wrapper">
-          <form onSubmit={props.submitted}>
+          <Formsy.Form
+            onValidSubmit={() => {
+              if (props.updatePage) {
+                props.updateLink();
+              } else {
+                props.saveLink && props.saveLink();
+                resetForm();
+              }
+            }}
+            ref={formRef}
+          >
             <div className="image-edit-links">
               <span>Title</span>
-              <input
-                required
-                autoFocus
+              <InputValidation
                 type="text"
+                id="basic"
+                name="basic"
+                required
                 value={props.title}
                 placeholder="Add a link title"
-                className="form-control"
                 onChange={(evt) => {
                   props.titleChange(evt.target.value);
                 }}
               />
-              <span>Redirected URL</span>
-              <input
+              <span>URL</span>
+              <InputValidation
+                placeholder="Please Enter Website Address"
+                type="text"
+                id="website"
                 required
-                autoFocus
-                type="url"
+                name="website"
+                trigger="change"
+                validations="isUrl"
+                validationError={{
+                  isUrl: "This value should be a valid url.",
+                }}
                 value={props.redirectedUrl}
-                placeholder="Add a link to any web page"
-                className="form-control"
                 onChange={(evt) => {
                   props.redirectedUrlChange(evt.target.value);
                 }}
               />
 
-
-              
               <div className="pane-button">
                 {props.updatePage ? (
                   <>
@@ -54,12 +74,18 @@ const AddNewLink = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button onClick={props.updateLink}>
+                      <Button type="submit">
                         &nbsp;&nbsp;Update&nbsp;&nbsp;
                       </Button>
                     )}
                     <div className="remove-link">
-                      <a href="javascript:void(0)" onClick={props.deleteLink}>
+                      <a
+                        href="javascript:void(0)"
+                        onClick={() => {
+                          props.deleteLink();
+                          resetForm();
+                        }}
+                      >
                         <span className="glyphicon glyphicon-trash"></span>
                         Remove Link
                       </a>
@@ -72,10 +98,7 @@ const AddNewLink = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button
-                        onClick={(ev) => props.saveLink && props.saveLink(this)}
-                        color=""
-                      >
+                      <Button type="submit" color="">
                         &nbsp;&nbsp;Save&nbsp;&nbsp;
                       </Button>
                     )}
@@ -83,7 +106,7 @@ const AddNewLink = (props) => {
                 )}
               </div>
             </div>
-          </form>
+          </Formsy.Form>
         </div>
       </div>
     </>

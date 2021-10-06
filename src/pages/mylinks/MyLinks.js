@@ -8,7 +8,7 @@ import TopBar from "./component/TopBar";
 import MobilePreview from "./component/MobilePreview";
 import AddNewLink from "./component/AddNewLink/index";
 import style from "./MyLinks.module.scss";
-
+import moment from "moment";
 
 class MyLinks extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class MyLinks extends React.Component {
       myLinks: [],
       title: "",
       redirectedUrl: "",
-      timestamp: "2021-10-2",
+      timestamp: moment().format('YYYY-MM-DD'),
       singlePost: "",
       url: config.visitorURL + "/",
       nextPageUrl: "",
@@ -90,7 +90,6 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
-
         this.addNewLink();
       })
       .catch((error) => {
@@ -212,7 +211,7 @@ class MyLinks extends React.Component {
               <iframe
                 src={`${
                   this.state.url + this.state.username
-                }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
                 title=""
                 className="myshop-iframe"
               ></iframe>
@@ -220,6 +219,7 @@ class MyLinks extends React.Component {
             <Row>
               <Col xs="12" className="p-3">
                 <AddNewLink
+                  addNewLink={this.addNewLink}
                   loading={this.state.loading}
                   titleChange={this.titleChange}
                   redirectedUrlChange={this.redirectedUrlChange}
@@ -229,7 +229,6 @@ class MyLinks extends React.Component {
                   autoFocus={this.state.autoFocus}
                   isPreview={this.state.preview}
                   preview={this.preview}
-                  singlePost={this.state.singlePost}
                   saveLink={this.saveLink}
                   updatePage={this.state.updatePage}
                   updateLink={() => {

@@ -62,6 +62,8 @@ class InputValidation extends React.Component {
           onBlur={this.changeValue}
           placeholder={this.props.placeholder}
           value={this.props.value}
+          onChange={this.props.onChange}
+        
         />
         {required}
         {errorList}

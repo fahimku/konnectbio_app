@@ -183,7 +183,10 @@ class Layout extends React.Component {
                       <Route
                         path="/app/main"
                         exact
-                        render={() => <Redirect to="/connect" />}
+                        render={() => {
+                          this.props.history.push('/connect')
+                        }
+                        }
                       />
                       <Route
                         path="/app/main/dashboard"

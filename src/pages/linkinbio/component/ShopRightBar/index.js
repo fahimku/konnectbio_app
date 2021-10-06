@@ -4,6 +4,8 @@ import {Button} from "reactstrap";
 import moment from "moment";
 import {Select} from "antd";
 import Loader from "../../../../components/Loader";
+import InputValidation from "../../../../components/InputValidation";
+import Formsy from "formsy-react";
 
 const {Option} = Select;
 
@@ -13,6 +15,7 @@ const ShopRightBar = (props) => {
     ? props.singlePost.id
     : props.singlePost.media_id;
   const redirectedUrlRef = useRef(null);
+  const formRef = useRef("");
 
   useEffect(() => {
     setSubCategories(props.subCategories);
@@ -23,43 +26,46 @@ const ShopRightBar = (props) => {
     props.postType,
   ]);
 
-  useEffect(() => {
-    redirectedUrlRef.current.focus();
-  }, [props.postType]);
+  // useEffect(() => {
+  //   redirectedUrlRef.current.focus();
+  // }, [props.postType]);
+
+  function resetForm() {
+    formRef.current.reset();
+  }
 
   return (
     <>
-      <div
-        className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
-      >
-        <div className="image-box-info">
-          <h4>
-            Edit Links
-
-          <span
-            onClick={() => props.selectPost(false, "")}
-            className="fa fa-times"
-          ></span>
-          </h4>
-          <p>
-            Posted on {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
-          </p>
-
-        </div>
-        <div className="image-wrapper">
-          <div className="image-box">
-            {props.singlePost.media_type == "IMAGE" && (
-              <img src={`${props.singlePost.media_url}`} />
-            )}
-            {props.singlePost.media_type == "VIDEO" && (
-              <Video src={props.singlePost.media_url} />
-            )}
+      <Formsy.Form onValidSubmit={() => {}} ref={formRef}>
+        <div
+          className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
+        >
+          <div className="image-box-info">
+            <h4>
+              Edit Links
+              <span
+                onClick={() => props.selectPost(false, "")}
+                className="fa fa-times"
+              ></span>
+            </h4>
+            <p>
+              Posted on{" "}
+              {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
+            </p>
           </div>
 
-
+          <div className="image-wrapper">
+            <div className="image-box">
+              {props.singlePost.media_type == "IMAGE" && (
+                <img src={`${props.singlePost.media_url}`} />
+              )}
+              {props.singlePost.media_type == "VIDEO" && (
+                <Video src={props.singlePost.media_url} />
+              )}
+            </div>
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
-              <input
+               <input
                 ref={redirectedUrlRef}
                 required
                 autoFocus
@@ -70,7 +76,25 @@ const ShopRightBar = (props) => {
                 onChange={(evt) => {
                   props.callBack(evt.target.value);
                 }}
-              />
+              /> 
+
+              {/* <InputValidation
+                placeholder="Please Enter Website Address"
+                type="text"
+                id="website"
+                required
+                name="website"
+                trigger="change"
+                validations="isUrl"
+                validationError={{
+                  isUrl: "This value should be a valid url.",
+                }}
+                value={props.redirectedUrl}
+                onChange={(value) => {
+                  props.callBack(value);
+                }}
+              /> */}
+
               <div className="select-categories mt-3">
                 <Select
                   key={Date.now()}
@@ -192,7 +216,10 @@ const ShopRightBar = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button onClick={(ev) => props.savePost && props.savePost (this)} color="">
+                      <Button
+                        onClick={(ev) => props.savePost && props.savePost(this)}
+                        color=""
+                      >
                         &nbsp;&nbsp;Save&nbsp;&nbsp;
                       </Button>
                     )}
@@ -200,8 +227,9 @@ const ShopRightBar = (props) => {
                 )}
               </div>
             </div>
+          </div>
         </div>
-      </div>
+      </Formsy.Form>
     </>
   );
 };
