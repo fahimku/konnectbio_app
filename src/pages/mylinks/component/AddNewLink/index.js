@@ -1,9 +1,7 @@
 import React from "react";
 import {Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
-import InputValidation from "../../../../components/InputValidation";
-import Formsy from 'formsy-react';
-
+import InputValidation from '../../../../components/InputValidation';
 
 const AddNewLink = (props) => {
   return (
@@ -19,7 +17,7 @@ const AddNewLink = (props) => {
           </h4>
         </div>
         <div className="image-wrapper">
-        <Formsy.Form>
+          <form onSubmit={props.submitted}>
             <div className="image-edit-links">
               <span>Title</span>
               <input
@@ -34,8 +32,20 @@ const AddNewLink = (props) => {
                 }}
               />
               <span>Redirected URL</span>
-    
+              <input
+                required
+                autoFocus
+                type="url"
+                value={props.redirectedUrl}
+                placeholder="Add a link to any web page"
+                className="form-control"
+                onChange={(evt) => {
+                  props.redirectedUrlChange(evt.target.value);
+                }}
+              />
 
+
+              
               <div className="pane-button">
                 {props.updatePage ? (
                   <>
@@ -73,7 +83,7 @@ const AddNewLink = (props) => {
                 )}
               </div>
             </div>
-            </Formsy.Form>
+          </form>
         </div>
       </div>
     </>
