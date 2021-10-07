@@ -1,0 +1,15 @@
+/*****
+Custome CSS
+**/
+.header .left-top-bar {
+  border: none !important;
+  margin-top: 7px;
+}
+.left-top-bar .profile {
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #c8c8c8;
+  border-radius: 1em;
+  width: 250px;
+  display: flex;
+}
