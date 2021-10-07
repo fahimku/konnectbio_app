@@ -1,13 +1,13 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import {Button} from "reactstrap";
+import { Button } from "reactstrap";
 import moment from "moment";
-import {Select} from "antd";
+import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
-const {Option} = Select;
+const { Option } = Select;
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -65,7 +65,7 @@ const ShopRightBar = (props) => {
             </div>
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
-               <input
+              <input
                 ref={redirectedUrlRef}
                 required
                 autoFocus
@@ -76,7 +76,7 @@ const ShopRightBar = (props) => {
                 onChange={(evt) => {
                   props.callBack(evt.target.value);
                 }}
-              /> 
+              />
 
               {/* <InputValidation
                 placeholder="Please Enter Website Address"
@@ -100,7 +100,7 @@ const ShopRightBar = (props) => {
                   key={Date.now()}
                   value={props.category}
                   showSearch
-                  style={{width: "100%"}}
+                  style={{ width: "100%" }}
                   placeholder="Select Category"
                   optionFilterProp="children"
                   clearable={false}
@@ -116,13 +116,13 @@ const ShopRightBar = (props) => {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {props.categories.map(({value, label}, i) => (
+                  {props.categories.map(({ value, label }, i) => (
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
               </div>
 
-              <div className="select-categories mt-3">
+              {/* <div className="select-categories mt-3">
                 <Select
                   key={Date.now()}
                   mode="tags"
@@ -147,7 +147,7 @@ const ShopRightBar = (props) => {
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
-              </div>
+              </div> */}
 
               {props.singlePost.media_type == "VIDEO" && (
                 <>

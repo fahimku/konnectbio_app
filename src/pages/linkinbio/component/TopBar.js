@@ -1,18 +1,25 @@
 import React from "react";
 import placeholder from "../../../images/placeholder.png";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 const TopBar = ({ username, copyToClipboard, url }) => {
   return (
     <div className="left-top-bar">
-      <div className="profile">
+      {/* <div className="profile">
         <div className="placeholder">
           <img src={placeholder} />
         </div>
         <div className="instagram-account">
           <div className="instagram-username">@{username}</div>
           <div className="instagram-label">Instagram</div>
-        </div>
-      </div>
+        </div> */}
+      <DropdownButton
+        id="dropdown-basic-button"
+        className="source-button"
+        title={`Source: instagram@${username}`}
+      >
+        {/* <Dropdown.Item href="#/Instagram">Instagram</Dropdown.Item> */}
+      </DropdownButton>
 
       {/* <div className="your-copy-link">
         <div className="item-a">

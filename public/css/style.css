@@ -13,3 +13,18 @@ Custome CSS
   width: 250px;
   display: flex;
 }
+.left-top-bar .dropdown-menu {
+  min-width: 220px;
+}
+.source-button button {
+  background: #000;
+  border: none;
+}
+.source-button button:hover {
+  color: #fff;
+  background-color: #000;
+  border-color: #000;
+}
+.mobile-preview .mobile-header {
+  padding-left: 90px !important;
+}

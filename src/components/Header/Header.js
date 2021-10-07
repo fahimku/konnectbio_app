@@ -204,7 +204,7 @@ class Header extends React.Component {
           <div className="left-top-bar">
             <div className="your-copy-link">
               <div className="item-a">
-                Your Link:{" "}
+                Bio Link:{" "}
                 <a target="_blank" href={url + this.props.username}>
                   {url + this.props.username}
                 </a>

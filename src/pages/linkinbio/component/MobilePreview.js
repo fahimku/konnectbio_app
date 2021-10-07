@@ -1,6 +1,6 @@
 import React from "react";
-import {Row, Col} from "reactstrap";
-import {Link} from "react-router-dom";
+import { Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const MobilePreview = ({
   placeholder,
@@ -38,7 +38,7 @@ const MobilePreview = ({
         );
       } else {
         instaPosts.push(
-          <Col key={i} xs="4"   onClick={(ev) => selectPost(true, i)}>
+          <Col key={i} xs="4" onClick={(ev) => selectPost(true, i)}>
             <div className="mobile-image-box">
               <video
                 oncontextmenu="return false;"
@@ -52,14 +52,16 @@ const MobilePreview = ({
                 }
                 key={i}
                 id={"img" + i}
-              
               >
                 <source
                   src={instagramPosts.data[i].media_url}
                   type="video/mp4"
                 ></source>
               </video>
-              <span className="video-label fa fa-play" aria-hidden="true"></span>
+              <span
+                className="video-label fa fa-play"
+                aria-hidden="true"
+              ></span>
               {instagramPosts.data[i].linked ? (
                 <span className="linked-label">LINKED</span>
               ) : (
@@ -85,7 +87,7 @@ const MobilePreview = ({
         </div>
       ) : (
         <div>
-          <div className="visit-website">Visit Website</div>
+          {/* <div className="visit-website">Visit Website</div> */}
           <div ref={paneDidMount} className="mobile-gallery">
             <Row>{instaPosts}</Row>
           </div>
