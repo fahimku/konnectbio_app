@@ -64,6 +64,11 @@
         width: 170px;
     }
 
+    .mobile-menu .navbar-nav {
+        height: 100vh;
+        width: 100vh;
+    }
+
 
 }
 
@@ -92,7 +97,7 @@
     }
 
     .pane-button button {
-        width:100%;
+        width: 100%;
     }
 
     .pane-button .remove-link {

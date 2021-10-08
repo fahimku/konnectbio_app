@@ -1,5 +1,5 @@
 import React from "react";
-import { DropdownButton } from "react-bootstrap";
+import { DropdownButton,Dropdown } from "react-bootstrap";
 
 const TopBar = ({ username, copyToClipboard, url }) => {
   return (
@@ -17,7 +17,7 @@ const TopBar = ({ username, copyToClipboard, url }) => {
         className="source-button"
         title={`Source: instagram@${username}`}
       >
-        {/* <Dropdown.Item href="#/Instagram">Instagram</Dropdown.Item> */}
+        <Dropdown.Item href="#/Instagram">Instagram</Dropdown.Item>
       </DropdownButton>
 
       {/* <div className="your-copy-link">
