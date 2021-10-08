@@ -44,7 +44,7 @@
 
     @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height),
     (max-width: map_get($grid-breakpoints, md) - 1px) {
-      line-height: 35px;
+      line-height: 40px;
     }
   }
 
