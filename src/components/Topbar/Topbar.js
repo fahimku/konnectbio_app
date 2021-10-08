@@ -1,6 +1,5 @@
 import React from "react";
-import placeholder from "../../../images/placeholder.png";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { DropdownButton } from "react-bootstrap";
 
 const TopBar = ({ username, copyToClipboard, url }) => {
   return (

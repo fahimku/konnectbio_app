@@ -7,7 +7,7 @@ import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import {connect} from "react-redux";
 import {addUserInfo} from "../../actions/user";
-import TopBar from "./component/TopBar";
+import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 

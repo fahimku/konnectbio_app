@@ -165,7 +165,7 @@ class Layout extends React.Component {
         ].join(" ")}
       >
         <Sidebar />
-        <div className={s.wrap}>
+        <div className={'LayoutWrap '+ s.wrap}>
           <Header username={this.state.username} placeholder={placeholder} />
           <Helper />
 
@@ -178,15 +178,14 @@ class Layout extends React.Component {
                   classNames="fade"
                   timeout={200}
                 >
-                 <Router history={history}>
+                  <Router history={history}>
                     <Switch>
                       <Route
                         path="/app/main"
                         exact
                         render={() => {
-                          this.props.history.push('/connect')
-                        }
-                        }
+                          this.props.history.push("/connect");
+                        }}
                       />
                       <Route
                         path="/app/main/dashboard"

@@ -10,10 +10,9 @@ import Formsy from "formsy-react";
 const { Option } = Select;
 
 const ShopRightBar = (props) => {
+ 
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id
-    ? props.singlePost.id
-    : props.singlePost.media_id;
+  const media_id = props.singlePost.id ? props.singlePost.id: props.singlePost.media_id;
   const redirectedUrlRef = useRef(null);
   const formRef = useRef("");
 
@@ -65,10 +64,10 @@ const ShopRightBar = (props) => {
             </div>
             <div className="image-edit-links">
               <span>Konnect.Bio</span>
-              <input
+               <input
                 ref={redirectedUrlRef}
                 required
-                autoFocus
+                autoFocus 
                 type="url"
                 value={props.redirectedUrl}
                 placeholder="Add a link to any web page"
@@ -76,8 +75,7 @@ const ShopRightBar = (props) => {
                 onChange={(evt) => {
                   props.callBack(evt.target.value);
                 }}
-              />
-
+              /> 
               {/* <InputValidation
                 placeholder="Please Enter Website Address"
                 type="text"

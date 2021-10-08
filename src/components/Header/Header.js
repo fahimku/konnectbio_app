@@ -1,48 +1,44 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router";
+import {withRouter} from "react-router";
 import {
   Navbar,
   Nav,
-  Dropdown,
+  NavbarToggler,
   NavItem,
   NavLink,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledTooltip,
-  InputGroupAddon,
-  InputGroup,
-  Input,
-  Form,
-  FormGroup,
+  Collapse,
+  NavbarBrand,
 } from "reactstrap";
 import cx from "classnames";
-import { NavbarTypes } from "../../reducers/layout";
+import {NavbarTypes} from "../../reducers/layout";
 import Notifications from "../Notifications";
-import { logoutUser } from "../../actions/auth";
-import Joyride, { STATUS } from "react-joyride";
+import {logoutUser} from "../../actions/auth";
+import Joyride, {STATUS} from "react-joyride";
+
+import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 import {
   toggleSidebar,
   openSidebar,
   closeSidebar,
   changeActiveSidebarItem,
 } from "../../actions/navigation";
-import adminDefault from "../../images/chat/chat2.png";
-import MenuIcon from "../../images/sidebar/Fill/MenuIcon";
-import FlipIcon from "../../images/sidebar/Outline/Flip";
-import CloseIcon from "../../images/sidebar/Fill/CloseIconOne";
-import SearchIcon from "../../images/sidebar/Outline/Search";
-import SettingsIcon from "../../images/sidebar/Outline/Settings";
-import CalendarIcon from "../../images/sidebar/Outline/Calendar";
-import PersonIcon from "../../images/sidebar/Outline/Person";
-import EmailIcon from "../../images/sidebar/Outline/Email";
-import PowerIcon from "../../images/sidebar/Outline/Power";
+import logo from '../../images/logo.png';
+// import adminDefault from "../../images/chat/chat2.png";
+// import MenuIcon from "../../images/sidebar/Fill/MenuIcon";
+// import FlipIcon from "../../images/sidebar/Outline/Flip";
+// import CloseIcon from "../../images/sidebar/Fill/CloseIconOne";
+// import SearchIcon from "../../images/sidebar/Outline/Search";
+// import SettingsIcon from "../../images/sidebar/Outline/Settings";
+// import CalendarIcon from "../../images/sidebar/Outline/Calendar";
+// import PersonIcon from "../../images/sidebar/Outline/Person";
+// import EmailIcon from "../../images/sidebar/Outline/Email";
+// import PowerIcon from "../../images/sidebar/Outline/Power";
 
 import s from "./Header.module.scss"; // eslint-disable-line css-modules/no-unused-class
 import config from "../../../src/config";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 class Header extends React.Component {
   static propTypes = {
@@ -64,7 +60,8 @@ class Header extends React.Component {
     this.doLogout = this.doLogout.bind(this);
 
     this.state = {
-      menuOpen: false,
+      navs: [false, false, false, false],
+      menuOpen: true,
       notificationsOpen: false,
       notificationsTabSelected: 1,
       focus: true,
@@ -103,14 +100,14 @@ class Header extends React.Component {
   componentDidMount() {
     this.toggleSidebar();
     if (window.location.href.includes("main")) {
-      this.setState({ run: false });
+      this.setState({run: false});
     }
   }
 
   handleJoyrideCallback = (CallBackProps) => {
-    const { status } = CallBackProps;
+    const {status} = CallBackProps;
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      this.setState({ run: false });
+      this.setState({run: false});
     }
   };
 
@@ -121,7 +118,7 @@ class Header extends React.Component {
   };
 
   toggleFocus = () => {
-    this.setState({ focus: !this.state.focus });
+    this.setState({focus: !this.state.focus});
   };
 
   toggleNotifications() {
@@ -166,6 +163,16 @@ class Header extends React.Component {
       menuOpen: !this.state.menuOpen,
     });
   }
+
+  toggle(id) {
+    const newState = Array(4).fill(false);
+
+    if (!this.state.navs[id]) {
+      newState[id] = true;
+    }
+
+    this.setState({navs: newState});
+  }
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
     const url = config.visitorURL + "/";
@@ -178,8 +185,8 @@ class Header extends React.Component {
   };
 
   render() {
-    const { focus } = this.state;
-    const { openUsersList } = this.props;
+    const {focus} = this.state;
+    const {openUsersList} = this.props;
     const navbarType = localStorage.getItem("navbarType") || "static";
     const user = this.props.currentUser;
     const avatar =
@@ -190,17 +197,88 @@ class Header extends React.Component {
 
     return (
       <>
+        <div className="mobile-header">
+          <Navbar
+            className="mobile-menu px-4 mt-lg"
+            color="light"
+            light
+            expand="md"
+          >
+            <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
+            <Collapse isOpen={this.state.navs[3]} navbar>
+              <Nav className="ml-auto" navbar>
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Posts"
+                  link="/app/linkinbio"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Shop"
+                  link="/app/linkinbio-shop"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Links"
+                  link="/app/my/links"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Analytics"
+                  link="/app/analysis"
+                  isHeader
+                  iconElement={<span className="fa fa-bar-chart-o"></span>}
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Media Library"
+                  link="/app/media/library"
+                  isHeader
+                  iconElement={<span className="glyphicon glyphicon-picture" />}
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Collect Media"
+                  link="/app/couponsss"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-download-alt"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              </Nav>
+            </Collapse>
+          </Navbar>
+          <div className="logo">
+            <img  src={logo} alt/>
+          </div>
+        </div>
         <div className="header bg-white">
           <div className="linkin-text">Konnect.Bio</div>
-          {/* <div className="profile">
-            <div className="placeholder">
-              <img src={this.props.placeholder} />
-            </div>
-            <div className="instagram-account">
-              <div className="instagram-username">@{this.props.username}</div>
-              <div className="instagram-label">Instagram</div>
-            </div>
-          </div> */}
           <div className="left-top-bar">
             <div className="your-copy-link">
               <div className="item-a">
@@ -213,10 +291,6 @@ class Header extends React.Component {
                 Copy
               </div>
             </div>
-
-            {/* <div className="instagram-bio">
-        <button>Add to Instagram Bio</button>
-      </div> */}
           </div>
         </div>
       </>

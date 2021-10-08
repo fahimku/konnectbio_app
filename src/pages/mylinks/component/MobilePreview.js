@@ -24,7 +24,9 @@ const MobilePreview = ({
         <Col key={i} xs="12">
           <div
             onClick={() => {
-              fetchSingleLink(myLinks[i].media_id);
+              if (!myLinks[i].media_id)
+                addNewLink(myLinks[i].caption, myLinks[i].redirected_url);
+              else fetchSingleLink(myLinks[i].media_id);
             }}
             className={style.links}
           >
@@ -48,7 +50,12 @@ const MobilePreview = ({
         </div>
       ) : (
         <div>
-          <div className="visit-website" onClick={addNewLink}>
+          <div
+            className="visit-website"
+            onClick={() => {
+              addNewLink("", "");
+            }}
+          >
             Add a New Link
           </div>
           <div

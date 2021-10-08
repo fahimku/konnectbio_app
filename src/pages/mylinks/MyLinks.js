@@ -4,7 +4,7 @@ import {Row, Col} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
-import TopBar from "./component/TopBar";
+import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import AddNewLink from "./component/AddNewLink/index";
 import style from "./MyLinks.module.scss";
@@ -19,10 +19,51 @@ class MyLinks extends React.Component {
     this.state = {
       loading: false,
       updatePage: false,
-      myLinks: [],
+      myLinks: [
+        {
+          redirected_url: "",
+          caption: "Facebook",
+        },
+        {
+          redirected_url: "",
+          caption: "Twitter",
+        },
+        {
+          redirected_url: "",
+          caption: "Youtube",
+        },
+        {
+          redirected_url: "",
+          caption: "Whatsapp",
+        },
+        {
+          redirected_url: "",
+          caption: "Instagram",
+        },
+        {
+          redirected_url: "",
+          caption: "Tik Tok",
+        },
+        {
+          redirected_url: "",
+          caption: "My Website",
+        },
+        {
+          redirected_url: "",
+          caption: "Custom 1",
+        },
+        {
+          redirected_url: "",
+          caption: "Custom 2",
+        },
+        {
+          redirected_url: "",
+          caption: "Custom 3",
+        },
+      ],
       title: "",
       redirectedUrl: "",
-      timestamp: moment().format('YYYY-MM-DD'),
+      timestamp: moment().format("YYYY-MM-DD"),
       singlePost: "",
       url: config.visitorURL + "/",
       nextPageUrl: "",
@@ -43,11 +84,19 @@ class MyLinks extends React.Component {
     this.fetchMyLinks(this.state.username);
   }
 
+  forceUpdateState = () => {
+    this.forceUpdate();
+  };
+
   fetchMyLinks = async (username) => {
     await axios
       .get(`/posts/receive?user=${username}&post_type=link`)
       .then((response) => {
-        this.setState({myLinks: response.data.message});
+        const myLinks = [...this.state.myLinks, ...response.data.message];
+        const uniqueMyLinks = [
+          ...new Map(myLinks.map((item) => [item["caption"], item])).values(),
+        ];
+        this.setState({myLinks: uniqueMyLinks});
       })
       .catch((error) => {
         console.log(error);
@@ -124,6 +173,7 @@ class MyLinks extends React.Component {
         toast.success("Link removed successfully.");
         this.setState({loading: false});
         this.addNewLink();
+        this.forceUpdateState();
       })
       .catch((error) => {
         console.log(error);
@@ -154,9 +204,9 @@ class MyLinks extends React.Component {
     this.setState({error: error});
   }
 
-  addNewLink = () => {
-    this.setState({title: ""});
-    this.setState({redirectedUrl: ""});
+  addNewLink = (title = "", redirectedUrl = "") => {
+    this.setState({title: title});
+    this.setState({redirectedUrl: redirectedUrl});
     this.setState({preview: true});
     this.setState({updatePage: false});
     this.setState({loading: false});

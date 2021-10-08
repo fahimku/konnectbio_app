@@ -4,16 +4,19 @@ import {Row, Col} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
-import {connect} from "react-redux";
-import {addUserInfo} from "../../actions/user";
-import TopBar from "./component/TopBar";
+// import {connect} from "react-redux";
+// import {addUserInfo} from "../../actions/user";
+import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
+
   constructor(props) {
+
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
+
     super(props);
     this.error = this.error.bind(this);
     this.state = {
@@ -41,7 +44,6 @@ class LinkinBio extends React.Component {
       autoFocus: false,
       error: "",
     };
-    this.props.addUserInfo("test");
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
     this.changePostType = this.changePostType.bind(this);
@@ -493,10 +495,4 @@ class LinkinBio extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addUserInfo: (text) => dispatch(addUserInfo(text)),
-  };
-};
-export default connect(null, mapDispatchToProps)(LinkinBio);
+export default LinkinBio
