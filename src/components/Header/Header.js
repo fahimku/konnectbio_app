@@ -202,7 +202,6 @@ class Header extends React.Component {
             className="mobile-menu px-4 mt-lg"
             color="light"
             light
-            expand="md"
           >
             <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
             <Collapse isOpen={this.state.navs[3]} navbar>

@@ -230,7 +230,7 @@ class MyLinks extends React.Component {
     return (
       <div className="linkin-bio">
         <Row className="main-container">
-          <Col className="left-column" md="5" xs="12">
+          <Col className="left-column" md="5" xs="12" xl="3">
             <TopBar
               username={this.state.username}
               url={this.state.url}
@@ -253,6 +253,7 @@ class MyLinks extends React.Component {
             } `}
             md="7"
             xs="12"
+            xl="9"
           >
             <div
               className={`${!this.state.preview ? "show" : "hidden"}`}
