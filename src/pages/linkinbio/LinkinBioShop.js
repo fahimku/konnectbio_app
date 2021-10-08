@@ -333,7 +333,7 @@ class LinkinBioShop extends React.Component {
     return (
       <div className="linkin-bio">
         <Row className="main-container">
-          <Col className="left-column" md="4" xs="12">
+          <Col className="left-column" md="5" xs="12">
             <TopBar
               username={this.state.username}
               url={this.state.url}
@@ -352,7 +352,7 @@ class LinkinBioShop extends React.Component {
             className={`right-bar bg-white ${
               !this.state.selectPost ? "no-padding" : ""
             } `}
-            md="8"
+            md="7"
             xs="12"
           >
             <div

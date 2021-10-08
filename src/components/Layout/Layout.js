@@ -116,8 +116,8 @@ class Layout extends React.Component {
   }
 
   componentDidMount() {
-    this.handleResize();
-    window.addEventListener("resize", this.handleResize.bind(this));
+    //this.handleResize();
+   // window.addEventListener("resize", this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
@@ -126,7 +126,7 @@ class Layout extends React.Component {
 
   handleResize() {
     if (window.innerWidth <= 768 && this.props.sidebarStatic) {
-      this.props.dispatch(toggleSidebar());
+     // this.props.dispatch(toggleSidebar());
     }
   }
 
@@ -138,7 +138,7 @@ class Layout extends React.Component {
       }
 
       if (e.direction === 2 && this.props.sidebarOpened) {
-        this.props.dispatch(closeSidebar());
+      //  this.props.dispatch(closeSidebar());
         return;
       }
     }
@@ -149,8 +149,7 @@ class Layout extends React.Component {
       <div
         className={[
           s.root,
-          this.props.sidebarStatic ? `${s.sidebarStatic}` : "",
-          !this.props.sidebarOpened ? s.sidebarClose : "",
+           `${s.sidebarStatic}`,
           "sing-dashboard",
           `dashboard-${
             localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT

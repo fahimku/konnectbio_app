@@ -230,7 +230,7 @@ class MyLinks extends React.Component {
     return (
       <div className="linkin-bio">
         <Row className="main-container">
-          <Col className="left-column" md="4" xs="12">
+          <Col className="left-column" md="5" xs="12">
             <TopBar
               username={this.state.username}
               url={this.state.url}
@@ -251,7 +251,7 @@ class MyLinks extends React.Component {
             className={`right-bar bg-white ${
               !this.state.preview ? "no-padding" : ""
             } `}
-            md="8"
+            md="7"
             xs="12"
           >
             <div

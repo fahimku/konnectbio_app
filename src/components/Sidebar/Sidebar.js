@@ -73,11 +73,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div
-        className={`${
-          !this.props.sidebarOpened && !this.props.sidebarStatic
-            ? s.sidebarClose
-            : ""
-        } ${s.sidebarWrapper} sidebar`}
+        className={`${s.sidebarWrapper} sidebar`}
       >
         <nav
           // onMouseEnter={this.onMouseEnter}
@@ -199,8 +195,9 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
-                />
-                <LinksGroup
+                  />
+                  
+                             <LinksGroup
                   className="sidebar-nav-links"
                   header="My Shop"
                   link="/app/linkinbio-shop"
@@ -224,6 +221,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
+     
 
                 {/* <LinksGroup
                   className="sidebar-nav-links"
