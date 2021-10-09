@@ -199,7 +199,7 @@ class Header extends React.Component {
       <>
         <div className="mobile-header">
           <Navbar
-            className="mobile-menu px-4 mt-lg"
+            className="mobile-menu px-4 mt-2"
             color="light"
             light
           >

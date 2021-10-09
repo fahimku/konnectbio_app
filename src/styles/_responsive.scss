@@ -1,5 +1,30 @@
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+    .modal {
+        display:block;
+    }
+    .header .left-top-bar {
+        display: none;
+    }
+
+    .source-button {
+        width: 100%;
+    }
+
+    .source-button button {
+        width: 100%;
+    }
+
+    .modal .image-box img {
+        width:150px;
+        height:150px;
+
+    }
+
+    .image-box-info h4 {
+        display: none;
+    }
+}
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {}
@@ -7,35 +32,44 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 991px) {
 
+    .navbar {
+        height: 38px;
+    }
 
     .header {
         flex-direction: column;
     }
 
     .mobile-menu ul {
-        border-top: 1px solid #c8c8c8;
-        margin-top:5px;
+        margin-top: 5px;
     }
 
-    .mobile-menu ul  li a span {
-        top:1px;
-        font-size:16px;
+    .mobile-menu ul li a {
+        font-weight: 100 !important;
     }
-  
+
+    .mobile-menu ul li a span {
+        top: 1px;
+        font-size: 16px;
+    }
+
     .mobile-menu ul li:last-child {
-        border-bottom:1px solid #c8c8c8;    
+        border-bottom: 1px solid #c8c8c8;
     }
-
-
 
     .mobile-menu {
         display: block;
-        z-index: 111111;
+        z-index: 99;
         background: white;
     }
 
     .mobile-menu .navbar-collapse {
         background: white !important;
+        margin-left: -23px;
+    }
+
+    .navbar-light .navbar-toggler {
+        border-color: white !important;
     }
 
     .header .linkin-text {
@@ -59,17 +93,18 @@
 
     .mobile-header {
         display: flex;
+
     }
 
     .mobile-header .logo {
         position: absolute;
         left: 31%;
-        top: 1%;
-        z-index: 111111;
+        top: 0%;
+        z-index: 100;
     }
 
     .mobile-header .logo img {
-        width: 170px;
+        width: 138px;
     }
 
     .mobile-menu .navbar-nav {
@@ -138,8 +173,8 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 991px) {
-
     .sidebar {
         display: none !important;
     }
 }
+

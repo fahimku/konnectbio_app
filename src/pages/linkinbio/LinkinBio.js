@@ -1,6 +1,14 @@
 import axios from "axios";
 import React from "react";
-import {Row, Col} from "reactstrap";
+import {
+  Row,
+  Col,
+  Modal,
+  Button,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -11,9 +19,7 @@ import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
-
   constructor(props) {
-
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
 
@@ -21,6 +27,7 @@ class LinkinBio extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       media_id: "",
+      modal: false,
       loading: false,
       instagramPosts: null,
       postType: "image",
@@ -346,6 +353,12 @@ class LinkinBio extends React.Component {
     }
   };
 
+  toggle(id) {
+    this.setState((prevState) => ({
+      [id]: !prevState[id],
+    }));
+  }
+
   selectPost = (state, postIndex) => {
     this.setState((prevState) => ({autoFocus: !prevState.autoFocus}));
     this.fetchCategories();
@@ -382,6 +395,7 @@ class LinkinBio extends React.Component {
       );
     }
     this.setState({selectPost: state});
+    this.setState({modal: true});
   };
 
   error(error) {
@@ -418,6 +432,37 @@ class LinkinBio extends React.Component {
 
   submitted = (e) => {
     e.preventDefault();
+  };
+
+  shopRightBar = () => {
+    return (
+      <ShopRightBar
+        loading={this.state.loading}
+        submitted={this.submitted}
+        autoFocus={this.state.autoFocus}
+        isSelectPost={this.state.selectPost}
+        selectPost={this.selectPost}
+        singlePost={this.state.singlePost}
+        redirectedUrl={this.state.redirectedUrl}
+        categories={this.state.categories}
+        changeCategory={this.changeCategory}
+        category={this.state.category}
+        subCategory={this.state.subCategory}
+        changeSubCategory={this.changeSubCategory}
+        subCategories={this.state.subCategories}
+        changePostType={this.changePostType}
+        postType={this.state.postType}
+        savePost={this.savePost}
+        updatePost={(val1, val2) => {
+          this.updatePost(val1, val2);
+        }}
+        media_id={this.state.media_id}
+        deletePost={this.deletePost}
+        callBack={(value) => {
+          this.setState({redirectedUrl: value});
+        }}
+      ></ShopRightBar>
+    );
   };
 
   render() {
@@ -462,38 +507,26 @@ class LinkinBio extends React.Component {
 
             <Row>
               <Col xs="12" className="p-5">
-                <ShopRightBar
-                  loading={this.state.loading}
-                  submitted={this.submitted}
-                  autoFocus={this.state.autoFocus}
-                  isSelectPost={this.state.selectPost}
-                  selectPost={this.selectPost}
-                  singlePost={this.state.singlePost}
-                  redirectedUrl={this.state.redirectedUrl}
-                  categories={this.state.categories}
-                  changeCategory={this.changeCategory}
-                  category={this.state.category}
-                  subCategory={this.state.subCategory}
-                  changeSubCategory={this.changeSubCategory}
-                  subCategories={this.state.subCategories}
-                  changePostType={this.changePostType}
-                  postType={this.state.postType}
-                  savePost={this.savePost}
-                  updatePost={(val1, val2) => {
-                    this.updatePost(val1, val2);
-                  }}
-                  media_id={this.state.media_id}
-                  deletePost={this.deletePost}
-                  callBack={(value) => {
-                    this.setState({redirectedUrl: value});
-                  }}
-                ></ShopRightBar>
+                {this.shopRightBar()}
               </Col>
             </Row>
           </Col>
         </Row>
+
+        {window.innerWidth <= 760 && (
+          <Modal
+            size="sm"
+            isOpen={this.state.modal}
+            toggle={() => this.toggle("modal")}
+          >
+            <ModalHeader toggle={() => this.toggle("modal")}>
+              Edit Links
+            </ModalHeader>
+            <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
+          </Modal>
+        )}
       </div>
     );
   }
 }
-export default LinkinBio
+export default LinkinBio;

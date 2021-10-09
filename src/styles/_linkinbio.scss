@@ -36,7 +36,7 @@
 }
 
 
-.preview-heading{
+.preview-heading {
     border-bottom: 1px solid #ccc;
     padding: 14px 0px 13px;
     font-size: 18px;
@@ -55,8 +55,9 @@
         border: 1px solid #e1e1ee;
         height: 35px;
         line-height: 31px;
-        background: #fff ;
+        background: #fff;
         font-weight: bold;
+
         .item-a {
             display: inline-block;
             padding: 0px 10px;
@@ -158,7 +159,7 @@
 
         .place-holder-name {
             padding-left: 10px;
-            padding-top: 8px;
+            padding-top: 6px;
             font-weight: bold;
         }
 
@@ -198,12 +199,13 @@
             padding: 0;
             width: 52px;
         }
+
         .video-label {
             position: absolute;
-            top:50%;
-            left:50%;
-            color:white;
-            font-size:24px;
+            top: 50%;
+            left: 50%;
+            color: white;
+            font-size: 24px;
             z-index: 0;
             cursor: pointer;
         }
@@ -212,9 +214,9 @@
         video {
             width: 100%;
             height: 100%;
-            -webkit-filter: grayscale(100%);
-            filter: grayscale(100%);
-            opacity: 0.5;
+            // -webkit-filter: grayscale(100%);
+            // filter: grayscale(100%);
+            // opacity: 0.5;
             cursor: pointer;
         }
 
@@ -314,7 +316,7 @@
                 cursor: pointer;
             }
 
-            .fa-times{
+            .fa-times {
                 float: right;
                 margin-top: 5px;
             }

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from "axios";
 import React from "react";
-import {Row, Col} from "reactstrap";
+import {Row, Col, Modal, ModalHeader, ModalBody} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -19,6 +19,7 @@ class LinkinBioShop extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       loading: false,
+      modal: false,
       media_id: "",
       instagramPosts: null,
       postType: "image",
@@ -62,7 +63,9 @@ class LinkinBioShop extends React.Component {
   //Second Request From User
   async fetchInstagramPosts(username, limit, page) {
     await axios
-      .get(`profile/posts/${username}?limit=${limit}&page=${page}&post_type=image`)
+      .get(
+        `profile/posts/${username}?limit=${limit}&page=${page}&post_type=image`
+      )
       .then((response) => {
         this.setState({instagramPosts: response.data.message.result});
         if (response.data.message.result.hasOwnProperty("next")) {
@@ -76,7 +79,9 @@ class LinkinBioShop extends React.Component {
   //nextPageInstagramPosts
   async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`profile/posts/${username}?limit=${limit}&page=${page}&post_type=link`)
+      .get(
+        `profile/posts/${username}?limit=${limit}&page=${page}&post_type=link`
+      )
       .then((response) => {
         // console.log(response.data.message.result);
         if (response.data.message.result.hasOwnProperty("next")) {
@@ -296,6 +301,7 @@ class LinkinBioShop extends React.Component {
       );
     }
     this.setState({selectPost: state});
+    this.setState({modal: true});
   };
 
   error(error) {
@@ -327,6 +333,43 @@ class LinkinBioShop extends React.Component {
     document.execCommand("copy");
     textField.remove();
     toast.success("Copied to Clipboard!");
+  };
+
+  toggle(id) {
+    this.setState((prevState) => ({
+      [id]: !prevState[id],
+    }));
+  }
+
+  shopRightBar = () => {
+    return (
+      <ShopRightBar
+        loading={this.state.loading}
+        autoFocus={this.state.autoFocus}
+        submitted={this.submitted}
+        isSelectPost={this.state.selectPost}
+        selectPost={this.selectPost}
+        singlePost={this.state.singlePost}
+        redirectedUrl={this.state.redirectedUrl}
+        categories={this.state.categories}
+        changeCategory={this.changeCategory}
+        category={this.state.category}
+        subCategory={this.state.subCategory}
+        changeSubCategory={this.changeSubCategory}
+        subCategories={this.state.subCategories}
+        changePostType={this.changePostType}
+        postType={this.state.postType}
+        //  savePost={this.savePost}
+        updatePost={(val1, val2) => {
+          this.updatePost(val1, val2);
+        }}
+        media_id={this.state.media_id}
+        deletePost={this.deletePost}
+        callBack={(value) => {
+          this.setState({redirectedUrl: value});
+        }}
+      ></ShopRightBar>
+    );
   };
 
   render() {
@@ -369,36 +412,23 @@ class LinkinBioShop extends React.Component {
 
             <Row>
               <Col xs="12" className="p-5">
-                <ShopRightBar
-                  loading={this.state.loading}
-                  autoFocus={this.state.autoFocus}
-                  submitted={this.submitted}
-                  isSelectPost={this.state.selectPost}
-                  selectPost={this.selectPost}
-                  singlePost={this.state.singlePost}
-                  redirectedUrl={this.state.redirectedUrl}
-                  categories={this.state.categories}
-                  changeCategory={this.changeCategory}
-                  category={this.state.category}
-                  subCategory={this.state.subCategory}
-                  changeSubCategory={this.changeSubCategory}
-                  subCategories={this.state.subCategories}
-                  changePostType={this.changePostType}
-                  postType={this.state.postType}
-                  //  savePost={this.savePost}
-                  updatePost={(val1, val2) => {
-                    this.updatePost(val1, val2);
-                  }}
-                  media_id={this.state.media_id}
-                  deletePost={this.deletePost}
-                  callBack={(value) => {
-                    this.setState({redirectedUrl: value});
-                  }}
-                ></ShopRightBar>
+                {this.shopRightBar()}
               </Col>
             </Row>
           </Col>
         </Row>
+        {window.innerWidth <= 760 && (
+          <Modal
+            size="sm"
+            isOpen={this.state.modal}
+            toggle={() => this.toggle("modal")}
+          >
+            <ModalHeader toggle={() => this.toggle("modal")}>
+              Edit Links
+            </ModalHeader>
+            <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
+          </Modal>
+        )}
       </div>
     );
   }

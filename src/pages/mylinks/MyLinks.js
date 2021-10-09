@@ -1,6 +1,14 @@
 import axios from "axios";
 import React from "react";
-import {Row, Col} from "reactstrap";
+import {
+  Row,
+  Col,
+  Modal,
+  Button,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -18,6 +26,7 @@ class MyLinks extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       loading: false,
+      modal:false,
       updatePage: false,
       myLinks: [
         {
@@ -119,7 +128,8 @@ class MyLinks extends React.Component {
         this.setState({title: res.data.message.caption});
         this.setState({redirectedUrl: res.data.message.redirected_url});
         this.setState({updatePage: true});
-        this.setState({linkId: linkId});
+        this.setState({ linkId: linkId });
+        this.setState({ modal: true });
       })
       .catch((error) => {
         console.log(error);
@@ -196,6 +206,13 @@ class MyLinks extends React.Component {
     }
   };
 
+  toggle(id) {
+    this.setState((prevState) => ({
+      [id]: !prevState[id],
+    }));
+  }
+
+
   preview = (state, postIndex) => {
     this.setState({preview: false});
   };
@@ -209,7 +226,8 @@ class MyLinks extends React.Component {
     this.setState({redirectedUrl: redirectedUrl});
     this.setState({preview: true});
     this.setState({updatePage: false});
-    this.setState({loading: false});
+    this.setState({ loading: false });
+    this.setState({ modal:true})
   };
 
   copyToClipboard = (e) => {
@@ -222,6 +240,34 @@ class MyLinks extends React.Component {
     toast.success("Copied to Clipboard!");
   };
 
+  addNewLinkShop = () => {
+    return (
+      <AddNewLink
+        addNewLink={this.addNewLink}
+        loading={this.state.loading}
+        titleChange={this.titleChange}
+        redirectedUrlChange={this.redirectedUrlChange}
+        title={this.state.title}
+        redirectedUrl={this.state.redirectedUrl}
+        submitted={this.submitted}
+        autoFocus={this.state.autoFocus}
+        isPreview={this.state.preview}
+        preview={this.preview}
+        saveLink={this.saveLink}
+        updatePage={this.state.updatePage}
+        updateLink={() => {
+          this.updateLink(
+            this.state.linkId,
+            this.state.title,
+            this.state.redirectedUrl
+          );
+        }}
+        deleteLink={() => {
+          this.deleteLink(this.state.linkId);
+        }}
+      ></AddNewLink>
+    );
+  };
   submitted = (e) => {
     e.preventDefault();
   };
@@ -269,34 +315,23 @@ class MyLinks extends React.Component {
             </div>
             <Row>
               <Col xs="12" className="p-3">
-                <AddNewLink
-                  addNewLink={this.addNewLink}
-                  loading={this.state.loading}
-                  titleChange={this.titleChange}
-                  redirectedUrlChange={this.redirectedUrlChange}
-                  title={this.state.title}
-                  redirectedUrl={this.state.redirectedUrl}
-                  submitted={this.submitted}
-                  autoFocus={this.state.autoFocus}
-                  isPreview={this.state.preview}
-                  preview={this.preview}
-                  saveLink={this.saveLink}
-                  updatePage={this.state.updatePage}
-                  updateLink={() => {
-                    this.updateLink(
-                      this.state.linkId,
-                      this.state.title,
-                      this.state.redirectedUrl
-                    );
-                  }}
-                  deleteLink={() => {
-                    this.deleteLink(this.state.linkId);
-                  }}
-                ></AddNewLink>
+                {this.addNewLinkShop()}
               </Col>
             </Row>
           </Col>
         </Row>
+        {window.innerWidth <= 760 && (
+          <Modal
+            size="sm"
+            isOpen={this.state.modal}
+            toggle={() => this.toggle("modal")}
+          >
+            <ModalHeader toggle={() => this.toggle("modal")}>
+              Edit Links
+            </ModalHeader>
+            <ModalBody className="bg-white">{this.addNewLinkShop()}</ModalBody>
+          </Modal>
+        )}
       </div>
     );
   }
