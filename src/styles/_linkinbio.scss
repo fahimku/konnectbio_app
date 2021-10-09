@@ -132,7 +132,7 @@
     background: url(../images/mobile-preview.svg) no-repeat;
     text-align: center;
     background-size: 100% auto;
-    margin-top: 80px;
+    margin-top: 30px;
 
     .error {
         width: 69%;
@@ -174,7 +174,7 @@
     }
 
     .mobile-gallery {
-        height: 437px;
+        height: 446px;
         overflow: scroll;
         overflow-x: hidden;
         width: 93%;
@@ -218,6 +218,7 @@
             // filter: grayscale(100%);
             // opacity: 0.5;
             cursor: pointer;
+            object-fit:cover;
         }
 
         .linked {
@@ -335,6 +336,7 @@
                 {
                 width: 256px;
                 height: 256px;
+                object-fit:cover;
             }
 
             form {

@@ -1,28 +1,54 @@
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-    .modal {
-        display:block;
+@media only screen and (max-width: 768px) {
+
+    iframe {
+        display: none;
     }
+
+    .right-bar {
+        display: none;
+    }
+
+    .auth-logo i {
+        display: none;
+    }
+
+    .auth-logo img {
+        width: 200px;
+        height: 50px;
+    }
+
+    .modal {
+        display: block;
+    }
+
     .header .left-top-bar {
         display: none;
     }
 
     .source-button {
-        width: 100%;
+        margin: 0 auto;
     }
 
     .source-button button {
-        width: 100%;
+        text-align: left;
+
     }
 
-    .modal .image-box img {
-        width:150px;
-        height:150px;
+    .modal .image-box img,
+    .modal .image-box video {
+        width: 150px;
+        height: 150px;
 
     }
 
     .image-box-info h4 {
         display: none;
+    }
+
+    .bottom-links {
+        position:absolute;
+        bottom:-500px;
     }
 }
 
@@ -46,14 +72,16 @@
 
     .mobile-menu ul li a {
         font-weight: 100 !important;
-    }
-
-    .mobile-menu ul li a span {
-        top: 1px;
         font-size: 16px;
     }
 
-    .mobile-menu ul li:last-child {
+    .mobile-menu ul li a span {
+        top: 5px;
+        font-size: 20px;
+        color:black;
+    }
+
+    .mobile-menu ul li {
         border-bottom: 1px solid #c8c8c8;
     }
 
@@ -69,7 +97,7 @@
     }
 
     .navbar-light .navbar-toggler {
-        border-color: white !important;
+        color: white;
     }
 
     .header .linkin-text {
@@ -108,8 +136,8 @@
     }
 
     .mobile-menu .navbar-nav {
-        height: 100vh;
         width: 100vh;
+        height:70vh;
     }
 
     .left-top-bar {
@@ -127,22 +155,7 @@
 }
 
 
-@media only screen and (max-width: 500px) {
-    iframe {
-        display: none;
-    }
-
-    .right-bar {
-        display: none;
-    }
-    .auth-logo i {
-        display: none;
-    }
-    .auth-logo img {
-        width: 200px;
-        height: 50px;
-    }
-}
+@media only screen and (max-width: 500px) {}
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 1024px) {
@@ -177,4 +190,3 @@
         display: none !important;
     }
 }
-

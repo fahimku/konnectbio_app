@@ -24,7 +24,7 @@ import {
   closeSidebar,
   changeActiveSidebarItem,
 } from "../../actions/navigation";
-import logo from '../../images/logo.png';
+import logo from "../../images/logo.png";
 // import adminDefault from "../../images/chat/chat2.png";
 // import MenuIcon from "../../images/sidebar/Fill/MenuIcon";
 // import FlipIcon from "../../images/sidebar/Outline/Flip";
@@ -166,13 +166,12 @@ class Header extends React.Component {
 
   toggle(id) {
     const newState = Array(4).fill(false);
-
     if (!this.state.navs[id]) {
       newState[id] = true;
     }
-
     this.setState({navs: newState});
   }
+
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
     const url = config.visitorURL + "/";
@@ -198,15 +197,12 @@ class Header extends React.Component {
     return (
       <>
         <div className="mobile-header">
-          <Navbar
-            className="mobile-menu px-4 mt-2"
-            color="light"
-            light
-          >
+          <Navbar className="mobile-menu px-4 mt-2" color="light" light>
             <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
             <Collapse isOpen={this.state.navs[3]} navbar>
               <Nav className="ml-auto" navbar>
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="My Posts"
                   link="/app/linkinbio"
@@ -218,6 +214,7 @@ class Header extends React.Component {
                   labelColor="info"
                 />
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="My Shop"
                   link="/app/linkinbio-shop"
@@ -229,6 +226,7 @@ class Header extends React.Component {
                   labelColor="info"
                 />
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="My Links"
                   link="/app/my/links"
@@ -241,17 +239,17 @@ class Header extends React.Component {
                 />
 
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="Analytics"
                   link="/app/analysis"
                   isHeader
-                  iconElement={
-                  <span className="fa fa-bar-chart-o"></span>
-                }
+                  iconElement={<span className="fa fa-bar-chart-o"></span>}
                   iconName="flaticon-users"
                   labelColor="info"
                 />
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="Media Library"
                   link="/app/media/library"
@@ -261,6 +259,7 @@ class Header extends React.Component {
                   labelColor="info"
                 />
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="Collect Media"
                   link="/app/couponsss"
@@ -272,10 +271,25 @@ class Header extends React.Component {
                   labelColor="info"
                 />
               </Nav>
+              <Nav className="ml-auto" navbar>
+              <LinksGroup
+                onClick={() => this.toggle(3)}
+                className="sidebar-nav-links"
+                header="Sign Out"
+                link="/logout"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-log-out"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+               </Nav>
             </Collapse>
           </Navbar>
           <div className="logo">
-            <img  src={logo} alt/>
+            <img src={logo} alt />
           </div>
         </div>
         <div className="header bg-white">

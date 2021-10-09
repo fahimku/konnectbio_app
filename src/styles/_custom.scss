@@ -73,12 +73,12 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: #c8c8c8;
+  background:black;
   /* color of the tracking area */
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #c8c8c8;
+  background-color: black;
   /* color of the scroll thumb */
   border-radius: 10px;
   /* roundness of the scroll thumb */
@@ -95,19 +95,19 @@ body::-webkit-scrollbar-thumb {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px #c8c8c8;
+  box-shadow: inset 0 0 5px black;
   border-radius: 10px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #c8c8c8;
+  background: black;
   border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #c8c8c8
+  background: black
 }
 
 /*End Scroll Css */
@@ -140,7 +140,7 @@ video::-webkit-media-controls-panel {
 
 .sidebar-nav-links a {
   font-size: 13px;
-
+  color:black !important;
   padding-top: -3px;
   font-weight: bold !important;
   letter-spacing: 1px;

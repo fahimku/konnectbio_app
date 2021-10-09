@@ -68,7 +68,7 @@ const ShopRightBar = (props) => {
                 ref={redirectedUrlRef}
                 required
                 autoFocus 
-                type="url"
+                type="text"
                 value={props.redirectedUrl}
                 placeholder="Add a link to any web page"
                 className="form-control"
