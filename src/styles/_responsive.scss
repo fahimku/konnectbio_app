@@ -88,7 +88,7 @@
     .mobile-menu {
         display: block;
         z-index: 99;
-        background: white;
+        background: none !important;
     }
 
     .mobile-menu .navbar-collapse {
@@ -135,9 +135,11 @@
         width: 138px;
     }
 
+
     .mobile-menu .navbar-nav {
         width: 100vh;
         height:70vh;
+        
     }
 
     .left-top-bar {
