@@ -245,7 +245,9 @@ class Header extends React.Component {
                   header="Analytics"
                   link="/app/analysis"
                   isHeader
-                  iconElement={<span className="fa fa-bar-chart-o"></span>}
+                  iconElement={
+                  <span className="fa fa-bar-chart-o"></span>
+                }
                   iconName="flaticon-users"
                   labelColor="info"
                 />
