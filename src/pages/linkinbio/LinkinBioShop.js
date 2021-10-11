@@ -53,12 +53,18 @@ class LinkinBioShop extends React.Component {
   }
 
   componentDidMount() {
+    document.body.classList.add("body-bio-shop");
     this.fetchInstagramPosts(
       this.state.username,
       this.state.limit,
       this.state.page
     );
     this.fetchCategories();
+  }
+
+  
+  componentWillUnmount() {
+    document.body.classList.remove("body-bio-shop");
   }
 
   //Second Request From User
@@ -81,7 +87,7 @@ class LinkinBioShop extends React.Component {
   async nextPageInstagramPosts(username, limit, page) {
     await axios
       .get(
-        `profile/posts/${username}?limit=${limit}&page=${page}&post_type=link`
+        `profile/posts/${username}?limit=${limit}&page=${page}&post_type=image`
       )
       .then((response) => {
         // console.log(response.data.message.result);
@@ -166,7 +172,7 @@ class LinkinBioShop extends React.Component {
               );
               instagramPosts.data[singlePostIndex] = currentPost;
               this.setState({instagramPosts: instagramPosts}, () => {});
-              toast.success("Your Post is Linked Successfully");
+             
             })
             .catch((err) => {
               this.setState({loading: false});
@@ -197,7 +203,7 @@ class LinkinBioShop extends React.Component {
         );
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({instagramPosts: instagramPosts});
-        toast.success("Your Post Link is Updated");
+        toast.success("Bio Shop Updated Successfully");
         this.setState({loading: false});
       });
   };
@@ -235,6 +241,7 @@ class LinkinBioShop extends React.Component {
     let node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
+      console.log('bottom reached')
       if (this.state.page) {
         this.nextPageInstagramPosts(
           this.state.username,

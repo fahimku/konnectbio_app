@@ -87,7 +87,12 @@ class MyLinks extends React.Component {
   }
 
   componentWillMount() {
+    document.body.classList.add("body-my-links");
     this.fetchMyLinks(this.state.username);
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove("body-my-links");
   }
 
   fetchMyLinks = async (username) => {

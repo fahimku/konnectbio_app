@@ -64,7 +64,7 @@ const ShopRightBar = (props) => {
               )}
             </div>
             <div className="image-edit-links">
-              <span>Konnect.Bio</span>
+              <span>URL</span>
               <input
                 ref={redirectedUrlRef}
                 required
@@ -95,6 +95,7 @@ const ShopRightBar = (props) => {
               /> */}
 
               <div className="select-categories mt-3">
+              <span>Select Category</span>
                 <Select
                   key={Date.now()}
                   value={props.category}

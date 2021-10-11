@@ -78,6 +78,7 @@
     margin-top: 9px;
     margin-right: 15px;
     background: var(--sidebar-icon-bg);
+    
     color: var(--sidebar-badge-color);
 
     @media (min-width: map_get($grid-breakpoints, lg)) and (min-height: $screen-lg-height),
@@ -106,7 +107,8 @@
 
     .icon {
       border-radius: 50%;
-      background-color: var(--sidebar-icon-bg);
+      // background-color: var(--sidebar-icon-bg);
+      background-color: #c8c8c8;
       opacity: 1;
       display: flex;
       justify-content: center;

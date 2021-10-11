@@ -1,8 +1,12 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 760px) {
 
-    body {
-        overflow: hidden;
+    // body {
+    //     overflow: hidden;
+    // }
+
+    body.body-my-post ,body.body-bio-shop,body.body-my-links{
+        overflow-y: hidden;
     }
     iframe {
         display: none;
@@ -42,7 +46,6 @@
         font-size: 13px;
         border-radius: 1em;
         text-align: left;
-
     }
 
     .modal .image-box img,
@@ -110,6 +113,8 @@
         z-index: 99;
         background: none !important;
         width: 100%;
+        justify-content: center;
+        align-items: center;
     }
 
     .mobile-menu .navbar-collapse {
@@ -128,6 +133,8 @@
 
     .left-top-bar {
         justify-content: center;
+        place-content: end;
+        
     }
 
 
@@ -143,11 +150,13 @@
     .top-mobile-header {
         display: flex;
 
+
     }
 
     .top-mobile-header .logo {
         z-index: 100;
-        width: 100%;
+        justify-content: center;
+        align-items: center;
     }
 
     .top-mobile-header .logo img {
@@ -158,7 +167,7 @@
 
     .mobile-menu .navbar-nav {
         width: 100vh;
-        // height: 70vh;
+        height: 70vh;
 
     }
 
@@ -222,6 +231,10 @@
 
     .left-top-bar {
         border-bottom: none;
+
+    }
+    .top-mobile-header :nth-child(3){
+        justify-content: flex-end !important;
     }
 
 

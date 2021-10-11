@@ -58,6 +58,7 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
+    document.body.classList.add("body-my-post");
     let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
@@ -72,6 +73,10 @@ class LinkinBio extends React.Component {
       this.fetchInstagramPosts(accessToken);
     }
     this.fetchCategories();
+  }
+
+  componentWillUnmount() {
+    document.body.classList.remove("body-my-post");
   }
 
   //First Request From User
@@ -396,8 +401,7 @@ class LinkinBio extends React.Component {
     }
     this.setState({selectPost: state});
     this.setState({modal: true});
-    this.setState({ iframeKey: this.state.iframeKey + 1 });
-    
+    this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
@@ -444,7 +448,7 @@ class LinkinBio extends React.Component {
     return (
       <ShopRightBar
         closeModel={() => {
-          this.setState({ modal: false })
+          this.setState({modal: false});
         }}
         testUrl={this.testUrl}
         loading={this.state.loading}

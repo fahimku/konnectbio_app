@@ -72,9 +72,7 @@ class Sidebar extends React.Component {
 
   render() {
     return (
-      <div
-        className={`${s.sidebarWrapper} sidebar`}
-      >
+      <div className={`${s.sidebarWrapper} sidebar`}>
         <nav
           // onMouseEnter={this.onMouseEnter}
           // onMouseLeave={this.onMouseLeave}
@@ -186,20 +184,7 @@ class Sidebar extends React.Component {
               <>
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="My Posts"
-                  link="/app/linkinbio"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                  />
-                  
-                             <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Shop"
+                  header="Bio Shop"
                   link="/app/linkinbio-shop"
                   isHeader
                   iconElement={
@@ -209,6 +194,19 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="My Posts"
+                  link="/app/linkinbio"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="My Links"
@@ -221,7 +219,6 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-     
 
                 {/* <LinksGroup
                   className="sidebar-nav-links"
