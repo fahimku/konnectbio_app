@@ -1,5 +1,6 @@
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 760px) {
+
 
     iframe {
         display: none;
@@ -22,15 +23,22 @@
         display: block;
     }
 
-    .header .left-top-bar {
+
+    .header {
         display: none;
     }
 
     .source-button {
         margin: 0 auto;
+        margin-top: 3px;
     }
 
+
+
     .source-button button {
+        width: 100%;
+        font-size: 13px;
+        border-radius: 1em;
         text-align: left;
 
     }
@@ -47,8 +55,8 @@
     }
 
     .bottom-links {
-        position:absolute;
-        bottom:-500px;
+        position: absolute;
+        bottom: -500px;
     }
 
     .modal-header .close {
@@ -58,8 +66,8 @@
         color: black;
         top: 0;
     }
-    
-    
+
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -88,7 +96,7 @@
     .mobile-menu ul li a span {
         top: 5px;
         font-size: 20px;
-        color:black;
+        color: black;
     }
 
     .mobile-menu ul li {
@@ -99,6 +107,7 @@
         display: block;
         z-index: 99;
         background: none !important;
+        width: 100%;
     }
 
     .mobile-menu .navbar-collapse {
@@ -129,31 +138,31 @@
         margin-top: 21px;
     }
 
-    .mobile-header {
+    .top-mobile-header {
         display: flex;
 
     }
 
-    .mobile-header .logo {
-        position: absolute;
-        left: 31%;
-        top: 0%;
+    .top-mobile-header .logo {
         z-index: 100;
+        width: 100%;
     }
 
-    .mobile-header .logo img {
-        width: 138px;
+    .top-mobile-header .logo img {
+        width: 101px;
+        margin-top: 10px;
     }
 
 
     .mobile-menu .navbar-nav {
         width: 100vh;
-        height:70vh;
-        
+        height: 70vh;
+
     }
 
     .left-top-bar {
         justify-content: left;
+        width: 100%;
     }
 
 
@@ -161,7 +170,7 @@
 
 /**larger screen greater than 768 */
 @media only screen and (min-width: 991px) {
-    .mobile-header {
+    .top-mobile-header {
         display: none;
     }
 }
@@ -198,7 +207,20 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 991px) {
+
+    .top-mobile-header {}
+
     .sidebar {
         display: none !important;
     }
+
+    .main-container .left-top-bar {
+        display: none;
+    }
+
+    .left-top-bar {
+        border-bottom: none;
+    }
+
+
 }

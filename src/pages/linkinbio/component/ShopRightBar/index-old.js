@@ -62,7 +62,7 @@ const ShopRightBar = ( props) => {
                           onClick={() => props.selectPost(false, "")}
                           className="glyphicon glyphicon-arrow-left"
                         ></span>
-                        <h4>Edit Links</h4>
+                        <h4>Edit Post</h4>
                         <p>
                           Posted on{" "}
                           {moment(props.singlePost.timestamp).format(

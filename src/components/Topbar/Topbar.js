@@ -1,7 +1,7 @@
 import React from "react";
 import { DropdownButton,Dropdown } from "react-bootstrap";
 
-const TopBar = ({ username, copyToClipboard, url }) => {
+const TopBar = ({ username, copyToClipboard, url,text }) => {
   return (
     <div className="left-top-bar">
       {/* <div className="profile">
@@ -15,7 +15,7 @@ const TopBar = ({ username, copyToClipboard, url }) => {
       <DropdownButton
         id="dropdown-basic-button"
         className="source-button"
-        title={`Source: instagram@${username}`}
+        title={text ?  'Source: instagram':''+`Source: instagram @${username}`}
       >
         <Dropdown.Item href="#/Instagram">Instagram</Dropdown.Item>
       </DropdownButton>

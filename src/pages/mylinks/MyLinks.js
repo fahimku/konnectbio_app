@@ -25,8 +25,9 @@ class MyLinks extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      iframeKey: 0,
       loading: false,
-      modal:false,
+      modal: false,
       updatePage: false,
       myLinks: [
         {
@@ -40,10 +41,6 @@ class MyLinks extends React.Component {
         {
           redirected_url: "",
           caption: "Youtube",
-        },
-        {
-          redirected_url: "",
-          caption: "Whatsapp",
         },
         {
           redirected_url: "",
@@ -93,10 +90,6 @@ class MyLinks extends React.Component {
     this.fetchMyLinks(this.state.username);
   }
 
-  forceUpdateState = () => {
-    this.forceUpdate();
-  };
-
   fetchMyLinks = async (username) => {
     await axios
       .get(`/posts/receive?user=${username}&post_type=link`)
@@ -128,8 +121,8 @@ class MyLinks extends React.Component {
         this.setState({title: res.data.message.caption});
         this.setState({redirectedUrl: res.data.message.redirected_url});
         this.setState({updatePage: true});
-        this.setState({ linkId: linkId });
-        this.setState({ modal: true });
+        this.setState({linkId: linkId});
+        this.setState({modal: true});
       })
       .catch((error) => {
         console.log(error);
@@ -183,7 +176,6 @@ class MyLinks extends React.Component {
         toast.success("Link removed successfully.");
         this.setState({loading: false});
         this.addNewLink();
-        this.forceUpdateState();
       })
       .catch((error) => {
         console.log(error);
@@ -212,9 +204,9 @@ class MyLinks extends React.Component {
     }));
   }
 
-
   preview = (state, postIndex) => {
     this.setState({preview: false});
+    this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
@@ -226,8 +218,8 @@ class MyLinks extends React.Component {
     this.setState({redirectedUrl: redirectedUrl});
     this.setState({preview: true});
     this.setState({updatePage: false});
-    this.setState({ loading: false });
-    this.setState({ modal:true})
+    this.setState({loading: false});
+    this.setState({modal: true});
   };
 
   copyToClipboard = (e) => {
@@ -306,6 +298,7 @@ class MyLinks extends React.Component {
               style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
+                key={this.state.iframeKey}
                 src={`${
                   this.state.url + this.state.username
                 }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
@@ -327,7 +320,7 @@ class MyLinks extends React.Component {
             toggle={() => this.toggle("modal")}
           >
             <ModalHeader toggle={() => this.toggle("modal")}>
-              Edit Links
+              Edit Link
             </ModalHeader>
             <ModalBody className="bg-white">{this.addNewLinkShop()}</ModalBody>
           </Modal>

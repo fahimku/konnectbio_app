@@ -18,6 +18,7 @@ class LinkinBioShop extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      iframeKey: 0,
       loading: false,
       modal: false,
       media_id: "",
@@ -216,6 +217,11 @@ class LinkinBioShop extends React.Component {
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
+      this.fetchInstagramPosts(
+        this.state.username,
+        this.state.limit,
+        this.state.page
+      );
     });
   };
 
@@ -302,6 +308,7 @@ class LinkinBioShop extends React.Component {
     }
     this.setState({selectPost: state});
     this.setState({modal: true});
+    this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
@@ -341,9 +348,17 @@ class LinkinBioShop extends React.Component {
     }));
   }
 
+  testUrl = (url) => {
+    window.open(url, "_blank");
+  };
+  
   shopRightBar = () => {
     return (
       <ShopRightBar
+        closeModel={() => {
+          this.setState({modal: false});
+        }}
+        testUrl={this.testUrl}
         loading={this.state.loading}
         autoFocus={this.state.autoFocus}
         submitted={this.submitted}
@@ -404,6 +419,7 @@ class LinkinBioShop extends React.Component {
               style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
+                key={this.state.iframeKey}
                 src={`${this.state.url + this.state.username}?iframe=yes`}
                 title=""
                 className="myshop-iframe"
@@ -424,7 +440,7 @@ class LinkinBioShop extends React.Component {
             toggle={() => this.toggle("modal")}
           >
             <ModalHeader toggle={() => this.toggle("modal")}>
-              Edit Links
+              Edit Post
             </ModalHeader>
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>

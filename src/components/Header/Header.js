@@ -39,7 +39,7 @@ import logo from "../../images/logo.png";
 import s from "./Header.module.scss"; // eslint-disable-line css-modules/no-unused-class
 import config from "../../../src/config";
 import {toast} from "react-toastify";
-
+import TopBar from "../../components/Topbar";
 class Header extends React.Component {
   static propTypes = {
     sidebarOpened: PropTypes.bool.isRequired,
@@ -51,6 +51,9 @@ class Header extends React.Component {
   };
 
   constructor(props) {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let username = userInfo.username;
+
     super(props);
 
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -65,6 +68,7 @@ class Header extends React.Component {
       notificationsOpen: false,
       notificationsTabSelected: 1,
       focus: true,
+      username:username,
       showNewMessage: false,
       hideMessage: true,
       run: false,
@@ -196,7 +200,7 @@ class Header extends React.Component {
 
     return (
       <>
-        <div className="mobile-header">
+        <div className="top-mobile-header" style={{ borderBottom:'1px solid #c8c8c8'}}>
           <Navbar className="mobile-menu px-4 mt-2" color="light" light>
             <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
             <Collapse isOpen={this.state.navs[3]} navbar>
@@ -291,7 +295,14 @@ class Header extends React.Component {
           <div className="logo">
             <img src={logo} alt />
           </div>
+          <TopBar
+          text={true}
+          username={this.state.username}
+          />
+  
         </div>
+ 
+
         <div className="header bg-white">
           <div className="linkin-text">Konnect.Bio</div>
           <div className="left-top-bar">

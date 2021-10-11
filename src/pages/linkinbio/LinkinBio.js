@@ -26,6 +26,7 @@ class LinkinBio extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      iframeKey: 0,
       media_id: "",
       modal: false,
       loading: false,
@@ -367,7 +368,6 @@ class LinkinBio extends React.Component {
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.id;
       let lastPost = this.state.singlePost;
-
       this.fetchSinglePost(mediaId);
 
       if (lastPost) {
@@ -396,6 +396,8 @@ class LinkinBio extends React.Component {
     }
     this.setState({selectPost: state});
     this.setState({modal: true});
+    this.setState({ iframeKey: this.state.iframeKey + 1 });
+    
   };
 
   error(error) {
@@ -430,6 +432,10 @@ class LinkinBio extends React.Component {
     toast.success("Copied to Clipboard!");
   };
 
+  testUrl = (url) => {
+    window.open(url, "_blank");
+  };
+
   submitted = (e) => {
     e.preventDefault();
   };
@@ -437,6 +443,10 @@ class LinkinBio extends React.Component {
   shopRightBar = () => {
     return (
       <ShopRightBar
+        closeModel={() => {
+          this.setState({ modal: false })
+        }}
+        testUrl={this.testUrl}
         loading={this.state.loading}
         submitted={this.submitted}
         autoFocus={this.state.autoFocus}
@@ -497,6 +507,7 @@ class LinkinBio extends React.Component {
               style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
+                key={this.state.iframeKey}
                 src={`${
                   this.state.url + this.state.username
                 }?coupon=no&brand=no&iframe=yes&mypost=hide`}
@@ -520,7 +531,7 @@ class LinkinBio extends React.Component {
             toggle={() => this.toggle("modal")}
           >
             <ModalHeader toggle={() => this.toggle("modal")}>
-              Edit Links
+              Edit Post
             </ModalHeader>
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>
