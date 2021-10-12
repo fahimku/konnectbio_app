@@ -12,6 +12,7 @@ import jwt from "jsonwebtoken";
 import {push} from "connected-react-router";
 import logo from '../../../images/logo.png';
 
+
 class Login extends React.Component {
 
   static propTypes = {
@@ -78,7 +79,7 @@ class Login extends React.Component {
            <img src={logo}/>
             <i className="la la-circle text-danger" />
           </h5>
-          <Widget
+          <Widget 
             className="widget-auth mx-auto"
             title={<h3 className="mt-0">Login</h3>}
           >
@@ -129,6 +130,7 @@ class Login extends React.Component {
               Create an Account
             </Link>
           </Widget>
+             
         </Container>
       </div>
     );

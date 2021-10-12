@@ -25,3 +25,27 @@ Custome CSS
   background-color: #000;
   border-color: #000;
 }
+.btn-primary {
+  background-color: #002B49 !important;
+  margin-right: 5px !important;
+  /* background-color: #25c6fe !important; */
+}
+
+.btn-primary:hover {
+  /* border-color: #25c6fe !important; */
+  border-color: #002B49 !important;
+}
+
+.btn-danger {
+  /* background-color: #25c6fe !important; */
+  background-color: #002B49 !important;
+}
+.btn-danger:hover {
+  background-color: #002B49 !important;
+  /* background-color: #25c6fe !important; */
+  border: none !important;
+}
+
+.save-btn {
+  color: white !important;
+}

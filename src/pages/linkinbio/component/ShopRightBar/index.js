@@ -193,6 +193,8 @@ const ShopRightBar = (props) => {
                     ) : (
                       <>
                         <Button
+                        className="update-buttons"
+                        color="primary"
                           onClick={(ev) =>
                             props.updatePost(media_id, props.redirectedUrl)
                           }
@@ -200,6 +202,7 @@ const ShopRightBar = (props) => {
                           &nbsp;&nbsp;Update&nbsp;&nbsp;
                         </Button>
                         <Button
+                        className="update-buttons"
                           color="primary"
                           onClick={() => props.testUrl(props.redirectedUrl)}
                         >
@@ -207,7 +210,8 @@ const ShopRightBar = (props) => {
                         </Button>
 
                         <Button
-                          color="danger"
+                        className="update-buttons"
+                          color="primary"
                           onClick={() => {
                             props.selectPost(false, "");
                             props.closeModel(false);
@@ -240,7 +244,7 @@ const ShopRightBar = (props) => {
                           onClick={(ev) =>
                             props.savePost && props.savePost(this)
                           }
-                          color=""
+                          className="save-btn btn btn-primary"
                         >
                           &nbsp;&nbsp;Save&nbsp;&nbsp;
                         </Button>

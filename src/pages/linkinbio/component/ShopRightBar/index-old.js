@@ -151,7 +151,7 @@ const ShopRightBar = ( props) => {
                                         props.redirectedUrl
                                       )
                                     }
-                                    color=""
+                                   
                                   >
                                     &nbsp;&nbsp;Update&nbsp;&nbsp;
                                   </Button>
@@ -172,7 +172,7 @@ const ShopRightBar = ( props) => {
                               ) : (
                                 <Button
                                   onClick={(ev) => props.savePost(this)}
-                                  color=""
+                                  className="save-btn btn btn-primary"
                                 >
                                   &nbsp;&nbsp;Save&nbsp;&nbsp;
                                 </Button>

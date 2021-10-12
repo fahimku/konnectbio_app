@@ -175,7 +175,7 @@ const Profile = () => (
                   <i className="fa fa-map-marker fa-lg" />
                 </button>
               </div>
-              <button type="submit" className="btn btn-danger btn-sm ml-auto">Post</button>
+              <button type="submit" className="btn btn-primary btn-sm ml-auto">Post</button>
             </div>
           </Form>
         </section>
