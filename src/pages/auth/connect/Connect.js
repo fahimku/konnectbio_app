@@ -1,10 +1,10 @@
 import axios from "axios";
 import React from "react";
 //import PropTypes from "prop-types";
-import {withRouter, Link, Route} from "react-router-dom";
+import { withRouter, Link, Route } from "react-router-dom";
 //import config from "../../../config";
-import {connect} from "react-redux";
-import {Container, Button} from "reactstrap";
+import { connect } from "react-redux";
+import { Container, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
 //import {loginUser, receiveToken, doInit} from "../../../actions/auth";
 //import jwt from "jsonwebtoken";
@@ -15,9 +15,7 @@ import twitter from "../../../images/socialIcons/twitter.png";
 import youtube from "../../../images/socialIcons/youtube.png";
 import snapchat from "../../../images/socialIcons/snapchat.png";
 import facebook from "../../../images/socialIcons/facebook.png";
-import {push} from "connected-react-router";
-
-
+import { push } from "connected-react-router";
 
 class Connect extends React.Component {
   constructor(props) {
@@ -28,9 +26,10 @@ class Connect extends React.Component {
   }
 
   async getInstagramUrl() {
-    await axios.post(`/social/ig/url/instagram`)
+    await axios
+      .post(`/social/ig/url/instagram`)
       .then((response) => {
-        this.setState({url: response.data});
+        this.setState({ url: response.data });
       })
       .catch(function (error) {});
   }
@@ -73,14 +72,14 @@ class Connect extends React.Component {
               >
                 <i
                   className="social-icon social-microsoft"
-                  style={{backgroundImage: `url(${instagram})`}}
+                  style={{ backgroundImage: `url(${instagram})` }}
                 />
                 <p className="social-text">
                   <Route
                     path="/goToGoogle"
                     render={() => (window.location = "https://www.google.com")}
                   />
-                  <div dangerouslySetInnerHTML={{__html: this.state.url}} />
+                  <div dangerouslySetInnerHTML={{ __html: this.state.url }} />
                 </p>
               </Button>
               {/* <Button
@@ -103,28 +102,28 @@ class Connect extends React.Component {
             <div className="social-links text-center">
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${tiktok})`}}
+                style={{ backgroundImage: `url(${tiktok})` }}
               />
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${instagram})`}}
+                style={{ backgroundImage: `url(${instagram})` }}
               />
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${twitter})`}}
+                style={{ backgroundImage: `url(${twitter})` }}
               />
 
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${facebook})`}}
+                style={{ backgroundImage: `url(${facebook})` }}
               />
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${youtube})`}}
+                style={{ backgroundImage: `url(${youtube})` }}
               />
               <i
                 className="social-icon social-microsoft"
-                style={{backgroundImage: `url(${snapchat})`}}
+                style={{ backgroundImage: `url(${snapchat})` }}
               />
             </div>
           </Widget>

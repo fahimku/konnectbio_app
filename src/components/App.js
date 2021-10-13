@@ -1,5 +1,5 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,10 +8,10 @@ import {
   Redirect,
 } from "react-router-dom";
 //import {HashRouter} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
-import {ConnectedRouter} from "connected-react-router";
-import {getHistory} from "../index";
-import {AdminRoute, UserRoute, AuthRoute} from "./RouteComponents";
+import { ToastContainer } from "react-toastify";
+import { ConnectedRouter } from "connected-react-router";
+import { getHistory } from "../index";
+import { AdminRoute, UserRoute, AuthRoute } from "./RouteComponents";
 /* eslint-disable */
 import ErrorPage from "../pages/error";
 /* eslint-enable */
@@ -24,11 +24,11 @@ import Verify from "../pages/auth/verify";
 import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory({
-  forceRefresh: true
-  })
+  forceRefresh: true,
+});
 
 const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
@@ -49,45 +49,43 @@ class App extends React.PureComponent {
         />
         {/* <ConnectedRouter history={getHistory()}> */}
         <Router history={history}>
-
-            <Switch>
-              {/* <Route
+          <Switch>
+            {/* <Route
                 path="/"
                 exact
                 render={() => <Redirect to="/app/main" />}
               /> */}
-              <Route path="/" exact component={Login} />
-              <Route
-                path="/app"
-                exact
-                render={() => <Redirect to="/app/main" />}
-              />
-              <UserRoute
-                path="/app"
-                dispatch={this.props.dispatch}
-                component={LayoutComponent}
-              />
+            <Route path="/" exact component={Login} />
+            <Route
+              path="/app"
+              exact
+              render={() => <Redirect to="/app/main" />}
+            />
+            <UserRoute
+              path="/app"
+              dispatch={this.props.dispatch}
+              component={LayoutComponent}
+            />
 
-              <AdminRoute
-                path="/admin"
-                currentUser={this.props.currentUser}
-                dispatch={this.props.dispatch}
-                component={LayoutComponent}
-              />
-         
-          
-              <Route path="/connect" exact component={Connect} />
-              <Route path="/logout" exact component={Logout} />
-              <AuthRoute path="/register" exact component={Register} />
-              <AuthRoute path="/login" exact component={Login} />
-              <AuthRoute path="/verify-email" exact component={Verify} />
-              <AuthRoute path="/password-reset" exact component={Reset} />
-              <AuthRoute path="/forgot" exact component={Forgot} />
-              <Route path="/error" exact component={ErrorPage} />
-              {/* <Redirect from="*" to="/app/main/analytics"/>*/}
-              <Redirect from="*" to="/connect" />
-            </Switch>
-          </Router>
+            <AdminRoute
+              path="/admin"
+              currentUser={this.props.currentUser}
+              dispatch={this.props.dispatch}
+              component={LayoutComponent}
+            />
+
+            <Route path="/connect" exact component={Connect} />
+            <Route path="/logout" exact component={Logout} />
+            <AuthRoute path="/register" exact component={Register} />
+            <AuthRoute path="/login" exact component={Login} />
+            <AuthRoute path="/verify-email" exact component={Verify} />
+            <AuthRoute path="/password-reset" exact component={Reset} />
+            <AuthRoute path="/forgot" exact component={Forgot} />
+            <Route path="/error" exact component={ErrorPage} />
+            {/* <Redirect from="*" to="/app/main/analytics"/>*/}
+            <Redirect from="*" to="/connect" />
+          </Switch>
+        </Router>
         {/* </ConnectedRouter> */}
       </div>
     );

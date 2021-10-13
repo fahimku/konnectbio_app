@@ -1,13 +1,13 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import {Button} from "reactstrap";
+import { Button } from "reactstrap";
 import moment from "moment";
-import {Select} from "antd";
+import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
-const {Option} = Select;
+const { Option } = Select;
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -95,12 +95,12 @@ const ShopRightBar = (props) => {
               /> */}
 
               <div className="select-categories mt-3">
-              <span>Select Category</span>
+                <span>Select Category</span>
                 <Select
                   key={Date.now()}
                   value={props.category}
                   showSearch
-                  style={{width: "100%"}}
+                  style={{ width: "100%" }}
                   placeholder="Select Category"
                   optionFilterProp="children"
                   clearable={false}
@@ -116,7 +116,7 @@ const ShopRightBar = (props) => {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {props.categories.map(({value, label}, i) => (
+                  {props.categories.map(({ value, label }, i) => (
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
@@ -193,8 +193,8 @@ const ShopRightBar = (props) => {
                     ) : (
                       <>
                         <Button
-                        className="update-buttons"
-                        color="primary"
+                          className="update-buttons"
+                          color="primary"
                           onClick={(ev) =>
                             props.updatePost(media_id, props.redirectedUrl)
                           }
@@ -202,7 +202,7 @@ const ShopRightBar = (props) => {
                           &nbsp;&nbsp;Update&nbsp;&nbsp;
                         </Button>
                         <Button
-                        className="update-buttons"
+                          className="update-buttons"
                           color="primary"
                           onClick={() => props.testUrl(props.redirectedUrl)}
                         >
@@ -210,19 +210,18 @@ const ShopRightBar = (props) => {
                         </Button>
 
                         <Button
-                        className="update-buttons"
+                          className="update-buttons"
                           color="primary"
                           onClick={() => {
                             props.selectPost(false, "");
                             props.closeModel(false);
-                            }
-                          }
+                          }}
                         >
                           &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                         </Button>
                       </>
                     )}
-                    <div className="remove-link">
+                    {/* <div className="remove-link">
                       <a
                         href="javascript:void(0)"
                         onClick={() => props.deletePost(media_id)}
@@ -230,7 +229,14 @@ const ShopRightBar = (props) => {
                         <span className="glyphicon glyphicon-trash"></span>
                         Remove Post
                       </a>
-                    </div>
+                    </div> */}
+                    <Button
+                      className="update-buttons"
+                      color="primary"
+                      onClick={() => props.deletePost(media_id)}
+                    >
+                      &nbsp;&nbsp; Remove Post&nbsp;&nbsp;
+                    </Button>
                   </>
                 ) : (
                   <>
@@ -259,8 +265,7 @@ const ShopRightBar = (props) => {
                           onClick={() => {
                             props.selectPost(false, "");
                             props.closeModel(false);
-                            }
-                          }
+                          }}
                         >
                           &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                         </Button>
