@@ -55,9 +55,20 @@
     left:0 !important;
     margin-left:0 !important;
   }
+  .source-button.dropdown {
+    margin-left: 0px !important;
+}
 }
 .contentFooter {
   position: absolute;
   bottom: 15px;
   color: $text-muted;
+}
+
+
+@media only screen and (max-width: 375px) {
+ 
+  .source-button.dropdown {
+    margin-left: 0px !important;
+}
 }

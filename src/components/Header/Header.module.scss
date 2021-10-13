@@ -21,6 +21,9 @@
   }
   @include media-breakpoint-down(sm) {
     padding: 7px 0;
+    .source-button.dropdown {
+       margin-left: 62px !important; 
+  }
   }
 
   :global {

@@ -14,7 +14,7 @@ Custome CSS
   display: flex;
 }
 .left-top-bar .dropdown-menu {
-  min-width: 220px;
+  /* min-width: 220px; */
 }
 .source-button button {
   background: #000;
@@ -49,3 +49,64 @@ Custome CSS
 .save-btn {
   color: white !important;
 }
+
+.auth-btn{
+background-color: #002B49 !important;
+}
+
+
+.source-button.dropdown {
+  margin-left: 62px;
+}
+.dropdown-menu {
+  width: 98%;
+}
+
+.Sidebar_bottomLinks__2HIUf {
+  width: 100%;
+}
+
+.Sidebar_sidebarWrapper__2AFqc .Sidebar_bottomLinks__2HIUf {
+  
+  bottom: 5px !important;
+}
+
+
+/*Scroll Hidden*/
+nav.Sidebar_root__1FSXo {
+  overflow-y: clip !important;
+}
+
+
+
+.LinksGroup_headerLink__1yg6A a.LinksGroup_headerLinkActive__2FQhW .LinksGroup_icon__3xIpG {
+  background-color: #002B49 !important;
+}
+
+span.icon.LinksGroup_icon__3xIpG {
+  margin-top: 5px !important;
+}
+
+.sidebar-nav-links a span {
+  font-size: 13px !important;
+  top: 0px !important;
+}
+
+@media only screen and (max-width: 375px) {
+ 
+  .source-button.dropdown {
+    margin-left: 0px !important;
+}
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #002B49 !important;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px lightgray !important;
+}
+
+

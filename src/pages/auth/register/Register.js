@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import Select from "react-select";
+import Select,{createFilter} from "react-select";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -45,14 +45,14 @@ class Register extends React.Component {
     this.checkPassword = this.checkPassword.bind(this);
     this.isPasswordValid = this.isPasswordValid.bind(this);
   }
-  
+
 
   async componentDidMount() {
     await this.getCountries();
     await this.getCities();
   }
 
- 
+
 
 
 
@@ -64,7 +64,7 @@ class Register extends React.Component {
   //   //   },
   //   //   body:  {"country_code" :this.state.country}
   //   // };
-  //   console.log(this.state.country,'getcities');
+  //   console.log(this.state.country, 'getcities');
   //   await axios.post(`/common/receive/cities`, { "country_code": this.state.country }
   //   )
   //     .then((response) => {
@@ -74,13 +74,14 @@ class Register extends React.Component {
   //         selectCities.push({ value: name, label: name });
   //       })
   //       this.setState({ cities: selectCities });
+  //       // this.setState({  })
   //     })
   //     .catch(function (error) {
   //       console.log(error);
   //     });
   // }
 
- 
+
   getCountries = async () => {
     await axios
       .post(`/common/receive/countries`)
@@ -93,7 +94,8 @@ class Register extends React.Component {
             // console.log({name, code1, selected});
             this.setState({ country: name });
           }
-          
+          this.setState({ country: "PK" })
+
         });
         this.setState({ countries: selectCountries });
       })
@@ -115,25 +117,17 @@ class Register extends React.Component {
   }
 
   changeCountry(event) {
-    // console.log(event);
-    
-   
+    this.setState({ city: '' }); 
     this.setState({ country: event.value });
-
-    // setTimeout(() => {
-      
-    //   this.getCities();  
-    // }, 200);
-    
-    
-    
-  
+    setTimeout(() => {
+      this.getCities();
+    }, 100);
   }
 
   changeCity(event) {
-    console.log(event);
+    // console.log(event);
     this.setState({ city: event.value });
-    
+
   }
   changePassword(event) {
     this.setState({ password: event.target.value });
@@ -185,7 +179,7 @@ class Register extends React.Component {
   }
 
   render() {
-    console.log(this.state.country ,"jhjhsg");
+    console.log(this.state.city, "city");
     return (
       <div className="auth-page">
         <Container>
@@ -242,6 +236,7 @@ class Register extends React.Component {
                 {this.state.country ? (
                   <Select
                     onChange={this.changeCountry}
+                    filterOption={createFilter({ignoreAccents: false})}
                     placeholder="Select Country"
                     options={this.state.countries}
                     defaultValue={{
@@ -256,10 +251,12 @@ class Register extends React.Component {
               <div className="form-group">
                 {this.state.country ? (
                   <Select
+                  
                     onChange={this.changeCity}
+                    filterOption={createFilter({ignoreAccents: false})}
                     placeholder="Select City"
                     options={this.state.cities}
-                    defaultValue={{
+                    value={{
                       label: this.state.city,
                       value: this.state.city,
                     }}
