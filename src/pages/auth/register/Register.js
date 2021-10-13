@@ -49,7 +49,7 @@ class Register extends React.Component {
 
   async componentDidMount() {
     await this.getCountries();
-    await this.getCities();
+    // await this.getCities();
   }
 
 
@@ -94,7 +94,7 @@ class Register extends React.Component {
             // console.log({name, code1, selected});
             this.setState({ country: name });
           }
-          this.setState({ country: "PK" })
+          // this.setState({ country: "PK" })
 
         });
         this.setState({ countries: selectCountries });
@@ -119,9 +119,9 @@ class Register extends React.Component {
   changeCountry(event) {
     this.setState({ city: '' }); 
     this.setState({ country: event.value });
-    setTimeout(() => {
-      this.getCities();
-    }, 100);
+    // setTimeout(() => {
+    //   this.getCities();
+    // }, 100);
   }
 
   changeCity(event) {
