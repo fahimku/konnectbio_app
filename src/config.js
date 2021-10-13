@@ -1,9 +1,18 @@
-// const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85:9000" : "https://api.konnect.bio";
-const hostApi = "https://api.konnect.bio";
-const portApi = process.env.NODE_ENV === "development" ?  '' : "";
+const hostApi =
+  process.env.NODE_ENV === "development"
+    ? "http://172.16.1.85:9000"
+    : "https://api.konnect.bio";
+// const hostApi = "https://api.konnect.bio";
+const portApi = process.env.NODE_ENV === "development" ? "" : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
-const redirectURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://app.konnect.bio";
-const visitorURL = process.env.NODE_ENV === "development" ? "https://konnect.bio" : "https://konnect.bio";
+const redirectURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://app.konnect.bio";
+const visitorURL =
+  process.env.NODE_ENV === "development"
+    ? "https://konnect.bio"
+    : "https://konnect.bio";
 
 export default {
   redirectURL,
@@ -14,32 +23,32 @@ export default {
   remote: "https://api.konnect.bio",
   isBackend: process.env.REACT_APP_BACKEND,
   auth: {
-    email: 'roi@admdenim.com',
-    password: '123'
+    email: "roi@admdenim.com",
+    password: "123",
   },
   endPoint: {
     global: {
-      countries: 'common/receive/countries',
-      connect:'social/ig/url/instagram',
-   }, 
-  auth: {
-    login: 'signin/user',
-    register: 'signup/user',
-    forgotPassword: '',
+      countries: "common/receive/countries",
+      connect: "social/ig/url/instagram",
+    },
+    auth: {
+      login: "signin/user",
+      register: "signup/user",
+      forgotPassword: "",
     },
     posts: {
-      create: '',
-      update: '',
-      delete: '',
-      getAll: '',
+      create: "",
+      update: "",
+      delete: "",
+      getAll: "",
     },
     analytics: {
-      profileViews: '',
-      postClicks:'',
+      profileViews: "",
+      postClicks: "",
     },
-    getAllCountries:'common/receive/countries',
-    getAllCategories : 'common/receive/categories',
-    getAllBrands     : 'brands/receive',
+    getAllCountries: "common/receive/countries",
+    getAllCategories: "common/receive/categories",
+    getAllBrands: "brands/receive",
   },
   app: {
     colors: {
@@ -53,5 +62,5 @@ export default {
       black: "#13191D",
       salat: "#21AE8C",
     },
-  }
+  },
 };

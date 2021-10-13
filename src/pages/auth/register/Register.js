@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import Select,{createFilter} from "react-select";
+import Select, { createFilter } from "react-select";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -31,7 +31,9 @@ class Register extends React.Component {
       city: "",
       password: "",
       confirmPassword: "",
-
+      countryCode: "",
+      packages: "",
+      packageType: "",
     };
 
     this.doRegister = this.doRegister.bind(this);
@@ -46,41 +48,28 @@ class Register extends React.Component {
     this.isPasswordValid = this.isPasswordValid.bind(this);
   }
 
-
   async componentDidMount() {
     await this.getCountries();
-    // await this.getCities();
+    await this.getCities();
+    await this.getPackages();
   }
 
-
-
-
-
-  // getCities = async () => {
-  //   // const requestOptions = {
-  //   //   method: "POST",
-  //   //   headers: {
-  //   //     "Content-Type": "application/json",
-  //   //   },
-  //   //   body:  {"country_code" :this.state.country}
-  //   // };
-  //   console.log(this.state.country, 'getcities');
-  //   await axios.post(`/common/receive/cities`, { "country_code": this.state.country }
-  //   )
-  //     .then((response) => {
-  //       const selectCities = [];
-  //       const cities = response.data.message;
-  //       cities.map(({ name, countryCode, stateCode }) => {
-  //         selectCities.push({ value: name, label: name });
-  //       })
-  //       this.setState({ cities: selectCities });
-  //       // this.setState({  })
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }
-
+  getCities = async () => {
+    await axios
+      .post(`/common/receive/cities`, { country_code: this.state.countryCode })
+      .then((response) => {
+        const selectCities = [];
+        const cities = response.data.message;
+        cities.map(({ name, countryCode, stateCode }) => {
+          selectCities.push({ value: name, label: name });
+        });
+        this.setState({ cities: selectCities });
+        // this.setState({  })
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   getCountries = async () => {
     await axios
@@ -92,12 +81,26 @@ class Register extends React.Component {
           selectCountries.push({ value: code1, label: name });
           if (selected) {
             // console.log({name, code1, selected});
-            this.setState({ country: name });
+            this.setState({ country: name, countryCode: code1 });
           }
-          // this.setState({ country: "PK" })
-
+          this.setState({ country: "Pakistan", countryCode: "PK" });
         });
         this.setState({ countries: selectCountries });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  getPackages = async () => {
+    await axios
+      .get(`/package/receive`)
+      .then((response) => {
+        const selectPackages = [];
+        const packages = response.data.message;
+        packages.map(({ package_id, package_name }) => {
+          selectPackages.push({ value: package_id, label: package_name });
+        });
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -117,17 +120,16 @@ class Register extends React.Component {
   }
 
   changeCountry(event) {
-    this.setState({ city: '' }); 
-    this.setState({ country: event.value });
-    // setTimeout(() => {
-    //   this.getCities();
-    // }, 100);
+    this.setState({ city: "" });
+    this.setState({ country: event.value, countryCode: event.value });
+    setTimeout(() => {
+      this.getCities();
+    }, 500);
   }
 
   changeCity(event) {
     // console.log(event);
     this.setState({ city: event.value });
-
   }
   changePassword(event) {
     this.setState({ password: event.target.value });
@@ -158,28 +160,30 @@ class Register extends React.Component {
 
   doRegister(e) {
     e.preventDefault();
-    if (this.state.userType == "")
-      this.props.dispatch(authError("Please Select Account Type"));
-    else {
-      if (!this.isPasswordValid()) {
-        this.checkPassword();
-      } else {
-        this.props.dispatch(
-          registerUser({
-            name: this.state.name,
-            email: this.state.email,
-            user_type: this.state.userType,
-            country: this.state.country,
-            city: this.state.city,
-            password: this.state.password,
-          })
-        );
-      }
+    if (!this.isPasswordValid()) {
+      this.checkPassword();
+    } else {
+      this.props.dispatch(
+        registerUser({
+          name: this.state.name,
+          email: this.state.email,
+          package_id: this.state.packageType.value,
+          country: this.state.countryCode,
+          city: this.state.city,
+          password: this.state.password,
+        })
+      );
     }
   }
 
+  changePackage = (e, options) => {
+    this.setState({
+      packageType: options,
+    });
+  };
+
   render() {
-    console.log(this.state.city, "city");
+    console.log(this.state.countryCode, "packageType");
     return (
       <div className="auth-page">
         <Container>
@@ -222,21 +226,16 @@ class Register extends React.Component {
               </div>
               <div className="form-group">
                 <Select
-                  rules={{ required: "Please select an option" }}
-                  onChange={this.changeUserType}
-                  placeholder="Select Account Type"
-                  options={this.state.accountTypes}
-                // defaultValue={{
-                //   label: this.state.country,
-                //   value: this.state.country,
-                // }}
+                  onChange={(options, e) => this.changePackage(e, options)}
+                  placeholder="Select Package"
+                  options={this.state.packages}
                 />
               </div>
               <div className="form-group">
                 {this.state.country ? (
                   <Select
                     onChange={this.changeCountry}
-                    filterOption={createFilter({ignoreAccents: false})}
+                    filterOption={createFilter({ ignoreAccents: false })}
                     placeholder="Select Country"
                     options={this.state.countries}
                     defaultValue={{
@@ -251,20 +250,18 @@ class Register extends React.Component {
               <div className="form-group">
                 {this.state.country ? (
                   <Select
-                  
                     onChange={this.changeCity}
-                    filterOption={createFilter({ignoreAccents: false})}
+                    filterOption={createFilter({ ignoreAccents: false })}
                     placeholder="Select City"
                     options={this.state.cities}
-                    value={{
-                      label: this.state.city,
-                      value: this.state.city,
-                    }}
+                    // value={{
+                    //   label: this.state.city,
+                    //   value: this.state.city,
+                    // }}
                   />
                 ) : (
                   ""
                 )}
-
               </div>
               <div className="form-group">
                 <input

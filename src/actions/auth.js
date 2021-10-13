@@ -1,11 +1,11 @@
 import axios from "axios";
 import config from "../config";
 import jwt from "jsonwebtoken";
-import {toast} from "react-toastify";
-import {push} from "connected-react-router";
+import { toast } from "react-toastify";
+import { push } from "connected-react-router";
 import Errors from "../components/FormItems/error/errors";
-import {mockUser} from "./mock";
-import {createBrowserHistory} from "history";
+import { mockUser } from "./mock";
+import { createBrowserHistory } from "history";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -163,7 +163,7 @@ export function verifyEmail(token) {
       history.push("/login");
     } else {
       axios
-        .put("/auth/verify-email", {token})
+        .put("/auth/verify-email", { token })
         .then((verified) => {
           if (verified) {
             toast.success("Your email was verified");
@@ -188,7 +188,7 @@ export function resetPassword(token, password) {
         type: RESET_REQUEST,
       });
       axios
-        .put("/auth/password-reset", {token, password})
+        .put("/auth/password-reset", { token, password })
         .then((res) => {
           dispatch({
             type: RESET_SUCCESS,
@@ -212,7 +212,7 @@ export function sendPasswordResetEmail(email) {
         type: PASSWORD_RESET_EMAIL_REQUEST,
       });
       axios
-        .post("/auth/send-password-reset-email", {email})
+        .post("/auth/send-password-reset-email", { email })
         .then((res) => {
           dispatch({
             type: PASSWORD_RESET_EMAIL_SUCCESS,
