@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-const packagesInfo = JSON.parse(localStorage.getItem("packages"));
+// const packagesInfo = JSON.parse(localStorage.getItem("packages"));
 
 class MyCategory extends React.Component {
   state = {
@@ -77,7 +77,7 @@ class MyCategory extends React.Component {
   };
 
   render() {
-    console.log(this.state.defaultCategory, "defaultCategory");
+    // console.log(userInfo, "userInfo");
     // const defaultCategory =
     //   this.state.defaultCategory.length === 0
     //     ? "No Category"
@@ -90,9 +90,11 @@ class MyCategory extends React.Component {
               <h5 className="page-title line-heading">Current Plan</h5>
               <Row>
                 <Col md={8}>
-                  <h3 className="package_name">{packagesInfo.package_name}</h3>
+                  <h3 className="package_name">
+                    {userInfo.package.package_name}
+                  </h3>
                   <div className="category_count">
-                    You have only {packagesInfo.category_count} categories
+                    You have only {userInfo.package.category_count} categories
                     allowed in this plan
                   </div>
                 </Col>
