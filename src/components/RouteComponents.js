@@ -3,6 +3,7 @@ import { logoutUser } from '../actions/auth';
 import { Redirect, Route } from 'react-router';
 import React from 'react';
 import { createBrowserHistory } from "history";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });

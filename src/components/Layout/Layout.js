@@ -86,10 +86,12 @@ import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
 import MyLinks from "../../pages/mylinks/MyLinks";
-import {createBrowserHistory} from "history";
+
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
   static propTypes = {

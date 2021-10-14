@@ -76,8 +76,8 @@ class App extends React.PureComponent {
 
             <Route path="/connect" exact component={Connect} />
             <Route path="/logout" exact component={Logout} />
-            <AuthRoute path="/register" exact component={Register} />
-            <AuthRoute path="/login" exact component={Login} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} />
             <AuthRoute path="/verify-email" exact component={Verify} />
             <AuthRoute path="/password-reset" exact component={Reset} />
             <AuthRoute path="/forgot" exact component={Forgot} />
