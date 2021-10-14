@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import s from "./ErrorPage.module.scss";
 import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 // const packagesInfo = JSON.parse(localStorage.getItem("packages"));
@@ -13,8 +14,9 @@ class MyCategory extends React.Component {
   state = {
     myCategory: "",
     user_id: "",
-    category: "",
+    category: [],
     defaultCategory: [],
+    categoryError: "",
   };
 
   componentDidMount() {
@@ -50,7 +52,7 @@ class MyCategory extends React.Component {
         this.setState({ defaultCategory: mycategories });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data.message);
       });
   };
   handleSelect = (e, options) => {
@@ -60,28 +62,38 @@ class MyCategory extends React.Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
-    let category = this.state.category.map((category) => {
-      return category.value;
-    });
-    await axios
-      .put(`/users/revise/categories/${userInfo.user_id}`, {
-        categories: category,
-      })
-      .then((response) => {
-        let categoryResponse = response.data;
-        console.log(categoryResponse, "response");
-      })
-      .catch((err) => {
-        console.log(err.response.data.message, "error");
-      });
+    let category =
+      this.state.category === null
+        ? []
+        : this.state.category.map((category) => {
+            return category.value;
+          });
+    // console.log(this.state.category, "category");
+    if (category.length !== 0 && category.length < 4) {
+      await axios
+        .put(`/users/revise/categories/${userInfo.user_id}`, {
+          categories: category,
+        })
+        .then((response) => {
+          let categoryResponse = response.data;
+          if (categoryResponse.success) {
+            toast.success(categoryResponse.message);
+            this.setState({ categoryError: "" });
+            this.fetchSaveCategory();
+          }
+        })
+        .catch((err) => {
+          console.log(err.response, "err");
+          this.setState({ categoryError: err.response.data.message });
+        });
+    } else {
+      this.setState({ categoryError: "Please Select Category" });
+    }
   };
 
   render() {
     // console.log(userInfo, "userInfo");
-    // const defaultCategory =
-    //   this.state.defaultCategory.length === 0
-    //     ? "No Category"
-    //     : this.state.defaultCategory.map((cat) => cat.label);
+
     return (
       <div className="category-page">
         <div className="container">
@@ -126,6 +138,9 @@ class MyCategory extends React.Component {
                     placeholder="Select Category"
                     onChange={(options, e) => this.handleSelect(e, options)}
                   />
+                  <span className="text-danger">
+                    {this.state.categoryError}
+                  </span>
                   <Row>
                     {this.state.defaultCategory.length === 0
                       ? "No Category"
