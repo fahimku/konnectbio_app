@@ -1,7 +1,15 @@
 /* eslint-disable */
 import axios from "axios";
 import React from "react";
-import {Row, Col, Modal, ModalHeader, ModalBody} from "reactstrap";
+import {
+  Row,
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -15,9 +23,15 @@ class LinkinBioShop extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
+    let userId = userInfo.user_id;
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      deleteId: "",
+      startDate: "",
+      endDate:"",
+      userId: userId,
+      confirmModal: false,
       iframeKey: 0,
       loading: false,
       modal: false,
@@ -62,7 +76,6 @@ class LinkinBioShop extends React.Component {
     this.fetchCategories();
   }
 
-  
   componentWillUnmount() {
     document.body.classList.remove("body-bio-shop");
   }
@@ -110,15 +123,18 @@ class LinkinBioShop extends React.Component {
       });
   }
   //Fetch Categories
+  //Fetch Categories
   fetchCategories = async () => {
-    await axios.post(`/common/receive/categories`).then((response) => {
-      const selectCategories = [];
-      const categories = response.data.message;
-      categories.map(({category_id, category_name}) => {
-        selectCategories.push({value: category_id, label: category_name});
+    await axios
+      .get(`/users/receive/categories?id=${this.state.userId}`)
+      .then((response) => {
+        const selectCategories = [];
+        const categories = response.data.message;
+        categories.map(({category_id, category_name}) => {
+          selectCategories.push({value: category_id, label: category_name});
+        });
+        this.setState({categories: selectCategories});
       });
-      this.setState({categories: selectCategories});
-    });
   };
 
   //Fetch Sub Categories
@@ -158,6 +174,8 @@ class LinkinBioShop extends React.Component {
               categories: [this.state.category],
               sub_categories: this.state.subCategory,
               post_type: this.state.postType,
+              start_date: this.state.startDate,
+              end_date:this.state.endDate
             })
             .then((response) => {
               this.setState({loading: false});
@@ -172,7 +190,6 @@ class LinkinBioShop extends React.Component {
               );
               instagramPosts.data[singlePostIndex] = currentPost;
               this.setState({instagramPosts: instagramPosts}, () => {});
-             
             })
             .catch((err) => {
               this.setState({loading: false});
@@ -223,12 +240,9 @@ class LinkinBioShop extends React.Component {
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
-      this.fetchInstagramPosts(
-        this.state.username,
-        this.state.limit,
-        1
-      );
+      this.fetchInstagramPosts(this.state.username, this.state.limit, 1);
     });
+    this.setState({confirmModal: false});
   };
 
   paneDidMount = (node) => {
@@ -241,7 +255,7 @@ class LinkinBioShop extends React.Component {
     let node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
     if (bottom) {
-      console.log('bottom reached')
+      console.log("bottom reached");
       if (this.state.page) {
         this.nextPageInstagramPosts(
           this.state.username,
@@ -315,7 +329,8 @@ class LinkinBioShop extends React.Component {
     }
     this.setState({selectPost: state});
     this.setState({modal: true});
-    this.setState({iframeKey: this.state.iframeKey + 1});
+    if (state == false && postIndex == "")
+      this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
@@ -358,12 +373,20 @@ class LinkinBioShop extends React.Component {
   testUrl = (url) => {
     window.open(url, "_blank");
   };
-  
+
+  changeDateRange = (startDate, endDate) => {
+    this.setState({startDate: startDate});
+    this.setState({endDate: endDate});
+  };
+
   shopRightBar = () => {
     return (
       <ShopRightBar
         closeModel={() => {
           this.setState({modal: false});
+        }}
+        dateRange={(startDate, endDate) => {
+          this.changeDateRange(startDate, endDate);
         }}
         testUrl={this.testUrl}
         loading={this.state.loading}
@@ -386,7 +409,10 @@ class LinkinBioShop extends React.Component {
           this.updatePost(val1, val2);
         }}
         media_id={this.state.media_id}
-        deletePost={this.deletePost}
+        deletePost={(deleteId) => {
+          this.setState({confirmModal: true});
+          this.setState({deleteId: deleteId});
+        }}
         callBack={(value) => {
           this.setState({redirectedUrl: value});
         }}
@@ -452,6 +478,29 @@ class LinkinBioShop extends React.Component {
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>
         )}
+
+        <Modal
+          isOpen={this.state.confirmModal}
+          toggle={() => this.toggle("confirmModal")}
+        >
+          <ModalHeader toggle={() => this.toggle("confirmModal")}>
+            Delete Post
+          </ModalHeader>
+          <ModalBody className="bg-white">
+            Are you sure you want to delete?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="default" onClick={() => this.toggle("confirmModal")}>
+              Close
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => this.deletePost(this.state.deleteId)}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

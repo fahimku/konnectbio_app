@@ -25,6 +25,7 @@ class MyLinks extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      confirmModal: false,
       iframeKey: 0,
       loading: false,
       modal: false,
@@ -81,7 +82,6 @@ class MyLinks extends React.Component {
       autoFocus: false,
       error: "",
     };
-    this.addNewLink = this.addNewLink.bind(this);
     this.titleChange = this.titleChange.bind(this);
     this.redirectedUrlChange = this.redirectedUrlChange.bind(this);
   }
@@ -180,6 +180,7 @@ class MyLinks extends React.Component {
         this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
         this.setState({loading: false});
+        this.setState({confirmModal: false});
         this.addNewLink();
       })
       .catch((error) => {
@@ -218,7 +219,7 @@ class MyLinks extends React.Component {
     this.setState({error: error});
   }
 
-  addNewLink = (title = "", redirectedUrl = "") => {
+  addNewLink = (title, redirectedUrl) => {
     this.setState({title: title});
     this.setState({redirectedUrl: redirectedUrl});
     this.setState({preview: true});
@@ -237,9 +238,14 @@ class MyLinks extends React.Component {
     toast.success("Copied to Clipboard!");
   };
 
+  testUrl = (url) => {
+    window.open(url, "_blank");
+  };
+
   addNewLinkShop = () => {
     return (
       <AddNewLink
+        testUrl={this.testUrl}
         addNewLink={this.addNewLink}
         loading={this.state.loading}
         titleChange={this.titleChange}
@@ -260,11 +266,12 @@ class MyLinks extends React.Component {
           );
         }}
         deleteLink={() => {
-          this.deleteLink(this.state.linkId);
+          this.setState({confirmModal: true});
         }}
       ></AddNewLink>
     );
   };
+
   submitted = (e) => {
     e.preventDefault();
   };
@@ -330,6 +337,29 @@ class MyLinks extends React.Component {
             <ModalBody className="bg-white">{this.addNewLinkShop()}</ModalBody>
           </Modal>
         )}
+
+        <Modal
+          isOpen={this.state.confirmModal}
+          toggle={() => this.toggle("confirmModal")}
+        >
+          <ModalHeader toggle={() => this.toggle("confirmModal")}>
+            Delete Link
+          </ModalHeader>
+          <ModalBody className="bg-white">
+            Are you sure you want to delete?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="default" onClick={() => this.toggle("confirmModal")}>
+              Close
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => this.deleteLink(this.state.linkId)}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

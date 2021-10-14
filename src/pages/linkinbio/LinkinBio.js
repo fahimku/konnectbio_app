@@ -16,18 +16,23 @@ import config from "../../config";
 // import {addUserInfo} from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
+
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
+    let userId = userInfo.user_id;
 
     super(props);
     this.error = this.error.bind(this);
     this.state = {
       iframeKey: 0,
-      deleteId:'',
+      deleteId: "",
+      userId:userId,
+      startDate: "",
+      endDate: "",
       media_id: "",
       modal: false,
       confirmModal: false,
@@ -210,6 +215,8 @@ class LinkinBio extends React.Component {
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
+        this.setState({startDate: response.data.message.start_date});
+        this.setState({endDate: response.data.message.end_date});
         let subCategory = [];
         this.fetchSubCategories(category).then(function () {
           response.data.message.sub_categories.map((subCategoryId) => {
@@ -229,7 +236,7 @@ class LinkinBio extends React.Component {
 
   //Fetch Categories
   fetchCategories = async () => {
-    await axios.post(`/common/receive/categories`).then((response) => {
+    await axios.get(`/users/receive/categories?id=${this.state.userId}`).then((response) => {
       const selectCategories = [];
       const categories = response.data.message;
       categories.map(({category_id, category_name}) => {
@@ -276,6 +283,8 @@ class LinkinBio extends React.Component {
               categories: [this.state.category],
               sub_categories: this.state.subCategory,
               post_type: this.state.postType,
+              start_date: this.state.startDate,
+              end_date: this.state.endDate,
             })
             .then((response) => {
               this.setState({loading: false});
@@ -309,6 +318,8 @@ class LinkinBio extends React.Component {
         categories: [this.state.category],
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
+        start_date: this.state.startDate,
+        end_date: this.state.endDate,
       })
       .then((response) => {
         this.setState({loading: false});
@@ -327,7 +338,7 @@ class LinkinBio extends React.Component {
   };
 
   deletePost = async (id) => {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -341,6 +352,7 @@ class LinkinBio extends React.Component {
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
+      this.setState({confirmModal: false});
     });
   };
 
@@ -384,7 +396,6 @@ class LinkinBio extends React.Component {
       }
 
       currentPost.select = true;
-
       let instagramPosts = JSON.parse(
         JSON.stringify(this.state.instagramPosts)
       );
@@ -405,7 +416,8 @@ class LinkinBio extends React.Component {
     }
     this.setState({selectPost: state});
     this.setState({modal: true});
-    this.setState({iframeKey: this.state.iframeKey + 1});
+    if (state == false && postIndex == "")
+      this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
@@ -430,6 +442,11 @@ class LinkinBio extends React.Component {
     }
   };
 
+  changeDateRange = (startDate, endDate) => {
+    this.setState({startDate: startDate});
+    this.setState({endDate: endDate});
+  };
+
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
     textField.innerText = this.state.url + this.state.username;
@@ -452,11 +469,16 @@ class LinkinBio extends React.Component {
     return (
       <ShopRightBar
         closeModel={() => {
-          this.setState({ modal: false });
+          this.setState({modal: false});
         }}
         testUrl={this.testUrl}
         loading={this.state.loading}
         submitted={this.submitted}
+        dateRange={(startDate, endDate) => {
+          this.changeDateRange(startDate, endDate);
+        }}
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
         selectPost={this.selectPost}
@@ -476,8 +498,8 @@ class LinkinBio extends React.Component {
         }}
         media_id={this.state.media_id}
         deletePost={(deleteId) => {
-          this.setState({ deleteId: deleteId });
-          this.setState({ confirmModal: true });
+          this.setState({deleteId: deleteId});
+          this.setState({confirmModal: true});
         }}
         callBack={(value) => {
           this.setState({redirectedUrl: value});
@@ -561,7 +583,10 @@ class LinkinBio extends React.Component {
             <Button color="default" onClick={() => this.toggle("confirmModal")}>
               Close
             </Button>
-            <Button color="primary" onClick={() => this.deletePost(this.state.deleteId)}>
+            <Button
+              color="primary"
+              onClick={() => this.deletePost(this.state.deleteId)}
+            >
               Delete
             </Button>
           </ModalFooter>

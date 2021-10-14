@@ -115,9 +115,11 @@ class Login extends React.Component {
                   placeholder="Password"
                 />
               </div>
-              <Link className="d-block text-right mb-3 mt-1 fs-sm" to="forgot">
+              <a className="d-block text-right mb-3 mt-1 fs-sm" onClick={() => {
+              this.props.history.push('/forgot')
+            }}>
                 Forgot password?
-              </Link>
+              </a>
               <Button
                 type="submit"
                 color="info"
@@ -130,9 +132,11 @@ class Login extends React.Component {
             <p className="widget-auth-info">
               Don't have an account? Sign up now!
             </p>
-            <Link className="d-block text-center" to="register">
+            <a className="d-block text-center" onClick={() => {
+              this.props.history.push('/register')
+            }}>
               Create an Account
-            </Link>
+            </a>
           </Widget>
         </Container>
       </div>

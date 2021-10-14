@@ -298,9 +298,11 @@ class Register extends React.Component {
             <p className="widget-auth-info">
               Already have the account? Login now!
             </p>
-            <Link className="d-block text-center" to="login">
+            <a className="d-block text-center" onClick={() => {
+              this.props.history.push('/login')
+            }}>
               Login
-            </Link>
+            </a>
           </Widget>
         </Container>
       </div>

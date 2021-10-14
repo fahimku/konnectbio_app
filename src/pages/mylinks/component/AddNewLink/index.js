@@ -74,22 +74,45 @@ const AddNewLink = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button type="submit">
-                        &nbsp;&nbsp;Update&nbsp;&nbsp;
-                      </Button>
+                      <>
+                        <Button type="submit" color="primary">
+                          &nbsp;&nbsp;Update&nbsp;&nbsp;
+                        </Button>
+                        <Button
+                          color="primary"
+                          onClick={() => props.testUrl(props.redirectedUrl)}
+                        >
+                          &nbsp;&nbsp;Test&nbsp;&nbsp;
+                        </Button>
+                        <Button
+                          color="danger"
+                          onClick={() => {
+                            props.preview(false, "");
+                          }}
+                        >
+                          &nbsp;&nbsp;Cancel
+                        </Button>
+
+                        <Button
+                          color="danger"
+                          onClick={() => {
+                            props.deleteLink();
+                            resetForm();
+                          }}
+                        >
+                          Delete Link&nbsp;&nbsp;
+                        </Button>
+                      </>
                     )}
-                    <div className="remove-link">
+
+                    {/* <div className="remove-link">
                       <a
                         href="javascript:void(0)"
-                        onClick={() => {
-                          props.deleteLink();
-                          resetForm();
-                        }}
                       >
                         <span className="glyphicon glyphicon-trash"></span>
                         Remove Link
                       </a>
-                    </div>
+                    </div> */}
                   </>
                 ) : (
                   <>
@@ -98,9 +121,25 @@ const AddNewLink = (props) => {
                         <Loader />
                       </Button>
                     ) : (
-                      <Button type="submit" color="">
-                        &nbsp;&nbsp;Save&nbsp;&nbsp;
-                      </Button>
+                      <>
+                        <Button type="submit" color="primary">
+                          &nbsp;&nbsp;Save&nbsp;&nbsp;
+                        </Button>
+                        <Button
+                          color="primary"
+                          onClick={() => props.testUrl(props.redirectedUrl)}
+                        >
+                          &nbsp;&nbsp;Test&nbsp;&nbsp;
+                        </Button>
+                        <Button
+                          color="danger"
+                          onClick={() => {
+                            props.preview(false, "");
+                          }}
+                        >
+                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                        </Button>
+                      </>
                     )}
                   </>
                 )}

@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Video from "../../../../components/Video";
-import { Button } from "reactstrap";
+import {Row, Col, Button} from "reactstrap";
 import moment from "moment";
-import { Select } from "antd";
+import {Select} from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
+import {DatePicker} from "antd";
+import "antd/dist/antd.css";
 
-const { Option } = Select;
+const {Option} = Select;
+const {RangePicker} = DatePicker;
+const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
@@ -15,9 +19,15 @@ const ShopRightBar = (props) => {
     ? props.singlePost.id
     : props.singlePost.media_id;
   const redirectedUrlRef = useRef(null);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const formRef = useRef("");
 
   useEffect(() => {
+    console.log("start date");
+    console.log(props.startDate);
+    console.log("end date");
+    console.log(props.endDate);
     setSubCategories(props.subCategories);
   }, [
     props.subCategories,
@@ -26,9 +36,15 @@ const ShopRightBar = (props) => {
     props.postType,
   ]);
 
-  // useEffect(() => {
-  //   redirectedUrlRef.current.focus();
-  // }, [props.postType]);
+  useEffect(() => {}, [props.startDate]);
+
+  function dateRangePickerChanger(value, dataString) {
+    let startDate = dataString[0];
+    let endDate = dataString[1];
+    setStartDate(startDate);
+    setEndDate(endDate);
+    props.dateRange(startDate, endDate);
+  }
 
   function resetForm() {
     formRef.current.reset();
@@ -100,7 +116,7 @@ const ShopRightBar = (props) => {
                   key={Date.now()}
                   value={props.category}
                   showSearch
-                  style={{ width: "100%" }}
+                  style={{width: "100%"}}
                   placeholder="Select Category"
                   optionFilterProp="children"
                   clearable={false}
@@ -116,7 +132,7 @@ const ShopRightBar = (props) => {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {props.categories.map(({ value, label }, i) => (
+                  {props.categories.map(({value, label}, i) => (
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
@@ -183,6 +199,57 @@ const ShopRightBar = (props) => {
                   </div>
                 </>
               )}
+
+              <div className="date-range mt-3">
+                {props.startDate ? (
+                  <RangePicker
+                    key={1}
+                    defaultValue={[
+                      moment(props.startDate),
+                      moment(props.endDate),
+                    ]}
+                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
+                      Today: [moment(), moment()],
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                    }}
+                    style={{width: "100%"}}
+                    format={dateFormat}
+                    onChange={dateRangePickerChanger}
+                  />
+                ) : (
+                  <RangePicker
+                    key={1}
+                    defaultValue={[]}
+                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
+                      Today: [moment(), moment()],
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                    }}
+                    style={{width: "100%"}}
+                    format={dateFormat}
+                    onChange={dateRangePickerChanger}
+                  />
+                )}
+              </div>
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (
                   <>
@@ -192,51 +259,51 @@ const ShopRightBar = (props) => {
                       </Button>
                     ) : (
                       <>
-                        <Button
-                          className="update-buttons"
-                          color="primary"
-                          onClick={(ev) =>
-                            props.updatePost(media_id, props.redirectedUrl)
-                          }
-                        >
-                          &nbsp;&nbsp;Update&nbsp;&nbsp;
-                        </Button>
-                        <Button
-                          className="update-buttons"
-                          color="primary"
-                          onClick={() => props.testUrl(props.redirectedUrl)}
-                        >
-                          &nbsp;&nbsp;Test&nbsp;&nbsp;
-                        </Button>
-
-                        <Button
-                          className="update-buttons"
-                          color="primary"
-                          onClick={() => {
-                            props.selectPost(false, "");
-                            props.closeModel(false);
-                          }}
-                        >
-                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                        </Button>
+                        <Row className="mt-3">
+                          <Col lg="3" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={(ev) =>
+                                props.updatePost(media_id, props.redirectedUrl)
+                              }
+                            >
+                              &nbsp;&nbsp;Update&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                          <Col lg="3" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => props.testUrl(props.redirectedUrl)}
+                            >
+                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                          <Col lg="3" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => {
+                                props.selectPost(false, "");
+                                props.closeModel(false);
+                              }}
+                            >
+                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                          <Col lg="3" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => props.deletePost(media_id)}
+                            >
+                              Remove
+                            </Button>
+                          </Col>
+                        </Row>
                       </>
                     )}
-                    {/* <div className="remove-link">
-                      <a
-                        href="javascript:void(0)"
-                        onClick={() => props.deletePost(media_id)}
-                      >
-                        <span className="glyphicon glyphicon-trash"></span>
-                        Remove Post
-                      </a>
-                    </div> */}
-                    <Button
-                      className="update-buttons"
-                      color="primary"
-                      onClick={() => props.deletePost(media_id)}
-                    >
-                      &nbsp;&nbsp; Remove Post&nbsp;&nbsp;
-                    </Button>
                   </>
                 ) : (
                   <>
@@ -246,29 +313,37 @@ const ShopRightBar = (props) => {
                       </Button>
                     ) : (
                       <>
-                        <Button
-                          onClick={(ev) =>
-                            props.savePost && props.savePost(this)
-                          }
-                          className="save-btn btn btn-primary"
-                        >
-                          &nbsp;&nbsp;Save&nbsp;&nbsp;
-                        </Button>
-                        <Button
-                          color="primary"
-                          onClick={() => props.testUrl(props.redirectedUrl)}
-                        >
-                          &nbsp;&nbsp;Test&nbsp;&nbsp;
-                        </Button>
-                        <Button
-                          color="danger"
-                          onClick={() => {
-                            props.selectPost(false, "");
-                            props.closeModel(false);
-                          }}
-                        >
-                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                        </Button>
+                        <Row className="mt-3">
+                          <Col lg="4" sm="4" xs="6">
+                            <Button
+                              onClick={(ev) =>
+                                props.savePost && props.savePost(this)
+                              }
+                              className="save-btn btn btn-primary"
+                            >
+                              &nbsp;&nbsp;Save&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                          <Col lg="4" sm="4" xs="6">
+                            <Button
+                              color="primary"
+                              onClick={() => props.testUrl(props.redirectedUrl)}
+                            >
+                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                          <Col lg="4" sm="4" xs="6">
+                            <Button
+                              color="danger"
+                              onClick={() => {
+                                props.selectPost(false, "");
+                                props.closeModel(false);
+                              }}
+                            >
+                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                            </Button>
+                          </Col>
+                        </Row>
                       </>
                     )}
                   </>
