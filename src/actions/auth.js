@@ -27,8 +27,8 @@ export const history = createBrowserHistory({
 
 async function findMe() {
   if (config.isBackend) {
-    const response = await axios.get("/auth/me");
-    return response.data;
+  //  const response = await axios.get("/auth/me");
+    return []
   } else {
     return mockUser;
   }
@@ -114,7 +114,7 @@ export function receiveToken(token) {
     dispatch({
       type: LOGIN_SUCCESS,
     });
-    history.push("/app");
+   // history.push("/app");
   };
 }
 

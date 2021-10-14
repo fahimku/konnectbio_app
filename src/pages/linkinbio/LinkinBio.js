@@ -140,25 +140,27 @@ class LinkinBio extends React.Component {
           this.setState({ nextPageUrl: response.data.paging.next });
       })
       .catch((err) => {
+        console.log('Error')
         console.log(err);
-        if (err.response.data.message.type) {
-          //  Retrieves the string and converts it to a JavaScript object
-          const userInformation = localStorage.getItem("userInfo");
-          const parseUserInformation = JSON.parse(userInformation);
-          // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
-          parseUserInformation.access_token = "";
-          //Store User Information
-          const storeUserInformation = JSON.stringify(parseUserInformation);
-          localStorage.setItem("userInfo", storeUserInformation);
-          localStorage.removeItem("access_token");
-          this.setState({
-            error: {
-              type: "InstagramAuthFail",
-              message:
-                "Your Instagram connection is expired. pleased connect in again",
-            },
-          });
-        }
+
+        // if (err.response.data.message.type) {
+        //   //  Retrieves the string and converts it to a JavaScript object
+        //   const userInformation = localStorage.getItem("userInfo");
+        //   const parseUserInformation = JSON.parse(userInformation);
+        //   // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
+        //   parseUserInformation.access_token = "";
+        //   //Store User Information
+        //   const storeUserInformation = JSON.stringify(parseUserInformation);
+        //   localStorage.setItem("userInfo", storeUserInformation);
+        //   localStorage.removeItem("access_token");
+        //   this.setState({
+        //     error: {
+        //       type: "InstagramAuthFail",
+        //       message:
+        //         "Your Instagram connection is expired. pleased connect in again",
+        //     },
+        //   });
+        // }
       });
   }
   //Next Page Instagram Posts Request From User
