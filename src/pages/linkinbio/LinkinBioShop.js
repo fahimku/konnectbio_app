@@ -226,7 +226,7 @@ class LinkinBioShop extends React.Component {
       this.fetchInstagramPosts(
         this.state.username,
         this.state.limit,
-        this.state.page
+        1
       );
     });
   };
