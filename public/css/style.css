@@ -189,3 +189,40 @@ span.icon.LinksGroup_icon__3xIpG {
     margin-right: 21px;
   }
 }
+
+.profile-page .container {
+  background-color: #fff;
+}
+.category-page .category-btn {
+  margin-top: 30px;
+}
+.category-page {
+}
+.white-box {
+  position: relative;
+  margin-bottom: 40px;
+  background: #fff;
+  border-radius: 0.35rem;
+  padding: 15px;
+}
+.package_name {
+}
+.line-heading {
+  border-bottom: 1px solid #dce4ec;
+  font-size: 16px;
+  padding-bottom: 12px;
+  color: #7b8994;
+}
+.cat-box {
+  text-align: center;
+  margin-top: 20px;
+}
+.cat-box .cat-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.cat-box span {
+  margin-left: 20px;
+}

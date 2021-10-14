@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 //import { Switch, Route, withRouter, Redirect } from "react-router";
 import {
   BrowserRouter as Router,
@@ -9,7 +9,7 @@ import {
   withRouter,
   Redirect,
 } from "react-router-dom";
-import {TransitionGroup, CSSTransition} from "react-transition-group";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Hammer from "rc-hammerjs";
 import Profile from "../../pages/profile";
 import Login from "../../pages/login";
@@ -61,7 +61,7 @@ import UserFormPage from "../Users/form/UsersFormPage";
 import UserListPage from "../Users/list/UsersListPage";
 import UserViewPage from "../Users/view/UsersViewPage";
 import ChangePasswordFormPage from "../Users/changePassword/ChangePasswordFormPage";
-import {SidebarTypes} from "../../reducers/layout";
+import { SidebarTypes } from "../../reducers/layout";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Helper from "../Helper";
@@ -72,7 +72,7 @@ import {
   toggleSidebar,
 } from "../../actions/navigation";
 import s from "./Layout.module.scss";
-import {DashboardThemes} from "../../reducers/layout";
+import { DashboardThemes } from "../../reducers/layout";
 import ProductEdit from "../../pages/management/components/productEdit";
 import BreadcrumbHistory from "../BreadcrumbHistory";
 
@@ -86,7 +86,9 @@ import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
 import MyLinks from "../../pages/mylinks/MyLinks";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
+import MyProfile from "../../pages/myprofile/MyProfile";
+import MyCategory from "../../pages/mycategory/MyCategory";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -117,7 +119,7 @@ class Layout extends React.Component {
 
   componentDidMount() {
     //this.handleResize();
-   // window.addEventListener("resize", this.handleResize.bind(this));
+    // window.addEventListener("resize", this.handleResize.bind(this));
   }
 
   componentWillUnmount() {
@@ -126,7 +128,7 @@ class Layout extends React.Component {
 
   handleResize() {
     if (window.innerWidth <= 768 && this.props.sidebarStatic) {
-     // this.props.dispatch(toggleSidebar());
+      // this.props.dispatch(toggleSidebar());
     }
   }
 
@@ -138,7 +140,7 @@ class Layout extends React.Component {
       }
 
       if (e.direction === 2 && this.props.sidebarOpened) {
-      //  this.props.dispatch(closeSidebar());
+        //  this.props.dispatch(closeSidebar());
         return;
       }
     }
@@ -149,7 +151,7 @@ class Layout extends React.Component {
       <div
         className={[
           s.root,
-           `${s.sidebarStatic}`,
+          `${s.sidebarStatic}`,
           "sing-dashboard",
           `dashboard-${
             localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
@@ -164,7 +166,7 @@ class Layout extends React.Component {
         ].join(" ")}
       >
         <Sidebar />
-        <div className={'LayoutWrap '+ s.wrap}>
+        <div className={"LayoutWrap " + s.wrap}>
           <Header username={this.state.username} placeholder={placeholder} />
           <Helper />
 
@@ -479,6 +481,16 @@ class Layout extends React.Component {
                         path="/app/account/delete"
                         exact
                         component={AccountDelete}
+                      />
+                      <Route
+                        path="/app/account/profile"
+                        exact
+                        component={MyProfile}
+                      />
+                      <Route
+                        path="/app/account/categories"
+                        exact
+                        component={MyCategory}
                       />
                       <Route path="/app/my/links" exact component={MyLinks} />
                     </Switch>
