@@ -181,3 +181,11 @@ span.icon.LinksGroup_icon__3xIpG {
     margin-top: 4px !important;
   }
 }
+@media only screen and (min-device-width: 280px) and (max-device-width: 511px) {
+  .source-button.dropdown {
+    margin-left: 94px !important;
+  }
+  .mobile-menu {
+    margin-right: 21px;
+  }
+}
