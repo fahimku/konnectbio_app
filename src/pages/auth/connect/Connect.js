@@ -38,12 +38,9 @@ class Connect extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let access_token = userInfo.access_token;
     if (access_token !== "") {
-  //    this.props.history.push("/app/linkinbio/");
+      this.props.history.push("/app/linkinbio/");
     }
     const instagramCodeUrl = window.location.href;
-    // console.log('test')
-    // console.log(instagramCodeUrl);
-    // return;
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
       this.props.history.push("/app/linkinbio/" + code[1]);
