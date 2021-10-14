@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 //import {Progress, Alert} from "reactstrap";
-import {withRouter} from "react-router-dom";
-import {dismissAlert} from "../../actions/alerts";
+import { withRouter } from "react-router-dom";
+import { dismissAlert } from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
 import {
@@ -12,7 +12,7 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
-import {logoutUser} from "../../actions/auth";
+import { logoutUser } from "../../actions/auth";
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -43,7 +43,7 @@ class Sidebar extends React.Component {
 
   componentDidMount() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({userType: userInfo.user_type});
+    this.setState({ userType: userInfo.user_type });
   }
 
   onMouseEnter() {
@@ -288,6 +288,14 @@ class Sidebar extends React.Component {
                     index="admin"
                     exact={false}
                     childrenLinks={[
+                      {
+                        header: "Personal Profile",
+                        link: "/app/account/profile",
+                      },
+                      {
+                        header: "Categories",
+                        link: "/app/account/categories",
+                      },
                       {
                         header: "Delete Account",
                         link: "/app/account/delete",
