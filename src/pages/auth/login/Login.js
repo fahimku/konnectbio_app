@@ -10,11 +10,9 @@ import {loginUser, receiveToken, doInit} from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 // import microsoft from '../../../images/microsoft.png';
 import {push} from "connected-react-router";
-import logo from '../../../images/logo.png';
-
+import logo from "../../../images/logo.png";
 
 class Login extends React.Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
@@ -59,10 +57,16 @@ class Login extends React.Component {
 
   componentDidMount() {
     //const params = new URLSearchParams(this.props.location.search);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
+      const instagramCodeUrl = window.location.href;
+
       this.props.dispatch(receiveToken(token));
-//      this.props.dispatch(doInit());
+      if (instagramCodeUrl.includes("code")) {
+        const code = instagramCodeUrl.split("?")[1].split("=");
+        this.props.history.push("/app/linkinbio/" + code[1]);
+      }
+      //      this.props.dispatch(doInit());
     }
   }
 
@@ -76,10 +80,10 @@ class Login extends React.Component {
         <Container>
           <h5 className="auth-logo">
             <i className="la la-circle text-primary" />
-           <img src={logo}/>
+            <img src={logo} />
             <i className="la la-circle text-danger" />
           </h5>
-          <Widget 
+          <Widget
             className="widget-auth mx-auto"
             title={<h3 className="mt-0">Login</h3>}
           >
@@ -130,7 +134,6 @@ class Login extends React.Component {
               Create an Account
             </Link>
           </Widget>
-             
         </Container>
       </div>
     );

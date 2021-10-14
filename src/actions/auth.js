@@ -114,7 +114,7 @@ export function receiveToken(token) {
     dispatch({
       type: LOGIN_SUCCESS,
     });
-    history.push("/app");
+ //   history.push("/app");
   };
 }
 
