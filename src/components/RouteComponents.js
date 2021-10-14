@@ -10,7 +10,7 @@ export const history = createBrowserHistory({
 export const AdminRoute = ({currentUser, dispatch, component, ...rest}) => {
   if (!currentUser || currentUser.role !== 'admin' || !Login.isAuthenticated(localStorage.getItem('token'))) {
 //    return (<Redirect to="/app/main"/>)
-    return history.push('app/main');
+    return history.push('/app/main');
   } else if (currentUser && currentUser.role === 'admin') {
     return (
       <Route {...rest} render={props => (React.createElement(component, props))}/>
@@ -22,7 +22,7 @@ export const UserRoute = ({dispatch, component, ...rest}) => {
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
 //    return (<Redirect to="/login" />)
-    return history.push('login');
+    return history.push('/login');
   } else {
     return ( // eslint-disable-line
       <Route {...rest} render={props => (React.createElement(component, props))}/>
