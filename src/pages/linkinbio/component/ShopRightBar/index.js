@@ -58,7 +58,7 @@ const ShopRightBar = (props) => {
         >
           <div className="image-box-info">
             <h4>
-              Edit Post
+              Add Post
               <span
                 onClick={() => props.selectPost(false, "")}
                 className="fa fa-times"
