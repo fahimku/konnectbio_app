@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from "react";
-import {Button} from "reactstrap";
+import {Row, Col, Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
@@ -70,21 +70,33 @@ const AddNewLink = (props) => {
                 {props.updatePage ? (
                   <>
                     {props.loading ? (
+
+
+
                       <Button>
                         <Loader />
                       </Button>
                     ) : (
                       <>
-                        <Button type="submit" color="primary">
+
+                          <Row className="mt-3">
+                          <Col lg="3" sm="6" xs="6">
+                          <Button type="submit" color="primary">
                           &nbsp;&nbsp;Update&nbsp;&nbsp;
                         </Button>
-                        <Button
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                          <Button
                           color="primary"
                           onClick={() => props.testUrl(props.redirectedUrl)}
                         >
                           &nbsp;&nbsp;Test&nbsp;&nbsp;
                         </Button>
-                        <Button
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                          <Button
                           color="danger"
                           onClick={() => {
                             props.preview(false, "");
@@ -92,8 +104,10 @@ const AddNewLink = (props) => {
                         >
                           &nbsp;&nbsp;Cancel
                         </Button>
+                          </Col>
 
-                        <Button
+                          <Col lg="3" sm="6" xs="6">
+                          <Button
                           color="danger"
                           onClick={() => {
                             props.deleteLink();
@@ -102,6 +116,16 @@ const AddNewLink = (props) => {
                         >
                           Delete Link&nbsp;&nbsp;
                         </Button>
+                          </Col>
+                          </Row>
+
+
+
+                        
+                        
+                        
+
+                        
                       </>
                     )}
 
@@ -122,16 +146,24 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
+                         <Row className="mt-3">
+                          <Col lg="3" sm="6" xs="6">
                         <Button type="submit" color="primary">
                           &nbsp;&nbsp;Save&nbsp;&nbsp;
                         </Button>
-                        <Button
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                          <Button
                           color="primary"
                           onClick={() => props.testUrl(props.redirectedUrl)}
                         >
                           &nbsp;&nbsp;Test&nbsp;&nbsp;
                         </Button>
-                        <Button
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                          <Button
                           color="danger"
                           onClick={() => {
                             props.preview(false, "");
@@ -139,6 +171,17 @@ const AddNewLink = (props) => {
                         >
                           &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                         </Button>
+
+                          </Col>
+
+  
+
+                          </Row>
+
+
+                        
+                        
+                        
                       </>
                     )}
                   </>
