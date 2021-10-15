@@ -95,14 +95,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    console.log(this.state.saveCategories, "sds");
-    // if (category.length === 0) {
-    //   this.setState({ categoryError: "Please Select Category" });
-    // } else if (category.length < userInfo.package.category_count) {
-    //   this.setState({
-    //     categoryError: "You have only 3 categories allowed in this plan",
-    //   });
-    // } else {
+
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
         categories: category,
@@ -122,10 +115,11 @@ class MyCategory extends React.Component {
     // }
   };
 
-  render() {
-    // console.log(this.state.saveCategories, "saveCategories");
-    console.log(this.state.saveCategories, "saveCategories");
+  UpgradePlan = () => {
+    alert("Please Contact Customer Support Team");
+  };
 
+  render() {
     return (
       <div className="category-page">
         <div className="container">
@@ -143,7 +137,11 @@ class MyCategory extends React.Component {
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
-                  <Button variant="primary" className="btn-block">
+                  <Button
+                    variant="primary"
+                    className="btn-block"
+                    onClick={this.UpgradePlan}
+                  >
                     Upgrade Plan
                   </Button>
                 </Col>
@@ -166,8 +164,6 @@ class MyCategory extends React.Component {
                       name="category"
                       className="selectCustomization"
                       options={this.state.myCategory}
-                      // value={this.state.defaultCategory}
-                      // defaultValue={this.state.defaultCategory}
                       defaultValue={this.state.saveCategories}
                       placeholder="Select Category"
                       onChange={(options, e) => this.handleSelect(e, options)}
@@ -182,7 +178,7 @@ class MyCategory extends React.Component {
                     ) : (
                       this.state.saveCategories.map((cat) => (
                         <React.Fragment>
-                          <div className="cat-box col-sm-3">
+                          <div className="cat-box col-sm-3 col-6">
                             <img
                               src={
                                 cat.image === "" || cat.image === undefined

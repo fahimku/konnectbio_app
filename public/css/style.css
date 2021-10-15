@@ -75,7 +75,6 @@ nav.Sidebar_root__1FSXo {
   overflow-y: clip !important;
 }
 
-
 span.icon.LinksGroup_icon__3xIpG {
   margin-top: 5px !important;
 }
@@ -248,6 +247,15 @@ span.icon.LinksGroup_icon__3xIpG {
 }
 .select-image {
   margin-bottom: 12px;
+}
+.settings-bottom {
+  width: 100%;
+}
+.link-wrapper .activenav .icon {
+  background: #00395f !important;
+}
+.profile-icon {
+  object-fit: cover;
 }
 @media screen and (max-width: 768px) {
   .file-profile {

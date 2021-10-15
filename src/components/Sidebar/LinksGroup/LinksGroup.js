@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {NavLink, withRouter} from "react-router-dom";
-import {Collapse, Badge} from "reactstrap";
-import {Route} from "react-router";
+import { NavLink, withRouter } from "react-router-dom";
+import { Collapse, Badge } from "reactstrap";
+import { Route } from "react-router";
 import classnames from "classnames";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 import s from "./LinksGroup.module.scss";
 
@@ -64,7 +64,7 @@ class LinksGroup extends Component {
       this.props.activeItem.includes(this.props.index) &&
       this.state.headerLinkWasClicked;
 
-    const {exact} = this.props.exact;
+    const { exact } = this.props.exact;
 
     if (!this.props.childrenLinks) {
       if (this.props.isHeader) {
@@ -78,7 +78,7 @@ class LinksGroup extends Component {
           >
             <NavLink
               to={this.props.link}
-              activeClassName={s.headerLinkActive}
+              activeClassName={`activenav ${s.headerLinkActive}`}
               exact={exact}
               onClick={() => {
                 this.props.onClick && this.props.onClick();
@@ -112,7 +112,7 @@ class LinksGroup extends Component {
           <NavLink
             to={this.props.link}
             activeClassName={s.headerLinkActive}
-            style={{paddingLeft: `${26 + 10 * (this.props.deep - 1)}px`}}
+            style={{ paddingLeft: `${26 + 10 * (this.props.deep - 1)}px` }}
             onClick={(e) => {
               // able to go to link is not available(for Demo)
               if (this.props.link.includes("menu")) {
@@ -135,19 +135,19 @@ class LinksGroup extends Component {
       <Route
         path={this.props.link}
         children={(params) => {
-          const {match} = params;
+          const { match } = params;
           return (
             <li
               className={classnames(
                 "link-wrapper",
-                {[s.headerLink]: this.props.isHeader},
+                { [s.headerLink]: this.props.isHeader },
                 this.props.className
               )}
             >
               <a
                 className={classnames(
-                  {[s.headerLinkActive]: match},
-                  {[s.collapsed]: isOpen},
+                  { [s.headerLinkActive]: match },
+                  { [s.collapsed]: isOpen },
                   "d-flex"
                 )}
                 style={{
