@@ -261,7 +261,48 @@ class Header extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
+
                 <LinksGroup
+                  onClick={() => this.toggle(3)}
+                  className="sidebar-nav-links"
+                  header="Personal Profile"
+                  link="/app/account/profile"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-log-out"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  onClick={() => this.toggle(3)}
+                  className="sidebar-nav-links"
+                  header="Categories"
+                  link="/app/account/categories"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-log-out"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  onClick={() => this.toggle(3)}
+                  className="sidebar-nav-links"
+                  header="Sign Out"
+                  link="/logout"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-log-out"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                {/* <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="Media Library"
@@ -282,26 +323,10 @@ class Header extends React.Component {
                   }
                   iconName="flaticon-users"
                   labelColor="info"
-                />
-              </Nav>
-              <Nav className="ml-auto" navbar>
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Sign Out"
-                  link="/logout"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
+                /> */}
               </Nav>
             </Collapse>
           </Navbar>
-
           <TopBar text={true} username={this.state.username} />
         </div>
 

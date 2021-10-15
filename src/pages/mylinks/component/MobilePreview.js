@@ -11,6 +11,7 @@ const MobilePreview = ({
   addNewLink,
   fetchSingleLink,
   style,
+  pageName,
 }) => {
   useEffect(() => {
     // Update the document title using the browser API
@@ -41,6 +42,7 @@ const MobilePreview = ({
       <div className="mobile-header">
         <img className="place-holder-image" src={placeholder} />
         <span className="place-holder-name">{username}</span>
+        <div className="page-name">{pageName}</div>
       </div>
       {error ? (
         <div className="error">

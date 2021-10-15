@@ -89,6 +89,7 @@ import MyLinks from "../../pages/mylinks/MyLinks";
 import { createBrowserHistory } from "history";
 import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
+import Home from "../../pages/home/Home"
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -494,6 +495,7 @@ class Layout extends React.Component {
                         component={MyCategory}
                       />
                       <Route path="/app/my/links" exact component={MyLinks} />
+                      <Route path="/app/home" exact component={Home} />
                     </Switch>
                   </Router>
                 </CSSTransition>

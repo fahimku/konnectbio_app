@@ -288,6 +288,7 @@ class MyLinks extends React.Component {
             />
             <MobilePreview
               style={style}
+              pageName="My Links"
               addNewLink={this.addNewLink}
               placeholder={placeholder}
               username={this.state.username}

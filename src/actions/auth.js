@@ -135,6 +135,7 @@ export function loginUser(creds) {
           const token = res.data.message.token;
           const userInfo = {
             user_id: res.data.message.user_id,
+            name:res.data.message.name,
             access_token: res.data.message.access_token,
             username: res.data.message.username,
             email: res.data.message.email,

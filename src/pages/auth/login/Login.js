@@ -60,7 +60,6 @@ class Login extends React.Component {
     const token = localStorage.getItem("token");
     if (token) {
       const instagramCodeUrl = window.location.href;
-
       this.props.dispatch(receiveToken(token));
       if (instagramCodeUrl.includes("code")) {
         const code = instagramCodeUrl.split("?")[1].split("=");
@@ -115,9 +114,12 @@ class Login extends React.Component {
                   placeholder="Password"
                 />
               </div>
-              <a className="d-block text-right mb-3 mt-1 fs-sm" onClick={() => {
-              this.props.history.push('/forgot')
-            }}>
+              <a
+                className="d-block text-right mb-3 mt-1 fs-sm"
+                onClick={() => {
+                  this.props.history.push("/forgot");
+                }}
+              >
                 Forgot password?
               </a>
               <Button
@@ -132,9 +134,12 @@ class Login extends React.Component {
             <p className="widget-auth-info">
               Don't have an account? Sign up now!
             </p>
-            <a className="d-block text-center" onClick={() => {
-              this.props.history.push('/register')
-            }}>
+            <a
+              className="d-block text-center"
+              onClick={() => {
+                this.props.history.push("/register");
+              }}
+            >
               Create an Account
             </a>
           </Widget>

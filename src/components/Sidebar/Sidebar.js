@@ -143,7 +143,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <LinksGroup
+                {/* <LinksGroup
                   className="sidebar-nav-links"
                   header="Media Library"
                   // link="/app/extra/gallery"
@@ -166,7 +166,7 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
-                />
+                /> */}
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Sign Out"
@@ -243,7 +243,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <LinksGroup
+                {/* <LinksGroup
                   className="sidebar-nav-links"
                   header="Media Library"
                   // link="/app/extra/gallery"
@@ -266,7 +266,7 @@ class Sidebar extends React.Component {
                   // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
-                />
+                /> */}
                 <div className={s.bottomLinks}>
                   <LinksGroup
                     className="sidebar-nav-links"

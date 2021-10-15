@@ -9,6 +9,7 @@ const MobilePreview = ({
   paneDidMount,
   instagramPosts,
   selectPost,
+  pageName,
 }) => {
   const instaPosts = [];
   if (instagramPosts) {
@@ -78,6 +79,9 @@ const MobilePreview = ({
       <div className="mobile-header">
         <img className="place-holder-image" src={placeholder} />
         <span className="place-holder-name">{username}</span>
+        <div className="page-name">
+          {pageName}
+        </div>
       </div>
       {error ? (
         <div className="error">

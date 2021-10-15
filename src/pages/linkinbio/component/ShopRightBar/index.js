@@ -21,6 +21,7 @@ const ShopRightBar = (props) => {
   const redirectedUrlRef = useRef(null);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [showDateRange, setDateRange] = useState(false);
   const formRef = useRef("");
 
   useEffect(() => {
@@ -36,7 +37,9 @@ const ShopRightBar = (props) => {
     props.postType,
   ]);
 
-  useEffect(() => {}, [props.startDate]);
+  useEffect(() => {
+
+  }, [props.startDate,props.endDate]);
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -201,7 +204,7 @@ const ShopRightBar = (props) => {
               )}
 
               <div className="date-range mt-3">
-                {props.startDate ? (
+              {props.startDate && props.endDate && (
                   <RangePicker
                     key={1}
                     defaultValue={[
@@ -225,30 +228,10 @@ const ShopRightBar = (props) => {
                     style={{width: "100%"}}
                     format={dateFormat}
                     onChange={dateRangePickerChanger}
-                  />
-                ) : (
-                  <RangePicker
-                    key={1}
-                    defaultValue={[]}
-                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                    allowClear={false}
-                    ranges={{
-                      Today: [moment(), moment()],
-                      Today: [moment(), moment()],
-                      Tomorrow: [
-                        moment().add(1, "days"),
-                        moment().add(1, "days"),
-                      ],
-                      "This Month": [
-                        moment().startOf("month"),
-                        moment().endOf("month"),
-                      ],
-                    }}
-                    style={{width: "100%"}}
-                    format={dateFormat}
-                    onChange={dateRangePickerChanger}
-                  />
-                )}
+                  /> 
+                ) 
+              
+              }
               </div>
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (

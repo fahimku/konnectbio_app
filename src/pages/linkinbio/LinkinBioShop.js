@@ -29,7 +29,7 @@ class LinkinBioShop extends React.Component {
     this.state = {
       deleteId: "",
       startDate: "",
-      endDate:"",
+      endDate: "",
       userId: userId,
       confirmModal: false,
       iframeKey: 0,
@@ -175,7 +175,7 @@ class LinkinBioShop extends React.Component {
               sub_categories: this.state.subCategory,
               post_type: this.state.postType,
               start_date: this.state.startDate,
-              end_date:this.state.endDate
+              end_date: this.state.endDate,
             })
             .then((response) => {
               this.setState({loading: false});
@@ -431,6 +431,7 @@ class LinkinBioShop extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              pageName="Bio Shop"
               placeholder={placeholder}
               username={this.state.username}
               error={this.state.error}

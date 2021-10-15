@@ -30,7 +30,7 @@ class LinkinBio extends React.Component {
     this.state = {
       iframeKey: 0,
       deleteId: "",
-      userId:userId,
+      userId: userId,
       startDate: "",
       endDate: "",
       media_id: "",
@@ -236,14 +236,16 @@ class LinkinBio extends React.Component {
 
   //Fetch Categories
   fetchCategories = async () => {
-    await axios.get(`/users/receive/categories?id=${this.state.userId}`).then((response) => {
-      const selectCategories = [];
-      const categories = response.data.message;
-      categories.map(({category_id, category_name}) => {
-        selectCategories.push({value: category_id, label: category_name});
+    await axios
+      .get(`/users/receive/categories?id=${this.state.userId}`)
+      .then((response) => {
+        const selectCategories = [];
+        const categories = response.data.message;
+        categories.map(({category_id, category_name}) => {
+          selectCategories.push({value: category_id, label: category_name});
+        });
+        this.setState({categories: selectCategories});
       });
-      this.setState({categories: selectCategories});
-    });
   };
 
   //Fetch Sub Categories
@@ -519,6 +521,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              pageName='My Posts'
               placeholder={placeholder}
               username={this.state.username}
               error={this.state.error}
