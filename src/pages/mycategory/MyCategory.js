@@ -6,6 +6,7 @@ import s from "./ErrorPage.module.scss";
 import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import placeholder from "../../../src/images/placeholder.svg";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 // const packagesInfo = JSON.parse(localStorage.getItem("packages"));
@@ -15,7 +16,8 @@ class MyCategory extends React.Component {
     myCategory: "",
     user_id: "",
     category: [],
-    defaultCategory: [],
+    defaultCategory: "",
+    saveCategories: "",
     categoryError: "",
   };
 
@@ -31,8 +33,12 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const mycategories = response.data.message;
-        mycategories.map(({ category_id, category_name }) => {
-          selectCategories.push({ value: category_id, label: category_name });
+        mycategories.map(({ category_id, category_name, image_url }) => {
+          selectCategories.push({
+            value: category_id,
+            label: category_name,
+            image: image_url,
+          });
         });
         this.setState({ myCategory: selectCategories });
       })
@@ -46,53 +52,79 @@ class MyCategory extends React.Component {
       .then((response) => {
         const saveCategories = [];
         const mycategories = response.data.message;
-        // mycategories.map(({ category_id, category_name, category_name }) => {
-        //   saveCategories.push({ value: category_id, label: category_name });
-        // });
-        this.setState({ defaultCategory: mycategories });
+        const optioncategories = response.data.message;
+        optioncategories.map(({ category_id, category_name, image_url }) => {
+          saveCategories.push({
+            value: category_id,
+            label: category_name,
+            image: image_url,
+          });
+        });
+        this.setState({
+          // defaultCategory: mycategories,
+          saveCategories: saveCategories,
+        });
       })
       .catch((error) => {
         console.log(error.response.data.message);
       });
   };
   handleSelect = (e, options) => {
-    this.setState({
-      category: options,
-    });
+    options = options === null ? [] : options;
+    if (options.length > userInfo.package.category_count) {
+      this.setState({
+        saveCategories: options,
+      });
+      options.pop();
+      this.setState({
+        saveCategories: options,
+        categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+      });
+    } else {
+      this.setState({
+        saveCategories: options === null ? [] : options,
+        categoryError: "",
+      });
+    }
   };
   handleSubmit = async (e) => {
     e.preventDefault();
     let category =
-      this.state.category === null
+      this.state.saveCategories === null
         ? []
-        : this.state.category.map((category) => {
+        : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    // console.log(this.state.category, "category");
-    if (category.length !== 0 && category.length < 4) {
-      await axios
-        .put(`/users/revise/categories/${userInfo.user_id}`, {
-          categories: category,
-        })
-        .then((response) => {
-          let categoryResponse = response.data;
-          if (categoryResponse.success) {
-            toast.success(categoryResponse.message);
-            this.setState({ categoryError: "" });
-            this.fetchSaveCategory();
-          }
-        })
-        .catch((err) => {
-          console.log(err.response, "err");
-          this.setState({ categoryError: err.response.data.message });
-        });
-    } else {
-      this.setState({ categoryError: "Please Select Category" });
-    }
+    console.log(this.state.saveCategories, "sds");
+    // if (category.length === 0) {
+    //   this.setState({ categoryError: "Please Select Category" });
+    // } else if (category.length < userInfo.package.category_count) {
+    //   this.setState({
+    //     categoryError: "You have only 3 categories allowed in this plan",
+    //   });
+    // } else {
+    await axios
+      .put(`/users/revise/categories/${userInfo.user_id}`, {
+        categories: category,
+      })
+      .then((response) => {
+        let categoryResponse = response.data;
+        if (categoryResponse.success) {
+          toast.success(categoryResponse.message);
+          this.setState({ categoryError: "" });
+          this.fetchSaveCategory();
+        }
+      })
+      .catch((err) => {
+        console.log(err.response, "err");
+        this.setState({ categoryError: err.response.data.message });
+      });
+    // }
   };
 
   render() {
-    // console.log(userInfo, "userInfo");
+    // console.log(this.state.saveCategories, "saveCategories");
+    console.log(this.state.saveCategories, "saveCategories");
 
     return (
       <div className="category-page">
@@ -120,7 +152,7 @@ class MyCategory extends React.Component {
 
             <Row className="mt-4">
               <Col md={12}>
-                <h4 className="page-title">Personal Categories</h4>
+                <h4 className="page-title">My Categories</h4>
               </Col>
             </Row>
 
@@ -128,38 +160,43 @@ class MyCategory extends React.Component {
               <Row>
                 <Col md={8}>
                   <label>Select Category: </label>
-                  <Select
-                    isMulti={true}
-                    name="category"
-                    className="selectCustomization"
-                    options={this.state.myCategory}
-                    // value={this.state.defaultCategory}
-                    // defaultValue={this.state.defaultCategory}
-                    placeholder="Select Category"
-                    onChange={(options, e) => this.handleSelect(e, options)}
-                  />
+                  {this.state.saveCategories === "" ? null : (
+                    <Select
+                      isMulti={true}
+                      name="category"
+                      className="selectCustomization"
+                      options={this.state.myCategory}
+                      // value={this.state.defaultCategory}
+                      // defaultValue={this.state.defaultCategory}
+                      defaultValue={this.state.saveCategories}
+                      placeholder="Select Category"
+                      onChange={(options, e) => this.handleSelect(e, options)}
+                    />
+                  )}
                   <span className="text-danger">
                     {this.state.categoryError}
                   </span>
                   <Row>
-                    {this.state.defaultCategory.length === 0
-                      ? "No Category"
-                      : this.state.defaultCategory.map((cat) => (
-                          <React.Fragment>
-                            <div className="cat-box col-sm-4">
-                              <img
-                                src={
-                                  cat.image_url === ""
-                                    ? "https://linkin.bio/assets/img--userAvatar--placeholder.svg"
-                                    : cat.image_url
-                                }
-                                alt="cat-image"
-                                className="img-fluid cat-image"
-                              />
-                              <div>{cat.category_name}</div>
-                            </div>
-                          </React.Fragment>
-                        ))}
+                    {this.state.saveCategories.length === 0 ? (
+                      <span className="ml-4">No Category Selected</span>
+                    ) : (
+                      this.state.saveCategories.map((cat) => (
+                        <React.Fragment>
+                          <div className="cat-box col-sm-3">
+                            <img
+                              src={
+                                cat.image === "" || cat.image === undefined
+                                  ? placeholder
+                                  : cat.image
+                              }
+                              alt="cat-image"
+                              className="img-fluid cat-image"
+                            />
+                            <div>{cat.label}</div>
+                          </div>
+                        </React.Fragment>
+                      ))
+                    )}
                   </Row>
                 </Col>
                 <Col md={4}>

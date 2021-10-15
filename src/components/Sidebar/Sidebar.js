@@ -289,11 +289,11 @@ class Sidebar extends React.Component {
                     exact={false}
                     childrenLinks={[
                       {
-                        header: "Personal Profile",
+                        header: "My Profile",
                         link: "/app/account/profile",
                       },
                       {
-                        header: "Categories",
+                        header: "My Categories",
                         link: "/app/account/categories",
                       },
                       {
