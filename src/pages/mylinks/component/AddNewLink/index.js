@@ -1,5 +1,5 @@
-import React, {useRef, useEffect} from "react";
-import {Row, Col, Button} from "reactstrap";
+import React, { useRef, useEffect } from "react";
+import { Row, Col, Button } from "reactstrap";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
@@ -79,70 +79,56 @@ const AddNewLink = (props) => {
                     ) : (
                       <>
 
-                          <Row className="mt-3">
+                        <Row className="mt-3">
                           <Col lg="3" sm="6" xs="6">
-                          <Button type="submit" color="primary">
-                          &nbsp;&nbsp;Update&nbsp;&nbsp;
-                        </Button>
+                            <Button type="submit" color="primary" className="update-buttons">
+                              &nbsp;&nbsp;Update&nbsp;&nbsp;
+                            </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
-                          <Button
-                          color="primary"
-                          onClick={() => props.testUrl(props.redirectedUrl)}
-                        >
-                          &nbsp;&nbsp;Test&nbsp;&nbsp;
-                        </Button>
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => props.testUrl(props.redirectedUrl)}
+                            >
+                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                            </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
-                          <Button
-                          color="primary"
-                          onClick={() => {
-                            props.preview(false, "");
-                          }}
-                        >
-                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                        </Button>
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => {
+                                props.preview(false, "");
+                              }}
+                            >
+                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                            </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
-                          <Button
-                          color="primary"
-                          onClick={() => {
-                            props.deleteLink();
-                            resetForm();
-                          }}
-                        >
-                         Delete
-                        </Button>
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => {
+                                props.deleteLink();
+                                resetForm();
+                              }}
+                            >
+                              Delete
+                            </Button>
                           </Col>
-                            
- 
+
+
                         </Row>
 
-                          <Row className="mt-3">
-                          <Col lg="3" sm="6" xs="6">
-                          
-                          </Col>
-
-                          <Col lg="3" sm="6" xs="6">
-                         
-                          </Col>
-
-                          <Col lg="3" sm="6" xs="6">
-                        
-                          </Col>
-
-                          <Col lg="3" sm="6" xs="6">
-                          
-                          </Col>
-                          </Row>
 
 
 
-                        
-                        
-                        
 
-                        
+
+
+
+
                       </>
                     )}
 
@@ -163,42 +149,44 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
-                         <Row className="mt-3">
-                          <Col lg="3" sm="6" xs="6">
-                        <Button type="submit" color="primary">
-                          &nbsp;&nbsp;Save&nbsp;&nbsp;
-                        </Button>
+                        <Row className="mt-3">
+                          <Col lg="4" sm="6" xs="6">
+                            <Button type="submit" color="primary" className="update-buttons">
+                              &nbsp;&nbsp;Save&nbsp;&nbsp;
+                            </Button>
                           </Col>
 
-                          <Col lg="3" sm="6" xs="6">
-                          <Button
-                          color="primary"
-                          onClick={() => props.testUrl(props.redirectedUrl)}
-                        >
-                          &nbsp;&nbsp;Test&nbsp;&nbsp;
-                        </Button>
+                          <Col lg="4" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => props.testUrl(props.redirectedUrl)}
+                            >
+                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                            </Button>
                           </Col>
 
-                          <Col lg="3" sm="6" xs="6">
-                          <Button
-                          color="danger"
-                          onClick={() => {
-                            props.preview(false, "");
-                          }}
-                        >
-                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                        </Button>
+                          <Col lg="4" sm="6" xs="6">
+                            <Button
+                              className="update-buttons"
+                              color="primary"
+                              onClick={() => {
+                                props.preview(false, "");
+                              }}
+                            >
+                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                            </Button>
 
                           </Col>
 
-  
-
-                          </Row>
 
 
-                        
-                        
-                        
+                        </Row>
+
+
+
+
+
                       </>
                     )}
                   </>

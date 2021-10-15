@@ -1,16 +1,16 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import {Row, Col, Button} from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import moment from "moment";
-import {Select} from "antd";
+import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 
-const {Option} = Select;
-const {RangePicker} = DatePicker;
+const { Option } = Select;
+const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
@@ -39,7 +39,7 @@ const ShopRightBar = (props) => {
 
   useEffect(() => {
 
-  }, [props.startDate,props.endDate]);
+  }, [props.startDate, props.endDate]);
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -55,7 +55,7 @@ const ShopRightBar = (props) => {
 
   return (
     <>
-      <Formsy.Form onValidSubmit={() => {}} ref={formRef}>
+      <Formsy.Form onValidSubmit={() => { }} ref={formRef}>
         <div
           className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
         >
@@ -119,7 +119,7 @@ const ShopRightBar = (props) => {
                   key={Date.now()}
                   value={props.category}
                   showSearch
-                  style={{width: "100%"}}
+                  style={{ width: "100%" }}
                   placeholder="Select Category"
                   optionFilterProp="children"
                   clearable={false}
@@ -135,7 +135,7 @@ const ShopRightBar = (props) => {
                       .indexOf(input.toLowerCase()) >= 0
                   }
                 >
-                  {props.categories.map(({value, label}, i) => (
+                  {props.categories.map(({ value, label }, i) => (
                     <Option value={value}>{label}</Option>
                   ))}
                 </Select>
@@ -204,7 +204,7 @@ const ShopRightBar = (props) => {
               )}
 
               <div className="date-range mt-3">
-              {props.startDate && props.endDate && (
+                {props.startDate && props.endDate && (
                   <RangePicker
                     key={1}
                     defaultValue={[
@@ -225,13 +225,13 @@ const ShopRightBar = (props) => {
                         moment().endOf("month"),
                       ],
                     }}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     format={dateFormat}
                     onChange={dateRangePickerChanger}
-                  /> 
-                ) 
-              
-              }
+                  />
+                )
+
+                }
               </div>
               <div className="pane-button">
                 {props.singlePost.linked || props.updatePage ? (
@@ -251,7 +251,7 @@ const ShopRightBar = (props) => {
                                 props.updatePost(media_id, props.redirectedUrl)
                               }
                             >
-                              &nbsp;&nbsp;Update&nbsp;&nbsp;
+                              &nbsp;Update&nbsp;
                             </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
@@ -260,7 +260,7 @@ const ShopRightBar = (props) => {
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}
                             >
-                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                              &nbsp;Test&nbsp;
                             </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
@@ -272,7 +272,7 @@ const ShopRightBar = (props) => {
                                 props.closeModel(false);
                               }}
                             >
-                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                              &nbsp;Cancel&nbsp;
                             </Button>
                           </Col>
                           <Col lg="3" sm="6" xs="6">
@@ -281,7 +281,7 @@ const ShopRightBar = (props) => {
                               color="primary"
                               onClick={() => props.deletePost(media_id)}
                             >
-                              Remove
+                              &nbsp;Remove&nbsp;
                             </Button>
                           </Col>
                         </Row>
@@ -297,33 +297,38 @@ const ShopRightBar = (props) => {
                     ) : (
                       <>
                         <Row className="mt-3">
-                          <Col lg="4" sm="4" xs="6">
+                          <Col lg="4" sm="6" xs="6">
                             <Button
+
+                              className="update-buttons save-btn btn btn-primary"
+                              color="primary"
                               onClick={(ev) =>
                                 props.savePost && props.savePost(this)
                               }
-                              className="save-btn btn btn-primary"
+
                             >
-                              &nbsp;&nbsp;Save&nbsp;&nbsp;
+                              &nbsp;Sasve&nbsp;
                             </Button>
                           </Col>
-                          <Col lg="4" sm="4" xs="6">
+                          <Col lg="4" sm="6" xs="6">
                             <Button
+                              className="update-buttons"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}
                             >
-                              &nbsp;&nbsp;Test&nbsp;&nbsp;
+                              &nbsp;Test&nbsp;
                             </Button>
                           </Col>
-                          <Col lg="4" sm="4" xs="6">
+                          <Col lg="4" sm="6" xs="6">
                             <Button
-                              color="danger"
+                              className="update-buttons"
+                              color="primary"
                               onClick={() => {
                                 props.selectPost(false, "");
                                 props.closeModel(false);
                               }}
                             >
-                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                              &nbsp;Cancel&nbsp;
                             </Button>
                           </Col>
                         </Row>

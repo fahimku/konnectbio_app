@@ -23,6 +23,11 @@ Custome CSS
   border: none;
 }
 
+
+button.update-buttons.btn.btn-primary {
+  width:135% !important
+  }
+
 .source-button button:hover {
   color: #fff;
   background-color: #000;
