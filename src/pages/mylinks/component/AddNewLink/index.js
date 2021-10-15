@@ -85,7 +85,6 @@ const AddNewLink = (props) => {
                           &nbsp;&nbsp;Update&nbsp;&nbsp;
                         </Button>
                           </Col>
-
                           <Col lg="3" sm="6" xs="6">
                           <Button
                           color="primary"
@@ -94,28 +93,46 @@ const AddNewLink = (props) => {
                           &nbsp;&nbsp;Test&nbsp;&nbsp;
                         </Button>
                           </Col>
-
                           <Col lg="3" sm="6" xs="6">
                           <Button
-                          color="danger"
+                          color="primary"
                           onClick={() => {
                             props.preview(false, "");
                           }}
                         >
-                          &nbsp;&nbsp;Cancel
+                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                         </Button>
                           </Col>
-
                           <Col lg="3" sm="6" xs="6">
                           <Button
-                          color="danger"
+                          color="primary"
                           onClick={() => {
                             props.deleteLink();
                             resetForm();
                           }}
                         >
-                          Delete Link&nbsp;&nbsp;
+                         Delete
                         </Button>
+                          </Col>
+                            
+ 
+                        </Row>
+
+                          <Row className="mt-3">
+                          <Col lg="3" sm="6" xs="6">
+                          
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                         
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                        
+                          </Col>
+
+                          <Col lg="3" sm="6" xs="6">
+                          
                           </Col>
                           </Row>
 

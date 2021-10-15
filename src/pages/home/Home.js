@@ -16,14 +16,14 @@ class Home extends React.Component {
         <div className="row">
           <div
             onClick={() => {
-              this.props.history.push("/app/linkinbio-shop");
+              this.props.history.push("/app/account/profile");
             }}
             className="col-md-4"
           >
             <div className="card-counter primary">
-              <i className="glyphicon glyphicon-shopping-cart"></i>
-              <span className="count-numbers">Bio Shop</span>
-              {/* <span className="count-name">Flowz</span> */}
+              <i className="fa fa-user-circle-o"></i>
+              <span className="count-numbers">My Profile</span>
+              {/* <span className="count-name">Users</span> */}
             </div>
           </div>
 
@@ -40,6 +40,22 @@ class Home extends React.Component {
             </div>
           </div>
 
+
+          <div
+            onClick={() => {
+              this.props.history.push("/app/linkinbio-shop");
+            }}
+            className="col-md-4"
+          >
+            <div className="card-counter primary">
+              <i className="glyphicon glyphicon-shopping-cart"></i>
+              <span className="count-numbers">My Shop</span>
+              {/* <span className="count-name">Flowz</span> */}
+            </div>
+          </div>
+
+          
+
           <div
             onClick={() => {
               this.props.history.push("/app/my/links");
@@ -52,6 +68,10 @@ class Home extends React.Component {
               {/* <span className="count-name">Data</span> */}
             </div>
           </div>
+
+          
+
+
 
           <div
             onClick={() => {
@@ -82,18 +102,7 @@ class Home extends React.Component {
             </div>
         </div> */}
         
-          <div
-            onClick={() => {
-              this.props.history.push("/app/account/profile");
-            }}
-            className="col-md-4"
-          >
-            <div className="card-counter primary">
-              <i className="fa fa-user-circle-o"></i>
-              <span className="count-numbers">Personal Profile</span>
-              {/* <span className="count-name">Users</span> */}
-            </div>
-          </div>
+          
 
           <div
             onClick={() => {
