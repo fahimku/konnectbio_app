@@ -49,7 +49,7 @@ class Home extends React.Component {
           >
             <div className="card-counter primary">
               <i className="glyphicon glyphicon-shopping-cart"></i>
-              <span className="count-numbers">My Shop</span>
+              <span className="count-numbers">Bio Shop</span>
               {/* <span className="count-name">Flowz</span> */}
             </div>
           </div>

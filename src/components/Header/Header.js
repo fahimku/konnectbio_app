@@ -213,15 +213,16 @@ class Header extends React.Component {
             <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
             <Collapse isOpen={this.state.navs[3]} navbar>
               <Nav className="ml-auto" navbar>
-                <LinksGroup
+              <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
-                  header="Bio Shop"
-                  link="/app/linkinbio-shop"
+                  header="My Profile"
+                  link="/app/account/profile"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
+                    <span className="glyphicon glyphicon-log-out"></span>
                   }
+                  // label="Awesome"
                   iconName="flaticon-users"
                   labelColor="info"
                 />
@@ -237,6 +238,19 @@ class Header extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
+                <LinksGroup
+                  onClick={() => this.toggle(3)}
+                  className="sidebar-nav-links"
+                  header="Bio Shop"
+                  link="/app/linkinbio-shop"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                
 
                 <LinksGroup
                   onClick={() => this.toggle(3)}
@@ -262,19 +276,7 @@ class Header extends React.Component {
                   labelColor="info"
                 />
 
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Personal Profile"
-                  link="/app/account/profile"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
+               
                 <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
