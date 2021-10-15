@@ -267,9 +267,9 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                <div className={s.bottomLinks}>
+                <div className={`settings-bottom ${s.bottomLinks}`}>
                   <LinksGroup
-                    className="sidebar-nav-links"
+                    className="sidebar-nav-links "
                     onActiveSidebarItemChange={(activeItem) =>
                       this.props.dispatch(changeActiveSidebarItem(activeItem))
                     }
