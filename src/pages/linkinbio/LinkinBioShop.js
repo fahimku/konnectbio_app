@@ -189,7 +189,8 @@ class LinkinBioShop extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({instagramPosts: instagramPosts}, () => {});
+              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.selectPost(false, "")
             })
             .catch((err) => {
               this.setState({loading: false});
@@ -221,7 +222,8 @@ class LinkinBioShop extends React.Component {
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({instagramPosts: instagramPosts});
         toast.success("Bio Shop Updated Successfully");
-        this.setState({loading: false});
+        this.setState({ loading: false });
+        this.selectPost(false, "")
       });
   };
 
@@ -242,7 +244,8 @@ class LinkinBioShop extends React.Component {
       this.setState({loading: false});
       this.fetchInstagramPosts(this.state.username, this.state.limit, 1);
     });
-    this.setState({confirmModal: false});
+    this.setState({ confirmModal: false });
+    this.selectPost(false, "")
   };
 
   paneDidMount = (node) => {

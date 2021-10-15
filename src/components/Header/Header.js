@@ -213,7 +213,7 @@ class Header extends React.Component {
             <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
             <Collapse isOpen={this.state.navs[3]} navbar>
               <Nav className="ml-auto" navbar>
-              <LinksGroup
+                <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
                   header="My Profile"
@@ -250,7 +250,6 @@ class Header extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                
 
                 <LinksGroup
                   onClick={() => this.toggle(3)}
@@ -276,7 +275,6 @@ class Header extends React.Component {
                   labelColor="info"
                 />
 
-               
                 <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
@@ -363,5 +361,4 @@ function mapStateToProps(store) {
     currentUser: store.auth.currentUser,
   };
 }
-
 export default withRouter(connect(mapStateToProps)(Header));

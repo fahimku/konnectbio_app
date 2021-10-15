@@ -16,7 +16,7 @@ import config from "../../config";
 // import {addUserInfo} from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
-
+import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
@@ -31,8 +31,8 @@ class LinkinBio extends React.Component {
       iframeKey: 0,
       deleteId: "",
       userId: userId,
-      startDate: "",
-      endDate: "",
+      startDate: moment().startOf("month"),
+      endDate: moment().endOf("month"),
       media_id: "",
       modal: false,
       confirmModal: false,
@@ -302,7 +302,10 @@ class LinkinBio extends React.Component {
               instagramPosts.data[singlePostIndex] = currentPost;
               this.setState({instagramPosts: instagramPosts}, () => {});
               toast.success("Your Post is Linked Successfully");
+              this.selectPost(false, "");
             })
+
+
             .catch((err) => {
               this.setState({loading: false});
               toast.error(err);
@@ -336,6 +339,7 @@ class LinkinBio extends React.Component {
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({instagramPosts: instagramPosts});
         toast.success("Your Post Link is Updated");
+        this.selectPost(false, "");
       });
   };
 
@@ -354,7 +358,8 @@ class LinkinBio extends React.Component {
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
-      this.setState({confirmModal: false});
+      this.setState({ confirmModal: false });
+      this.selectPost(false, "");
     });
   };
 
@@ -391,6 +396,7 @@ class LinkinBio extends React.Component {
       let currentPost = this.state.instagramPosts.data[postIndex];
       let mediaId = currentPost.id;
       let lastPost = this.state.singlePost;
+
       this.fetchSinglePost(mediaId);
 
       if (lastPost) {
@@ -521,7 +527,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
-              pageName='My Posts'
+              pageName="My Posts"
               placeholder={placeholder}
               username={this.state.username}
               error={this.state.error}

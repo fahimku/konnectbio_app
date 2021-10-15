@@ -211,8 +211,10 @@ class MyLinks extends React.Component {
   }
 
   preview = (state, postIndex) => {
+    this.toggle();
     this.setState({preview: false});
     this.setState({iframeKey: this.state.iframeKey + 1});
+    this.setState({confirmModal: false});
   };
 
   error(error) {
