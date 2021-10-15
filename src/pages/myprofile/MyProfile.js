@@ -30,17 +30,17 @@ class MyProfile extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state.form, "submit");
     this.setState({ loading: true });
     await axios
       .put(`/users/revise/profilefields/${userInfo.user_id}`, this.state.form)
       .then((response) => {
         this.setState({ loading: false });
         let imageResponse = response.data;
-        console.log(imageResponse, "imageResponse");
+        toast.success(imageResponse.message);
       })
       .catch((err) => {
-        console.log(err.response, "err");
+        console.log(err.response.data);
+        toast.error(err.response.data.message);
         this.setState({ loading: false });
       });
   };
@@ -60,7 +60,6 @@ class MyProfile extends React.Component {
     reader.onloadend = () => {
       files[0].preview = reader.result;
       files[0].toUpload = true;
-      // setImageFiles(files);
       this.setState({
         imageFiles: files,
       });
@@ -123,7 +122,8 @@ class MyProfile extends React.Component {
                                 alt="..."
                                 src={file.preview}
                                 key={`img-id-${idx.toString()}`}
-                                style={{ width: "200px", height: "150px" }}
+                                style={{ width: "150px", height: "150px" }}
+                                className="circle profile-icon"
                               />
                             ))}
                           </div>
@@ -131,7 +131,8 @@ class MyProfile extends React.Component {
                           <img
                             alt="..."
                             src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                            style={{ width: "200px", height: "150px" }}
+                            style={{ width: "150px", height: "150px" }}
+                            className="circle profile-icon"
                           />
                         )}
                       </div>
@@ -145,7 +146,7 @@ class MyProfile extends React.Component {
                     </Button>
 
                     {this.state.loadingImage ? (
-                      <Button>
+                      <Button className="d-block upload-btn">
                         <Loader />
                       </Button>
                     ) : (
@@ -175,6 +176,7 @@ class MyProfile extends React.Component {
                 <Row className="mb-3">
                   <Col md={12}>
                     <label>Enter Bio</label>
+
                     <textarea
                       name="bio"
                       placeholder="Enter Bio"
