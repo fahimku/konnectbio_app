@@ -416,8 +416,8 @@ class LinkinBioShop extends React.Component {
           this.setState({confirmModal: true});
           this.setState({deleteId: deleteId});
         }}
-        callBack={(value) => {
-          this.setState({redirectedUrl: value});
+        callBack={(e) => {
+          this.setState({redirectedUrl: e.target.value});
         }}
       ></ShopRightBar>
     );
