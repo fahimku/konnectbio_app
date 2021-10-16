@@ -67,22 +67,22 @@ button.update-buttons.btn.btn-primary {
   width: 98%;
 }
 
-.Sidebar_bottomLinks__2HIUf {
+/* .Sidebar_bottomLinks__2HIUf {
   width: 100%;
 }
 
 .Sidebar_sidebarWrapper__2AFqc .Sidebar_bottomLinks__2HIUf {
   bottom: 5px !important;
-}
+} */
 
 /*Scroll Hidden*/
 nav.Sidebar_root__1FSXo {
   overflow-y: clip !important;
 }
 
-span.icon.LinksGroup_icon__3xIpG {
+ span.icon {
   margin-top: 5px !important;
-}
+} 
 
 .sidebar-nav-links a span {
   font-size: 13px !important;
