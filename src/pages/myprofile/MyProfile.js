@@ -22,12 +22,40 @@ class MyProfile extends React.Component {
     imageError: "",
     loadingImage: false,
     loading: false,
+    userData: "",
   };
 
   componentDidMount() {
-    // this.setState({ user_id: userInfo.user_id });
+    this.fetchUserInfo();
   }
+  fetchUserInfo = async () => {
+    await axios
+      .get(`/users/receive/userinfo?user=${userInfo.username}`)
+      .then((response) => {
+        if (response.data.success) {
+          const userInfo = response.data.message.data;
+          this.setState({
+            userData: userInfo,
+          });
+          this.setDefaultData();
+        }
+      })
+      .catch((error) => {
+        console.log(error.response.data.messagem, "error");
+      });
+  };
+  setDefaultData = () => {
+    const { form } = this.state;
 
+    setTimeout(() => {
+      form.name = this.state.userData.name;
+      form.bio = this.state.userData.bio;
+
+      this.setState({
+        form,
+      });
+    }, 100);
+  };
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -37,6 +65,7 @@ class MyProfile extends React.Component {
         this.setState({ loading: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
+        this.fetchUserInfo();
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -81,7 +110,7 @@ class MyProfile extends React.Component {
         this.setState({ loadingImage: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
-        console.log(imageResponse, "imageResponse");
+        this.fetchUserInfo();
       })
       .catch((err) => {
         console.log(err.response.data.message, "err");
@@ -92,6 +121,8 @@ class MyProfile extends React.Component {
   };
 
   render() {
+    console.log(this.state.userData, "userInfo");
+    const userData = this.state.userData;
     return (
       <div className="profile-page">
         <div className="container">
@@ -130,7 +161,12 @@ class MyProfile extends React.Component {
                         ) : (
                           <img
                             alt="..."
-                            src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                            // src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                            src={
+                              userData.profile_image_url === ""
+                                ? "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                                : userData.profile_image_url
+                            }
                             style={{ width: "150px", height: "150px" }}
                             className="circle profile-icon"
                           />
@@ -169,7 +205,7 @@ class MyProfile extends React.Component {
                       onInput={this.handleChange}
                       className="form-control comment-field"
                       required
-                      // defaultValue={this.props.defaultValue}
+                      defaultValue={userData.name}
                     />
                   </Col>
                 </Row>
@@ -184,6 +220,7 @@ class MyProfile extends React.Component {
                       className="form-control comment-field"
                       // required
                       maxlength="120"
+                      defaultValue={userData.bio}
                     />
                   </Col>
                 </Row>
