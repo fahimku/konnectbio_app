@@ -67,10 +67,9 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Konnect.bio Analytics</span>
+                        <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
-
                     <NavItem>
                       <NavLink
                         className={classnames({
@@ -80,7 +79,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab21");
                         }}
                       >
-                        <span>Post Performance</span>
+                        <span>Konnect.bio Analytics</span>
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -89,10 +88,10 @@ class Analysis extends React.Component {
                     className="mb-lg"
                     activeTab={this.state.activeSecondTab}
                   >
-                    <TabPane tabId="tab22">
+                    <TabPane tabId="tab21">
                       <HighCharts username={this.state.username} />
                     </TabPane>
-                    <TabPane tabId="tab21">
+                    <TabPane tabId="tab22">
                       <PostPerfomance username={this.state.username} />
                     </TabPane>
                   </TabContent>

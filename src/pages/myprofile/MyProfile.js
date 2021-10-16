@@ -121,7 +121,6 @@ class MyProfile extends React.Component {
   };
 
   render() {
-    console.log(this.state.userData, "userInfo");
     const userData = this.state.userData;
     return (
       <div className="profile-page">
@@ -189,6 +188,9 @@ class MyProfile extends React.Component {
                       <Button
                         onClick={this.uploadImage}
                         className="d-block upload-btn"
+                        disabled={
+                          this.state.imageFiles.length > 0 ? false : true
+                        }
                       >
                         Upload Image
                       </Button>
