@@ -35,7 +35,7 @@ class Home extends React.Component {
           >
             <div className="card-counter primary">
               <i className="fa fa-ticket"></i>
-              <span className="count-numbers">My Posts</span>
+              <span className="count-numbers">All Post</span>
               {/* <span className="count-name">Instances</span> */}
             </div>
           </div>
@@ -64,7 +64,7 @@ class Home extends React.Component {
           >
             <div className="card-counter primary">
               <i className="glyphicon glyphicon-link"></i>
-              <span className="count-numbers">My Links</span>
+              <span className="count-numbers">Links</span>
               {/* <span className="count-name">Data</span> */}
             </div>
           </div>
