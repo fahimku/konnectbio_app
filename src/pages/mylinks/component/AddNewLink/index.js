@@ -10,7 +10,6 @@ const AddNewLink = (props) => {
   function resetForm() {
     formRef.current.reset();
   }
-
   return (
     <>
       <div className={`image-edit-box ${props.isPreview ? "show" : "hidden"}`}>

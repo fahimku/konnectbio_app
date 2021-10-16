@@ -279,13 +279,13 @@ class LinkinBioShop extends React.Component {
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
-        let subCategory = [];
-        this.fetchSubCategories(category).then(function () {
-          response.data.message.sub_categories.map((subCategoryId) => {
-            return subCategory.push(subCategoryId.sub_category_id);
-          });
-          that.setState({subCategory: subCategory});
-        });
+        // let subCategory = [];
+        // this.fetchSubCategories(category).then(function () {
+        //   response.data.message.sub_categories.map((subCategoryId) => {
+        //     return subCategory.push(subCategoryId.sub_category_id);
+        //   });
+        //   that.setState({subCategory: subCategory});
+        // });
       })
       .catch((err) => {
         this.setState({
@@ -343,7 +343,7 @@ class LinkinBioShop extends React.Component {
   changeCategory = (category) => {
     if (category) {
       this.setState({category: category});
-      this.fetchSubCategories(category);
+      //this.fetchSubCategories(category);
     }
   };
 
