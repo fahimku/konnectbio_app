@@ -229,7 +229,7 @@ class Header extends React.Component {
                 <LinksGroup
                   onClick={() => this.toggle(3)}
                   className="sidebar-nav-links"
-                  header="All Post"
+                  header="All Posts"
                   link="/app/linkinbio"
                   isHeader
                   iconElement={
