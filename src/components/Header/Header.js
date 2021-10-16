@@ -201,7 +201,7 @@ class Header extends React.Component {
     return (
       <>
         <div className="top-logo">
-          <div className="logo">
+          <div className="logo" onClick={()=>{this.props.history.push('/app/home')}}>
             <img src={logo} alt />
           </div>
         </div>

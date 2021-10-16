@@ -78,7 +78,7 @@ class Sidebar extends React.Component {
           // onMouseLeave={this.onMouseLeave}
           className={s.root}
         >
-          <header className={s.logo}>
+          <header className={s.logo} onClick={()=>{this.props.history.push('/app/home')}}>
             <a href="#">
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>

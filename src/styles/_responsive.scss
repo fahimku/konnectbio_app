@@ -119,7 +119,6 @@
     .mobile-menu ul li a span {
         top: 0px !important;
         font-size: 20px;
-        color: black;
     }
 
     .mobile-menu ul li {
@@ -260,10 +259,20 @@
 }
 
 @media only screen and (max-width: 991px) {
-    .mobile-menu ul li a span {
-        color: #000000 !important;
-       
+    ul.ml-auto.navbar-nav{
+        margin-left: 20px !important;
     }
+    // .mobile-menu ul li{
+    //     margin-left: 20px;
+    // }
+
+    .mobile-menu ul li a{
+        font-size: 14px;
+    }
+    // .mobile-menu ul li a span {
+    //     color: #000000 !important;
+       
+    // }
 }
 
 ::-webkit-scrollbar-thumb {
@@ -299,7 +308,7 @@
     }
 
     .mobile-preview .mobile-header {
-        padding: 5px 17px 9px 0px;
+        padding: 5px 17px 9px 20px;
     }
 
     .mobile-preview .mobile-header .page-name {

@@ -67,26 +67,22 @@ button.update-buttons.btn.btn-primary {
   width: 98%;
 }
 
-/* .Sidebar_bottomLinks__2HIUf {
-  width: 100%;
-}
 
-.Sidebar_sidebarWrapper__2AFqc .Sidebar_bottomLinks__2HIUf {
-  bottom: 5px !important;
-} */
 
 /*Scroll Hidden*/
 nav.Sidebar_root__1FSXo {
   overflow-y: clip !important;
 }
 
- span.icon {
-  margin-top: 5px !important;
-} 
+
 
 .sidebar-nav-links a span {
   font-size: 13px !important;
   top: 0px !important;
+}
+
+span.icon {
+  margin-top: 5px !important;
 }
 
 @media only screen and (max-width: 375px) {
@@ -98,7 +94,7 @@ nav.Sidebar_root__1FSXo {
 }
 
 @media only screen and (max-width: 991px) {
-  .mobile-menu ul li a span {
+  .mobile-menu ul li a span:active {
     color: #fff !important;
   }
 }
@@ -259,7 +255,12 @@ nav.Sidebar_root__1FSXo {
   width: 100%;
 }
 .link-wrapper .activenav .icon {
-  background: #00395f !important;
+  background: #185887 !important;
+}
+
+.mobile-menu ul li a span span:active {
+  color: #fff !important;
+ 
 }
 .profile-icon {
   object-fit: cover;
