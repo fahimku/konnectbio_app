@@ -220,7 +220,7 @@ class Header extends React.Component {
                   link="/app/account/profile"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
+                    <span className="glyphicon glyphicon-user"></span>
                   }
                   // label="Awesome"
                   iconName="flaticon-users"
@@ -233,7 +233,7 @@ class Header extends React.Component {
                   link="/app/linkinbio"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
+                    <span className="glyphicon glyphicon-th-list"></span>
                   }
                   iconName="flaticon-users"
                   labelColor="info"
@@ -245,7 +245,7 @@ class Header extends React.Component {
                   link="/app/linkinbio-shop"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
+                    <span className="glyphicon glyphicon-shopping-cart"></span>
                   }
                   iconName="flaticon-users"
                   labelColor="info"
@@ -282,7 +282,7 @@ class Header extends React.Component {
                   link="/app/account/categories"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
+                    <span className="glyphicon glyphicon-th"></span>
                   }
                   // label="Awesome"
                   iconName="flaticon-users"

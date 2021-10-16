@@ -188,7 +188,7 @@ class Sidebar extends React.Component {
                   link="/app/linkinbio-shop"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
+                    <span className="glyphicon glyphicon-shopping-cart"></span>
                   }
                   // label="Awesome"
                   iconName="flaticon-users"
@@ -200,7 +200,7 @@ class Sidebar extends React.Component {
                   link="/app/linkinbio"
                   isHeader
                   iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
+                    <span className="glyphicon glyphicon-th-list"></span>
                   }
                   // label="Awesome"
                   iconName="flaticon-users"
