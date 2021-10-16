@@ -19,16 +19,15 @@ const ShopRightBar = (props) => {
     ? props.singlePost.id
     : props.singlePost.media_id;
   const redirectedUrlRef = useRef(null);
+
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [showDateRange, setDateRange] = useState(false);
+
   const formRef = useRef("");
 
   useEffect(() => {
-    console.log("start date");
-    console.log(props.startDate);
-    console.log("end date");
-    console.log(props.endDate);
+    console.log("Props Redirected Url");
+    console.log(props.redirectedUrl);
     setSubCategories(props.subCategories);
   }, [
     props.subCategories,
@@ -82,19 +81,7 @@ const ShopRightBar = (props) => {
             </div>
             <div className="image-edit-links">
               <span>URL</span>
-              <input
-                ref={redirectedUrlRef}
-                required
-                autoFocus
-                type="text"
-                value={props.redirectedUrl}
-                placeholder="Add a link to any web page"
-                className="form-control"
-                onChange={(evt) => {
-                  props.callBack(evt.target.value);
-                }}
-              />
-              {/* <InputValidation
+              <InputValidation
                 placeholder="Please Enter Website Address"
                 type="text"
                 id="website"
@@ -106,11 +93,10 @@ const ShopRightBar = (props) => {
                   isUrl: "This value should be a valid url.",
                 }}
                 value={props.redirectedUrl}
-                onChange={(value) => {
-                  props.callBack(value);
+                onChange={(e) => {
+                  props.callBack(e);
                 }}
-              /> */}
-
+              />
               <div className="select-categories mt-3">
                 <span>Select Category</span>
                 <Select
@@ -241,7 +227,7 @@ const ShopRightBar = (props) => {
                         <Row className="mt-3">
                           <Col lg="3" sm="6" xs="6">
                             <Button
-                              className="update-buttons"
+                              className="update-buttons save-btn btn btn-primary"
                               color="primary"
                               onClick={(ev) =>
                                 props.updatePost(media_id, props.redirectedUrl)

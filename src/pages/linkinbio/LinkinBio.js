@@ -31,8 +31,8 @@ class LinkinBio extends React.Component {
       iframeKey: 0,
       deleteId: "",
       userId: userId,
-      startDate: moment().startOf("month"),
-      endDate: moment().endOf("month"),
+      startDate: moment(),
+      endDate: moment().add(30, "days"),
       media_id: "",
       modal: false,
       confirmModal: false,
@@ -305,7 +305,6 @@ class LinkinBio extends React.Component {
               this.selectPost(false, "");
             })
 
-
             .catch((err) => {
               this.setState({loading: false});
               toast.error(err);
@@ -358,7 +357,7 @@ class LinkinBio extends React.Component {
       this.setState({instagramPosts: instagramPosts});
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
-      this.setState({ confirmModal: false });
+      this.setState({confirmModal: false});
       this.selectPost(false, "");
     });
   };
@@ -435,7 +434,7 @@ class LinkinBio extends React.Component {
   changeCategory = (category) => {
     if (category) {
       this.setState({category: category});
-      this.fetchSubCategories(category);
+      // this.fetchSubCategories(category);
     }
   };
 
@@ -482,11 +481,9 @@ class LinkinBio extends React.Component {
         testUrl={this.testUrl}
         loading={this.state.loading}
         submitted={this.submitted}
-        dateRange={(startDate, endDate) => {
-          this.changeDateRange(startDate, endDate);
-        }}
-        startDate={this.state.startDate}
-        endDate={this.state.endDate}
+        // dateRange={(startDate, endDate) => {
+        //   this.changeDateRange(startDate, endDate);
+        // }}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
         selectPost={this.selectPost}
@@ -495,6 +492,8 @@ class LinkinBio extends React.Component {
         categories={this.state.categories}
         changeCategory={this.changeCategory}
         category={this.state.category}
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
         subCategory={this.state.subCategory}
         changeSubCategory={this.changeSubCategory}
         subCategories={this.state.subCategories}
@@ -509,8 +508,8 @@ class LinkinBio extends React.Component {
           this.setState({deleteId: deleteId});
           this.setState({confirmModal: true});
         }}
-        callBack={(value) => {
-          this.setState({redirectedUrl: value});
+        callBack={(e) => {
+          this.setState({redirectedUrl: e.target.value});
         }}
       ></ShopRightBar>
     );
