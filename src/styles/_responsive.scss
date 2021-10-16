@@ -117,7 +117,7 @@
     }
 
     .mobile-menu ul li a span {
-        top: 5px !important;
+        top: 0px !important;
         font-size: 20px;
         color: black;
     }
@@ -261,7 +261,7 @@
 
 @media only screen and (max-width: 991px) {
     .mobile-menu ul li a span {
-        color: black !important;
+        color: #fff !important;
        
     }
 }
