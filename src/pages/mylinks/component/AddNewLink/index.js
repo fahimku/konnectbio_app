@@ -5,7 +5,7 @@ import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
 const AddNewLink = (props) => {
-  const formRef = useRef("");
+  const formRef = useRef("LinkForm");
 
   function resetForm() {
     formRef.current.reset();

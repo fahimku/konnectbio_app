@@ -18,12 +18,11 @@ const ShopRightBar = (props) => {
   const media_id = props.singlePost.id
     ? props.singlePost.id
     : props.singlePost.media_id;
-  const redirectedUrlRef = useRef(null);
 
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
-  const formRef = useRef("");
+  const formRef = useRef("LinkForm");
 
   useEffect(() => {
     console.log("Props Redirected Url");
@@ -37,6 +36,10 @@ const ShopRightBar = (props) => {
   ]);
 
   useEffect(() => {}, [props.startDate, props.endDate]);
+
+  function resetForm() {
+    formRef.current.reset();
+  }
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -52,7 +55,18 @@ const ShopRightBar = (props) => {
 
   return (
     <>
-      <Formsy.Form onValidSubmit={() => {}} ref={formRef}>
+      <Formsy.Form
+        
+        // onValidSubmit={() => {
+        //   if (props.updatePage) {
+        //     props.updateLink();
+        //   } else {
+        //     props.saveLink && props.saveLink();
+    
+        //   }
+        // }}
+        
+        ref={formRef}>
         <div
           className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}
         >
@@ -251,7 +265,7 @@ const ShopRightBar = (props) => {
                               color="primary"
                               onClick={() => {
                                 props.selectPost(false, "");
-                                props.closeModel(false);
+                                props.closeModel(true);
                               }}
                             >
                               &nbsp;Cancel&nbsp;
