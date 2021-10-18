@@ -53,7 +53,7 @@ class PostDataComponent extends React.Component {
         to_date: toDate,
       })
       .then((response) => {
-        this.setState({ data: response.data.message.data, loading: false });
+        this.setState({ data: response.data.message, loading: false });
         // if (response.data.message.hasOwnProperty("next")) {
         //   this.setState({ page: response.data.message.next.page });
         // } else {
