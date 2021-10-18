@@ -23,10 +23,9 @@ Custome CSS
   border: none;
 }
 
-
 button.update-buttons.btn.btn-primary {
-  width:135% !important
-  }
+  width: 135% !important;
+}
 
 .source-button button:hover {
   color: #fff;
@@ -62,19 +61,14 @@ button.update-buttons.btn.btn-primary {
   background-color: #002b49 !important;
 }
 
-
 .dropdown-menu {
   width: 98%;
 }
-
-
 
 /*Scroll Hidden*/
 nav.Sidebar_root__1FSXo {
   overflow-y: clip !important;
 }
-
-
 
 .sidebar-nav-links a span {
   font-size: 13px !important;
@@ -89,8 +83,6 @@ span.icon {
   .source-button.dropdown {
     /* margin-left: 0px !important; */
   }
-
-  
 }
 
 @media only screen and (max-width: 991px) {
@@ -260,7 +252,6 @@ span.icon {
 
 .mobile-menu ul li a span span:active {
   color: #fff !important;
- 
 }
 .profile-icon {
   object-fit: cover;
@@ -277,5 +268,41 @@ span.icon {
   }
   .upload-btn {
     width: 100%;
+  }
+}
+/**************analytic-box******************/
+.analytic-box {
+  margin-bottom: 20px;
+  padding: 20px;
+}
+.analytic-box .media-image {
+}
+.count-main-box {
+  border-top: 1px solid #c8c8c8;
+  margin-top: 15px !important;
+  padding-top: 15px;
+}
+.analytic-box .count-box {
+  margin-bottom: 15px;
+}
+.analytic-box .count-box .count {
+}
+.analytic-box .count-box .count-title {
+  color: #798892;
+  font-size: 18px;
+}
+.analytics-loading {
+  display: flex !important;
+  align-items: center !important;
+  height: 50vh !important;
+}
+.analytic-box .analytic-caption {
+  display: flex;
+  align-items: center;
+  padding-left: 0;
+}
+@media screen and (max-width: 768px) {
+  .analytics-page .container-fluid {
+    padding: 0;
   }
 }
