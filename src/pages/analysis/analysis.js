@@ -15,14 +15,15 @@ import classnames from "classnames";
 //import {connect} from "react-redux";
 import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
+import PostAnalytic from "./postperformance/postanalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
-    console.log("I am a user");
-    console.log(props.user);
+    // console.log("I am a user");
+    // console.log(props.user);
     this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
 
@@ -92,7 +93,7 @@ class Analysis extends React.Component {
                       <HighCharts username={this.state.username} />
                     </TabPane>
                     <TabPane tabId="tab22">
-                      <PostPerfomance username={this.state.username} />
+                      <PostAnalytic username={this.state.username} />
                     </TabPane>
                   </TabContent>
                 </Col>
