@@ -218,7 +218,7 @@ class LinkinBio extends React.Component {
 
         // this.setState({ startDate: response.data.message.start_date });
         // this.setState({ endDate: response.data.message.end_date });
-      
+          
         this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
         // let subCategory = [];
         // this.fetchSubCategories(category).then(function () {

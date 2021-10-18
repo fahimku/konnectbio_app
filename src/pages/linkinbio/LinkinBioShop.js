@@ -18,7 +18,7 @@ import {addUserInfo} from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
-
+import moment from "moment"
 class LinkinBioShop extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -28,8 +28,8 @@ class LinkinBioShop extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       deleteId: "",
-      startDate: "",
-      endDate: "",
+      startDate: moment(),
+      endDate: moment().add(30, "days"),
       userId: userId,
       confirmModal: false,
       iframeKey: 0,
@@ -279,6 +279,10 @@ class LinkinBioShop extends React.Component {
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
+
+        console.log("start Date")
+        console.log("endDate")
+
         this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
 
         // let subCategory = [];

@@ -61,7 +61,7 @@ const ShopRightBar = (props) => {
 
   return (
     <>
-      {startDate && endDate && (
+      {props.startDate && endDate && (
         <Formsy.Form
           // onValidSubmit={() => {
           //   if (props.updatePage) {

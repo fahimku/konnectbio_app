@@ -26,12 +26,12 @@ export const history = createBrowserHistory({
 });
 
 async function findMe() {
-  if (config.isBackend) {
-    const response = await axios.get("/auth/me");
-    return response.data;
-  } else {
-    return mockUser;
-  }
+  // if (config.isBackend) {
+  //   const response = await axios.get("/auth/me");
+  //   return response.data;
+  // } else {
+  //   return mockUser;
+  // }
 }
 
 export function authError(payload) {
