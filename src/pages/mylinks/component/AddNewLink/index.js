@@ -99,6 +99,7 @@ const AddNewLink = (props) => {
                               color="primary"
                               onClick={() => {
                                 props.preview(false, "");
+                                props.closeModel();
                               }}
                             >
                               &nbsp;&nbsp;Cancel&nbsp;&nbsp;
@@ -162,7 +163,10 @@ const AddNewLink = (props) => {
                             <Button
                               className="update-buttons"
                               color="primary"
-                              onClick={() => props.preview(false, "")}
+                              onClick={() => {
+                                props.preview(false, "");
+                                props.closeModel();
+                              }}
                             >
                               &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                             </Button>

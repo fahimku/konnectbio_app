@@ -247,6 +247,7 @@ class MyLinks extends React.Component {
   addNewLinkShop = () => {
     return (
       <AddNewLink
+     
         testUrl={this.testUrl}
         addNewLink={this.addNewLink}
         loading={this.state.loading}
@@ -269,6 +270,9 @@ class MyLinks extends React.Component {
         }}
         deleteLink={() => {
           this.setState({confirmModal: true});
+        }}
+        closeModel={() => {
+          this.setState({modal: false});
         }}
       ></AddNewLink>
     );

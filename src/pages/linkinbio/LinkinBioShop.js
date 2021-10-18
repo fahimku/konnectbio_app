@@ -39,7 +39,7 @@ class LinkinBioShop extends React.Component {
       instagramPosts: null,
       postType: "image",
       page: 1,
-      limit: 12,
+      limit: 15,
       categories: [],
       category: [],
       subCategories: [],
@@ -274,11 +274,13 @@ class LinkinBioShop extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
-        let that = this;
+
         this.setState({postType: response.data.message.post_type});
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
-        this.setState({category: category});
+        this.setState({ category: category });
+        this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
+
         // let subCategory = [];
         // this.fetchSubCategories(category).then(function () {
         //   response.data.message.sub_categories.map((subCategoryId) => {
@@ -407,6 +409,8 @@ class LinkinBioShop extends React.Component {
         subCategories={this.state.subCategories}
         changePostType={this.changePostType}
         postType={this.state.postType}
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
         //  savePost={this.savePost}
         updatePost={(val1, val2) => {
           this.updatePost(val1, val2);

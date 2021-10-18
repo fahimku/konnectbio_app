@@ -200,136 +200,123 @@ class Header extends React.Component {
 
     return (
       <>
-        <div className="top-logo">
-          <div className="logo" onClick={()=>{this.props.history.push('/app/home')}}>
-            <img src={logo} alt />
+        <div className="mobile-header-responsive">
+          <div className="top-logo">
+            <div
+              className="logo"
+              onClick={() => {
+                this.props.history.push("/app/home");
+              }}
+            >
+              <img src={logo} alt />
+            </div>
+          </div>
+          <div
+            className="top-mobile-header"
+            style={{borderBottom: "1px solid #c8c8c8"}}
+          >
+            <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
+              <NavbarToggler
+                className="ml-auto"
+                onClick={() => this.toggle(3)}
+              />
+              <Collapse isOpen={this.state.navs[3]} navbar>
+                <Nav className="ml-auto" navbar>
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="My Profile"
+                    link="/app/account/profile"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-user"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="All Posts"
+                    link="/app/linkinbio"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th-list"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Bio Shop"
+                    link="/app/linkinbio-shop"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Links"
+                    link="/app/my/links"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-link"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Analytics"
+                    link="/app/analysis"
+                    isHeader
+                    iconElement={<span className="fa fa-bar-chart-o"></span>}
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Categories"
+                    link="/app/account/categories"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Sign Out"
+                    link="/logout"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-log-out"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                </Nav>
+              </Collapse>
+            </Navbar>
+            <TopBar text={true} username={this.state.username} />
           </div>
         </div>
-        <div
-          className="top-mobile-header"
-          style={{borderBottom: "1px solid #c8c8c8"}}
-        >
-          <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
-            <NavbarToggler className="ml-auto" onClick={() => this.toggle(3)} />
-            <Collapse isOpen={this.state.navs[3]} navbar>
-              <Nav className="ml-auto" navbar>
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="My Profile"
-                  link="/app/account/profile"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-user"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="All Posts"
-                  link="/app/linkinbio"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-th-list"></span>
-                  }
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Bio Shop"
-                  link="/app/linkinbio-shop"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-shopping-cart"></span>
-                  }
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Links"
-                  link="/app/my/links"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Analytics"
-                  link="/app/analysis"
-                  isHeader
-                  iconElement={<span className="fa fa-bar-chart-o"></span>}
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Categories"
-                  link="/app/account/categories"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-th"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Sign Out"
-                  link="/logout"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-log-out"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                {/* <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Media Library"
-                  link="/app/media/library"
-                  isHeader
-                  iconElement={<span className="glyphicon glyphicon-picture" />}
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  onClick={() => this.toggle(3)}
-                  className="sidebar-nav-links"
-                  header="Collect Media"
-                  link="/app/couponsss"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-download-alt"></span>
-                  }
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
-              </Nav>
-            </Collapse>
-          </Navbar>
-          <TopBar text={true} username={this.state.username} />
-        </div>
-
         <div className="header bg-white">
           <div className="linkin-text">Konnect.Bio</div>
           <div className="left-top-bar">

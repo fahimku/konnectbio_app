@@ -215,15 +215,18 @@ class LinkinBio extends React.Component {
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
         this.setState({category: category});
-        this.setState({startDate: response.data.message.start_date});
-        this.setState({endDate: response.data.message.end_date});
-        let subCategory = [];
-        this.fetchSubCategories(category).then(function () {
-          response.data.message.sub_categories.map((subCategoryId) => {
-            return subCategory.push(subCategoryId.sub_category_id);
-          });
-          that.setState({subCategory: subCategory});
-        });
+
+        // this.setState({ startDate: response.data.message.start_date });
+        // this.setState({ endDate: response.data.message.end_date });
+      
+        this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
+        // let subCategory = [];
+        // this.fetchSubCategories(category).then(function () {
+        //   response.data.message.sub_categories.map((subCategoryId) => {
+        //     return subCategory.push(subCategoryId.sub_category_id);
+        //   });
+        //   that.setState({subCategory: subCategory});
+        // });
       })
       .catch((err) => {
         this.setState({
@@ -481,9 +484,9 @@ class LinkinBio extends React.Component {
         testUrl={this.testUrl}
         loading={this.state.loading}
         submitted={this.submitted}
-        // dateRange={(startDate, endDate) => {
-        //   this.changeDateRange(startDate, endDate);
-        // }}
+        dateRange={(startDate, endDate) => {
+          this.changeDateRange(startDate, endDate);
+        }}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
         selectPost={this.selectPost}
