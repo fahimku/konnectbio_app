@@ -1,18 +1,21 @@
 import axios from "axios";
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-const limit = (text, limit = 20) => {
+const limitCharacter = (text, limit = 20) => {
   let shortText = text;
   if (text && text.length > limit) {
     shortText = text.slice(0, limit) + "...";
   }
   return shortText;
+};
+const twodecimalplace = (value = 0) => {
+  return parseFloat(value).toFixed(2);
 };
 class PostDataComponent extends React.Component {
   constructor(props) {
@@ -21,22 +24,24 @@ class PostDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: "",
-      toDate: "",
-      today: moment(new Date()).format("YYYY-MM-DD"),
-      lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
+      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      toDate: moment(new Date(), "YYYY-MM-DD"),
+      // today: moment().startOf("year").format("YYYY-MM-DD"),
+      // lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
+      page: 1,
+      limit: 6,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
 
   componentDidMount() {
-    const date_to = moment(this.state.today).format("YYYY-MM-DD");
-    // this.fetchPostPerformance(this.state.username, "2020-01-01", "2021-12-31");
-    this.fetchPostPerformance(
-      this.state.username,
-      this.state.today,
-      moment().endOf("year").format("YYYY-MM-DD")
-    );
+    // const date_to = moment(this.state.today).format("YYYY-MM-DD");
+    this.fetchPostPerformance(this.state.username, "2020-01-01", "2021-12-31");
+    // this.fetchPostPerformance(
+    //   this.state.username,
+    //   this.state.toDate,
+    //   moment(new Date(), "YYYY-MM-DD")
+    // );
   }
 
   fetchPostPerformance(username, fromDate, toDate) {
@@ -48,7 +53,12 @@ class PostDataComponent extends React.Component {
         to_date: toDate,
       })
       .then((response) => {
-        this.setState({ data: response.data.message, loading: false });
+        this.setState({ data: response.data.message.data, loading: false });
+        // if (response.data.message.hasOwnProperty("next")) {
+        //   this.setState({ page: response.data.message.next.page });
+        // } else {
+        //   this.setState({ page: 0 });
+        // }
       });
   }
   dateRangePickerChanger(value, dataString) {
@@ -57,8 +67,13 @@ class PostDataComponent extends React.Component {
     this.setState({ fromDate: fromDate, toDate: toDate });
     this.fetchPostPerformance(this.state.username, fromDate, toDate);
   }
+  pagination = () => {
+    let { username, fromDate, toDate, limit, page } = this.state;
+    this.fetchPostPerformance(username, fromDate, toDate, limit, page);
+  };
 
   render() {
+    console.log(this.state.page, "page");
     return (
       <>
         {this.state.loading ? (
@@ -68,19 +83,14 @@ class PostDataComponent extends React.Component {
             {/* <Row>
               <Col xs={12} xl={12} md={12}>
                 <RangePicker
-                  key={1}
+                  key={2}
                   defaultValue={[
-                    moment(this.state.lastSevenDays),
-                    moment(this.state.today),
+                    moment(this.state.fromDate),
+                    moment(this.state.toDate),
                   ]}
                   defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
                   allowClear={false}
                   ranges={{
-                    Today: [moment(), moment()],
-                    "Get All Records": [
-                      moment().subtract(200, "month"),
-                      moment().add(200, "month"),
-                    ],
                     Today: [moment(), moment()],
                     Tomorrow: [
                       moment().add(1, "days"),
@@ -124,7 +134,7 @@ class PostDataComponent extends React.Component {
                             <p className="card-text">
                               {record.caption === ""
                                 ? "No Caption Added"
-                                : limit(record.caption, 55)}
+                                : limitCharacter(record.caption, 55)}
                             </p>
                           </div>
                         </div>
@@ -140,7 +150,9 @@ class PostDataComponent extends React.Component {
                         </div>
                         <div className="col-6 count-box">
                           <h5 className="count-title">Engagement</h5>
-                          <h3 className="count">4,607</h3>
+                          <h3 className="count">
+                            {twodecimalplace(record.ctr)}%
+                          </h3>
                         </div>
                         {/* <div className="col-6 count-box">
                         <h4>Date Start</h4>
@@ -158,6 +170,17 @@ class PostDataComponent extends React.Component {
             </Row>
           </React.Fragment>
         )}
+        {/* {this.state.page !== 0 ? (
+          <div className="text-right">
+            <Button
+              variant="primary"
+              // className="text-right"
+              onClick={this.pagination}
+            >
+              Next
+            </Button>
+          </div>
+        ) : null} */}
       </>
     );
   }
