@@ -21,8 +21,8 @@ class PostDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: "",
-      toDate: "",
+      fromDate: moment(new Date()).format("YYYY-MM-DD"),
+      toDate: moment().endOf("year").format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
     };
@@ -65,13 +65,13 @@ class PostDataComponent extends React.Component {
           <Loader className="analytics-loading" size={60} />
         ) : (
           <React.Fragment>
-            {/* <Row>
+            <Row>
               <Col xs={12} xl={12} md={12}>
                 <RangePicker
-                  key={1}
+                  key={2}
                   defaultValue={[
-                    moment(this.state.lastSevenDays),
-                    moment(this.state.today),
+                    moment(this.state.fromDate),
+                    moment(this.state.toDate),
                   ]}
                   defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
                   allowClear={false}
@@ -105,7 +105,7 @@ class PostDataComponent extends React.Component {
                 />
                 <hr />
               </Col>
-            </Row> */}
+            </Row>
             <Row>
               {this.state.data.map((record) => (
                 <React.Fragment>
