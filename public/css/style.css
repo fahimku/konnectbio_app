@@ -313,18 +313,32 @@ span.icon {
   }
 }
 
-
-.connections  button {
+.connections button {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.connections  button i {
-  font-size:20px;
+.connections button i {
+  font-size: 20px;
   text-align: left;
 }
 
-.connections  button a  {
-  color:white;
+.connections button a {
+  color: white;
 }
+
+.source-button .btn-primary:not(:disabled):not(.disabled):active,
+.source-button .btn-primary:not(:disabled):not(.disabled).active,
+.source-button.show > .btn-primary.dropdown-toggle {
+  background: #fff !important;
+  color: #364554;
+}
+.right-bar {
+  height: 100vh !important;
+}
+/* .myshop-iframe {
+  margin: 0 auto;
+  display: flex;
+  width: 680px !important;
+} */
