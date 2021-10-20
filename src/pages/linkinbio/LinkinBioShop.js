@@ -245,6 +245,9 @@ class LinkinBioShop extends React.Component {
 
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
+      this.setState({redirectedUrl: ""});
+      this.setState({startDate: moment()});
+      this.setState({endDate: moment().add(30, "days")});
       this.fetchInstagramPosts(this.state.username, this.state.limit, 1);
     });
     this.setState({confirmModal: false});

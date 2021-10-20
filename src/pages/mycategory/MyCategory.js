@@ -1,8 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {route} from "react-router";
-import {Link} from "react-router-dom";
-import s from "./ErrorPage.module.scss";
 import Select from "react-select";
 import {Row, Col, Button} from "react-bootstrap";
 import {toast} from "react-toastify";
@@ -11,38 +8,42 @@ import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class MyCategory extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      myCategory: "",
+      user_id: "",
+      category: [],
+      defaultCategory: "",
+      saveCategories: "",
+      categoryError: "",
+      isInstagramConnected: false,
+    };
   }
 
-  state = {
-    myCategory: "",
-    user_id: "",
-    category: [],
-    defaultCategory: "",
-    saveCategories: "",
-    categoryError: "",
-    instagramCode: "",
-  };
-
   componentDidMount() {
+    if (userInfo.access_token !== "") {
+      this.setState({isInstagramConnected: true});
+    }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({user_id: userInfo.user_id});
     this.fetchMyCategory();
     this.fetchSaveCategory();
+
     //Connect Instagram Code
-   }
+  }
 
   fetchMyCategory = async () => {
     await axios
       .get("/category/receive")
       .then((response) => {
         const selectCategories = [];
-        const mycategories = response.data.message;
-        mycategories.map(({category_id, category_name, image_url}) => {
+        const myCategories = response.data.message;
+        myCategories.map(({category_id, category_name, image_url}) => {
           selectCategories.push({
             value: category_id,
             label: category_name,
@@ -60,9 +61,9 @@ class MyCategory extends React.Component {
       .get(`/users/receive/categories?id=${userInfo.user_id}`)
       .then((response) => {
         const saveCategories = [];
-        const mycategories = response.data.message;
-        const optioncategories = response.data.message;
-        optioncategories.map(({category_id, category_name, image_url}) => {
+        //const myCategories = response.data.message;
+        const optionCategories = response.data.message;
+        optionCategories.map(({category_id, category_name, image_url}) => {
           saveCategories.push({
             value: category_id,
             label: category_name,
@@ -70,7 +71,7 @@ class MyCategory extends React.Component {
           });
         });
         this.setState({
-          // defaultCategory: mycategories,
+          // defaultCategory: myCategories,
           saveCategories: saveCategories,
         });
       })
@@ -142,18 +143,23 @@ class MyCategory extends React.Component {
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
-                  <Button
-                    variant="primary"
-                    className="btn-block"
-                  >
+                  <Button variant="primary" className="btn-block">
                     <i className="fa fa-instagram" />
                     &nbsp;&nbsp;
-                    <div dangerouslySetInnerHTML={{__html: this.props.url}} />
+                    {this.props.isInstagramConnected || this.state.isInstagramConnected ? (
+                      "Connected"
+                    ) : (
+                      <>
+                        {" "}
+                        <div
+                          dangerouslySetInnerHTML={{__html: this.props.url}}
+                        />
+                      </>
+                    )}
                   </Button>
                 </Col>
               </Row>
             </div>
-
             <div className="white-box mt-5">
               <h5 className="page-title line-heading">Current Plan</h5>
               <Row>
@@ -206,10 +212,11 @@ class MyCategory extends React.Component {
                     {this.state.saveCategories.length === 0 ? (
                       <span className="ml-4">No Category Selected</span>
                     ) : (
-                      this.state.saveCategories.map((cat) => (
-                        <React.Fragment>
-                          <div className="cat-box col-sm-3 col-6">
+                      this.state.saveCategories.map((cat, i) => (
+                        <React.Fragment key={i}>
+                          <div key={i} className="cat-box col-sm-3 col-6">
                             <img
+                              key={i}
                               src={
                                 cat.image === "" || cat.image === undefined
                                   ? placeholder
@@ -236,7 +243,6 @@ class MyCategory extends React.Component {
                 </Col>
               </Row>
             </form>
-           
           </div>
         </div>
       </div>

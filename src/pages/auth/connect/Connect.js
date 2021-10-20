@@ -3,7 +3,7 @@ import React from "react";
 import {Button, Row, Col, FormLabel} from "react-bootstrap";
 import {withRouter, NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import logo from "../../../images/logo.svg"
+import logo from "../../../images/logo.svg";
 import MyCategory from "pages/mycategory/MyCategory";
 
 class Connect extends React.Component {
@@ -12,6 +12,7 @@ class Connect extends React.Component {
     this.state = {
       url: "",
       instagramCode: "",
+      isInstagramConnected: false
     };
   }
 
@@ -34,10 +35,8 @@ class Connect extends React.Component {
     const instagramCodeUrl = window.location.href;
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
-      this.setState({instagramCode: code[1]});
-      //      this.props.history.push("/app/linkinbio/" + code[1]);
-      // console.log("hello world");
-      // console.log(this.state.instagramCode);
+      this.setState({ instagramCode: code[1] });
+      this.setState({isInstagramConnected: true});
     }
     this.getInstagramUrl();
   }
@@ -46,12 +45,21 @@ class Connect extends React.Component {
     return (
       <>
         <div className="connect-page-header">
-            <div><img className="img-connect" src={logo} /></div>
-            <div className="btn-div">
-              <Button className="btn-connect" onClick={()=>this.props.history.push('/logout')}>Logout</Button>
-            </div>
+          <div>
+            <img className="img-connect" src={logo} />
+          </div>
+          <div className="btn-div">
+            <Button
+              className="btn-connect"
+              onClick={() => this.props.history.push("/logout")}
+            >
+              Logout
+            </Button>
+          </div>
         </div>
-        <MyCategory url={this.state.url} />
+        <MyCategory
+          isInstagramConnected={this.state.isInstagramConnected}
+          url={this.state.url} />
         <div className="category-page">
           <div className="container">
             <div className="justify-content-md-center">
@@ -61,7 +69,9 @@ class Connect extends React.Component {
                   <Button
                     disabled={this.state.instagramCode == "" ? true : false}
                     onClick={() => {
-                      this.props.history.push(`/app/linkinbio/${this.state.instagramCode}`);
+                      this.props.history.push(
+                        `/app/linkinbio/${this.state.instagramCode}`
+                      );
                     }}
                     variant="primary"
                     type="submit"
@@ -69,10 +79,13 @@ class Connect extends React.Component {
                   >
                     Next
                   </Button>
-                  
                 </Col>
               </Row>
-              {this.state.instagramCode =="" && <FormLabel className="label-insta">Please Connect your Instagram Account</FormLabel>}
+              {this.state.instagramCode == "" && (
+                <FormLabel className="label-insta">
+                  Please Connect your Instagram Account
+                </FormLabel>
+              )}
             </div>
           </div>
         </div>

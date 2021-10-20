@@ -9,7 +9,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 // import {connect} from "react-redux";
@@ -20,7 +20,9 @@ import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
+
   constructor(props) {
+
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     let userId = userInfo.user_id;
@@ -110,9 +112,9 @@ class LinkinBio extends React.Component {
           response.data.username,
           response.data.access_token
         );
-        this.setState({ instagramPosts: response.data });
-        this.setState({ nextPageUrl: response.data.paging.next });
-        this.setState({ username: response.data.username });
+        this.setState({instagramPosts: response.data});
+        this.setState({nextPageUrl: response.data.paging.next});
+        this.setState({username: response.data.username});
       })
       .catch((err) => {
         if (err.response.data.message) {
@@ -142,9 +144,9 @@ class LinkinBio extends React.Component {
         username: this.state.username,
       })
       .then((response) => {
-        this.setState({ instagramPosts: response.data });
+        this.setState({instagramPosts: response.data});
         if (response.data)
-          this.setState({ nextPageUrl: response.data.paging.next });
+          this.setState({nextPageUrl: response.data.paging.next});
       })
       .catch((err) => {
         console.log("Error");
@@ -182,15 +184,15 @@ class LinkinBio extends React.Component {
         let PreviousInstagramPosts = this.state.instagramPosts;
         //Check Instagram has more posts
         if (nextPageInstagramPosts.paging.hasOwnProperty("next")) {
-          this.setState({ nextPageUrl: nextPageInstagramPosts.paging.next });
+          this.setState({nextPageUrl: nextPageInstagramPosts.paging.next});
         } else {
-          this.setState({ nextPageUrl: "" });
+          this.setState({nextPageUrl: ""});
         }
         instagramPosts.push(PreviousInstagramPosts);
         for (let i = 0; i < nextPageInstagramPosts.data.length; i++) {
           instagramPosts[0].data.push(nextPageInstagramPosts.data[i]);
         }
-        this.setState({ instagramPost: instagramPosts });
+        this.setState({instagramPost: instagramPosts});
       })
       .catch((err) => {
         if (err.response.data.message.type) {
@@ -211,10 +213,10 @@ class LinkinBio extends React.Component {
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
         let that = this;
-        this.setState({ postType: response.data.message.post_type });
-        this.setState({ media_id: media_id });
+        this.setState({postType: response.data.message.post_type});
+        this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
-        this.setState({ category: category });
+        this.setState({category: category});
 
         // this.setState({ startDate: response.data.message.start_date });
         // this.setState({ endDate: response.data.message.end_date });
@@ -235,8 +237,8 @@ class LinkinBio extends React.Component {
         this.setState({
           category: [],
         });
-        this.setState({ subCategory: [] });
-        this.setState({ postType: "image" });
+        this.setState({subCategory: []});
+        this.setState({postType: "image"});
       });
   };
 
@@ -247,27 +249,27 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const categories = response.data.message;
-        categories.map(({ category_id, category_name }) => {
-          selectCategories.push({ value: category_id, label: category_name });
+        categories.map(({category_id, category_name}) => {
+          selectCategories.push({value: category_id, label: category_name});
         });
-        this.setState({ categories: selectCategories });
+        this.setState({categories: selectCategories});
       });
   };
 
   //Fetch Sub Categories
   async fetchSubCategories(category_id) {
     await axios
-      .post(`/common/receive/subCategories`, { category_id: category_id })
+      .post(`/common/receive/subCategories`, {category_id: category_id})
       .then((response) => {
         const selectSubCategories = [];
         const subCategories = response.data.message;
-        subCategories.map(({ sub_category_id, sub_category_name }) => {
+        subCategories.map(({sub_category_id, sub_category_name}) => {
           selectSubCategories.push({
             value: sub_category_id,
             label: sub_category_name,
           });
         });
-        this.setState({ subCategories: selectSubCategories });
+        this.setState({subCategories: selectSubCategories});
       });
   }
 
@@ -278,7 +280,7 @@ class LinkinBio extends React.Component {
           currentPost: previousState.singlePost,
         }),
         async () => {
-          this.setState({ loading: true });
+          this.setState({loading: true});
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
@@ -295,7 +297,7 @@ class LinkinBio extends React.Component {
               end_date: this.state.endDate,
             })
             .then((response) => {
-              this.setState({ loading: false });
+              this.setState({loading: false});
               let singlePostIndex = this.state.instagramPosts.data.findIndex(
                 (item) => item.id === this.state.currentPost.id
               );
@@ -306,13 +308,13 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => {});
+              this.setState({instagramPosts: instagramPosts}, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
             })
 
             .catch((err) => {
-              this.setState({ loading: false });
+              this.setState({loading: false});
               toast.error(err);
             });
         }
@@ -321,7 +323,7 @@ class LinkinBio extends React.Component {
   };
 
   updatePost = async (id, url) => {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
@@ -332,7 +334,7 @@ class LinkinBio extends React.Component {
         end_date: this.state.endDate,
       })
       .then((response) => {
-        this.setState({ loading: false });
+        this.setState({loading: false});
         let singlePostIndex = this.state.instagramPosts.data.findIndex(
           (item) => item.id === id
         );
@@ -342,14 +344,14 @@ class LinkinBio extends React.Component {
           JSON.stringify(this.state.instagramPosts)
         );
         instagramPosts.data[singlePostIndex] = currentPost;
-        this.setState({ instagramPosts: instagramPosts });
+        this.setState({instagramPosts: instagramPosts});
         toast.success("Your Post Link is Updated");
         this.selectPost(false, "");
       });
   };
 
   deletePost = async (id) => {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     await axios.delete(`/posts/remove/${id}`).then((response) => {
       let singlePostIndex = this.state.instagramPosts.data.findIndex(
         (item) => item.id === id
@@ -360,11 +362,14 @@ class LinkinBio extends React.Component {
         JSON.stringify(this.state.instagramPosts)
       );
       instagramPosts.data[singlePostIndex] = currentPost;
-      this.setState({ instagramPosts: instagramPosts });
-      toast.success("Your Post is Unlinked Successfully");
+      this.setState({instagramPosts: instagramPosts});
+      this.setState({redirectedUrl: ""});
+      this.setState({startDate: moment()});
+      this.setState({endDate: moment().add(30, "days")});
       this.setState({ loading: false });
-      this.setState({ confirmModal: false });
+      this.setState({ confirmModal: false });  
       this.selectPost(false, "");
+      toast.success("Your Post is Unlinked Successfully");
     });
   };
 
@@ -394,7 +399,7 @@ class LinkinBio extends React.Component {
   }
 
   selectPost = (state, postIndex) => {
-    this.setState((prevState) => ({ autoFocus: !prevState.autoFocus }));
+    this.setState((prevState) => ({autoFocus: !prevState.autoFocus}));
     this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
@@ -414,7 +419,7 @@ class LinkinBio extends React.Component {
       );
 
       instagramPosts.data[postIndex] = currentPost;
-      this.setState({ instagramPosts: instagramPosts });
+      this.setState({instagramPosts: instagramPosts});
       //link current post
       this.setState(
         {
@@ -422,42 +427,42 @@ class LinkinBio extends React.Component {
         },
         () => {
           if (currentPost.redirected_url)
-            this.setState({ redirectedUrl: currentPost.redirected_url });
-          else this.setState({ redirectedUrl: "" });
+            this.setState({redirectedUrl: currentPost.redirected_url});
+          else this.setState({redirectedUrl: ""});
         }
       );
     }
-    this.setState({ selectPost: state });
-    this.setState({ modal: true });
+    this.setState({selectPost: state});
+    this.setState({modal: true});
     if (state == false && postIndex == "")
-      this.setState({ iframeKey: this.state.iframeKey + 1 });
+      this.setState({iframeKey: this.state.iframeKey + 1});
   };
 
   error(error) {
-    this.setState({ error: error });
+    this.setState({error: error});
   }
 
   changeCategory = (category) => {
     if (category) {
-      this.setState({ category: category });
+      this.setState({category: category});
       // this.fetchSubCategories(category);
     }
   };
 
   changeSubCategory = (subCategories) => {
-    this.setState({ subCategory: subCategories });
+    this.setState({subCategory: subCategories});
   };
 
   changePostType = (e) => {
     if (e.target.checked) {
       console.log(e.target.value);
-      this.setState({ postType: e.target.value });
+      this.setState({postType: e.target.value});
     }
   };
 
   changeDateRange = (startDate, endDate) => {
-    this.setState({ startDate: startDate });
-    this.setState({ endDate: endDate });
+    this.setState({startDate: startDate});
+    this.setState({endDate: endDate});
   };
 
   copyToClipboard = (e) => {
@@ -482,7 +487,7 @@ class LinkinBio extends React.Component {
     return (
       <ShopRightBar
         closeModel={() => {
-          this.setState({ modal: false });
+          this.setState({modal: false});
         }}
         testUrl={this.testUrl}
         loading={this.state.loading}
@@ -511,11 +516,11 @@ class LinkinBio extends React.Component {
         }}
         media_id={this.state.media_id}
         deletePost={(deleteId) => {
-          this.setState({ deleteId: deleteId });
-          this.setState({ confirmModal: true });
+          this.setState({deleteId: deleteId});
+          this.setState({confirmModal: true});
         }}
         callBack={(e) => {
-          this.setState({ redirectedUrl: e.target.value });
+          this.setState({redirectedUrl: e.target.value});
         }}
       ></ShopRightBar>
     );
@@ -551,7 +556,7 @@ class LinkinBio extends React.Component {
           >
             <div
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
-              style={{ height: "100%", width: "100%", padding: "0px" }}
+              style={{height: "100%", width: "100%", padding: "0px"}}
             >
               <iframe
                 key={this.state.iframeKey}
