@@ -24,6 +24,7 @@ import Verify from "../pages/auth/verify";
 import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
+
 import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory({

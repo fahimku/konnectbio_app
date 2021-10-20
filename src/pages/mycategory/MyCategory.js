@@ -1,17 +1,22 @@
 import React from "react";
 import axios from "axios";
-import { route } from "react-router";
-import { Link } from "react-router-dom";
+import {route} from "react-router";
+import {Link} from "react-router-dom";
 import s from "./ErrorPage.module.scss";
 import Select from "react-select";
-import { Row, Col, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
+import {Row, Col, Button} from "react-bootstrap";
+import {toast} from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-
+import {createBrowserHistory} from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-// const packagesInfo = JSON.parse(localStorage.getItem("packages"));
-
 class MyCategory extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   state = {
     myCategory: "",
     user_id: "",
@@ -19,12 +24,19 @@ class MyCategory extends React.Component {
     defaultCategory: "",
     saveCategories: "",
     categoryError: "",
+    instagramCode: "",
   };
 
   componentDidMount() {
-    this.setState({ user_id: userInfo.user_id });
+    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.setState({user_id: userInfo.user_id});
     this.fetchMyCategory();
     this.fetchSaveCategory();
+    //Connect Instagram Code
+    let access_token = userInfo.access_token;
+    if (access_token !== "") {
+      this.props.history.push("/app/home");
+    }
   }
 
   fetchMyCategory = async () => {
@@ -33,14 +45,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const mycategories = response.data.message;
-        mycategories.map(({ category_id, category_name, image_url }) => {
+        mycategories.map(({category_id, category_name, image_url}) => {
           selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({ myCategory: selectCategories });
+        this.setState({myCategory: selectCategories});
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +65,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         const mycategories = response.data.message;
         const optioncategories = response.data.message;
-        optioncategories.map(({ category_id, category_name, image_url }) => {
+        optioncategories.map(({category_id, category_name, image_url}) => {
           saveCategories.push({
             value: category_id,
             label: category_name,
@@ -104,13 +116,13 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
+          this.setState({categoryError: ""});
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({ categoryError: err.response.data.message });
+        this.setState({categoryError: err.response.data.message});
       });
     // }
   };
@@ -124,6 +136,27 @@ class MyCategory extends React.Component {
       <div className="category-page">
         <div className="container">
           <div className="justify-content-md-center">
+            <div className="connections white-box mt-5">
+              <Row>
+                <Col md={8}>
+                  <h3 className="package_name">Connect Instagram</h3>
+                  <div className="category_count">
+                    Connect to Instagram or Facebook to start using KONNECT BIO.
+                  </div>
+                </Col>
+                <Col md={4} className="text-right">
+                  <Button
+                    variant="primary"
+                    className="btn-block"
+                  >
+                    <i className="fa fa-instagram" />
+                    &nbsp;&nbsp;
+                    <div dangerouslySetInnerHTML={{__html: this.props.url}} />
+                  </Button>
+                </Col>
+              </Row>
+            </div>
+
             <div className="white-box mt-5">
               <h5 className="page-title line-heading">Current Plan</h5>
               <Row>
@@ -206,6 +239,7 @@ class MyCategory extends React.Component {
                 </Col>
               </Row>
             </form>
+           
           </div>
         </div>
       </div>
