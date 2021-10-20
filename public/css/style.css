@@ -324,3 +324,50 @@ span.icon {
 .connections  button a  {
   color:white;
 }
+
+.connect-page-header{
+  background-color: #f1e7e7;
+  display: flex;
+}
+.img-connect{
+  margin-left: 28px;
+  width: 180px;
+  height: 50px; 
+}
+ .btn-div{
+  position: absolute;
+  right: 28px;
+} 
+
+.btn-connect{
+  margin-top: 8px;
+
+}
+.label-insta{
+  margin-top: 4px;
+  position: absolute;
+  color: crimson;
+  right: 344px;
+}
+
+.logo{
+  width: 180px;
+  height: 90px;
+}
+
+@media screen and (min-width: 280px) and (max-width :767px){
+  .img-connect{
+    margin: 0px;
+    display: block;
+  }
+  .btn-connect{
+    margin-top: 8px;
+    margin-right: 0px;
+  }
+  .label-insta{
+    margin-top: 0px;
+    position: absolute;
+    color: crimson;
+    right: 40px;
+  }
+}

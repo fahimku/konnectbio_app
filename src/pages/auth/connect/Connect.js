@@ -1,8 +1,9 @@
 import axios from "axios";
 import React from "react";
-import {Button, Row, Col} from "react-bootstrap";
+import {Button, Row, Col, FormLabel} from "react-bootstrap";
 import {withRouter, NavLink} from "react-router-dom";
 import {connect} from "react-redux";
+import logo from "../../../images/logo.svg"
 import MyCategory from "pages/mycategory/MyCategory";
 
 class Connect extends React.Component {
@@ -45,13 +46,10 @@ class Connect extends React.Component {
     return (
       <>
         <div className="connect-page-header">
-          <Row>
-            <Col md="4"></Col>
-            <Col md="4">Logo</Col>
-            <Col md="4">
-              <NavLink to="logout">Logout</NavLink>
-            </Col>
-          </Row>
+            <div><img className="img-connect" src={logo} /></div>
+            <div className="btn-div">
+              <Button className="btn-connect" onClick={()=>this.props.history.push('/logout')}>Logout</Button>
+            </div>
         </div>
         <MyCategory url={this.state.url} />
         <div className="category-page">
@@ -71,8 +69,10 @@ class Connect extends React.Component {
                   >
                     Next
                   </Button>
+                  
                 </Col>
               </Row>
+              {this.state.instagramCode =="" && <FormLabel className="label-insta">Please Connect your Instagram Account</FormLabel>}
             </div>
           </div>
         </div>

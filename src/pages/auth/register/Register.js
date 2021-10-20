@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
-import logo from "../../../images/logo.png";
+import logo from "../../../images/logo.svg";
 
 class Register extends React.Component {
   static propTypes = {
@@ -25,6 +25,7 @@ class Register extends React.Component {
       genderList: [
         {value: "male", label: "Male"},
         {value: "female", label: "Female"},
+        {value: "other", label: "Other"}
       ],
       gender:"",
       userType: "",
@@ -200,7 +201,7 @@ class Register extends React.Component {
         <Container>
           <h5 className="auth-logo">
             <i className="la la-circle text-gray" />
-            <img src={logo} />
+            <img className="logo" src={logo} />
             <i className="la la-circle text-warning" />
           </h5>
           <Widget
