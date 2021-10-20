@@ -303,10 +303,6 @@ span.icon {
   align-items: center;
   padding-left: 0;
 }
-.no-data {
-  font-size: 1.75rem;
-  margin-left: 28px;
-}
 @media screen and (max-width: 768px) {
   .analytics-page .container-fluid {
     padding: 0;
@@ -328,15 +324,60 @@ span.icon {
   color: white;
 }
 
+.connect-page-header {
+  background-color: #f1e7e7;
+  display: flex;
+}
+.img-connect {
+  margin-left: 28px;
+  width: 180px;
+  height: 50px;
+}
+.btn-div {
+  position: absolute;
+  right: 28px;
+}
+
+.btn-connect {
+  margin-top: 8px;
+}
+.label-insta {
+  margin-top: 4px;
+  position: absolute;
+  color: crimson;
+  right: 344px;
+}
+
+.logo {
+  width: 180px;
+  height: 90px;
+}
+
+@media screen and (min-width: 280px) and (max-width: 767px) {
+  .img-connect {
+    margin: 0px;
+    display: block;
+  }
+  .btn-connect {
+    margin-top: 8px;
+    margin-right: 0px;
+  }
+  .label-insta {
+    margin-top: 0px;
+    position: absolute;
+    color: crimson;
+    right: 40px;
+  }
+}
 .source-button .btn-primary:not(:disabled):not(.disabled):active,
 .source-button .btn-primary:not(:disabled):not(.disabled).active,
 .source-button.show > .btn-primary.dropdown-toggle {
   background: #fff !important;
   color: #364554;
 }
-.right-bar {
+/* .right-bar {
   height: 100vh !important;
-}
+} */
 /* .myshop-iframe {
   margin: 0 auto;
   display: flex;
