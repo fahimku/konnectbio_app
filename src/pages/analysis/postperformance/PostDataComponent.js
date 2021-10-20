@@ -33,8 +33,8 @@ class PostDataComponent extends React.Component {
       // toDate: moment(new Date(), "YYYY-MM-DD"),
       // today: moment().startOf("year").format("YYYY-MM-DD"),
       // lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
       page: 1,
@@ -77,9 +77,6 @@ class PostDataComponent extends React.Component {
         } else {
           this.setState({ previous: 0 });
         }
-      })
-      .catch((error) => {
-        console.log(error, "error");
       });
   }
   dateRangePickerChanger(value, dataString) {
@@ -107,6 +104,7 @@ class PostDataComponent extends React.Component {
   }
 
   render() {
+    console.log(this.state.page, "page");
     return (
       <>
         <Row>
