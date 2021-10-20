@@ -54,32 +54,6 @@ class PostDataComponent extends React.Component {
       this.state.page
     );
   }
-
-  // async fetchPostPerformance(username, fromDate, toDate, limit, page) {
-  //   this.setState({ loading: true });
-  //   await axios
-  //     .post("analytics/receive/analyseAllPosts", {
-  //       username: username,
-  //       from_date: fromDate,
-  //       to_date: toDate,
-  //       page: page,
-  //       limit: limit,
-  //       post_type: "image",
-  //     })
-  //     .then((response) => {
-  //       this.setState({ data: response.data.message.data, loading: false });
-  //       if (response.data.message.hasOwnProperty("next")) {
-  //         this.setState({ page: response.data.message.next.page });
-  //       } else {
-  //         this.setState({ page: 0 });
-  //       }
-  //       if (response.data.message.hasOwnProperty("previous")) {
-  //         this.setState({ previous: response.data.message.previous.page });
-  //       } else {
-  //         this.setState({ previous: 0 });
-  //       }
-  //     });
-  // }
   async fetchPostPerformance(username, fromDate, toDate, limit, page) {
     this.setState({ loading: true });
     await axios
