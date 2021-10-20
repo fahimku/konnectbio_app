@@ -303,10 +303,6 @@ span.icon {
   align-items: center;
   padding-left: 0;
 }
-.no-data {
-  font-size: 1.75rem;
-  margin-left: 28px;
-}
 @media screen and (max-width: 768px) {
   .analytics-page .container-fluid {
     padding: 0;
