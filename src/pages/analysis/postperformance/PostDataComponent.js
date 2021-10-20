@@ -81,6 +81,7 @@ class PostDataComponent extends React.Component {
   //     });
   // }
   async fetchPostPerformance(username, fromDate, toDate, limit, page) {
+    this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseAllPosts", {
         username: username,
