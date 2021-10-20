@@ -33,8 +33,8 @@ class PostDataComponent extends React.Component {
       // toDate: moment(new Date(), "YYYY-MM-DD"),
       // today: moment().startOf("year").format("YYYY-MM-DD"),
       // lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
-      fromDate: "",
-      toDate: "",
+      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
       page: 1,
@@ -55,32 +55,8 @@ class PostDataComponent extends React.Component {
     );
   }
 
-  // async fetchPostPerformance(username, fromDate, toDate, limit, page) {
-  //   this.setState({ loading: true });
-  //   await axios
-  //     .post("analytics/receive/analyseAllPosts", {
-  //       username: username,
-  //       from_date: fromDate,
-  //       to_date: toDate,
-  //       page: page,
-  //       limit: limit,
-  //       post_type: "image",
-  //     })
-  //     .then((response) => {
-  //       this.setState({ data: response.data.message.data, loading: false });
-  //       if (response.data.message.hasOwnProperty("next")) {
-  //         this.setState({ page: response.data.message.next.page });
-  //       } else {
-  //         this.setState({ page: 0 });
-  //       }
-  //       if (response.data.message.hasOwnProperty("previous")) {
-  //         this.setState({ previous: response.data.message.previous.page });
-  //       } else {
-  //         this.setState({ previous: 0 });
-  //       }
-  //     });
-  // }
   async fetchPostPerformance(username, fromDate, toDate, limit, page) {
+    this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseAllPosts", {
         username: username,
@@ -102,9 +78,6 @@ class PostDataComponent extends React.Component {
         } else {
           this.setState({ previous: 0 });
         }
-      })
-      .catch((error) => {
-        console.log(error, "error");
       });
   }
   dateRangePickerChanger(value, dataString) {
@@ -132,6 +105,7 @@ class PostDataComponent extends React.Component {
   }
 
   render() {
+    console.log(this.state.page, "page");
     return (
       <>
         <Row>
