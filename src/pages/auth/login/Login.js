@@ -63,7 +63,7 @@ class Login extends React.Component {
       this.props.dispatch(receiveToken(token));
       if (instagramCodeUrl.includes("code")) {
         const code = instagramCodeUrl.split("?")[1].split("=");
-        this.props.history.push("/app/linkinbio/" + code[1]);
+        this.props.history.push("/connect?code=" + code[1]);
       }
       //      this.props.dispatch(doInit());
     }

@@ -46,7 +46,6 @@ class MyProfile extends React.Component {
   };
   setDefaultData = () => {
     const { form } = this.state;
-
     setTimeout(() => {
       form.name = this.state.userData.name;
       form.bio = this.state.userData.bio;

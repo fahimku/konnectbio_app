@@ -25,8 +25,8 @@ const ShopRightBar = (props) => {
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
-    console.log("Props Redirected Url");
-    console.log(props.redirectedUrl);
+    // console.log("Props Redirected Url");
+    // console.log(props.redirectedUrl);
     setSubCategories(props.subCategories);
   }, [
     props.subCategories,
@@ -36,10 +36,10 @@ const ShopRightBar = (props) => {
   ]);
 
   useEffect(() => {
-    console.log("start date");
-    console.log(props.startDate);
-    console.log("end date");
-    console.log(props.endDate);
+    // console.log("start date");
+    // console.log(props.startDate);
+    // console.log("end date");
+    // console.log(props.endDate);
 
     setStartDate(props.startDate);
     setEndDate(props.endDate);

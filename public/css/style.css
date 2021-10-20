@@ -308,3 +308,19 @@ span.icon {
     padding: 0;
   }
 }
+
+
+.connections  button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.connections  button i {
+  font-size:20px;
+  text-align: left;
+}
+
+.connections  button a  {
+  color:white;
+}

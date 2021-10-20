@@ -96,6 +96,7 @@ export const history = createBrowserHistory({
 
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
+
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
