@@ -6,8 +6,8 @@ import moment from "moment";
 import "antd/dist/antd.css";
 import PostDataComponent from "./PostDataComponent";
 
-const { RangePicker } = DatePicker;
-const dateFormat = "YYYY-MM-DD";
+// const { RangePicker } = DatePicker;
+// const dateFormat = "YYYY-MM-DD";
 
 class PostAnalytic extends React.Component {
   state = {
@@ -34,40 +34,7 @@ class PostAnalytic extends React.Component {
   render() {
     return (
       <>
-        {/* <RangePicker
-          key={1}
-          defaultValue={
-            [
-              //   moment(this.state.lastSevenDays),
-              // moment(this.state.today),
-            ]
-          }
-          defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-          allowClear={false}
-          ranges={{
-            Today: [moment(), moment()],
-            "Get All Records": [
-              moment().subtract(200, "month"),
-              moment().add(200, "month"),
-            ],
-            Today: [moment(), moment()],
-            Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
-            Yesterday: [
-              moment().subtract(1, "days"),
-              moment().subtract(1, "days"),
-            ],
-            "This Month": [moment().startOf("month"), moment().endOf("month")],
-            "Last Month": [
-              moment().subtract(1, "month").startOf("month"),
-              moment().subtract(1, "month").endOf("month"),
-            ],
-          }}
-          style={{ width: "20%" }}
-          format={dateFormat}
-          //   onChange={this.dateRangePickerChanger.bind(this)}
-        /> */}
         <div className="container-fluid">
-          {" "}
           <h3>Post Performance</h3>
           <PostDataComponent username={this.state.username} />
         </div>

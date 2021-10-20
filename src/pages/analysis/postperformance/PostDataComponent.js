@@ -4,6 +4,8 @@ import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
+import "antd/dist/antd.css";
+
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
@@ -27,10 +29,14 @@ class PostDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      toDate: moment(new Date(), "YYYY-MM-DD"),
+      // fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      // toDate: moment(new Date(), "YYYY-MM-DD"),
       // today: moment().startOf("year").format("YYYY-MM-DD"),
       // lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
+      fromDate: "",
+      toDate: "",
+      today: moment(new Date()).format("YYYY-MM-DD"),
+      lastYear: moment().startOf("year").format("YYYY-MM-DD"),
       page: 1,
       limit: 6,
       previous: "",
@@ -42,16 +48,16 @@ class PostDataComponent extends React.Component {
     // const date_to = moment(this.state.today).format("YYYY-MM-DD");
     this.fetchPostPerformance(
       this.state.username,
-      "2021-10-01",
+      this.state.lastYear,
       "2021-10-20",
       this.state.limit,
       this.state.page
     );
   }
 
-  fetchPostPerformance(username, fromDate, toDate, limit, page) {
+  async fetchPostPerformance(username, fromDate, toDate, limit, page) {
     this.setState({ loading: true });
-    axios
+    await axios
       .post("analytics/receive/analyseAllPosts", {
         username: username,
         from_date: fromDate,
@@ -78,7 +84,13 @@ class PostDataComponent extends React.Component {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({ fromDate: fromDate, toDate: toDate });
-    this.fetchPostPerformance(this.state.username, fromDate, toDate);
+    this.fetchPostPerformance(
+      this.state.username,
+      fromDate,
+      toDate,
+      this.state.limit,
+      1
+    );
   }
   pagination = () => {
     let { username, fromDate, toDate, limit, page } = this.state;
@@ -88,14 +100,52 @@ class PostDataComponent extends React.Component {
     let { username, fromDate, toDate, limit, previous } = this.state;
     this.fetchPostPerformance(username, fromDate, toDate, limit, previous);
   };
+  disabledDate(current) {
+    return current && current > moment().endOf("day");
+  }
 
   render() {
+    console.log(this.state.page, "page");
     return (
       <>
+        <Row>
+          <Col xs={12} xl={12} md={12}>
+            <RangePicker
+              disabledDate={this.disabledDate}
+              key={4}
+              defaultValue={[
+                moment(this.state.lastYear),
+                moment(this.state.today),
+              ]}
+              defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+              allowClear={false}
+              ranges={{
+                Today: [moment(), moment()],
+                Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
+                Yesterday: [
+                  moment().subtract(1, "days"),
+                  moment().subtract(1, "days"),
+                ],
+                "This Month": [
+                  moment().startOf("month"),
+                  moment().endOf("month"),
+                ],
+                "Last Month": [
+                  moment().subtract(1, "month").startOf("month"),
+                  moment().subtract(1, "month").endOf("month"),
+                ],
+              }}
+              style={{ width: "20%" }}
+              format={dateFormat}
+              onChange={this.dateRangePickerChanger.bind(this)}
+            />
+          </Col>
+        </Row>
+        <hr />
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
         ) : (
-          <React.Fragment>
+          <>
             {/* <Row>
               <Col xs={12} xl={12} md={12}>
                 <RangePicker
@@ -132,49 +182,53 @@ class PostDataComponent extends React.Component {
                 <hr />
               </Col>
             </Row> */}
+
             <Row>
-              {this.state.data.map((record) => (
-                <React.Fragment>
-                  <Col xs={12} xl={4} md={6}>
-                    <div className="card analytic-box">
-                      <div className="row">
-                        <div className="col-4">
-                          <img
-                            src={record.media_url}
-                            class="img-fluid media-image"
-                            alt={record.media_type}
-                          />
-                        </div>
-                        <div class="col-8 analytic-caption">
-                          <div className="card-block px-2">
-                            <p className="card-text">
-                              {record.caption === ""
-                                ? "No Caption Added"
-                                : limitCharacter(record.caption, 55)}
-                            </p>
+              {!this.state.data.length ? (
+                <div className="no-data">No Data Available</div>
+              ) : (
+                this.state.data.map((record) => (
+                  <>
+                    <Col xs={12} xl={4} md={6}>
+                      <div className="card analytic-box">
+                        <div className="row">
+                          <div className="col-4">
+                            <img
+                              src={record.media_url}
+                              className="img-fluid media-image"
+                              alt={record.media_type}
+                            />
+                          </div>
+                          <div className="col-8 analytic-caption">
+                            <div className="card-block px-2">
+                              <p className="card-text">
+                                {record.caption === ""
+                                  ? "No Caption Added"
+                                  : limitCharacter(record.caption, 55)}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="row count-main-box">
-                        <div className="col-6 count-box">
-                          <h5 className="count-title">Impressions</h5>
-                          <h3 className="count">
-                            {numberWithCommas(record.views)}
-                          </h3>
-                        </div>
-                        <div className="col-6 count-box">
-                          <h5 className="count-title">Clicks</h5>
-                          <h3 className="count">
-                            {numberWithCommas(record.clicks)}
-                          </h3>
-                        </div>
-                        <div className="col-6 count-box">
-                          <h5 className="count-title">Engagement</h5>
-                          <h3 className="count">
-                            {twodecimalplace(record.ctr)}%
-                          </h3>
-                        </div>
-                        {/* <div className="col-6 count-box">
+                        <div className="row count-main-box">
+                          <div className="col-6 count-box">
+                            <h5 className="count-title">Impressions</h5>
+                            <h3 className="count">
+                              {numberWithCommas(record.views)}
+                            </h3>
+                          </div>
+                          <div className="col-6 count-box">
+                            <h5 className="count-title">Clicks</h5>
+                            <h3 className="count">
+                              {numberWithCommas(record.clicks)}
+                            </h3>
+                          </div>
+                          <div className="col-6 count-box">
+                            <h5 className="count-title">Engagement</h5>
+                            <h3 className="count">
+                              {twodecimalplace(record.ctr)}%
+                            </h3>
+                          </div>
+                          {/* <div className="col-6 count-box">
                         <h4>Date Start</h4>
                         <h3 className="count">1st October 2021</h3>
                       </div>
@@ -182,15 +236,16 @@ class PostDataComponent extends React.Component {
                         <h4>Date Start</h4>
                         <h3 className="count">31st October 2021</h3>
                       </div> */}
+                        </div>
                       </div>
-                    </div>
-                  </Col>
-                </React.Fragment>
-              ))}
+                    </Col>
+                  </>
+                ))
+              )}
             </Row>
-          </React.Fragment>
+          </>
         )}
-        {this.state.loading ? null : (
+        {this.state.loading || !this.state.data.length ? null : (
           <div className="text-right">
             <Button
               variant="primary"
