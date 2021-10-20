@@ -55,8 +55,32 @@ class PostDataComponent extends React.Component {
     );
   }
 
+  // async fetchPostPerformance(username, fromDate, toDate, limit, page) {
+  //   this.setState({ loading: true });
+  //   await axios
+  //     .post("analytics/receive/analyseAllPosts", {
+  //       username: username,
+  //       from_date: fromDate,
+  //       to_date: toDate,
+  //       page: page,
+  //       limit: limit,
+  //       post_type: "image",
+  //     })
+  //     .then((response) => {
+  //       this.setState({ data: response.data.message.data, loading: false });
+  //       if (response.data.message.hasOwnProperty("next")) {
+  //         this.setState({ page: response.data.message.next.page });
+  //       } else {
+  //         this.setState({ page: 0 });
+  //       }
+  //       if (response.data.message.hasOwnProperty("previous")) {
+  //         this.setState({ previous: response.data.message.previous.page });
+  //       } else {
+  //         this.setState({ previous: 0 });
+  //       }
+  //     });
+  // }
   async fetchPostPerformance(username, fromDate, toDate, limit, page) {
-    this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseAllPosts", {
         username: username,
@@ -78,6 +102,9 @@ class PostDataComponent extends React.Component {
         } else {
           this.setState({ previous: 0 });
         }
+      })
+      .catch((error) => {
+        console.log(error, "error");
       });
   }
   dateRangePickerChanger(value, dataString) {
@@ -105,7 +132,6 @@ class PostDataComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state.page, "page");
     return (
       <>
         <Row>
@@ -146,43 +172,6 @@ class PostDataComponent extends React.Component {
           <Loader className="analytics-loading" size={60} />
         ) : (
           <>
-            {/* <Row>
-              <Col xs={12} xl={12} md={12}>
-                <RangePicker
-                  key={2}
-                  defaultValue={[
-                    moment(this.state.fromDate),
-                    moment(this.state.toDate),
-                  ]}
-                  defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                  allowClear={false}
-                  ranges={{
-                    Today: [moment(), moment()],
-                    Tomorrow: [
-                      moment().add(1, "days"),
-                      moment().add(1, "days"),
-                    ],
-                    Yesterday: [
-                      moment().subtract(1, "days"),
-                      moment().subtract(1, "days"),
-                    ],
-                    "This Month": [
-                      moment().startOf("month"),
-                      moment().endOf("month"),
-                    ],
-                    "Last Month": [
-                      moment().subtract(1, "month").startOf("month"),
-                      moment().subtract(1, "month").endOf("month"),
-                    ],
-                  }}
-                  style={{ width: "20%" }}
-                  format={dateFormat}
-                  onChange={this.dateRangePickerChanger.bind(this)}
-                />
-                <hr />
-              </Col>
-            </Row> */}
-
             <Row>
               {!this.state.data.length ? (
                 <div className="no-data">No Data Available</div>
