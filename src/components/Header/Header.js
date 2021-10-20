@@ -24,7 +24,7 @@ import {
   closeSidebar,
   changeActiveSidebarItem,
 } from "../../actions/navigation";
-import logo from "../../images/logo.png";
+import logo from "../../images/logo.svg";
 // import adminDefault from "../../images/chat/chat2.png";
 // import MenuIcon from "../../images/sidebar/Fill/MenuIcon";
 // import FlipIcon from "../../images/sidebar/Outline/Flip";

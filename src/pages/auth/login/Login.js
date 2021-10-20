@@ -10,7 +10,7 @@ import {loginUser, receiveToken, doInit} from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 // import microsoft from '../../../images/microsoft.png';
 import {push} from "connected-react-router";
-import logo from "../../../images/logo.png";
+import logo from "../../../images/logo.svg";
 
 class Login extends React.Component {
   static propTypes = {
@@ -79,7 +79,7 @@ class Login extends React.Component {
         <Container>
           <h5 className="auth-logo">
             <i className="la la-circle text-primary" />
-            <img src={logo} />
+            <img className="logo" src={logo} />
             <i className="la la-circle text-danger" />
           </h5>
           <Widget
