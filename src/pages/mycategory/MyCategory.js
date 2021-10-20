@@ -12,6 +12,7 @@ export const history = createBrowserHistory({
   forceRefresh: true,
 });
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
 class MyCategory extends React.Component {
   constructor(props) {
     super(props);
@@ -33,11 +34,7 @@ class MyCategory extends React.Component {
     this.fetchMyCategory();
     this.fetchSaveCategory();
     //Connect Instagram Code
-    let access_token = userInfo.access_token;
-    if (access_token !== "") {
-      this.props.history.push("/app/home");
-    }
-  }
+   }
 
   fetchMyCategory = async () => {
     await axios
