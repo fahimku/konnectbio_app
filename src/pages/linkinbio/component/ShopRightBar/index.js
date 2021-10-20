@@ -1,16 +1,16 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import {Row, Col, Button} from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import moment from "moment";
-import {Select} from "antd";
+import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 
-const {Option} = Select;
-const {RangePicker} = DatePicker;
+const { Option } = Select;
+const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
@@ -106,16 +106,16 @@ const ShopRightBar = (props) => {
                 <span>URL</span>
                 <InputValidation
                   placeholder="Please Enter Website Address"
-                  type="text"
+                  type="url"
                   id="website"
                   required
                   name="website"
                   trigger="change"
-                  validations="isUrl"
-                  validationError={{
-                    isUrl: "This value should be a valid url.",
-                  }}
-                  value={props.redirectedUrl}
+                  // validations="isUrl"
+                  // validationError={{
+                  //   isUrl: "This value should be a valid url.",
+                  // }}
+                  value={props.redirectedUrl ? props.redirectedUrl : "https://"}
                   onChange={(e) => {
                     props.callBack(e);
                   }}
@@ -126,7 +126,7 @@ const ShopRightBar = (props) => {
                     key={Date.now()}
                     value={props.category}
                     showSearch
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     placeholder="Select Category"
                     optionFilterProp="children"
                     clearable={false}
@@ -142,7 +142,7 @@ const ShopRightBar = (props) => {
                         .indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    {props.categories.map(({value, label}, i) => (
+                    {props.categories.map(({ value, label }, i) => (
                       <Option value={value}>{label}</Option>
                     ))}
                   </Select>
@@ -235,7 +235,7 @@ const ShopRightBar = (props) => {
                         moment().endOf("month"),
                       ],
                     }}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     format={dateFormat}
                     onChange={dateRangePickerChanger}
                   />
