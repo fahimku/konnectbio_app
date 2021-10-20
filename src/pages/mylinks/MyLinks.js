@@ -128,6 +128,7 @@ class MyLinks extends React.Component {
         this.setState({updatePage: true});
         this.setState({linkId: linkId});
         this.setState({modal: true});
+        
       })
       .catch((error) => {
         console.log(error);
@@ -147,7 +148,8 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
-        this.addNewLink();
+        //  this.addNewLink();
+        this.setState({loading: false});
       })
       .catch((error) => {
         console.log(error);
@@ -180,8 +182,9 @@ class MyLinks extends React.Component {
         this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
         this.setState({loading: false});
-        this.setState({confirmModal: false});
-        this.addNewLink();
+        this.setState({ confirmModal: false });
+        this.preview(false,"")
+        // this.addNewLink();
       })
       .catch((error) => {
         console.log(error);
@@ -247,7 +250,6 @@ class MyLinks extends React.Component {
   addNewLinkShop = () => {
     return (
       <AddNewLink
-     
         testUrl={this.testUrl}
         addNewLink={this.addNewLink}
         loading={this.state.loading}

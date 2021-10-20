@@ -1,15 +1,25 @@
-import React, { useRef, useEffect } from "react";
-import { Row, Col, Button } from "reactstrap";
+import React, {useRef, useEffect, useState} from "react";
+import {Row, Col, Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
 const AddNewLink = (props) => {
+  const [canSubmit, setCanSubmit] = useState(false);
   const formRef = useRef("LinkForm");
 
   function resetForm() {
     formRef.current.reset();
   }
+
+  function disableButton() {
+    setCanSubmit(true);
+  }
+
+  function enableButton() {
+    setCanSubmit(false);
+  }
+
   return (
     <>
       <div className={`image-edit-box ${props.isPreview ? "show" : "hidden"}`}>
@@ -27,12 +37,16 @@ const AddNewLink = (props) => {
             onValidSubmit={() => {
               if (props.updatePage) {
                 props.updateLink();
+                props.preview(false, "");
               } else {
                 props.saveLink && props.saveLink();
+                props.preview(false, "");
                 resetForm();
               }
             }}
             ref={formRef}
+            onValid={enableButton}
+            onInvalid={disableButton}
           >
             <div className="image-edit-links">
               <span>Title</span>
@@ -64,7 +78,6 @@ const AddNewLink = (props) => {
                   props.redirectedUrlChange(evt.target.value);
                 }}
               />
-
               <div className="pane-button">
                 {props.updatePage ? (
                   <>
@@ -86,6 +99,7 @@ const AddNewLink = (props) => {
                           </Col>
                           <Col lg="3" sm="6" xs="6">
                             <Button
+                              disabled={canSubmit}
                               className="update-buttons"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}
@@ -111,6 +125,7 @@ const AddNewLink = (props) => {
                               color="primary"
                               onClick={() => {
                                 props.deleteLink();
+
                                 resetForm();
                               }}
                             >
@@ -120,15 +135,6 @@ const AddNewLink = (props) => {
                         </Row>
                       </>
                     )}
-
-                    {/* <div className="remove-link">
-                      <a
-                        href="javascript:void(0)"
-                      >
-                        <span className="glyphicon glyphicon-trash"></span>
-                        Remove Link
-                      </a>
-                    </div> */}
                   </>
                 ) : (
                   <>
@@ -151,6 +157,7 @@ const AddNewLink = (props) => {
 
                           <Col lg="4" sm="6" xs="6">
                             <Button
+                              disabled={canSubmit}
                               className="update-buttons"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}

@@ -18,7 +18,7 @@ import {addUserInfo} from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
-import moment from "moment"
+import moment from "moment";
 class LinkinBioShop extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -189,8 +189,8 @@ class LinkinBioShop extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
-              this.selectPost(false, "")
+              this.setState({instagramPosts: instagramPosts}, () => {});
+              this.selectPost(false, "");
             })
             .catch((err) => {
               this.setState({loading: false});
@@ -209,6 +209,8 @@ class LinkinBioShop extends React.Component {
         categories: [this.state.category],
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
+        start_date: this.state.startDate,
+        end_date: this.state.endDate,
       })
       .then((response) => {
         let singlePostIndex = this.state.instagramPosts.data.findIndex(
@@ -222,8 +224,8 @@ class LinkinBioShop extends React.Component {
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({instagramPosts: instagramPosts});
         toast.success("Bio Shop Updated Successfully");
-        this.setState({ loading: false });
-        this.selectPost(false, "")
+        this.setState({loading: false});
+        this.selectPost(false, "");
       });
   };
 
@@ -240,12 +242,13 @@ class LinkinBioShop extends React.Component {
       );
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({instagramPosts: instagramPosts});
+
       toast.success("Your Post is Unlinked Successfully");
       this.setState({loading: false});
       this.fetchInstagramPosts(this.state.username, this.state.limit, 1);
     });
-    this.setState({ confirmModal: false });
-    this.selectPost(false, "")
+    this.setState({confirmModal: false});
+    this.selectPost(false, "");
   };
 
   paneDidMount = (node) => {
@@ -274,16 +277,18 @@ class LinkinBioShop extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
-
         this.setState({postType: response.data.message.post_type});
         this.setState({media_id: media_id});
         let category = response.data.message.categories[0].category_id;
-        this.setState({ category: category });
+        this.setState({category: category});
 
-        console.log("start Date")
-        console.log("endDate")
+        console.log("start Date");
+        console.log("endDate");
 
-        this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
+        this.changeDateRange(
+          response.data.message.start_date,
+          response.data.message.end_date
+        );
 
         // let subCategory = [];
         // this.fetchSubCategories(category).then(function () {
