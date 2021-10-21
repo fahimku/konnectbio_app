@@ -104,11 +104,11 @@ class PostDataComponent extends React.Component {
   }
 
   render() {
-    console.log(this.state.page, "page");
     return (
       <>
         <Row>
           <Col xs={12} xl={12} md={12}>
+            <p>Select Start Date / End Date</p>
             <RangePicker
               disabledDate={this.disabledDate}
               key={4}
