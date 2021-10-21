@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button} from "react-bootstrap";
-import {toast} from "react-toastify";
+import { Row, Col, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -27,10 +27,10 @@ class MyCategory extends React.Component {
 
   componentDidMount() {
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({user_id: userInfo.user_id});
+    this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
     this.fetchSaveCategory();
 
@@ -43,14 +43,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
+        myCategories.map(({ category_id, category_name, image_url }) => {
           selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({myCategory: selectCategories});
+        this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -63,7 +63,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
+        optionCategories.map(({ category_id, category_name, image_url }) => {
           saveCategories.push({
             value: category_id,
             label: category_name,
@@ -114,13 +114,13 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({categoryError: ""});
+          this.setState({ categoryError: "" });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({categoryError: err.response.data.message});
+        this.setState({ categoryError: err.response.data.message });
       });
     // }
   };
@@ -146,13 +146,14 @@ class MyCategory extends React.Component {
                   <Button variant="primary" className="btn-block">
                     <i className="fa fa-instagram" />
                     &nbsp;&nbsp;
-                    {this.props.isInstagramConnected || this.state.isInstagramConnected ? (
+                    {this.props.isInstagramConnected ||
+                    this.state.isInstagramConnected ? (
                       "Connected"
                     ) : (
                       <>
                         {" "}
                         <div
-                          dangerouslySetInnerHTML={{__html: this.props.url}}
+                          dangerouslySetInnerHTML={{ __html: this.props.url }}
                         />
                       </>
                     )}
@@ -237,6 +238,7 @@ class MyCategory extends React.Component {
                     variant="primary"
                     type="submit"
                     className="category-btn btn-block"
+                    disabled={this.state.saveCategories.length ? false : true}
                   >
                     Save Category
                   </Button>
