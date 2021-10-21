@@ -1,21 +1,23 @@
-import React, {useEffect, useState, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import {Row, Col, Button} from "reactstrap";
+import { Row, Col, Button } from "reactstrap";
 import moment from "moment";
-import {Select} from "antd";
+import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 
-const {Option} = Select;
-const {RangePicker} = DatePicker;
+const { Option } = Select;
+const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
   const [subCategories, setSubCategories] = useState([]);
-  const media_id = props.singlePost.id ? props.singlePost.id : props.singlePost.media_id;
+  const media_id = props.singlePost.id
+    ? props.singlePost.id
+    : props.singlePost.media_id;
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [redirectedUrl, setRedirectedUrl] = useState("");
@@ -44,7 +46,7 @@ const ShopRightBar = (props) => {
   }, [props.startDate, props.endDate]);
 
   useEffect(() => {
-    setRedirectedUrl(props.redirectedUrl)
+    setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
 
   function resetForm() {
@@ -65,15 +67,13 @@ const ShopRightBar = (props) => {
     <>
       {props.startDate && props.endDate && (
         <Formsy.Form
-          // onValidSubmit={() => {
-          //   if (props.updatePage) {
-          //     props.updateLink();
-          //   } else {
-          //     props.saveLink && props.saveLink();
-
-          //   }
-          // }}
-
+          onValidSubmit={() => {
+            if (props.updatePage) {
+              props.updatePost();
+            } else {
+              props.savePost && props.savePost(this);
+            }
+          }}
           ref={formRef}
         >
           <div
@@ -108,7 +108,7 @@ const ShopRightBar = (props) => {
                 <span>URL</span>
                 <InputValidation
                   placeholder="Please Enter Website Address"
-                  type="url"
+                  type="text"
                   id="website"
                   required
                   name="website"
@@ -117,18 +117,26 @@ const ShopRightBar = (props) => {
                   // validationError={{
                   //   isUrl: "This value should be a valid url.",
                   // }}
-                  value={redirectedUrl ? redirectedUrl : "https://"}
+                  validations={{
+                    matchRegexp:
+                      /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
+                  }}
+                  validationError={{
+                    isUrl: "This value should be a valid url.",
+                  }}
+                  value={redirectedUrl}
                   onChange={(e) => {
                     props.callBack(e);
                   }}
                 />
+
                 <div className="select-categories mt-3">
                   <span>Select Category</span>
                   <Select
                     key={Date.now()}
                     value={props.category}
                     showSearch
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     placeholder="Select Category"
                     optionFilterProp="children"
                     clearable={false}
@@ -144,7 +152,7 @@ const ShopRightBar = (props) => {
                         .indexOf(input.toLowerCase()) >= 0
                     }
                   >
-                    {props.categories.map(({value, label}, i) => (
+                    {props.categories.map(({ value, label }, i) => (
                       <Option value={value}>{label}</Option>
                     ))}
                   </Select>
@@ -237,7 +245,7 @@ const ShopRightBar = (props) => {
                         moment().endOf("month"),
                       ],
                     }}
-                    style={{width: "100%"}}
+                    style={{ width: "100%" }}
                     format={dateFormat}
                     onChange={dateRangePickerChanger}
                   />
@@ -315,9 +323,9 @@ const ShopRightBar = (props) => {
                               <Button
                                 className="update-buttons save-btn btn btn-primary"
                                 color="primary"
-                                onClick={(ev) =>
-                                  props.savePost && props.savePost(this)
-                                }
+                                // onClick={(ev) =>
+                                //   props.savePost && props.savePost(this)
+                                // }
                               >
                                 &nbsp;Save&nbsp;
                               </Button>

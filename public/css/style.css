@@ -390,3 +390,15 @@ span.icon {
   display: flex;
   width: 680px !important;
 } */
+.url-note {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #798892;
+  display: block;
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .Layout_wrap__3DJh2 {
+    left: 0 !important;
+    margin-left: 0 !important;
+  }
+}

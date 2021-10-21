@@ -18,7 +18,10 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
-
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 class LinkinBio extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -272,6 +275,14 @@ class LinkinBio extends React.Component {
   }
 
   savePost = () => {
+    let newRedirectedUrl;
+    if (this.state.redirectedUrl.includes("http://")) {
+      newRedirectedUrl = this.state.redirectedUrl;
+    } else if (this.state.redirectedUrl.includes("https://")) {
+      newRedirectedUrl = this.state.redirectedUrl;
+    } else {
+      newRedirectedUrl = "http://" + this.state.redirectedUrl;
+    }
     if (this.state.redirectedUrl) {
       this.setState(
         (previousState) => ({
@@ -286,7 +297,7 @@ class LinkinBio extends React.Component {
               media_url: this.state.currentPost.media_url,
               media_type: this.state.currentPost.media_type,
               timestamp: this.state.currentPost.timestamp,
-              redirected_url: this.state.redirectedUrl,
+              redirected_url: newRedirectedUrl,
               username: this.state.currentPost.username,
               categories: [this.state.category],
               sub_categories: this.state.subCategory,
@@ -309,6 +320,7 @@ class LinkinBio extends React.Component {
               this.setState({ instagramPosts: instagramPosts }, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
+              this.reload();
             })
 
             .catch((err) => {
@@ -347,7 +359,13 @@ class LinkinBio extends React.Component {
         this.selectPost(false, "");
       });
   };
-
+  reload = () => {
+    const current = this.props.location.pathname;
+    this.props.history.replace(`/reload`);
+    setTimeout(() => {
+      this.props.history.replace(current);
+    });
+  };
   deletePost = async (id) => {
     this.setState({ loading: true });
     await axios.delete(`/posts/remove/${id}`).then((response) => {
@@ -365,6 +383,9 @@ class LinkinBio extends React.Component {
       this.setState({ loading: false });
       this.setState({ confirmModal: false });
       this.selectPost(false, "");
+      // window.location.reload();
+      // history.push("/app/linkinbio/");
+      this.reload();
     });
   };
 
@@ -450,7 +471,7 @@ class LinkinBio extends React.Component {
 
   changePostType = (e) => {
     if (e.target.checked) {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       this.setState({ postType: e.target.value });
     }
   };
