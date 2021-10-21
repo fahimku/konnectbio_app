@@ -61,7 +61,7 @@ class Login extends React.Component {
   componentDidMount() {
     const query = queryString.parse(window.location.search);
 
-    if (query.bio_code) {
+    if (query.bio_code && query.email) {
       this.tokenVerify(query.bio_code, query.email);
     }
     //const params = new URLSearchParams(this.props.location.search);
@@ -89,7 +89,11 @@ class Login extends React.Component {
         return res.json();
       })
       .then((response) => {
-        toast.error(response.message);
+        if (response.success) {
+          toast.success(response.success);
+        } else {
+          toast.error(response.message);
+        }
       });
   };
   signUp() {
