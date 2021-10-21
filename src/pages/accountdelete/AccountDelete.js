@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import {route} from "react-router";
 import {
   Container,
   Button,
@@ -11,6 +10,10 @@ import {
 } from "reactstrap";
 import {Link} from "react-router-dom";
 import s from "./ErrorPage.module.scss";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -40,7 +43,7 @@ class AccountDelete extends React.Component {
       })
       .then(() => {
         this.setState({modal: false});
-        this.props.history.push('/logout')
+        history.push("/logout");
       })
       .catch((err) => {});
   };
