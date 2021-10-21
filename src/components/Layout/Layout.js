@@ -180,7 +180,7 @@ class Layout extends React.Component {
                 <CSSTransition
                   key={this.props.location.key}
                   classNames="fade"
-                  timeout={200}
+                  timeout={0}
                 >
                   <Router history={history}>
                     <Switch>
