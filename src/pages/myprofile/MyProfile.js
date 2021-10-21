@@ -235,6 +235,7 @@ class MyProfile extends React.Component {
                       // required
                       // maxlength="120"
                       defaultValue={userData.bio}
+                      rows="4"
                     />
                   </Col>
                 </Row>
