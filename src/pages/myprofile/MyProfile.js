@@ -110,14 +110,20 @@ class MyProfile extends React.Component {
         let imageResponse = response.data;
         toast.success(imageResponse.message);
         this.fetchUserInfo();
+        this.setState({ imageFiles: [] });
       })
       .catch((err) => {
-        console.log(err.response.data.message, "err");
         toast.error(err.response.data.message);
         this.setState({ loadingImage: false });
         this.setState({ imageError: err.response.data.message });
       });
   };
+  // clearImage = () => {
+  //   console.log("sdsdsd");
+  //   this.setState({
+  //     imageFiles: [],
+  //   });
+  // };
 
   render() {
     const userData = this.state.userData;
@@ -178,6 +184,13 @@ class MyProfile extends React.Component {
                     >
                       <label for="fileupload2">Choose Image</label>
                     </Button>
+                    {/* <Button
+                      onClick={this.clearImage}
+                      className="select-image"
+                      // disabled={this.state.imageFiles.length > 0 ? false : true}
+                    >
+                      Remove
+                    </Button> */}
 
                     {this.state.loadingImage ? (
                       <Button className="d-block upload-btn">
@@ -220,7 +233,7 @@ class MyProfile extends React.Component {
                       onInput={this.handleChange}
                       className="form-control comment-field"
                       // required
-                      maxlength="120"
+                      // maxlength="120"
                       defaultValue={userData.bio}
                     />
                   </Col>
