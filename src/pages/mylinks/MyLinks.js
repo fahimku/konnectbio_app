@@ -1,14 +1,6 @@
 import axios from "axios";
 import React from "react";
-import {
-  Row,
-  Col,
-  Modal,
-  Button,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "reactstrap";
+import { Row,Col,Modal,Button,ModalHeader,ModalBody,ModalFooter} from "reactstrap";
 import {toast} from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -25,6 +17,7 @@ class MyLinks extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      isDeleted:false,
       confirmModal: false,
       iframeKey: 0,
       loading: false,
@@ -136,7 +129,8 @@ class MyLinks extends React.Component {
   };
 
   saveLink = async () => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
+    
     await axios
       .post("posts/reserve", {
         caption: this.state.title,
@@ -148,8 +142,8 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
-        //  this.addNewLink();
-        this.setState({loading: false});
+        this.setState({ loading: false });
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -165,9 +159,10 @@ class MyLinks extends React.Component {
         post_type: "link",
       })
       .then(() => {
-        this.fetchMyLinks(this.state.username);
+        // this.fetchMyLinks(this.state.username);
         toast.success("Link Updated");
-        this.setState({loading: false});
+        this.setState({ loading: false });
+        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
@@ -175,16 +170,18 @@ class MyLinks extends React.Component {
   };
 
   deleteLink = async (id) => {
-    this.setState({loading: true});
+    this.setState({ loading: true});
+    this.setState({ isDeleted: true });
     await axios
       .delete(`posts/remove/${id}?post_type=link`)
       .then(() => {
-        this.fetchMyLinks(this.state.username);
+        // this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
         this.setState({loading: false});
         this.setState({ confirmModal: false });
-        this.preview(false,"")
-        // this.addNewLink();
+        this.preview(false, "")
+        window.location.reload();
+        //this.addNewLink();
       })
       .catch((error) => {
         console.log(error);
@@ -251,6 +248,7 @@ class MyLinks extends React.Component {
     return (
       <AddNewLink
         testUrl={this.testUrl}
+        isDeleted={this.state.isDeleted}
         addNewLink={this.addNewLink}
         loading={this.state.loading}
         titleChange={this.titleChange}

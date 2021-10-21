@@ -25,11 +25,11 @@ import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
 
-import { createBrowserHistory } from "history";
+// import { createBrowserHistory } from "history";
 
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
+// export const history = createBrowserHistory({
+//   forceRefresh: true,
+// });
 
 const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
@@ -48,8 +48,8 @@ class App extends React.PureComponent {
           hideProgressBar
           closeButton={<CloseButton />}
         />
-        {/* <ConnectedRouter history={getHistory()}> */}
-        <Router history={history}>
+        <ConnectedRouter history={getHistory()}>
+        <Router>
           <Switch>
             {/* <Route
                 path="/"
@@ -84,18 +84,16 @@ class App extends React.PureComponent {
             <AuthRoute path="/forgot" exact component={Forgot} />
             <Route path="/error" exact component={ErrorPage} />
             {/* <Redirect from="*" to="/app/main/analytics"/>*/}
-            <Redirect from="*" to="/connect" />
+            <Redirect from="*" to="/login" />
           </Switch>
         </Router>
-        {/* </ConnectedRouter> */}
+        </ConnectedRouter>
       </div>
     );
   }
 }
-
 const mapStateToProps = (store) => ({
   currentUser: store.auth.currentUser,
   loadingInit: store.auth.loadingInit,
 });
-
 export default connect(mapStateToProps)(App);

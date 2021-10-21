@@ -34,9 +34,7 @@ export const store = createStore(
     ),
   )
 );
-
 store.dispatch(doInit());
-
 ReactDOM.render(
     <Provider store={store}>
         <App />
