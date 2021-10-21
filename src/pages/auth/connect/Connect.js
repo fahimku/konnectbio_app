@@ -1,8 +1,8 @@
 import axios from "axios";
 import React from "react";
-import {Button, Row, Col, FormLabel} from "react-bootstrap";
-import {withRouter, NavLink} from "react-router-dom";
-import {connect} from "react-redux";
+import { Button, Row, Col, FormLabel } from "react-bootstrap";
+import { withRouter, NavLink } from "react-router-dom";
+import { connect } from "react-redux";
 import logo from "../../../images/logo.svg";
 import MyCategory from "pages/mycategory/MyCategory";
 
@@ -12,7 +12,7 @@ class Connect extends React.Component {
     this.state = {
       url: "",
       instagramCode: "",
-      isInstagramConnected: false
+      isInstagramConnected: false,
     };
   }
 
@@ -20,7 +20,7 @@ class Connect extends React.Component {
     await axios
       .post(`/social/ig/url/instagram`)
       .then((response) => {
-        this.setState({url: response.data});
+        this.setState({ url: response.data });
       })
       .catch(function (error) {});
   }
@@ -36,7 +36,7 @@ class Connect extends React.Component {
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
       this.setState({ instagramCode: code[1] });
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
     this.getInstagramUrl();
   }
@@ -44,22 +44,23 @@ class Connect extends React.Component {
   render() {
     return (
       <>
-        <div className="connect-page-header">
-          <div>
+        <Row className="connect-page-header">
+          <Col md={11} xs={8}>
             <img className="img-connect" src={logo} />
-          </div>
-          <div className="btn-div">
+          </Col>
+          <Col md={1} xs={4}>
             <Button
               className="btn-connect"
               onClick={() => this.props.history.push("/logout")}
             >
               Logout
             </Button>
-          </div>
-        </div>
+          </Col>
+        </Row>
         <MyCategory
           isInstagramConnected={this.state.isInstagramConnected}
-          url={this.state.url} />
+          url={this.state.url}
+        />
         <div className="category-page">
           <div className="container">
             <div className="justify-content-md-center">
@@ -80,12 +81,12 @@ class Connect extends React.Component {
                     Next
                   </Button>
                 </Col>
+                {this.state.instagramCode == "" && (
+                  <FormLabel className="label-insta col-md-12">
+                    Please Connect your Instagram Account
+                  </FormLabel>
+                )}
               </Row>
-              {this.state.instagramCode == "" && (
-                <FormLabel className="label-insta">
-                  Please Connect your Instagram Account
-                </FormLabel>
-              )}
             </div>
           </div>
         </div>

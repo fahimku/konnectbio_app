@@ -90,7 +90,7 @@ class Login extends React.Component {
       })
       .then((response) => {
         if (response.success) {
-          toast.success(response.success);
+          toast.success(response.message);
         } else {
           toast.error(response.message);
         }

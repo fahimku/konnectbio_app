@@ -326,7 +326,7 @@ span.icon {
 
 .connect-page-header {
   background-color: #f1e7e7;
-  display: flex;
+  /* display: flex; */
 }
 .img-connect {
   margin-left: 28px;
@@ -343,9 +343,8 @@ span.icon {
 }
 .label-insta {
   margin-top: 4px;
-  position: absolute;
   color: crimson;
-  right: 344px;
+  text-align: right;
 }
 
 .logo {
@@ -363,10 +362,18 @@ span.icon {
     margin-right: 0px;
   }
   .label-insta {
-    margin-top: 0px;
-    position: absolute;
+    margin-top: 5px;
     color: crimson;
-    right: 40px;
+    text-align: center;
+  }
+  .connect-page-header {
+    background-color: #f1e7e7;
+    display: flex;
+    left: 0px;
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    z-index: 1000;
   }
 }
 .source-button .btn-primary:not(:disabled):not(.disabled):active,
