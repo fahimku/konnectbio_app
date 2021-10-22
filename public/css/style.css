@@ -410,14 +410,18 @@ span.icon {
   .ant-picker-range {
     width: auto !important;
   }
+  .header .left-top-bar {
+    justify-content: flex-start !important;
+  }
 }
 .next-button .btn-primary:disabled {
   cursor: no-drop;
 }
 @media (max-width: 576px) {
-  /* .ant-picker-panels {
+  .ant-picker-panels {
     flex-direction: column;
   }
+  /*
   .ant-picker-dropdown-range {
     top: 302px !important;
     position: relative !important;

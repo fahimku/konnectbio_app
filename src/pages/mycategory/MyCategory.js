@@ -22,6 +22,7 @@ class MyCategory extends React.Component {
       saveCategories: "",
       categoryError: "",
       isInstagramConnected: false,
+      loading: false,
     };
   }
 
@@ -105,6 +106,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
+    this.setState({ loading: true });
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -115,11 +117,13 @@ class MyCategory extends React.Component {
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
           this.setState({ categoryError: "" });
+          this.setState({ loading: false });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
+        this.setState({ loading: false });
         this.setState({ categoryError: err.response.data.message });
       });
     // }
@@ -238,7 +242,11 @@ class MyCategory extends React.Component {
                     variant="primary"
                     type="submit"
                     className="category-btn btn-block"
-                    disabled={this.state.saveCategories.length ? false : true}
+                    disabled={
+                      this.state.saveCategories.length && !this.state.loading
+                        ? false
+                        : true
+                    }
                   >
                     Save Category
                   </Button>

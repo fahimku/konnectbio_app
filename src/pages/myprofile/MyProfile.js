@@ -263,7 +263,7 @@ class MyProfile extends React.Component {
                 </Row>
               </form>
             </div>
-            <Row className="mt-4">
+            <Row className="">
               <Col md={12}>
                 <h4 className="page-title">Change Password</h4>
               </Col>
