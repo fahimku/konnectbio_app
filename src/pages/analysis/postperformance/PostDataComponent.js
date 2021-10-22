@@ -208,7 +208,7 @@ class PostDataComponent extends React.Component {
           </>
         )}
         {this.state.loading || !this.state.data.length ? null : (
-          <div className="text-right">
+          <div className="text-right next-button">
             <Button
               variant="primary"
               onClick={this.paginationPrev}

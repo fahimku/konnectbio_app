@@ -8,6 +8,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import InputValidation from "../../components/InputValidation";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
+import ChangePassword from "./component/ChangePassword";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -41,7 +42,7 @@ class MyProfile extends React.Component {
         }
       })
       .catch((error) => {
-        console.log(error.response.data.messagem, "error");
+        console.log(error.response.data.message, "error");
       });
   };
   setDefaultData = () => {
@@ -162,15 +163,19 @@ class MyProfile extends React.Component {
                               />
                             ))}
                           </div>
+                        ) : userData.profile_image_url === "" ? (
+                          <img
+                            alt="image"
+                            src={
+                              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                            }
+                            style={{ width: "150px", height: "150px" }}
+                            className="circle profile-icon"
+                          />
                         ) : (
                           <img
-                            alt="..."
-                            // src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                            src={
-                              userData.profile_image_url === ""
-                                ? "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                                : userData.profile_image_url
-                            }
+                            alt="image"
+                            src={userData.profile_image_url}
                             style={{ width: "150px", height: "150px" }}
                             className="circle profile-icon"
                           />
@@ -258,6 +263,12 @@ class MyProfile extends React.Component {
                 </Row>
               </form>
             </div>
+            <Row className="mt-4">
+              <Col md={12}>
+                <h4 className="page-title">Change Password</h4>
+              </Col>
+            </Row>
+            <ChangePassword userID={userInfo.user_id} />
           </div>
         </div>
       </div>

@@ -401,4 +401,41 @@ span.icon {
     left: 0 !important;
     margin-left: 0 !important;
   }
+  .logo {
+    height: 50px;
+  }
+  .top-logo .logo img {
+    width: auto !important;
+  }
+  .ant-picker-range {
+    width: auto !important;
+  }
+}
+.next-button .btn-primary:disabled {
+  cursor: no-drop;
+}
+@media (max-width: 576px) {
+  /* .ant-picker-panels {
+    flex-direction: column;
+  }
+  .ant-picker-dropdown-range {
+    top: 302px !important;
+    position: relative !important;
+    left: 30px !important;
+  } */
+  .top-logo .logo img {
+    width: auto !important;
+  }
+  .logo {
+    height: 50px;
+  }
+  .ant-picker-range {
+    width: auto !important;
+  }
+}
+.change-password .white-box {
+  margin-bottom: 8px;
+}
+.change-password .modal-title {
+  font-size: 1.25rem;
 }
