@@ -54,6 +54,8 @@ class Header extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
 
+    console.log(username)
+
     super(props);
 
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -188,16 +190,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { focus } = this.state;
-    const { openUsersList } = this.props;
-    const navbarType = localStorage.getItem("navbarType") || "static";
-    const user = this.props.currentUser;
-    const avatar =
-      user && user.avatar && user.avatar.length && user.avatar[0].publicUrl;
-    const firstUserLetter =
-      user && (user.firstName || user.email)[0].toUpperCase();
     const url = config.visitorURL + "/";
-
     return (
       <>
         <div className="mobile-header-responsive">

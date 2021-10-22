@@ -1,8 +1,8 @@
 import axios from "axios";
 import React from "react";
-import { Button, Row, Col, FormLabel } from "react-bootstrap";
-import { withRouter, NavLink } from "react-router-dom";
-import { connect } from "react-redux";
+import {Button, Row, Col, FormLabel} from "react-bootstrap";
+import {withRouter, NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 import logo from "../../../images/logo.svg";
 import MyCategory from "pages/mycategory/MyCategory";
 
@@ -20,7 +20,7 @@ class Connect extends React.Component {
     await axios
       .post(`/social/ig/url/instagram`)
       .then((response) => {
-        this.setState({ url: response.data });
+        this.setState({url: response.data});
       })
       .catch(function (error) {});
   }
@@ -28,17 +28,57 @@ class Connect extends React.Component {
   componentDidMount() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let access_token = userInfo.access_token;
+    const instagramCodeUrl = window.location.href;
     if (access_token !== "") {
       this.props.history.push("/app/linkinbio");
     }
 
-    const instagramCodeUrl = window.location.href;
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
-      this.setState({ instagramCode: code[1] });
-      this.setState({ isInstagramConnected: true });
+      this.setState({instagramCode: code[1]});
+      this.setState({isInstagramConnected: true});
+      this.fetchInstagramPostsFirstTime(code[1]);
     }
     this.getInstagramUrl();
+  }
+
+  async fetchInstagramPostsFirstTime(token) {
+    const userInformation = localStorage.getItem("userInfo");
+    const parseUserInformation = JSON.parse(userInformation);
+    await axios
+      .post(`/social/ig/data/${token}`, {email: parseUserInformation.email})
+      .then((response) => {
+        localStorage.setItem("access_token", response.data.access_token);
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        parseUserInformation.username = response.data.username;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+        this.updateAccessToken(
+          userInfo.user_id,
+          response.data.username,
+          response.data.access_token``
+        );
+      })
+      .catch((err) => {
+        if (err.response.data.message) {
+          this.setState({
+            error: {
+              type: "accountExist",
+              message:
+                "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
+            },
+          });
+        }
+      });
+  }
+
+  //First Request From User
+  async updateAccessToken(user_id, username, accessToken) {
+    await axios.put(`/users/revise/ig/instagram`, {
+      user_id: user_id,
+      username: username,
+      access_token: accessToken,
+    });
   }
 
   render() {

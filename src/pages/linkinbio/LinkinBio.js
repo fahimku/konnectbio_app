@@ -18,7 +18,7 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -75,7 +75,7 @@ class LinkinBio extends React.Component {
 
     if (this.props.match.params.code && !accessToken && !savedAccessToken) {
       let accessTokenCode = this.props.match.params.code.split("#")[0];
-      this.fetchInstagramPostsFirstTime(accessTokenCode);
+    //  this.fetchInstagramPostsFirstTime(accessTokenCode);
     } else {
       if (savedAccessToken) {
         accessToken = savedAccessToken;
@@ -90,54 +90,54 @@ class LinkinBio extends React.Component {
   }
 
   //First Request From User
-  async fetchInstagramPostsFirstTime(token) {
-    const userInformation = localStorage.getItem("userInfo");
-    const parseUserInformation = JSON.parse(userInformation);
+  // async fetchInstagramPostsFirstTime(token) {
+  //   const userInformation = localStorage.getItem("userInfo");
+  //   const parseUserInformation = JSON.parse(userInformation);
 
-    await axios
-      .post(`/social/ig/data/${token}`, {
-        email: parseUserInformation.email,
-      })
-      .then((response) => {
-        //Set Access Token
-        localStorage.setItem("access_token", response.data.access_token);
-        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        // Retrieves the string and converts it to a JavaScript object
-        // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
-        parseUserInformation.username = response.data.username;
-        //Store User Information
-        const storeUserInformation = JSON.stringify(parseUserInformation);
-        localStorage.setItem("userInfo", storeUserInformation);
-        this.updateAccessToken(
-          userInfo.user_id,
-          response.data.username,
-          response.data.access_token
-        );
-        this.setState({ instagramPosts: response.data });
-        this.setState({ nextPageUrl: response.data.paging.next });
-        this.setState({ username: response.data.username });
-      })
-      .catch((err) => {
-        if (err.response.data.message) {
-          this.setState({
-            error: {
-              type: "accountExist",
-              message:
-                "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
-            },
-          });
-        }
-      });
-  }
+  //   await axios
+  //     .post(`/social/ig/data/${token}`, {
+  //       email: parseUserInformation.email,
+  //     })
+  //     .then((response) => {
+  //       //Set Access Token
+  //       localStorage.setItem("access_token", response.data.access_token);
+  //       let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //       // Retrieves the string and converts it to a JavaScript object
+  //       // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
+  //       parseUserInformation.username = response.data.username;
+  //       //Store User Information
+  //       const storeUserInformation = JSON.stringify(parseUserInformation);
+  //       localStorage.setItem("userInfo", storeUserInformation);
+  //       this.updateAccessToken(
+  //         userInfo.user_id,
+  //         response.data.username,
+  //         response.data.access_token
+  //       );
+  //       this.setState({ instagramPosts: response.data });
+  //       this.setState({ nextPageUrl: response.data.paging.next });
+  //       this.setState({ username: response.data.username });
+  //     })
+  //     .catch((err) => {
+  //       if (err.response.data.message) {
+  //         this.setState({
+  //           error: {
+  //             type: "accountExist",
+  //             message:
+  //               "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
+  //           },
+  //         });
+  //       }
+  //     });
+  // }
 
   //First Request From User
-  async updateAccessToken(user_id, username, accessToken) {
-    await axios.put(`/users/revise/ig/instagram`, {
-      user_id: user_id,
-      username: username,
-      access_token: accessToken,
-    });
-  }
+  // async updateAccessToken(user_id, username, accessToken) {
+  //   await axios.put(`/users/revise/ig/instagram`, {
+  //     user_id: user_id,
+  //     username: username,
+  //     access_token: accessToken,
+  //   });
+  // }
   //Second Request From User
   async fetchInstagramPosts(token) {
     await axios
@@ -498,6 +498,10 @@ class LinkinBio extends React.Component {
   submitted = (e) => {
     e.preventDefault();
   };
+
+  iframe_clicked(event) {
+    alert("test");
+  }
 
   shopRightBar = () => {
     return (
