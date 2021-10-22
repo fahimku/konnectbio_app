@@ -49,7 +49,7 @@ class PostDataComponent extends React.Component {
     this.fetchPostPerformance(
       this.state.username,
       this.state.lastYear,
-      "2021-10-20",
+      moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
       this.state.page
     );
