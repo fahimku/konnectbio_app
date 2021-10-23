@@ -77,7 +77,7 @@ class MyCategory extends React.Component {
         });
       })
       .catch((error) => {
-        console.log(error.response.data.message);
+        console.log(error);
       });
   };
   handleSelect = (e, options) => {
@@ -147,7 +147,7 @@ class MyCategory extends React.Component {
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
-                  <Button variant="primary" className="btn-block">
+                  <Button variant="primary" className="btn-block cat-right-btn">
                     <i className="fa fa-instagram" />
                     &nbsp;&nbsp;
                     {this.props.isInstagramConnected ||
@@ -180,7 +180,7 @@ class MyCategory extends React.Component {
                 <Col md={4} className="text-right">
                   <Button
                     variant="primary"
-                    className="btn-block"
+                    className="btn-block cat-right-btn"
                     onClick={this.UpgradePlan}
                   >
                     Upgrade Plan

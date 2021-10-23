@@ -9,6 +9,7 @@ import InputValidation from "../../components/InputValidation";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
+import Placeholder from "../../images/placeholder.svg";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -24,6 +25,7 @@ class MyProfile extends React.Component {
     loadingImage: false,
     loading: false,
     userData: "",
+    userImage: "",
   };
 
   componentDidMount() {
@@ -37,12 +39,13 @@ class MyProfile extends React.Component {
           const userInfo = response.data.message.data;
           this.setState({
             userData: userInfo,
+            userImage: userInfo.profile_image_url,
           });
           this.setDefaultData();
         }
       })
       .catch((error) => {
-        console.log(error.response.data.message, "error");
+        console.log(error, "error");
       });
   };
   setDefaultData = () => {
@@ -119,12 +122,12 @@ class MyProfile extends React.Component {
         this.setState({ imageError: err.response.data.message });
       });
   };
-  // clearImage = () => {
-  //   console.log("sdsdsd");
-  //   this.setState({
-  //     imageFiles: [],
-  //   });
-  // };
+  clearImage = () => {
+    this.setState({
+      imageFiles: [],
+      userImage: "",
+    });
+  };
 
   render() {
     const userData = this.state.userData;
@@ -138,7 +141,7 @@ class MyProfile extends React.Component {
               </Col>
             </Row>
             <div className="white-box">
-              <form onSubmit={this.handleSubmit} className="white-box">
+              <form onSubmit={this.handleSubmit}>
                 <Row className="mb-3">
                   <Col md={12} className="text-center">
                     <div className="fileinput file-profile">
@@ -163,11 +166,13 @@ class MyProfile extends React.Component {
                               />
                             ))}
                           </div>
-                        ) : userData.profile_image_url === "" ? (
+                        ) : this.state.userImage === "" ||
+                          this.state.userImage === undefined ? (
                           <img
                             alt="image"
                             src={
-                              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                              Placeholder
+                              // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
                             }
                             style={{ width: "150px", height: "150px" }}
                             className="circle profile-icon"
@@ -175,7 +180,7 @@ class MyProfile extends React.Component {
                         ) : (
                           <img
                             alt="image"
-                            src={userData.profile_image_url}
+                            src={this.state.userImage}
                             style={{ width: "150px", height: "150px" }}
                             className="circle profile-icon"
                           />
@@ -189,13 +194,13 @@ class MyProfile extends React.Component {
                     >
                       <label for="fileupload2">Choose Image</label>
                     </Button>
-                    {/* <Button
+                    <Button
                       onClick={this.clearImage}
                       className="select-image"
                       // disabled={this.state.imageFiles.length > 0 ? false : true}
                     >
-                      Remove
-                    </Button> */}
+                      Clear
+                    </Button>
 
                     {this.state.loadingImage ? (
                       <Button className="d-block upload-btn">

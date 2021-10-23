@@ -378,6 +378,15 @@ span.icon {
   .link-icon {
     height: 58px !important;
   }
+  .analytic-box .count-box .count-title {
+    font-size: 16px;
+  }
+  .link-caption {
+    font-size: 24px;
+  }
+  .cat-right-btn {
+    margin-top: 15px;
+  }
 }
 .source-button .btn-primary:not(:disabled):not(.disabled):active,
 .source-button .btn-primary:not(:disabled):not(.disabled).active,
@@ -420,6 +429,22 @@ span.icon {
 .next-button .btn-primary:disabled {
   cursor: no-drop;
 }
+.change-password .white-box {
+  margin-bottom: 8px;
+}
+.change-password .modal-title {
+  font-size: 1.25rem;
+}
+.link-icon {
+  font-size: 20px;
+  width: 100%;
+  height: 90px;
+  border: 1px solid #ccc;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (max-width: 576px) {
   .ant-picker-panels {
     flex-direction: column;
@@ -439,19 +464,4 @@ span.icon {
   .ant-picker-range {
     width: auto !important;
   }
-}
-.change-password .white-box {
-  margin-bottom: 8px;
-}
-.change-password .modal-title {
-  font-size: 1.25rem;
-}
-.link-icon {
-  font-size: 36px;
-  width: 100%;
-  height: 90px;
-  border: 1px solid #ccc;
-  display: flex !important;
-  justify-content: center;
-  align-items: center;
 }

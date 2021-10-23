@@ -154,10 +154,10 @@ class LinkDataComponent extends React.Component {
                           </div>
                           <div className="col-8 analytic-caption">
                             <div className="card-block px-2">
-                              <h3 className="card-text">
+                              <h3 className="card-text link-caption">
                                 {record.caption === ""
                                   ? "No Caption Added"
-                                  : limitCharacter(record.caption, 55)}
+                                  : record.caption}
                               </h3>
                             </div>
                           </div>
