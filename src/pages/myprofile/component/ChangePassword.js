@@ -87,7 +87,7 @@ class ChangePassword extends React.Component {
                   <Col md={12}>
                     <label>Current Password</label>
                     <input
-                      type="text"
+                      type="password"
                       name="currentPassword"
                       placeholder="Enter Current Password"
                       onInput={this.handleChange}
@@ -95,6 +95,7 @@ class ChangePassword extends React.Component {
                       onBlur={handleBlur}
                       onChange={handleChange}
                       value={values.currentPassword}
+                      autoComplete="off"
                     />
                     <span className="text-danger">
                       {errors.currentPassword}
@@ -112,6 +113,7 @@ class ChangePassword extends React.Component {
                       value={values.newPassword}
                       placeholder="Enter New Password"
                       className="form-control comment-field"
+                      autoComplete="off"
                     />
                     <span className="text-danger">{errors.newPassword}</span>
                   </Col>
@@ -127,6 +129,7 @@ class ChangePassword extends React.Component {
                       value={values.changepassword}
                       placeholder="Enter Confirm Password"
                       className="form-control comment-field"
+                      autoComplete="off"
                     />
                     <span className="text-danger">{errors.changepassword}</span>
                   </Col>
