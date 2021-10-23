@@ -375,6 +375,9 @@ span.icon {
     width: 100%;
     z-index: 1000;
   }
+  .link-icon {
+    height: 58px !important;
+  }
 }
 .source-button .btn-primary:not(:disabled):not(.disabled):active,
 .source-button .btn-primary:not(:disabled):not(.disabled).active,
@@ -442,4 +445,13 @@ span.icon {
 }
 .change-password .modal-title {
   font-size: 1.25rem;
+}
+.link-icon {
+  font-size: 36px;
+  width: 100%;
+  height: 90px;
+  border: 1px solid #ccc;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }

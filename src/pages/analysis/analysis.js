@@ -16,6 +16,7 @@ import classnames from "classnames";
 import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
+import LinkAnalytic from "./Linkperformance/linkanalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -74,6 +75,18 @@ class Analysis extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
+                          active: this.state.activeSecondTab === "tab23",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab23");
+                        }}
+                      >
+                        <span>Link Performance</span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
                           active: this.state.activeSecondTab === "tab21",
                         })}
                         onClick={() => {
@@ -94,6 +107,9 @@ class Analysis extends React.Component {
                     </TabPane>
                     <TabPane tabId="tab22">
                       <PostAnalytic username={this.state.username} />
+                    </TabPane>
+                    <TabPane tabId="tab23">
+                      <LinkAnalytic username={this.state.username} />
                     </TabPane>
                   </TabContent>
                 </Col>
