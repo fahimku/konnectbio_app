@@ -465,3 +465,18 @@ span.icon {
     width: auto !important;
   }
 }
+.connected-text {
+  color: #155724;
+}
+.disconnect-btn {
+  color: #fff;
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.disconnect-btn:hover,
+.disconnect-btn:focus {
+  color: #fff;
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}

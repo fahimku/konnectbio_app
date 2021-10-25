@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
 import { createBrowserHistory } from "history";
@@ -23,6 +23,7 @@ class MyCategory extends React.Component {
       categoryError: "",
       isInstagramConnected: false,
       loading: false,
+      modal: false,
     };
   }
 
@@ -132,6 +133,26 @@ class MyCategory extends React.Component {
   UpgradePlan = () => {
     alert("Please Contact Customer Support Team");
   };
+  toggleModal = () => {
+    const { modal } = this.state;
+    this.setState({
+      modal: !modal,
+    });
+  };
+  disconnect = async () => {
+    await axios
+      .put(`/users/revise/disconnectInstagram/disconnected`, {
+        user_id: this.state.user_id,
+      })
+      .then((response) => {
+        this.setState({ modal: false });
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        history.push("/connect");
+      })
+      .catch((err) => {
+        console.log(err.response, "err");
+      });
+  };
 
   render() {
     return (
@@ -147,7 +168,7 @@ class MyCategory extends React.Component {
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
-                  <Button variant="primary" className="btn-block cat-right-btn">
+                  {/* <Button variant="primary" className="btn-block cat-right-btn">
                     <i className="fa fa-instagram" />
                     &nbsp;&nbsp;
                     {this.props.isInstagramConnected ||
@@ -161,7 +182,67 @@ class MyCategory extends React.Component {
                         />
                       </>
                     )}
-                  </Button>
+                  </Button> */}
+                  {this.props.isInstagramConnected ||
+                  this.state.isInstagramConnected ? (
+                    <>
+                      <div className="connected-text text-center mb-2">
+                        Connected Instagram: @{userInfo.username}
+                      </div>
+                      <Button
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                        onClick={() => {
+                          this.setState({ modal: true });
+                        }}
+                      >
+                        Disconnect Instagram
+                      </Button>
+                      <Modal
+                        show={this.state.modal}
+                        onHide={this.toggleModal}
+                        className="change-password"
+                        centered
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title>Disconnect Instagram</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className="bg-white">
+                          Are you sure you want to Disconnect @
+                          {userInfo.username} account from Instagram?
+                        </Modal.Body>
+                        <Modal.Footer>
+                          <Button
+                            onClick={() => {
+                              this.setState({ modal: false });
+                            }}
+                          >
+                            Close
+                          </Button>
+                          <Button
+                            className="disconnect-btn"
+                            onClick={this.disconnect}
+                          >
+                            Yes
+                          </Button>
+                        </Modal.Footer>
+                      </Modal>
+                    </>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      className="btn-block cat-right-btn"
+                    >
+                      <i className="fa fa-instagram" />
+                      &nbsp;&nbsp;
+                      <>
+                        {" "}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: this.props.url }}
+                        />
+                      </>
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </div>

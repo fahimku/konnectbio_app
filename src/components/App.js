@@ -49,44 +49,44 @@ class App extends React.PureComponent {
           closeButton={<CloseButton />}
         />
         <ConnectedRouter history={getHistory()}>
-        <Router>
-          <Switch>
-            {/* <Route
+          <Router>
+            <Switch>
+              {/* <Route
                 path="/"
                 exact
                 render={() => <Redirect to="/app/main" />}
               /> */}
-            <Route path="/" exact component={Login} />
-            <Route
-              path="/app"
-              exact
-              render={() => <Redirect to="/app/main" />}
-            />
-            <UserRoute
-              path="/app"
-              dispatch={this.props.dispatch}
-              component={LayoutComponent}
-            />
+              <Route path="/" exact component={Login} />
+              <Route
+                path="/app"
+                exact
+                render={() => <Redirect to="/app/main" />}
+              />
+              <UserRoute
+                path="/app"
+                dispatch={this.props.dispatch}
+                component={LayoutComponent}
+              />
 
-            <AdminRoute
-              path="/admin"
-              currentUser={this.props.currentUser}
-              dispatch={this.props.dispatch}
-              component={LayoutComponent}
-            />
+              <AdminRoute
+                path="/admin"
+                currentUser={this.props.currentUser}
+                dispatch={this.props.dispatch}
+                component={LayoutComponent}
+              />
 
-            <Route path="/connect" exact component={Connect} />
-            <Route path="/logout" exact component={Logout} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-            <AuthRoute path="/verify-email" exact component={Verify} />
-            <AuthRoute path="/password-reset" exact component={Reset} />
-            <AuthRoute path="/forgot" exact component={Forgot} />
-            <Route path="/error" exact component={ErrorPage} />
-            {/* <Redirect from="*" to="/app/main/analytics"/>*/}
-            <Redirect from="*" to="/login" />
-          </Switch>
-        </Router>
+              <Route path="/connect" exact component={Connect} />
+              <Route path="/logout" exact component={Logout} />
+              <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
+              <AuthRoute path="/verify-email" exact component={Verify} />
+              <AuthRoute path="/password-reset" exact component={Reset} />
+              <AuthRoute path="/forgot" exact component={Forgot} />
+              <Route path="/error" exact component={ErrorPage} />
+              {/* <Redirect from="*" to="/app/main/analytics"/>*/}
+              <Redirect from="*" to="/login" />
+            </Switch>
+          </Router>
         </ConnectedRouter>
       </div>
     );
