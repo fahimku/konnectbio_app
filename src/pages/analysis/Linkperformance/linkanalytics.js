@@ -13,12 +13,12 @@ class LinkAnalytic extends React.Component {
 
   render() {
     return (
-      <>
+      <React.Fragment>
         <div className="container-fluid">
           <h3>Link Performance</h3>
           <LinkDataComponent username={this.state.username} />
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

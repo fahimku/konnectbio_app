@@ -9,13 +9,6 @@ import "antd/dist/antd.css";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-const limitCharacter = (text, limit = 20) => {
-  let shortText = text;
-  if (text && text.length > limit) {
-    shortText = text.slice(0, limit) + "...";
-  }
-  return shortText;
-};
 const twodecimalplace = (value = 0) => {
   return parseFloat(value).toFixed(2);
 };
