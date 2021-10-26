@@ -167,10 +167,13 @@ class MyCategory extends React.Component {
           <div className="justify-content-md-center">
             <div className="connections white-box mt-5">
               <Row>
+                <Col md={12}>
+                  <h5 className="page-title line-heading">Connect Instagram</h5>
+                </Col>
                 <Col md={8}>
-                  <h3 className="package_name">Connect Instagram</h3>
+                  {/* <h3 className="package_name">Connect Instagram</h3> */}
                   <div className="category_count">
-                    Connect to Instagram or Facebook to start using KONNECT BIO.
+                    Connect your Instagram to start using KONNECT BIO.
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
@@ -284,13 +287,14 @@ class MyCategory extends React.Component {
               </Row>
             </div>
 
-            <Row className="mt-4">
+            {/* <Row className="mt-4">
               <Col md={12}>
                 <h4 className="page-title">My Categories</h4>
               </Col>
-            </Row>
+            </Row> */}
 
             <form onSubmit={this.handleSubmit} className="white-box">
+              <h5 className="page-title line-heading">My Categories</h5>
               <Row>
                 <Col md={8}>
                   <label>Select Category: </label>
