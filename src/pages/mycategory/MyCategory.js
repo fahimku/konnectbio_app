@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button, Modal} from "react-bootstrap";
-import {toast} from "react-toastify";
+import { Row, Col, Button, Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -24,15 +24,16 @@ class MyCategory extends React.Component {
       isInstagramConnected: false,
       loading: false,
       modal: false,
+      loadingInsta: false,
     };
   }
 
   componentDidMount() {
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({user_id: userInfo.user_id});
+    this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
     this.fetchSaveCategory();
 
@@ -45,14 +46,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
+        myCategories.map(({ category_id, category_name, image_url }) => {
           selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({myCategory: selectCategories});
+        this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -65,7 +66,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
+        optionCategories.map(({ category_id, category_name, image_url }) => {
           saveCategories.push({
             value: category_id,
             label: category_name,
@@ -107,7 +108,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -117,15 +118,15 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({categoryError: ""});
-          this.setState({loading: false});
+          this.setState({ categoryError: "" });
+          this.setState({ loading: false });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({loading: false});
-        this.setState({categoryError: err.response.data.message});
+        this.setState({ loading: false });
+        this.setState({ categoryError: err.response.data.message });
       });
     // }
   };
@@ -134,23 +135,26 @@ class MyCategory extends React.Component {
     alert("Please Contact Customer Support Team");
   };
   toggleModal = () => {
-    const {modal} = this.state;
+    const { modal } = this.state;
     this.setState({
       modal: !modal,
     });
   };
   disconnect = async () => {
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
         user_id: this.state.user_id,
       })
       .then((response) => {
-        this.setState({modal: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
+        this.setState({ loadingInsta: false });
         console.log(err.response, "err");
       });
   };
@@ -197,7 +201,7 @@ class MyCategory extends React.Component {
                         variant="primary"
                         className="btn-block cat-right-btn"
                         onClick={() => {
-                          this.setState({modal: true});
+                          this.setState({ modal: true });
                         }}
                       >
                         Disconnect Instagram
@@ -212,13 +216,16 @@ class MyCategory extends React.Component {
                           <Modal.Title>Disconnect Instagram</Modal.Title>
                         </Modal.Header>
                         <Modal.Body className="bg-white">
-                          Are you sure you want to Disconnect @
-                          {userInfo.username} account from Instagram?
+                          Are you sure you want to disconnect
+                          <span class="strong"> @{userInfo.username}</span>{" "}
+                          account from Konnect.bio? This will remove all your
+                          content from our platform.
+                          <p>This action is not Reversible.</p>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button
                             onClick={() => {
-                              this.setState({modal: false});
+                              this.setState({ modal: false });
                             }}
                           >
                             Close
@@ -226,6 +233,7 @@ class MyCategory extends React.Component {
                           <Button
                             className="disconnect-btn"
                             onClick={this.disconnect}
+                            disabled={this.state.loadingInsta ? true : false}
                           >
                             Yes
                           </Button>
@@ -242,7 +250,7 @@ class MyCategory extends React.Component {
                       <>
                         {" "}
                         <div
-                          dangerouslySetInnerHTML={{__html: this.props.url}}
+                          dangerouslySetInnerHTML={{ __html: this.props.url }}
                         />
                       </>
                     </Button>
