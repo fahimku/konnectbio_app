@@ -135,7 +135,7 @@ export function loginUser(creds) {
           const token = res.data.message.token;
           const userInfo = {
             user_id: res.data.message.user_id,
-            name:res.data.message.name,
+            name: res.data.message.name,
             access_token: res.data.message.access_token,
             username: res.data.message.username,
             email: res.data.message.email,
@@ -181,51 +181,53 @@ export function verifyEmail(token) {
   };
 }
 
-export function resetPassword(token, password) {
+export function resetPassword(token,email,password) {
   return (dispatch) => {
-    if (!config.isBackend) {
-      dispatch(push("/login"));
-    } else {
-      dispatch({
-        type: RESET_REQUEST,
-      });
-      axios
-        .put("/auth/password-reset", {token, password})
-        .then((res) => {
-          dispatch({
-            type: RESET_SUCCESS,
-          });
-          toast.success("Password has been updated");
-          history.push("/login");
-        })
-        .catch((err) => {
-          dispatch(authError(err.response.data));
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    dispatch({
+      type: RESET_REQUEST,
+    });
+    axios.put("/users/revise/password/new",{password, email},{
+        headers: headers,
+        }
+      )
+      .then((res) => {
+        dispatch({
+          type: RESET_SUCCESS,
         });
-    }
+        toast.success("Password has been updated");
+        setTimeout(() => {
+          history.push("/login");          
+        },1000)
+
+      })
+      .catch((err) => {
+        dispatch(authError(err.response.data.message));
+      });
   };
 }
 
 export function sendPasswordResetEmail(email) {
+  const endPoint =
+    config.baseURLApiToken + "/" + "forgotpassword?email=" + email;
   return (dispatch) => {
-    if (!config.isBackend) {
-      history.push("/login");
-    } else {
-      dispatch({
-        type: PASSWORD_RESET_EMAIL_REQUEST,
-      });
-      axios
-        .post("/auth/send-password-reset-email", {email})
-        .then((res) => {
-          dispatch({
-            type: PASSWORD_RESET_EMAIL_SUCCESS,
-          });
-          toast.success("Email with resetting instructions has been sent");
-          history.push("/login");
-        })
-        .catch((err) => {
-          dispatch(authError(err.response.data));
+    dispatch({
+      type: PASSWORD_RESET_EMAIL_REQUEST,
+    });
+    axios
+      .get(endPoint)
+      .then((res) => {
+        dispatch({
+          type: PASSWORD_RESET_EMAIL_SUCCESS,
         });
-    }
+        toast.success("Email with resetting instructions has been sent");
+        history.push("/login");
+      })
+      .catch((err) => {
+        dispatch(authError(err.response.data.message));
+      });
   };
 }
 

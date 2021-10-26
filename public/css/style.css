@@ -347,9 +347,6 @@ span.icon {
   text-align: right;
 }
 
-.logo {
-  width: 180px;
-}
 
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .img-connect {

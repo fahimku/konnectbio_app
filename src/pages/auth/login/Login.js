@@ -1,19 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withRouter, Link, useLocation } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 //import {Redirect} from "react-router";
 import config from "../../../config";
-import { connect } from "react-redux";
-import { Container, Alert, Button } from "reactstrap";
+import {connect} from "react-redux";
+import {Container, Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
-import { loginUser, receiveToken, doInit } from "../../../actions/auth";
+import {loginUser, receiveToken} from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 // import microsoft from '../../../images/microsoft.png';
-import { push } from "connected-react-router";
+import {push} from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
-import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 class Login extends React.Component {
   static propTypes = {
@@ -44,17 +43,17 @@ class Login extends React.Component {
   }
 
   changeEmail(event) {
-    this.setState({ email: event.target.value });
+    this.setState({email: event.target.value});
   }
 
   changePassword(event) {
-    this.setState({ password: event.target.value });
+    this.setState({password: event.target.value});
   }
 
   doLogin(e) {
     e.preventDefault();
     this.props.dispatch(
-      loginUser({ email: this.state.email, password: this.state.password })
+      loginUser({email: this.state.email, password: this.state.password})
     );
   }
 
@@ -76,14 +75,15 @@ class Login extends React.Component {
       //      this.props.dispatch(doInit());
     }
   }
+
   tokenVerify = async (code, email) => {
+    const endPoint = config.baseURLApiToken + "/" + "verify?email=" + email;
     const requestOptions = {
       method: "GET",
       headers: {
         Authorization: "Bearer " + code,
       },
     };
-    const endPoint = config.baseURLApiToken + "/" + "verify?email=" + email;
     fetch(endPoint, requestOptions)
       .then((res) => {
         return res.json();
@@ -96,6 +96,7 @@ class Login extends React.Component {
         }
       });
   };
+
   signUp() {
     this.props.dispatch(push("/register"));
   }

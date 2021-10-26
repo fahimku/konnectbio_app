@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,10 +8,10 @@ import {
   Redirect,
 } from "react-router-dom";
 //import {HashRouter} from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import { ConnectedRouter } from "connected-react-router";
-import { getHistory } from "../index";
-import { AdminRoute, UserRoute, AuthRoute } from "./RouteComponents";
+import {ToastContainer} from "react-toastify";
+import {ConnectedRouter} from "connected-react-router";
+import {getHistory} from "../index";
+import {AdminRoute, UserRoute, AuthRoute} from "./RouteComponents";
 /* eslint-disable */
 import ErrorPage from "../pages/error";
 /* eslint-enable */
@@ -31,7 +31,7 @@ import Forgot from "../pages/auth/forgot";
 //   forceRefresh: true,
 // });
 
-const CloseButton = ({ closeToast }) => (
+const CloseButton = ({closeToast}) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
 );
 
@@ -67,14 +67,12 @@ class App extends React.PureComponent {
                 dispatch={this.props.dispatch}
                 component={LayoutComponent}
               />
-
               <AdminRoute
                 path="/admin"
                 currentUser={this.props.currentUser}
                 dispatch={this.props.dispatch}
                 component={LayoutComponent}
               />
-
               <Route path="/connect" exact component={Connect} />
               <Route path="/logout" exact component={Logout} />
               <Route path="/register" exact component={Register} />

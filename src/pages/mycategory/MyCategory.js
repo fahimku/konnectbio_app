@@ -146,6 +146,7 @@ class MyCategory extends React.Component {
       })
       .then((response) => {
         this.setState({ modal: false });
+        localStorage.removeItem('access_token');
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
@@ -187,7 +188,7 @@ class MyCategory extends React.Component {
                   this.state.isInstagramConnected ? (
                     <>
                       <div className="connected-text text-center mb-2">
-                        Connected Instagram: @{userInfo.username}
+                        Connected Instagram: @{this.props.username ? this.props.username:userInfo.username}
                       </div>
                       <Button
                         variant="primary"

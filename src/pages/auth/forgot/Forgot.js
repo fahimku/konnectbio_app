@@ -1,85 +1,95 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Alert, Button, Container } from 'reactstrap';
-import Widget from '../../../components/Widget';
-import { sendPasswordResetEmail } from '../../../actions/auth';
+import React from "react";
+import PropTypes from "prop-types";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {Alert, Button, Container} from "reactstrap";
+import Widget from "../../../components/Widget";
+import {sendPasswordResetEmail} from "../../../actions/auth";
+import logo from "../../../images/logo.svg";
 
 class Forgot extends React.Component {
- 
+
   static propTypes = {
-        dispatch: PropTypes.func.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
     };
+    this.changeEmail = this.changeEmail.bind(this);
+    this.doSendResetEmail = this.doSendResetEmail.bind(this);
+  }
 
-    constructor(props) {
-        super(props);
+  changeEmail(event) {
+    this.setState({email: event.target.value});
+  }
 
-      this.state = {
-        email: '',
-      };
+  doSendResetEmail(e) {
+    e.preventDefault();
+    this.props.dispatch(sendPasswordResetEmail(this.state.email));
+  }
 
-      this.changeEmail = this.changeEmail.bind(this);
-      this.doSendResetEmail = this.doSendResetEmail.bind(this);
-    }
-
-    changeEmail(event) {
-      this.setState({email: event.target.value});
-    }
-
-    doSendResetEmail(e) {
-      e.preventDefault();
-      this.props.dispatch(sendPasswordResetEmail(this.state.email));
-    }
-
-    render() {
-      return (
-        <div className="auth-page">
-          <Container>
-            <h5 className="auth-logo">
-              <i className="la la-circle text-gray"/>
-              KONNECT BIO
-              <i className="la la-circle text-warning"/>
-            </h5>
-            <Widget className="widget-auth mx-auto" title={<h3 className="mt-0">Forgot password?</h3>}>
-              <p className="widget-auth-info">
+  render() {
+    return (
+      <div className="auth-page">
+        <Container>
+        <h5 className="auth-logo">
+            <i className="la la-circle text-primary" />
+            <img alt='Logo' className="logo" src={logo} />
+            <i className="la la-circle text-danger" />
+          </h5>
+          <Widget
+            className="widget-auth mx-auto"
+            title={<h3 className="mt-0">Forgot password?</h3>}
+          >
+            <p className="widget-auth-info">
               We’ll send you a link to reset your password.
-              </p>
-              <form className="mt" onSubmit={this.doSendResetEmail}>
-                {
-                  this.props.errorMessage && (
-                    <Alert className="alert-sm" color="danger">
-                      {this.props.errorMessage}
-                    </Alert>
-                  )
-                }
-                <div className="form-group">
-                  <input className="form-control" value={this.state.email}
-                         onChange={this.changeEmail} type="email" required name="email"
-                         placeholder="Email"/>
-                </div>
-                <Button type="submit" color="inverse" className="auth-btn mb-3"
-                        size="sm">{this.props.isFetching ? 'Loading...' : 'Reset Password'}</Button>
-              </form>
-              <p className="widget-auth-info">
-                Need to Login?
-              </p>
-              <Link className="d-block text-center" to="login">Enter the account</Link>
-            </Widget>
-          </Container>
-          {/* <footer className="auth-footer">
+            </p>
+            <form className="mt" onSubmit={this.doSendResetEmail}>
+              {this.props.errorMessage && (
+                <Alert className="alert-sm" color="danger">
+                  {this.props.errorMessage}
+                </Alert>
+              )}
+              <div className="form-group">
+                <input
+                  className="form-control"
+                  value={this.state.email}
+                  onChange={this.changeEmail}
+                  type="email"
+                  required
+                  name="email"
+                  placeholder="Email"
+                />
+              </div>
+              <Button
+                type="submit"
+                color="inverse"
+                className="auth-btn mb-3"
+                size="sm"
+              >
+                {this.props.isFetching ? "Loading..." : "Reset Password"}
+              </Button>
+            </form>
+            <p className="widget-auth-info">Need to Login?</p>
+            <Link className="d-block text-center" to="login">
+              Enter the account
+            </Link>
+          </Widget>
+        </Container>
+        {/* <footer className="auth-footer">
             {new Date().getFullYear()} &copy; Sing App - React Admin Dashboard Template. By <a rel="noopener noreferrer" target="_blank" href="https://flatlogic.com">Flatlogic</a>
           </footer> */}
-        </div>
-      );
-    }
+      </div>
+    );
+  }
 }
-
 function mapStateToProps(state) {
   return {
     isFetching: state.auth.isFetching,
     errorMessage: state.auth.errorMessage,
   };
 }
-
 export default withRouter(connect(mapStateToProps)(Forgot));

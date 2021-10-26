@@ -13,6 +13,7 @@ class Connect extends React.Component {
       url: "",
       instagramCode: "",
       isInstagramConnected: false,
+      username:"",
     };
   }
 
@@ -51,24 +52,26 @@ class Connect extends React.Component {
         localStorage.setItem("access_token", response.data.access_token);
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         parseUserInformation.username = response.data.username;
+        this.setState({username:response.data.username})
+        parseUserInformation.access_token = response.data.access_token;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
         this.updateAccessToken(
           userInfo.user_id,
           response.data.username,
-          response.data.access_token``
+          response.data.access_token
         );
       })
       .catch((err) => {
-        if (err.response.data.message) {
-          this.setState({
-            error: {
-              type: "accountExist",
-              message:
-                "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
-            },
-          });
-        }
+        // if (err.response.data.message) {
+        //   this.setState({
+        //     error: {
+        //       type: "accountExist",
+        //       message:
+        //         "This account is already connected to another Konnect.Bio account. Please contact support for further assistance.",
+        //     },
+        //   });
+        // }
       });
   }
 
@@ -98,6 +101,7 @@ class Connect extends React.Component {
           </Col>
         </Row>
         <MyCategory
+          username={this.state.username}
           isInstagramConnected={this.state.isInstagramConnected}
           url={this.state.url}
         />

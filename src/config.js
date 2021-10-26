@@ -8,7 +8,7 @@ const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const baseURLApiToken = `${hostApi}${portApi ? `:${portApi}` : ``}`;
 const redirectURL =
   process.env.NODE_ENV === "development"
-    ? "http://172.16.1.153:3000"
+    ? "http://172.16.1.85:3000"
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"

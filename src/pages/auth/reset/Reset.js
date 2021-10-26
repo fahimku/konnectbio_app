@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link, withRouter} from "react-router-dom";
+import {withRouter,NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {Alert, Button, Container} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {authError, resetPassword} from "../../../actions/auth";
+import logo from "../../../images/logo.svg";
 
 class Reset extends React.Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
@@ -56,15 +58,19 @@ class Reset extends React.Component {
   doReset(e) {
     e.preventDefault();
     const params = new URLSearchParams(this.props.location.search);
-    const token = params.get("token");
+    const token = params.get("code");
+    const email = params.get("email");
+
+    console.log('code', token);
+    console.log('code', email);
+
     if (!token) {
       authError("There are no token");
     }
-
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      this.props.dispatch(resetPassword(token, this.state.password));
+      this.props.dispatch(resetPassword(token,email,this.state.password));
     }
   }
 
@@ -73,9 +79,9 @@ class Reset extends React.Component {
       <div className="auth-page">
         <Container>
           <h5 className="auth-logo">
-            <i className="la la-circle text-gray" />
-            Sing App React
-            <i className="la la-circle text-warning" />
+            <i className="la la-circle text-primary" />
+            <img alt="Logo" className="logo" src={logo} />
+            <i className="la la-circle text-danger" />
           </h5>
           <Widget
             className="widget-auth mx-auto"
@@ -117,16 +123,16 @@ class Reset extends React.Component {
                 className="auth-btn mb-3"
                 size="sm"
               >
-                {this.props.isFetching ? "Loading..." : "Reset"}
+                {this.props.isFetching ? "Loading..." : "Reset Password"}
               </Button>
             </form>
             <p className="widget-auth-info">or</p>
-            <Link className="d-block text-center" to="login">
+            <NavLink className="d-block text-center" to="/login">
               Enter the account
-            </Link>
+            </NavLink>
           </Widget>
         </Container>
-        <footer className="auth-footer">
+        {/* <footer className="auth-footer">
           {new Date().getFullYear()} &copy; Sing App - React Admin Dashboard
           Template. By{" "}
           <a
@@ -136,7 +142,7 @@ class Reset extends React.Component {
           >
             Flatlogic
           </a>
-        </footer>
+        </footer> */}
       </div>
     );
   }
@@ -148,5 +154,4 @@ function mapStateToProps(state) {
     errorMessage: state.auth.errorMessage,
   };
 }
-
 export default withRouter(connect(mapStateToProps)(Reset));
