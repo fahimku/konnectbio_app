@@ -480,3 +480,9 @@ span.icon {
   background-color: #dc3545 !important;
   border-color: #dc3545 !important;
 }
+
+.category-page .white-box {
+  margin-top: 0px !important;
+  position: relative;
+  top: 30px;
+}
