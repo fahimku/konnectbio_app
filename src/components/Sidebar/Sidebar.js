@@ -268,7 +268,8 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 /> */}
                 <div className={`settings-bottom ${s.bottomLinks}`}>
-                  <LinksGroup
+                    <LinksGroup
+
                     className="sidebar-nav-links "
                     onActiveSidebarItemChange={(activeItem) =>
                       this.props.dispatch(changeActiveSidebarItem(activeItem))

@@ -37,6 +37,7 @@ class MyCategory extends React.Component {
     this.fetchMyCategory();
     this.fetchSaveCategory();
 
+      
     //Connect Instagram Code
   }
 
@@ -160,6 +161,8 @@ class MyCategory extends React.Component {
   };
 
   render() {
+    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo1.username)
     return (
       <div className="category-page">
         <div className="container">
@@ -188,14 +191,11 @@ class MyCategory extends React.Component {
                       </>
                     )}
                   </Button> */}
-                  {this.props.isInstagramConnected ||
-                  this.state.isInstagramConnected ? (
+                  {userInfo1.username !== "" || this.props.username !== "" ? (
                     <>
                       <div className="connected-text text-center mb-2">
                         Connected Instagram: @
-                        {this.props.username
-                          ? this.props.username
-                          : userInfo.username}
+                             { userInfo1.username !== "" ? userInfo1.username : this.props.username }
                       </div>
                       <Button
                         variant="primary"
@@ -217,7 +217,7 @@ class MyCategory extends React.Component {
                         </Modal.Header>
                         <Modal.Body className="bg-white">
                           Are you sure you want to disconnect
-                          <span class="strong"> @{userInfo.username}</span>{" "}
+                          <span class="strong"> @{userInfo1.username}</span>{" "}
                           account from Konnect.bio? This will remove all your
                           content from our platform.
                           <p>This action is not reversible.</p>
@@ -241,19 +241,18 @@ class MyCategory extends React.Component {
                       </Modal>
                     </>
                   ) : (
-                    <Button
-                      variant="primary"
-                      className="btn-block cat-right-btn"
-                    >
-                      <i className="fa fa-instagram" />
-                      &nbsp;&nbsp;
-                      <>
-                        {" "}
-                        <div
-                          dangerouslySetInnerHTML={{ __html: this.props.url }}
-                        />
-                      </>
-                    </Button>
+                    <>
+                      <Button
+                        onClick={() => {
+                          window.location.replace(this.props.url);
+                        }}
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                      >
+                        <i className="fa fa-instagram" />
+                        &nbsp;&nbsp; Connect Instagram
+                      </Button>
+                    </>
                   )}
                 </Col>
               </Row>
