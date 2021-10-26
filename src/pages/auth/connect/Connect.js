@@ -69,7 +69,10 @@ class Connect extends React.Component {
         toast.error(err.response.data.message, {
           autoClose: false,
         });
-        this.setState({ errorInsta: err.response.data.message });
+        this.setState({
+          errorInsta: err.response.data.message,
+          instagramCode: "",
+        });
         // if (err.response.data.message) {
         //   this.setState({
         //     error: {
