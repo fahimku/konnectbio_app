@@ -200,9 +200,7 @@ class Register extends React.Component {
       <div className="auth-page">
         <Container>
           <h5 className="auth-logo">
-            <i className="la la-circle text-gray" />
             <img className="logo" src={logo} />
-            <i className="la la-circle text-warning" />
           </h5>
           <Widget
             className="widget-auth mx-auto"

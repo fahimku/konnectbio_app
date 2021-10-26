@@ -106,9 +106,8 @@ class Login extends React.Component {
       <div className="auth-page">
         <Container>
           <h5 className="auth-logo">
-            <i className="la la-circle text-primary" />
+
             <img className="logo" src={logo} />
-            <i className="la la-circle text-danger" />
           </h5>
           <Widget
             className="widget-auth mx-auto"
