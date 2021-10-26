@@ -1,7 +1,15 @@
 import axios from "axios";
 import React from "react";
-import { Row,Col,Modal,Button,ModalHeader,ModalBody,ModalFooter} from "reactstrap";
-import {toast} from "react-toastify";
+import {
+  Row,
+  Col,
+  Modal,
+  Button,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "reactstrap";
+import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import TopBar from "../../components/Topbar";
@@ -17,7 +25,7 @@ class MyLinks extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
-      isDeleted:false,
+      isDeleted: false,
       confirmModal: false,
       iframeKey: 0,
       loading: false,
@@ -96,7 +104,7 @@ class MyLinks extends React.Component {
         const uniqueMyLinks = [
           ...new Map(myLinks.map((item) => [item["caption"], item])).values(),
         ];
-        this.setState({myLinks: uniqueMyLinks});
+        this.setState({ myLinks: uniqueMyLinks });
       })
       .catch((error) => {
         console.log(error);
@@ -104,24 +112,23 @@ class MyLinks extends React.Component {
   };
 
   titleChange = (value) => {
-    this.setState({title: value});
+    this.setState({ title: value });
   };
 
   redirectedUrlChange = (value) => {
-    this.setState({redirectedUrl: value});
+    this.setState({ redirectedUrl: value });
   };
 
   fetchSingleLink = async (linkId) => {
     await axios
       .get(`posts/retrieve/${linkId}?post_type=link `)
       .then((res) => {
-        this.setState({preview: true});
-        this.setState({title: res.data.message.caption});
-        this.setState({redirectedUrl: res.data.message.redirected_url});
-        this.setState({updatePage: true});
-        this.setState({linkId: linkId});
-        this.setState({modal: true});
-        
+        this.setState({ preview: true });
+        this.setState({ title: res.data.message.caption });
+        this.setState({ redirectedUrl: res.data.message.redirected_url });
+        this.setState({ updatePage: true });
+        this.setState({ linkId: linkId });
+        this.setState({ modal: true });
       })
       .catch((error) => {
         console.log(error);
@@ -130,7 +137,7 @@ class MyLinks extends React.Component {
 
   saveLink = async () => {
     this.setState({ loading: true });
-    
+
     await axios
       .post("posts/reserve", {
         caption: this.state.title,
@@ -151,7 +158,7 @@ class MyLinks extends React.Component {
   };
 
   updateLink = async (id, title, redirectedUrl) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await axios
       .put(`posts/revise/${id}`, {
         caption: title,
@@ -170,16 +177,16 @@ class MyLinks extends React.Component {
   };
 
   deleteLink = async (id) => {
-    this.setState({ loading: true});
+    this.setState({ loading: true });
     this.setState({ isDeleted: true });
     await axios
       .delete(`posts/remove/${id}?post_type=link`)
       .then(() => {
         // this.fetchMyLinks(this.state.username);
         toast.success("Link removed successfully.");
-        this.setState({loading: false});
+        this.setState({ loading: false });
         this.setState({ confirmModal: false });
-        this.preview(false, "")
+        this.preview(false, "");
         window.location.reload();
         //this.addNewLink();
       })
@@ -212,22 +219,22 @@ class MyLinks extends React.Component {
 
   preview = (state, postIndex) => {
     this.toggle();
-    this.setState({preview: false});
-    this.setState({iframeKey: this.state.iframeKey + 1});
-    this.setState({confirmModal: false});
+    this.setState({ preview: false });
+    this.setState({ iframeKey: this.state.iframeKey + 1 });
+    this.setState({ confirmModal: false });
   };
 
   error(error) {
-    this.setState({error: error});
+    this.setState({ error: error });
   }
 
   addNewLink = (title, redirectedUrl) => {
-    this.setState({title: title});
-    this.setState({redirectedUrl: redirectedUrl});
-    this.setState({preview: true});
-    this.setState({updatePage: false});
-    this.setState({loading: false});
-    this.setState({modal: true});
+    this.setState({ title: title });
+    this.setState({ redirectedUrl: redirectedUrl });
+    this.setState({ preview: true });
+    this.setState({ updatePage: false });
+    this.setState({ loading: false });
+    this.setState({ modal: true });
   };
 
   copyToClipboard = (e) => {
@@ -269,10 +276,10 @@ class MyLinks extends React.Component {
           );
         }}
         deleteLink={() => {
-          this.setState({confirmModal: true});
+          this.setState({ confirmModal: true });
         }}
         closeModel={() => {
-          this.setState({modal: false});
+          this.setState({ modal: false });
         }}
       ></AddNewLink>
     );
@@ -314,16 +321,18 @@ class MyLinks extends React.Component {
           >
             <div
               className={`${!this.state.preview ? "show" : "hidden"}`}
-              style={{height: "100%", width: "100%", padding: "0px"}}
+              style={{ height: "100%", width: "100%", padding: "0px" }}
             >
-              <iframe
-                key={this.state.iframeKey}
-                src={`${
-                  this.state.url + this.state.username
-                }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                title=""
-                className="myshop-iframe"
-              ></iframe>
+              {this.state.username !== "" ? (
+                <iframe
+                  key={this.state.iframeKey}
+                  src={`${
+                    this.state.url + this.state.username
+                  }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  title=""
+                  className="myshop-iframe"
+                ></iframe>
+              ) : null}
             </div>
             <Row>
               <Col xs="12" className="p-3">

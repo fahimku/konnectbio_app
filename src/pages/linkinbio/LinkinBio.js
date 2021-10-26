@@ -18,7 +18,7 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -80,7 +80,7 @@ class LinkinBio extends React.Component {
     //   if (savedAccessToken) {
     //     accessToken = savedAccessToken;
     //   }
-      this.fetchInstagramPosts(accessToken);
+    this.fetchInstagramPosts(accessToken);
     ///}
     this.fetchCategories();
   }
@@ -578,15 +578,17 @@ class LinkinBio extends React.Component {
               className={`${!this.state.selectPost ? "show" : "hidden"}`}
               style={{ height: "100%", width: "100%", padding: "0px" }}
             >
-              <iframe
-                id="iframe"
-                key={this.state.iframeKey}
-                src={`${
-                  this.state.url + this.state.username
-                }?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                title=""
-                className="myshop-iframe"
-              ></iframe>
+              {this.state.username !== "" ? (
+                <iframe
+                  id="iframe"
+                  key={this.state.iframeKey}
+                  src={`${
+                    this.state.url + this.state.username
+                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  title=""
+                  className="myshop-iframe"
+                ></iframe>
+              ) : null}
             </div>
 
             <Row>
