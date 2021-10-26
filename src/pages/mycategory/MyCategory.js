@@ -37,7 +37,6 @@ class MyCategory extends React.Component {
     this.fetchMyCategory();
     this.fetchSaveCategory();
 
-      
     //Connect Instagram Code
   }
 
@@ -162,7 +161,6 @@ class MyCategory extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(userInfo1.username)
     return (
       <div className="category-page">
         <div className="container">
@@ -195,7 +193,9 @@ class MyCategory extends React.Component {
                     <>
                       <div className="connected-text text-center mb-2">
                         Connected Instagram: @
-                             { userInfo1.username !== "" ? userInfo1.username : this.props.username }
+                        {userInfo1.username !== ""
+                          ? userInfo1.username
+                          : this.props.username}
                       </div>
                       <Button
                         variant="primary"
@@ -217,7 +217,10 @@ class MyCategory extends React.Component {
                         </Modal.Header>
                         <Modal.Body className="bg-white">
                           Are you sure you want to disconnect
-                          <span class="strong"> @{userInfo1.username}</span>{" "}
+                          <span class="strong">
+                            {" "}
+                            @{userInfo1.username}
+                          </span>{" "}
                           account from Konnect.bio? This will remove all your
                           content from our platform.
                           <p>This action is not reversible.</p>
