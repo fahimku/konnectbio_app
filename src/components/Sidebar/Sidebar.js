@@ -78,7 +78,12 @@ class Sidebar extends React.Component {
           // onMouseLeave={this.onMouseLeave}
           className={s.root}
         >
-          <header className={s.logo} onClick={()=>{this.props.history.push('/app/home')}}>
+          <header
+            className={s.logo}
+            onClick={() => {
+              this.props.history.push("/app/home");
+            }}
+          >
             <a href="#">
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
@@ -268,8 +273,7 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 /> */}
                 <div className={`settings-bottom ${s.bottomLinks}`}>
-                    <LinksGroup
-
+                  <LinksGroup
                     className="sidebar-nav-links "
                     onActiveSidebarItemChange={(activeItem) =>
                       this.props.dispatch(changeActiveSidebarItem(activeItem))
