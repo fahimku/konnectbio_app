@@ -347,6 +347,10 @@ span.icon {
   text-align: right;
 }
 
+.auth-logo .logo {
+  width: 180px;
+  height: 90px;
+}
 
 @media screen and (min-width: 280px) and (max-width: 767px) {
   .img-connect {

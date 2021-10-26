@@ -1,5 +1,7 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 760px) {
+
+
     .mobile-preview .visit-website {
         margin-bottom: 10px;
         width: 89%;
@@ -11,11 +13,6 @@
 
 
 
-    body.body-my-post,
-    body.body-bio-shop,
-    body.body-my-links {
-        overflow-y: hidden;
-    }
 
     iframe {
         display: none;
@@ -89,6 +86,13 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 991px) {
+    .mobile-header-responsive {
+        position: sticky;
+        top: 0;
+        left: 0;
+        background: white;
+        z-index: 3234234;
+    }
 
     .top-logo {
         display: flex;
@@ -259,19 +263,21 @@
 }
 
 @media only screen and (max-width: 991px) {
-    ul.ml-auto.navbar-nav{
+    ul.ml-auto.navbar-nav {
         margin-left: 20px !important;
     }
+
     // .mobile-menu ul li{
     //     margin-left: 20px;
     // }
 
-    .mobile-menu ul li a{
+    .mobile-menu ul li a {
         font-size: 14px;
     }
+
     // .mobile-menu ul li a span {
     //     color: #000000 !important;
-       
+
     // }
 }
 
@@ -300,8 +306,9 @@
 @media only screen and (max-width: 512px) {
 
     button.update-buttons.btn.btn-primary {
-        width:100% !important
+        width: 100% !important
     }
+
     .source-button {
         border: 1px solid #c8c8c8;
         margin-top: 15px;
@@ -318,7 +325,7 @@
         top: 12px;
         font-weight: bold;
         font-size: 13px;
-        letter-spacing:2px;
+        letter-spacing: 2px;
         text-transform: uppercase;
     }
 
