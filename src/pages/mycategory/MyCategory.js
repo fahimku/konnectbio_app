@@ -220,7 +220,7 @@ class MyCategory extends React.Component {
                           <span class="strong"> @{userInfo1.username}</span>{" "}
                           account from Konnect.bio? This will remove all your
                           content from our platform.
-                          <p>This action is not Reversible.</p>
+                          <p>This action is not reversible.</p>
                         </Modal.Body>
                         <Modal.Footer>
                           <Button

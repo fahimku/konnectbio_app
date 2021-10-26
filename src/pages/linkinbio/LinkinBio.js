@@ -22,6 +22,7 @@ import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -71,7 +72,7 @@ class LinkinBio extends React.Component {
     document.body.classList.add("body-my-post");
     let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    // let savedAccessToken = userInfo.access_token;
+     let savedAccessToken = userInfo.access_token;
 
     // if (this.props.match.params.code && !accessToken && !savedAccessToken) {
     //   let accessTokenCode = this.props.match.params.code.split("#")[0];
@@ -80,7 +81,7 @@ class LinkinBio extends React.Component {
     //   if (savedAccessToken) {
     //     accessToken = savedAccessToken;
     //   }
-      this.fetchInstagramPosts(accessToken);
+      this.fetchInstagramPosts(savedAccessToken);
     ///}
     this.fetchCategories();
   }
