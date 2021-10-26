@@ -104,8 +104,8 @@ class Register extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        packages.map(({package_id, package_name}) => {
-          selectPackages.push({value: package_id, label: package_name});
+        packages.map(({package_id, package_name,package_amount}) => {
+          selectPackages.push({value: package_id, label: package_name + ' ($' + package_amount + ')'});
         });
         this.setState({packages: selectPackages});
       })
