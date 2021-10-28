@@ -122,14 +122,18 @@ const Package = (props) => {
                       <li className="d-block py-2">Access To Marketplace.</li>
                       <li className="d-block py-2">&nbsp;</li>
                     </ul>
-                    <div className="bottom-btn">
-                      <a
-                        className="btn btn-danger-gradiant btn-md text-white btn-block"
-                        href="#f1"
-                      >
-                        <span>Select Package</span>
-                      </a>
-                    </div>
+                    {/* <div className="bottom-btn"> */}
+                    <button
+                      className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      onClick={() => {
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
+                        );
+                      }}
+                    >
+                      <span>Select Package</span>
+                    </button>
+                    {/* </div> */}
                   </div>
                 </div>
               </div>
@@ -158,14 +162,16 @@ const Package = (props) => {
                       <li className="d-block py-2">Access To Marketplace.</li>
                       <li className="d-block py-2">&nbsp;</li>
                     </ul>
-                    <div className="bottom-btn">
-                      <a
-                        className="btn btn-success-gradiant btn-md text-white btn-block"
-                        href="#f1"
-                      >
-                        <span>Select Package</span>
-                      </a>
-                    </div>
+                    <button
+                      className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      onClick={() => {
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
+                        );
+                      }}
+                    >
+                      <span>Select Package</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -195,14 +201,16 @@ const Package = (props) => {
                         Affiliate Campaign/Coupons.
                       </li>
                     </ul>
-                    <div className="bottom-btn">
-                      <a
-                        className="btn btn-success-gradiant btn-md text-white btn-block"
-                        href="#f1"
-                      >
-                        <span>Select Package</span>
-                      </a>
-                    </div>
+                    <button
+                      className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      onClick={() => {
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
+                        );
+                      }}
+                    >
+                      <span>Select Package</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -235,14 +243,16 @@ const Package = (props) => {
                         Affiliate Campaign/Coupons.
                       </li>
                     </ul>
-                    <div className="bottom-btn">
-                      <a
-                        className="btn btn-success-gradiant btn-md text-white btn-block"
-                        href="#f1"
-                      >
-                        <span>Select Package</span>
-                      </a>
-                    </div>
+                    <button
+                      className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      onClick={() => {
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
+                        );
+                      }}
+                    >
+                      <span>Select Package</span>
+                    </button>
                   </div>
                 </div>
               </div>
