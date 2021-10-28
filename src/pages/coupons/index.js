@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {Row, Col} from "reactstrap";
-import {toast} from "react-toastify";
-import placeholder from "../../images/placeholder.png";
+import { Row, Col } from "reactstrap";
+// import {toast} from "react-toastify";
+// import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import s from "./Static.modules.scss";
 import Widget from "../../components/Widget";
-import Header from "../linkinbio/component/Header";
+// import Header from "../linkinbio/component/Header";
 import CouponForm from "./component/form";
 import CouponGrid from "./component/grid";
 
 const Coupons = () => {
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  const [username, setUsername] = useState(userInfo.username);
+  // const [username, setUsername] = useState(userInfo.username);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -21,7 +21,7 @@ const Coupons = () => {
   const [imageFiles, setImageFiles] = useState([]);
   const [data, setData] = useState([]);
 
-  const [couponItems, setCouponItems] = useState([
+  const [couponItems] = useState([
     {
       id: 1,
       image: "https://demo.flatlogic.com/sing-app-react/static/media/1.png",
@@ -44,21 +44,26 @@ const Coupons = () => {
     },
   ]);
 
-  useEffect(async () => {
-    const holdCategory = await FetchCategories();
-    setCategories(holdCategory);
+  useEffect(() => {
+    (async function () {
+      const holdCategory = await FetchCategories();
+      setCategories(holdCategory);
+    })();
   }, []);
 
-  useEffect(async () => {
-    const holdBrand = await FetchBrands();
-    setBrands(holdBrand);
+  useEffect(() => {
+    (async function () {
+      const holdBrand = await FetchBrands();
+      setBrands(holdBrand);
+    })();
   }, []);
 
-  useEffect(async () => {
-    const holdCountries = await FetchCountries();
-    setCountries(holdCountries);
+  useEffect(() => {
+    (async function () {
+      const holdCountries = await FetchCountries();
+      setCountries(holdCountries);
+    })();
   }, []);
-
   const FetchCategories = async () => {
     const holdCategory = [];
     await axios
@@ -66,7 +71,7 @@ const Coupons = () => {
       .then((response) => {
         if (response.data.message.length > 0)
           response.data.message.map((category) => {
-            holdCategory.push({
+            return holdCategory.push({
               value: category.category_id,
               label: category.category_name,
             });
@@ -87,7 +92,7 @@ const Coupons = () => {
       .then((response) => {
         if (response.data.message.length > 0)
           response.data.message.map((brand) => {
-            holdBrands.push({
+            return holdBrands.push({
               value: brand.brand_id,
               label: brand.brand_name,
             });
@@ -107,7 +112,7 @@ const Coupons = () => {
       .then((response) => {
         if (response.data.message.length > 0)
           response.data.message.map((country) => {
-            holdCountries.push({
+            return holdCountries.push({
               value: country.code1,
               label: country.name,
             });

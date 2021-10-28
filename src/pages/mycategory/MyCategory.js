@@ -25,6 +25,7 @@ class MyCategory extends React.Component {
       loading: false,
       modal: false,
       loadingInsta: false,
+      alert: true,
     };
   }
 
@@ -47,7 +48,7 @@ class MyCategory extends React.Component {
         const selectCategories = [];
         const myCategories = response.data.message;
         myCategories.map(({ category_id, category_name, image_url }) => {
-          selectCategories.push({
+          return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
@@ -67,7 +68,7 @@ class MyCategory extends React.Component {
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
         optionCategories.map(({ category_id, category_name, image_url }) => {
-          saveCategories.push({
+          return saveCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
@@ -168,31 +169,29 @@ class MyCategory extends React.Component {
             <div className="connections white-box mt-5">
               <Row>
                 <Col md={12}>
+                  {/* {this.state.alert && this.props.errorInsta ? (
+                    <Alert
+                      variant="danger"
+                      onClose={() => {
+                        this.setState({ alert: false });
+                      }}
+                      dismissible
+                    >
+                      <div className="h5">{this.props.errorInsta}</div>
+                    </Alert>
+                  ) : null} */}
+                </Col>
+                <Col md={12}>
                   <h5 className="page-title line-heading">Connect Instagram</h5>
                 </Col>
                 <Col md={8}>
-                  {/* <h3 className="package_name">Connect Instagram</h3> */}
                   <div className="category_count">
                     Connect your Instagram to start using KONNECT BIO.
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
-                  {/* <Button variant="primary" className="btn-block cat-right-btn">
-                    <i className="fa fa-instagram" />
-                    &nbsp;&nbsp;
-                    {this.props.isInstagramConnected ||
-                    this.state.isInstagramConnected ? (
-                      "Connected"
-                    ) : (
-                      <>
-                        {" "}
-                        <div
-                          dangerouslySetInnerHTML={{ __html: this.props.url }}
-                        />
-                      </>
-                    )}
-                  </Button> */}
-                  {userInfo1.username !== "" || this.props.username !== "" ? (
+                  {(userInfo1.username !== "" && !this.props.username) ||
+                  (userInfo1.username !== "" && this.props.username !== "") ? (
                     <>
                       <div className="connected-text text-center mb-2">
                         Connected Instagram: @
@@ -287,12 +286,6 @@ class MyCategory extends React.Component {
               </Row>
             </div>
 
-            {/* <Row className="mt-4">
-              <Col md={12}>
-                <h4 className="page-title">My Categories</h4>
-              </Col>
-            </Row> */}
-
             <form onSubmit={this.handleSubmit} className="white-box">
               <h5 className="page-title line-heading">My Categories</h5>
               <Row>
@@ -326,7 +319,7 @@ class MyCategory extends React.Component {
                                   ? placeholder
                                   : cat.image
                               }
-                              alt="cat-image"
+                              alt="cat-logo"
                               className="img-fluid cat-image"
                             />
                             <div>{cat.label}</div>

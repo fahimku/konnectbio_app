@@ -70,7 +70,7 @@ class LinkinBio extends React.Component {
 
   componentWillMount() {
     document.body.classList.add("body-my-post");
-    let accessToken = localStorage.getItem("access_token");
+    // let accessToken = localStorage.getItem("access_token");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
 
@@ -214,7 +214,7 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
-        let that = this;
+        // let that = this;
         this.setState({ postType: response.data.message.post_type });
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
@@ -252,7 +252,10 @@ class LinkinBio extends React.Component {
         const selectCategories = [];
         const categories = response.data.message;
         categories.map(({ category_id, category_name }) => {
-          selectCategories.push({ value: category_id, label: category_name });
+          return selectCategories.push({
+            value: category_id,
+            label: category_name,
+          });
         });
         this.setState({ categories: selectCategories });
       });
@@ -266,7 +269,7 @@ class LinkinBio extends React.Component {
         const selectSubCategories = [];
         const subCategories = response.data.message;
         subCategories.map(({ sub_category_id, sub_category_name }) => {
-          selectSubCategories.push({
+          return selectSubCategories.push({
             value: sub_category_id,
             label: sub_category_name,
           });
@@ -451,7 +454,7 @@ class LinkinBio extends React.Component {
     }
     this.setState({ selectPost: state });
     this.setState({ modal: true });
-    if (state == false && postIndex == "")
+    if (state === false && postIndex === "")
       this.setState({ iframeKey: this.state.iframeKey + 1 });
   };
 
@@ -586,7 +589,7 @@ class LinkinBio extends React.Component {
                   src={`${
                     this.state.url + this.state.username
                   }?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                  title=""
+                  title="linkin"
                   className="myshop-iframe"
                 ></iframe>
               ) : null}

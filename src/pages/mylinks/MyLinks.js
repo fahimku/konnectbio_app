@@ -329,7 +329,7 @@ class MyLinks extends React.Component {
                   src={`${
                     this.state.url + this.state.username
                   }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                  title=""
+                  title="mylinks"
                   className="myshop-iframe"
                 ></iframe>
               ) : null}

@@ -1,18 +1,17 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import axios from "axios";
-import {Row, Col} from "reactstrap";
-import Highcharts, {Chart} from "highcharts";
+import { Row, Col } from "reactstrap";
+import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 //import chartsData from "./mock";
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import moment from "moment";
 import "antd/dist/antd.css";
 
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 class HighCharts extends PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -259,10 +258,10 @@ class HighCharts extends PureComponent {
         let data = response.data.message.data;
         this.setState({
           postClicks: {
-            series: [{data: data}],
+            series: [{ data: data }],
           },
         });
-        this.setState({totalClicks: response.data.message.total_clicks});
+        this.setState({ totalClicks: response.data.message.total_clicks });
       })
       .catch((error) => {
         console.log(error);
@@ -280,11 +279,11 @@ class HighCharts extends PureComponent {
         let data = response.data.message.data;
         this.setState({
           profileViews: {
-            series: [{data: data}],
+            series: [{ data: data }],
           },
         });
 
-        this.setState({totalProfileViews: response.data.message.total_views});
+        this.setState({ totalProfileViews: response.data.message.total_views });
       })
       .catch((error) => {
         console.log(error);
@@ -302,10 +301,10 @@ class HighCharts extends PureComponent {
         let data = response.data.message.data;
         this.setState({
           clickThrough: {
-            series: [{data: data}],
+            series: [{ data: data }],
           },
         });
-        this.setState({totalClickThrough: response.data.message.total_ctp});
+        this.setState({ totalClickThrough: response.data.message.total_ctp });
       })
       .catch((error) => {
         console.log(error);
@@ -315,7 +314,7 @@ class HighCharts extends PureComponent {
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];
-    this.setState({fromDate: fromDate, toDate: toDate});
+    this.setState({ fromDate: fromDate, toDate: toDate });
     this.fetchPostClicks(this.state.username, fromDate, toDate);
     this.fetchProfileViews(this.state.username, fromDate, toDate);
     this.fetchClickThrough(this.state.username, fromDate, toDate);
@@ -352,7 +351,7 @@ class HighCharts extends PureComponent {
                 moment().subtract(200, "month"),
                 moment().add(200, "month"),
               ],
-              Today: [moment(), moment()],
+
               Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
               Yesterday: [
                 moment().subtract(1, "days"),
@@ -367,7 +366,7 @@ class HighCharts extends PureComponent {
                 moment().subtract(1, "month").endOf("month"),
               ],
             }}
-            style={{width: "20%"}}
+            style={{ width: "20%" }}
             format={dateFormat}
             onChange={this.dateRangePickerChanger.bind(this)}
           />

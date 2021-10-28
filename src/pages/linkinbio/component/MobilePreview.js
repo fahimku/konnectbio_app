@@ -14,7 +14,7 @@ const MobilePreview = ({
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
-      if (instagramPosts.data[i].media_type == "IMAGE") {
+      if (instagramPosts.data[i].media_type === "IMAGE") {
         instaPosts.push(
           <Col key={i} xs="4">
             <div className="mobile-image-box">
@@ -28,6 +28,7 @@ const MobilePreview = ({
                 id={"img" + i}
                 onClick={(ev) => selectPost(true, i)}
                 src={instagramPosts.data[i].media_url}
+                alt="instagramPosts"
               />
               {instagramPosts.data[i].linked ? (
                 <span className="linked-label">LINKED</span>
@@ -43,7 +44,7 @@ const MobilePreview = ({
             <div className="mobile-image-box">
               <video
                 oncontextmenu="return false;"
-                id="myVideo"
+                // id="myVideo"
                 autoplay
                 controlsList="nodownload"
                 className={
@@ -77,11 +78,13 @@ const MobilePreview = ({
   return (
     <div className="mobile-preview">
       <div className="mobile-header">
-        <img className="place-holder-image" src={placeholder} />
+        <img
+          className="place-holder-image"
+          src={placeholder}
+          alt="placeholder"
+        />
         <span className="place-holder-name">{username}</span>
-        <div className="page-name">
-          {pageName}
-        </div>
+        <div className="page-name">{pageName}</div>
       </div>
       {error ? (
         <div className="error">

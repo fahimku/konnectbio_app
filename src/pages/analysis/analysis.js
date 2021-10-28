@@ -7,13 +7,12 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Button,
 } from "reactstrap";
 import HighCharts from "./highcharts/HighCharts";
-import PostPerfomance from "./postperformance/postperformance";
+// import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
 //import {connect} from "react-redux";
-import placeholder from "../../images/placeholder.png";
+// import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 import LinkAnalytic from "./Linkperformance/linkanalytics";

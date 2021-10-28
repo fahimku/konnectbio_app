@@ -1,8 +1,4 @@
-import axios from "axios";
-import HtmlTable from "../../../components/HtmlTable/HtmlTable";
 import React from "react";
-import { DatePicker } from "antd";
-import moment from "moment";
 import "antd/dist/antd.css";
 import LinkDataComponent from "./LinkDataComponent";
 

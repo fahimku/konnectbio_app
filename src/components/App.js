@@ -1,17 +1,16 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  withRouter,
   Redirect,
 } from "react-router-dom";
 //import {HashRouter} from "react-router-dom";
-import {ToastContainer} from "react-toastify";
-import {ConnectedRouter} from "connected-react-router";
-import {getHistory} from "../index";
-import {AdminRoute, UserRoute, AuthRoute} from "./RouteComponents";
+import { ToastContainer } from "react-toastify";
+import { ConnectedRouter } from "connected-react-router";
+import { getHistory } from "../index";
+import { AdminRoute, UserRoute, AuthRoute } from "./RouteComponents";
 /* eslint-disable */
 import ErrorPage from "../pages/error";
 /* eslint-enable */
@@ -31,7 +30,7 @@ import Forgot from "../pages/auth/forgot";
 //   forceRefresh: true,
 // });
 
-const CloseButton = ({closeToast}) => (
+const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
 );
 

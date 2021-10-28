@@ -5,22 +5,16 @@ import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
 const AddNewLink = (props) => {
-
   const [canSubmit, setCanSubmit] = useState(false);
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
-    if (props.updatePage)
-      setCanSubmit(true);
-
-  },[]);
-
+    if (props.updatePage) setCanSubmit(true);
+  }, [props.updatePage]);
 
   useEffect(() => {
-    if (props.isDeleted)
-      resetForm();
-       
-  },[props.isDeleted]);
+    if (props.isDeleted) resetForm();
+  }, [props.isDeleted]);
 
   function resetForm() {
     formRef.current.reset();
@@ -114,7 +108,7 @@ const AddNewLink = (props) => {
                           </Col>
                           <Col lg="3" sm="6" xs="6">
                             <Button
-                               disabled={canSubmit}
+                              disabled={canSubmit}
                               className="update-buttons"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}

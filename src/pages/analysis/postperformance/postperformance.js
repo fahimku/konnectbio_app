@@ -1,12 +1,12 @@
 import axios from "axios";
 import HtmlTable from "../../../components/HtmlTable";
 import React from "react";
-import {DatePicker} from "antd";
-import moment from "moment";
+// import { DatePicker } from "antd";
+// import moment from "moment";
 import "antd/dist/antd.css";
 
-const {RangePicker} = DatePicker;
-const dateFormat = "YYYY-MM-DD";
+// const {RangePicker} = DatePicker;
+// const dateFormat = "YYYY-MM-DD";
 
 class PostPerfomance extends React.Component {
   constructor(props) {
@@ -30,8 +30,8 @@ class PostPerfomance extends React.Component {
         to_date: toDate,
       })
       .then((response) => {
-        this.setState({columns: response.data.message.columns});
-        this.setState({data: response.data.message.data});
+        this.setState({ columns: response.data.message.columns });
+        this.setState({ data: response.data.message.data });
       });
   }
 

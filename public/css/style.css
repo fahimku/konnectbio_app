@@ -370,6 +370,10 @@ span.icon {
     background-color: #f1e7e7;
     display: flex;
     left: 0px;
+    position: -webkit-sticky;
+    position: -moz-sticky;
+    position: -o-sticky;
+    position: -ms-sticky;
     position: sticky;
     top: 0px;
     width: 100%;
@@ -491,4 +495,11 @@ span.icon {
     position: relative;
     right: 36px;
   }
+}
+
+.link {
+  color: #1a86d0;
+  text-decoration: none;
+  background-color: initial;
+  cursor: pointer;
 }

@@ -2,20 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import {
-  Navbar,
-  Nav,
-  NavbarToggler,
-  NavItem,
-  NavLink,
-  Collapse,
-  NavbarBrand,
-} from "reactstrap";
-import cx from "classnames";
-import { NavbarTypes } from "../../reducers/layout";
-import Notifications from "../Notifications";
+import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
+
 import { logoutUser } from "../../actions/auth";
-import Joyride, { STATUS } from "react-joyride";
+import { STATUS } from "react-joyride";
 
 import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 import {
@@ -36,7 +26,7 @@ import logo from "../../images/logo.svg";
 // import EmailIcon from "../../images/sidebar/Outline/Email";
 // import PowerIcon from "../../images/sidebar/Outline/Power";
 
-import s from "./Header.module.scss"; // eslint-disable-line css-modules/no-unused-class
+// import s from "./Header.module.scss"; // eslint-disable-line css-modules/no-unused-class
 import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
@@ -54,7 +44,7 @@ class Header extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
 
-    console.log(username)
+    console.log(username);
 
     super(props);
 
@@ -316,7 +306,11 @@ class Header extends React.Component {
             <div className="your-copy-link">
               <div className="item-a">
                 Bio Link:{" "}
-                <a target="_blank" href={url + this.props.username}>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={url + this.props.username}
+                >
                   {url + this.props.username}
                 </a>
               </div>

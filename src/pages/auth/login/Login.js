@@ -1,18 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 //import {Redirect} from "react-router";
 import config from "../../../config";
-import {connect} from "react-redux";
-import {Container, Alert, Button} from "reactstrap";
+import { connect } from "react-redux";
+import { Container, Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import {loginUser, receiveToken} from "../../../actions/auth";
+import { loginUser, receiveToken } from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 // import microsoft from '../../../images/microsoft.png';
-import {push} from "connected-react-router";
+import { push } from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 class Login extends React.Component {
   static propTypes = {
@@ -43,17 +43,17 @@ class Login extends React.Component {
   }
 
   changeEmail(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   changePassword(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   doLogin(e) {
     e.preventDefault();
     this.props.dispatch(
-      loginUser({email: this.state.email, password: this.state.password})
+      loginUser({ email: this.state.email, password: this.state.password })
     );
   }
 
@@ -77,7 +77,7 @@ class Login extends React.Component {
   }
 
   tokenVerify = async (code, email) => {
-    const endPoint = config.baseURLApiToken + "/" + "verify?email=" + email;
+    const endPoint = config.baseURLApiToken + "/verify?email=" + email;
     const requestOptions = {
       method: "GET",
       headers: {
@@ -106,8 +106,7 @@ class Login extends React.Component {
       <div className="auth-page">
         <Container>
           <h5 className="auth-logo">
-
-            <img className="logo" src={logo} />
+            <img className="logo" src={logo} alt="logo" />
           </h5>
           <Widget
             className="widget-auth mx-auto"
@@ -141,14 +140,14 @@ class Login extends React.Component {
                   placeholder="Password"
                 />
               </div>
-              <a
-                className="d-block text-right mb-3 mt-1 fs-sm"
+              <span
+                className="d-block text-right mb-3 mt-1 fs-sm  link"
                 onClick={() => {
                   this.props.history.push("/forgot");
                 }}
               >
                 Forgot password?
-              </a>
+              </span>
               <Button
                 type="submit"
                 color="info"
@@ -161,14 +160,14 @@ class Login extends React.Component {
             <p className="widget-auth-info">
               Don't have an account? Sign up now!
             </p>
-            <a
-              className="d-block text-center"
+            <span
+              className="d-block text-center  link"
               onClick={() => {
                 this.props.history.push("/register");
               }}
             >
               Create an Account
-            </a>
+            </span>
           </Widget>
         </Container>
       </div>

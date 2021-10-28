@@ -1,9 +1,7 @@
 import React from "react";
 import {
-  Row,
   Col,
   Button,
-  Form,
   FormGroup,
   Label,
   Input,
@@ -78,7 +76,7 @@ const CouponForm = ({
                       alt="..."
                       src={file.preview}
                       key={`img-id-${idx.toString()}`}
-                      style={{width: "200px", height: "150px"}}
+                      style={{ width: "200px", height: "150px" }}
                     />
                   ))}
                 </div>
@@ -86,7 +84,7 @@ const CouponForm = ({
                 <img
                   alt="..."
                   src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                  style={{width: "200px", height: "150px"}}
+                  style={{ width: "200px", height: "150px" }}
                 />
               )}
             </div>

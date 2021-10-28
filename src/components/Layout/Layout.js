@@ -66,11 +66,11 @@ import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Helper from "../Helper";
 import placeholder from "../../images/placeholder.png";
-import {
-  openSidebar,
-  closeSidebar,
-  toggleSidebar,
-} from "../../actions/navigation";
+// import {
+//   openSidebar,
+//   closeSidebar,
+//   toggleSidebar,
+// } from "../../actions/navigation";
 import s from "./Layout.module.scss";
 import { DashboardThemes } from "../../reducers/layout";
 import ProductEdit from "../../pages/management/components/productEdit";
@@ -89,14 +89,13 @@ import MyLinks from "../../pages/mylinks/MyLinks";
 import { createBrowserHistory } from "history";
 import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
-import Home from "../../pages/home/Home"
+import Home from "../../pages/home/Home";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
-
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,

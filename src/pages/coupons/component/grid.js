@@ -1,24 +1,11 @@
 import React from "react";
-import {
-  Row,
-  Col,
-  Table,
-  Progress,
-  Button,
-  UncontrolledButtonDropdown,
-  DropdownMenu,
-  DropdownToggle,
-  DropdownItem,
-  Input,
-  Label,
-  Badge,
-} from "reactstrap";
+import { Table, Badge } from "reactstrap";
 
-const couponGrid = ({couponItems}) => {
+const couponGrid = ({ couponItems }) => {
   const parseDate = (date) => {
     let dateSet = date.toDateString().split(" ");
 
-    return `${date.toLocaleString("en-us", {month: "long"})} ${dateSet[2]}, ${
+    return `${date.toLocaleString("en-us", { month: "long" })} ${dateSet[2]}, ${
       dateSet[3]
     }`;
   };

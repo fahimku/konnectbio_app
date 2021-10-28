@@ -15,7 +15,7 @@ const TopBar = ({ username, copyToClipboard, url, text }) => {
       <DropdownButton
         id="dropdown-basic-button"
         className="source-button"
-        title={text ? "Instagram" : "" + `Source: instagram @${username}`}
+        title={text ? "Instagram" : `Source: instagram @${username}`}
       >
         <Dropdown.Item href="#/Instagram">Instagram</Dropdown.Item>
       </DropdownButton>

@@ -14,7 +14,7 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-  const [subCategories, setSubCategories] = useState([]);
+  // const [subCategories, setSubCategories] = useState([]);
   const media_id = props.singlePost.id
     ? props.singlePost.id
     : props.singlePost.media_id;
@@ -24,16 +24,16 @@ const ShopRightBar = (props) => {
 
   const formRef = useRef("LinkForm");
 
-  useEffect(() => {
-    // console.log("Props Redirected Url");
-    // console.log(props.redirectedUrl);
-    setSubCategories(props.subCategories);
-  }, [
-    props.subCategories,
-    props.changeSubCategory,
-    props.changePostType,
-    props.postType,
-  ]);
+  // useEffect(() => {
+  //   // console.log("Props Redirected Url");
+  //   // console.log(props.redirectedUrl);
+  //   setSubCategories(props.subCategories);
+  // }, [
+  //   props.subCategories,
+  //   props.changeSubCategory,
+  //   props.changePostType,
+  //   props.postType,
+  // ]);
 
   useEffect(() => {
     // console.log("start date");
@@ -49,9 +49,9 @@ const ShopRightBar = (props) => {
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
 
-  function resetForm() {
-    formRef.current.reset();
-  }
+  // function resetForm() {
+  //   formRef.current.reset();
+  // }
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -59,9 +59,9 @@ const ShopRightBar = (props) => {
     props.dateRange(startDate, endDate);
   }
 
-  function resetForm() {
-    formRef.current.reset();
-  }
+  // function resetForm() {
+  //   formRef.current.reset();
+  // }
 
   return (
     <>
@@ -97,10 +97,10 @@ const ShopRightBar = (props) => {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type == "IMAGE" && (
-                  <img src={`${props.singlePost.media_url}`} />
+                {props.singlePost.media_type === "IMAGE" && (
+                  <img src={`${props.singlePost.media_url}`} alt="media_url" />
                 )}
-                {props.singlePost.media_type == "VIDEO" && (
+                {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
               </div>
@@ -185,14 +185,14 @@ const ShopRightBar = (props) => {
                 </Select>
               </div> */}
 
-                {props.singlePost.media_type == "VIDEO" && (
+                {props.singlePost.media_type === "VIDEO" && (
                   <>
                     <div className="form-check form-check-inline mt-3">
                       <input
                         onChange={props.changePostType}
                         className="form-check-input"
                         type="radio"
-                        checked={props.postType == "video" ? "checked" : ""}
+                        checked={props.postType === "video" ? "checked" : ""}
                         name="postType"
                         id="inlineRadio1"
                         value="video"
@@ -210,7 +210,7 @@ const ShopRightBar = (props) => {
                         className="form-check-input"
                         type="radio"
                         checked={
-                          props.postType == "advertisement" ? "checked" : ""
+                          props.postType === "advertisement" ? "checked" : ""
                         }
                         name="postType"
                         id="inlineRadio2"
@@ -236,7 +236,7 @@ const ShopRightBar = (props) => {
                     allowClear={false}
                     ranges={{
                       Today: [moment(), moment()],
-                      Today: [moment(), moment()],
+
                       Tomorrow: [
                         moment().add(1, "days"),
                         moment().add(1, "days"),

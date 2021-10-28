@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
-import {Row, Col} from "reactstrap";
-import {Link} from "react-router-dom";
+import React, { useEffect } from "react";
+import { Row, Col } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const MobilePreview = ({
   placeholder,
@@ -40,7 +40,11 @@ const MobilePreview = ({
   return (
     <div className={`mobile-preview ` + style.myLinks}>
       <div className="mobile-header">
-        <img className="place-holder-image" src={placeholder} />
+        <img
+          className="place-holder-image"
+          src={placeholder}
+          alt="placeholder"
+        />
         <span className="place-holder-name">{username}</span>
         <div className="page-name">{pageName}</div>
       </div>

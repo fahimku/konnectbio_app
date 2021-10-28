@@ -4,23 +4,18 @@ import axios from "axios";
 import {
   Row,
   Col,
-  ButtonGroup,
   Button,
-  Nav,
-  NavItem,
-  NavLink,
   Pagination,
   PaginationLink,
   PaginationItem,
-  Badge,
   UncontrolledButtonDropdown,
   DropdownMenu,
   DropdownToggle,
   DropdownItem,
 } from "reactstrap";
 
-import Header from "../../linkinbio/component/Header";
-import placeholder from "../../../images/placeholder.png";
+// import Header from "../../linkinbio/component/Header";
+// import placeholder from "../../../images/placeholder.png";
 import s from "./Search.module.scss";
 
 class Search extends React.Component {
@@ -52,7 +47,7 @@ class Search extends React.Component {
         zip: [],
       })
       .then((res) => {
-        this.setState({brands: res.data.message});
+        this.setState({ brands: res.data.message });
       });
   }
 
@@ -99,6 +94,7 @@ class Search extends React.Component {
                   <a
                     href={item.website}
                     target="_blank"
+                    rel="noreferrer"
                     className={`link-primary ${s.imageLink}`}
                   >
                     <img className={s.image} src={item.logo_url} alt="" />
@@ -110,6 +106,7 @@ class Search extends React.Component {
                           <a
                             href={item.website}
                             target="_blank"
+                            rel="noreferrer"
                             className="link-primary"
                           >
                             {item.brand_name}

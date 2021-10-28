@@ -1,18 +1,17 @@
-import React , { useState, useEffect } from "react";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import {logoutUser} from "../../../actions/auth";
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { logoutUser } from "../../../actions/auth";
 
 class Logout extends React.Component {
-
-    doLogout() {
+  doLogout() {
     this.props.dispatch(logoutUser());
   }
 
   constructor(props) {
     super(props);
     this.doLogout = this.doLogout.bind(this);
-    }
+  }
 
   componentDidMount() {
     this.doLogout();

@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { route } from "react-router";
+// import { route } from "react-router";
 import {} from "reactstrap";
-import { Link } from "react-router-dom";
-import s from "./ErrorPage.module.scss";
+// import { Link } from "react-router-dom";
+// import s from "./ErrorPage.module.scss";
 import { Row, Col, Button } from "react-bootstrap";
-import InputValidation from "../../components/InputValidation";
+// import InputValidation from "../../components/InputValidation";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
@@ -169,7 +169,7 @@ class MyProfile extends React.Component {
                         ) : this.state.userImage === "" ||
                           this.state.userImage === undefined ? (
                           <img
-                            alt="image"
+                            alt="profile-icon"
                             src={
                               Placeholder
                               // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
@@ -179,7 +179,7 @@ class MyProfile extends React.Component {
                           />
                         ) : (
                           <img
-                            alt="image"
+                            alt="profile-icon"
                             src={this.state.userImage}
                             style={{ width: "150px", height: "150px" }}
                             className="circle profile-icon"

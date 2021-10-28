@@ -84,13 +84,13 @@ class Sidebar extends React.Component {
               this.props.history.push("/app/home");
             }}
           >
-            <a href="#">
+            <a href="/">
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
           </header>
 
           <ul className={s.nav}>
-            {this.state.userType == "Brand" ? (
+            {this.state.userType === "Brand" ? (
               <>
                 <LinksGroup
                   className="sidebar-nav-links"

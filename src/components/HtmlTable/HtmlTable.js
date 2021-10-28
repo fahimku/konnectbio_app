@@ -1,6 +1,6 @@
-import {Table} from "antd";
-import React, {useEffect, useState} from "react";
-import moment from "moment";
+import { Table } from "antd";
+import React, { useEffect, useState } from "react";
+// import moment from "moment";
 
 const HtmlTable = (props) => {
   const [columns, setColumns] = useState([]);
@@ -9,7 +9,7 @@ const HtmlTable = (props) => {
     getColumns();
   }, [props]);
 
-  function showPopup() {}
+  // function showPopup() {}
 
   function getColumns() {
     if (props.columns != null) {
@@ -54,13 +54,11 @@ const HtmlTable = (props) => {
           // },
           // sortDirections: ["descend", "ascend"],
           render: (text, record, i) => {
-            if (index == 0) {
+            if (index === 0) {
               let media = "";
-              if (record.media_type == "IMAGE") {
-                media = <img src={record.media_url} />;
-              }
-              else {
-
+              if (record.media_type === "IMAGE") {
+                media = <img src={record.media_url} alt="mediaimage" />;
+              } else {
               }
               return media;
             }

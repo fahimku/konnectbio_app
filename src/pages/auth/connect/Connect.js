@@ -1,10 +1,10 @@
 import axios from "axios";
 import React from "react";
 import { Button, Row, Col, FormLabel } from "react-bootstrap";
-import { withRouter, NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import logo from "../../../images/logo.svg";
-import MyCategory from "pages/mycategory/MyCategory";
+import MyCategory from "../../../pages/mycategory/MyCategory";
 import { toast } from "react-toastify";
 
 class Connect extends React.Component {
@@ -99,7 +99,7 @@ class Connect extends React.Component {
       <>
         <Row className="connect-page-header">
           <Col md={11} xs={8}>
-            <img className="img-connect" src={logo} />
+            <img className="img-connect" src={logo} alt="logo" />
           </Col>
           <Col md={1} xs={4}>
             <Button
@@ -123,7 +123,7 @@ class Connect extends React.Component {
                 <Col md={10}></Col>
                 <Col md={2}>
                   <Button
-                    disabled={this.state.instagramCode == "" ? true : false}
+                    disabled={this.state.instagramCode === "" ? true : false}
                     onClick={() => {
                       this.props.history.push(
                         `/app/linkinbio/${this.state.instagramCode}`
@@ -136,7 +136,7 @@ class Connect extends React.Component {
                     Next
                   </Button>
                 </Col>
-                {this.state.instagramCode == "" && (
+                {this.state.instagramCode === "" && (
                   <FormLabel className="label-insta col-md-12">
                     Please Connect your Instagram Account
                   </FormLabel>

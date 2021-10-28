@@ -1,11 +1,11 @@
 import axios from "axios";
 import config from "../config";
 import jwt from "jsonwebtoken";
-import {toast} from "react-toastify";
-import {push} from "connected-react-router";
+import { toast } from "react-toastify";
+// import {push} from "connected-react-router";
 import Errors from "../components/FormItems/error/errors";
-import {mockUser} from "./mock";
-import {createBrowserHistory} from "history";
+import { mockUser } from "./mock";
+import { createBrowserHistory } from "history";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
@@ -165,7 +165,7 @@ export function verifyEmail(token) {
       history.push("/login");
     } else {
       axios
-        .put("/auth/verify-email", {token})
+        .put("/auth/verify-email", { token })
         .then((verified) => {
           if (verified) {
             toast.success("Your email was verified");
@@ -181,7 +181,7 @@ export function verifyEmail(token) {
   };
 }
 
-export function resetPassword(token,email,password) {
+export function resetPassword(token, email, password) {
   return (dispatch) => {
     const headers = {
       Authorization: "Bearer " + token,
@@ -189,8 +189,12 @@ export function resetPassword(token,email,password) {
     dispatch({
       type: RESET_REQUEST,
     });
-    axios.put("/users/revise/password/new",{password, email},{
-        headers: headers,
+    axios
+      .put(
+        "/users/revise/password/new",
+        { password, email },
+        {
+          headers: headers,
         }
       )
       .then((res) => {
@@ -199,9 +203,8 @@ export function resetPassword(token,email,password) {
         });
         toast.success("Password has been updated");
         setTimeout(() => {
-          history.push("/login");          
-        },1000)
-
+          history.push("/login");
+        }, 1000);
       })
       .catch((err) => {
         dispatch(authError(err.response.data.message));
@@ -210,8 +213,7 @@ export function resetPassword(token,email,password) {
 }
 
 export function sendPasswordResetEmail(email) {
-  const endPoint =
-    config.baseURLApiToken + "/" + "forgotpassword?email=" + email;
+  const endPoint = config.baseURLApiToken + "/forgotpassword?email=" + email;
   return (dispatch) => {
     dispatch({
       type: PASSWORD_RESET_EMAIL_REQUEST,
@@ -244,7 +246,7 @@ export function registerUser(creds) {
             type: REGISTER_SUCCESS,
           });
           toast.success("You've been registered successfully.");
-          history.push("/login");
+          setTimeout(() => history.push("/login"), 800);
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
