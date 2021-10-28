@@ -2,6 +2,11 @@ import React, { useEffect } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 const Package = (props) => {
@@ -13,7 +18,7 @@ const Package = (props) => {
         package_id: "a7afb3b0-fb76-4ceb-975d-a6dc900728aa",
       })
       .then(() => {
-        props.history.push("/connect");
+        history.push("/connect");
       })
       .catch((error) => {
         console.log(error);
@@ -28,7 +33,7 @@ const Package = (props) => {
         <Col md={1} xs={4}>
           <Button
             className="btn-connect"
-            onClick={() => props.history.push("/logout")}
+            onClick={() => history.push("/logout")}
           >
             Logout
           </Button>
