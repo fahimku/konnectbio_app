@@ -58,7 +58,7 @@ class Register extends React.Component {
   async componentDidMount() {
     await this.getCountries();
     await this.getCities();
-    await this.getPackages();
+    // await this.getPackages();
   }
 
   getCities = async () => {
@@ -182,7 +182,7 @@ class Register extends React.Component {
           name: this.state.name,
           email: this.state.email,
           gender: this.state.gender,
-          package_id: this.state.packageType.value,
+          // package_id: this.state.packageType.value,
           country: this.state.countryCode,
           city: this.state.city,
           password: this.state.password,
@@ -191,14 +191,13 @@ class Register extends React.Component {
     }
   }
 
-  changePackage = (e, options) => {
-    this.setState({
-      packageType: options,
-    });
-  };
+  // changePackage = (e, options) => {
+  //   this.setState({
+  //     packageType: options,
+  //   });
+  // };
 
   render() {
-    console.log(this.state.countryCode, "packageType");
     return (
       <div className="auth-page">
         <Container>
@@ -245,13 +244,13 @@ class Register extends React.Component {
                   options={this.state.genderList}
                 />
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <Select
                   onChange={(options, e) => this.changePackage(e, options)}
                   placeholder="Select Package"
                   options={this.state.packages}
                 />
-              </div>
+              </div> */}
               <div className="form-group">
                 {this.state.country ? (
                   <Select

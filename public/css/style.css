@@ -325,11 +325,12 @@ span.icon {
 }
 
 .connect-page-header {
-  background-color: #f1e7e7;
+  /* background-color: #f1e7e7; */
   /* display: flex; */
+  padding: 0 15px;
 }
 .img-connect {
-  margin-left: 28px;
+  /* margin-left: 28px; */
   width: 180px;
   height: 50px;
 }
@@ -366,7 +367,7 @@ span.icon {
     color: crimson;
     text-align: center;
   }
-  .connect-page-header {
+  /* .connect-page-header {
     background-color: #f1e7e7;
     display: flex;
     left: 0px;
@@ -378,7 +379,9 @@ span.icon {
     top: 0px;
     width: 100%;
     z-index: 1000;
-  }
+    margin: 0 !important;
+    padding: 0;
+  } */
   .link-icon {
     height: 58px !important;
   }
@@ -413,7 +416,6 @@ span.icon {
   display: block;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
-
   .top-logo .logo img {
     width: auto !important;
   }
@@ -456,7 +458,7 @@ span.icon {
   .top-logo .logo img {
     width: auto !important;
   }
- 
+
   .ant-picker-range {
     width: auto !important;
   }
@@ -482,12 +484,6 @@ span.icon {
   position: relative;
   top: 30px;
 }
-@media screen and (min-width: 768px) and (max-width: 1360px) {
-  .btn-connect {
-    position: relative;
-    right: 36px;
-  }
-}
 
 .link {
   color: #1a86d0;
@@ -495,5 +491,3 @@ span.icon {
   background-color: initial;
   cursor: pointer;
 }
-
-

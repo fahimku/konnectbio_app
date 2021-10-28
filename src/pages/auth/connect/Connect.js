@@ -97,19 +97,23 @@ class Connect extends React.Component {
   render() {
     return (
       <>
-        <Row className="connect-page-header">
-          <Col md={11} xs={8}>
-            <img className="img-connect" src={logo} alt="logo" />
-          </Col>
-          <Col md={1} xs={4}>
-            <Button
-              className="btn-connect"
-              onClick={() => this.props.history.push("/logout")}
-            >
-              Logout
-            </Button>
-          </Col>
-        </Row>
+        <div className="main-header">
+          <div className="container">
+            <Row className="connect-page-header">
+              <Col md={10} xs={8}>
+                <img className="img-connect" src={logo} alt="logo" />
+              </Col>
+              <Col md={2} xs={4} className="text-right">
+                <Button
+                  className="btn-connect"
+                  onClick={() => this.props.history.push("/logout")}
+                >
+                  Logout
+                </Button>
+              </Col>
+            </Row>
+          </div>
+        </div>
         <MyCategory
           username={this.state.username}
           isInstagramConnected={this.state.isInstagramConnected}
@@ -118,7 +122,7 @@ class Connect extends React.Component {
         />
         <div className="category-page">
           <div className="container">
-            <div className="justify-content-md-center">
+            <div className="white-box pt-0">
               <Row>
                 <Col md={10}></Col>
                 <Col md={2}>
