@@ -162,7 +162,7 @@ class MyCategory extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(userInfo1.package,"sdsdsdsd")
+    console.log(userInfo1.package, "sdsdsdsd");
     return (
       <div className="category-page">
         <div className="container">
@@ -268,84 +268,92 @@ class MyCategory extends React.Component {
               <Row>
                 <Col md={8}>
                   <h3 className="package_name">
-                    {userInfo1.package?userInfo1.package.package_name :""}
+                    {userInfo1.package ? userInfo1.package.package_name : ""}
                   </h3>
-                  <div className="category_count">
-                    You have only {userInfo1.package?userInfo1.package.category_count:""} categories
-                    allowed in this plan
-                  </div>
+                  {userInfo1.package.category_count !== 0 ? (
+                    <div className="category_count">
+                      You have only{" "}
+                      {userInfo1.package
+                        ? userInfo1.package.category_count
+                        : ""}{" "}
+                      categories allowed in this plan
+                    </div>
+                  ) : null}
                 </Col>
                 <Col md={4} className="text-right">
-                  <Button
-                    variant="primary"
-                    className="btn-block cat-right-btn"
-                    onClick={this.UpgradePlan}
-                  >
-                    Upgrade Plan
-                  </Button>
+                  {userInfo1.package.category_count !== 0 ? (
+                    <Button
+                      variant="primary"
+                      className="btn-block cat-right-btn"
+                      onClick={this.UpgradePlan}
+                    >
+                      Upgrade Plan
+                    </Button>
+                  ) : null}
                 </Col>
               </Row>
             </div>
-
-            <form onSubmit={this.handleSubmit} className="white-box">
-              <h5 className="page-title line-heading">My Categories</h5>
-              <Row>
-                <Col md={8}>
-                  <label>Select Category: </label>
-                  {this.state.saveCategories === "" ? null : (
-                    <Select
-                      isMulti={true}
-                      name="category"
-                      className="selectCustomization"
-                      options={this.state.myCategory}
-                      defaultValue={this.state.saveCategories}
-                      placeholder="Select Category"
-                      onChange={(options, e) => this.handleSelect(e, options)}
-                    />
-                  )}
-                  <span className="text-danger">
-                    {this.state.categoryError}
-                  </span>
-                  <Row>
-                    {this.state.saveCategories.length === 0 ? (
-                      <span className="ml-4">No Category Selected</span>
-                    ) : (
-                      this.state.saveCategories.map((cat, i) => (
-                        <React.Fragment key={i}>
-                          <div key={i} className="cat-box col-sm-3 col-6">
-                            <img
-                              key={i}
-                              src={
-                                cat.image === "" || cat.image === undefined
-                                  ? placeholder
-                                  : cat.image
-                              }
-                              alt="cat-logo"
-                              className="img-fluid cat-image"
-                            />
-                            <div>{cat.label}</div>
-                          </div>
-                        </React.Fragment>
-                      ))
+            {userInfo1.package.category_count !== 0 ? (
+              <form onSubmit={this.handleSubmit} className="white-box">
+                <h5 className="page-title line-heading">My Categories</h5>
+                <Row>
+                  <Col md={8}>
+                    <label>Select Category: </label>
+                    {this.state.saveCategories === "" ? null : (
+                      <Select
+                        isMulti={true}
+                        name="category"
+                        className="selectCustomization"
+                        options={this.state.myCategory}
+                        defaultValue={this.state.saveCategories}
+                        placeholder="Select Category"
+                        onChange={(options, e) => this.handleSelect(e, options)}
+                      />
                     )}
-                  </Row>
-                </Col>
-                <Col md={4}>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    className="category-btn btn-block"
-                    disabled={
-                      this.state.saveCategories.length && !this.state.loading
-                        ? false
-                        : true
-                    }
-                  >
-                    Save Category
-                  </Button>
-                </Col>
-              </Row>
-            </form>
+                    <span className="text-danger">
+                      {this.state.categoryError}
+                    </span>
+                    <Row>
+                      {this.state.saveCategories.length === 0 ? (
+                        <span className="ml-4">No Category Selected</span>
+                      ) : (
+                        this.state.saveCategories.map((cat, i) => (
+                          <React.Fragment key={i}>
+                            <div key={i} className="cat-box col-sm-3 col-6">
+                              <img
+                                key={i}
+                                src={
+                                  cat.image === "" || cat.image === undefined
+                                    ? placeholder
+                                    : cat.image
+                                }
+                                alt="cat-logo"
+                                className="img-fluid cat-image"
+                              />
+                              <div>{cat.label}</div>
+                            </div>
+                          </React.Fragment>
+                        ))
+                      )}
+                    </Row>
+                  </Col>
+                  <Col md={4}>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      className="category-btn btn-block"
+                      disabled={
+                        this.state.saveCategories.length && !this.state.loading
+                          ? false
+                          : true
+                      }
+                    >
+                      Save Category
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+            ) : null}
           </div>
         </div>
       </div>
