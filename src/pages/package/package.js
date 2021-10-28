@@ -77,19 +77,21 @@ const Package = (props) => {
                       <li className="d-block py-2">&nbsp;</li>
                       <li className="d-block py-2">&nbsp;</li>
                     </ul>
-                    <div
+                    {/* <div
                       onClick={() => {
                         updatePackage(userInfo.user_id);
                       }}
                       className="bottom-btn"
+                    > */}
+                    <button
+                      className="btn btn-success-gradiant btn-md text-white btn-block"
+                      onClick={() => {
+                        updatePackage(userInfo.user_id);
+                      }}
                     >
-                      <a
-                        className="btn btn-success-gradiant btn-md text-white btn-block"
-                        href="#"
-                      >
-                        <span>Select Package</span>
-                      </a>
-                    </div>
+                      <span>Select Package</span>
+                    </button>
+                    {/* </div> */}
                   </div>
                 </div>
               </div>
