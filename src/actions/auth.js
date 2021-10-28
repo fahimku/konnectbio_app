@@ -148,7 +148,13 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          history.push("/app");
+          console.log(res)
+          
+          if (res.data.message.package)
+            history.push("/app"); 
+          else
+          history.push("/package");
+
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));

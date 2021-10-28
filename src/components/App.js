@@ -23,6 +23,7 @@ import Verify from "../pages/auth/verify";
 import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
+import Package from "../pages/package/package";
 
 // import { createBrowserHistory } from "history";
 
@@ -73,6 +74,7 @@ class App extends React.PureComponent {
                 component={LayoutComponent}
               />
               <Route path="/connect" exact component={Connect} />
+              <Route path="/package" exact component={Package} />
               <Route path="/logout" exact component={Logout} />
               <Route path="/register" exact component={Register} />
               <Route path="/login" exact component={Login} />
