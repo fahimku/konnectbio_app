@@ -1,5 +1,5 @@
-import React, {useEffect} from "react";
-import {Button, Row, Col} from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button, Row, Col } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -80,7 +80,7 @@ const Package = (props) => {
                     >
                       <a
                         className="btn btn-success-gradiant btn-md text-white btn-block"
-                        href="#"
+                        href="/"
                       >
                         <span>Select Package</span>
                       </a>

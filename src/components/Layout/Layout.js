@@ -36,7 +36,7 @@ import Widgets from "../../pages/widgets";
 import Products from "../../pages/products";
 import Management from "../../pages/management";
 import Product from "../../pages/product";
-import Package from "../../pages/package";
+// import Package from "../../pages/package";
 import Email from "../../pages/email";
 import CoreTypography from "../../pages/core/typography";
 import CoreColors from "../../pages/core/colors";
@@ -334,7 +334,7 @@ class Layout extends React.Component {
                       <Route path="/app/ui/nav" exact component={UINav} />
                       <Route path="/app/grid" exact component={Grid} />
                       <Route path="/app/chat" exact component={ChatPage} />
-                      <Route path="/app/package" exact component={Package} />
+                      {/* <Route path="/app/package" exact component={Package} /> */}
                       <Route
                         path="/app/forms"
                         exact
