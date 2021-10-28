@@ -95,12 +95,15 @@
     }
 
     .top-logo {
-        display: flex;
+        display:block !important;
         place-content: center;
+        width:132px;
+        margin:0 auto;
     }
 
     .top-logo .logo img {
         width: 120px;
+
     }
 
     .navbar {
@@ -378,40 +381,12 @@
         // margin-left: 123px;
     }
 
-    .left-top-bar {}
 
-    // .top-mobile-header {
-    //   display: block !important;
-    // }
-    // .mobile-menu {
-    //   float: left !important;
-    //   width: auto !important;
-    //   margin-right: 46px;
-    // }
-    // .top-mobile-header .logo img {
-    //   width: 138px !important;
-    // }
     .left-column {
         border: none !important;
     }
 
     .pane-button button {
         margin-top: 4px !important;
-    }
-}
-
-@media only screen and (min-device-width: 280px) and (max-device-width: 511px) {
-    // .source-button.dropdown {
-    //   margin-left: 94px !important;
-    // }
-    // .mobile-menu {
-    //   margin-right: 21px;
-    // }
-
-    .top-mobile-header .logo {
-
-        //         position: absolute;
-        //         left: 50%;
-        //         right: 50%;
     }
 }

@@ -413,13 +413,7 @@ span.icon {
   display: block;
 }
 @media screen and (min-width: 768px) and (max-width: 991px) {
-  .Layout_wrap__3DJh2 {
-    left: 0 !important;
-    margin-left: 0 !important;
-  }
-  .logo {
-    height: 50px;
-  }
+
   .top-logo .logo img {
     width: auto !important;
   }
@@ -462,9 +456,7 @@ span.icon {
   .top-logo .logo img {
     width: auto !important;
   }
-  .logo {
-    height: 50px;
-  }
+ 
   .ant-picker-range {
     width: auto !important;
   }
