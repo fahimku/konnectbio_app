@@ -162,6 +162,7 @@ class MyCategory extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userInfo1.package,"sdsdsdsd")
     return (
       <div className="category-page">
         <div className="container">
@@ -267,10 +268,10 @@ class MyCategory extends React.Component {
               <Row>
                 <Col md={8}>
                   <h3 className="package_name">
-                    {userInfo.package.package_name}
+                    {userInfo1.package?userInfo1.package.package_name :""}
                   </h3>
                   <div className="category_count">
-                    You have only {userInfo.package.category_count} categories
+                    You have only {userInfo1.package?userInfo1.package.category_count:""} categories
                     allowed in this plan
                   </div>
                 </Col>
