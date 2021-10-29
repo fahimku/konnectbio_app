@@ -8,6 +8,7 @@ import { mockUser } from "./mock";
 import { createBrowserHistory } from "history";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
+export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
@@ -37,6 +38,13 @@ async function findMe() {
 export function authError(payload) {
   return {
     type: AUTH_FAILURE,
+    payload,
+  };
+}
+
+export function authSuccess(payload) {
+  return {
+    type: AUTH_SUCCESS,
     payload,
   };
 }
@@ -251,8 +259,7 @@ export function registerUser(creds) {
           dispatch({
             type: REGISTER_SUCCESS,
           });
-          toast.success("You've been registered successfully.");
-          setTimeout(() => history.push("/login"), 800);
+          dispatch(authSuccess("You've been registered successfully.An email has been sent for verification."));
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));

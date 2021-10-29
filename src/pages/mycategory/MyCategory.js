@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button, Modal } from "react-bootstrap";
-import { toast } from "react-toastify";
+import {Row, Col, Button, Modal} from "react-bootstrap";
+import {toast} from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -26,20 +26,42 @@ class MyCategory extends React.Component {
       modal: false,
       loadingInsta: false,
       alert: true,
+      packages: "",
+      package: userInfo.package.package_name,
+      categoryAllow:userInfo.package.category_count
     };
   }
 
   componentDidMount() {
     if (userInfo.access_token !== "") {
-      this.setState({ isInstagramConnected: true });
+      this.setState({isInstagramConnected: true});
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ user_id: userInfo.user_id });
+    this.setState({user_id: userInfo.user_id});
     this.fetchMyCategory();
     this.fetchSaveCategory();
-
+    this.getPackages();
     //Connect Instagram Code
   }
+
+  getPackages = async () => {
+    await axios
+      .get(`/package/receive`)
+      .then((response) => {
+        const selectPackages = [];
+        const packages = response.data.message;
+        packages.map(({package_id, package_name, package_amount}) => {
+          return selectPackages.push({
+            value: package_id,
+            label: package_name,
+          });
+        });
+        this.setState({packages: selectPackages});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   fetchMyCategory = async () => {
     await axios
@@ -47,19 +69,20 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({ category_id, category_name, image_url }) => {
+        myCategories.map(({category_id, category_name, image_url}) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({ myCategory: selectCategories });
+        this.setState({myCategory: selectCategories});
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   fetchSaveCategory = async () => {
     await axios
       .get(`/users/receive/categories?id=${userInfo.user_id}`)
@@ -67,7 +90,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({ category_id, category_name, image_url }) => {
+        optionCategories.map(({category_id, category_name, image_url}) => {
           return saveCategories.push({
             value: category_id,
             label: category_name,
@@ -83,6 +106,7 @@ class MyCategory extends React.Component {
         console.log(error);
       });
   };
+
   handleSelect = (e, options) => {
     options = options === null ? [] : options;
     if (options.length > userInfo.package.category_count) {
@@ -101,6 +125,7 @@ class MyCategory extends React.Component {
       });
     }
   };
+
   handleSubmit = async (e) => {
     e.preventDefault();
     let category =
@@ -109,7 +134,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({ loading: true });
+    this.setState({loading: true});
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -119,15 +144,15 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
-          this.setState({ loading: false });
+          this.setState({categoryError: ""});
+          this.setState({loading: false});
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({ loading: false });
-        this.setState({ categoryError: err.response.data.message });
+        this.setState({loading: false});
+        this.setState({categoryError: err.response.data.message});
       });
     // }
   };
@@ -136,38 +161,143 @@ class MyCategory extends React.Component {
     alert("Please Contact Customer Support Team");
   };
   toggleModal = () => {
-    const { modal } = this.state;
+    const {modal} = this.state;
     this.setState({
       modal: !modal,
     });
   };
   disconnect = async () => {
-    this.setState({ loadingInsta: true });
+    this.setState({loadingInsta: true});
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
         user_id: this.state.user_id,
       })
       .then((response) => {
-        this.setState({ modal: false });
-        this.setState({ loadingInsta: false });
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({ loadingInsta: false });
+        this.setState({loadingInsta: false});
         console.log(err.response, "err");
       });
   };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(userInfo1.package, "sdsdsdsd");
     return (
       <div className="category-page">
-        <div className="container">
+        <div
+          className={
+            this.props.className ? this.props.className : "container-fluid"
+          }
+        >
           <div className="justify-content-md-center">
             <div className="connections white-box mt-5">
+              <div className="white-box mt-5">
+                <h5 className="page-title line-heading">Current Plan</h5>
+                <Row>
+                  <Col md={8}>
+                    <h3 className="package_name">
+                      {/* {userInfo1.package ? userInfo1.package.package_name : ""} */}
+                      Individual
+                    </h3>
+                    {/* {userInfo1.package.category_count !== 0 ? ( */}
+                    <div className="category_count">
+                    You have only {this.state.categoryAllow}
+                      { " "}categories allowed in this plan
+                  </div>
+                    {/* ) : null} */}
+                  </Col>
+                  <Col md={4} className="mt-5">
+                    {/* {userInfo1.package.category_count !== 0 ? ( */}
+
+                    <Select 
+                      options={this.state.packages}
+                      placeholder="Select package"
+
+                      value={
+                         {
+                          label: this.state.package,
+                          value: this.state.package,
+                        }
+                      }
+
+                      //                      onChange={(options, e) => this.handleSelect(e, options)}
+                    />
+                    {/* <Button
+                      variant="primary"
+                      className="btn-block cat-right-btn"
+                      onClick={this.UpgradePlan}
+                    >
+                      Upgrade Plan
+                    </Button> */}
+                    {/* ) : null} */}
+                  </Col>
+                </Row>
+              </div>
+              <form onSubmit={this.handleSubmit} className="white-box">
+                <h5 className="page-title line-heading">My Categories</h5>
+                <Row>
+                  <Col md={8}>
+                    <label>Select Category: </label>
+                    {this.state.saveCategories === "" ? null : (
+                      <Select
+                        isMulti={true}
+                        name="category"
+                        className="selectCustomization"
+                        options={this.state.myCategory}
+                        defaultValue={this.state.saveCategories}
+                        placeholder="Select Category"
+                        onChange={(options, e) => this.handleSelect(e, options)}
+                      />
+                    )}
+                    <span className="text-danger">
+                      {this.state.categoryError}
+                    </span>
+                    <Row>
+                      {this.state.saveCategories.length === 0 ? (
+                        <span className="ml-4">No Category Selected</span>
+                      ) : (
+                        this.state.saveCategories.map((cat, i) => (
+                          <React.Fragment key={i}>
+                            <div key={i} className="cat-box col-sm-3 col-6">
+                              <img
+                                key={i}
+                                src={
+                                  cat.image === "" || cat.image === undefined
+                                    ? placeholder
+                                    : cat.image
+                                }
+                                alt="cat-logo"
+                                className="img-fluid cat-image"
+                              />
+                              <div>{cat.label}</div>
+                            </div>
+                          </React.Fragment>
+                        ))
+                      )}
+                    </Row>
+                  </Col>
+                  <Col md={4}>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      className="category-btn btn-block"
+                      disabled={
+                        this.state.saveCategories.length && !this.state.loading
+                          ? false
+                          : true
+                      }
+                    >
+                      Save Category
+                    </Button>
+                  </Col>
+                </Row>
+              </form>
+
               <Row>
                 <Col md={12}>
                   {/* {this.state.alert && this.props.errorInsta ? (
@@ -204,7 +334,7 @@ class MyCategory extends React.Component {
                         variant="primary"
                         className="btn-block cat-right-btn"
                         onClick={() => {
-                          this.setState({ modal: true });
+                          this.setState({modal: true});
                         }}
                       >
                         Disconnect Instagram
@@ -231,7 +361,7 @@ class MyCategory extends React.Component {
                         <Modal.Footer>
                           <Button
                             onClick={() => {
-                              this.setState({ modal: false });
+                              this.setState({modal: false});
                             }}
                           >
                             Close
@@ -263,96 +393,6 @@ class MyCategory extends React.Component {
                 </Col>
               </Row>
             </div>
-            <div className="white-box mt-5">
-              <h5 className="page-title line-heading">Current Plan</h5>
-              <Row>
-                <Col md={8}>
-                  <h3 className="package_name">
-                    {/* {userInfo1.package ? userInfo1.package.package_name : ""} */}
-                    Individual
-                  </h3>
-                  {/* {userInfo1.package.category_count !== 0 ? ( */}
-                  {/* <div className="category_count">
-                    You have only{" "}
-                    {userInfo1.package.category_count
-                    categories allowed in this plan
-                  </div> */}
-                  {/* ) : null} */}
-                </Col>
-                <Col md={4} className="text-right">
-                  {/* {userInfo1.package.category_count !== 0 ? ( */}
-                  <Button
-                    variant="primary"
-                    className="btn-block cat-right-btn"
-                    onClick={this.UpgradePlan}
-                  >
-                    Upgrade Plan
-                  </Button>
-                  {/* ) : null} */}
-                </Col>
-              </Row>
-            </div>
-            {/* {userInfo1.package.category_count !== 0 ? ( */}
-            <form onSubmit={this.handleSubmit} className="white-box">
-              <h5 className="page-title line-heading">My Categories</h5>
-              <Row>
-                <Col md={8}>
-                  <label>Select Category: </label>
-                  {this.state.saveCategories === "" ? null : (
-                    <Select
-                      isMulti={true}
-                      name="category"
-                      className="selectCustomization"
-                      options={this.state.myCategory}
-                      defaultValue={this.state.saveCategories}
-                      placeholder="Select Category"
-                      onChange={(options, e) => this.handleSelect(e, options)}
-                    />
-                  )}
-                  <span className="text-danger">
-                    {this.state.categoryError}
-                  </span>
-                  <Row>
-                    {this.state.saveCategories.length === 0 ? (
-                      <span className="ml-4">No Category Selected</span>
-                    ) : (
-                      this.state.saveCategories.map((cat, i) => (
-                        <React.Fragment key={i}>
-                          <div key={i} className="cat-box col-sm-3 col-6">
-                            <img
-                              key={i}
-                              src={
-                                cat.image === "" || cat.image === undefined
-                                  ? placeholder
-                                  : cat.image
-                              }
-                              alt="cat-logo"
-                              className="img-fluid cat-image"
-                            />
-                            <div>{cat.label}</div>
-                          </div>
-                        </React.Fragment>
-                      ))
-                    )}
-                  </Row>
-                </Col>
-                <Col md={4}>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    className="category-btn btn-block"
-                    disabled={
-                      this.state.saveCategories.length && !this.state.loading
-                        ? false
-                        : true
-                    }
-                  >
-                    Save Category
-                  </Button>
-                </Col>
-              </Row>
-            </form>
-            {/* ) : null} */}
           </div>
         </div>
       </div>

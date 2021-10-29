@@ -370,6 +370,7 @@ class LinkinBio extends React.Component {
       this.props.history.replace(current);
     });
   };
+
   deletePost = async (id) => {
     this.setState({ loading: true });
     await axios.delete(`/posts/remove/${id}`).then((response) => {

@@ -14,6 +14,11 @@ import logo from "../../../images/logo.svg";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
+
 class Login extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -143,7 +148,7 @@ class Login extends React.Component {
               <span
                 className="d-block text-right mb-3 mt-1 fs-sm  link"
                 onClick={() => {
-                  this.props.history.push("/forgot");
+                history.push("/forgot");
                 }}
               >
                 Forgot password?
@@ -163,7 +168,7 @@ class Login extends React.Component {
             <span
               className="d-block text-center  link"
               onClick={() => {
-                this.props.history.push("/register");
+                history.push("/register");
               }}
             >
               Create an Account
