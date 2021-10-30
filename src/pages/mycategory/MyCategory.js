@@ -197,11 +197,11 @@ class MyCategory extends React.Component {
           <div className="justify-content-md-center">
             <div className="connections mt-5">
               <div className="white-box mt-5">
-                <h5 className="page-title line-heading">Current Plan</h5>
+                <h5 className="page-title line-heading">Subscription Plan</h5>
                 <Row>
                   <Col md={8}>
                     <h3 className="package_name">
-                      {userInfo1.package ? userInfo1.package.package_name : ""}
+                      {userInfo1.package ? userInfo1.package.package_name : ""} Account
                       {/* Individual */}
                     </h3>
                     {/* {userInfo1.package.category_count !== 0 ? ( */}
@@ -236,7 +236,7 @@ class MyCategory extends React.Component {
                 </Row>
               </div>
               <form onSubmit={this.handleSubmit} className="white-box">
-                <h5 className="page-title line-heading">My Categories</h5>
+                <h5 className="page-title line-heading">Subscribed Categories</h5>
                 <Row>
                   <Col md={8}>
                     <label>Select Category: </label>
@@ -289,7 +289,7 @@ class MyCategory extends React.Component {
                           : true
                       }
                     >
-                      Save Category
+                      Save
                     </Button>
                   </Col>
                 </Row>
@@ -310,11 +310,11 @@ class MyCategory extends React.Component {
                   ) : null} */}
                 </Col>
                 <Col md={12}>
-                  <h5 className="page-title line-heading">Connect Instagram</h5>
+                  <h5 className="page-title line-heading">Connections</h5>
                 </Col>
                 <Col md={8}>
                   <div className="category_count">
-                    Connect your Instagram to start using KONNECT BIO.
+                   Connection Status
                   </div>
                 </Col>
                 <Col md={4} className="text-right">
