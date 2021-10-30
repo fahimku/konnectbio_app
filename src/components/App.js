@@ -79,7 +79,7 @@ class App extends React.PureComponent {
               <Route path="/register" exact component={Register} />
               <Route path="/login" exact component={Login} />
               <AuthRoute path="/verify-email" exact component={Verify} />
-              <AuthRoute path="/password-reset" exact component={Reset} />
+              <Route path="/password-reset" exact component={Reset} />
               <AuthRoute path="/forgot" exact component={Forgot} />
               <Route path="/error" exact component={ErrorPage} />
               {/* <Redirect from="*" to="/app/main/analytics"/>*/}
