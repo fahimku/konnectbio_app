@@ -1,8 +1,8 @@
-import React, {useEffect} from "react";
-import {Button, Row, Col} from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button, Row, Col } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -10,12 +10,12 @@ export const history = createBrowserHistory({
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 const Package = (props) => {
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
-  async function updatePackage(id) {
+  async function updatePackage(id, packageId) {
     await axios
       .put(`users/revise/package/${id}`, {
-        package_id: "a7afb3b0-fb76-4ceb-975d-a6dc900728aa",
+        package_id: packageId,
       })
       .then((response) => {
         const userInformation = localStorage.getItem("userInfo");
@@ -92,7 +92,10 @@ const Package = (props) => {
                     <button
                       className="btn btn-success-gradiant btn-md text-white btn-block"
                       onClick={() => {
-                        updatePackage(userInfo.user_id);
+                        updatePackage(
+                          userInfo.user_id,
+                          "617cee6790aad9bd2a4e10fb"
+                        );
                       }}
                     >
                       <span>Select Package</span>
@@ -131,9 +134,15 @@ const Package = (props) => {
                     {/* <div className="bottom-btn"> */}
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      // onClick={() => {
+                      //   alert(
+                      //     "Please contact support@konnect.bio for plan inquiries."
+                      //   );
+                      // }}
                       onClick={() => {
-                        alert(
-                          "Please contact support@konnect.bio for plan inquiries."
+                        updatePackage(
+                          userInfo.user_id,
+                          "617cee8b90aad9bd2a4e10ff"
                         );
                       }}
                     >
@@ -170,9 +179,15 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      // onClick={() => {
+                      //   alert(
+                      //     "Please contact support@konnect.bio for plan inquiries."
+                      //   );
+                      // }}
                       onClick={() => {
-                        alert(
-                          "Please contact support@konnect.bio for plan inquiries."
+                        updatePackage(
+                          userInfo.user_id,
+                          "617ceeb390aad9bd2a4e1103"
                         );
                       }}
                     >
@@ -209,9 +224,15 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      // onClick={() => {
+                      //   alert(
+                      //     "Please contact support@konnect.bio for plan inquiries."
+                      //   );
+                      // }}
                       onClick={() => {
-                        alert(
-                          "Please contact support@konnect.bio for plan inquiries."
+                        updatePackage(
+                          userInfo.user_id,
+                          "617cef1390aad9bd2a4e1107"
                         );
                       }}
                     >
@@ -251,9 +272,15 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
+                      // onClick={() => {
+                      //   alert(
+                      //     "Please contact support@konnect.bio for plan inquiries."
+                      //   );
+                      // }}
                       onClick={() => {
-                        alert(
-                          "Please contact support@konnect.bio for plan inquiries."
+                        updatePackage(
+                          userInfo.user_id,
+                          "617cef2e90aad9bd2a4e110b"
                         );
                       }}
                     >
