@@ -6,12 +6,9 @@ import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
 const Package = (props) => {
-  useEffect(() => { }, []);
-
+  useEffect(() => {}, []);
   async function updatePackage(id) {
     await axios
       .put(`users/revise/package/${id}`, {
@@ -32,21 +29,25 @@ const Package = (props) => {
 
   return (
     <>
-      <Row className="connect-page-header">
-        <Col md={11} xs={8}>
-          <img className="img-connect" src={logo} alt="logo" />
-        </Col>
-        <Col md={1} xs={4}>
-          <Button
-            className="btn-connect"
-            onClick={() => history.push("/logout")}
-          >
-            Logout
-          </Button>
-        </Col>
-      </Row>
-      <div className="container-fluid">
-        <div className="pricing1 py-5 bg-light">
+      <div className="main-header">
+        <div className="container">
+          <Row className="connect-page-header">
+            <Col md={10} xs={8}>
+              <img className="img-connect" src={logo} alt="logo" />
+            </Col>
+            <Col md={2} xs={4} className="text-right">
+              <Button
+                className="btn-connect"
+                onClick={() => this.props.history.push("/logout")}
+              >
+                Logout
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      </div>
+      <div className="container-fluid bg-light">
+        <div className="pricing1 py-5 ">
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-md-8 text-center">
@@ -55,7 +56,7 @@ const Package = (props) => {
               </div>
             </div>
             <div className="row mt-5">
-              <div className="col">
+              <div className="col col-xl col-lg-6 col-md-6 col-sm-12">
                 <div className="card text-center card-shadow on-hover border-0 mb-4">
                   <div className="card-body font-14">
                     <h5 className="mt-3 mb-1 font-weight-medium">
@@ -101,8 +102,7 @@ const Package = (props) => {
                   </div>
                 </div>
               </div>
-
-              <div className="col">
+              <div className="col col-xl col-lg-6 col-md-6 col-sm-12">
                 <div className="card text-center card-shadow on-hover border-0 mb-4">
                   <div className="card-body font-14">
                     <h5 className="mt-3 mb-1 font-weight-medium">
@@ -143,8 +143,7 @@ const Package = (props) => {
                   </div>
                 </div>
               </div>
-
-              <div className="col">
+              <div className="col col-xl col-lg-6 col-md-6 col-sm-12">
                 <div className="card text-center card-shadow on-hover border-0 mb-4">
                   <div className="card-body font-14">
                     <h5 className="mt-3 mb-1 font-weight-medium">Influencer</h5>
@@ -181,7 +180,7 @@ const Package = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="col">
+              <div className="col col-xl col-lg-6 col-md-6 col-sm-12">
                 <div className="card text-center card-shadow on-hover border-0 mb-4">
                   <div className="card-body font-14">
                     <h5 className="mt-3 mb-1 font-weight-medium">Business</h5>
@@ -220,8 +219,7 @@ const Package = (props) => {
                   </div>
                 </div>
               </div>
-
-              <div className="col">
+              <div className="col col-xl col-lg-6 col-md-6 col-sm-12">
                 <div className="card text-center card-shadow on-hover border-0 mb-4">
                   <div className="card-body font-14">
                     <h5 className="mt-3 mb-1 font-weight-medium">
