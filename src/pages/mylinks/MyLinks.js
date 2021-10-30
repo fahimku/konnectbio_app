@@ -22,6 +22,7 @@ class MyLinks extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
+    let userId = userInfo.user_id;
     super(props);
     this.error = this.error.bind(this);
     this.state = {
@@ -82,6 +83,7 @@ class MyLinks extends React.Component {
       accordionSecond: [false, true, false],
       autoFocus: false,
       error: "",
+      userId: userId,
     };
     this.titleChange = this.titleChange.bind(this);
     this.redirectedUrlChange = this.redirectedUrlChange.bind(this);
@@ -145,6 +147,7 @@ class MyLinks extends React.Component {
         username: this.state.username,
         timestamp: this.state.timestamp,
         post_type: "link",
+        user_id: this.state.userId,
       })
       .then(() => {
         this.fetchMyLinks(this.state.username);
