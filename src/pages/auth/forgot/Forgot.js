@@ -34,7 +34,6 @@ class Forgot extends React.Component {
   render() {
     return (
       <div className="auth-page">
-
         <div class="login_header">
           <div class="header_inr group">
             <div class="header_inr_left">

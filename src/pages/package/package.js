@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import React, {useEffect} from "react";
+import {Button, Row, Col} from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });

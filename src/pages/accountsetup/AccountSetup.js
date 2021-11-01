@@ -2,23 +2,27 @@ import React from "react";
 import axios from "axios";
 import Select from "react-select";
 import {Row, Col, Button, Modal} from "react-bootstrap";
+import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
-import placeholder from "../../../src/images/placeholder.svg";
 import {createBrowserHistory} from "history";
+import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-class MyCategory extends React.Component {
+class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showPaymentButton: false,
+      allPackages: "",
+      singlePackage: "",
       myCategory: "",
       user_id: "",
       category: [],
+      categoryIncluded: 0,
+      linksIncluded: 0,
       defaultCategory: "",
       saveCategories: "",
       categoryError: "",
@@ -52,6 +56,7 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
+        this.setState({allPackages: packages});
         packages.map(({package_id, package_name, package_amount}) => {
           return selectPackages.push({
             value: package_id,
@@ -159,8 +164,15 @@ class MyCategory extends React.Component {
     // }
   };
 
-  handlePackage = () => {
+  handlePackage = (event) => {
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
+    console.log();
+    console.log(singlePackage);
+    this.setState({singlePackage: singlePackage});
     this.setState({showPaymentButton: true});
+    this.setState({package: event.value, package: event.label});
   };
 
   toggleModal = () => {
@@ -205,150 +217,143 @@ class MyCategory extends React.Component {
                 <h5 className="page-title line-heading">Manage Plan</h5>
                 <Row>
                   <Col md={8}>
-                    <h3 className="package_name">
-                      {userInfo1.package ? userInfo1.package.package_name : ""}{" "}
-                      Account {"  "}
-                      <span>${this.state.package_amount}/Month</span>
-                    </h3>
-
-                    <div className="category_count">
-                      You have {this.state.categoryAllow} categories allowed in
-                      this plan
-                    </div>
-                    <Row className="mt-4">
-                      <Col md={6}>
-                        <Select
-                          options={this.state.packages}
-                          placeholder="Select package"
-                          value={{
-                            label: this.state.package,
-                            value: this.state.package,
-                          }}
-                          onChange={(options, e) =>
-                            this.handlePackage(e, options)
-                          }
-                        />
-                      </Col>
-                      {this.state.showPaymentButton && (
-                        <Col md={6}>
-                          <Button>
-                            <i className="fa fa-payment" />
-                            &nbsp;&nbsp;Payment
-                          </Button>
-                        </Col>
-                      )}
-                    </Row>
+                    <h4 className="package_name">
+                      Current Plan{" "}
+                      {userInfo1.package ? userInfo1.package.package_name : ""}
+                    </h4>
                   </Col>
                 </Row>
-              </div>
-              <form onSubmit={this.handleSubmit} className="white-box">
-                <h5 className="page-title line-heading">
-                  Subscribed Categories
-                </h5>
-                <Row>
-                  <Col md={12}>
-                    <label>Select Category: </label>
-                    {this.state.saveCategories === "" ? null : (
-                      <Select
-                        isMulti={true}
-                        name="category"
-                        className="selectCustomization"
-                        options={this.state.myCategory}
-                        defaultValue={this.state.saveCategories}
-                        placeholder="Select Category"
-                        onChange={(options, e) => this.handleSelect(e, options)}
-                      />
-                    )}
-                    <span className="text-danger">
-                      {this.state.categoryError}
-                    </span>
-                    <Row>
-                      {this.state.saveCategories.length === 0 ? (
-                        <span className="ml-4">No Category Selected</span>
-                      ) : (
-                        this.state.saveCategories.map((cat, i) => (
-                          <React.Fragment key={i}>
-                            <div key={i} className="cat-box col-sm-3 col-6">
-                              <img
-                                key={i}
-                                src={
-                                  cat.image === "" || cat.image === undefined
-                                    ? placeholder
-                                    : cat.image
-                                }
-                                alt="cat-logo"
-                                className="img-fluid cat-image"
-                              />
-                              <div>{cat.label}</div>
-                            </div>
-                          </React.Fragment>
-                        ))
-                      )}
-                    </Row>
-                  </Col>
-                </Row>
-
-                <Row className="white-box">
-                  <Col md={12}>
-                    <h5 className="page-title line-heading">Connections</h5>
-                  </Col>
-                  <Col md={8}>
-                    <div className="category_count">Connection Status</div>
-                  </Col>
-                  <Col md={4} className="text-right">
-                    {(userInfo1.username !== "" && !this.props.username) ||
-                    (userInfo1.username !== "" &&
-                      this.props.username !== "") ? (
-                      <>
-                        <div className="connected-text text-center mb-2">
-                          Connected Instagram: @
-                          {userInfo1.username !== ""
-                            ? userInfo1.username
-                            : this.props.username}
-                        </div>
-                        <Button
-                          variant="primary"
-                          className="btn-block cat-right-btn"
-                          onClick={() => {
-                            this.setState({modal: true});
-                          }}
-                        >
-                          Disconnect Instagram
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          onClick={() => {
-                            window.location.replace(this.props.url);
-                          }}
-                          variant="primary"
-                          className="btn-block cat-right-btn"
-                        >
-                          <i className="fa fa-instagram" />
-                          &nbsp;&nbsp; Connect Instagram
-                        </Button>
-                      </>
-                    )}
-                  </Col>
-                </Row>
-                <Row className="">
-                  <Col md={3}>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      className="category-btn btn-block"
-                      disabled={
-                        this.state.saveCategories.length && !this.state.loading
-                          ? false
-                          : true
-                      }
-                    >
-                      Save
+                <Row className="mt-4">
+                  <Col md={4}>Status Activity:(Monthly)</Col>
+                  <Col md={4}>
+                    <Button variant="primary" className="btn-block">
+                      Cancel Subscription
                     </Button>
                   </Col>
                 </Row>
-              </form>
+
+                <Row className="mt-4">
+                  <Col md={4}>Change Plan:</Col>
+                  <Col md={4}>
+                    <Select
+                      options={this.state.packages}
+                      placeholder="Select package"
+                      value={{
+                        label: this.state.package,
+                        value: this.state.package,
+                      }}
+                      onChange={(event) => this.handlePackage(event)}
+                    />
+                  </Col>
+                </Row>
+
+                <Row className="mt-4">
+                  <Col md={4}>
+                    {/* Categories Included: {this.state.singlePackage[0].category_count} */}
+                  </Col>
+                  <Col md={4}>
+                    <p>Change Plan to have more categories</p>
+                  </Col>
+                </Row>
+
+                <Row className="mt-4">
+                  <Col md={4}>
+                    {/* Links Included: {this.state.singlePackage[0].link_count} */}
+                  </Col>
+                  <Col md={4}>
+                    <p>Change Plan to have more links</p>
+                  </Col>
+                </Row>
+              </div>
+
+              <Row className="white-box">
+                <Col md={12}>
+                  <h5 className="page-title line-heading">Payment</h5>
+                </Col>
+                <div className="checkbox abc-checkbox">
+                  <Input
+                    className="mt-0"
+                    id="checkbox1"
+                    type="checkbox"
+                    // onClick={() => this.checkTable(0)}
+                    // checked={this.state.checkedArr[0]}
+                    readOnly
+                  />{" "}
+                  <Label for="checkbox1" />
+                  Pay Monthly $10.00
+                </div>
+
+                <div className="checkbox abc-checkbox">
+                  <Input
+                    className="mt-0"
+                    id="checkbox2"
+                    type="checkbox"
+                    // onClick={() => this.checkTable(0)}
+                    // checked={this.state.checkedArr[0]}
+                    readOnly
+                  />{" "}
+                  <Label for="checkbox2" />
+                  Pay Yearly & Save $100.00 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                  <sub>(Save 20%)</sub>
+                </div>
+              </Row>
+              {this.state.showPaymentButton && (
+                <Row>
+                  <Col>
+                    <Button variant="primary" className="">
+                      Make Payment
+                    </Button>
+                  </Col>
+                </Row>
+              )}
+
+              <Row className="white-box">
+                <Col md={4}>
+                  <h5 className="page-title line-heading">
+                    Instagram Connection
+                  </h5>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={4}>
+                  <div className="category_count">Connection Status</div>
+                </Col>
+                <Col md={4} className="text-right">
+                  {(userInfo1.username !== "" && !this.props.username) ||
+                  (userInfo1.username !== "" && this.props.username !== "") ? (
+                    <>
+                      <div className="connected-text text-center mb-2">
+                        Connected Instagram: @
+                        {userInfo1.username !== ""
+                          ? userInfo1.username
+                          : this.props.username}
+                      </div>
+                      <Button
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                        onClick={() => {
+                          this.setState({modal: true});
+                        }}
+                      >
+                        Disconnect Instagram
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        onClick={() => {
+                          window.location.replace(this.props.url);
+                        }}
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                      >
+                        <i className="fa fa-instagram" />
+                        &nbsp;&nbsp; Connect Instagram
+                      </Button>
+                    </>
+                  )}
+                </Col>
+              </Row>
             </div>
           </div>
         </div>
@@ -389,4 +394,4 @@ class MyCategory extends React.Component {
     );
   }
 }
-export default MyCategory;
+export default AccountSetup;

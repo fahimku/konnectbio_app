@@ -219,171 +219,180 @@ class Register extends React.Component {
   render() {
     return (
       <div className="auth-page">
-
-      <div class="login_header">
-        <div class="header_inr group">
-          <div class="header_inr_left">
-            <div class="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
-            <h3 class="kon_pg_title">Create Account</h3>
-          </div>
-          <div class="header_inr_right">
-           <div class="create_account">Already have an account?&nbsp;<a href="/login">Sign in</a></div>
+        <div class="login_header">
+          <div class="header_inr group">
+            <div class="header_inr_left">
+              <div class="konnect_logo">
+                <img className="logo" src={logo} alt="logo" />
+              </div>
+              <h3 class="kon_pg_title">Create Account</h3>
+            </div>
+            <div class="header_inr_right">
+              <div class="create_account">
+                Already have an account?&nbsp;<a href="/login">Sign in</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
         <div className="custome_container_auth_ift">
           <div class="custome_container_auth_inr">
-          <Widget
-            className="custome_signup"
-            title={<h3 className="mt-0">Create an Account</h3>}
-          >
-            <form id="registerForm" className="mt" onSubmit={this.doRegister}>
-              {this.props.errorMessage && (
-                <Alert className="alert-sm" color="danger">
-                  {this.props.errorMessage}
-                </Alert>
-              )}
+            <Widget
+              className="custome_signup"
+              title={<h3 className="mt-0">Create an Account</h3>}
+            >
+              <form id="registerForm" className="mt" onSubmit={this.doRegister}>
+                {this.props.errorMessage && (
+                  <Alert className="alert-sm" color="danger">
+                    {this.props.errorMessage}
+                  </Alert>
+                )}
 
-              {this.props.successMessage && (
-                <Alert className="alert-sm" color="success">
-                  {this.props.successMessage}
-                </Alert>
-              )}
+                {this.props.successMessage && (
+                  <Alert className="alert-sm" color="success">
+                    {this.props.successMessage}
+                  </Alert>
+                )}
 
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  value={this.state.name}
-                  onChange={this.changeName}
-                  type="text"
-                  required
-                  name="name"
-                  placeholder="Name"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  value={this.state.email}
-                  onChange={this.changeEmail}
-                  type="email"
-                  required
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
-              <div className="form-group">
-                <Select className="form_select_group"
-                  value={
-                    this.state.gender && {
-                      label: this.state.gender,
-                      value: this.state.gender,
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.name}
+                    onChange={this.changeName}
+                    type="text"
+                    required
+                    name="name"
+                    placeholder="Name"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.email}
+                    onChange={this.changeEmail}
+                    type="email"
+                    required
+                    name="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div className="form-group">
+                  <Select
+                    className="form_select_group"
+                    value={
+                      this.state.gender && {
+                        label: this.state.gender,
+                        value: this.state.gender,
+                      }
                     }
-                  }
-                  onChange={this.changeGender}
-                  placeholder="Select Gender"
-                  options={this.state.genderList}
-                />
-              </div>
-              {/* <div className="form-group">
+                    onChange={this.changeGender}
+                    placeholder="Select Gender"
+                    options={this.state.genderList}
+                  />
+                </div>
+                {/* <div className="form-group">
                 <Select
                   onChange={(options, e) => this.changePackage(e, options)}
                   placeholder="Select Package"
                   options={this.state.packages}
                 />
               </div> */}
-              <div className="form-group">
-                {this.state.country ? (
-                  <Select className="form_select_group"
-                    value={
-                      this.state.country && {
+                <div className="form-group">
+                  {this.state.country ? (
+                    <Select
+                      className="form_select_group"
+                      value={
+                        this.state.country && {
+                          label: this.state.country,
+                          value: this.state.country,
+                        }
+                      }
+                      onChange={this.changeCountry}
+                      filterOption={createFilter({ignoreAccents: false})}
+                      placeholder="Select Country"
+                      options={this.state.countries}
+                      defaultValue={{
                         label: this.state.country,
                         value: this.state.country,
+                      }}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="form-group">
+                  {this.state.country ? (
+                    <Select
+                      className="form_select_group"
+                      onChange={this.changeCity}
+                      filterOption={createFilter({ignoreAccents: false})}
+                      placeholder="Select City"
+                      options={this.state.cities}
+                      value={
+                        this.state.city && {
+                          label: this.state.city,
+                          value: this.state.city,
+                        }
                       }
-                    }
-                    onChange={this.changeCountry}
-                    filterOption={createFilter({ignoreAccents: false})}
-                    placeholder="Select Country"
-                    options={this.state.countries}
-                    defaultValue={{
-                      label: this.state.country,
-                      value: this.state.country,
-                    }}
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.password}
+                    onChange={this.changePassword}
+                    type="password"
+                    required
+                    name="password"
+                    placeholder="Password"
                   />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="form-group">
-                {this.state.country ? (
-                  <Select className="form_select_group"
-                    onChange={this.changeCity}
-                    filterOption={createFilter({ignoreAccents: false})}
-                    placeholder="Select City"
-                    options={this.state.cities}
-                    value={
-                      this.state.city && {
-                        label: this.state.city,
-                        value: this.state.city,
-                      }
-                    }
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.confirmPassword}
+                    onChange={this.changeConfirmPassword}
+                    onBlur={this.checkPassword}
+                    type="password"
+                    required
+                    name="confirmPassword"
+                    placeholder="Confirm"
                   />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  value={this.state.password}
-                  onChange={this.changePassword}
-                  type="password"
-                  required
-                  name="password"
-                  placeholder="Password"
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  value={this.state.confirmPassword}
-                  onChange={this.changeConfirmPassword}
-                  onBlur={this.checkPassword}
-                  type="password"
-                  required
-                  name="confirmPassword"
-                  placeholder="Confirm"
-                />
-              </div>
-              <Button
-                type="submit"
-                color="inverse"
-                className="register_button"
-                size="lg"
-              >
-                {this.props.isFetching ? "Loading..." : "Create Account"}
-              </Button>
-            </form>
-            <p className="already">
-              Already have the account? &nbsp;
-              <span
-              className="text-center link"
-              onClick={() => {
-                history.push("/login");
-              }}
-            >
-              Sign in
-            </span>
-            </p>
-            
-          </Widget>
-          <div class="signup_right">
-            <h3>Turn your Followers into Customers</h3>
-            <p>Staying just an influencer is not all! Turn your followers into customers with just a few clicks. Create a trackable link, find out what is popular, and aim to monetize on it. Design your social media accordingly and become an entrepreneur.</p>
+                </div>
+                <Button
+                  type="submit"
+                  color="inverse"
+                  className="register_button"
+                  size="lg"
+                >
+                  {this.props.isFetching ? "Loading..." : "Create Account"}
+                </Button>
+              </form>
+              <p className="already">
+                Already have the account? &nbsp;
+                <span
+                  className="text-center link"
+                  onClick={() => {
+                    history.push("/login");
+                  }}
+                >
+                  Sign in
+                </span>
+              </p>
+            </Widget>
+            <div class="signup_right">
+              <h3>Turn your Followers into Customers</h3>
+              <p>
+                Staying just an influencer is not all! Turn your followers into
+                customers with just a few clicks. Create a trackable link, find
+                out what is popular, and aim to monetize on it. Design your
+                social media accordingly and become an entrepreneur.
+              </p>
+            </div>
           </div>
-          </div>
-
         </div>
       </div>
     );

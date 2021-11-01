@@ -7,11 +7,9 @@ import {
   Label,
 } from 'reactstrap';
 import Formsy from 'formsy-react';
-
 import InputValidation from '../../../components/InputValidation';
 import Widget from '../../../components/Widget';
 import Formik from './Formik';
-
 
 class Validation extends React.Component {
 
