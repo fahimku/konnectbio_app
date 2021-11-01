@@ -10,11 +10,15 @@
 
 .links {
     text-align: center;
-    border: 1px solid black;
-    background:black;
-    color:white;
-    margin-bottom: 6px;
-    font-size: 15px;
+    border: 1px solid #c8c8c8;
+    color: #364554;
     width: 100%;
-    padding:6px;
+    padding: 6px 0;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+.links:hover{
+    background-color:#185887;
+    border-color:#185887;
+    color:#FFF;
 }

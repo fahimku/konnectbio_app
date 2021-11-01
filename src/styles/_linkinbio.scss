@@ -242,20 +242,24 @@
     }
 
     .visit-website {
-        width: 80%;
+        width: 250px;
         padding: 5px;
         margin: 0 auto;
-        font-size: 1.1rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
         text-align: center;
         overflow-wrap: break-word;
         word-break: break-word;
+        -webkit-hyphens: auto;
         hyphens: auto;
         white-space: normal;
+        -webkit-user-select: none;
         user-select: none;
         background: #fff;
         border: 1px solid #ccc;
-        border-radius: 5px;
+        border-radius: 0;
+        margin-bottom: 20px;
+        color:#364554;
     }
 }
 
@@ -331,7 +335,7 @@
 
             }
 
-            .image-box img,
+            .image-box img
                 {
                 width: 256px;
                 height: 256px;
