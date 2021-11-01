@@ -64,10 +64,7 @@ const MobilePreview = ({
           >
             Add a New Link
           </div>
-          <div
-            ref={paneDidMount}
-            className={`mobile-gallery ` + style.myLinksGallery}
-          >
+          <div ref={paneDidMount} className="custome_link mobile-gallery">
             <Row>{links}</Row>
           </div>
         </div>

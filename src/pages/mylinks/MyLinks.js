@@ -295,7 +295,7 @@ class MyLinks extends React.Component {
   render() {
     return (
       <div className="linkin-bio">
-        <Row className="main-container">
+        <Row className="app_main_cont_ift main-container">
           <Col className="left-column" md="5" xs="12" xl="3">
             <TopBar
               username={this.state.username}
@@ -323,8 +323,7 @@ class MyLinks extends React.Component {
             xl="9"
           >
             <div
-              className={`${!this.state.preview ? "show" : "hidden"}`}
-              style={{ height: "100%", width: "100%", padding: "0px" }}
+              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"}`}
             >
               {this.state.username !== "" ? (
                 <iframe

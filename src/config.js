@@ -12,6 +12,7 @@ const redirectURL =
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"
+  
     ? "http://172.16.1.84:3001"
     : "https://konnect.bio";
 

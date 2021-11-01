@@ -178,7 +178,7 @@ const Coupons = () => {
 
   return (
     <div className={s.root}>
-      <Row className="main-container">
+      <Row className="test main-container">
         <Col md="6" xs="12">
           <Widget title={<h5> Coupons </h5>}>
             <CouponGrid couponItems={couponItems}></CouponGrid>
