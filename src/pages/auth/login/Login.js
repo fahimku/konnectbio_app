@@ -109,13 +109,25 @@ class Login extends React.Component {
   render() {
     return (
       <div className="auth-page">
-        <Container>
-          <h5 className="auth-logo">
-            <img className="logo" src={logo} alt="logo" />
-          </h5>
+
+        <div class="login_header">
+          <div class="header_inr group">
+            <div class="header_inr_left">
+              <div class="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
+              <h3 class="kon_pg_title">Sign In</h3>
+            </div>
+            <div class="header_inr_right">
+            <div class="create_account">Already have an account?&nbsp;<a href="/login">Sign in</a></div>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="custome_container_auth_ift">
+          <div class="custome_container_auth_inr">
           <Widget
-            className="widget-auth mx-auto"
-            title={<h3 className="mt-0">Login</h3>}
+            className="custome_login custome_signup"
+            title={<h3 className="mt-0">Sign In</h3>}
           >
             <form className="mt" onSubmit={this.doLogin}>
               {this.props.errorMessage && (
@@ -134,7 +146,7 @@ class Login extends React.Component {
                   placeholder="Email"
                 />
               </div>
-              <div className="form-group mb-0">
+              <div className="form-group">
                 <input
                   className="form-control"
                   value={this.state.password}
@@ -145,36 +157,42 @@ class Login extends React.Component {
                   placeholder="Password"
                 />
               </div>
-              <span
-                className="d-block text-right mb-3 mt-1 fs-sm  link"
-                onClick={() => {
-                history.push("/forgot");
-                }}
-              >
-                Forgot password?
-              </span>
+              
               <Button
                 type="submit"
-                color="info"
-                className="auth-btn mb-3"
-                size="sm"
+                color="inverse"
+                className="register_button"
+                size="lg"
               >
-                {this.props.isFetching ? "Loading..." : "Login"}
+                {this.props.isFetching ? "Loading..." : "Sign In"}
               </Button>
             </form>
-            <p className="widget-auth-info">
-              Don't have an account? Sign up now!
-            </p>
-            <span
-              className="d-block text-center  link"
+            <p className="already">
+              New to konnectBio &nbsp;
+              <span
+              className="text-center link"
               onClick={() => {
                 history.push("/register");
               }}
             >
               Create an Account
             </span>
+            </p>
+            <span
+                className="decoration text-center link"
+                onClick={() => {
+                history.push("/forgot");
+                }}
+              >
+                Forgot password?
+              </span>
           </Widget>
-        </Container>
+          <div class="login_right signup_right">
+            <h3>Maximize Possibilities with KonnectBio</h3>
+          </div>
+          </div>
+          
+        </div>
       </div>
     );
   }

@@ -70,9 +70,16 @@
 }
 
 .form-control {
-  font-family: $font-family-base;
+  font-family: "Segoe UI";
   box-shadow: none;
   transition: border-color ease-in-out 0.15s, background-color ease-in-out 0.15s;
+  padding: 0 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #323b43;
+  background: #fff;
+  border: solid 1px #dce4ec;
+  min-height: 45px;
 
   &:focus {
     box-shadow: none;

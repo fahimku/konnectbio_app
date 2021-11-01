@@ -34,14 +34,23 @@ class Forgot extends React.Component {
   render() {
     return (
       <div className="auth-page">
-        <Container>
-        <h5 className="auth-logo">
-            <i className="la la-circle text-primary" />
-            <img alt='Logo' className="logo" src={logo} />
-            <i className="la la-circle text-danger" />
-          </h5>
-          <Widget
-            className="widget-auth mx-auto"
+
+        <div class="login_header">
+          <div class="header_inr group">
+            <div class="header_inr_left">
+              <div class="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
+              <h3 class="kon_pg_title">Create Account</h3>
+            </div>
+            <div class="header_inr_right">
+              <div class="create_account">Already have an account?&nbsp;<a href="/login">Sign in</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="custome_container_auth_ift">
+        <div class="custome_container_auth_inr">
+        <Widget
+            className="custome_signup"
             title={<h3 className="mt-0">Forgot password?</h3>}
           >
             <p className="widget-auth-info">
@@ -67,18 +76,26 @@ class Forgot extends React.Component {
               <Button
                 type="submit"
                 color="inverse"
-                className="auth-btn mb-3"
-                size="sm"
+                className="register_button"
+                size="lg"
               >
                 {this.props.isFetching ? "Loading..." : "Reset Password"}
               </Button>
             </form>
-            <p className="widget-auth-info">Need to Login?</p>
-            <Link className="d-block text-center" to="login">
-              Enter the account
-            </Link>
+            <p className="already">
+              <span
+              className="text-center link"
+              onClick={() => {
+               this.history.push("/login");
+              }}
+            >
+              Sign in
+            </span>
+            </p>
           </Widget>
-        </Container>
+        </div>
+          
+        </div>
         {/* <footer className="auth-footer">
             {new Date().getFullYear()} &copy; Sing App - React Admin Dashboard Template. By <a rel="noopener noreferrer" target="_blank" href="https://flatlogic.com">Flatlogic</a>
           </footer> */}

@@ -102,7 +102,7 @@ class Register extends React.Component {
                         Sing App
                         <i className="fa fa-circle text-warning"/>
                     </h5>
-                    <Widget className="widget-auth mx-auto" title={<h3 className="mt-0">Create an account</h3>}>
+                    <Widget className="widget-auth mx-auto" title={<h3 className="mt-0">Create an Account</h3>}>
                         <p className="widget-auth-info">
                             Please fill all fields below
                         </p>

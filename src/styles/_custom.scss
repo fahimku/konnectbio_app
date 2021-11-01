@@ -16,8 +16,13 @@
   /* iOS 4.1- */
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
 body {
   font-family: "Segoe UI" !important;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+  font-family: 'Rubik', sans-serif !important;
 }
 
 .connect-page .social-auth {
