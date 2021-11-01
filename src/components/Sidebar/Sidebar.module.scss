@@ -77,7 +77,7 @@
 }
 
 .nav {
-  padding: 2px;
+  padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -88,7 +88,7 @@
   transition: opacity $sidebar-transition-time ease-in-out;
   color: var(--sidebar-section);
   opacity: .6;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .sidebarClose .navTitle {
@@ -140,6 +140,7 @@
     font-size: $font-size-mini;
     color: var(--sidebar-color);
     text-decoration: none;
+    color:#f00 !important;
 
 
     >i {

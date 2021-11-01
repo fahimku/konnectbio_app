@@ -140,12 +140,13 @@ class Reset extends React.Component {
             <span
               className="text-center link"
               onClick={() => {
-               this.history.push("/login");
+               this.props.history.push("/login");
               }}
             >
               Enter the account
             </span>
             </p>
+            
           </Widget>
         </div>
         </div>

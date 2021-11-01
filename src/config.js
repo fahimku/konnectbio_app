@@ -9,7 +9,7 @@ const redirectURL =
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"
-    ? "https://konnect.bio"
+    ? "http://localhost:3001"
     : "https://konnect.bio";
 
 export default {

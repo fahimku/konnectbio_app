@@ -554,7 +554,7 @@ class LinkinBio extends React.Component {
   render() {
     return (
       <div className="linkin-bio">
-        <Row className="main-container">
+        <Row className="app_main_cont_ift main-container">
           <Col className="left-column" md="5" xs="12" xl="3">
             <TopBar
               username={this.state.username}
@@ -580,8 +580,8 @@ class LinkinBio extends React.Component {
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show" : "hidden"}`}
-              style={{ height: "100%", width: "100%", padding: "0px" }}
+              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"}`}
+              
             >
               {this.state.username !== "" ? (
                 <iframe
@@ -596,13 +596,13 @@ class LinkinBio extends React.Component {
               ) : null}
             </div>
 
-            <Row>
+            <Row className="linked_edit_box">
               <Col xs="12" className="p-5">
                 {this.shopRightBar()}
               </Col>
             </Row>
           </Col>
-        </Row>
+          </Row>
 
         {window.innerWidth <= 760 && (
           <Modal
