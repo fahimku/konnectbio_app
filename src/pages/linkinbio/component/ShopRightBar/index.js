@@ -8,6 +8,7 @@ import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import PermissionHelper from "../../../../components/PermissionHelper";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -151,6 +152,7 @@ const ShopRightBar = (props) => {
                         .toLowerCase()
                         .indexOf(input.toLowerCase()) >= 0
                     }
+                    disabled={PermissionHelper.categoryCheck() ? true : false}
                   >
                     {props.categories.map(({ value, label }, i) => (
                       <Option value={value}>{label}</Option>

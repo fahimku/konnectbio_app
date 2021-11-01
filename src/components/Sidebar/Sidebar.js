@@ -13,6 +13,7 @@ import {
 } from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
 import { logoutUser } from "../../actions/auth";
+import PermissionHelper from "../PermissionHelper";
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -237,17 +238,18 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 /> */}
-
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Analytics"
-                  link="/app/analysis"
-                  isHeader
-                  iconElement={<span className="fa fa-bar-chart-o"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
+                {PermissionHelper.validate(["access_analytics"]) ? (
+                  <LinksGroup
+                    className="sidebar-nav-links"
+                    header="Analytics"
+                    link="/app/analysis"
+                    isHeader
+                    iconElement={<span className="fa fa-bar-chart-o"></span>}
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                ) : null}
                 {/* <LinksGroup
                   className="sidebar-nav-links"
                   header="Media Library"
