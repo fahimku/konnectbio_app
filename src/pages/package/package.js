@@ -39,7 +39,7 @@ const Package = (props) => {
             <Col md={2} xs={4} className="text-right">
               <Button
                 className="btn-connect"
-                onClick={() => this.props.history.push("/logout")}
+                onClick={() => props.history.push("/logout")}
               >
                 Logout
               </Button>

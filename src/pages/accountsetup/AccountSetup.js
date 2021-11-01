@@ -9,8 +9,8 @@ import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
 class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +33,7 @@ class AccountSetup extends React.Component {
       alert: true,
       packages: "",
       package: userInfo.package.package_name,
+      packageId: userInfo.package.package_id,
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
     };
@@ -47,7 +48,7 @@ class AccountSetup extends React.Component {
     this.fetchMyCategory();
     this.fetchSaveCategory();
     this.getPackages();
-    //Connect Instagram Code
+
   }
 
   getPackages = async () => {
@@ -56,8 +57,10 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        this.setState({allPackages: packages});
-        packages.map(({package_id, package_name, package_amount}) => {
+        const singlePackage = packages.filter((x) => x.package_id === this.state.packageId);
+        this.setState({allPackages: packages});       
+        this.setState({singlePackage: singlePackage[0]});
+        packages.map(({ package_id, package_name }) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -165,12 +168,8 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
-    console.log();
-    console.log(singlePackage);
-    this.setState({singlePackage: singlePackage});
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    this.setState({singlePackage: singlePackage[0]});
     this.setState({showPaymentButton: true});
     this.setState({package: event.value, package: event.label});
   };
@@ -249,7 +248,8 @@ class AccountSetup extends React.Component {
 
                 <Row className="mt-4">
                   <Col md={4}>
-                    {/* Categories Included: {this.state.singlePackage[0].category_count} */}
+                    Categories Included:{" "}
+                    {this.state.singlePackage.category_count}
                   </Col>
                   <Col md={4}>
                     <p>Change Plan to have more categories</p>
@@ -258,7 +258,7 @@ class AccountSetup extends React.Component {
 
                 <Row className="mt-4">
                   <Col md={4}>
-                    {/* Links Included: {this.state.singlePackage[0].link_count} */}
+                    Links Included: {this.state.singlePackage.link_count}
                   </Col>
                   <Col md={4}>
                     <p>Change Plan to have more links</p>
@@ -275,12 +275,13 @@ class AccountSetup extends React.Component {
                     className="mt-0"
                     id="checkbox1"
                     type="checkbox"
+                    checked
                     // onClick={() => this.checkTable(0)}
                     // checked={this.state.checkedArr[0]}
                     readOnly
                   />{" "}
                   <Label for="checkbox1" />
-                  Pay Monthly $10.00
+                  Pay Monthly ${this.state.singlePackage.package_amount}
                 </div>
 
                 <div className="checkbox abc-checkbox">
@@ -293,7 +294,7 @@ class AccountSetup extends React.Component {
                     readOnly
                   />{" "}
                   <Label for="checkbox2" />
-                  Pay Yearly & Save $100.00 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                  Pay Yearly & Save ${this.state.singlePackage.package_amount*12} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                   <sub>(Save 20%)</sub>
                 </div>
               </Row>
@@ -308,7 +309,7 @@ class AccountSetup extends React.Component {
               )}
 
               <Row className="white-box">
-                <Col md={4}>
+                <Col md={12}>
                   <h5 className="page-title line-heading">
                     Instagram Connection
                   </h5>
