@@ -1,6 +1,6 @@
 .auth-page {
-  padding-top: 10vh;
-  height: 100vh;
+  float:left;
+  width:100%;
 }
 
 .widget-auth {
@@ -101,3 +101,151 @@
 }
 
 
+.group:before, .group:after {
+	content: "";
+	display: table
+}
+.group:after {
+	clear: both
+}
+.login_header {
+  position: relative;
+  width: 100%;
+  padding: 0.75rem 0;
+  background: #fff;
+  color: #7b8994;
+  z-index: 400;
+  border-bottom: 1px solid #dce4ec
+}
+.header_inr{
+  max-width:980px;
+  position: relative;
+  margin: 0 auto;
+}
+.header_inr_left{
+  float:left;
+  width:50%;
+}
+.header_inr_right{
+  float:right;
+  width:50%;
+}
+.konnect_logo{
+  float:left;
+  border-right: 1px solid #dce4ec;
+  width:140px;
+  height:45px;
+  display:flex;
+}
+.konnect_logo .logo{
+  width:130px;
+}
+.kon_pg_title {
+  float: left;
+  padding-left: 2rem;
+  font-size: 1.1rem;
+  font-weight: 400;
+  height: 45px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  color:#7b8994;
+}
+.create_account{
+  display: flex;
+  height: 45px;
+  width: 100%;
+  align-items: center;
+  justify-content: right;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color:#7b8994;
+}
+.create_account a:hover{
+  text-decoration: underline;
+}
+.custome_container_auth_ift{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-size: auto;
+  height: calc(100vh - 65px);
+  overflow: auto;
+  padding: 6rem 0;
+}
+.custome_container_auth_inr{
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.custome_signup{
+  width: 450px;
+  margin: 0 1rem;
+  padding: 2rem;
+  background: #fff;
+  position: relative;
+  border: 1px solid #dce4ec;
+  border-radius: 5px;
+}
+.signup_right{
+  color: #323b43;
+  margin: 0 1rem;
+  z-index: 0;
+  width: 360px;
+  padding: 2rem;
+  background: #fff;
+  position: relative;
+  border: 1px solid #dce4ec;
+  border-radius: 5px;
+}
+.custome_signup .widget-body{
+  padding:0;
+}
+.custome_signup header{
+  padding:0;
+}
+.custome_signup header h3{
+  font-size: 1.6rem;
+  line-height: 2.3rem;
+  margin-bottom: 0;
+  font-weight: 500;
+  margin-bottom:1.5rem
+}
+.custome_signup .form_select_group > div{
+  min-height:45px;
+  border-color:#dce4ec;
+}
+.register_button{
+  float: left;
+  width: 100%;
+  padding: 0;
+  font-size: 1.15rem;
+  border-radius: 0.3rem;
+  line-height: normal;
+  min-height: 45px;
+  margin-bottom: 1rem;
+}
+.already{
+  float: left;
+  width:100%;
+}
+.already span:hover{
+  text-decoration: underline;
+}
+.custome_login .form-group{
+  margin-bottom:2rem;
+}
+.decoration:hover{
+  text-decoration:underline;
+}
+.signup_right{
+  background-image: url(../images/register-right-2.jpg);
+  background-repeat: no-repeat;
+  background-position: center top; 
+}
+.login_right{
+  background-image: url(../images/login-right.jpg);
+  background-repeat: no-repeat;
+  background-position: center top; 
+}

@@ -219,13 +219,24 @@ class Register extends React.Component {
   render() {
     return (
       <div className="auth-page">
-        <Container>
-          <h5 className="auth-logo">
-            <img className="logo" src={logo} alt="logo" />
-          </h5>
+
+      <div class="login_header">
+        <div class="header_inr group">
+          <div class="header_inr_left">
+            <div class="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
+            <h3 class="kon_pg_title">Create Account</h3>
+          </div>
+          <div class="header_inr_right">
+           <div class="create_account">Already have an account?&nbsp;<a href="/login">Sign in</a></div>
+          </div>
+        </div>
+      </div>
+
+        <div className="custome_container_auth_ift">
+          <div class="custome_container_auth_inr">
           <Widget
-            className="widget-auth mx-auto"
-            title={<h3 className="mt-0">Create an account</h3>}
+            className="custome_signup"
+            title={<h3 className="mt-0">Create an Account</h3>}
           >
             <form id="registerForm" className="mt" onSubmit={this.doRegister}>
               {this.props.errorMessage && (
@@ -263,7 +274,7 @@ class Register extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <Select
+                <Select className="form_select_group"
                   value={
                     this.state.gender && {
                       label: this.state.gender,
@@ -284,7 +295,7 @@ class Register extends React.Component {
               </div> */}
               <div className="form-group">
                 {this.state.country ? (
-                  <Select
+                  <Select className="form_select_group"
                     value={
                       this.state.country && {
                         label: this.state.country,
@@ -306,7 +317,7 @@ class Register extends React.Component {
               </div>
               <div className="form-group">
                 {this.state.country ? (
-                  <Select
+                  <Select className="form_select_group"
                     onChange={this.changeCity}
                     filterOption={createFilter({ignoreAccents: false})}
                     placeholder="Select City"
@@ -348,25 +359,32 @@ class Register extends React.Component {
               <Button
                 type="submit"
                 color="inverse"
-                className="auth-btn mb-3"
-                size="sm"
+                className="register_button"
+                size="lg"
               >
-                {this.props.isFetching ? "Loading..." : "Register"}
+                {this.props.isFetching ? "Loading..." : "Create Account"}
               </Button>
             </form>
-            <p className="widget-auth-info">
-              Already have the account? Login now!
-            </p>
-            <span
-              className="d-block text-center link"
+            <p className="already">
+              Already have the account? &nbsp;
+              <span
+              className="text-center link"
               onClick={() => {
                 history.push("/login");
               }}
             >
-              Login
+              Sign in
             </span>
+            </p>
+            
           </Widget>
-        </Container>
+          <div class="signup_right">
+            <h3>Turn your Followers into Customers</h3>
+            <p>Staying just an influencer is not all! Turn your followers into customers with just a few clicks. Create a trackable link, find out what is popular, and aim to monetize on it. Design your social media accordingly and become an entrepreneur.</p>
+          </div>
+          </div>
+
+        </div>
       </div>
     );
   }
