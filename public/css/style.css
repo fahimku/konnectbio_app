@@ -527,6 +527,10 @@ span.icon {
 }
 .mobile-preview .custome_link{
   overflow: auto !important;
+  width:250px !important;
+}
+.mobile-preview .custome_link .row .col-12{
+  padding:0;
 }
 
 
