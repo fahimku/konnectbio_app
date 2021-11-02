@@ -205,26 +205,6 @@
 
 @media only screen and (max-width: 500px) {}
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (max-width: 1024px) {
-    .linkin-bio .image-edit-box .image-wrapper .image-box img {
-        width: 134px;
-        height: 162px;
-
-    }
-    .pane-button {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .pane-button button {
-        width: 100%;
-    }
-
-    .pane-button .remove-link {
-        margin-left: 0
-    }
-}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 991px) {
@@ -304,10 +284,6 @@
 
 @media only screen and (max-width: 512px) {
 
-    button.update-buttons.btn.btn-primary {
-        width: 100% !important
-    }
-
     .source-button {
         border: 1px solid #c8c8c8;
         margin-top: 15px;
@@ -380,9 +356,5 @@
 
     .left-column {
         border: none !important;
-    }
-
-    .pane-button button {
-        margin-top: 4px !important;
     }
 }

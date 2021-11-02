@@ -22,11 +22,6 @@ Custome CSS
   background: #000;
   border: none;
 }
-
-button.update-buttons.btn.btn-primary {
-  width: 135% !important;
-}
-
 .source-button button:hover {
   color: #fff;
   background-color: #000;
@@ -167,14 +162,9 @@ span.icon {
   .left-column {
     border: none !important;
   }
-  .pane-button button {
-    margin-top: 4px !important;
-  }
 }
 @media only screen and (min-device-width: 280px) and (max-device-width: 511px) {
-  .source-button.dropdown {
-    /* margin-left: 94px !important; */
-  }
+
   .mobile-menu {
     margin-right: 21px;
   }
@@ -186,8 +176,6 @@ span.icon {
 }
 .category-page .category-btn {
   margin-top: 30px;
-}
-.category-page {
 }
 .white-box {
   position: relative;
@@ -491,10 +479,38 @@ span.icon {
   background-color: initial;
   cursor: pointer;
 }
-
-
-
-
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+  height:45px !important;
+  padding:0 10px !important;
+}
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{
+  height: 44px !important;
+}
+.ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{
+  line-height: 44px !important;
+}
+.image-edit-box{
+  background: #FFF;
+  padding: 20px;
+  border: solid 1px #ccc;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px #ccc;
+}
+.image-edit-links span{
+  float:left;
+  width:100%;
+  margin-bottom:5px;
+}
+.edit_button_main{
+  display: flex;
+  width:100%;
+}
+.image-box{
+  flex: 0 0 26%;
+  max-width: 26%;
+  align-items: center;
+  justify-content: center;
+}
 
 
 
@@ -531,6 +547,9 @@ span.icon {
 }
 .mobile-preview .custome_link .row .col-12{
   padding:0;
+}
+.ant-picker{
+  min-height: 45px;
 }
 
 

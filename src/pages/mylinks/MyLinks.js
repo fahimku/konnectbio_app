@@ -323,7 +323,7 @@ class MyLinks extends React.Component {
             xl="9"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"}`}
+              className={`${!this.state.selectPost ? "show_ift_iframe hidden" : "hidden"}`}
             >
               {this.state.username !== "" ? (
                 <iframe

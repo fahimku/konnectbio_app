@@ -253,7 +253,7 @@ const ShopRightBar = (props) => {
                     onChange={dateRangePickerChanger}
                   />
                 </div>
-                <div className="pane-button">
+                <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (
                     <>
                       {props.loading ? (
@@ -262,10 +262,10 @@ const ShopRightBar = (props) => {
                         </Button>
                       ) : (
                         <>
-                          <Row className="mt-3">
-                            <Col lg="3" sm="6" xs="6">
+                          
+                            
                               <Button
-                                className="update-buttons save-btn btn btn-primary"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={(ev) =>
                                   props.updatePost(
@@ -276,10 +276,10 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Update&nbsp;
                               </Button>
-                            </Col>
-                            <Col lg="3" sm="6" xs="6">
+                            
+                            
                               <Button
-                                className="update-buttons"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={() =>
                                   props.testUrl(props.redirectedUrl)
@@ -287,10 +287,10 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Test&nbsp;
                               </Button>
-                            </Col>
-                            <Col lg="3" sm="6" xs="6">
+                            
+                            
                               <Button
-                                className="update-buttons"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={() => {
                                   props.selectPost(false, "");
@@ -299,17 +299,17 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Cancel&nbsp;
                               </Button>
-                            </Col>
-                            <Col lg="3" sm="6" xs="6">
+                            
+                            
                               <Button
-                                className="update-buttons"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={() => props.deletePost(media_id)}
                               >
                                 &nbsp;Remove&nbsp;
                               </Button>
-                            </Col>
-                          </Row>
+                            
+                          
                         </>
                       )}
                     </>
@@ -321,10 +321,10 @@ const ShopRightBar = (props) => {
                         </Button>
                       ) : (
                         <>
-                          <Row className="mt-3">
-                            <Col lg="4" sm="6" xs="6">
+                          
+                           
                               <Button
-                                className="update-buttons save-btn btn btn-primary"
+                                className="custom_btns_ift"
                                 color="primary"
                                 // onClick={(ev) =>
                                 //   props.savePost && props.savePost(this)
@@ -332,10 +332,9 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Save&nbsp;
                               </Button>
-                            </Col>
-                            <Col lg="4" sm="6" xs="6">
+                            
                               <Button
-                                className="update-buttons"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={() =>
                                   props.testUrl(props.redirectedUrl)
@@ -343,10 +342,10 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Test&nbsp;
                               </Button>
-                            </Col>
-                            <Col lg="4" sm="6" xs="6">
+                            
+                            
                               <Button
-                                className="update-buttons"
+                                className="custom_btns_ift"
                                 color="primary"
                                 onClick={() => {
                                   props.selectPost(false, "");
@@ -355,8 +354,8 @@ const ShopRightBar = (props) => {
                               >
                                 &nbsp;Cancel&nbsp;
                               </Button>
-                            </Col>
-                          </Row>
+                            
+                          
                         </>
                       )}
                     </>
