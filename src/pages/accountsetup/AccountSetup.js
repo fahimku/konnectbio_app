@@ -2,23 +2,28 @@ import React from "react";
 import axios from "axios";
 import Select from "react-select";
 import {Row, Col, Button, Modal} from "react-bootstrap";
+import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
-import placeholder from "../../../src/images/placeholder.svg";
 import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
-class MyCategory extends React.Component {
+class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: userInfo,
+      cancelSubscription: true,
       showPaymentButton: false,
+      allPackages: "",
+      singlePackage: "",
       myCategory: "",
       user_id: "",
       category: [],
+      categoryIncluded: 0,
+      linksIncluded: 0,
       defaultCategory: "",
       saveCategories: "",
       categoryError: "",
@@ -29,21 +34,23 @@ class MyCategory extends React.Component {
       alert: true,
       packages: "",
       package: userInfo.package.package_name,
+      packageId: userInfo.package.package_id,
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
     };
   }
 
   componentDidMount() {
+    if (this.props.cancelSubscription == false) {
+      this.setState({cancelSubscription: false});
+    }
     if (userInfo.access_token !== "") {
       this.setState({isInstagramConnected: true});
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({user_id: userInfo.user_id});
-    this.fetchMyCategory();
-    this.fetchSaveCategory();
+
     this.getPackages();
-    //Connect Instagram Code
   }
 
   getPackages = async () => {
@@ -52,7 +59,12 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        packages.map(({package_id, package_name, package_amount}) => {
+        const singlePackage = packages.filter(
+          (x) => x.package_id === this.state.userInfo.package.package_id
+        );
+        this.setState({allPackages: packages});
+        this.setState({singlePackage: singlePackage[0]});
+        packages.map(({package_id, package_name}) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -61,50 +73,6 @@ class MyCategory extends React.Component {
         this.setState({packages: selectPackages});
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  fetchMyCategory = async () => {
-    await axios
-      .get("/category/receive")
-      .then((response) => {
-        const selectCategories = [];
-        const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
-          return selectCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
-        this.setState({myCategory: selectCategories});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  fetchSaveCategory = async () => {
-    await axios
-      .get(`/users/receive/categories?id=${userInfo.user_id}`)
-      .then((response) => {
-        const saveCategories = [];
-        //const myCategories = response.data.message;
-        const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
-          return saveCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
-        this.setState({
-          // defaultCategory: myCategories,
-          saveCategories: saveCategories,
-        });
-      })
-      .catch((error) => {
         console.log(error);
       });
   };
@@ -159,8 +127,13 @@ class MyCategory extends React.Component {
     // }
   };
 
-  handlePackage = () => {
+  handlePackage = (event) => {
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
+    this.setState({singlePackage: singlePackage[0]});
     this.setState({showPaymentButton: true});
+    this.setState({package: event.value, package: event.label});
   };
 
   toggleModal = () => {
@@ -205,100 +178,136 @@ class MyCategory extends React.Component {
                 <h5 className="page-title line-heading">Manage Plan</h5>
                 <Row>
                   <Col md={8}>
-                    <h3 className="package_name">
-                      {userInfo1.package ? userInfo1.package.package_name : ""}{" "}
-                      Account {"  "}
-                      <span>${this.state.package_amount}/Month</span>
-                    </h3>
-
-                    <div className="category_count">
-                      You have {this.state.categoryAllow} categories allowed in
-                      this plan
-                    </div>
-                    <Row className="mt-4">
-                      <Col md={6}>
-                        <Select
-                          options={this.state.packages}
-                          placeholder="Select package"
-                          value={{
-                            label: this.state.package,
-                            value: this.state.package,
-                          }}
-                          onChange={(options, e) =>
-                            this.handlePackage(e, options)
-                          }
-                        />
+                    <h4 className="package_name">
+                      Current Plan{" "}
+                      {userInfo1.package ? userInfo1.package.package_name : ""}
+                    </h4>
+                  </Col>
+                </Row>
+                {this.state.singlePackage.package_name !== "Individual" && (
+                  <Row className="mt-4">
+                    <Col md={4}>Status Activity:(Monthly)</Col>
+                    {this.state.cancelSubscription && (
+                      <Col md={4}>
+                        <Button variant="primary" className="btn-block">
+                          Cancel Subscription
+                        </Button>
                       </Col>
-                      {this.state.showPaymentButton && (
-                        <Col md={6}>
-                          <Button>
-                            <i className="fa fa-payment" />
-                            &nbsp;&nbsp;Payment
-                          </Button>
-                        </Col>
-                      )}
-                    </Row>
+                    )}
+                  </Row>
+                )}
+                <Row className="mt-4">
+                  <Col md={4}>Change Plan:</Col>
+                  <Col md={4}>
+                    <Select
+                      options={this.state.packages}
+                      placeholder="Select package"
+                      value={{
+                        label: this.state.package,
+                        value: this.state.package,
+                      }}
+                      onChange={(event) => this.handlePackage(event)}
+                    />
+                  </Col>
+                </Row>
+
+                <Row className="mt-4">
+                  <Col md={4}>
+                    Categories Included:{" "}
+                    {this.state.singlePackage.category_count}
+                  </Col>
+                  <Col md={4}>
+                    <p>Change Plan to have more categories</p>
+                  </Col>
+                </Row>
+
+                <Row className="mt-4">
+                  <Col md={4}>
+                    Links Included: {this.state.singlePackage.link_count}
+                  </Col>
+                  <Col md={4}>
+                    <p>Change Plan to have more links</p>
                   </Col>
                 </Row>
               </div>
-              <form onSubmit={this.handleSubmit} className="white-box">
-                <h5 className="page-title line-heading">
-                  Subscribed Categories
-                </h5>
+              {this.state.singlePackage.package_name !== "Individual" && (
+                <>
+                  <div className="white-box">
+                    <Row>
+                      <Col md={12}>
+                        <h5 className="page-title line-heading">Payment</h5>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={2}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            name="payment"
+                            className="mt-0"
+                            id="checkbox1"
+                            type="radio"
+                            // onClick={() => this.checkTable(0)}
+                            // checked={this.state.checkedArr[0]}
+                            readOnly
+                          />{" "}
+                          <Label for="checkbox1" />
+                          Pay Monthly $
+                          {this.state.singlePackage.package_amount_monthly}
+                        </div>
+                      </Col>
+                      <Col md={4}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            name="payment"
+                            className="mt-0"
+                            id="checkbox2"
+                            type="radio"
+                            // onClick={() => this.checkTable(0)}
+                            // checked={this.state.checkedArr[0]}
+                            readOnly
+                          />{" "}
+                          <Label for="checkbox2" />
+                          Pay Yearly & Save $
+                          {this.state.singlePackage.package_amount_yearly}{" "}
+                          &nbsp;{" "}
+                          <sub>
+                            (Save {this.state.singlePackage.yearly_discount}%)
+                          </sub>
+                        </div>
+                      </Col>
+                    </Row>
+                    <br />
+
+                    {this.state.showPaymentButton && (
+                      <Button
+                        onClick={() => {
+                          alert(
+                            "Please contact support@konnect.bio for plan inquiries."
+                          );
+                        }}
+                        variant="primary"
+                        className=""
+                      >
+                        Make Payment
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
+              <div className="white-box">
                 <Row>
                   <Col md={12}>
-                    <label>Select Category: </label>
-                    {this.state.saveCategories === "" ? null : (
-                      <Select
-                        isMulti={true}
-                        name="category"
-                        className="selectCustomization"
-                        options={this.state.myCategory}
-                        defaultValue={this.state.saveCategories}
-                        placeholder="Select Category"
-                        onChange={(options, e) => this.handleSelect(e, options)}
-                      />
-                    )}
-                    <span className="text-danger">
-                      {this.state.categoryError}
-                    </span>
-                    <Row>
-                      {this.state.saveCategories.length === 0 ? (
-                        <span className="ml-4">No Category Selected</span>
-                      ) : (
-                        this.state.saveCategories.map((cat, i) => (
-                          <React.Fragment key={i}>
-                            <div key={i} className="cat-box col-sm-3 col-6">
-                              <img
-                                key={i}
-                                src={
-                                  cat.image === "" || cat.image === undefined
-                                    ? placeholder
-                                    : cat.image
-                                }
-                                alt="cat-logo"
-                                className="img-fluid cat-image"
-                              />
-                              <div>{cat.label}</div>
-                            </div>
-                          </React.Fragment>
-                        ))
-                      )}
-                    </Row>
+                    <h5 className="page-title line-heading">
+                      Instagram Connection
+                    </h5>
                   </Col>
                 </Row>
-
-                <Row className="white-box">
-                  <Col md={12}>
-                    <h5 className="page-title line-heading">Connections</h5>
-                  </Col>
-                  <Col md={8}>
+                <Row>
+                  <Col md={4}>
                     <div className="category_count">Connection Status</div>
                   </Col>
                   <Col md={4} className="text-right">
-                    {(userInfo1.username !== "" && !this.props.username) ||
-                    (userInfo1.username !== "" &&
-                      this.props.username !== "") ? (
+                    {userInfo1.username !== "" || !this.props.username ? (
                       <>
                         <div className="connected-text text-center mb-2">
                           Connected Instagram: @
@@ -332,23 +341,7 @@ class MyCategory extends React.Component {
                     )}
                   </Col>
                 </Row>
-                <Row className="">
-                  <Col md={3}>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      className="category-btn btn-block"
-                      disabled={
-                        this.state.saveCategories.length && !this.state.loading
-                          ? false
-                          : true
-                      }
-                    >
-                      Save
-                    </Button>
-                  </Col>
-                </Row>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -389,4 +382,4 @@ class MyCategory extends React.Component {
     );
   }
 }
-export default MyCategory;
+export default AccountSetup;

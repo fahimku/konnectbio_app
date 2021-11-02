@@ -1,11 +1,11 @@
 import axios from "axios";
 import config from "../config";
 import jwt from "jsonwebtoken";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 // import {push} from "connected-react-router";
 import Errors from "../components/FormItems/error/errors";
-import { mockUser } from "./mock";
-import { createBrowserHistory } from "history";
+import {mockUser} from "./mock";
+import {createBrowserHistory} from "history";
 
 export const AUTH_FAILURE = "AUTH_FAILURE";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
@@ -156,13 +156,10 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          console.log(res)
-          
-          if (res.data.message.package)
-            history.push("/app"); 
-          else
-          history.push("/package");
+          console.log(res);
 
+          if (res.data.message.package) history.push("/app");
+          else history.push("/package");
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
@@ -179,7 +176,7 @@ export function verifyEmail(token) {
       history.push("/login");
     } else {
       axios
-        .put("/auth/verify-email", { token })
+        .put("/auth/verify-email", {token})
         .then((verified) => {
           if (verified) {
             toast.success("Your email was verified");
@@ -206,7 +203,7 @@ export function resetPassword(token, email, password) {
     axios
       .put(
         "/users/revise/password/new",
-        { password, email },
+        {password, email},
         {
           headers: headers,
         }
@@ -259,7 +256,11 @@ export function registerUser(creds) {
           dispatch({
             type: REGISTER_SUCCESS,
           });
-          dispatch(authSuccess("You've been registered successfully.An email has been sent for verification."));
+          dispatch(
+            authSuccess(
+              "You've been registered successfully.An email has been sent for verification."
+            )
+          );
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
