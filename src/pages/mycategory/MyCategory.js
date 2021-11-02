@@ -157,21 +157,23 @@ class MyCategory extends React.Component {
     return (
       <div className="category-page">
         <div
-          className={this.props.className ? this.props.className : "container"}
+          className={
+            this.props.className ? this.props.className : "container-fluid"
+          }
         >
-          <div className="justify-content-md-center">
+          <div className="">
             <div className="connections mt-5">
-              <div className="page-title text-center">
+              <div className="page-title">
                 <h3>Category Setup</h3>
               </div>
               <div className="white-box mt-5">
                 <h5 className="page-title line-heading">Manage Category</h5>
                 <Row className="mt-4">
-                  <Col md={6}>
-                    <h4 className="package_name">
+                  <Col md={4}>
+                    <div className="package_name">
                       Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
-                    </h4>
+                    </div>
                   </Col>
                   <Col md={6} lg={3}>
                     <div className="package_detail">
@@ -184,27 +186,29 @@ class MyCategory extends React.Component {
                       </Button>
                     </div>
                   </Col>
-                  <Col md={3}></Col>
+                  <Col md={5}></Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={6}>
-                    <h4 className="package_name">
+                  <Col md={4}>
+                    <div className="package_name">
                       Categories Included:{" "}
                       {userInfo1.package
                         ? userInfo1.package.category_count
                         : ""}
-                    </h4>
+                    </div>
                   </Col>
                   <Col md={6} lg={3}>
                     <div className="package_detail">
                       <p>Change Plan to have more categories</p>
                     </div>
                   </Col>
-                  <Col md={3}></Col>
+                  <Col md={5}></Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={6}>
-                    <h4 className="package_name">Use Predefined Categories </h4>
+                  <Col md={4}>
+                    <div className="package_name">
+                      Use Predefined Categories{" "}
+                    </div>
                   </Col>
                   <Col md={6} lg={3}>
                     <CustomCategory
@@ -212,14 +216,14 @@ class MyCategory extends React.Component {
                       fetchMyCategory={this.fetchMyCategory}
                     />
                   </Col>
-                  <Col md={3}></Col>
+                  <Col md={5}></Col>
                 </Row>
               </div>
 
               <form onSubmit={this.handleSubmit} className="white-box">
                 <h5 className="page-title line-heading">Manage Categories</h5>
                 <Row>
-                  <Col md={12}>
+                  <Col md={7}>
                     <label>Select Category: </label>
                     {this.state.saveCategories === "" ? null : (
                       <Select
@@ -262,6 +266,7 @@ class MyCategory extends React.Component {
                 </Row>
 
                 <Row className="">
+                  <Col md={4}></Col>
                   <Col md={3}>
                     <Button
                       variant="primary"
