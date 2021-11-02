@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button, Modal} from "react-bootstrap";
-import {Label, Input} from "reactstrap";
-import {toast} from "react-toastify";
-import {createBrowserHistory} from "history";
-import style from "./AccountSetup.module.scss";
+import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Label, Input } from "reactstrap";
+import { toast } from "react-toastify";
+import { createBrowserHistory } from "history";
+// import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -41,14 +41,13 @@ class AccountSetup extends React.Component {
 
   componentDidMount() {
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({user_id: userInfo.user_id});
+    this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
     this.fetchSaveCategory();
     this.getPackages();
-
   }
 
   getPackages = async () => {
@@ -57,16 +56,18 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter((x) => x.package_id === this.state.packageId);
-        this.setState({allPackages: packages});       
-        this.setState({singlePackage: singlePackage[0]});
+        const singlePackage = packages.filter(
+          (x) => x.package_id === this.state.packageId
+        );
+        this.setState({ allPackages: packages });
+        this.setState({ singlePackage: singlePackage[0] });
         packages.map(({ package_id, package_name }) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
           });
         });
-        this.setState({packages: selectPackages});
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -79,14 +80,14 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
+        myCategories.map(({ category_id, category_name, image_url }) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({myCategory: selectCategories});
+        this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -100,7 +101,7 @@ class AccountSetup extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
+        optionCategories.map(({ category_id, category_name, image_url }) => {
           return saveCategories.push({
             value: category_id,
             label: category_name,
@@ -144,7 +145,7 @@ class AccountSetup extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -154,48 +155,50 @@ class AccountSetup extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({categoryError: ""});
-          this.setState({loading: false});
+          this.setState({ categoryError: "" });
+          this.setState({ loading: false });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({loading: false});
-        this.setState({categoryError: err.response.data.message});
+        this.setState({ loading: false });
+        this.setState({ categoryError: err.response.data.message });
       });
     // }
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
-    this.setState({singlePackage: singlePackage[0]});
-    this.setState({showPaymentButton: true});
-    this.setState({package: event.value, package: event.label});
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
+    this.setState({ singlePackage: singlePackage[0] });
+    this.setState({ showPaymentButton: true });
+    this.setState({ package: event.value, package: event.label });
   };
 
   toggleModal = () => {
-    const {modal} = this.state;
+    const { modal } = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
   disconnect = async () => {
-    this.setState({loadingInsta: true});
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
         user_id: this.state.user_id,
       })
       .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({loadingInsta: false});
+        this.setState({ loadingInsta: false });
         console.log(err.response, "err");
       });
   };
@@ -294,8 +297,9 @@ class AccountSetup extends React.Component {
                     readOnly
                   />{" "}
                   <Label for="checkbox2" />
-                  Pay Yearly & Save ${this.state.singlePackage.package_amount*12} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                  <sub>(Save 20%)</sub>
+                  Pay Yearly & Save $
+                  {this.state.singlePackage.package_amount * 12}{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <sub>(Save 20%)</sub>
                 </div>
               </Row>
               {this.state.showPaymentButton && (
@@ -333,7 +337,7 @@ class AccountSetup extends React.Component {
                         variant="primary"
                         className="btn-block cat-right-btn"
                         onClick={() => {
-                          this.setState({modal: true});
+                          this.setState({ modal: true });
                         }}
                       >
                         Disconnect Instagram
@@ -377,7 +381,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({modal: false});
+                this.setState({ modal: false });
               }}
             >
               Close

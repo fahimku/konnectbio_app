@@ -300,6 +300,10 @@ class Sidebar extends React.Component {
                         link: "/app/account/profile",
                       },
                       {
+                        header: "My Category",
+                        link: "/app/account/categories",
+                      },
+                      {
                         header: "Account Setup",
                         link: "/app/account/setup",
                       },

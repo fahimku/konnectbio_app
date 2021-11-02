@@ -71,3 +71,12 @@ h1 small {
 .btn-connect {
   margin-right: 0px !important;
 }
+.category-page .package_name {
+  font-weight: normal;
+}
+
+@media (max-width: 576px) {
+  .category-page .package_detail .btn {
+    margin-top: 15px;
+  }
+}
