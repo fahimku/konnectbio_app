@@ -169,7 +169,7 @@ class MyCategory extends React.Component {
               <div className="white-box mt-5">
                 <h5 className="page-title line-heading">Manage Category</h5>
                 <Row className="mt-4">
-                  <Col md={4}>
+                  <Col md={2}>
                     <div className="package_name">
                       Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
@@ -189,7 +189,7 @@ class MyCategory extends React.Component {
                   <Col md={5}></Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={4}>
+                  <Col md={2}>
                     <div className="package_name">
                       Categories Included:{" "}
                       {userInfo1.package
@@ -205,7 +205,7 @@ class MyCategory extends React.Component {
                   <Col md={5}></Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={4}>
+                  <Col md={2}>
                     <div className="package_name">
                       Use Predefined Categories{" "}
                     </div>
