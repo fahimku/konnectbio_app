@@ -137,7 +137,6 @@ class MyLinks extends React.Component {
 
   saveLink = async () => {
     this.setState({loading: true});
-
     await axios
       .post("posts/reserve", {
         caption: this.state.title,
@@ -150,12 +149,11 @@ class MyLinks extends React.Component {
       .then(() => {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
-        this.setState({ loading: false });
-        this.setState({selectPost: true});
+        this.setState({loading: false});
         window.location.reload();
       })
       .catch((error) => {
-        this.setState({selectPost: true});
+      
         console.log(error);
       });
   };
@@ -238,7 +236,7 @@ class MyLinks extends React.Component {
     this.setState({preview: true});
     this.setState({updatePage: false});
     this.setState({loading: false});
-    this.setState({ modal: true });
+    this.setState({modal: true});
     this.setState({selectPost: true});
   };
 
@@ -326,9 +324,7 @@ class MyLinks extends React.Component {
           >
             <div
               className={`${
-                !this.state.selectPost
-                  ? "show_ift_iframe show"
-                  : "show_ift_iframe hidden"
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
               }`}
             >
               {this.state.username !== "" ? (
@@ -361,7 +357,6 @@ class MyLinks extends React.Component {
             <ModalBody className="bg-white">{this.addNewLinkShop()}</ModalBody>
           </Modal>
         )}
-
         <Modal
           isOpen={this.state.confirmModal}
           toggle={() => this.toggle("confirmModal")}

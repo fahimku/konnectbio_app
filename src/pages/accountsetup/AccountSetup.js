@@ -5,16 +5,17 @@ import {Row, Col, Button, Modal} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
 import {createBrowserHistory} from "history";
-import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      userInfo: userInfo,
+      cancelSubscription: true,
       showPaymentButton: false,
       allPackages: "",
       singlePackage: "",
@@ -40,15 +41,16 @@ class AccountSetup extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.cancelSubscription == false) {
+      this.setState({cancelSubscription: false});
+    }
     if (userInfo.access_token !== "") {
       this.setState({isInstagramConnected: true});
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({user_id: userInfo.user_id});
-    this.fetchMyCategory();
-    this.fetchSaveCategory();
-    this.getPackages();
 
+    this.getPackages();
   }
 
   getPackages = async () => {
@@ -57,10 +59,12 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter((x) => x.package_id === this.state.packageId);
-        this.setState({allPackages: packages});       
+        const singlePackage = packages.filter(
+          (x) => x.package_id === this.state.userInfo.package.package_id
+        );
+        this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
-        packages.map(({ package_id, package_name }) => {
+        packages.map(({package_id, package_name}) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -69,50 +73,6 @@ class AccountSetup extends React.Component {
         this.setState({packages: selectPackages});
       })
       .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  fetchMyCategory = async () => {
-    await axios
-      .get("/category/receive")
-      .then((response) => {
-        const selectCategories = [];
-        const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
-          return selectCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
-        this.setState({myCategory: selectCategories});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  fetchSaveCategory = async () => {
-    await axios
-      .get(`/users/receive/categories?id=${userInfo.user_id}`)
-      .then((response) => {
-        const saveCategories = [];
-        //const myCategories = response.data.message;
-        const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
-          return saveCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
-        this.setState({
-          // defaultCategory: myCategories,
-          saveCategories: saveCategories,
-        });
-      })
-      .catch((error) => {
         console.log(error);
       });
   };
@@ -168,7 +128,9 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     this.setState({singlePackage: singlePackage[0]});
     this.setState({showPaymentButton: true});
     this.setState({package: event.value, package: event.label});
@@ -222,15 +184,18 @@ class AccountSetup extends React.Component {
                     </h4>
                   </Col>
                 </Row>
-                <Row className="mt-4">
-                  <Col md={4}>Status Activity:(Monthly)</Col>
-                  <Col md={4}>
-                    <Button variant="primary" className="btn-block">
-                      Cancel Subscription
-                    </Button>
-                  </Col>
-                </Row>
-
+                {this.state.singlePackage.package_name !== "Individual" && (
+                  <Row className="mt-4">
+                    <Col md={4}>Status Activity:(Monthly)</Col>
+                    {this.state.cancelSubscription && (
+                      <Col md={4}>
+                        <Button variant="primary" className="btn-block">
+                          Cancel Subscription
+                        </Button>
+                      </Col>
+                    )}
+                  </Row>
+                )}
                 <Row className="mt-4">
                   <Col md={4}>Change Plan:</Col>
                   <Col md={4}>
@@ -265,96 +230,118 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
               </div>
+              {this.state.singlePackage.package_name !== "Individual" && (
+                <>
+                  <div className="white-box">
+                    <Row>
+                      <Col md={12}>
+                        <h5 className="page-title line-heading">Payment</h5>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={2}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            name="payment"
+                            className="mt-0"
+                            id="checkbox1"
+                            type="radio"
+                            // onClick={() => this.checkTable(0)}
+                            // checked={this.state.checkedArr[0]}
+                            readOnly
+                          />{" "}
+                          <Label for="checkbox1" />
+                          Pay Monthly $
+                          {this.state.singlePackage.package_amount_monthly}
+                        </div>
+                      </Col>
+                      <Col md={4}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            name="payment"
+                            className="mt-0"
+                            id="checkbox2"
+                            type="radio"
+                            // onClick={() => this.checkTable(0)}
+                            // checked={this.state.checkedArr[0]}
+                            readOnly
+                          />{" "}
+                          <Label for="checkbox2" />
+                          Pay Yearly & Save $
+                          {this.state.singlePackage.package_amount_yearly}{" "}
+                          &nbsp;{" "}
+                          <sub>
+                            (Save {this.state.singlePackage.yearly_discount}%)
+                          </sub>
+                        </div>
+                      </Col>
+                    </Row>
+                    <br />
 
-              <Row className="white-box">
-                <Col md={12}>
-                  <h5 className="page-title line-heading">Payment</h5>
-                </Col>
-                <div className="checkbox abc-checkbox">
-                  <Input
-                    className="mt-0"
-                    id="checkbox1"
-                    type="checkbox"
-                    checked
-                    // onClick={() => this.checkTable(0)}
-                    // checked={this.state.checkedArr[0]}
-                    readOnly
-                  />{" "}
-                  <Label for="checkbox1" />
-                  Pay Monthly ${this.state.singlePackage.package_amount}
-                </div>
-
-                <div className="checkbox abc-checkbox">
-                  <Input
-                    className="mt-0"
-                    id="checkbox2"
-                    type="checkbox"
-                    // onClick={() => this.checkTable(0)}
-                    // checked={this.state.checkedArr[0]}
-                    readOnly
-                  />{" "}
-                  <Label for="checkbox2" />
-                  Pay Yearly & Save ${this.state.singlePackage.package_amount*12} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                  <sub>(Save 20%)</sub>
-                </div>
-              </Row>
-              {this.state.showPaymentButton && (
+                    {this.state.showPaymentButton && (
+                      <Button
+                        onClick={() => {
+                          alert(
+                            "Please contact support@konnect.bio for plan inquiries."
+                          );
+                        }}
+                        variant="primary"
+                        className=""
+                      >
+                        Make Payment
+                      </Button>
+                    )}
+                  </div>
+                </>
+              )}
+              <div className="white-box">
                 <Row>
-                  <Col>
-                    <Button variant="primary" className="">
-                      Make Payment
-                    </Button>
+                  <Col md={12}>
+                    <h5 className="page-title line-heading">
+                      Instagram Connection
+                    </h5>
                   </Col>
                 </Row>
-              )}
-
-              <Row className="white-box">
-                <Col md={12}>
-                  <h5 className="page-title line-heading">
-                    Instagram Connection
-                  </h5>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={4}>
-                  <div className="category_count">Connection Status</div>
-                </Col>
-                <Col md={4} className="text-right">
-                  {(userInfo1.username !== "" && !this.props.username) ||
-                  (userInfo1.username !== "" && this.props.username !== "") ? (
-                    <>
-                      <div className="connected-text text-center mb-2">
-                        Connected Instagram: @
-                        {userInfo1.username !== ""
-                          ? userInfo1.username
-                          : this.props.username}
-                      </div>
-                      <Button
-                        variant="primary"
-                        className="btn-block cat-right-btn"
-                        onClick={() => {
-                          this.setState({modal: true});
-                        }}
-                      >
-                        Disconnect Instagram
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        onClick={() => {
-                          window.location.replace(this.props.url);
-                        }}
-                        variant="primary"
-                        className="btn-block cat-right-btn"
-                      >
-                        <i className="fa fa-instagram" />
-                        &nbsp;&nbsp; Connect Instagram
-                      </Button>
-                    </>
-                  )}
-                </Col>
-              </Row>
+                <Row>
+                  <Col md={4}>
+                    <div className="category_count">Connection Status</div>
+                  </Col>
+                  <Col md={4} className="text-right">
+                    {userInfo1.username !== "" || !this.props.username ? (
+                      <>
+                        <div className="connected-text text-center mb-2">
+                          Connected Instagram: @
+                          {userInfo1.username !== ""
+                            ? userInfo1.username
+                            : this.props.username}
+                        </div>
+                        <Button
+                          variant="primary"
+                          className="btn-block cat-right-btn"
+                          onClick={() => {
+                            this.setState({modal: true});
+                          }}
+                        >
+                          Disconnect Instagram
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button
+                          onClick={() => {
+                            window.location.replace(this.props.url);
+                          }}
+                          variant="primary"
+                          className="btn-block cat-right-btn"
+                        >
+                          <i className="fa fa-instagram" />
+                          &nbsp;&nbsp; Connect Instagram
+                        </Button>
+                      </>
+                    )}
+                  </Col>
+                </Row>
+              </div>
             </div>
           </div>
         </div>

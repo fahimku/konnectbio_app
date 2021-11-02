@@ -16,6 +16,7 @@ class Connect extends React.Component {
       isInstagramConnected: false,
       username: "",
       errorInsta: "",
+      cancelSubscription: false,
     };
   }
 
@@ -110,6 +111,7 @@ class Connect extends React.Component {
           </div>
         </div>
         <AccountSetup
+          cancelSubscription={this.state.cancelSubscription}
           className="container"
           username={this.state.username}
           isInstagramConnected={this.state.isInstagramConnected}

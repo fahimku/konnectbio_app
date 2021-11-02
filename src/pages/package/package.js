@@ -135,17 +135,17 @@ const Package = (props) => {
                     {/* <div className="bottom-btn"> */}
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
-                      // onClick={() => {
-                      //   alert(
-                      //     "Please contact support@konnect.bio for plan inquiries."
-                      //   );
-                      // }}
                       onClick={() => {
-                        updatePackage(
-                          userInfo.user_id,
-                          "617cee8b90aad9bd2a4e10ff"
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
                         );
                       }}
+                      // onClick={() => {
+                      //   updatePackage(
+                      //     userInfo.user_id,
+                      //     "617cee8b90aad9bd2a4e10ff"
+                      //   );
+                      // }}
                     >
                       <span>Select Package</span>
                     </button>
@@ -179,17 +179,17 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
-                      // onClick={() => {
-                      //   alert(
-                      //     "Please contact support@konnect.bio for plan inquiries."
-                      //   );
-                      // }}
                       onClick={() => {
-                        updatePackage(
-                          userInfo.user_id,
-                          "617ceeb390aad9bd2a4e1103"
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
                         );
                       }}
+                      // onClick={() => {
+                      //   updatePackage(
+                      //     userInfo.user_id,
+                      //     "617ceeb390aad9bd2a4e1103"
+                      //   );
+                      // }}
                     >
                       <span>Select Package</span>
                     </button>
@@ -224,17 +224,17 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
-                      // onClick={() => {
-                      //   alert(
-                      //     "Please contact support@konnect.bio for plan inquiries."
-                      //   );
-                      // }}
                       onClick={() => {
-                        updatePackage(
-                          userInfo.user_id,
-                          "617cef1390aad9bd2a4e1107"
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
                         );
                       }}
+                      // onClick={() => {
+                      //   updatePackage(
+                      //     userInfo.user_id,
+                      //     "617cef1390aad9bd2a4e1107"
+                      //   );
+                      // }}
                     >
                       <span>Select Package</span>
                     </button>
@@ -271,17 +271,17 @@ const Package = (props) => {
                     </ul>
                     <button
                       className="btn btn-danger-gradiant btn-md text-white btn-block"
-                      // onClick={() => {
-                      //   alert(
-                      //     "Please contact support@konnect.bio for plan inquiries."
-                      //   );
-                      // }}
                       onClick={() => {
-                        updatePackage(
-                          userInfo.user_id,
-                          "617cef2e90aad9bd2a4e110b"
+                        alert(
+                          "Please contact support@konnect.bio for plan inquiries."
                         );
                       }}
+                      // onClick={() => {
+                      //   updatePackage(
+                      //     userInfo.user_id,
+                      //     "617cef2e90aad9bd2a4e110b"
+                      //   );
+                      // }}
                     >
                       <span>Select Package</span>
                     </button>
