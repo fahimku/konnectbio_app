@@ -197,7 +197,7 @@ class AccountSetup extends React.Component {
                 <Row>
                   <Col md={8}>
                     <h4 className="package_name">
-                      Current Plan{" "}
+                      Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
                     </h4>
                   </Col>
@@ -217,7 +217,7 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
-                {this.state.singlePackage.package_name !== "Individual" && (
+                {this.state.singlePackage.package_name !== "Individual" && this.state.cancelSubscription && (
                   <Row className="mt-4">
                     <Col md={4}>Status Activity:(Monthly)</Col>
                     {this.state.cancelSubscription && (
@@ -260,6 +260,7 @@ class AccountSetup extends React.Component {
                       <Col md={2}>
                         <div className="checkbox abc-checkbox">
                           <Input
+                            checked
                             name="payment"
                             className="mt-0"
                             id="checkbox1"
@@ -285,7 +286,7 @@ class AccountSetup extends React.Component {
                             readOnly
                           />{" "}
                           <Label for="checkbox2" />
-                          Pay Yearly & Save $
+                          Pay Yearly & Save: $
                           {this.state.singlePackage.package_amount_yearly}{" "}
                           &nbsp;{" "}
                           <sub>
