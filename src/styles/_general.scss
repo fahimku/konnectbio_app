@@ -74,7 +74,11 @@ h1 small {
 .category-page .package_name {
   font-weight: normal;
 }
-
+.category-page .container {
+}
+.cat-box .cat-image {
+  object-fit: cover;
+}
 @media (max-width: 576px) {
   .category-page .package_detail .btn {
     margin-top: 15px;
