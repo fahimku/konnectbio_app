@@ -206,9 +206,7 @@ class MyCategory extends React.Component {
                 </Row>
                 <Row className="mt-4">
                   <Col md={2}>
-                    <div className="package_name">
-                      Use Predefined Categories{" "}
-                    </div>
+                    <div className="package_name">Custom Category</div>
                   </Col>
                   <Col md={6} lg={3}>
                     <CustomCategory
