@@ -30,11 +30,12 @@ Custome CSS
 .btn-primary {
   background-color: #002b49 !important;
   margin-right: 5px !important;
-  /* background-color: #25c6fe !important; */
+  padding: 10px 10px !important;
+  min-width: 120px;
 }
 
 .btn-primary:hover {
-  /* border-color: #25c6fe !important; */
+  background-color:#000 !important;
   border-color: #002b49 !important;
 }
 
@@ -171,8 +172,9 @@ span.icon {
 }
 
 .profile-page .container {
-  /* background-color: #fff; */
   max-width: 600px;
+  max-width: 960px;
+  margin: 0;
 }
 .category-page .category-btn {
   margin-top: 30px;
@@ -183,6 +185,7 @@ span.icon {
   background: #fff;
   border-radius: 0.35rem;
   padding: 15px;
+  box-shadow: 0px 0px 3px #ccc;
 }
 .package_name {
 }
@@ -496,11 +499,6 @@ span.icon {
   border-radius: 10px;
   box-shadow: 0px 0px 3px #ccc;
 }
-.image-edit-links span{
-  float:left;
-  width:100%;
-  margin-bottom:5px;
-}
 .edit_button_main{
   display: flex;
   width:100%;
@@ -551,7 +549,40 @@ span.icon {
 .ant-picker{
   min-height: 45px;
 }
-
+.profile_ift_main{
+  width: 100%;
+}
+.profile_ift{
+  width: 70%;
+  background: #FFF;
+  border: solid 1px #ccc;
+  box-shadow: 0px 0px 3px #ccc;
+  border-radius: 10px;
+  margin-left: 50px;
+  margin-top: 50px;
+  padding: 20px 20px;
+}
+.profile_ift_iner{
+  display: flex;
+  width:100%;
+}
+.profile-image_ift{
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+.profile-image_ift .circle, .circle-o{
+  border-radius: 0;
+}
+.profile-image_ift .circle, .rounded, .circle-o{
+  width: 100%;
+  height: auto;
+  border: solid 1px #ccc;
+  padding: 4px;
+  border-radius: 4px;
+}
+.pricing-table-ifti{
+  max-width:1400px;
+}
 
 
 
