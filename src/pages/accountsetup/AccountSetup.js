@@ -1,10 +1,10 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button, Modal } from "react-bootstrap";
-import { Label, Input } from "reactstrap";
-import { toast } from "react-toastify";
-import { createBrowserHistory } from "history";
+import {Row, Col, Button, Modal} from "react-bootstrap";
+import {Label, Input} from "reactstrap";
+import {toast} from "react-toastify";
+import {createBrowserHistory} from "history";
 // import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -17,6 +17,8 @@ class AccountSetup extends React.Component {
     this.state = {
       userInfo: userInfo,
       cancelSubscription: true,
+      resetAccount: true,
+      resetModal: false,
       showPaymentButton: false,
       allPackages: "",
       singlePackage: "",
@@ -42,14 +44,18 @@ class AccountSetup extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.cancelSubscription == false) {
-      this.setState({ cancelSubscription: false });
+    if (this.props.cancelSubscription === false) {
+      this.setState({cancelSubscription: false});
+    }
+
+    if (this.props.resetAccount === false) {
+      this.setState({resetAccount: false});
     }
     if (userInfo.access_token !== "") {
-      this.setState({ isInstagramConnected: true });
+      this.setState({isInstagramConnected: true});
     }
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ user_id: userInfo.user_id });
+    this.setState({user_id: userInfo.user_id});
 
     this.getPackages();
   }
@@ -63,15 +69,15 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (x) => x.package_id === this.state.userInfo.package.package_id
         );
-        this.setState({ allPackages: packages });
-        this.setState({ singlePackage: singlePackage[0] });
-        packages.map(({ package_id, package_name }) => {
+        this.setState({allPackages: packages});
+        this.setState({singlePackage: singlePackage[0]});
+        packages.map(({package_id, package_name}) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
           });
         });
-        this.setState({ packages: selectPackages });
+        this.setState({packages: selectPackages});
       })
       .catch(function (error) {
         console.log(error);
@@ -105,7 +111,7 @@ class AccountSetup extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({ loading: true });
+    this.setState({loading: true});
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -115,15 +121,15 @@ class AccountSetup extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
-          this.setState({ loading: false });
+          this.setState({categoryError: ""});
+          this.setState({loading: false});
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({ loading: false });
-        this.setState({ categoryError: err.response.data.message });
+        this.setState({loading: false});
+        this.setState({categoryError: err.response.data.message});
       });
     // }
   };
@@ -132,35 +138,46 @@ class AccountSetup extends React.Component {
     const singlePackage = this.state.allPackages.filter(
       (x) => x.package_id === event.value
     );
-    this.setState({ singlePackage: singlePackage[0] });
-    this.setState({ showPaymentButton: true });
-    this.setState({ package: event.value, package: event.label });
+    this.setState({singlePackage: singlePackage[0]});
+    this.setState({showPaymentButton: true});
+    this.setState({package: event.label});
   };
 
   toggleModal = () => {
-    const { modal } = this.state;
+    const {modal} = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
+  togglerResetModal = () => {
+    const {resetModal} = this.state;
+    this.setState({
+      resetModal: !resetModal,
+    });
+  };
+
   disconnect = async () => {
-    this.setState({ loadingInsta: true });
+    this.setState({loadingInsta: true});
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
         user_id: this.state.user_id,
       })
       .then((response) => {
-        this.setState({ modal: false });
-        this.setState({ loadingInsta: false });
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({ loadingInsta: false });
+        this.setState({loadingInsta: false});
         console.log(err.response, "err");
       });
+  };
+
+  resetAccount = async () => {
+    this.setState({loadingInsta: true});
   };
 
   render() {
@@ -185,18 +202,7 @@ class AccountSetup extends React.Component {
                     </h4>
                   </Col>
                 </Row>
-                {this.state.singlePackage.package_name !== "Individual" && (
-                  <Row className="mt-4">
-                    <Col md={4}>Status Activity:(Monthly)</Col>
-                    {this.state.cancelSubscription && (
-                      <Col md={4}>
-                        <Button variant="primary" className="btn-block">
-                          Cancel Subscription
-                        </Button>
-                      </Col>
-                    )}
-                  </Row>
-                )}
+
                 <Row className="mt-4">
                   <Col md={4}>Change Plan:</Col>
                   <Col md={4}>
@@ -211,7 +217,18 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
-
+                {this.state.singlePackage.package_name !== "Individual" && (
+                  <Row className="mt-4">
+                    <Col md={4}>Status Activity:(Monthly)</Col>
+                    {this.state.cancelSubscription && (
+                      <Col md={4}>
+                        <Button variant="primary" className="btn-block">
+                          Cancel Subscription
+                        </Button>
+                      </Col>
+                    )}
+                  </Row>
+                )}
                 <Row className="mt-4">
                   <Col md={4}>
                     Categories Included:{" "}
@@ -308,7 +325,7 @@ class AccountSetup extends React.Component {
                     <div className="category_count">Connection Status</div>
                   </Col>
                   <Col md={4} className="text-right">
-                    {userInfo1.username !== "" || !this.props.username ? (
+                    {userInfo1.username !== "" || this.props.username ? (
                       <>
                         <div className="connected-text text-center mb-2">
                           Connected Instagram: @
@@ -320,7 +337,7 @@ class AccountSetup extends React.Component {
                           variant="primary"
                           className="btn-block cat-right-btn"
                           onClick={() => {
-                            this.setState({ modal: true });
+                            this.setState({modal: true});
                           }}
                         >
                           Disconnect Instagram
@@ -343,6 +360,33 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
               </div>
+              {this.state.resetAccount && (
+                <div className="white-box">
+                  <Row>
+                    <Col md={12}>
+                      <h5 className="page-title line-heading">Reset Account</h5>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={4}>
+                      <div className="category_count">
+                        This will remove all your data from our platform.
+                      </div>
+                    </Col>
+                    <Col md={4} className="text-right">
+                      <Button
+                        onClick={() => {
+                          this.setState({resetModal: true});
+                        }}
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                      >
+                        Reset Account
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -365,7 +409,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({ modal: false });
+                this.setState({modal: false});
               }}
             >
               Close
@@ -373,6 +417,38 @@ class AccountSetup extends React.Component {
             <Button
               className="disconnect-btn"
               onClick={this.disconnect}
+              disabled={this.state.loadingInsta ? true : false}
+            >
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.resetModal}
+          onHide={this.togglerResetModal}
+          className="change-password"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Reset Account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-white">
+            Are you sure you want to reset your Konnect.bio Account? This will
+            remove all your data from our platform.This action is not
+            reversible.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={() => {
+                this.setState({resetModal: false});
+              }}
+            >
+              Close
+            </Button>
+            <Button
+              className="disconnect-btn"
+              onClick={this.resetAccount}
               disabled={this.state.loadingInsta ? true : false}
             >
               Yes

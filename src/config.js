@@ -10,7 +10,7 @@ const redirectURL =
 const visitorURL =
   process.env.NODE_ENV === "development"
   
-    ? "http://localhost:3001"
+    ? "https://konnect.bio"
     : "https://konnect.bio";
 
 export default {
