@@ -108,7 +108,7 @@ class CustomCategory extends React.Component {
                           alt="..."
                           src={file.preview}
                           key={`img-id-${idx.toString()}`}
-                          style={{ width: "150px", height: "150px" }}
+                          style={{ width: "100px", height: "100px" }}
                           className="circle profile-icon"
                         />
                       ))}
@@ -117,14 +117,14 @@ class CustomCategory extends React.Component {
                     <img
                       alt="profile-icon"
                       src={Placeholder}
-                      style={{ width: "150px", height: "150px" }}
+                      style={{ width: "100px", height: "100px" }}
                       className="circle profile-icon"
                     />
                   )}
                 </div>
               </div>
               <Button type="button" color="default" className="select-image">
-                <label for="fileupload2">Choose Image</label>
+                <label for="fileupload2">Choose Category Image</label>
               </Button>
             </Col>
           </div>
