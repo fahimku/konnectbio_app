@@ -132,7 +132,11 @@ class MyProfile extends React.Component {
   render() {
     const userData = this.state.userData;
     return (
+
+
+
       <div className="profile-page">
+
         <div className="container">
           <div className="justify-content-md-center">
             <Row className="mt-4">

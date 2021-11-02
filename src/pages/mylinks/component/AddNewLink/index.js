@@ -58,8 +58,9 @@ const AddNewLink = (props) => {
             onInvalid={disableButton}
           >
             <div className="image-edit-links">
+              <div className="mt-3">
               <span>Title</span>
-              <InputValidation
+              <InputValidation className=""
                 type="text"
                 id="basic"
                 name="basic"
@@ -70,8 +71,10 @@ const AddNewLink = (props) => {
                   props.titleChange(evt.target.value);
                 }}
               />
+              </div>
+              <div className="mt-3">
               <span>URL</span>
-              <InputValidation
+              <InputValidation className=""
                 placeholder="Please Enter Website Address"
                 type="text"
                 id="website"
@@ -87,7 +90,8 @@ const AddNewLink = (props) => {
                   props.redirectedUrlChange(evt.target.value);
                 }}
               />
-              <div className="pane-button">
+              </div>
+              <div className="edit_button_main pane-button">
                 {props.updatePage ? (
                   <>
                     {props.loading ? (
@@ -96,29 +100,29 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
-                        <Row className="mt-3">
-                          <Col lg="3" sm="6" xs="6">
+                        
+                          
                             <Button
                               type="submit"
                               color="primary"
-                              className="update-buttons"
+                              className="custom_btns_ift"
                             >
                               &nbsp;&nbsp;Update&nbsp;&nbsp;
                             </Button>
-                          </Col>
-                          <Col lg="3" sm="6" xs="6">
+                          
+                          
                             <Button
                               disabled={canSubmit}
-                              className="update-buttons"
+                              className="custom_btns_ift"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}
                             >
                               &nbsp;&nbsp;Test&nbsp;&nbsp;
                             </Button>
-                          </Col>
-                          <Col lg="3" sm="6" xs="6">
+                         
+                          
                             <Button
-                              className="update-buttons"
+                              className="custom_btns_ift"
                               color="primary"
                               onClick={() => {
                                 props.preview(false, "");
@@ -127,10 +131,10 @@ const AddNewLink = (props) => {
                             >
                               &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                             </Button>
-                          </Col>
-                          <Col lg="3" sm="6" xs="6">
+                          
+                          
                             <Button
-                              className="update-buttons"
+                              className="custom_btns_ift"
                               color="primary"
                               onClick={() => {
                                 props.deleteLink();
@@ -138,8 +142,7 @@ const AddNewLink = (props) => {
                             >
                               Delete
                             </Button>
-                          </Col>
-                        </Row>
+                          
                       </>
                     )}
                   </>
@@ -151,31 +154,28 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
-                        <Row className="mt-3">
-                          <Col lg="4" sm="6" xs="6">
+                        
                             <Button
                               type="submit"
                               color="primary"
-                              className="update-buttons"
+                              className="custom_btns_ift"
                             >
                               &nbsp;&nbsp;Save&nbsp;&nbsp;
                             </Button>
-                          </Col>
 
-                          <Col lg="4" sm="6" xs="6">
+                         
                             <Button
                               disabled={canSubmit}
-                              className="update-buttons"
+                              className="custom_btns_ift"
                               color="primary"
                               onClick={() => props.testUrl(props.redirectedUrl)}
                             >
                               &nbsp;&nbsp;Test&nbsp;&nbsp;
                             </Button>
-                          </Col>
 
-                          <Col lg="4" sm="6" xs="6">
+                         
                             <Button
-                              className="update-buttons"
+                              className="custom_btns_ift"
                               color="primary"
                               onClick={() => {
                                 props.preview(false, "");
@@ -184,8 +184,6 @@ const AddNewLink = (props) => {
                             >
                               &nbsp;&nbsp;Cancel&nbsp;&nbsp;
                             </Button>
-                          </Col>
-                        </Row>
                       </>
                     )}
                   </>

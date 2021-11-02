@@ -30,24 +30,28 @@ const Package = (props) => {
 
   return (
     <>
-      <div className="main-header">
-        <div className="container">
-          <Row className="connect-page-header">
-            <Col md={10} xs={8}>
-              <img className="img-connect" src={logo} alt="logo" />
-            </Col>
-            <Col md={2} xs={4} className="text-right">
-              <Button
+
+
+
+      <div class="login_header">
+        <div class="header_inr group">
+          <div class="header_inr_left">
+            <div class="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
+          </div>
+          <div class="header_inr_right">
+            <div class="create_account">
+            <Button
                 className="btn-connect"
                 onClick={() => props.history.push("/logout")}
               >
                 Logout
               </Button>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="container-fluid bg-light">
+
+      <div className="container-fluid pricing-table-ifti">
         <div className="pricing1 py-5 ">
           <div className="container-fluid">
             <div className="row justify-content-center">
