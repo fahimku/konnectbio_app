@@ -206,7 +206,7 @@ class MyCategory extends React.Component {
                 </Row>
                 <Row className="mt-4">
                   <Col md={2}>
-                    <div className="package_name">Custom Category</div>
+                    <div className="package_name">Custom Categories:</div>
                   </Col>
                   <Col md={6} lg={3}>
                     <CustomCategory
