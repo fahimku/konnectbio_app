@@ -159,8 +159,9 @@ class Register extends React.Component {
   }
 
   changeCountry(event) {
+    console.log(event, "event");
     this.setState({ city: "" });
-    this.setState({ country: event.value, countryCode: event.value });
+    this.setState({ country: event.label, countryCode: event.value });
     setTimeout(() => {
       this.getCities();
     }, 500);
