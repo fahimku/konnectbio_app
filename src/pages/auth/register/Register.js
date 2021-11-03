@@ -66,7 +66,6 @@ class Register extends React.Component {
   async componentDidMount() {
     await this.getCountries();
     await this.getCities();
-    // await this.getPackages();
   }
 
   componentDidUpdate(prevProps) {
@@ -113,7 +112,7 @@ class Register extends React.Component {
             // console.log({name, code1, selected});
             this.setState({ country: name, countryCode: code1 });
           }
-          this.setState({ country: "Pakistan", countryCode: "PK" });
+      //    this.setState({ country: "Pakistan", countryCode: "PK" });
           return selectCountries.push({ value: code1, label: name });
         });
         this.setState({ countries: selectCountries });
@@ -123,24 +122,7 @@ class Register extends React.Component {
       });
   };
 
-  getPackages = async () => {
-    await axios
-      .get(`/package/receive`)
-      .then((response) => {
-        const selectPackages = [];
-        const packages = response.data.message;
-        packages.map(({ package_id, package_name, package_amount }) => {
-          return selectPackages.push({
-            value: package_id,
-            label: package_name + " ($" + package_amount + ")",
-          });
-        });
-        this.setState({ packages: selectPackages });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+
 
   changeName(event) {
     this.setState({ name: event.target.value });
@@ -227,11 +209,6 @@ class Register extends React.Component {
     }
   }
 
-  // changePackage = (e, options) => {
-  //   this.setState({
-  //     packageType: options,
-  //   });
-  // };
 
   render() {
     return (
@@ -307,17 +284,15 @@ class Register extends React.Component {
                     options={this.state.genderList}
                   />
                 </div>
-                {/* <div className="form-group">
-                <Select
-                  onChange={(options, e) => this.changePackage(e, options)}
-                  placeholder="Select Package"
-                  options={this.state.packages}
-                />
-              </div> */}
+   
                 <div className="form-group">
-                  {this.state.country ? (
+                  {this.state.country &&(
                     <Select
                       className="form_select_group"
+                      defaultValue={{
+                        label: this.state.country,
+                        value: this.state.country,
+                      }}
                       value={
                         this.state.country && {
                           label: this.state.country,
@@ -328,13 +303,7 @@ class Register extends React.Component {
                       filterOption={createFilter({ ignoreAccents: false })}
                       placeholder="Select Country"
                       options={this.state.countries}
-                      defaultValue={{
-                        label: this.state.country,
-                        value: this.state.country,
-                      }}
                     />
-                  ) : (
-                    ""
                   )}
                 </div>
                 <div className="form-group">
@@ -435,7 +404,6 @@ class Register extends React.Component {
     );
   }
 }
-
 function mapStateToProps(state) {
   return {
     isFetching: state.auth.isFetching,
