@@ -91,7 +91,6 @@ class LinkinBio extends React.Component {
           this.setState({ nextPageUrl: response.data.paging.next });
       })
       .catch((err) => {
-        console.log("Error");
         console.log(err);
 
         // if (err.response.data.message.type) {
@@ -281,7 +280,7 @@ class LinkinBio extends React.Component {
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
-        categories: this.state.category,
+        categories: this.state.category.split(),
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
         start_date: this.state.startDate,
@@ -368,7 +367,9 @@ class LinkinBio extends React.Component {
       let mediaId = currentPost.id;
       let lastPost = this.state.singlePost;
 
-      this.fetchSinglePost(mediaId);
+      if (currentPost.linked) {
+        this.fetchSinglePost(mediaId);
+      }
 
       if (lastPost) {
         lastPost.select = false;
@@ -405,7 +406,7 @@ class LinkinBio extends React.Component {
 
   changeCategory = (category) => {
     if (category) {
-      this.setState({ category: category });
+      this.setState({ category: category.split() });
       // this.fetchSubCategories(category);
     }
   };
@@ -416,7 +417,6 @@ class LinkinBio extends React.Component {
 
   changePostType = (e) => {
     if (e.target.checked) {
-      console.log(e.target.value);
       this.setState({ postType: e.target.value });
     }
   };
