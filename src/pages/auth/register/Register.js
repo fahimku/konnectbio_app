@@ -8,19 +8,13 @@ import {Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
-import {createBrowserHistory} from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
 
 class Register extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
-
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       email: "",
@@ -218,7 +212,15 @@ class Register extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;<a href="/login">Sign in</a>
+                Already have an account?&nbsp;
+                <a
+                  href="#"
+                  onClick={() => {
+                    this.props.history.push("/login");
+                  }}
+                >
+                  Sign in
+                </a>
               </div>
             </div>
           </div>
