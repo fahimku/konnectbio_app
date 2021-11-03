@@ -173,6 +173,19 @@ class AccountSetup extends React.Component {
 
   resetAccount = async () => {
     this.setState({loadingInsta: true});
+    await axios
+      .put(`/users/revise/resetAccount/${this.state.user_id}`)
+      .then((response) => {
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
+        localStorage.removeItem("access_token");
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        history.push("/connect");
+      })
+      .catch((err) => {
+        this.setState({loadingInsta: false});
+        console.log(err.response, "err");
+      });
   };
 
   render() {

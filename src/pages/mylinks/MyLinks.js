@@ -19,7 +19,6 @@ import style from "./MyLinks.module.scss";
 import moment from "moment";
 
 class MyLinks extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -93,7 +92,6 @@ class MyLinks extends React.Component {
   componentWillMount() {
     this.fetchMyLinks(this.state.username);
   }
-
 
   fetchMyLinks = async (username) => {
     await axios
