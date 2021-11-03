@@ -13,11 +13,8 @@ import { push } from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
 import { toast } from "react-toastify";
+import {authError} from "../../../actions/auth";
 
-import { createBrowserHistory } from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
 
 class Login extends React.Component {
   static propTypes = {
@@ -174,7 +171,8 @@ class Login extends React.Component {
                 <span
                   className="text-center link"
                   onClick={() => {
-                    history.push("/register");
+                    this.props.dispatch(authError(""));
+                    this.props.history.push("/register");
                   }}
                 >
                   Create an Account
@@ -183,7 +181,8 @@ class Login extends React.Component {
               <span
                 className="decoration text-center link"
                 onClick={() => {
-                  history.push("/forgot");
+                  this.props.dispatch(authError(""));
+                  this.props.history.push("/forgot");
                 }}
               >
                 Forgot password?
