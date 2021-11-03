@@ -206,10 +206,7 @@ class LinkinBioShop extends React.Component {
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
-        categories:
-          this.state.category.length === 0
-            ? this.state.category
-            : this.state.category.split(),
+        categories: this.state.category,
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
         start_date: this.state.startDate,
