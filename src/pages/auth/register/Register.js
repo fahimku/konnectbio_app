@@ -44,6 +44,8 @@ class Register extends React.Component {
       countryCode: "",
       packages: "",
       packageType: "",
+      zip: "",
+      referred_by: "",
     };
 
     this.doRegister = this.doRegister.bind(this);
@@ -57,6 +59,8 @@ class Register extends React.Component {
     this.changeConfirmPassword = this.changeConfirmPassword.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
     this.isPasswordValid = this.isPasswordValid.bind(this);
+    this.changeZip = this.changeZip.bind(this);
+    this.changeReferred = this.changeReferred.bind(this);
   }
 
   async componentDidMount() {
@@ -74,6 +78,8 @@ class Register extends React.Component {
         city: "",
         password: "",
         confirmPassword: "",
+        zip: "",
+        referred_by: "",
       });
       this.setState({ country: "Pakistan", countryCode: "PK" });
     }
@@ -190,9 +196,17 @@ class Register extends React.Component {
       this.state.password && this.state.password === this.state.confirmPassword
     );
   }
+  changeZip(event) {
+    this.setState({ zip: event.target.value });
+  }
+
+  changeReferred(event) {
+    this.setState({ referred_by: event.target.value });
+  }
 
   doRegister(e) {
     e.preventDefault();
+
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
@@ -205,6 +219,8 @@ class Register extends React.Component {
           country: this.state.countryCode,
           city: this.state.city,
           password: this.state.password,
+          zip: this.state.zip,
+          referred_by: this.state.referred_by,
         })
       );
     }
@@ -360,6 +376,26 @@ class Register extends React.Component {
                     required
                     name="confirmPassword"
                     placeholder="Confirm"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.zip}
+                    onChange={this.changeZip}
+                    type="number"
+                    name="zip"
+                    placeholder="Zip Code"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.referred_by}
+                    onChange={this.changeReferred}
+                    type="text"
+                    name="referred_by"
+                    placeholder="Referred By"
                   />
                 </div>
                 <Button
