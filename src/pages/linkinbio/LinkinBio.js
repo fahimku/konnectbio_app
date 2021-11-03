@@ -380,6 +380,10 @@ class LinkinBio extends React.Component {
 
       if (currentPost.linked) {
         this.fetchSinglePost(mediaId);
+      } else {
+        this.setState({
+          category: [],
+        });
       }
 
       if (lastPost) {
