@@ -276,11 +276,15 @@ class LinkinBio extends React.Component {
   };
 
   updatePost = async (id, url) => {
+    console.log(this.state.category, "sdsdsd");
     this.setState({ loading: true });
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
-        categories: this.state.category.split(),
+        categories:
+          this.state.category.length === 0
+            ? this.state.category
+            : this.state.category.split(),
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
         start_date: this.state.startDate,

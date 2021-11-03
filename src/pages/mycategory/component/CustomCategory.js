@@ -105,7 +105,7 @@ class CustomCategory extends React.Component {
                     <div>
                       {this.state.imageFiles.map((file, idx) => (
                         <img
-                          alt="..."
+                          alt="image"
                           src={file.preview}
                           key={`img-id-${idx.toString()}`}
                           style={{ width: "100px", height: "100px" }}
