@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Row, Col, Button } from "reactstrap";
+import React, {useRef, useEffect, useState} from "react";
+import {Button} from "reactstrap";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
@@ -59,37 +59,39 @@ const AddNewLink = (props) => {
           >
             <div className="image-edit-links">
               <div className="mt-3">
-              <span>Title</span>
-              <InputValidation className=""
-                type="text"
-                id="basic"
-                name="basic"
-                required
-                value={props.title}
-                placeholder="Add a link title"
-                onChange={(evt) => {
-                  props.titleChange(evt.target.value);
-                }}
-              />
+                <span>Title</span>
+                <InputValidation
+                  className=""
+                  type="text"
+                  id="basic"
+                  name="basic"
+                  required
+                  value={props.title}
+                  placeholder="Add a link title"
+                  onChange={(evt) => {
+                    props.titleChange(evt.target.value);
+                  }}
+                />
               </div>
               <div className="mt-3">
-              <span>URL</span>
-              <InputValidation className=""
-                placeholder="Please Enter Website Address"
-                type="text"
-                id="website"
-                required
-                name="website"
-                trigger="change"
-                validations="isUrl"
-                validationError={{
-                  isUrl: "This value should be a valid url.",
-                }}
-                value={props.redirectedUrl}
-                onChange={(evt) => {
-                  props.redirectedUrlChange(evt.target.value);
-                }}
-              />
+                <span>URL</span>
+                <InputValidation
+                  className=""
+                  placeholder="Please Enter Website Address"
+                  type="text"
+                  id="website"
+                  required
+                  name="website"
+                  trigger="change"
+                  validations="isUrl"
+                  validationError={{
+                    isUrl: "This value should be a valid url.",
+                  }}
+                  value={props.redirectedUrl}
+                  onChange={(evt) => {
+                    props.redirectedUrlChange(evt.target.value);
+                  }}
+                />
               </div>
               <div className="edit_button_main pane-button">
                 {props.updatePage ? (
@@ -100,49 +102,43 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
-                        
-                          
-                            <Button
-                              type="submit"
-                              color="primary"
-                              className="custom_btns_ift"
-                            >
-                              &nbsp;&nbsp;Update&nbsp;&nbsp;
-                            </Button>
-                          
-                          
-                            <Button
-                              disabled={canSubmit}
-                              className="custom_btns_ift"
-                              color="primary"
-                              onClick={() => props.testUrl(props.redirectedUrl)}
-                            >
-                              &nbsp;&nbsp;Test&nbsp;&nbsp;
-                            </Button>
-                         
-                          
-                            <Button
-                              className="custom_btns_ift"
-                              color="primary"
-                              onClick={() => {
-                                props.preview(false, "");
-                                props.closeModel();
-                              }}
-                            >
-                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                            </Button>
-                          
-                          
-                            <Button
-                              className="custom_btns_ift"
-                              color="primary"
-                              onClick={() => {
-                                props.deleteLink();
-                              }}
-                            >
-                              Delete
-                            </Button>
-                          
+                        <Button
+                          type="submit"
+                          color="primary"
+                          className="custom_btns_ift"
+                        >
+                          &nbsp;&nbsp;Update&nbsp;&nbsp;
+                        </Button>
+
+                        <Button
+                          disabled={canSubmit}
+                          className="custom_btns_ift"
+                          color="primary"
+                          onClick={() => props.testUrl(props.redirectedUrl)}
+                        >
+                          &nbsp;&nbsp;Test&nbsp;&nbsp;
+                        </Button>
+
+                        <Button
+                          className="custom_btns_ift"
+                          color="primary"
+                          onClick={() => {
+                            props.preview(false, "");
+                            props.closeModel();
+                          }}
+                        >
+                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                        </Button>
+
+                        <Button
+                          className="custom_btns_ift"
+                          color="primary"
+                          onClick={() => {
+                            props.deleteLink();
+                          }}
+                        >
+                          Delete
+                        </Button>
                       </>
                     )}
                   </>
@@ -154,36 +150,33 @@ const AddNewLink = (props) => {
                       </Button>
                     ) : (
                       <>
-                        
-                            <Button
-                              type="submit"
-                              color="primary"
-                              className="custom_btns_ift"
-                            >
-                              &nbsp;&nbsp;Save&nbsp;&nbsp;
-                            </Button>
+                        <Button
+                          type="submit"
+                          color="primary"
+                          className="custom_btns_ift"
+                        >
+                          &nbsp;&nbsp;Save&nbsp;&nbsp;
+                        </Button>
 
-                         
-                            <Button
-                              disabled={canSubmit}
-                              className="custom_btns_ift"
-                              color="primary"
-                              onClick={() => props.testUrl(props.redirectedUrl)}
-                            >
-                              &nbsp;&nbsp;Test&nbsp;&nbsp;
-                            </Button>
+                        <Button
+                          disabled={canSubmit}
+                          className="custom_btns_ift"
+                          color="primary"
+                          onClick={() => props.testUrl(props.redirectedUrl)}
+                        >
+                          &nbsp;&nbsp;Test&nbsp;&nbsp;
+                        </Button>
 
-                         
-                            <Button
-                              className="custom_btns_ift"
-                              color="primary"
-                              onClick={() => {
-                                props.preview(false, "");
-                                props.closeModel();
-                              }}
-                            >
-                              &nbsp;&nbsp;Cancel&nbsp;&nbsp;
-                            </Button>
+                        <Button
+                          className="custom_btns_ift"
+                          color="primary"
+                          onClick={() => {
+                            props.preview(false, "");
+                            props.closeModel();
+                          }}
+                        >
+                          &nbsp;&nbsp;Cancel&nbsp;&nbsp;
+                        </Button>
                       </>
                     )}
                   </>
