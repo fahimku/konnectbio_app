@@ -8,7 +8,6 @@ import {Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {loginUser, receiveToken} from "../../../actions/auth";
 import jwt from "jsonwebtoken";
-
 import {push} from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
@@ -115,7 +114,6 @@ class Login extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                
                 Already have an account?&nbsp;<a  href="#" onClick={() => {
                   this.props.history.push('/login')
                 }}>Sign in</a>

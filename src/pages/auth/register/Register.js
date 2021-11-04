@@ -146,6 +146,7 @@ class Register extends React.Component {
     // console.log(event);
     this.setState({city: event.value});
   }
+
   changePassword(event) {
     this.setState({password: event.target.value});
   }
