@@ -513,7 +513,7 @@ class Static extends React.Component {
                       <td className="text-right">$25 224.2</td>
                       <td className="text-center">
                         <Sparklines data={[13, 14, 16, 15, 4, 14, 20]} style={{ width: '35px', height: '20px' }}>
-                          <SparklinesBars style={{ stroke: 'white', fill: '#002B49' }} />
+                          <SparklinesBars style={{ stroke: 'white', fill: '#010b40' }} />
                         </Sparklines>
                       </td>
                     </tr>
