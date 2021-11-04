@@ -122,7 +122,7 @@ class Connect extends React.Component {
         />
         <div className="category-page">
           <div className="container">
-            <div className="white-box pt-0">
+            <div className="p-0">
               <Row>
                 <Col md={10}></Col>
                 <Col md={2}>

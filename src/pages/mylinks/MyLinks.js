@@ -118,7 +118,7 @@ class MyLinks extends React.Component {
 
   fetchSingleLink = async (linkId) => {
     await axios
-      .get(`posts/retrieve/${linkId}?post_type=link `)
+      .get(`posts/retrieve/${linkId}?post_type=link`)
       .then((res) => {
         this.setState({preview: true});
         this.setState({title: res.data.message.caption});
@@ -148,7 +148,6 @@ class MyLinks extends React.Component {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
         this.setState({loading: false});
-        window.location.reload();
       })
       .catch((error) => {
         console.log(error);
