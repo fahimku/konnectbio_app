@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 //import {Redirect} from "react-router";
 import config from "../../../config";
-import {connect} from "react-redux";
-import {Alert, Button} from "reactstrap";
+import { connect } from "react-redux";
+import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import {loginUser, receiveToken} from "../../../actions/auth";
+import { loginUser, receiveToken } from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 
-import {push} from "connected-react-router";
+import { push } from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
-import {toast} from "react-toastify";
-import {authError,authSuccess} from "../../../actions/auth";
+import { toast } from "react-toastify";
+import { authError, authSuccess } from "../../../actions/auth";
 
 class Login extends React.Component {
   static propTypes = {
@@ -44,17 +44,17 @@ class Login extends React.Component {
   }
 
   changeEmail(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   changePassword(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   doLogin(e) {
     e.preventDefault();
     this.props.dispatch(
-      loginUser({email: this.state.email, password: this.state.password})
+      loginUser({ email: this.state.email, password: this.state.password })
     );
   }
 
@@ -103,6 +103,7 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log(this.props.isFetching, "isFetching");
     return (
       <div className="auth-page">
         <div class="login_header">
@@ -115,10 +116,15 @@ class Login extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                
-                Already have an account?&nbsp;<a  href="#" onClick={() => {
-                  this.props.history.push('/login')
-                }}>Sign in</a>
+                Already have an account?&nbsp;
+                <a
+                  href="#"
+                  onClick={() => {
+                    this.props.history.push("/login");
+                  }}
+                >
+                  Sign in
+                </a>
               </div>
             </div>
           </div>

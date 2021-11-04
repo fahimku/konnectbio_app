@@ -61,7 +61,6 @@ class Package extends React.Component {
       });
   };
   render() {
-    console.log(this.state.packages, "sds");
     const individual = this.state.packages.Individual || {};
     const business = this.state.packages.Business || {};
     const businessPlus = this.state.packages.BusinessPlus || {};

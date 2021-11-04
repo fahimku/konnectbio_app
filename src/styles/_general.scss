@@ -79,6 +79,11 @@ h1 small {
 .cat-box .cat-image {
   object-fit: cover;
 }
+
+.abc-checkbox input[type="radio"]:focus + label::before {
+  outline: none !important;
+}
+
 @media (max-width: 576px) {
   .category-page .package_detail .btn {
     margin-top: 15px;
