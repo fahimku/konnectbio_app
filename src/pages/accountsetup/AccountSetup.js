@@ -5,6 +5,7 @@ import {Row, Col, Button, Modal} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
 import {createBrowserHistory} from "history";
+// import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -16,6 +17,8 @@ class AccountSetup extends React.Component {
     this.state = {
       userInfo: userInfo,
       cancelSubscription: true,
+      resetAccount: true,
+      resetModal: false,
       showPaymentButton: false,
       allPackages: "",
       singlePackage: "",
@@ -41,8 +44,8 @@ class AccountSetup extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.cancelSubscription == false) {
-      this.setState({cancelSubscription: false});
+    if (this.props.resetAccount === false) {
+      this.setState({resetAccount: false});
     }
     if (userInfo.access_token !== "") {
       this.setState({isInstagramConnected: true});
@@ -132,14 +135,20 @@ class AccountSetup extends React.Component {
       (x) => x.package_id === event.value
     );
     this.setState({singlePackage: singlePackage[0]});
-    this.setState({showPaymentButton: true});
-    this.setState({package: event.value, package: event.label});
+    this.setState({package: event.label});
   };
 
   toggleModal = () => {
     const {modal} = this.state;
     this.setState({
       modal: !modal,
+    });
+  };
+
+  togglerResetModal = () => {
+    const {resetModal} = this.state;
+    this.setState({
+      resetModal: !resetModal,
     });
   };
 
@@ -162,16 +171,35 @@ class AccountSetup extends React.Component {
       });
   };
 
+  resetAccount = async () => {
+    this.setState({loadingInsta: true});
+    await axios
+      .put(`/users/revise/resetAccount/${this.state.user_id}`)
+      .then((response) => {
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
+        localStorage.removeItem("access_token");
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        history.push("/connect");
+      })
+      .catch((err) => {
+        this.setState({loadingInsta: false});
+        console.log(err.response, "err");
+      });
+  };
+
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="category-page">
         <div
-          className={this.props.className ? this.props.className : "container"}
+          className={
+            this.props.className ? this.props.className : "container-fluid"
+          }
         >
           <div className="justify-content-md-center">
             <div className="connections mt-5">
-              <div className="page-title text-center">
+              <div className="page-title">
                 <h3>Account Setup</h3>
               </div>
               <div className="white-box mt-5">
@@ -179,26 +207,15 @@ class AccountSetup extends React.Component {
                 <Row>
                   <Col md={8}>
                     <h4 className="package_name">
-                      Current Plan{" "}
+                      Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
                     </h4>
                   </Col>
                 </Row>
-                {this.state.singlePackage.package_name !== "Individual" && (
-                  <Row className="mt-4">
-                    <Col md={4}>Status Activity:(Monthly)</Col>
-                    {this.state.cancelSubscription && (
-                      <Col md={4}>
-                        <Button variant="primary" className="btn-block">
-                          Cancel Subscription
-                        </Button>
-                      </Col>
-                    )}
-                  </Row>
-                )}
+
                 <Row className="mt-4">
-                  <Col md={4}>Change Plan:</Col>
-                  <Col md={4}>
+                  <Col md={2}>Change Plan:</Col>
+                  <Col md={3}>
                     <Select
                       options={this.state.packages}
                       placeholder="Select package"
@@ -210,75 +227,99 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
+                {this.state.singlePackage.package_name !== "Individual" && (
+                  <Row className="mt-4">
+                    <Col md={2}>Status Activity:</Col>
+                    <Col md={3}>
+                      <Button
+                        variant="primary"
+                        className="btn-block"
+                        onClick={() => {
+                          this.setState({showPaymentButton: true});
+                        }}
+                      >
+                        Subscribe
+                      </Button>
+                    </Col>
+                  </Row>
+                )}
 
                 <Row className="mt-4">
-                  <Col md={4}>
+                  <Col md={2}>
                     Categories Included:{" "}
                     {this.state.singlePackage.category_count}
                   </Col>
-                  <Col md={4}>
-                    <p>Change Plan to have more categories</p>
-                  </Col>
+                  {this.state.singlePackage.package_name !==
+                    "Business Plus" && (
+                    <Col md={3}>
+                      <p>Change Plan to have more categories</p>
+                    </Col>
+                  )}
                 </Row>
 
                 <Row className="mt-4">
-                  <Col md={4}>
+                  <Col md={2}>
                     Links Included: {this.state.singlePackage.link_count}
                   </Col>
-                  <Col md={4}>
-                    <p>Change Plan to have more links</p>
-                  </Col>
+
+                  {this.state.singlePackage.package_name !==
+                    "Business Plus" && (
+                    <Col md={3}>
+                      <p>Change Plan to have more links</p>
+                    </Col>
+                  )}
                 </Row>
               </div>
-              {this.state.singlePackage.package_name !== "Individual" && (
-                <>
-                  <div className="white-box">
-                    <Row>
-                      <Col md={12}>
-                        <h5 className="page-title line-heading">Payment</h5>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={2}>
-                        <div className="checkbox abc-checkbox">
-                          <Input
-                            name="payment"
-                            className="mt-0"
-                            id="checkbox1"
-                            type="radio"
-                            // onClick={() => this.checkTable(0)}
-                            // checked={this.state.checkedArr[0]}
-                            readOnly
-                          />{" "}
-                          <Label for="checkbox1" />
-                          Pay Monthly $
-                          {this.state.singlePackage.package_amount_monthly}
-                        </div>
-                      </Col>
-                      <Col md={4}>
-                        <div className="checkbox abc-checkbox">
-                          <Input
-                            name="payment"
-                            className="mt-0"
-                            id="checkbox2"
-                            type="radio"
-                            // onClick={() => this.checkTable(0)}
-                            // checked={this.state.checkedArr[0]}
-                            readOnly
-                          />{" "}
-                          <Label for="checkbox2" />
-                          Pay Yearly & Save $
-                          {this.state.singlePackage.package_amount_yearly}{" "}
-                          &nbsp;{" "}
-                          <sub>
-                            (Save {this.state.singlePackage.yearly_discount}%)
-                          </sub>
-                        </div>
-                      </Col>
-                    </Row>
-                    <br />
+              {this.state.singlePackage.package_name !== "Individual" &&
+                this.state.showPaymentButton && (
+                  <>
+                    <div className="white-box">
+                      <Row>
+                        <Col md={12}>
+                          <h5 className="page-title line-heading">Payment</h5>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md={3}>
+                          <div className="checkbox abc-checkbox">
+                            <Input
+                              checked
+                              name="payment"
+                              className="mt-0"
+                              id="checkbox1"
+                              type="radio"
+                              // onClick={() => this.checkTable(0)}
+                              // checked={this.state.checkedArr[0]}
+                              readOnly
+                            />{" "}
+                            <Label for="checkbox1" />
+                            Pay Monthly: $
+                            {this.state.singlePackage.package_amount_monthly}
+                          </div>
+                        </Col>
+                        <Col md={4}>
+                          <div className="checkbox abc-checkbox">
+                            <Input
+                              name="payment"
+                              className="mt-0"
+                              id="checkbox2"
+                              type="radio"
+                              // onClick={() => this.checkTable(0)}
+                              // checked={this.state.checkedArr[0]}
+                              readOnly
+                            />{" "}
+                            <Label for="checkbox2" />
+                            Pay Yearly & Save: $
+                            {
+                              this.state.singlePackage.package_amount_yearly
+                            }{" "}
+                            &nbsp; (Save{" "}
+                            {this.state.singlePackage.yearly_discount}%)
+                          </div>
+                        </Col>
+                      </Row>
+                      <br />
 
-                    {this.state.showPaymentButton && (
                       <Button
                         onClick={() => {
                           alert(
@@ -290,10 +331,9 @@ class AccountSetup extends React.Component {
                       >
                         Make Payment
                       </Button>
-                    )}
-                  </div>
-                </>
-              )}
+                    </div>
+                  </>
+                )}
               <div className="white-box">
                 <Row>
                   <Col md={12}>
@@ -303,14 +343,14 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md={4}>
+                  <Col md={2}>
                     <div className="category_count">Connection Status</div>
                   </Col>
-                  <Col md={4} className="text-right">
-                    {userInfo1.username !== "" || !this.props.username ? (
+                  <Col md={3} className="text-right">
+                    {userInfo1.username !== "" || this.props.username ? (
                       <>
-                        <div className="connected-text text-center mb-2">
-                          Connected Instagram: @
+                        <div className="connected-text text-left mb-2">
+                          Connected: @
                           {userInfo1.username !== ""
                             ? userInfo1.username
                             : this.props.username}
@@ -342,6 +382,33 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
               </div>
+              {this.state.resetAccount && (
+                <div className="white-box">
+                  <Row>
+                    <Col md={12}>
+                      <h5 className="page-title line-heading">Reset Account</h5>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={2}>
+                      <div className="category_count">
+                        This will reset your account.
+                      </div>
+                    </Col>
+                    <Col md={3} className="text-right">
+                      <Button
+                        onClick={() => {
+                          this.setState({resetModal: true});
+                        }}
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                      >
+                        Reset Account
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -357,7 +424,7 @@ class AccountSetup extends React.Component {
           </Modal.Header>
           <Modal.Body className="bg-white">
             Are you sure you want to disconnect
-            <span class="strong"> @{userInfo1.username}</span> account from
+            <span className="strong"> @{userInfo1.username}</span> account from
             Konnect.bio? This will remove all your content from our platform.
             <p>This action is not reversible.</p>
           </Modal.Body>
@@ -372,6 +439,38 @@ class AccountSetup extends React.Component {
             <Button
               className="disconnect-btn"
               onClick={this.disconnect}
+              disabled={this.state.loadingInsta ? true : false}
+            >
+              Yes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal
+          show={this.state.resetModal}
+          onHide={this.togglerResetModal}
+          className="change-password"
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Reset Account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="bg-white">
+            Are you sure you want to reset your Konnect.bio Account? This will
+            remove all your data from our platform.This action is not
+            reversible.
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={() => {
+                this.setState({resetModal: false});
+              }}
+            >
+              Close
+            </Button>
+            <Button
+              className="disconnect-btn"
+              onClick={this.resetAccount}
               disabled={this.state.loadingInsta ? true : false}
             >
               Yes

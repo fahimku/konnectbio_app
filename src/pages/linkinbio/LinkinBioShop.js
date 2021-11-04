@@ -171,7 +171,7 @@ class LinkinBioShop extends React.Component {
               timestamp: this.state.currentPost.timestamp,
               redirected_url: this.state.redirectedUrl,
               username: this.state.currentPost.username,
-              categories: [this.state.category],
+              categories: this.state.category,
               sub_categories: this.state.subCategory,
               post_type: this.state.postType,
               start_date: this.state.startDate,
@@ -202,11 +202,20 @@ class LinkinBioShop extends React.Component {
   };
 
   updatePost = async (id, url) => {
+    let newCategory = this.state.category;
+    if (
+      typeof this.state.category === "string" ||
+      this.state.category instanceof String
+    ) {
+      newCategory = newCategory.split();
+    } else {
+      newCategory = newCategory;
+    }
     this.setState({ loading: true });
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
-        categories: [this.state.category],
+        categories: newCategory,
         sub_categories: this.state.subCategory,
         post_type: this.state.postType,
         start_date: this.state.startDate,
@@ -356,7 +365,7 @@ class LinkinBioShop extends React.Component {
 
   changeCategory = (category) => {
     if (category) {
-      this.setState({ category: category });
+      this.setState({ category: category.split() });
       //this.fetchSubCategories(category);
     }
   };
@@ -468,7 +477,9 @@ class LinkinBioShop extends React.Component {
             xl="9"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"}`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {/* <iframe
                 key={this.state.iframeKey}

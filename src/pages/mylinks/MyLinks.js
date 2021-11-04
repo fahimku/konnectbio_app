@@ -93,8 +93,6 @@ class MyLinks extends React.Component {
     this.fetchMyLinks(this.state.username);
   }
 
-  componentWillUnmount() {}
-
   fetchMyLinks = async (username) => {
     await axios
       .get(`/posts/receive?user=${username}&post_type=link`)
@@ -153,7 +151,6 @@ class MyLinks extends React.Component {
         window.location.reload();
       })
       .catch((error) => {
-      
         console.log(error);
       });
   };
@@ -187,7 +184,6 @@ class MyLinks extends React.Component {
         toast.success("Link removed successfully.");
         this.setState({loading: false});
         this.setState({confirmModal: false});
-
         this.preview(false, "");
         window.location.reload();
         //this.addNewLink();
@@ -323,9 +319,9 @@ class MyLinks extends React.Component {
             xl="9"
           >
             <div
-
-              className={`${!this.state.selectPost ? "show_ift_iframe hidden" : "hidden"}`}
-
+              className={`${
+                !this.state.preview ? "show_ift_iframe" : "hidden"
+              }`}
             >
               {this.state.username !== "" ? (
                 <iframe

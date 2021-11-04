@@ -262,54 +262,42 @@ const ShopRightBar = (props) => {
                         </Button>
                       ) : (
                         <>
-                          
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={(ev) =>
-                                  props.updatePost(
-                                    media_id,
-                                    props.redirectedUrl
-                                  )
-                                }
-                              >
-                                &nbsp;Update&nbsp;
-                              </Button>
-                            
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={() =>
-                                  props.testUrl(props.redirectedUrl)
-                                }
-                              >
-                                &nbsp;Test&nbsp;
-                              </Button>
-                            
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={() => {
-                                  props.selectPost(false, "");
-                                  props.closeModel(true);
-                                }}
-                              >
-                                &nbsp;Cancel&nbsp;
-                              </Button>
-                            
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={() => props.deletePost(media_id)}
-                              >
-                                &nbsp;Remove&nbsp;
-                              </Button>
-                            
-                          
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={(ev) =>
+                              props.updatePost(media_id, props.redirectedUrl)
+                            }
+                          >
+                            &nbsp;Update&nbsp;
+                          </Button>
+
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => props.testUrl(props.redirectedUrl)}
+                          >
+                            &nbsp;Test&nbsp;
+                          </Button>
+
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => {
+                              props.selectPost(false, "");
+                              props.closeModel(true);
+                            }}
+                          >
+                            &nbsp;Cancel&nbsp;
+                          </Button>
+
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => props.deletePost(media_id)}
+                          >
+                            &nbsp;Remove&nbsp;
+                          </Button>
                         </>
                       )}
                     </>
@@ -321,41 +309,34 @@ const ShopRightBar = (props) => {
                         </Button>
                       ) : (
                         <>
-                          
-                           
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                // onClick={(ev) =>
-                                //   props.savePost && props.savePost(this)
-                                // }
-                              >
-                                &nbsp;Save&nbsp;
-                              </Button>
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={() =>
-                                  props.testUrl(props.redirectedUrl)
-                                }
-                              >
-                                &nbsp;Test&nbsp;
-                              </Button>
-                            
-                            
-                              <Button
-                                className="custom_btns_ift"
-                                color="primary"
-                                onClick={() => {
-                                  props.selectPost(false, "");
-                                  props.closeModel(false);
-                                }}
-                              >
-                                &nbsp;Cancel&nbsp;
-                              </Button>
-                            
-                          
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            // onClick={(ev) =>
+                            //   props.savePost && props.savePost(this)
+                            // }
+                          >
+                            &nbsp;Save&nbsp;
+                          </Button>
+
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => props.testUrl(props.redirectedUrl)}
+                          >
+                            &nbsp;Test&nbsp;
+                          </Button>
+
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => {
+                              props.selectPost(false, "");
+                              props.closeModel(false);
+                            }}
+                          >
+                            &nbsp;Cancel&nbsp;
+                          </Button>
                         </>
                       )}
                     </>

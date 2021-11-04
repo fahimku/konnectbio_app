@@ -4,23 +4,17 @@ import Select, {createFilter} from "react-select";
 import PropTypes from "prop-types";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import {Container, Alert, Button} from "reactstrap";
+import {Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
 import {registerUser, authError} from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
-import {createBrowserHistory} from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
 
 class Register extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
-
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       email: "",
@@ -44,6 +38,8 @@ class Register extends React.Component {
       countryCode: "",
       packages: "",
       packageType: "",
+      zip: "",
+      referred_by: "",
     };
 
     this.doRegister = this.doRegister.bind(this);
@@ -57,12 +53,13 @@ class Register extends React.Component {
     this.changeConfirmPassword = this.changeConfirmPassword.bind(this);
     this.checkPassword = this.checkPassword.bind(this);
     this.isPasswordValid = this.isPasswordValid.bind(this);
+    this.changeZip = this.changeZip.bind(this);
+    this.changeReferred = this.changeReferred.bind(this);
   }
 
   async componentDidMount() {
     await this.getCountries();
     await this.getCities();
-    // await this.getPackages();
   }
 
   componentDidUpdate(prevProps) {
@@ -74,6 +71,8 @@ class Register extends React.Component {
         city: "",
         password: "",
         confirmPassword: "",
+        zip: "",
+        referred_by: "",
       });
       this.setState({country: "Pakistan", countryCode: "PK"});
     }
@@ -107,29 +106,10 @@ class Register extends React.Component {
             // console.log({name, code1, selected});
             this.setState({country: name, countryCode: code1});
           }
-          this.setState({country: "Pakistan", countryCode: "PK"});
+          //    this.setState({ country: "Pakistan", countryCode: "PK" });
           return selectCountries.push({value: code1, label: name});
         });
         this.setState({countries: selectCountries});
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  getPackages = async () => {
-    await axios
-      .get(`/package/receive`)
-      .then((response) => {
-        const selectPackages = [];
-        const packages = response.data.message;
-        packages.map(({package_id, package_name, package_amount}) => {
-          return selectPackages.push({
-            value: package_id,
-            label: package_name + " ($" + package_amount + ")",
-          });
-        });
-        this.setState({packages: selectPackages});
       })
       .catch(function (error) {
         console.log(error);
@@ -154,7 +134,7 @@ class Register extends React.Component {
 
   changeCountry(event) {
     this.setState({city: ""});
-    this.setState({country: event.value, countryCode: event.value});
+    this.setState({country: event.label, countryCode: event.value});
     setTimeout(() => {
       this.getCities();
     }, 500);
@@ -190,9 +170,17 @@ class Register extends React.Component {
       this.state.password && this.state.password === this.state.confirmPassword
     );
   }
+  changeZip(event) {
+    this.setState({zip: event.target.value});
+  }
+
+  changeReferred(event) {
+    this.setState({referred_by: event.target.value});
+  }
 
   doRegister(e) {
     e.preventDefault();
+
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
@@ -201,20 +189,15 @@ class Register extends React.Component {
           name: this.state.name,
           email: this.state.email,
           gender: this.state.gender,
-          // package_id: this.state.packageType.value,
           country: this.state.countryCode,
           city: this.state.city,
           password: this.state.password,
+          zip: this.state.zip,
+          referred_by: this.state.referred_by,
         })
       );
     }
   }
-
-  // changePackage = (e, options) => {
-  //   this.setState({
-  //     packageType: options,
-  //   });
-  // };
 
   render() {
     return (
@@ -229,7 +212,15 @@ class Register extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;<a href="/login">Sign in</a>
+                Already have an account?&nbsp;
+                <a
+                  href="#"
+                  onClick={() => {
+                    this.props.history.push("/login");
+                  }}
+                >
+                  Sign in
+                </a>
               </div>
             </div>
           </div>
@@ -290,17 +281,15 @@ class Register extends React.Component {
                     options={this.state.genderList}
                   />
                 </div>
-                {/* <div className="form-group">
-                <Select
-                  onChange={(options, e) => this.changePackage(e, options)}
-                  placeholder="Select Package"
-                  options={this.state.packages}
-                />
-              </div> */}
+
                 <div className="form-group">
-                  {this.state.country ? (
+                  {this.state.country && (
                     <Select
                       className="form_select_group"
+                      defaultValue={{
+                        label: this.state.country,
+                        value: this.state.country,
+                      }}
                       value={
                         this.state.country && {
                           label: this.state.country,
@@ -311,13 +300,7 @@ class Register extends React.Component {
                       filterOption={createFilter({ignoreAccents: false})}
                       placeholder="Select Country"
                       options={this.state.countries}
-                      defaultValue={{
-                        label: this.state.country,
-                        value: this.state.country,
-                      }}
                     />
-                  ) : (
-                    ""
                   )}
                 </div>
                 <div className="form-group">
@@ -362,6 +345,26 @@ class Register extends React.Component {
                     placeholder="Confirm"
                   />
                 </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.zip}
+                    onChange={this.changeZip}
+                    type="number"
+                    name="zip"
+                    placeholder="Zip Code"
+                  />
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    value={this.state.referred_by}
+                    onChange={this.changeReferred}
+                    type="text"
+                    name="referred_by"
+                    placeholder="Referred By"
+                  />
+                </div>
                 <Button
                   type="submit"
                   color="inverse"
@@ -376,7 +379,7 @@ class Register extends React.Component {
                 <span
                   className="text-center link"
                   onClick={() => {
-                    history.push("/login");
+                    this.props.history.push("/login");
                   }}
                 >
                   Sign in
@@ -398,7 +401,6 @@ class Register extends React.Component {
     );
   }
 }
-
 function mapStateToProps(state) {
   return {
     isFetching: state.auth.isFetching,
