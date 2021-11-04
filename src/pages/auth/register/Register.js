@@ -104,10 +104,12 @@ class Register extends React.Component {
         countries.map(({name, code1, selected}) => {
           if (selected) {
             // console.log({name, code1, selected});
-            this.setState({country: name, countryCode: code1});
+            this.setState({ country: name, countryCode: code1 });
           }
-          //    this.setState({ country: "Pakistan", countryCode: "PK" });
-          return selectCountries.push({value: code1, label: name});
+          else {
+            this.setState({ country: "Pakistan", countryCode: "PK" });
+          }
+            return selectCountries.push({ value: code1, label: name });
         });
         this.setState({countries: selectCountries});
       })
