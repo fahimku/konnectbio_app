@@ -56,7 +56,7 @@ class App extends React.PureComponent {
                 exact
                 render={() => <Redirect to="/app/main" />}
               /> */}
-              <AuthRoute path="/" exact component={Login} />
+              <Route path="/" exact component={Login} />
               <Route
                 path="/app"
                 exact
