@@ -453,7 +453,15 @@ class LinkinBio extends React.Component {
   };
 
   testUrl = (url) => {
-    window.open(url, "_blank");
+    let newUrl;
+    if (url.includes("http://")) {
+      newUrl = url;
+    } else if (url.includes("https://")) {
+      newUrl = url;
+    } else {
+      newUrl = "https://" + url;
+    }
+    window.open(newUrl, "_blank");
   };
 
   submitted = (e) => {
