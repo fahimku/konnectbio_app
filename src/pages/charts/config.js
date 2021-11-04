@@ -1,7 +1,7 @@
 export default {
   app: {
     colors: {
-      sidebar: "#002B49",
+      sidebar: "#010b40",
       navbar: "#ffffff",
       primary: "#005792",
       secondary: "#798892",
@@ -9,7 +9,7 @@ export default {
       info: "#1A86D0",
       warning: "#FDA700",
       danger: "#FD5F00",
-      inverse: "#002B49",
+      inverse: "#010b40",
       textColor: "#495057",
       gray: "#D7DFE6"
     },

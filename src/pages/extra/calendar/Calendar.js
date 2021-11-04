@@ -91,7 +91,7 @@ class Calendar extends React.Component {
             title: "Study some Node",
             start: new Date(y, m, d + 18, 12, 0),
             end: new Date(y, m, d + 18, 13, 0),
-            backgroundColor: "#002B49",
+            backgroundColor: "#010b40",
             textColor: "#fff",
             description:
               "Node.js is a platform built " +

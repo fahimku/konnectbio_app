@@ -52,7 +52,7 @@ export default {
   },
   app: {
     colors: {
-      dark: "#002B49",
+      dark: "#010b40",
       light: "#FFFFFF",
       sea: "#004472",
       sky: "#E9EBEF",
