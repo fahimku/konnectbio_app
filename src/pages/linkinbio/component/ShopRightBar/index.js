@@ -1,21 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import Video from "../../../../components/Video";
-import { Row, Col, Button } from "reactstrap";
+import {Button} from "reactstrap";
 import moment from "moment";
-import { Select } from "antd";
+import {Select} from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
-import { DatePicker } from "antd";
+import {DatePicker} from "antd";
 import "antd/dist/antd.css";
 import PermissionHelper from "../../../../components/PermissionHelper";
 
-const { Option } = Select;
-const { RangePicker } = DatePicker;
+const {Option} = Select;
+const {RangePicker} = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-  // const [subCategories, setSubCategories] = useState([]);
   const media_id = props.singlePost.id
     ? props.singlePost.id
     : props.singlePost.media_id;
@@ -25,23 +24,7 @@ const ShopRightBar = (props) => {
 
   const formRef = useRef("LinkForm");
 
-  // useEffect(() => {
-  //   // console.log("Props Redirected Url");
-  //   // console.log(props.redirectedUrl);
-  //   setSubCategories(props.subCategories);
-  // }, [
-  //   props.subCategories,
-  //   props.changeSubCategory,
-  //   props.changePostType,
-  //   props.postType,
-  // ]);
-
   useEffect(() => {
-    // console.log("start date");
-    // console.log(props.startDate);
-    // console.log("end date");
-    // console.log(props.endDate);
-
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
@@ -50,19 +33,11 @@ const ShopRightBar = (props) => {
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
 
-  // function resetForm() {
-  //   formRef.current.reset();
-  // }
-
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
-
-  // function resetForm() {
-  //   formRef.current.reset();
-  // }
 
   return (
     <>
@@ -107,7 +82,7 @@ const ShopRightBar = (props) => {
               </div>
               <div className="image-edit-links">
                 <span>URL</span>
-                <InputValidation
+                {/* <InputValidation
                   placeholder="Please Enter Website Address"
                   type="text"
                   id="website"
@@ -129,6 +104,27 @@ const ShopRightBar = (props) => {
                   onChange={(e) => {
                     props.callBack(e);
                   }}
+                /> */}
+
+                <InputValidation
+                  className=""
+                  placeholder="Please Enter Website Address"
+                  type="text"
+                  id="website"
+                  required
+                  name="website"
+                  trigger="change"
+                  validations={{
+                    matchRegexp:
+                      /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
+                  }}
+                  validationError={{
+                    isUrl: "This value should be a valid url.",
+                  }}
+                  value={props.redirectedUrl}
+                  onChange={(evt) => {
+                    props.callBack(evt);
+                  }}
                 />
 
                 <div className="select-categories mt-3">
@@ -137,7 +133,7 @@ const ShopRightBar = (props) => {
                     key={Date.now()}
                     value={props.category}
                     showSearch
-                    style={{ width: "100%" }}
+                    style={{width: "100%"}}
                     placeholder="Select Category"
                     optionFilterProp="children"
                     clearable={false}
@@ -154,38 +150,11 @@ const ShopRightBar = (props) => {
                     }
                     disabled={PermissionHelper.categoryCheck() ? true : false}
                   >
-                    {props.categories.map(({ value, label }, i) => (
+                    {props.categories.map(({value, label}, i) => (
                       <Option value={value}>{label}</Option>
                     ))}
                   </Select>
                 </div>
-
-                {/* <div className="select-categories mt-3">
-                <Select
-                  key={Date.now()}
-                  mode="tags"
-                  clearable={false}
-                  searchable={false}
-                  required
-                  value={props.subCategory}
-                  style={{width: "100%"}}
-                  placeholder="Select Sub Category"
-                  optionFilterProp="children"
-                  onChange={props.changeSubCategory}
-                  // onFocus={onFocus}
-                  // onBlur={onBlur}
-                  // onSearch={onSearch}
-                  filterOption={(input, option) =>
-                    option.children
-                      .toLowerCase()
-                      .indexOf(input.toLowerCase()) >= 0
-                  }
-                >
-                  {subCategories.map(({value, label}, i) => (
-                    <Option value={value}>{label}</Option>
-                  ))}
-                </Select>
-              </div> */}
 
                 {props.singlePost.media_type === "VIDEO" && (
                   <>
@@ -248,7 +217,7 @@ const ShopRightBar = (props) => {
                         moment().endOf("month"),
                       ],
                     }}
-                    style={{ width: "100%" }}
+                    style={{width: "100%"}}
                     format={dateFormat}
                     onChange={dateRangePickerChanger}
                   />

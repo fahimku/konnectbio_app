@@ -15,7 +15,6 @@ const MobilePreview = ({
 }) => {
   useEffect(() => {
     // Update the document title using the browser API
-    console.log("my Links");
   }, [myLinks]);
 
   const links = [];

@@ -9,7 +9,8 @@ const AddNewLink = (props) => {
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
-    if (props.updatePage) setCanSubmit(true);
+    if (props.updatePage)
+      enableButton();
   }, [props.updatePage]);
 
   useEffect(() => {
