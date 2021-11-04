@@ -257,9 +257,7 @@ export function registerUser(creds) {
             type: REGISTER_SUCCESS,
           });
           dispatch(
-            authSuccess(
-              "We have sent an email with a confirmation link to your email address."
-            )
+            authSuccess("We have sent an email with a confirmation link to your email address.")
           );
         })
         .catch((err) => {
