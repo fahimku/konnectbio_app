@@ -277,14 +277,15 @@ class LinkinBio extends React.Component {
 
   updatePost = async (id, url) => {
     // console.log(this.state.category, "sdsdsd");
-    let newCategory = this.state.category;
+    let newCategory;
+    let oldCategory = this.state.category;
     if (
       typeof this.state.category === "string" ||
       this.state.category instanceof String
     ) {
-      newCategory = newCategory.split();
+      newCategory = oldCategory.split();
     } else {
-      newCategory = newCategory;
+      newCategory = oldCategory;
     }
 
     this.setState({ loading: true });

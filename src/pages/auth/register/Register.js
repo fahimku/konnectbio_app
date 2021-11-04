@@ -1,12 +1,12 @@
 import axios from "axios";
 import React from "react";
-import Select, {createFilter} from "react-select";
+import Select, { createFilter } from "react-select";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import {Alert, Button} from "reactstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import {registerUser, authError} from "../../../actions/auth";
+import { registerUser, authError } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Register extends React.Component {
@@ -21,15 +21,15 @@ class Register extends React.Component {
       countries: "",
       cities: "",
       genderList: [
-        {value: "male", label: "Male"},
-        {value: "female", label: "Female"},
-        {value: "other", label: "Other"},
+        { value: "male", label: "Male" },
+        { value: "female", label: "Female" },
+        { value: "other", label: "Other" },
       ],
       gender: "",
       userType: "",
       accountTypes: [
-        {value: "Influencer", label: "Influencer"},
-        {value: "Brand", label: "Brand"},
+        { value: "Influencer", label: "Influencer" },
+        { value: "Brand", label: "Brand" },
       ],
       country: "",
       city: "",
@@ -74,20 +74,20 @@ class Register extends React.Component {
         zip: "",
         referred_by: "",
       });
-      this.setState({country: "Pakistan", countryCode: "PK"});
+      this.setState({ country: "Pakistan", countryCode: "PK" });
     }
   }
 
   getCities = async () => {
     await axios
-      .post(`/common/receive/cities`, {country_code: this.state.countryCode})
+      .post(`/common/receive/cities`, { country_code: this.state.countryCode })
       .then((response) => {
         const selectCities = [];
         const cities = response.data.message;
-        cities.map(({name}) => {
-          return selectCities.push({value: name, label: name});
+        cities.map(({ name }) => {
+          return selectCities.push({ value: name, label: name });
         });
-        this.setState({cities: selectCities});
+        this.setState({ cities: selectCities });
         // this.setState({  })
       })
       .catch(function (error) {
@@ -101,17 +101,16 @@ class Register extends React.Component {
       .then((response) => {
         const selectCountries = [];
         const countries = response.data.message;
-        countries.map(({name, code1, selected}) => {
+        countries.map(({ name, code1, selected }) => {
           if (selected) {
             // console.log({name, code1, selected});
             this.setState({ country: name, countryCode: code1 });
-          }
-          else {
+          } else {
             this.setState({ country: "Pakistan", countryCode: "PK" });
           }
-            return selectCountries.push({ value: code1, label: name });
+          return selectCountries.push({ value: code1, label: name });
         });
-        this.setState({countries: selectCountries});
+        this.setState({ countries: selectCountries });
       })
       .catch(function (error) {
         console.log(error);
@@ -119,24 +118,24 @@ class Register extends React.Component {
   };
 
   changeName(event) {
-    this.setState({name: event.target.value});
+    this.setState({ name: event.target.value });
   }
 
   changeEmail(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   changeGender(event) {
-    this.setState({gender: event.value});
+    this.setState({ gender: event.value });
   }
 
   changeUserType(event) {
-    this.setState({userType: event.value});
+    this.setState({ userType: event.value });
   }
 
   changeCountry(event) {
-    this.setState({city: ""});
-    this.setState({country: event.label, countryCode: event.value});
+    this.setState({ city: "" });
+    this.setState({ country: event.label, countryCode: event.value });
     setTimeout(() => {
       this.getCities();
     }, 500);
@@ -144,14 +143,14 @@ class Register extends React.Component {
 
   changeCity(event) {
     // console.log(event);
-    this.setState({city: event.value});
+    this.setState({ city: event.value });
   }
   changePassword(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   changeConfirmPassword(event) {
-    this.setState({confirmPassword: event.target.value});
+    this.setState({ confirmPassword: event.target.value });
   }
 
   checkPassword() {
@@ -173,11 +172,11 @@ class Register extends React.Component {
     );
   }
   changeZip(event) {
-    this.setState({zip: event.target.value});
+    this.setState({ zip: event.target.value });
   }
 
   changeReferred(event) {
-    this.setState({referred_by: event.target.value});
+    this.setState({ referred_by: event.target.value });
   }
 
   doRegister(e) {
@@ -215,14 +214,14 @@ class Register extends React.Component {
             <div class="header_inr_right">
               <div class="create_account">
                 Already have an account?&nbsp;
-                <a
-                  href="#"
+                <button
+                  className="btn btn-link"
                   onClick={() => {
                     this.props.history.push("/login");
                   }}
                 >
                   Sign in
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -299,7 +298,7 @@ class Register extends React.Component {
                         }
                       }
                       onChange={this.changeCountry}
-                      filterOption={createFilter({ignoreAccents: false})}
+                      filterOption={createFilter({ ignoreAccents: false })}
                       placeholder="Select Country"
                       options={this.state.countries}
                     />
@@ -310,7 +309,7 @@ class Register extends React.Component {
                     <Select
                       className="form_select_group"
                       onChange={this.changeCity}
-                      filterOption={createFilter({ignoreAccents: false})}
+                      filterOption={createFilter({ ignoreAccents: false })}
                       placeholder="Select City"
                       options={this.state.cities}
                       value={

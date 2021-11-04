@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import { Row, Col, Button } from "reactstrap";
+import { Button } from "reactstrap";
 import moment from "moment";
 import { Select } from "antd";
 import Loader from "../../../../components/Loader";

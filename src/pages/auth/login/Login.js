@@ -117,14 +117,14 @@ class Login extends React.Component {
             <div class="header_inr_right">
               <div class="create_account">
                 Already have an account?&nbsp;
-                <a
-                  href="#"
+                <button
+                  className="btn btn-link"
                   onClick={() => {
                     this.props.history.push("/login");
                   }}
                 >
                   Sign in
-                </a>
+                </button>
               </div>
             </div>
           </div>
