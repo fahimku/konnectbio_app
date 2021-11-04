@@ -71,9 +71,9 @@ class AccountSetup extends React.Component {
         singlePackage[0].index = index;
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
-        this.setState({ singlePackage: singlePackage[0] });
-      
-         packages.map(({package_id, package_name}, index) => {
+        this.setState({singlePackage: singlePackage[0]});
+
+        packages.map(({package_id, package_name}, index) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -129,8 +129,10 @@ class AccountSetup extends React.Component {
     console.log(event.index);
     if (this.state.packageIndex <= event.index) {
       this.setState({upgrade: true});
-    } else {
-      this.setState({ upgrade: false });
+    }
+
+    else if (this.state.packageIndex > event.index) {
+      this.setState({upgrade: false});
     }
   };
 
@@ -225,7 +227,6 @@ class AccountSetup extends React.Component {
                 {this.state.singlePackage.package_name !== "Individual" && (
                   <Row className="mt-4">
                     <Col md={2}>Status Activity:</Col>
-
                     <Col md={3}>
                       {this.state.upgrade ? (
                         <Button
