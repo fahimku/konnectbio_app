@@ -6,7 +6,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { registerUser, authError } from "../../../actions/auth";
+import { registerUser, authError,authSuccess } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Register extends React.Component {
@@ -198,6 +198,8 @@ class Register extends React.Component {
           referred_by: this.state.referred_by,
         })
       );
+    
+      this.props.dispatch(authSuccess(""));
     }
   }
 
