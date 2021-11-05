@@ -21,10 +21,14 @@ class MyProfile extends React.Component {
     loading: false,
     userData: "",
     userImage: "",
+    userInfo2: "",
   };
 
   componentDidMount() {
     const userInfo2 = JSON.parse(localStorage.getItem("userInfo"));
+    this.setState({
+      userInfo2: userInfo2,
+    });
     this.fetchUserInfo(userInfo2);
   }
   fetchUserInfo = async (userInfo2) => {
@@ -64,7 +68,7 @@ class MyProfile extends React.Component {
         this.setState({ loading: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
-        this.fetchUserInfo(userInfo);
+        this.fetchUserInfo(this.state.userInfo2);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -109,7 +113,7 @@ class MyProfile extends React.Component {
         this.setState({ loadingImage: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
-        this.fetchUserInfo(userInfo);
+        this.fetchUserInfo(this.state.userInfo2);
         this.setState({ imageFiles: [] });
       })
       .catch((err) => {
