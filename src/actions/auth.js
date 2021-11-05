@@ -190,7 +190,7 @@ export function verifyEmail(token) {
   };
 }
 
-export function resetPassword(token, email, password) {
+export function resetPassword(token, password) {
   return (dispatch) => {
     const headers = {
       Authorization: "Bearer " + token,
@@ -201,7 +201,7 @@ export function resetPassword(token, email, password) {
     axios
       .put(
         "/users/revise/password/new",
-        { password, email },
+        { password },
         {
           headers: headers,
         }

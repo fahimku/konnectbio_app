@@ -26,6 +26,13 @@ class Reset extends React.Component {
     this.isPasswordValid = this.isPasswordValid.bind(this);
     this.doReset = this.doReset.bind(this);
   }
+  componentDidMount() {
+    const params = new URLSearchParams(this.props.location.search);
+    const token = params.get("code");
+    if (token === null) {
+      this.props.history.push("/login");
+    }
+  }
 
   changePassword(event) {
     this.setState({ password: event.target.value });
@@ -58,10 +65,7 @@ class Reset extends React.Component {
     e.preventDefault();
     const params = new URLSearchParams(this.props.location.search);
     const token = params.get("code");
-    const email = params.get("email");
-
-    console.log("code", token);
-    console.log("code", email);
+    // const email = params.get("email");
 
     if (!token) {
       authError("There are no token");
@@ -69,7 +73,7 @@ class Reset extends React.Component {
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      this.props.dispatch(resetPassword(token, email, this.state.password));
+      this.props.dispatch(resetPassword(token, this.state.password));
     }
   }
 
