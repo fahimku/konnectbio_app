@@ -60,7 +60,7 @@ class MyCategory extends React.Component {
 
   fetchMyCategory = async () => {
     await axios
-      .get(`/category/receive?user=${userInfo.user_id}`)
+      .get(`/customcategory/receive?user=${userInfo.user_id}`)
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
