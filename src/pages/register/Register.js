@@ -165,4 +165,3 @@ function mapStateToProps(state) {
 }
 
 export default withRouter(connect(mapStateToProps)(Register));
-
