@@ -61,8 +61,8 @@ class Login extends React.Component {
   componentDidMount() {
     const query = queryString.parse(window.location.search);
 
-    if (query.bio_code && query.email) {
-      this.tokenVerify(query.bio_code, query.email);
+    if (query.bio_code) {
+      this.tokenVerify(query.bio_code);
     }
     //const params = new URLSearchParams(this.props.location.search);
     const token = localStorage.getItem("token");
@@ -77,8 +77,8 @@ class Login extends React.Component {
     }
   }
 
-  tokenVerify = async (code, email) => {
-    const endPoint = config.baseURLApiToken + "/verify?email=" + email;
+  tokenVerify = async (code) => {
+    const endPoint = config.baseURLApiToken + "/verify";
     const requestOptions = {
       method: "GET",
       headers: {
