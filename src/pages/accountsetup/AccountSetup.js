@@ -39,14 +39,10 @@ class AccountSetup extends React.Component {
       loadingInsta: false,
       alert: true,
       packages: "",
-      package: userInfo.package
-        ? userInfo.package.package_name
-        : "Micro Influencer Account",
-      packageId: userInfo.package
-        ? userInfo.package.package_id
-        : "617cee8b90aad9bd2a4e10ff",
-      categoryAllow: userInfo.package ? userInfo.package.category_count : 3,
-      package_amount: userInfo.package ? userInfo.package.package_amount : 10,
+      package: userInfo.package ? userInfo.package.package_name : "",
+      packageId: userInfo.package ? userInfo.package.package_id : "",
+      categoryAllow: userInfo.package ? userInfo.package.category_count : "",
+      package_amount: userInfo.package ? userInfo.package.package_amount : "",
     };
   }
 
@@ -70,10 +66,10 @@ class AccountSetup extends React.Component {
         const selectPackages = [];
         const packages = response.data.message;
         const singlePackage = packages.filter(
-          (item) => item.package_id === "617cee8b90aad9bd2a4e10ff"
+          (item) => item.package_id === this.state.userInfo.package.package_id
         );
         const index = packages.findIndex(
-          (item) => item.package_id === "617cee8b90aad9bd2a4e10ff"
+          (item) => item.package_id === this.state.userInfo.package.package_id
         );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
