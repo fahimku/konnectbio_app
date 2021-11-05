@@ -15,6 +15,8 @@ class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      packageIndex: "",
+      upgrade: false,
       userInfo: userInfo,
       cancelSubscription: true,
       resetAccount: true,
@@ -50,9 +52,7 @@ class AccountSetup extends React.Component {
     if (userInfo.access_token !== "") {
       this.setState({isInstagramConnected: true});
     }
-    // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({user_id: userInfo.user_id});
-
     this.getPackages();
   }
 
@@ -63,14 +63,21 @@ class AccountSetup extends React.Component {
         const selectPackages = [];
         const packages = response.data.message;
         const singlePackage = packages.filter(
-          (x) => x.package_id === this.state.userInfo.package.package_id
+          (item) => item.package_id === this.state.userInfo.package.package_id
         );
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
+        singlePackage[0].index = index;
+        this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
-        packages.map(({package_id, package_name}) => {
+
+        packages.map(({package_id, package_name}, index) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
+            index: index,
           });
         });
         this.setState({packages: selectPackages});
@@ -78,25 +85,6 @@ class AccountSetup extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
-  };
-
-  handleSelect = (e, options) => {
-    options = options === null ? [] : options;
-    if (options.length > userInfo.package.category_count) {
-      this.setState({
-        saveCategories: options,
-      });
-      options.pop();
-      this.setState({
-        saveCategories: options,
-        categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
-      });
-    } else {
-      this.setState({
-        saveCategories: options === null ? [] : options,
-        categoryError: "",
-      });
-    }
   };
 
   handleSubmit = async (e) => {
@@ -127,7 +115,6 @@ class AccountSetup extends React.Component {
         this.setState({loading: false});
         this.setState({categoryError: err.response.data.message});
       });
-    // }
   };
 
   handlePackage = (event) => {
@@ -136,6 +123,17 @@ class AccountSetup extends React.Component {
     );
     this.setState({singlePackage: singlePackage[0]});
     this.setState({package: event.label});
+    console.log("Package Index");
+    console.log(this.state.packageIndex);
+    console.log("Event Index");
+    console.log(event.index);
+    if (this.state.packageIndex <= event.index) {
+      this.setState({upgrade: true});
+    }
+
+    else if (this.state.packageIndex > event.index) {
+      this.setState({upgrade: false});
+    }
   };
 
   toggleModal = () => {
@@ -212,7 +210,6 @@ class AccountSetup extends React.Component {
                     </h4>
                   </Col>
                 </Row>
-
                 <Row className="mt-4">
                   <Col md={2}>Change Plan:</Col>
                   <Col md={3}>
@@ -231,15 +228,27 @@ class AccountSetup extends React.Component {
                   <Row className="mt-4">
                     <Col md={2}>Status Activity:</Col>
                     <Col md={3}>
-                      <Button
-                        variant="primary"
-                        className="btn-block"
-                        onClick={() => {
-                          this.setState({showPaymentButton: true});
-                        }}
-                      >
-                        Subscribe
-                      </Button>
+                      {this.state.upgrade ? (
+                        <Button
+                          variant="primary"
+                          className="btn-block"
+                          onClick={() => {
+                            this.setState({showPaymentButton: true});
+                          }}
+                        >
+                          Upgrade Subscription
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="primary"
+                          className="btn-block"
+                          onClick={() => {
+                            this.setState({showPaymentButton: true});
+                          }}
+                        >
+                          Downgrade Subscription
+                        </Button>
+                      )}
                     </Col>
                   </Row>
                 )}

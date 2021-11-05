@@ -1,14 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import {Alert, Button} from "reactstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import {sendPasswordResetEmail} from "../../../actions/auth";
+import { sendPasswordResetEmail } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Forgot extends React.Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
@@ -23,7 +22,7 @@ class Forgot extends React.Component {
   }
 
   changeEmail(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   doSendResetEmail(e) {
@@ -44,9 +43,15 @@ class Forgot extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;<a href="#" onClick={() => {
-                  this.props.history.push('/login')
-                }}>Sign in</a>
+                Already have an account?&nbsp;
+                <button
+                  onClick={() => {
+                    this.props.history.push("/login");
+                  }}
+                  className="btn btn-link"
+                >
+                  Sign in
+                </button>
               </div>
             </div>
           </div>

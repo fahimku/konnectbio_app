@@ -94,23 +94,23 @@ class Connect extends React.Component {
   render() {
     return (
       <>
-        <div className="main-header">
-          <div className="container">
-            <Row className="connect-page-header">
-              <Col md={10} xs={8}>
-                <img className="img-connect" src={logo} alt="logo" />
-              </Col>
-              <Col md={2} xs={4} className="text-right">
-                <Button
-                  className="btn-connect"
-                  onClick={() => this.props.history.push("/logout")}
-                >
-                  Logout
-                </Button>
-              </Col>
-            </Row>
+      <div className="login_header">
+        <div className="header_inr group">
+          <div className="header_inr_left">
+            <div className="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
+          </div>
+          <div className="header_inr_right">
+            <div className="create_account">
+              <Button
+                className="btn-connect"
+                onClick={() => this.props.history.push("/logout")}
+              >
+                Logout
+              </Button>
+            </div>
           </div>
         </div>
+      </div>
         <AccountSetup
           resetAccount={this.state.resetAccount}
           cancelSubscription={this.state.cancelSubscription}
@@ -122,7 +122,7 @@ class Connect extends React.Component {
         />
         <div className="category-page">
           <div className="container">
-            <div className="white-box pt-0">
+            <div className="p-0">
               <Row>
                 <Col md={10}></Col>
                 <Col md={2}>

@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
-import {registerUser, authError} from "../../../actions/auth";
+import {registerUser, authError, authSuccess} from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Register extends React.Component {
@@ -105,8 +105,9 @@ class Register extends React.Component {
           if (selected) {
             // console.log({name, code1, selected});
             this.setState({country: name, countryCode: code1});
+          } else {
+            this.setState({country: "Pakistan", countryCode: "PK"});
           }
-          //    this.setState({ country: "Pakistan", countryCode: "PK" });
           return selectCountries.push({value: code1, label: name});
         });
         this.setState({countries: selectCountries});
@@ -144,6 +145,7 @@ class Register extends React.Component {
     // console.log(event);
     this.setState({city: event.value});
   }
+
   changePassword(event) {
     this.setState({password: event.target.value});
   }
@@ -196,6 +198,9 @@ class Register extends React.Component {
           referred_by: this.state.referred_by,
         })
       );
+      setTimeout(() => {
+        this.props.dispatch(authSuccess(""));
+      }, 10000);
     }
   }
 
@@ -213,14 +218,14 @@ class Register extends React.Component {
             <div class="header_inr_right">
               <div class="create_account">
                 Already have an account?&nbsp;
-                <a
-                  href="#"
+                <button
+                  className="btn btn-link"
                   onClick={() => {
                     this.props.history.push("/login");
                   }}
                 >
                   Sign in
-                </a>
+                </button>
               </div>
             </div>
           </div>

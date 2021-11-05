@@ -35,10 +35,8 @@ Custome CSS
 }
 
 .btn-primary:hover {
-
-  background-color:#000 !important;
+  background-color: #000 !important;
   border-color: #000 !important;
-
 }
 
 .btn-danger {
@@ -585,11 +583,11 @@ span.icon {
   border-radius: 4px;
 }
 
-.pricing-table-ifti{
-  max-width:1400px;
-  margin-top:100px;
+.pricing-table-ifti {
+  max-width: 1400px;
+  margin-top: 100px;
 }
-.pricing_tabs_ifti.nav-tabs{
+.pricing_tabs_ifti.nav-tabs {
   justify-content: space-between;
   background-color: transparent;
   width: 300px;
@@ -597,9 +595,8 @@ span.icon {
   padding: 5px 5px;
   border-radius: 30px;
   border: solid 1px #ccc;
-  
 }
-.pricing_tabs_ifti.nav-tabs > .nav-item{
+.pricing_tabs_ifti.nav-tabs > .nav-item {
   flex: 1 1;
   border: none;
   border-radius: 30px;
@@ -607,72 +604,74 @@ span.icon {
   padding: 10px;
   font-size: 1.1rem;
   font-weight: 500;
-  font-family: 'Rubik', sans-serif !important;
+  font-family: "Rubik", sans-serif !important;
   letter-spacing: 1px;
-  color:#3e4555;
+  color: #3e4555;
 }
-.pricing_tabs_ifti.nav-tabs .nav-link.active, .pricing_tabs_ifti.nav-tabs .nav-item.show .nav-link{
-  color: #FFF;
+.pricing_tabs_ifti.nav-tabs .nav-link.active,
+.pricing_tabs_ifti.nav-tabs .nav-item.show .nav-link {
+  color: #fff;
   background-color: #010b40;
   border-color: transparent;
 }
-.pricing-table-ifti .tab-content > .tab-pane{
-  padding-left:0;
-  padding-right:0;
+.pricing-table-ifti .tab-content > .tab-pane {
+  padding-left: 0;
+  padding-right: 0;
 }
-.package_parent{
+.package_parent {
   display: flex;
-  gap:1%;
+  gap: 1%;
 }
-.package_parent .custom_pkg{
+.package_parent .custom_pkg {
   min-height: 620px;
   border: solid 1px #ccc;
   flex-basis: 100%;
   padding: 1.25rem 14px 1rem;
   position: relative;
 }
-.custom_pkg h4{
+.custom_pkg h4 {
   letter-spacing: 0.06rem;
   font-weight: 700;
 }
-.pkg_price_ifti{
+.pkg_price_ifti {
   margin: 1.8rem 0 1rem 0;
-  font-family: 'Rubik';
+  font-family: "Rubik";
 }
-a.pkg_read{
+a.pkg_read {
   text-decoration: underline;
   color: #010b40;
 }
-a.pkg_read:focus, a.pkg_read:hover{
+a.pkg_read:focus,
+a.pkg_read:hover {
   text-decoration: underline;
 }
-.pkg_price_ifti .pkg_limit{
+.pkg_price_ifti .pkg_limit {
   font-size: 1rem;
   display: flex;
   font-weight: 500;
 }
-.pkg_price_ifti .pkg_billed{
+.pkg_price_ifti .pkg_billed {
   font-size: 1rem;
   position: relative;
   top: -10px;
   display: flex;
   font-weight: 500;
 }
-.pkg_price_ifti sup{
+.pkg_price_ifti sup {
   font-size: 2rem;
   top: -32px;
   font-weight: 400;
 }
-.pkg_price_ifti small{
+.pkg_price_ifti small {
   font-size: 1.2rem;
   font-weight: 400;
 }
-.pkg_price_ifti .display-5{
+.pkg_price_ifti .display-5 {
   font-size: 4rem;
   color: #263238;
   font-weight: 500;
 }
-.pkg_detail_list_ift li{
+.pkg_detail_list_ift li {
   font-size: 1rem;
   padding-bottom: 15px;
   padding-left: 16px;
@@ -682,26 +681,26 @@ a.pkg_read:focus, a.pkg_read:hover{
 .pricing-table-ifti {
   max-width: 1400px;
 }
-  
-.pkg_detail_list_ift li .glyphicon{
+
+.pkg_detail_list_ift li .glyphicon {
   padding-right: 0;
   font-size: 0.9rem;
   position: absolute;
   left: 0;
   top: 6px;
 }
-  
+
 .pkg_readmore .modal-body {
-  background: #FFF;
+  background: #fff;
 }
-  
-.package_parent .btn-dark{
+
+.package_parent .btn-dark {
   width: 90%;
   background-color: #010b40;
   border-radius: 25px;
   padding: 12px 0;
   border-color: #010b40;
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
   font-weight: 500;
   font-size: 1rem;
   position: absolute;
@@ -710,28 +709,15 @@ a.pkg_read:focus, a.pkg_read:hover{
   right: 0;
   margin: 0 auto;
 }
-.package_parent .btn-dark:hover{
-  background-color:#000;
-  border-color:#000;
+.package_parent .btn-dark:hover {
+  background-color: #000;
+  border-color: #000;
 }
-.package_parent .btn_individual{
-  background-color:#FFF;
-  border-color:#ccc;
-  color:#3e4555;
+.package_parent .btn_individual {
+  background-color: #fff;
+  border-color: #ccc;
+  color: #3e4555;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**Media Queries Iftikhar */
 

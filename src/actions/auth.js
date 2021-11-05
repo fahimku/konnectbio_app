@@ -156,8 +156,6 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          console.log(res);
-
           if (res.data.message.package) history.push("/app");
           else history.push("/package");
         })
@@ -257,9 +255,7 @@ export function registerUser(creds) {
             type: REGISTER_SUCCESS,
           });
           dispatch(
-            authSuccess(
-              "We have sent an email with a confirmation link to your email address."
-            )
+            authSuccess("We have sent an email with a confirmation link to your email address.")
           );
         })
         .catch((err) => {
