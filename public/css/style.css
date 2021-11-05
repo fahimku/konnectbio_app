@@ -678,7 +678,7 @@ a.pkg_read:focus, a.pkg_read:hover{
   padding-left: 16px;
   position: relative;
   line-height: 1.5rem;
-  
+}
 .pricing-table-ifti {
   max-width: 1400px;
 }
@@ -743,5 +743,10 @@ a.pkg_read:focus, a.pkg_read:hover{
   .app_main_cont_ift .right-bar.col-xl-9 {
     flex: 0 0 60%;
     max-width: 60%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .mobile-preview{
+    width:250px;
   }
 }

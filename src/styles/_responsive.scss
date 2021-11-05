@@ -91,13 +91,19 @@
         left: 0;
         background: white;
         z-index: 3234234;
+        position:relative;
     }
 
     .top-logo {
-        display:block !important;
+        display: block !important;
         place-content: center;
-        width:132px;
-        margin:0 auto;
+        width: 132px;
+        margin: 0 auto;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 20px;
+        z-index: 999;
     }
 
     .top-logo .logo img {
@@ -123,8 +129,11 @@
     }
 
     .mobile-menu ul li a span {
-        top: 0px !important;
-        font-size: 20px;
+        top: 3px !important;
+        font-size: 15px !important;
+    }
+    .mobile-menu ul li a.activenav span span{
+        top:0 !important;
     }
 
     .mobile-menu ul li {
@@ -138,15 +147,16 @@
         width: 100%;
         justify-content: center;
         align-items: center;
+        padding:0 !important;
     }
 
     .mobile-menu .navbar-collapse {
         background: white !important;
-        margin-left: -23px;
     }
 
     .navbar-light .navbar-toggler {
         color: white;
+        margin-left:1.5rem !important;
     }
 
     .header .linkin-text {
@@ -161,6 +171,18 @@
 
     .mobile-preview {
         margin-top: 21px;
+        width: 250px;
+    }
+    .mobile-preview .mobile-gallery{
+        width: 210px;
+        height: 355px;
+    }
+    .mobile-preview .custome_link{
+        width: 190px !important;
+        height:275px !important;
+    }
+    .mobile-preview .visit-website{
+        width:210px;
     }
 
     .top-mobile-header {
@@ -183,7 +205,7 @@
 
     .mobile-menu .navbar-nav {
         width: 100vh;
-        height: 100vh;
+        height: 94vh;
 
     }
 
@@ -221,6 +243,8 @@
     .left-top-bar {
         border-bottom: none;
         justify-content: flex-end !important;
+        padding: 0;
+        margin-top: 1.5rem;
     }
 
     .top-mobile-header :nth-child(3) {
@@ -242,22 +266,12 @@
 }
 
 @media only screen and (max-width: 991px) {
-    ul.ml-auto.navbar-nav {
-        margin-left: 20px !important;
-    }
-
-    // .mobile-menu ul li{
-    //     margin-left: 20px;
-    // }
-
     .mobile-menu ul li a {
         font-size: 14px;
+        padding-top: 6px;
+        padding-bottom: 6px;
     }
 
-    // .mobile-menu ul li a span {
-    //     color: #000000 !important;
-
-    // }
 }
 
 ::-webkit-scrollbar-thumb {
