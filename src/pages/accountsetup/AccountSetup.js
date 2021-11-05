@@ -1,11 +1,13 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button, Modal} from "react-bootstrap";
-import {Label, Input} from "reactstrap";
-import {toast} from "react-toastify";
-import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import {createBrowserHistory} from "history";
+import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Label, Input } from "reactstrap";
+import { toast } from "react-toastify";
+import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import queryString from "query-string";
+
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -37,21 +39,27 @@ class AccountSetup extends React.Component {
       loadingInsta: false,
       alert: true,
       packages: "",
-      package: userInfo.package.package_name,
-      packageId: userInfo.package.package_id,
-      categoryAllow: userInfo.package.category_count,
-      package_amount: userInfo.package.package_amount,
+      package: userInfo.package
+        ? userInfo.package.package_name
+        : "Micro Influencer Account",
+      packageId: userInfo.package
+        ? userInfo.package.package_id
+        : "617cee8b90aad9bd2a4e10ff",
+      categoryAllow: userInfo.package ? userInfo.package.category_count : 3,
+      package_amount: userInfo.package ? userInfo.package.package_amount : 10,
     };
   }
 
   componentDidMount() {
+    const params = queryString.parse(window.location.search);
+    console.log(params, "params");
     if (this.props.resetAccount === false) {
-      this.setState({resetAccount: false});
+      this.setState({ resetAccount: false });
     }
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
-    this.setState({userId: userInfo.user_id});
+    this.setState({ userId: userInfo.user_id });
     this.getPackages();
   }
 
@@ -62,27 +70,27 @@ class AccountSetup extends React.Component {
         const selectPackages = [];
         const packages = response.data.message;
         const singlePackage = packages.filter(
-          (item) => item.package_id === this.state.userInfo.package.package_id
+          (item) => item.package_id === "617cee8b90aad9bd2a4e10ff"
         );
         const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
+          (item) => item.package_id === "617cee8b90aad9bd2a4e10ff"
         );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
-          this.setState({upgrade: true});
+          this.setState({ upgrade: true });
         }
-        this.setState({packageIndex: index});
-        this.setState({allPackages: packages});
-        this.setState({singlePackage: singlePackage[0]});
-        packages.map(({package_id, package_name}, index) => {
+        this.setState({ packageIndex: index });
+        this.setState({ allPackages: packages });
+        this.setState({ singlePackage: singlePackage[0] });
+        packages.map(({ package_id, package_name }, index) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
             index: index,
           });
         });
-        this.setState({packages: selectPackages});
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -97,7 +105,7 @@ class AccountSetup extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -107,15 +115,15 @@ class AccountSetup extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({categoryError: ""});
-          this.setState({loading: false});
+          this.setState({ categoryError: "" });
+          this.setState({ loading: false });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({loading: false});
-        this.setState({categoryError: err.response.data.message});
+        this.setState({ loading: false });
+        this.setState({ categoryError: err.response.data.message });
       });
   };
 
@@ -124,65 +132,65 @@ class AccountSetup extends React.Component {
       (x) => x.package_id === event.value
     );
     const maxIndex = this.state.allPackages.length - 1;
-    this.setState({singlePackage: singlePackage[0]});
-    this.setState({package: event.label});
+    this.setState({ singlePackage: singlePackage[0] });
+    this.setState({ package: event.label });
     console.log("Package Index");
     console.log(this.state.packageIndex);
     console.log("Event Index");
     console.log(event.index);
     if (this.state.packageIndex <= event.index && event.index !== maxIndex) {
-      this.setState({upgrade: true});
+      this.setState({ upgrade: true });
     } else if (this.state.packageIndex > event.index) {
-      this.setState({upgrade: false});
+      this.setState({ upgrade: false });
     }
   };
 
   toggleModal = () => {
-    const {modal} = this.state;
+    const { modal } = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
   togglerResetModal = () => {
-    const {resetModal} = this.state;
+    const { resetModal } = this.state;
     this.setState({
       resetModal: !resetModal,
     });
   };
 
   disconnect = async () => {
-    this.setState({loadingInsta: true});
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
         userId: this.state.userId,
       })
       .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({loadingInsta: false});
+        this.setState({ loadingInsta: false });
         console.log(err.response, "err");
       });
   };
 
   resetAccount = async () => {
-    this.setState({loadingInsta: true});
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/resetAccount/${this.state.userId}`)
       .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({loadingInsta: false});
+        this.setState({ loadingInsta: false });
         console.log(err.response, "err");
       });
   };
@@ -236,7 +244,7 @@ class AccountSetup extends React.Component {
                             variant="primary"
                             className="btn-block"
                             onClick={() => {
-                              this.setState({showPaymentButton: true});
+                              this.setState({ showPaymentButton: true });
                             }}
                           >
                             Upgrade Subscription
@@ -347,7 +355,7 @@ class AccountSetup extends React.Component {
                           variant="primary"
                           className="btn-block cat-right-btn"
                           onClick={() => {
-                            this.setState({modal: true});
+                            this.setState({ modal: true });
                           }}
                         >
                           Disconnect Instagram
@@ -386,7 +394,7 @@ class AccountSetup extends React.Component {
                     <Col md={3} className="text-right">
                       <Button
                         onClick={() => {
-                          this.setState({resetModal: true});
+                          this.setState({ resetModal: true });
                         }}
                         variant="primary"
                         className="btn-block cat-right-btn"
@@ -419,7 +427,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({modal: false});
+                this.setState({ modal: false });
               }}
             >
               Close
@@ -451,7 +459,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({resetModal: false});
+                this.setState({ resetModal: false });
               }}
             >
               Close

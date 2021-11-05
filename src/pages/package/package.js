@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Tabs, Tab, Modal } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
+import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -196,16 +198,12 @@ class Package extends React.Component {
                       Access To Marketplace.
                     </li>
                   </ul>
-                  <Button
+                  <PaymentButton
+                    userId={userInfo.user_id}
+                    packageId={microInfluencer.package_id}
+                    name={"Select Plan"}
                     variant="dark"
-                    onClick={() => {
-                      alert(
-                        "Please contact support@konnect.bio for plan inquiries."
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
