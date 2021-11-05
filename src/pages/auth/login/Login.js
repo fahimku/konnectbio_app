@@ -103,7 +103,6 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props.isFetching, "isFetching");
     return (
       <div className="auth-page">
         <div class="login_header">
