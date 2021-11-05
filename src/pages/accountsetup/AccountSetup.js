@@ -4,12 +4,11 @@ import Select from "react-select";
 import {Row, Col, Button, Modal} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
+import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
 import {createBrowserHistory} from "history";
-// import style from "./AccountSetup.module.scss";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
   constructor(props) {
@@ -25,7 +24,7 @@ class AccountSetup extends React.Component {
       allPackages: "",
       singlePackage: "",
       myCategory: "",
-      user_id: "",
+      userId: "",
       category: [],
       categoryIncluded: 0,
       linksIncluded: 0,
@@ -52,7 +51,7 @@ class AccountSetup extends React.Component {
     if (userInfo.access_token !== "") {
       this.setState({isInstagramConnected: true});
     }
-    this.setState({user_id: userInfo.user_id});
+    this.setState({userId: userInfo.user_id});
     this.getPackages();
   }
 
@@ -68,11 +67,14 @@ class AccountSetup extends React.Component {
         const index = packages.findIndex(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
+        const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
+        if (index !== maxIndex) {
+          this.setState({upgrade: true});
+        }
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
-
         packages.map(({package_id, package_name}, index) => {
           return selectPackages.push({
             value: package_id,
@@ -121,17 +123,16 @@ class AccountSetup extends React.Component {
     const singlePackage = this.state.allPackages.filter(
       (x) => x.package_id === event.value
     );
+    const maxIndex = this.state.allPackages.length - 1;
     this.setState({singlePackage: singlePackage[0]});
     this.setState({package: event.label});
     console.log("Package Index");
     console.log(this.state.packageIndex);
     console.log("Event Index");
     console.log(event.index);
-    if (this.state.packageIndex <= event.index) {
+    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {
       this.setState({upgrade: true});
-    }
-
-    else if (this.state.packageIndex > event.index) {
+    } else if (this.state.packageIndex > event.index) {
       this.setState({upgrade: false});
     }
   };
@@ -154,7 +155,7 @@ class AccountSetup extends React.Component {
     this.setState({loadingInsta: true});
     await axios
       .put(`/users/revise/disconnectInstagram/disconnected`, {
-        user_id: this.state.user_id,
+        userId: this.state.userId,
       })
       .then((response) => {
         this.setState({modal: false});
@@ -172,7 +173,7 @@ class AccountSetup extends React.Component {
   resetAccount = async () => {
     this.setState({loadingInsta: true});
     await axios
-      .put(`/users/revise/resetAccount/${this.state.user_id}`)
+      .put(`/users/revise/resetAccount/${this.state.userId}`)
       .then((response) => {
         this.setState({modal: false});
         this.setState({loadingInsta: false});
@@ -224,35 +225,26 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
-                {this.state.singlePackage.package_name !== "Individual" && (
-                  <Row className="mt-4">
-                    <Col md={2}>Status Activity:</Col>
-                    <Col md={3}>
-                      {this.state.upgrade ? (
-                        <Button
-                          variant="primary"
-                          className="btn-block"
-                          onClick={() => {
-                            this.setState({showPaymentButton: true});
-                          }}
-                        >
-                          Upgrade Subscription
-                        </Button>
-                      ) : (
-                        <Button
-                          variant="primary"
-                          className="btn-block"
-                          onClick={() => {
-                            this.setState({showPaymentButton: true});
-                          }}
-                        >
-                          Downgrade Subscription
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                )}
 
+                {this.state.singlePackage.package_name !== "Individual" &&
+                  this.state.upgrade && (
+                    <Row className="mt-4">
+                      <>
+                        <Col md={2}>Status Activity:</Col>
+                        <Col md={3}>
+                          <Button
+                            variant="primary"
+                            className="btn-block"
+                            onClick={() => {
+                              this.setState({showPaymentButton: true});
+                            }}
+                          >
+                            Upgrade Subscription
+                          </Button>
+                        </Col>
+                      </>
+                    </Row>
+                  )}
                 <Row className="mt-4">
                   <Col md={2}>
                     Categories Included:{" "}
@@ -292,14 +284,13 @@ class AccountSetup extends React.Component {
                         <Col md={3}>
                           <div className="checkbox abc-checkbox">
                             <Input
-                              checked
+                              defaultChecked
                               name="payment"
                               className="mt-0"
                               id="checkbox1"
                               type="radio"
                               // onClick={() => this.checkTable(0)}
                               // checked={this.state.checkedArr[0]}
-                              readOnly
                             />{" "}
                             <Label for="checkbox1" />
                             Pay Monthly: $
@@ -315,7 +306,6 @@ class AccountSetup extends React.Component {
                               type="radio"
                               // onClick={() => this.checkTable(0)}
                               // checked={this.state.checkedArr[0]}
-                              readOnly
                             />{" "}
                             <Label for="checkbox2" />
                             Pay Yearly & Save: $
@@ -328,18 +318,7 @@ class AccountSetup extends React.Component {
                         </Col>
                       </Row>
                       <br />
-
-                      <Button
-                        onClick={() => {
-                          alert(
-                            "Please contact support@konnect.bio for plan inquiries."
-                          );
-                        }}
-                        variant="primary"
-                        className=""
-                      >
-                        Make Payment
-                      </Button>
+                      <PaymentButton userId={this.state.userId} />
                     </div>
                   </>
                 )}
