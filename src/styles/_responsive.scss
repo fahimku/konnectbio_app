@@ -35,6 +35,7 @@
     .show_ift_iframe{
         height: 700px;
         overflow-y: scroll;
+        -webkit-overflow-y:scroll;
         position: relative;
     }
     .show_ift_iframe iframe{
