@@ -36,12 +36,13 @@
         position: relative;
     }
     .show_ift_iframe{
-        height:auto;
+        height: 500px;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
     .show_ift_iframe iframe{
         width:460px;
-        height:300px;
-        overflow: auto; -webkit-overflow-scrolling: touch;
+        height:100%;
     }
 }
 
