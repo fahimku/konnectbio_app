@@ -5,6 +5,7 @@ import { Row, Col, Button, Modal } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { toast } from "react-toastify";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import queryString from "query-string";
 
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
@@ -38,20 +39,16 @@ class AccountSetup extends React.Component {
       loadingInsta: false,
       alert: true,
       packages: "",
-      package: userInfo.package
-        ? userInfo.package.package_name
-        : "Micro Influencer Account",
-      packageId: userInfo.package
-        ? userInfo.package.package_id
-        : "617cee8b90aad9bd2a4e10ff",
+      package: userInfo.package ? userInfo.package.package_name : "",
+      packageId: userInfo.package ? userInfo.package.package_id : "",
       categoryAllow: userInfo.package ? userInfo.package.category_count : "",
       package_amount: userInfo.package ? userInfo.package.package_amount : "",
     };
   }
 
   componentDidMount() {
-    // const params = queryString.parse(window.location.search);
-    // console.log(params, "params");
+    const params = queryString.parse(window.location.search);
+    console.log(params, "params");
     if (this.props.resetAccount === false) {
       this.setState({ resetAccount: false });
     }
@@ -69,10 +66,10 @@ class AccountSetup extends React.Component {
         const selectPackages = [];
         const packages = response.data.message;
         const singlePackage = packages.filter(
-          (item) => item.package_id === this.state.packageId
+          (item) => item.package_id === this.state.userInfo.package.package_id
         );
         const index = packages.findIndex(
-          (item) => item.package_id === this.state.packageId
+          (item) => item.package_id === this.state.userInfo.package.package_id
         );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;

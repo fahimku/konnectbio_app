@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 //import { Switch, Route, withRouter, Redirect } from "react-router";
 import {
   BrowserRouter as Router,
@@ -9,7 +9,7 @@ import {
   withRouter,
   Redirect,
 } from "react-router-dom";
-import {TransitionGroup, CSSTransition} from "react-transition-group";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Hammer from "rc-hammerjs";
 import Profile from "../../pages/profile";
 import Login from "../../pages/login";
@@ -61,7 +61,7 @@ import UserFormPage from "../Users/form/UsersFormPage";
 import UserListPage from "../Users/list/UsersListPage";
 import UserViewPage from "../Users/view/UsersViewPage";
 import ChangePasswordFormPage from "../Users/changePassword/ChangePasswordFormPage";
-import {SidebarTypes} from "../../reducers/layout";
+import { SidebarTypes } from "../../reducers/layout";
 import Header from "../Header";
 import Sidebar from "../Sidebar";
 import Helper from "../Helper";
@@ -72,7 +72,7 @@ import placeholder from "../../images/placeholder.png";
 //   toggleSidebar,
 // } from "../../actions/navigation";
 import s from "./Layout.module.scss";
-import {DashboardThemes} from "../../reducers/layout";
+import { DashboardThemes } from "../../reducers/layout";
 import ProductEdit from "../../pages/management/components/productEdit";
 import BreadcrumbHistory from "../BreadcrumbHistory";
 
@@ -89,9 +89,9 @@ import MyLinks from "../../pages/mylinks/MyLinks";
 import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
 import AccountSetup from "../../pages/accountsetup/AccountSetup";
-import Payment from "../../pages/payment/payment";
+// import Payment from "../../pages/payment/payment";
 import Home from "../../pages/home/Home";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: false,
 });
@@ -166,7 +166,7 @@ class Layout extends React.Component {
             localStorage.getItem("navbarColor")
               ? localStorage.getItem("navbarColor").replace("#", "")
               : "FFFFFF"
-          }`, 
+          }`,
         ].join(" ")}
       >
         <Sidebar />
@@ -502,7 +502,7 @@ class Layout extends React.Component {
                         component={AccountSetup}
                       />
 
-                      <Route path="/app/payment" exact component={Payment} />
+                      {/* <Route path="/app/payment" exact component={Payment} /> */}
                       <Route path="/app/my/links" exact component={MyLinks} />
                       <Route path="/app/home" exact component={Home} />
                     </Switch>

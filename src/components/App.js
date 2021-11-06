@@ -24,6 +24,7 @@ import Register from "../pages/auth/register";
 import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
 import Package from "../pages/package/package";
+import Payment from "../pages/payment/payment";
 
 // import { createBrowserHistory } from "history";
 
@@ -81,6 +82,7 @@ class App extends React.PureComponent {
               <AuthRoute path="/verify-email" exact component={Verify} />
               <AuthRoute path="/password-reset" exact component={Reset} />
               <AuthRoute path="/forgot" exact component={Forgot} />
+              <Route path="/payment" exact component={Payment} />
               <Route path="/error" exact component={ErrorPage} />
               {/* <Redirect from="*" to="/app/main/analytics"/>*/}
               <Redirect from="*" to="/login" />

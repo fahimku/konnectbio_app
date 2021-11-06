@@ -1,32 +1,98 @@
 import React from "react";
-// import { Container } from "reactstrap";
-import { Row, Col } from "react-bootstrap";
-
+import { Row, Col, Button } from "react-bootstrap";
+import logo from "../../images/logo.svg";
+import queryString from "query-string";
+import axios from "axios";
 // import s from "./payment.module.scss";
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Payment extends React.Component {
+  state = {
+    success: false,
+  };
+  componentDidMount() {
+    const params = queryString.parse(window.location.search);
+
+    if (params.status === "success") {
+      this.setState({ success: true });
+      this.updatePackage();
+    }
+  }
+  updatePackage = async () => {
+    await axios
+      .get("/package/retrieve/")
+      .then((response) => {
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        parseUserInformation.package = response.data.message;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+        // history.push("/connect");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   render() {
     return (
-      // <div className={s.errorPage}>
-      <div className="container-fluid">
-        <div className="connections mt-5">
-          <div className="page-title">
-            <h3>Payment</h3>
-          </div>
-          <div className="white-box mt-5">
-            {/* <h5 className="page-title line-heading">Payment</h5> */}
-            <Row className="mt-4 align-items-center">
-              <Col md={2}>
-                <div className="package_name">
-                  <div role="alert" class="alert alert-success">
-                    This is a success alert—check it out!
-                  </div>
-                </div>
-              </Col>
-            </Row>
+      <>
+        {/* <div className={s.errorPage}> */}
+        <div className="login_header">
+          <div className="header_inr group">
+            <div className="header_inr_left">
+              <div className="konnect_logo">
+                <img className="logo" src={logo} alt="logo" />
+              </div>
+            </div>
+            <div className="header_inr_right">
+              <div className="create_account">
+                <Button
+                  className="btn-connect"
+                  onClick={() => this.props.history.push("/logout")}
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+
+        <div className="container">
+          <div className="payment-page mt-5">
+            <div className="page-title">
+              <h3>Payment</h3>
+            </div>
+            <div className="white-box mt-5">
+              {this.state.success ? (
+                <div className="success-msg">
+                  <h2>Thank you!</h2>
+                  <p>Your payment has been successfully received.</p>
+                </div>
+              ) : (
+                <div className="error-msg">
+                  <h2>Oh no, your payment failed</h2>
+                  <p>
+                    Please contact support@konnect.bio for payment inquiries.
+                  </p>
+                </div>
+              )}
+            </div>
+            <div className="mt-5 text-right">
+              <Button
+                // disabled={this.state.instagramCode === "" ? true : false}
+                onClick={() => {
+                  this.props.history.push("/connect");
+                }}
+                variant="primary"
+                type="submit"
+                className="payment-next"
+              >
+                Continue
+              </Button>
+            </div>
+          </div>
+        </div>
+      </>
     );
   }
 }
