@@ -104,7 +104,7 @@ class Package extends React.Component {
                   <p>
                     Individual account allows you to create profile, add up to{" "}
                     {individual.link_count} social links and access &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -156,7 +156,7 @@ class Package extends React.Component {
                     Micro lnfluencer account allows you to create profile page,
                     add up to {microInfluencer.link_count} social/external
                     &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -209,9 +209,9 @@ class Package extends React.Component {
                   <h4>{influencer.package_name}</h4>
                   <p>
                     influencer account allows creation of profile page, up to{" "}
-                    {influencer.link_count} social/external links and BIOSHOP
+                    {influencer.link_count} social/external links and
                     &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -273,7 +273,7 @@ class Package extends React.Component {
                   <p>
                     Business account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -335,7 +335,7 @@ class Package extends React.Component {
                   <p>
                     Business Plus account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -401,7 +401,7 @@ class Package extends React.Component {
                   <p>
                     Individual account allows you to create profile, add up to{" "}
                     {individual.link_count} social links and access &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -453,7 +453,7 @@ class Package extends React.Component {
                     Micro lnfluencer account allows you to create profile page,
                     add up to {microInfluencer.link_count} social/external
                     &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -510,9 +510,9 @@ class Package extends React.Component {
                   <h4>{influencer.package_name}</h4>
                   <p>
                     influencer account allows creation of profile page, up to{" "}
-                    {influencer.link_count} social/external links and BIOSHOP
+                    {influencer.link_count} social/external links and
                     &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -574,7 +574,7 @@ class Package extends React.Component {
                   <p>
                     Business account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {
@@ -635,7 +635,7 @@ class Package extends React.Component {
                   <p>
                     Business Plus account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
+                    <br></br><a
                       className="pkg_read"
                       href="javascript:void"
                       onClick={() => {

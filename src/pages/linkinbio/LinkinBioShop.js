@@ -39,7 +39,7 @@ class LinkinBioShop extends React.Component {
       instagramPosts: null,
       postType: "image",
       page: 1,
-      limit: 15,
+      limit: 20,
       categories: [],
       category: [],
       subCategories: [],
@@ -513,10 +513,11 @@ class LinkinBioShop extends React.Component {
           </Col>
         </Row>
         {window.innerWidth <= 760 && (
-          <Modal
+          <Modal className='abcd'
             size="sm"
             isOpen={this.state.modal}
             toggle={() => this.toggle("modal")}
+            centered
           >
             <ModalHeader toggle={() => this.toggle("modal")}>
               Edit Post

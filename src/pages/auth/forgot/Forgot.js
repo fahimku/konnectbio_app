@@ -43,7 +43,7 @@ class Forgot extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;
+                <span>Already have an account?</span>&nbsp;
                 <button
                   onClick={() => {
                     this.props.history.push("/login");

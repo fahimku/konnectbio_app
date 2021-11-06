@@ -183,17 +183,11 @@ class Header extends React.Component {
     const url = config.visitorURL + "/";
     return (
       <>
+
+
+
         <div className="mobile-header-responsive">
-          <div className="top-logo">
-            <div
-              className="logo"
-              onClick={() => {
-                this.props.history.push("/app/home");
-              }}
-            >
-              <img src={logo} alt="logo" />
-            </div>
-          </div>
+          
           <div
             className="top-mobile-header"
             style={{ borderBottom: "1px solid #c8c8c8" }}
@@ -297,6 +291,17 @@ class Header extends React.Component {
                 </Nav>
               </Collapse>
             </Navbar>
+
+            <div className="top-logo">
+              <div
+                className="logo"
+                onClick={() => {
+                  this.props.history.push("/app/home");
+                }}
+              >
+                <img src={logo} alt="logo" />
+              </div>
+            </div>
             <TopBar text={true} username={this.state.username} />
           </div>
         </div>

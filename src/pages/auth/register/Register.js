@@ -217,7 +217,7 @@ class Register extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;
+              <span>Already have an account?</span>&nbsp;
                 <button
                   className="btn btn-link"
                   onClick={() => {
@@ -380,7 +380,7 @@ class Register extends React.Component {
                 </Button>
               </form>
               <p className="already">
-                Already have the account? &nbsp;
+                Already have an account?&nbsp;
                 <span
                   className="text-center link"
                   onClick={() => {
