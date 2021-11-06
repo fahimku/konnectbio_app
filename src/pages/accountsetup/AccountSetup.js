@@ -5,11 +5,12 @@ import {Row, Col, Button, Modal} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-
 import {createBrowserHistory} from "history";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
   constructor(props) {
@@ -47,8 +48,9 @@ class AccountSetup extends React.Component {
   }
 
   componentDidMount() {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    this.setState({userInfo:userInfo})
     // const params = queryString.parse(window.location.search);
-    console.log(this.state.userInfo, "params");
     if (this.props.resetAccount === false) {
       this.setState({resetAccount: false});
     }
