@@ -288,7 +288,6 @@
     display: flex;
     margin-top: 15px;
     justify-content: space-between;
-    gap: 2%;
 
     button {
         flex-basis: 100%;
@@ -301,6 +300,9 @@
         font-size: 0.90rem;
         border-radius: 5px;
         min-width: 50px;
+        margin-right: 2% !important;
+    }
+    button:last-child{
         margin-right: 0 !important;
     }
     button:hover{
