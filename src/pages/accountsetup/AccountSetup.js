@@ -39,16 +39,16 @@ class AccountSetup extends React.Component {
       loadingInsta: false,
       alert: true,
       packages: "",
-      package: userInfo.package ? userInfo.package.package_name : "",
-      packageId: userInfo.package ? userInfo.package.package_id : "",
-      categoryAllow: userInfo.package ? userInfo.package.category_count : "",
-      package_amount: userInfo.package ? userInfo.package.package_amount : "",
+      package: userInfo.package.package_name,
+      packageId: userInfo.package.package_id,
+      categoryAllow: userInfo.package.category_count,
+      package_amount: userInfo.package.package_amount,
     };
   }
 
   componentDidMount() {
-    const params = queryString.parse(window.location.search);
-    console.log(params, "params");
+    // const params = queryString.parse(window.location.search);
+    console.log(this.state.userInfo, "params");
     if (this.props.resetAccount === false) {
       this.setState({ resetAccount: false });
     }
@@ -192,6 +192,7 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(this.state.singlePackage, "single");
     return (
       <div className="category-page">
         <div
@@ -321,7 +322,12 @@ class AccountSetup extends React.Component {
                         </Col>
                       </Row>
                       <br />
-                      <PaymentButton userId={this.state.userId} />
+                      {/* <PaymentButton userId={this.state.userId} /> */}
+                      <PaymentButton
+                        userId={userInfo1.user_id}
+                        packageId={this.state.singlePackage.package_id}
+                        paymentMethod={this.state.singlePackage.package_name}
+                      />
                     </div>
                   </>
                 )}

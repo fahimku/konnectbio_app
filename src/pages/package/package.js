@@ -203,7 +203,7 @@ class Package extends React.Component {
                     packageId={microInfluencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
-                    paymentMethod={"micro-influencer"}
+                    paymentMethod={"Micro Influencer"}
                   />
                 </div>
                 <div className="custom_pkg">
@@ -273,7 +273,7 @@ class Package extends React.Component {
                     packageId={influencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
-                    paymentMethod={"influencer"}
+                    paymentMethod={"Influencer"}
                   />
                 </div>
                 <div className="custom_pkg">

@@ -1,18 +1,22 @@
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import queryString from "query-string";
 import axios from "axios";
 // import s from "./payment.module.scss";
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+// const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Payment extends React.Component {
   state = {
     success: false,
+    responseSuccess: false,
   };
   componentDidMount() {
     const params = queryString.parse(window.location.search);
 
+    if (Object.keys(params).length === 0) {
+      this.props.history.push("/app/linkinbio");
+    }
     if (params.status === "success") {
       this.setState({ success: true });
       this.updatePackage();
@@ -27,7 +31,8 @@ class Payment extends React.Component {
         parseUserInformation.package = response.data.message;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-        // history.push("/connect");
+        this.setState({ responseSuccess: response.data.success });
+        // this.props.history.push("/connect");
       })
       .catch((error) => {
         console.log(error);
@@ -79,7 +84,7 @@ class Payment extends React.Component {
             </div>
             <div className="mt-5 text-right">
               <Button
-                // disabled={this.state.instagramCode === "" ? true : false}
+                disabled={this.state.responseSuccess ? false : true}
                 onClick={() => {
                   this.props.history.push("/connect");
                 }}
