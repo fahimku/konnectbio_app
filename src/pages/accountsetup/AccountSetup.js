@@ -5,7 +5,6 @@ import { Row, Col, Button, Modal } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { toast } from "react-toastify";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-import queryString from "query-string";
 
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
@@ -124,21 +123,22 @@ class AccountSetup extends React.Component {
   // };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
+
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
     const maxIndex = this.state.allPackages.length - 1;
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
-    console.log("Package Index");
-    console.log(this.state.packageIndex);
-    console.log("Event Index");
-    console.log(event.index);
-    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {
+
+    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {      
       this.setState({ upgrade: true });
     } else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
     }
+
+    if (event.label === 'Business' || event.label === 'Business Plus'){
+    
+      this.setState({ showPaymentButton: false });
+     }
   };
 
   toggleModal = () => {
@@ -230,8 +230,8 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
 
-                {this.state.singlePackage.package_name !== "Individual" &&
-                  this.state.upgrade && (
+               { console.log(this.state.singlePackage.package_name)}
+                {this.state.singlePackage.package_name !== "Individual"  && this.state.upgrade && (
                     <Row className="mt-4">
                       <>
                         <Col md={2}>Status Activity:</Col>
@@ -275,8 +275,7 @@ class AccountSetup extends React.Component {
                   )}
                 </Row>
               </div>
-              {this.state.singlePackage.package_name !== "Individual" &&
-                this.state.showPaymentButton && (
+              {this.state.singlePackage.package_name !== "Individual" && this.state.showPaymentButton && (
                   <>
                     <div className="white-box">
                       <Row>
@@ -322,7 +321,6 @@ class AccountSetup extends React.Component {
                         </Col>
                       </Row>
                       <br />
-                      {/* <PaymentButton userId={this.state.userId} /> */}
                       <PaymentButton
                         userId={userInfo1.user_id}
                         packageId={this.state.singlePackage.package_id}

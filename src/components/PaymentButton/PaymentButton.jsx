@@ -48,7 +48,10 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  } else if (props.paymentMethod === "Influencer") {
+  }
+  
+  
+  else if (props.paymentMethod === "Influencer") {
     return (
       <>
         <form
