@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button, Modal } from "react-bootstrap";
-import { Label, Input } from "reactstrap";
-import { toast } from "react-toastify";
-import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import {Row, Col, Button, Modal} from "react-bootstrap";
+import {Label, Input} from "reactstrap";
+import {toast} from "react-toastify";
+import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
 
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -49,12 +49,12 @@ class AccountSetup extends React.Component {
     // const params = queryString.parse(window.location.search);
     console.log(this.state.userInfo, "params");
     if (this.props.resetAccount === false) {
-      this.setState({ resetAccount: false });
+      this.setState({resetAccount: false});
     }
     if (userInfo.access_token !== "") {
-      this.setState({ isInstagramConnected: true });
+      this.setState({isInstagramConnected: true});
     }
-    this.setState({ userId: userInfo.user_id });
+    this.setState({userId: userInfo.user_id});
     this.getPackages();
   }
 
@@ -73,19 +73,19 @@ class AccountSetup extends React.Component {
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
-          this.setState({ upgrade: true });
+          this.setState({upgrade: true});
         }
-        this.setState({ packageIndex: index });
-        this.setState({ allPackages: packages });
-        this.setState({ singlePackage: singlePackage[0] });
-        packages.map(({ package_id, package_name }, index) => {
+        this.setState({packageIndex: index});
+        this.setState({allPackages: packages});
+        this.setState({singlePackage: singlePackage[0]});
+        packages.map(({package_id, package_name}, index) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
             index: index,
           });
         });
-        this.setState({ packages: selectPackages });
+        this.setState({packages: selectPackages});
       })
       .catch(function (error) {
         console.log(error);
@@ -123,68 +123,68 @@ class AccountSetup extends React.Component {
   // };
 
   handlePackage = (event) => {
-
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     const maxIndex = this.state.allPackages.length - 1;
-    this.setState({ singlePackage: singlePackage[0] });
-    this.setState({ package: event.label });
+    this.setState({singlePackage: singlePackage[0]});
+    this.setState({package: event.label});
 
-    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {      
-      this.setState({ upgrade: true });
+    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {
+      this.setState({upgrade: true});
     } else if (this.state.packageIndex > event.index) {
-      this.setState({ upgrade: false });
+      this.setState({upgrade: false});
     }
 
-    if (event.label === 'Business' || event.label === 'Business Plus'){
-    
-      this.setState({ showPaymentButton: false });
-     }
+    if (event.label === "Business" || event.label === "Business Plus") {
+      this.setState({showPaymentButton: false});
+    }
   };
 
   toggleModal = () => {
-    const { modal } = this.state;
+    const {modal} = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
   togglerResetModal = () => {
-    const { resetModal } = this.state;
+    const {resetModal} = this.state;
     this.setState({
       resetModal: !resetModal,
     });
   };
 
   disconnect = async () => {
-    this.setState({ loadingInsta: true });
+    this.setState({loadingInsta: true});
     await axios
       .put(`/users/revise/disconnectinstagram/${this.state.userId}`)
       .then((response) => {
-        this.setState({ modal: false });
-        this.setState({ loadingInsta: false });
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({ loadingInsta: false });
+        this.setState({loadingInsta: false});
         console.log(err.response, "err");
       });
   };
 
   resetAccount = async () => {
-    this.setState({ loadingInsta: true });
+    this.setState({loadingInsta: true});
     await axios
       .put(`/users/revise/resetaccount/${this.state.userId}`)
       .then((response) => {
-        this.setState({ modal: false });
-        this.setState({ loadingInsta: false });
+        this.setState({modal: false});
+        this.setState({loadingInsta: false});
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({ loadingInsta: false });
+        this.setState({loadingInsta: false});
         toast.error(err.response.data.message);
         console.log(err.response, "err");
       });
@@ -230,8 +230,9 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
 
-               { console.log(this.state.singlePackage.package_name)}
-                {this.state.singlePackage.package_name !== "Individual"  && this.state.upgrade && (
+                {console.log(this.state.singlePackage.package_name)}
+                {this.state.singlePackage.package_name !== "Individual" &&
+                  this.state.upgrade && (
                     <Row className="mt-4">
                       <>
                         <Col md={2}>Status Activity:</Col>
@@ -240,7 +241,17 @@ class AccountSetup extends React.Component {
                             variant="primary"
                             className="btn-block"
                             onClick={() => {
-                              this.setState({ showPaymentButton: true });
+                              if (
+                                this.state.singlePackage.package_name ===
+                                  "Business" ||
+                                this.state.singlePackage.package_name ===
+                                  "Business Plus"
+                              ) {
+                               alert('For support please contact support@konnect.bio')
+                                this.setState({ showPaymentButton: false });
+                              } else {
+                                this.setState({showPaymentButton: true});
+                              }
                             }}
                           >
                             Upgrade Subscription
@@ -275,7 +286,8 @@ class AccountSetup extends React.Component {
                   )}
                 </Row>
               </div>
-              {this.state.singlePackage.package_name !== "Individual" && this.state.showPaymentButton && (
+              {this.state.singlePackage.package_name !== "Individual" &&
+                this.state.showPaymentButton && (
                   <>
                     <div className="white-box">
                       <Row>
@@ -354,7 +366,7 @@ class AccountSetup extends React.Component {
                           variant="primary"
                           className="btn-block cat-right-btn"
                           onClick={() => {
-                            this.setState({ modal: true });
+                            this.setState({modal: true});
                           }}
                         >
                           Disconnect Instagram
@@ -393,7 +405,7 @@ class AccountSetup extends React.Component {
                     <Col md={3} className="text-right">
                       <Button
                         onClick={() => {
-                          this.setState({ resetModal: true });
+                          this.setState({resetModal: true});
                         }}
                         variant="primary"
                         className="btn-block cat-right-btn"
@@ -426,7 +438,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({ modal: false });
+                this.setState({modal: false});
               }}
             >
               Close
@@ -458,7 +470,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({ resetModal: false });
+                this.setState({resetModal: false});
               }}
             >
               Close

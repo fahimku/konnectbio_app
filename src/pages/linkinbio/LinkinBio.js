@@ -69,7 +69,7 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-    document.body.classList.add("body-my-post");
+
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
     this.fetchInstagramPosts(savedAccessToken);
@@ -77,7 +77,7 @@ class LinkinBio extends React.Component {
   }
 
   componentWillUnmount() {
-    document.body.classList.remove("body-my-post");
+
   }
 
   async fetchInstagramPosts(token) {
