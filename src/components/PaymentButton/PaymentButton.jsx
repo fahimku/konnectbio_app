@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Button} from "react-bootstrap";
 
 const PaymentButton = (props) => {
@@ -143,7 +143,7 @@ const PaymentButton = (props) => {
           id="influencer_yearly_form"
           method="post"
         >
-           <input type="hidden" name="x_user_id" value={userId} />
+          <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
           <input type="hidden" name="x_login" value="WSP-ADM-D-DAwMRwCArg" />
           <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
@@ -178,8 +178,6 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else return {
-    
-  }
+  else return ('');
 };
 export {PaymentButton};
