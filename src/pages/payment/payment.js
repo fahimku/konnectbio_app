@@ -5,7 +5,10 @@ import queryString from "query-string";
 import axios from "axios";
 // import s from "./payment.module.scss";
 // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 class Payment extends React.Component {
   state = {
     success: false,
@@ -86,7 +89,7 @@ class Payment extends React.Component {
               <Button
                 disabled={this.state.responseSuccess ? false : true}
                 onClick={() => {
-                  this.props.history.push("/connect/");
+                  history.push("/connect/");
                 }}
                 variant="primary"
                 type="submit"
