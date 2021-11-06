@@ -5,7 +5,7 @@ const PaymentButton = (props) => {
   const [userId] = useState(props.userId);
   const packageId = props.packageId;
 
-  if (props.paymentMethod === "micro-influencer") {
+  if (props.paymentMethod === "Micro Influencer") {
     return (
       <>
         <form
@@ -48,7 +48,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  } else if (props.paymentMethod === "influencer") {
+  } else if (props.paymentMethod === "Influencer") {
     return (
       <>
         <form
@@ -91,6 +91,8 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
+  } else {
+    return "";
   }
 };
 
