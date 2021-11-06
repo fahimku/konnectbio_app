@@ -1,8 +1,8 @@
 import React from "react";
-import { Container } from "reactstrap";
-import { Row, Col, Button } from "react-bootstrap";
+// import { Container } from "reactstrap";
+import { Row, Col } from "react-bootstrap";
 
-import s from "./payment.module.scss";
+// import s from "./payment.module.scss";
 
 class Payment extends React.Component {
   render() {

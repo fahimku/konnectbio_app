@@ -93,35 +93,35 @@ class AccountSetup extends React.Component {
       });
   };
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    let category =
-      this.state.saveCategories === null
-        ? []
-        : this.state.saveCategories.map((category) => {
-            return category.value;
-          });
-    this.setState({ loading: true });
+  // handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let category =
+  //     this.state.saveCategories === null
+  //       ? []
+  //       : this.state.saveCategories.map((category) => {
+  //           return category.value;
+  //         });
+  //   this.setState({ loading: true });
 
-    await axios
-      .put(`/users/revise/categories/${userInfo.user_id}`, {
-        categories: category,
-      })
-      .then((response) => {
-        let categoryResponse = response.data;
-        if (categoryResponse.success) {
-          toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
-          this.setState({ loading: false });
-          this.fetchSaveCategory();
-        }
-      })
-      .catch((err) => {
-        console.log(err.response, "err");
-        this.setState({ loading: false });
-        this.setState({ categoryError: err.response.data.message });
-      });
-  };
+  //   await axios
+  //     .put(`/users/revise/categories/${userInfo.user_id}`, {
+  //       categories: category,
+  //     })
+  //     .then((response) => {
+  //       let categoryResponse = response.data;
+  //       if (categoryResponse.success) {
+  //         toast.success(categoryResponse.message);
+  //         this.setState({ categoryError: "" });
+  //         this.setState({ loading: false });
+  //         this.fetchSaveCategory();
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response, "err");
+  //       this.setState({ loading: false });
+  //       this.setState({ categoryError: err.response.data.message });
+  //     });
+  // };
 
   handlePackage = (event) => {
     const singlePackage = this.state.allPackages.filter(
@@ -158,9 +158,7 @@ class AccountSetup extends React.Component {
   disconnect = async () => {
     this.setState({ loadingInsta: true });
     await axios
-      .put(`/users/revise/disconnectInstagram/disconnected`, {
-        userId: this.state.userId,
-      })
+      .put(`/users/revise/disconnectinstagram/${this.state.userId}`)
       .then((response) => {
         this.setState({ modal: false });
         this.setState({ loadingInsta: false });
@@ -177,7 +175,7 @@ class AccountSetup extends React.Component {
   resetAccount = async () => {
     this.setState({ loadingInsta: true });
     await axios
-      .put(`/users/revise/resetAccount/${this.state.userId}`)
+      .put(`/users/revise/resetaccount/${this.state.userId}`)
       .then((response) => {
         this.setState({ modal: false });
         this.setState({ loadingInsta: false });
@@ -187,6 +185,7 @@ class AccountSetup extends React.Component {
       })
       .catch((err) => {
         this.setState({ loadingInsta: false });
+        toast.error(err.response.data.message);
         console.log(err.response, "err");
       });
   };
