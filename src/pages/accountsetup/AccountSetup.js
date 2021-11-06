@@ -16,6 +16,7 @@ class AccountSetup extends React.Component {
     super(props);
     this.state = {
       packageIndex: "",
+      plan:'Monthly',
       upgrade: false,
       userInfo: userInfo,
       cancelSubscription: true,
@@ -135,10 +136,6 @@ class AccountSetup extends React.Component {
     } else if (this.state.packageIndex > event.index) {
       this.setState({upgrade: false});
     }
-
-    if (event.label === "Business" || event.label === "Business Plus") {
-      this.setState({showPaymentButton: false});
-    }
   };
 
   toggleModal = () => {
@@ -247,8 +244,10 @@ class AccountSetup extends React.Component {
                                 this.state.singlePackage.package_name ===
                                   "Business Plus"
                               ) {
-                               alert('For support please contact support@konnect.bio')
-                                this.setState({ showPaymentButton: false });
+                                alert(
+                                  "For support please contact support@konnect.bio"
+                                );
+                                this.setState({showPaymentButton: false});
                               } else {
                                 this.setState({showPaymentButton: true});
                               }
@@ -301,11 +300,14 @@ class AccountSetup extends React.Component {
                             <Input
                               defaultChecked
                               name="payment"
+                              value="Monthly"
                               className="mt-0"
                               id="checkbox1"
                               type="radio"
-                              // onClick={() => this.checkTable(0)}
-                              // checked={this.state.checkedArr[0]}
+                            onChange={(e) => {
+                                this.setState({plan:e.target.value})
+
+                              }}
                             />{" "}
                             <Label for="checkbox1" />
                             Pay Monthly: $
@@ -316,11 +318,13 @@ class AccountSetup extends React.Component {
                           <div className="checkbox abc-checkbox">
                             <Input
                               name="payment"
+                              value="Yearly"
                               className="mt-0"
                               id="checkbox2"
                               type="radio"
-                              // onClick={() => this.checkTable(0)}
-                              // checked={this.state.checkedArr[0]}
+                              onChange={(e) => {
+                                this.setState({plan:e.target.value})
+                              }}
                             />{" "}
                             <Label for="checkbox2" />
                             Pay Yearly & Save: $
@@ -334,6 +338,7 @@ class AccountSetup extends React.Component {
                       </Row>
                       <br />
                       <PaymentButton
+                        plan={this.state.plan}
                         userId={userInfo1.user_id}
                         packageId={this.state.singlePackage.package_id}
                         paymentMethod={this.state.singlePackage.package_name}
