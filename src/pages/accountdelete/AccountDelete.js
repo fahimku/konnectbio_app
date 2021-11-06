@@ -8,8 +8,9 @@ import {
   ModalBody,
   ModalFooter,
 } from "reactstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import s from "./ErrorPage.module.scss";
+import { toast } from "react-toastify";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -27,7 +28,7 @@ class AccountDelete extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({user_id: userInfo.user_id});
+    this.setState({ user_id: userInfo.user_id });
   }
 
   toggle(id) {
@@ -38,14 +39,14 @@ class AccountDelete extends React.Component {
 
   deleteAccount = async () => {
     await axios
-      .put(`/users/revise/account/delete`, {
-        user_id: this.state.user_id,
-      })
+      .put(`/users/revise/accountdelete/${this.state.user_id}`)
       .then(() => {
-        this.setState({modal: false});
+        this.setState({ modal: false });
         history.push("/logout");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
   };
 
   render() {
@@ -68,7 +69,7 @@ class AccountDelete extends React.Component {
               <Button
                 className={s.errorBtn}
                 onClick={() => {
-                  this.setState({modal: true});
+                  this.setState({ modal: true });
                 }}
                 type="submit"
                 color="warning"
