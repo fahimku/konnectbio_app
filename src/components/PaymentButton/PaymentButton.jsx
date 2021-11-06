@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 const PaymentButton = (props) => {
-  const [userId, setUserId] = useState(props.userId);
-  const [packageId, setpackageId] = useState(props.packageId);
+  const [userId] = useState(props.userId);
+  const [packageId] = useState(props.packageId);
   return (
     <>
       <form
