@@ -199,6 +199,7 @@ class Package extends React.Component {
                     </li>
                   </ul>
                   <PaymentButton
+                    key="1"
                     userId={userInfo.user_id}
                     packageId={microInfluencer.package_id}
                     name={"Select Plan"}
@@ -269,8 +270,9 @@ class Package extends React.Component {
                     Select Plan
                   </Button> */}
                   <PaymentButton
+                    key="2"
                     userId={userInfo.user_id}
-                    packageId={influencer.package_id}
+                    packageIdInfluencer={influencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
                     paymentMethod={"Influencer"}

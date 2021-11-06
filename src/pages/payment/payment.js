@@ -15,7 +15,7 @@ class Payment extends React.Component {
     const params = queryString.parse(window.location.search);
 
     if (Object.keys(params).length === 0) {
-      this.props.history.push("/app/linkinbio");
+      this.props.history.push("/app/main/");
     }
     if (params.status === "success") {
       this.setState({ success: true });
@@ -86,7 +86,7 @@ class Payment extends React.Component {
               <Button
                 disabled={this.state.responseSuccess ? false : true}
                 onClick={() => {
-                  this.props.history.push("/connect");
+                  this.props.history.push("/connect/");
                 }}
                 variant="primary"
                 type="submit"
