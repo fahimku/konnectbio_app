@@ -83,6 +83,10 @@ h1 small {
   outline: none !important;
 }
 
+.continue-link {
+  color: #fff;
+  text-decoration: underline;
+}
 @media (max-width: 576px) {
   .category-page .package_detail .btn, .category-page .catmodel-box .btn {
     margin-top: 10px;
