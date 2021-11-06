@@ -32,11 +32,13 @@
     .header_inr{
         max-width: 90%;
     }
+    .app_main_cont_ift{
+        position: relative;
+    }
     .show_ift_iframe{
         height: 700px;
-        position: relative;
-        touch-action: auto;
         -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
     }
     .show_ift_iframe iframe{
         display: block;
@@ -47,11 +49,8 @@
         right:  0;
         width:  100px;
         min-width:  100%;
-        height: 700px;
+        height: 100px;
         min-height: 100%;
-        -webkit-overflow-scrolling: touch;
-        overflow-y: scroll;
-        
     }
 }
 
