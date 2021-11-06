@@ -88,6 +88,14 @@ h1 small {
   color: #fff;
   text-decoration: underline;
 }
+.payment-page .success-msg,
+.payment-page .success-msg h2 {
+  color: #0f5132;
+}
+.payment-page .error-msg,
+.payment-page .error-msg h2 {
+  color: #842029;
+}
 @media (max-width: 576px) {
   .category-page .package_detail .btn {
     margin-top: 15px;

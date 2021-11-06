@@ -3,7 +3,6 @@ import { Button, Tabs, Tab, Modal } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-import queryString from "query-string";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -16,9 +15,6 @@ class Package extends React.Component {
     packages: "",
   };
   componentDidMount() {
-    const params = queryString.parse(window.location.search);
-    console.log(params, "params");
-
     this.getPackages();
   }
 
