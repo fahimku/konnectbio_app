@@ -3,7 +3,7 @@ import { Button, Tabs, Tab, Modal } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-
+import queryString from "query-string";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -16,6 +16,9 @@ class Package extends React.Component {
     packages: "",
   };
   componentDidMount() {
+    const params = queryString.parse(window.location.search);
+    console.log(params, "params");
+
     this.getPackages();
   }
 
@@ -68,6 +71,7 @@ class Package extends React.Component {
     const businessPlus = this.state.packages.BusinessPlus || {};
     const influencer = this.state.packages.Influencer || {};
     const microInfluencer = this.state.packages.MicroInfluencer || {};
+
     return (
       <>
         <div className="login_header">
@@ -203,6 +207,7 @@ class Package extends React.Component {
                     packageId={microInfluencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
+                    paymentMethod={"micro-influencer"}
                   />
                 </div>
                 <div className="custom_pkg">
@@ -257,7 +262,7 @@ class Package extends React.Component {
                       Access To Marketplace
                     </li>
                   </ul>
-                  <Button
+                  {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -266,7 +271,14 @@ class Package extends React.Component {
                     }}
                   >
                     Select Plan
-                  </Button>
+                  </Button> */}
+                  <PaymentButton
+                    userId={userInfo.user_id}
+                    packageId={influencer.package_id}
+                    name={"Select Plan"}
+                    variant="dark"
+                    paymentMethod={"influencer"}
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{business.package_name}</h4>
