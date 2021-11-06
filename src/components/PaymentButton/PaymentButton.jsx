@@ -48,8 +48,10 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-
-  else if (props.paymentMethod === "Micro Influencer" && props.plan === "Yearly")
+  else if (
+    props.paymentMethod === "Micro Influencer" &&
+    props.plan === "Yearly"
+  )
     return (
       <>
         <form
@@ -97,23 +99,23 @@ const PaymentButton = (props) => {
       <>
         <form
           action="https://demo.globalgatewaye4.firstdata.com/pay"
-          id="pay_now_form_9b6937f3b6"
+          id="influencer_monthly_form"
           method="post"
         >
-          <input type="hidden" name="x_user_id" value={userId} />
-          <input type="hidden" name="x_package_id" value={packageId} />
           <input type="hidden" name="x_login" value="WSP-ADM-D-DAwMRwCArg" />
           <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
           <input
             type="hidden"
             name="x_fp_sequence"
-            value="16362069852407135726"
+            value="16362127803789352822"
           />
           <input
             type="hidden"
             name="x_fp_hash"
-            value="PNB-1.0-f22c04df051c5efdcd602dea180bda9024ddd320"
+            value="PNB-1.0-dc887f6f316398caef21e1bcd0d22f144f727a75"
           />
+           <input type="hidden" name="x_user_id" value={userId} />
+          <input type="hidden" name="x_package_id" value={packageId} />
           <input type="hidden" name="x_amount" value="25" />
           <input type="hidden" name="x_currency_code" value="USD" />
           <input type="hidden" name="x_test_request" value="TRUE" />
@@ -124,10 +126,11 @@ const PaymentButton = (props) => {
             name="button_code"
             value="Pay Now Influencer Demo Account"
           />
+  
         </form>
         <Button
           onClick={() => {
-            document.getElementById("pay_now_form_9b6937f3b6").submit();
+            document.getElementById("influencer_monthly_form").submit();
           }}
           variant={props.variant ? props.variant : "primary"}
         >
@@ -178,6 +181,6 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else return ('');
+  else return "";
 };
 export {PaymentButton};
