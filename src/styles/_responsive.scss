@@ -32,9 +32,11 @@
     .header_inr{
         max-width: 90%;
     }
-    .show_ift_iframe{
-        width: 460px;
-        height: 85%;
+    .show_ift_iframe iframe{
+        width:460px;
+    }
+    .main-container.iframe-container{
+        max-width: 460px;
     }
 }
 
