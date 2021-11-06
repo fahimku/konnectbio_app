@@ -86,7 +86,7 @@ class Reset extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;<a href="/login">Sign in</a>
+              <span>Already have an account?</span>&nbsp;<a href="/login">Sign in</a>
               </div>
             </div>
           </div>

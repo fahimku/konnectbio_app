@@ -574,6 +574,7 @@ class LinkinBio extends React.Component {
             size="sm"
             isOpen={this.state.modal}
             toggle={() => this.toggle("modal")}
+            centered
           >
             <ModalHeader toggle={() => this.toggle("modal")}>
               Edit Post

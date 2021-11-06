@@ -1,116 +1,57 @@
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 760px) {
-
-    .mobile-preview .visit-website {
-        margin-bottom: 10px;
-        width: 89%;
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 1300px) {
+    .left-column {
+        flex: 0 0 40% !important;
+        max-width: 40% !important;
     }
-
-    // body {
-    //     overflow: hidden;
-    // }
-
-
-
-
-    iframe {
-        display: none;
-    }
-
     .right-bar {
-        display: none;
+        flex: 0 0 60% !important;
+        max-width: 60% !important;
     }
-
-    .auth-logo i {
-        display: none;
-    }
-
-    .auth-logo img {
-        width: 200px;
-        height: 50px;
-    }
-
-    .modal {
-        display: block;
-    }
-
-
-    .header {
-        display: none;
-    }
-
-    .source-button {
-        // margin: 0 auto;
-        margin-top: 3px;
-    }
-
-
-
-    .source-button button {
-        width: 100%;
-        font-size: 13px;
-        border-radius: 1em;
-        text-align: left;
-    }
-
-    .modal .image-box img,
-    .modal .image-box video {
-        width: 150px;
-        height: 150px;
-
-    }
-
-    .image-box-info h4 {
-        display: none;
-    }
-
-    .bottom-links {
-        position: absolute;
-        bottom: -500px;
-    }
-
-    .modal-header .close {
-        font-size: 45px;
-        position: absolute;
-        right: 10px;
-        color: black;
-        top: 0;
-    }
-
-
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {}
+@media only screen and (max-width: 1390px) {
+    .custom_pkg p br{
+        display: block;
+    }
+}
+@media only screen and (max-width: 1250px) {
+    .package_parent{
+        gap: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .package_parent .custom_pkg{
+        min-height: 580px;
+        flex: 0 0 49%;
+        margin-bottom: 20px;
+    }
+}
 
-/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 1050px) {
+    .header_inr{
+        max-width: 90%;
+    }
+}
+
 @media only screen and (max-width: 991px) {
     .mobile-header-responsive {
         position: sticky;
         top: 0;
         left: 0;
-        background: white;
-        z-index: 3234234;
+        background: #FFF;
+        z-index: 999;
         position:relative;
     }
 
     .top-logo {
         display: block !important;
-        place-content: center;
-        width: 132px;
-        margin: 0 auto;
+        width: 140px;
         position: absolute;
         left: 0;
         right: 0;
-        top: 20px;
-        z-index: 999;
+        margin: 0 auto;
     }
-
-    .top-logo .logo img {
-        width: 120px;
-
-    }
-
     .navbar {
         height: 38px;
     }
@@ -144,19 +85,25 @@
         display: block;
         z-index: 99;
         background: none !important;
-        width: 100%;
         justify-content: center;
         align-items: center;
-        padding:0 !important;
+        padding: 0 !important;
+        height:auto;
+        margin:0 !important;
+        position:static;
     }
 
     .mobile-menu .navbar-collapse {
         background: white !important;
+        position: fixed;
+        left: 0;
+        top: 60px;
+        width: 100%;
+        height: 100%;
     }
 
     .navbar-light .navbar-toggler {
         color: white;
-        margin-left:1.5rem !important;
     }
 
     .header .linkin-text {
@@ -178,8 +125,8 @@
         height: 355px;
     }
     .mobile-preview .custome_link{
-        width: 190px !important;
-        height:275px !important;
+        width: 210px !important;
+        height:290px !important;
     }
     .mobile-preview .visit-website{
         width:210px;
@@ -187,8 +134,9 @@
 
     .top-mobile-header {
         display: flex;
-
-
+        padding: 1rem;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .top-mobile-header .logo {
@@ -197,36 +145,181 @@
         align-items: center;
     }
 
-    .top-mobile-header .logo img {
-        width: 101px;
-        margin-top: 10px;
-    }
-
-
-    .mobile-menu .navbar-nav {
-        width: 100vh;
-        height: 94vh;
-
-    }
-
     .left-top-bar {
         justify-content: right;
 
+    }
+    .header .left-top-bar{
+        margin-bottom: 7px;
+        margin-left: 1rem;
+    }
+    .custome_container_auth_ift{
+        height: auto;
+    }
+    .login_right, .signup_right{
+        display: none;
+    }
+    .custome_signup{
+        width:700px;
     }
 
 
 }
 
-/**larger screen greater than 768 */
 @media only screen and (min-width: 991px) {
     .top-mobile-header {
         display: none;
     }
 }
 
+@media only screen and (max-width: 760px) {
 
-@media only screen and (max-width: 500px) {}
+    .mobile-preview .visit-website {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    iframe {
+        display: none;
+    }
 
+    .right-bar {
+        display: none;
+    }
+    .app_main_cont_ift .left-column.col-xl-3{
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .auth-logo i {
+        display: none;
+    }
+    .auth-logo img {
+        width: 200px;
+        height: 50px;
+    }
+
+    .modal {
+        display: block;
+    }
+    .header {
+        display: none;
+    }
+    .image-box{
+        flex: 0 0 60%;
+        max-width: 60%;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal .image-box img,
+    .modal .image-box video {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border: solid 1px #ccc;
+        padding: 4px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+
+    }
+    .bg-white.modal-body{
+        padding:0;
+    }
+    .image-edit-box{
+        padding: 10px;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
+    .image-box-info h4 {
+        display: none;
+    }
+
+    .bottom-links {
+        position: absolute;
+        bottom: -500px;
+    }
+
+    .modal-header .close {
+        font-size: 45px;
+        position: absolute;
+        right: 10px;
+        color: black;
+        top: 0;
+    }
+    .mobile-preview .mobile-header {
+        padding: 10px 0 10px 0;
+    }
+
+    .mobile-preview .mobile-header .page-name {
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+        font-weight: bold;
+        font-size: 13px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    .mobile-preview {
+        background: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        height:auto;
+    }
+    .mobile-preview .mobile-gallery{
+        width:100%;
+        height: 600px;
+        overflow: auto;
+    }
+    .mobile-preview .custome_link{
+        width: 100% !important;
+        height: auto !important;
+    }
+    .body-bio-shop .mobile-preview .mobile-gallery .linked-label {
+        display: none;
+    }
+
+    .mobile-preview .mobile-gallery .linked-label {
+        width: auto !important;
+        left: 0 !important;
+    }
+
+    .mobile-preview .mobile-gallery .linked {
+        border: none !important;
+    }
+    .left-column {
+        border: none !important;
+    }
+    .top-mobile-header{
+        padding: 0.5rem;
+    }
+    .mobile-menu .navbar-collapse{
+        top:45px;
+    }
+    .custome_container_auth_ift{
+        width:100%;
+        padding: 2rem 0;
+        display:block;
+    }
+    .custome_signup{
+        width:100%;
+        padding:1rem;
+    }
+    .kon_pg_title, .create_account span{
+        display: none;
+    }
+    .package_parent .custom_pkg{
+        min-height: 100px;
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+        padding-bottom: 60px;
+    }
+
+
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 991px) {
@@ -244,7 +337,6 @@
         border-bottom: none;
         justify-content: flex-end !important;
         padding: 0;
-        margin-top: 1.5rem;
     }
 
     .top-mobile-header :nth-child(3) {
@@ -256,13 +348,6 @@
     
 
 
-}
-
-
-@media only screen and (max-width: 375px) {
-    .source-button.dropdown {
-        margin-left: 0px !important;
-    }
 }
 
 @media only screen and (max-width: 991px) {
@@ -284,9 +369,10 @@
 }
 
 .source-button button {
-    /* border: 1px solid #e1e1ee; */
+    border: 1px solid #e1e1ee;
     background: #fff !important;
     color: #364554;
+    margin-right: 0 !important;
 }
 
 .source-button button:hover,
@@ -295,80 +381,16 @@
     background-color: #fff !important;
     border-color: #000 !important;
 }
-
 @media only screen and (max-width: 512px) {
-
-    .source-button {
-        border: 1px solid #c8c8c8;
-        margin-top: 15px;
+    .top-logo{
+        width:110px;
     }
-
-    .mobile-preview .mobile-header {
-        padding: 5px 17px 9px 20px;
-    }
-
-    .mobile-preview .mobile-header .page-name {
-        display: block;
-        position: absolute;
-        right: 10px;
-        top: 12px;
-        font-weight: bold;
-        font-size: 13px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-    }
-
-    .mobile-preview {
-        background: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        width: 100% !important;
-    }
-
-    .mobile-preview .mobile-gallery {
-        width: 100% !important;
-        /* overflow: hidden !important; */
-        height: 600px !important;
-    }
-
-    .mobile-preview .mobile-gallery .row {
-        margin: 0 !important;
-        width: 100% !important;
-    }
-
-    .mobile-preview .mobile-gallery .row .col-4 {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    .mobile-preview .mobile-gallery .mobile-image-box {
-        width: 100% !important;
-        height: 135px !important;
-    }
-
-    .body-bio-shop .mobile-preview .mobile-gallery .linked-label {
-        display: none;
-    }
-
-    .mobile-preview .mobile-gallery .linked-label {
-        width: auto !important;
-        left: 0 !important;
-    }
-
-    .mobile-preview .mobile-gallery .linked {
+    .source-button button{
+        padding: 5px !important;
+        min-width: 50px;
         border: none !important;
     }
-
-    .navbar-light .navbar-toggler {
-        border: none;
-    }
-
-    .source-button.dropdown {
-        // margin-left: 123px;
-    }
-
-
-    .left-column {
-        border: none !important;
+    .source-button button.dropdown-toggle::after{
+        margin-left:5px;
     }
 }

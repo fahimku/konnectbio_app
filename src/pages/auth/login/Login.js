@@ -116,14 +116,14 @@ class Login extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-                Already have an account?&nbsp;
+              <span>New to konnectBio</span>&nbsp;
                 <button
                   className="btn btn-link"
                   onClick={() => {
-                    this.props.history.push("/login");
+                    this.props.history.push("/register");
                   }}
                 >
-                  Sign in
+                  Create an Account
                 </button>
               </div>
             </div>
@@ -175,7 +175,7 @@ class Login extends React.Component {
                 </Button>
               </form>
               <p className="already">
-                New to konnectBio &nbsp;
+                New to konnectBio&nbsp;
                 <span
                   className="text-center link"
                   onClick={() => {

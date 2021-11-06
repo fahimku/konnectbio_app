@@ -70,11 +70,10 @@ h1 small {
 }
 .btn-connect {
   margin-right: 0px !important;
+  margin-top:0 !important;
 }
 .category-page .package_name {
   font-weight: normal;
-}
-.category-page .container {
 }
 .cat-box .cat-image {
   object-fit: cover;
@@ -85,7 +84,7 @@ h1 small {
 }
 
 @media (max-width: 576px) {
-  .category-page .package_detail .btn {
-    margin-top: 15px;
+  .category-page .package_detail .btn, .category-page .catmodel-box .btn {
+    margin-top: 10px;
   }
 }

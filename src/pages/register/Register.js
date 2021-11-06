@@ -144,7 +144,7 @@ class Register extends React.Component {
                             </div>
                         </form>
                         <p className="widget-auth-info">
-                            Already have the account? Login now!
+                            Already have an account? Login now!
                         </p>
                         <Link className="d-block text-center" to="login">Enter the account</Link>
                     </Widget>
