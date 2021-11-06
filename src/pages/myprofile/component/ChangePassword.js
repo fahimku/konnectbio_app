@@ -162,7 +162,7 @@ class ChangePassword extends React.Component {
   render() {
     return (
       <div className="white-box">
-        <Row>
+        <Row className="align-items-center">
           <Col md={8}>
             <div className="category_count">Change Password</div>
           </Col>

@@ -86,13 +86,14 @@ import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
 import MyLinks from "../../pages/mylinks/MyLinks";
-import {createBrowserHistory} from "history";
 import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
 import AccountSetup from "../../pages/accountsetup/AccountSetup";
+import Payment from "../../pages/payment/payment";
 import Home from "../../pages/home/Home";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
-  forceRefresh: true,
+  forceRefresh: false,
 });
 
 //import ConnectPagee from "../../pages/auth/connect";
@@ -165,14 +166,13 @@ class Layout extends React.Component {
             localStorage.getItem("navbarColor")
               ? localStorage.getItem("navbarColor").replace("#", "")
               : "FFFFFF"
-          }`,
+          }`, 
         ].join(" ")}
       >
         <Sidebar />
         <div className={"LayoutWrap " + s.wrap}>
           <Header username={this.state.username} placeholder={placeholder} />
           <Helper />
-
           <Hammer onSwipe={this.handleSwipe}>
             <main className={s.content}>
               <BreadcrumbHistory url={this.props.location.pathname} />
@@ -502,6 +502,7 @@ class Layout extends React.Component {
                         component={AccountSetup}
                       />
 
+                      <Route path="/app/payment" exact component={Payment} />
                       <Route path="/app/my/links" exact component={MyLinks} />
                       <Route path="/app/home" exact component={Home} />
                     </Switch>
