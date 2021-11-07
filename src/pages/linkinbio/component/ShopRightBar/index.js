@@ -73,7 +73,7 @@ const ShopRightBar = (props) => {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type === "IMAGE" && (
+                {props.singlePost.media_type !== "VIDEO" && (
                   <img src={`${props.singlePost.media_url}`} alt="media_url" />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
