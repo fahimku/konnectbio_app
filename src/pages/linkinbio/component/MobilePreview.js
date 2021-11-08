@@ -14,7 +14,7 @@ const MobilePreview = ({
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
-      if (instagramPosts.data[i].media_type === "IMAGE") {
+      if (instagramPosts.data[i].media_type === "IMAGE" || instagramPosts.data[i].media_type === "CAROUSEL_ALBUM" ) {
         instaPosts.push(
           <Col key={i} xs="4">
             <div className="mobile-image-box">
