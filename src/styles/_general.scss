@@ -70,7 +70,7 @@ h1 small {
 }
 .btn-connect {
   margin-right: 0px !important;
-  margin-top:0 !important;
+  margin-top: 0 !important;
 }
 .category-page .package_name {
   font-weight: normal;
@@ -95,8 +95,13 @@ h1 small {
 .payment-page .error-msg h2 {
   color: #842029;
 }
+.custom_pkg .pkg_read {
+  color: #29323a;
+  text-decoration: underline;
+}
 @media (max-width: 576px) {
-  .category-page .package_detail .btn, .category-page .catmodel-box .btn {
+  .category-page .package_detail .btn,
+  .category-page .catmodel-box .btn {
     margin-top: 10px;
   }
 }
