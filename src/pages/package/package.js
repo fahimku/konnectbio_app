@@ -11,7 +11,11 @@ const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Package extends React.Component {
   state = {
-    show: false,
+    showIndividual: false,
+    showMicroInfluencer: false,
+    showInfluencer: false,
+    showBusiness: false,
+    showBusinessPlus: false,
     packages: "",
   };
   componentDidMount() {
@@ -40,8 +44,18 @@ class Package extends React.Component {
     }, initialValue);
   };
   handleClose = () => {
-    let { show } = this.state;
-    this.setState({ show: !show });
+    // let {
+    //   showIndividual,
+    //   showMicroInfluencer,
+    //   showInfluencer,
+    //   showBusiness,
+    //   showBusinessPlus,
+    // } = this.state;
+    this.setState({ showIndividual: false });
+    this.setState({ showMicroInfluencer: false });
+    this.setState({ showInfluencer: false });
+    this.setState({ showBusiness: false });
+    this.setState({ showBusinessPlus: false });
   };
 
   updatePackage = async (id, packageId) => {
@@ -107,7 +121,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showIndividual: true });
                       }}
                     >
                       Read More
@@ -158,7 +172,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showMicroInfluencer: true });
                       }}
                     >
                       Read More
@@ -215,7 +229,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showInfluencer: true });
                       }}
                     >
                       Read More
@@ -276,7 +290,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showBusiness: true });
                       }}
                     >
                       Read More
@@ -337,7 +351,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showBusinessPlus: true });
                       }}
                     >
                       Read More
@@ -402,7 +416,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showIndividual: true });
                       }}
                     >
                       Read More
@@ -453,7 +467,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showMicroInfluencer: true });
                       }}
                     >
                       Read More
@@ -510,7 +524,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showInfluencer: true });
                       }}
                     >
                       Read More
@@ -570,7 +584,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showBusiness: true });
                       }}
                     >
                       Read More
@@ -630,7 +644,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({ show: true });
+                        this.setState({ showBusinessPlus: true });
                       }}
                     >
                       Read More
@@ -690,7 +704,7 @@ class Package extends React.Component {
 
         <Modal
           className="pkg_readmore"
-          show={this.state.show}
+          show={this.state.showIndividual}
           onHide={this.handleClose}
           centered
         >
@@ -703,6 +717,97 @@ class Package extends React.Component {
             by businesses/brands on our platform. You are not allowed to link
             any your posts with any product categories. To link post-upgrade to
             influencer package you required.
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showMicroInfluencer}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Micro Influencer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Micro Influencer account allows you to create profile page, add up
+            to 3 social/external links and create BIOSHOP on our platform. In
+            this package you are allowed 3 product and service categories you
+            like to promote. You can add hyperlink to any lG post within these 3
+            product and service categories only. You also get access to
+            analytical data like; impressions, clicks and user engagement' You
+            are allowed Market Place access which enables you to search
+            affiliate campaigns being offered by businesses and brands on our
+            platform in your selected 3 categories only.
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showInfluencer}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Influencer</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Influencer account allows creation of profile page, up to 6
+            social/external links and BIOSHOP on our platform. This package
+            allows 6 product and service categories for promotion. Hyperlink can
+            be added to any lG post within these 6 product and service
+            categories only. Access to analytical data like impressions, clicks
+            and user engagement is also allowed. Market Place access allows
+            searching of affiliate campaigns/coupons being offered by businesses
+            and brands on our platform in your selected 6 categories' if
+            accepted, affiliate campaigns/coupons are added to the BIOSHOP
+            visible to all your followers.
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showBusiness}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Business</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Business account is for large businesses and brands and allows
+            creation of profile page, add up to 6 social/external links and
+            creation of BIOSHOP on our platform. In this package 6 product and
+            service categories are supported on BIOSHOP. Hyperlink can be added
+            to any lG post within these 6 product and service categories Access
+            to analytical data like impressions, clicks and user engagement is
+            provided. Market Place access is allowed to create affiliate
+            campaigns/coupons of products and services visible to all
+            influencers on our platform. This is a most powerful feature of
+            platform if influencers accept, the campaign/coupon is added to
+            influencer BIOSHOP, visible to their followers, boosting traffic and
+            driving sales.
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showBusinessPlus}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Business Plus</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Business Plus account is for large businesses and brands and allows
+            creation of profile page, add up to 6 social/external links, and
+            creation of BIOSHOP on our platform. In this package 30 product and
+            service categories are supported on BIOSHOP. Hyperlink can be added
+            to any lG post within these 30 product and service categories.
+            Access to analytical data like impressions, clicks and user
+            engagement is provided. Market Place access is allowed to create
+            Affiliate campaigns/coupons of products and services visible to all
+            influencers on our platform. This is a most powerful feature of
+            platform. If influencers accept the paign/coupon is added to
+            influencer BIOSHOP, visible to all their followers, boosting traffic
+            and driving sales.
           </Modal.Body>
         </Modal>
       </>
