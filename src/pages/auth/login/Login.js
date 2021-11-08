@@ -115,7 +115,7 @@ class Login extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-              <span>New to konnectBio</span>&nbsp;
+              <span>New to KonnectBio?</span>&nbsp;
                 <button
                   className="btn btn-link"
                   onClick={() => {
@@ -174,7 +174,7 @@ class Login extends React.Component {
                 </Button>
               </form>
               <p className="already">
-                New to konnectBio&nbsp;
+                New to KonnectBio?&nbsp;
                 <span
                   className="text-center link"
                   onClick={() => {

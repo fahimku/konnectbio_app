@@ -170,7 +170,7 @@ class Verify extends React.Component {
                 </Button>
               </form>
               <p className="already">
-                New to konnectBio &nbsp;
+                New to KonnectBio? &nbsp;
                 <span
                   className="text-center link"
                   onClick={() => {
