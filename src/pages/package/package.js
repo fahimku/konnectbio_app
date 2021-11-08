@@ -104,15 +104,14 @@ class Package extends React.Component {
                   <p>
                     Individual account allows you to create profile, add up to{" "}
                     {individual.link_count} social links and access &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">Always</span>
@@ -156,15 +155,14 @@ class Package extends React.Component {
                     Micro lnfluencer account allows you to create profile page,
                     add up to {microInfluencer.link_count} social/external
                     &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -211,18 +209,17 @@ class Package extends React.Component {
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
                   <p>
-                    influencer account allows creation of profile page, up to{" "}
+                    Influencer account allows creation of profile page, up to{" "}
                     {influencer.link_count} social/external links and BIOSHOP
                     &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -260,16 +257,7 @@ class Package extends React.Component {
                       Access To Marketplace
                     </li>
                   </ul>
-                  {/* <Button
-                    variant="dark"
-                    onClick={() => {
-                      alert(
-                        "Please contact support@konnect.bio for plan inquiries."
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button> */}
+
                   <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
@@ -285,15 +273,14 @@ class Package extends React.Component {
                   <p>
                     Business account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -347,15 +334,14 @@ class Package extends React.Component {
                   <p>
                     Business Plus account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -413,15 +399,14 @@ class Package extends React.Component {
                   <p>
                     Individual account allows you to create profile, add up to{" "}
                     {individual.link_count} social links and access &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">Always</span>
@@ -465,15 +450,14 @@ class Package extends React.Component {
                     Micro lnfluencer account allows you to create profile page,
                     add up to {microInfluencer.link_count} social/external
                     &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -507,32 +491,30 @@ class Package extends React.Component {
                       Access To Marketplace.
                     </li>
                   </ul>
-                  <Button
+                  <PaymentButton
+                    key="1"
+                    userId={userInfo.user_id}
+                    packageId={microInfluencer.package_id}
+                    name={"Select Plan"}
                     variant="dark"
-                    onClick={() => {
-                      alert(
-                        "Please contact support@konnect.bio for plan inquiries."
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                    paymentMethod={"Micro Influencer"}
+                    plan="Yearly"
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
                   <p>
-                    influencer account allows creation of profile page, up to{" "}
+                    Influencer account allows creation of profile page, up to{" "}
                     {influencer.link_count} social/external links and BIOSHOP
                     &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -570,31 +552,29 @@ class Package extends React.Component {
                       Access To Marketplace
                     </li>
                   </ul>
-                  <Button
+                  <PaymentButton
+                    key="2"
+                    userId={userInfo.user_id}
+                    packageIdInfluencer={influencer.package_id}
+                    name={"Select Plan"}
                     variant="dark"
-                    onClick={() => {
-                      alert(
-                        "Please contact support@konnect.bio for plan inquiries."
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                    paymentMethod={"Influencer"}
+                    plan="Yearly"
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{business.package_name}</h4>
                   <p>
                     Business account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
@@ -647,15 +627,14 @@ class Package extends React.Component {
                   <p>
                     Business Plus account is for large businesses and brands and
                     allows creation of profile &nbsp;
-                    <a
-                      className="pkg_read"
-                      href="javascript:void"
+                    <button
+                      className="pkg_read btn btn-link"
                       onClick={() => {
                         this.setState({ show: true });
                       }}
                     >
                       Read More
-                    </a>
+                    </button>
                   </p>
                   <div className="pkg_price_ifti">
                     <span className="pkg_limit">From</span>
