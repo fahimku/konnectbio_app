@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button, Modal} from "react-bootstrap";
-import {Label, Input} from "reactstrap";
-import {toast} from "react-toastify";
-import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import ResetAccount from './ResetAccount'
-import DisconnectInstagram from './DisconnectInstagram';
+import { Row, Col, Button, Modal } from "react-bootstrap";
+import { Label, Input } from "reactstrap";
+import { toast } from "react-toastify";
+import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import ResetAccount from "./ResetAccount";
+import DisconnectInstagram from "./DisconnectInstagram";
 
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
@@ -19,7 +19,7 @@ class AccountSetup extends React.Component {
     super(props);
     this.state = {
       packageIndex: "",
-      plan:'Monthly',
+      plan: "Monthly",
       upgrade: false,
       userInfo: userInfo,
       cancelSubscription: true,
@@ -51,15 +51,15 @@ class AccountSetup extends React.Component {
 
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({userInfo:userInfo})
+    this.setState({ userInfo: userInfo });
     // const params = queryString.parse(window.location.search);
     if (this.props.resetAccount === false) {
-      this.setState({resetAccount: false});
+      this.setState({ resetAccount: false });
     }
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
-    this.setState({userId: userInfo.user_id});
+    this.setState({ userId: userInfo.user_id });
     this.getPackages();
   }
 
@@ -72,29 +72,30 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
-          this.setState({upgrade: true});
+          this.setState({ upgrade: true });
         }
 
         if (index) {
-          this.setState({upgrade: false});
-  
+          this.setState({ upgrade: false });
         }
-        
-        this.setState({packageIndex: index});
-        this.setState({allPackages: packages});
-        this.setState({singlePackage: singlePackage[0]});
-        packages.map(({package_id, package_name}, index) => {
+
+        this.setState({ packageIndex: index });
+        this.setState({ allPackages: packages });
+        this.setState({ singlePackage: singlePackage[0] });
+        packages.map(({ package_id, package_name }, index) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
             index: index,
           });
         });
-        this.setState({packages: selectPackages});
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -132,69 +133,66 @@ class AccountSetup extends React.Component {
   // };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     const maxIndex = this.state.allPackages.length - 1;
-    this.setState({singlePackage: singlePackage[0]});
-    this.setState({package: event.label});
+    this.setState({ singlePackage: singlePackage[0] });
+    this.setState({ package: event.label });
 
     if (this.state.packageIndex < event.index && event.index !== maxIndex) {
-      this.setState({upgrade: true});
+      this.setState({ upgrade: true });
+    } else if (this.state.packageIndex > event.index) {
+      this.setState({ upgrade: false });
+    } else if (event.index === this.state.packageIndex) {
+      this.setState({ upgrade: false });
     }
-
-    else if (this.state.packageIndex > event.index) {
-      this.setState({upgrade: false});
-    }
-
-    else if (event.index === this.state.packageIndex) {
-      this.setState({upgrade: false});
-    }
-
   };
 
   toggleModal = () => {
-    const {modal} = this.state;
+    const { modal } = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
   togglerResetModal = () => {
-    const {resetModal} = this.state;
+    const { resetModal } = this.state;
     this.setState({
       resetModal: !resetModal,
     });
   };
 
   disconnect = async () => {
-    this.setState({loadingInsta: true});
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/disconnectinstagram/${this.state.userId}`)
       .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({loadingInsta: false});
+        this.setState({ loadingInsta: false });
         console.log(err.response, "err");
       });
   };
 
   resetAccount = async () => {
-    this.setState({loadingInsta: true});
+    this.setState({ loadingInsta: true });
     await axios
       .put(`/users/revise/resetaccount/${this.state.userId}`)
       .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
+        this.setState({ modal: false });
+        this.setState({ loadingInsta: false });
         localStorage.removeItem("access_token");
         localStorage.setItem("userInfo", JSON.stringify(response.data.data));
         history.push("/connect");
       })
       .catch((err) => {
-        this.setState({loadingInsta: false});
+        this.setState({ loadingInsta: false });
         toast.error(err.response.data.message);
         console.log(err.response, "err");
       });
@@ -259,9 +257,9 @@ class AccountSetup extends React.Component {
                                 alert(
                                   "For support please contact support@konnect.bio"
                                 );
-                                this.setState({showPaymentButton: false});
+                                this.setState({ showPaymentButton: false });
                               } else {
-                                this.setState({showPaymentButton: true});
+                                this.setState({ showPaymentButton: true });
                               }
                             }}
                           >
@@ -316,9 +314,8 @@ class AccountSetup extends React.Component {
                               className="mt-0"
                               id="checkbox1"
                               type="radio"
-                            onChange={(e) => {
-                                this.setState({plan:e.target.value})
-
+                              onChange={(e) => {
+                                this.setState({ plan: e.target.value });
                               }}
                             />{" "}
                             <Label for="checkbox1" />
@@ -335,7 +332,7 @@ class AccountSetup extends React.Component {
                               id="checkbox2"
                               type="radio"
                               onChange={(e) => {
-                                this.setState({plan:e.target.value})
+                                this.setState({ plan: e.target.value });
                               }}
                             />{" "}
                             <Label for="checkbox2" />
@@ -358,7 +355,7 @@ class AccountSetup extends React.Component {
                     </div>
                   </>
                 )}
-             
+
               {/* <div className="white-box">
                 <Row>
                   <Col md={12}>
@@ -384,7 +381,7 @@ class AccountSetup extends React.Component {
                           variant="primary"
                           className="btn-block cat-right-btn"
                           onClick={() => {
-                            this.setState({modal: true});
+                            this.setState({ modal: true });
                           }}
                         >
                           Disconnect Instagram
@@ -412,7 +409,7 @@ class AccountSetup extends React.Component {
                 username={this.props.username}
                 username1={userInfo1.username}
                 modal={(boolean) => {
-                  this.setState({modal: boolean});
+                  this.setState({ modal: boolean });
                 }}
                 url={this.props.url}
                 show={this.state.modal}
@@ -420,17 +417,17 @@ class AccountSetup extends React.Component {
                 disc0nnect={this.disconnect}
                 disabled={this.state.loadingInsta ? true : false}
               />
-              {this.state.resetAccount &&
+              {this.state.resetAccount && (
                 <ResetAccount
-                resetModal={(boolean) => {
-                   this.setState({resetModal: boolean});
-                }}
-                show={this.state.resetModal}
-                onHide={this.togglerResetModal}
-                resetAccount={this.resetAccount}
-                disabled={this.state.loadingInsta ? true : false}
-              />
-              }
+                  resetModal={(boolean) => {
+                    this.setState({ resetModal: boolean });
+                  }}
+                  show={this.state.resetModal}
+                  onHide={this.togglerResetModal}
+                  resetAccount={this.resetAccount}
+                  disabled={this.state.loadingInsta ? true : false}
+                />
+              )}
               {/* {this.state.resetAccount && (
                 <div className="white-box">
                   <Row>
@@ -447,7 +444,7 @@ class AccountSetup extends React.Component {
                     <Col md={3} className="text-right">
                       <Button
                         onClick={() => {
-                          this.setState({resetModal: true});
+                          this.setState({ resetModal: true });
                         }}
                         variant="primary"
                         className="btn-block cat-right-btn"
@@ -480,7 +477,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({modal: false});
+                this.setState({ modal: false });
               }}
             >
               Close
@@ -512,7 +509,7 @@ class AccountSetup extends React.Component {
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({resetModal: false});
+                this.setState({ resetModal: false });
               }}
             >
               Close
