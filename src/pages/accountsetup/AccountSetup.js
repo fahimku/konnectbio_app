@@ -6,10 +6,7 @@ import {Label, Input} from "reactstrap";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
-import {createBrowserHistory} from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
+
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
