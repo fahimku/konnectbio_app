@@ -50,6 +50,7 @@ export const AuthRoute = ({ dispatch, component, ...rest }) => {
     //   <Redirect to={from} />
 
     // );
+
     return history.push(from);
   } else {
     return (

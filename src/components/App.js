@@ -75,14 +75,24 @@ class App extends React.PureComponent {
                 component={LayoutComponent}
               />
               <Route path="/connect" exact component={Connect} />
-              <Route path="/package" exact component={Package} />
+              <UserRoute
+                path="/package"
+                exact
+                component={Package}
+                dispatch={this.props.dispatch}
+              />
               <Route path="/logout" exact component={Logout} />
               <AuthRoute path="/register" exact component={Register} />
               <AuthRoute path="/login" exact component={Login} />
               <AuthRoute path="/verify-email" exact component={Verify} />
               <AuthRoute path="/password-reset" exact component={Reset} />
               <AuthRoute path="/forgot" exact component={Forgot} />
-              <Route path="/payment" exact component={Payment} />
+              <UserRoute
+                path="/payment"
+                exact
+                component={Payment}
+                dispatch={this.props.dispatch}
+              />
               <Route path="/error" exact component={ErrorPage} />
               {/* <Redirect from="*" to="/app/main/analytics"/>*/}
               <Redirect from="*" to="/login" />

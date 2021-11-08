@@ -1,12 +1,14 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button, Modal} from "react-bootstrap";
+import {Row, Col, Button} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import {createBrowserHistory} from "history";
+import ResetAccount from './ResetAccount'
+import DisconnectInstagram from './DisconnectInstagram';
 
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -77,11 +79,9 @@ class AccountSetup extends React.Component {
           this.setState({upgrade: true});
         }
 
-        if (index == index) {
+        if (index) {
           this.setState({upgrade: false});
-  
         }
-        
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
@@ -99,35 +99,7 @@ class AccountSetup extends React.Component {
       });
   };
 
-  // handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   let category =
-  //     this.state.saveCategories === null
-  //       ? []
-  //       : this.state.saveCategories.map((category) => {
-  //           return category.value;
-  //         });
-  //   this.setState({ loading: true });
 
-  //   await axios
-  //     .put(`/users/revise/categories/${userInfo.user_id}`, {
-  //       categories: category,
-  //     })
-  //     .then((response) => {
-  //       let categoryResponse = response.data;
-  //       if (categoryResponse.success) {
-  //         toast.success(categoryResponse.message);
-  //         this.setState({ categoryError: "" });
-  //         this.setState({ loading: false });
-  //         this.fetchSaveCategory();
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.response, "err");
-  //       this.setState({ loading: false });
-  //       this.setState({ categoryError: err.response.data.message });
-  //     });
-  // };
 
   handlePackage = (event) => {
     const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
@@ -200,7 +172,7 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(this.state.singlePackage, "single");
+
     return (
       <div className="category-page">
         <div
@@ -238,7 +210,6 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
 
-                {console.log(this.state.singlePackage.package_name)}
                 {this.state.singlePackage.package_name !== "Individual" &&
                   this.state.upgrade && (
                     <Row className="mt-4">
@@ -357,149 +328,36 @@ class AccountSetup extends React.Component {
                     </div>
                   </>
                 )}
-              <div className="white-box">
-                <Row>
-                  <Col md={12}>
-                    <h5 className="page-title line-heading">
-                      Instagram Connection
-                    </h5>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md={2}>
-                    <div className="category_count">Connection Status</div>
-                  </Col>
-                  <Col md={3} className="text-right">
-                    {userInfo1.username !== "" || this.props.username ? (
-                      <>
-                        <div className="connected-text text-left mb-2">
-                          Connected: @
-                          {userInfo1.username !== ""
-                            ? userInfo1.username
-                            : this.props.username}
-                        </div>
-                        <Button
-                          variant="primary"
-                          className="btn-block cat-right-btn"
-                          onClick={() => {
-                            this.setState({modal: true});
-                          }}
-                        >
-                          Disconnect Instagram
-                        </Button>
-                      </>
-                    ) : (
-                      <>
-                        <Button
-                          onClick={() => {
-                            window.location.replace(this.props.url);
-                          }}
-                          variant="primary"
-                          className="btn-block cat-right-btn"
-                        >
-                          <i className="fa fa-instagram" />
-                          &nbsp;&nbsp; Connect Instagram
-                        </Button>
-                      </>
-                    )}
-                  </Col>
-                </Row>
-              </div>
-              {this.state.resetAccount && (
-                <div className="white-box">
-                  <Row>
-                    <Col md={12}>
-                      <h5 className="page-title line-heading">Reset Account</h5>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md={2}>
-                      <div className="category_count">
-                        This will reset your account.
-                      </div>
-                    </Col>
-                    <Col md={3} className="text-right">
-                      <Button
-                        onClick={() => {
-                          this.setState({resetModal: true});
-                        }}
-                        variant="primary"
-                        className="btn-block cat-right-btn"
-                      >
-                        Reset Account
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
-              )}
+      
+              <DisconnectInstagram
+                username={this.props.username}
+                username1={userInfo1.username}
+                modal={(boolean) => {
+                  this.setState({modal: boolean});
+                }}
+                url={this.props.url}
+                show={this.state.modal}
+                onHide={this.toggleModal}
+                disconnect={this.disconnect}
+                disabled={this.state.loadingInsta ? true : false}
+              />
+              {this.state.resetAccount &&
+                <ResetAccount
+                resetModal={(boolean) => {
+                   this.setState({resetModal: boolean});
+                }}
+                show={this.state.resetModal}
+                onHide={this.togglerResetModal}
+                resetAccount={this.resetAccount}
+                disabled={this.state.loadingInsta ? true : false}
+              />
+              }
+
             </div>
           </div>
         </div>
 
-        <Modal
-          show={this.state.modal}
-          onHide={this.toggleModal}
-          className="change-password"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Disconnect Instagram</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="bg-white">
-            Are you sure you want to disconnect
-            <span className="strong"> @{userInfo1.username}</span> account from
-            Konnect.bio? This will remove all your content from our platform.
-            <p>This action is not reversible.</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.setState({modal: false});
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              className="disconnect-btn"
-              onClick={this.disconnect}
-              disabled={this.state.loadingInsta ? true : false}
-            >
-              Yes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal
-          show={this.state.resetModal}
-          onHide={this.togglerResetModal}
-          className="change-password"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Reset Account</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="bg-white">
-            Are you sure you want to reset your Konnect.bio Account? This will
-            remove all your data from our platform.This action is not
-            reversible.
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.setState({resetModal: false});
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              className="disconnect-btn"
-              onClick={this.resetAccount}
-              disabled={this.state.loadingInsta ? true : false}
-            >
-              Yes
-            </Button>
-          </Modal.Footer>
-        </Modal>
+      
       </div>
     );
   }
