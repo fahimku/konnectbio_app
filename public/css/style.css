@@ -261,10 +261,11 @@ span.icon {
   margin-bottom: 15px;
 }
 .analytic-box .count-box .count {
+  font-size: 1rem;
 }
 .analytic-box .count-box .count-title {
   color: #798892;
-  font-size: 18px;
+  font-size: 1rem;
 }
 .analytics-loading {
   display: flex !important;

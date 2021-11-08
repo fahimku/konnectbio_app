@@ -4,24 +4,40 @@
         // border-top: 1px solid #c8c8c8;
         border-bottom: 1px solid #c8c8c8;
     }
+    
+    hr{
+        border-color: #ccc;;
+    }
+    .card{
+        box-shadow: 0px 0px 3px #ccc !important;
+        border:none;
+    }
+    .tab-content > .tab-pane{
+        padding: 2rem 0;
+    }
 
     .nav-tabs>.nav-item {
-        font-size: 16px;
         flex-grow: 0 !important;
         text-align: left;
         border-bottom: none;
 
+
         .nav-link.active {
             border: none !important;
-            color: teal;
             font-weight: normal;
-            background-color:#c8c8c8;
+            background-color:#185887 !important;
+            color:#FFF;
         }
 
         .nav-link {
             font-family: unset;
             background: none !important;
             font-weight: normal;
+            border-radius: 0;
+            padding: 10px 12px;
+        }
+        .nav-link.active:hover{
+            color:#FFF;
         }
     }
 
@@ -75,7 +91,4 @@
 
     /*hight Chart */
 
-    .highchart-container {
-        max-width: 1562px;
-    }
 }

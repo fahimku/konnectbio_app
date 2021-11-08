@@ -180,6 +180,21 @@
     .custome_signup{
         width:700px;
     }
+    .analytics-page {
+        padding:1rem;
+        background-color:#FFF;
+    }
+    .analytics-page .nav-tabs > .nav-item{
+        flex-grow: 1 !important;
+    }
+    .analytics-page .nav-tabs > .nav-item .nav-link{
+        padding: 9px 0 10px 0;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+    .analytics-page .ant-picker-range{
+        width:100%;
+    }
 
 
 }
@@ -340,6 +355,9 @@
         flex: 0 0 100%;
         margin-bottom: 20px;
         padding-bottom: 60px;
+    }
+    .pricing_tabs_ifti.nav-tabs{
+        width:280px;
     }
 
 
