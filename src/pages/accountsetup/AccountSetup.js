@@ -3,12 +3,10 @@ import axios from "axios";
 import Select from "react-select";
 import {Row, Col, Button} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
-import {toast} from "react-toastify";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import ResetAccount from './ResetAccount'
-import DisconnectInstagram from './DisconnectInstagram';
-
-import { createBrowserHistory } from "history";
+import ResetAccount from "./ResetAccount";
+import DisconnectInstagram from "./DisconnectInstagram";
+import {createBrowserHistory} from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -19,7 +17,7 @@ class AccountSetup extends React.Component {
     super(props);
     this.state = {
       packageIndex: "",
-      plan:'Monthly',
+      plan: "Monthly",
       upgrade: false,
       userInfo: userInfo,
       cancelSubscription: true,
@@ -51,7 +49,7 @@ class AccountSetup extends React.Component {
 
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({userInfo:userInfo})
+    this.setState({userInfo: userInfo});
     // const params = queryString.parse(window.location.search);
     if (this.props.resetAccount === false) {
       this.setState({resetAccount: false});
@@ -72,7 +70,9 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
@@ -99,26 +99,21 @@ class AccountSetup extends React.Component {
       });
   };
 
-
-
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     const maxIndex = this.state.allPackages.length - 1;
     this.setState({singlePackage: singlePackage[0]});
     this.setState({package: event.label});
 
     if (this.state.packageIndex < event.index && event.index !== maxIndex) {
       this.setState({upgrade: true});
-    }
-
-    else if (this.state.packageIndex > event.index) {
+    } else if (this.state.packageIndex > event.index) {
+      this.setState({upgrade: false});
+    } else if (event.index === this.state.packageIndex) {
       this.setState({upgrade: false});
     }
-
-    else if (event.index === this.state.packageIndex) {
-      this.setState({upgrade: false});
-    }
-
   };
 
   toggleModal = () => {
@@ -135,44 +130,8 @@ class AccountSetup extends React.Component {
     });
   };
 
-  disconnect = async () => {
-    this.setState({loadingInsta: true});
-    await axios
-      .put(`/users/revise/disconnectinstagram/${this.state.userId}`)
-      .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
-        localStorage.removeItem("access_token");
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
-        history.push("/connect");
-      })
-      .catch((err) => {
-        this.setState({loadingInsta: false});
-        console.log(err.response, "err");
-      });
-  };
-
-  resetAccount = async () => {
-    this.setState({loadingInsta: true});
-    await axios
-      .put(`/users/revise/resetaccount/${this.state.userId}`)
-      .then((response) => {
-        this.setState({modal: false});
-        this.setState({loadingInsta: false});
-        localStorage.removeItem("access_token");
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
-        history.push("/connect");
-      })
-      .catch((err) => {
-        this.setState({loadingInsta: false});
-        toast.error(err.response.data.message);
-        console.log(err.response, "err");
-      });
-  };
-
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-
     return (
       <div className="category-page">
         <div
@@ -286,9 +245,8 @@ class AccountSetup extends React.Component {
                               className="mt-0"
                               id="checkbox1"
                               type="radio"
-                            onChange={(e) => {
-                                this.setState({plan:e.target.value})
-
+                              onChange={(e) => {
+                                this.setState({plan: e.target.value});
                               }}
                             />{" "}
                             <Label for="checkbox1" />
@@ -305,7 +263,7 @@ class AccountSetup extends React.Component {
                               id="checkbox2"
                               type="radio"
                               onChange={(e) => {
-                                this.setState({plan:e.target.value})
+                                this.setState({plan: e.target.value});
                               }}
                             />{" "}
                             <Label for="checkbox2" />
@@ -328,8 +286,9 @@ class AccountSetup extends React.Component {
                     </div>
                   </>
                 )}
-      
+
               <DisconnectInstagram
+                userId={userInfo1.user_id}
                 username={this.props.username}
                 username1={userInfo1.username}
                 modal={(boolean) => {
@@ -338,26 +297,28 @@ class AccountSetup extends React.Component {
                 url={this.props.url}
                 show={this.state.modal}
                 onHide={this.toggleModal}
-                disconnect={this.disconnect}
-                disabled={this.state.loadingInsta ? true : false}
-              />
-              {this.state.resetAccount &&
-                <ResetAccount
-                resetModal={(boolean) => {
-                   this.setState({resetModal: boolean});
+                loading={(boolean) => {
+                  this.setState({loadingInsta: boolean});
                 }}
-                show={this.state.resetModal}
-                onHide={this.togglerResetModal}
-                resetAccount={this.resetAccount}
                 disabled={this.state.loadingInsta ? true : false}
               />
-              }
-
+              {this.state.resetAccount && (
+                <ResetAccount
+                  userId={userInfo1.user_id}
+                  resetModal={(boolean) => {
+                    this.setState({resetModal: boolean});
+                  }}
+                  show={this.state.resetModal}
+                  onHide={this.togglerResetModal}
+                  disabled={this.state.loadingInsta ? true : false}
+                  loading={(boolean) => {
+                    this.setState({ loadingInsta:boolean });
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
-
-      
       </div>
     );
   }

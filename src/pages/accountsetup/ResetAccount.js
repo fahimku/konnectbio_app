@@ -1,6 +1,31 @@
 import React from "react";
 import {Row, Col, Button, Modal} from "react-bootstrap";
+import axios from "axios";
+import {toast} from "react-toastify";
+import {createBrowserHistory} from "history";
+
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
+
 export default function ResetAccount(props) {
+  async function resetAccount() {
+    props.loading(true);
+    await axios
+      .put(`/users/revise/resetaccount/${props.userId}`)
+      .then((response) => {
+        props.resetModal(false);
+        props.loading(false);
+        localStorage.removeItem("access_token");
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        toast.error(response.data.message);
+        history.push("/connect");
+      })
+      .catch((err) => {
+        props.loading(false);
+        console.log(err, "err");
+      });
+  }
   return (
     <>
       <div className="white-box">
@@ -43,14 +68,16 @@ export default function ResetAccount(props) {
         <Modal.Footer>
           <Button
             onClick={() => {
-              props.resetModal(true);
+              props.resetModal(false);
             }}
           >
             Close
           </Button>
           <Button
             className="disconnect-btn"
-            onClick={props.resetAccount}
+            onClick={() => {
+              resetAccount();
+            }}
             disabled={props.disabled}
           >
             Yes

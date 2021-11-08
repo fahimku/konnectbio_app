@@ -2,7 +2,6 @@ import React from "react";
 import {Row, Col, Button, Modal} from "react-bootstrap";
 import axios from "axios";
 import {createBrowserHistory} from "history";
-
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
