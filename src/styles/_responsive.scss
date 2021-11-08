@@ -240,6 +240,7 @@
         max-width: 100% !important;
         padding-left: 10px;
         padding-right: 10px;
+        position:static;
     }
 
     .auth-logo i {
@@ -329,7 +330,7 @@
         height:auto;
         position:static;
     }
-    .app_main_cont_ift, .app_main_cont_ift .left-column.col-xl-3{
+    .app_main_cont_ift{
         position: static;
     }
     .custome_link_main.mobile-preview{
@@ -339,7 +340,7 @@
         width: 100%;
         overflow: auto;
         position: absolute;
-        height: 70%;
+        height: 86%; 
         padding: 0px 10px 10px 10px;
         left: 0;
     }
