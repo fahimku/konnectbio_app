@@ -307,8 +307,9 @@ class LinkinBio extends React.Component {
   handleScroll = (event) => {
     let node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    if (bottom) {
-      if (this.state.nextPageUrl) {
+    
+    if (bottom-50) {
+       if (this.state.nextPageUrl) {
         this.nextPageInstagramPosts(
           this.state.nextPageUrl,
           this.state.username

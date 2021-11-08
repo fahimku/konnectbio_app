@@ -55,9 +55,6 @@
         height: 100px;
         min-height: 100%;
     }
-    .LayoutWrap{
-        min-height: 90vh !important;
-    }
 }
 
 @media only screen and (max-width: 991px) {
@@ -213,6 +210,9 @@
     .analytics-page .ant-picker-range{
         width:100%;
     }
+    .LayoutWrap{
+        min-height: 93.5vh !important;
+    }
 
 
 }
@@ -224,6 +224,10 @@
 }
 
 @media only screen and (max-width: 760px) {
+
+    .LayoutWrap{
+        min-height: 90vh !important;
+    }
 
     .mobile-preview .visit-website {
         margin-bottom: 10px;
@@ -243,7 +247,6 @@
         max-width: 100% !important;
         padding-left: 10px;
         padding-right: 10px;
-        position:static;
     }
 
     .auth-logo i {
@@ -330,21 +333,14 @@
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
-        height:auto;
-        position:static;
+        height: 85vh;
     }
-    .app_main_cont_ift{
-        position: static;
-    }
-    .custome_link_main.mobile-preview{
-        position: relative;
-    }
+    
     .mobile-preview .mobile-gallery{
         width: 100%;
         overflow: auto;
         position: absolute;
-        height: 90%; 
-        padding: 0px 10px 10px 10px;
+        height: 90%;
         left: 0;
     }
 
