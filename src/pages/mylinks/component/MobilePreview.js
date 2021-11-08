@@ -37,7 +37,7 @@ const MobilePreview = ({
     }
   }
   return (
-    <div className={`mobile-preview ` + style.myLinks}>
+    <div className={`custome_link_main mobile-preview ` + style.myLinks}>
       <div className="mobile-header">
         <img
           className="place-holder-image"

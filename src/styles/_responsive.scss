@@ -286,11 +286,17 @@
         margin: 0 !important;
         width: 100% !important;
         height:auto;
+        position:static;
+    }
+    .custome_link_main.mobile-preview{
+        position: relative;
     }
     .mobile-preview .mobile-gallery{
-        width:100%;
-        height: 600px;
+        width: 100%;
         overflow: auto;
+        position: absolute;
+        height: 86%;
+        padding-bottom: 10px;
     }
     .mobile-preview .custome_link{
         width: 100% !important;
