@@ -70,14 +70,18 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
-        const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
           this.setState({upgrade: true});
         }
+
+        if (index == index) {
+          this.setState({upgrade: false});
+  
+        }
+        
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
@@ -126,18 +130,23 @@ class AccountSetup extends React.Component {
   // };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
     const maxIndex = this.state.allPackages.length - 1;
     this.setState({singlePackage: singlePackage[0]});
     this.setState({package: event.label});
 
-    if (this.state.packageIndex <= event.index && event.index !== maxIndex) {
+    if (this.state.packageIndex < event.index && event.index !== maxIndex) {
       this.setState({upgrade: true});
-    } else if (this.state.packageIndex > event.index) {
+    }
+
+    else if (this.state.packageIndex > event.index) {
       this.setState({upgrade: false});
     }
+
+    else if (event.index === this.state.packageIndex) {
+      this.setState({upgrade: false});
+    }
+
   };
 
   toggleModal = () => {
