@@ -226,18 +226,6 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
 
-                {/* <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Brand"
-                  link="/app/brands"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
                 {PermissionHelper.validate(["access_analytics"]) ? (
                   <LinksGroup
                     className="sidebar-nav-links"
@@ -250,30 +238,7 @@ class Sidebar extends React.Component {
                     labelColor="info"
                   />
                 ) : null}
-                {/* <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Media Library"
-                  // link="/app/extra/gallery"
-                  link="/app/media/library"
-                  isHeader
-                  iconElement={<span className="glyphicon glyphicon-picture" />}
-                  //label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Collect Media"
-                  // link="/app/tables/static"
-                  link="/app/couponsss"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-download-alt"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
+
                 <div className={`settings-bottom ${s.bottomLinks}`}>
                   <LinksGroup
                     className="sidebar-nav-links "

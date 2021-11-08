@@ -91,6 +91,7 @@ import MyCategory from "../../pages/mycategory/MyCategory";
 import AccountSetup from "../../pages/accountsetup/AccountSetup";
 // import Payment from "../../pages/payment/payment";
 import Home from "../../pages/home/Home";
+import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -151,6 +152,28 @@ class Layout extends React.Component {
   }
 
   render() {
+    const loggedIn = localStorage.getItem("token");
+
+    const PrivateRoute = ({ component: Component, ...rest }) => {
+      const Components = PermissionHelper.checkPermissions(Component, rest);
+      return (
+        <Route
+          {...rest}
+          render={(props) =>
+            loggedIn ? (
+              <Components {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: props.location },
+                }}
+              />
+            )
+          }
+        />
+      );
+    };
     return (
       <div
         className={[
@@ -468,7 +491,13 @@ class Layout extends React.Component {
                         component={LinkinBioShop}
                       />
                       <Route path="/app/brands" exact component={Brands} />
-                      <Route path="/app/analysis" exact component={Analysis} />
+                      {/* <Route path="/app/analysis" exact component={Analysis} /> */}
+                      <PrivateRoute
+                        exact
+                        path="/app/analysis"
+                        component={Analysis}
+                        permissions={["access_analytics"]}
+                      />
                       <Route
                         path="/app/linkinbio/:code"
                         exact
