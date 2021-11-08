@@ -5,8 +5,10 @@ import {Row, Col, Button, Modal} from "react-bootstrap";
 import {Label, Input} from "reactstrap";
 import {toast} from "react-toastify";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import {createBrowserHistory} from "history";
+import ResetAccount from './ResetAccount'
+import DisconnectInstagram from './DisconnectInstagram';
 
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -77,7 +79,7 @@ class AccountSetup extends React.Component {
           this.setState({upgrade: true});
         }
 
-        if (index == index) {
+        if (index) {
           this.setState({upgrade: false});
   
         }
@@ -200,7 +202,7 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(this.state.singlePackage, "single");
+
     return (
       <div className="category-page">
         <div
@@ -238,7 +240,6 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
 
-                {console.log(this.state.singlePackage.package_name)}
                 {this.state.singlePackage.package_name !== "Individual" &&
                   this.state.upgrade && (
                     <Row className="mt-4">
@@ -357,7 +358,8 @@ class AccountSetup extends React.Component {
                     </div>
                   </>
                 )}
-              <div className="white-box">
+             
+              {/* <div className="white-box">
                 <Row>
                   <Col md={12}>
                     <h5 className="page-title line-heading">
@@ -405,7 +407,31 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
               </div>
-              {this.state.resetAccount && (
+             */}
+              <DisconnectInstagram
+                username={this.props.username}
+                username1={userInfo1.username}
+                modal={(boolean) => {
+                  this.setState({modal: boolean});
+                }}
+                url={this.props.url}
+                show={this.state.modal}
+                onHide={this.toggleModal}
+                disc0nnect={this.disconnect}
+                disabled={this.state.loadingInsta ? true : false}
+              />
+              {this.state.resetAccount &&
+                <ResetAccount
+                resetModal={(boolean) => {
+                   this.setState({resetModal: boolean});
+                }}
+                show={this.state.resetModal}
+                onHide={this.togglerResetModal}
+                resetAccount={this.resetAccount}
+                disabled={this.state.loadingInsta ? true : false}
+              />
+              }
+              {/* {this.state.resetAccount && (
                 <div className="white-box">
                   <Row>
                     <Col md={12}>
@@ -431,12 +457,12 @@ class AccountSetup extends React.Component {
                     </Col>
                   </Row>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
 
-        <Modal
+        {/* <Modal
           show={this.state.modal}
           onHide={this.toggleModal}
           className="change-password"
@@ -467,9 +493,9 @@ class AccountSetup extends React.Component {
               Yes
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
-        <Modal
+        {/* <Modal
           show={this.state.resetModal}
           onHide={this.togglerResetModal}
           className="change-password"
@@ -499,7 +525,7 @@ class AccountSetup extends React.Component {
               Yes
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }
