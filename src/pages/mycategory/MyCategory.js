@@ -4,8 +4,9 @@ import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-import { createBrowserHistory } from "history";
+
 import CustomCategory from "./component/CustomCategory";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -180,7 +181,7 @@ class MyCategory extends React.Component {
                       <Button
                         variant="primary"
                         className="btn-block"
-                        onClick={() => history.push("/app/account/setup")}
+                        onClick={() => this.props.history.push("/app/account/setup")}
                       >
                         Change Plan
                       </Button>
