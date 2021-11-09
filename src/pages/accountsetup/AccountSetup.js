@@ -6,9 +6,8 @@ import {Label, Input} from "reactstrap";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
-
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
 class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
@@ -165,7 +164,6 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
-
                 {this.state.singlePackage.package_name !== "Individual" &&
                   this.state.upgrade && (
                     <Row className="mt-4">

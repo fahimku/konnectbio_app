@@ -19,6 +19,7 @@ import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 import { createBrowserHistory } from "history";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -33,6 +34,7 @@ class LinkinBio extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       iframeKey: 0,
+      nextPageCount:0,
       deleteId: "",
       userId: userId,
       startDate: moment(),
@@ -103,6 +105,7 @@ class LinkinBio extends React.Component {
         let PreviousInstagramPosts = this.state.instagramPosts;
         //Check Instagram has more posts
         if (nextPageInstagramPosts.paging.hasOwnProperty("next")) {
+
           this.setState({ nextPageUrl: nextPageInstagramPosts.paging.next });
         } else {
           this.setState({ nextPageUrl: "" });
@@ -306,11 +309,11 @@ class LinkinBio extends React.Component {
 
   handleScroll = (event) => {
     let node = event.target;
-    const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    
-    if (bottom-50) {
-       if (this.state.nextPageUrl) {
-        this.nextPageInstagramPosts(
+    const bottom = parseInt(node.scrollHeight+1 - node.scrollTop) === parseInt(node.clientHeight) || parseInt(node.scrollHeight- node.scrollTop) === parseInt(node.clientHeight) ;
+
+    if (bottom) {
+      if (this.state.nextPageUrl) {
+          this.nextPageInstagramPosts(
           this.state.nextPageUrl,
           this.state.username
         );
@@ -480,7 +483,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
-              pageName="My Posts"
+              pageName={`My Post`}
               placeholder={placeholder}
               username={this.state.username}
               error={this.state.error}

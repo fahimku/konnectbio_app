@@ -271,9 +271,8 @@ class LinkinBioShop extends React.Component {
 
   handleScroll = (event) => {
     let node = event.target;
-    const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
+    const bottom = parseInt(node.scrollHeight+1 - node.scrollTop) === parseInt(node.clientHeight) || parseInt(node.scrollHeight- node.scrollTop) === parseInt(node.clientHeight);
     if (bottom) {
-      console.log("bottom reached");
       if (this.state.page) {
         this.nextPageInstagramPosts(
           this.state.username,
