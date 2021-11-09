@@ -7,6 +7,7 @@ import placeholder from "../../../src/images/placeholder.svg";
 import CustomCategory from "./component/CustomCategory";
 import { createBrowserHistory } from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
+// import Confirm from "../../components/Helpers/ConfirmationHelper";
 import {
   SortableContainer,
   SortableElement,
@@ -194,15 +195,12 @@ class MyCategory extends React.Component {
       });
   };
   onSortEnd = ({ oldIndex, newIndex }) => {
-    console.log(oldIndex, "oldIndex");
-    console.log(newIndex, "newIndex");
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
     });
   };
 
   render() {
-    console.log(this.state.saveCategories);
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const SortableItem = SortableElement(({ value }) => (
       <div key={value.value} className="cat-box col-sm-3 col-6">
