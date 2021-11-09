@@ -4,18 +4,20 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
 import { createBrowserHistory } from "history";
-import Placeholder from "../../../images/placeholder.svg";
+// import Placeholder from "../../../images/placeholder.svg";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
-class CustomCategory extends React.Component {
+class EditCustomCategory extends React.Component {
   state = {
     loading: false,
     cat_modal: false,
     imageFiles: [],
-    category_name: "",
+    category_name: this.props.catData.label,
+    cat_image: this.props.catData.image,
+    cat_id: this.props.catData.value,
   };
   onChangeInputImage = (e) => {
     const files = [];
@@ -45,10 +47,10 @@ class CustomCategory extends React.Component {
       this.state.imageFiles[0] === undefined ? "" : this.state.imageFiles[0]
     );
     formData.append("category_name", this.state.category_name);
-    formData.append("user_id", this.props.userID);
+    // formData.append("user_id", this.props.userID);
     this.setState({ loading: true });
     await axios
-      .post(`/customcategory/reserve`, formData, {
+      .put(`/customcategory/revise/${this.state.cat_id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -67,12 +69,12 @@ class CustomCategory extends React.Component {
       });
   };
   categoryToggleModal = () => {
-    if (this.state.cat_modal) {
-      this.setState({
-        category_name: "",
-        imageFiles: [],
-      });
-    }
+    // if (this.state.cat_modal) {
+    //   this.setState({
+    //     category_name: "",
+    //     imageFiles: [],
+    //   });
+    // }
     const { cat_modal } = this.state;
     this.setState({
       cat_modal: !cat_modal,
@@ -87,7 +89,7 @@ class CustomCategory extends React.Component {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Custom Category</Modal.Title>
+          <Modal.Title>Edit Custom Category</Modal.Title>
         </Modal.Header>
         <form onSubmit={this.onSubmitting}>
           <div className="mb-3">
@@ -117,7 +119,7 @@ class CustomCategory extends React.Component {
                   ) : (
                     <img
                       alt="profile-icon"
-                      src={Placeholder}
+                      src={this.state.cat_image}
                       style={{ width: "100px", height: "100px" }}
                       className="circle profile-icon"
                     />
@@ -137,6 +139,7 @@ class CustomCategory extends React.Component {
                 name="category_name"
                 placeholder="Enter Category Name"
                 onInput={this.handleChange}
+                value={this.state.category_name}
                 className="form-control comment-field"
                 required
                 autoComplete="off"
@@ -156,7 +159,7 @@ class CustomCategory extends React.Component {
                   type="submit"
                   className="category-btn btn-block "
                 >
-                  Add Category
+                  Edit Category
                 </Button>
               )}
             </Col>
@@ -165,21 +168,38 @@ class CustomCategory extends React.Component {
       </Modal>
     );
   };
+  // fetchSingleCategory = async (id) => {
+  //   await axios
+  //     .put(`/customcategory/revise/${id}`)
+  //     .then((response) => {
+  //       const selectCategories = [];
+  //       const myCustomCategories = response.data.message;
+  //       myCustomCategories.map(({ category_id, category_name, image_url }) => {
+  //         return selectCategories.push({
+  //           value: category_id,
+  //           label: category_name,
+  //           image: image_url,
+  //         });
+  //       });
+  //       this.setState({ myCustomCategory: selectCategories });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
   render() {
     return (
-      <div className="catmodel-box">
-        <Button
-          variant="primary"
-          className="btn-block"
+      <>
+        <button
+          className="btn btn-link edit-icon"
           onClick={this.categoryToggleModal}
         >
-          Create Custom Categories
-        </Button>
-
+          <span className="fa fa-edit" title="Edit"></span>
+        </button>
         {this.categoryModal()}
-      </div>
+      </>
     );
   }
 }
-export default CustomCategory;
+export default EditCustomCategory;
