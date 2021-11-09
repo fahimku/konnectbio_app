@@ -15,6 +15,11 @@ const PaymentButton = (props) => {
         >
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
+          <input
+            type="hidden"
+            name="x_recurring_payment_type"
+            value={props.plan}
+          />
           <input type="hidden" name="x_recurring_billing" value="TRUE" />
           <input name="x_recurring_billing_amount" value="10" type="hidden" />
           <input
@@ -72,6 +77,11 @@ const PaymentButton = (props) => {
         >
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
+          <input
+            type="hidden"
+            name="x_recurring_payment_type"
+            value={props.plan}
+          />
           <input type="hidden" name="x_recurring_billing" value="TRUE" />
           <input name="x_recurring_billing_amount" value="96" type="hidden" />
           <input
@@ -122,6 +132,12 @@ const PaymentButton = (props) => {
         >
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
+          <input
+            type="hidden"
+            name="x_recurring_payment_type"
+            value={props.plan}
+          />
+
           <input type="hidden" name="x_recurring_billing" value="TRUE" />
           <input name="x_recurring_billing_amount" value="25" type="hidden" />
           <input
@@ -168,6 +184,12 @@ const PaymentButton = (props) => {
         >
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
+          <input
+            type="hidden"
+            name="x_recurring_payment_type"
+            value={props.plan}
+          />
+
           <input type="hidden" name="x_recurring_billing" value="TRUE" />
           <input name="x_recurring_billing_amount" value="240" type="hidden" />
           <input

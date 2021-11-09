@@ -115,7 +115,7 @@ class Login extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-              <span>New to KonnectBio?</span>&nbsp;
+                <span>New to KonnectBio?</span>&nbsp;
                 <button
                   className="btn btn-link"
                   onClick={() => {
