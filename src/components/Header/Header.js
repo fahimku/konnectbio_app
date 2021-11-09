@@ -3,10 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
-
 import { logoutUser } from "../../actions/auth";
 import { STATUS } from "react-joyride";
-
 import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 import {
   toggleSidebar,
@@ -15,18 +13,7 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import logo from "../../images/logo.svg";
-// import adminDefault from "../../images/chat/chat2.png";
-// import MenuIcon from "../../images/sidebar/Fill/MenuIcon";
-// import FlipIcon from "../../images/sidebar/Outline/Flip";
-// import CloseIcon from "../../images/sidebar/Fill/CloseIconOne";
-// import SearchIcon from "../../images/sidebar/Outline/Search";
-// import SettingsIcon from "../../images/sidebar/Outline/Settings";
-// import CalendarIcon from "../../images/sidebar/Outline/Calendar";
-// import PersonIcon from "../../images/sidebar/Outline/Person";
-// import EmailIcon from "../../images/sidebar/Outline/Email";
-// import PowerIcon from "../../images/sidebar/Outline/Power";
 
-// import s from "./Header.module.scss"; // eslint-disable-line css-modules/no-unused-class
 import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
@@ -183,11 +170,7 @@ class Header extends React.Component {
     const url = config.visitorURL + "/";
     return (
       <>
-
-
-
         <div className="mobile-header-responsive">
-          
           <div
             className="top-mobile-header"
             style={{ borderBottom: "1px solid #c8c8c8" }}

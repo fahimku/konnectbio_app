@@ -75,8 +75,6 @@ class Sidebar extends React.Component {
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav
-          // onMouseEnter={this.onMouseEnter}
-          // onMouseLeave={this.onMouseLeave}
           className={s.root}
         >
           <header
@@ -117,18 +115,6 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-                {/* <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Brand"
-                  link="/app/brands"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Analytics"
