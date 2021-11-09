@@ -9,6 +9,13 @@ class AccountUpgrade extends React.Component {
   render() {
     return (
       <div className="account-upgrade-page">
+         {/* <iframe
+                  id="iframe"
+                  //key={this.state.iframeKey}
+                  src={`https://konnect.bio/kbiouser3?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  title="linkin"
+                  className="myshop-iframe"
+                ></iframe> */}
         <div className={"container-fluid"}>
           <div className="justify-content-md-center">
             <div className="connections mt-5">

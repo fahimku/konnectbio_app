@@ -1,6 +1,27 @@
 import React from "react";
 import {Row, Col, Button, Modal} from "react-bootstrap";
+import axios from "axios";
+import {createBrowserHistory} from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
+
 export default function DisconnectInstagram(props) {
+  async function disconnect() {
+    props.loading(true);
+    await axios
+      .put(`/users/revise/disconnectinstagram/${props.userId}`)
+      .then((response) => {
+        props.modal(false);
+        props.loading(false);
+        localStorage.removeItem("access_token");
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        history.push("/connect");
+      })
+      .catch((err) => {
+        props.loading(true);
+      });
+  }
   return (
     <>
       <div className="white-box">
@@ -70,7 +91,9 @@ export default function DisconnectInstagram(props) {
           </Button>
           <Button
             className="disconnect-btn"
-            onClick={props.disconnect}
+            onClick={() => {
+              disconnect();
+            }}
             disabled={props.disabled}
           >
             Yes

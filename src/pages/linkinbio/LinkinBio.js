@@ -69,16 +69,12 @@ class LinkinBio extends React.Component {
   }
 
   componentWillMount() {
-
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
     this.fetchInstagramPosts(savedAccessToken);
     this.fetchCategories();
   }
 
-  componentWillUnmount() {
-
-  }
 
   async fetchInstagramPosts(token) {
     await axios
@@ -93,24 +89,6 @@ class LinkinBio extends React.Component {
       .catch((err) => {
         console.log(err);
 
-        // if (err.response.data.message.type) {
-        //   //  Retrieves the string and converts it to a JavaScript object
-        //   const userInformation = localStorage.getItem("userInfo");
-        //   const parseUserInformation = JSON.parse(userInformation);
-        //   // Modifies the object, converts it to a string and replaces the existing `ship` in LocalStorage
-        //   parseUserInformation.access_token = "";
-        //   //Store User Information
-        //   const storeUserInformation = JSON.stringify(parseUserInformation);
-        //   localStorage.setItem("userInfo", storeUserInformation);
-        //   localStorage.removeItem("access_token");
-        //   this.setState({
-        //     error: {
-        //       type: "InstagramAuthFail",
-        //       message:
-        //         "Your Instagram connection is expired. pleased connect in again",
-        //     },
-        //   });
-        // }
       });
   }
   //Next Page Instagram Posts Request From User
@@ -159,20 +137,12 @@ class LinkinBio extends React.Component {
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
 
-        // this.setState({ startDate: response.data.message.start_date });
-        // this.setState({ endDate: response.data.message.end_date });
-
+    
         this.changeDateRange(
           response.data.message.start_date,
           response.data.message.end_date
         );
-        // let subCategory = [];
-        // this.fetchSubCategories(category).then(function () {
-        //   response.data.message.sub_categories.map((subCategoryId) => {
-        //     return subCategory.push(subCategoryId.sub_category_id);
-        //   });
-        //   that.setState({subCategory: subCategory});
-        // });
+    
       })
       .catch((err) => {
         this.setState({
@@ -199,23 +169,6 @@ class LinkinBio extends React.Component {
         this.setState({ categories: selectCategories });
       });
   };
-
-  //Fetch Sub Categories
-  async fetchSubCategories(category_id) {
-    await axios
-      .post(`/common/receive/subCategories`, { category_id: category_id })
-      .then((response) => {
-        const selectSubCategories = [];
-        const subCategories = response.data.message;
-        subCategories.map(({ sub_category_id, sub_category_name }) => {
-          return selectSubCategories.push({
-            value: sub_category_id,
-            label: sub_category_name,
-          });
-        });
-        this.setState({ subCategories: selectSubCategories });
-      });
-  }
 
   savePost = () => {
     let newRedirectedUrl;
@@ -354,8 +307,9 @@ class LinkinBio extends React.Component {
   handleScroll = (event) => {
     let node = event.target;
     const bottom = node.scrollHeight - node.scrollTop === node.clientHeight;
-    if (bottom) {
-      if (this.state.nextPageUrl) {
+    
+    if (bottom-50) {
+       if (this.state.nextPageUrl) {
         this.nextPageInstagramPosts(
           this.state.nextPageUrl,
           this.state.username
@@ -423,7 +377,7 @@ class LinkinBio extends React.Component {
   changeCategory = (category) => {
     if (category) {
       this.setState({ category: category.split() });
-      // this.fetchSubCategories(category);
+      
     }
   };
 
@@ -536,9 +490,7 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${
-              !this.state.selectPost ? "no-padding" : ""
-            } `}
+            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""} `}
             md="7"
             xl="9"
             xs="12"
@@ -560,7 +512,6 @@ class LinkinBio extends React.Component {
                 ></iframe>
               ) : null}
             </div>
-
             <Row className="linked_edit_box">
               <Col xs="12" className="p-5">
                 {this.shopRightBar()}

@@ -210,6 +210,9 @@
     .analytics-page .ant-picker-range{
         width:100%;
     }
+    .LayoutWrap{
+        min-height: 93.5vh !important;
+    }
 
 
 }
@@ -221,6 +224,10 @@
 }
 
 @media only screen and (max-width: 760px) {
+
+    .LayoutWrap{
+        min-height: 90vh !important;
+    }
 
     .mobile-preview .visit-website {
         margin-bottom: 10px;
@@ -326,18 +333,14 @@
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
-        height:auto;
-        position:static;
+        height: 85vh;
     }
-    .custome_link_main.mobile-preview{
-        position: relative;
-    }
+    
     .mobile-preview .mobile-gallery{
         width: 100%;
         overflow: auto;
         position: absolute;
-        height: 86%;
-        padding: 0px 10px 10px 10px;
+        height: 90%;
         left: 0;
     }
 
