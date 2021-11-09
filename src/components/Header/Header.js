@@ -1,10 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import { withRouter } from "react-router";
-import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
-import { logoutUser } from "../../actions/auth";
-import { STATUS } from "react-joyride";
+import {withRouter} from "react-router";
+import {Navbar, Nav, NavbarToggler, Collapse} from "reactstrap";
+import {logoutUser} from "../../actions/auth";
+import {STATUS} from "react-joyride";
 import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 import {
   toggleSidebar,
@@ -15,7 +15,7 @@ import {
 import logo from "../../images/logo.svg";
 
 import config from "../../../src/config";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import TopBar from "../../components/Topbar";
 class Header extends React.Component {
   static propTypes = {
@@ -30,8 +30,6 @@ class Header extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
-
-    console.log(username);
 
     super(props);
 
@@ -83,14 +81,14 @@ class Header extends React.Component {
   componentDidMount() {
     this.toggleSidebar();
     if (window.location.href.includes("main")) {
-      this.setState({ run: false });
+      this.setState({run: false});
     }
   }
 
   handleJoyrideCallback = (CallBackProps) => {
-    const { status } = CallBackProps;
+    const {status} = CallBackProps;
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      this.setState({ run: false });
+      this.setState({run: false});
     }
   };
 
@@ -101,7 +99,7 @@ class Header extends React.Component {
   };
 
   toggleFocus = () => {
-    this.setState({ focus: !this.state.focus });
+    this.setState({focus: !this.state.focus});
   };
 
   toggleNotifications() {
@@ -152,7 +150,7 @@ class Header extends React.Component {
     if (!this.state.navs[id]) {
       newState[id] = true;
     }
-    this.setState({ navs: newState });
+    this.setState({navs: newState});
   }
 
   copyToClipboard = (e) => {
@@ -173,7 +171,7 @@ class Header extends React.Component {
         <div className="mobile-header-responsive">
           <div
             className="top-mobile-header"
-            style={{ borderBottom: "1px solid #c8c8c8" }}
+            style={{borderBottom: "1px solid #c8c8c8"}}
           >
             <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
               <NavbarToggler
@@ -185,16 +183,16 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="My Profile"
-                    link="/app/account/profile"
+                    header="Bio Shop"
+                    link="/app/linkinbio-shop"
                     isHeader
                     iconElement={
-                      <span className="glyphicon glyphicon-user"></span>
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
                     }
-                    // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
                   />
+
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -203,18 +201,6 @@ class Header extends React.Component {
                     isHeader
                     iconElement={
                       <span className="glyphicon glyphicon-th-list"></span>
-                    }
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-                  <LinksGroup
-                    onClick={() => this.toggle(3)}
-                    className="sidebar-nav-links"
-                    header="Bio Shop"
-                    link="/app/linkinbio-shop"
-                    isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-shopping-cart"></span>
                     }
                     iconName="flaticon-users"
                     labelColor="info"
@@ -247,17 +233,55 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Categories"
-                    link="/app/account/categories"
+                    header="My Profile"
+                    link="/app/account/profile"
                     isHeader
                     iconElement={
-                      <span className="glyphicon glyphicon-th"></span>
+                      <span className="glyphicon glyphicon-user"></span>
                     }
                     // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
                   />
 
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Category Setup"
+                    link="/app/account/categories"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Account Setup"
+                    link="/app/account/setup"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Delete Account"
+                    link="/app/account/Delete"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
