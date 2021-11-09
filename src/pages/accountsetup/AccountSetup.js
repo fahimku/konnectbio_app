@@ -6,8 +6,12 @@ import {Label, Input} from "reactstrap";
 import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+import {createBrowserHistory} from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 
+const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
   constructor(props) {
     super(props);
@@ -66,26 +70,29 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
-        const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id
         );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
           this.setState({upgrade: true});
         }
-
         if (index) {
           this.setState({upgrade: false});
         }
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
-        packages.map(({package_id, package_name}, index) => {
+        packages.map(({package_id, package_name}, index1) => {
+          let disabledSelect = false;
+          if (index >= index1) {
+            disabledSelect = true;
+          }
           return selectPackages.push({
             value: package_id,
             label: package_name,
-            index: index,
+            isdisabled: disabledSelect,
+            index: index1,
           });
         });
         this.setState({packages: selectPackages});
@@ -154,6 +161,8 @@ class AccountSetup extends React.Component {
                   <Col md={2}>Change Plan:</Col>
                   <Col md={3}>
                     <Select
+                      isSearchable={false}
+                      isOptionDisabled={(option) => option.isdisabled} // disable an option
                       options={this.state.packages}
                       placeholder="Select package"
                       value={{
@@ -164,6 +173,7 @@ class AccountSetup extends React.Component {
                     />
                   </Col>
                 </Row>
+
                 {this.state.singlePackage.package_name !== "Individual" &&
                   this.state.upgrade && (
                     <Row className="mt-4">
@@ -307,7 +317,7 @@ class AccountSetup extends React.Component {
                   onHide={this.togglerResetModal}
                   disabled={this.state.loadingInsta ? true : false}
                   loading={(boolean) => {
-                    this.setState({ loadingInsta:boolean });
+                    this.setState({loadingInsta: boolean});
                   }}
                 />
               )}
