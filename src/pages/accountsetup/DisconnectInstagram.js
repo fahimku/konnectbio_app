@@ -26,15 +26,15 @@ export default function DisconnectInstagram(props) {
     <>
       <div className="white-box">
         <Row>
-          <Col md={12}>
+          <Col xl={12}>
             <h5 className="page-title line-heading">Instagram Connection</h5>
           </Col>
         </Row>
         <Row>
-          <Col md={2}>
+          <Col md={4} xl={2}>
             <div className="category_count">Connection Status</div>
           </Col>
-          <Col md={3} className="text-right">
+          <Col md={4} xl={3} className="text-right">
             {props.username1 !== "" || props.username ? (
               <>
                 <div className="connected-text text-left mb-2">

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 //import {Progress, Alert} from "reactstrap";
-import { withRouter } from "react-router-dom";
-import { dismissAlert } from "../../actions/alerts";
+import {withRouter} from "react-router-dom";
+import {dismissAlert} from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
 import {
@@ -12,7 +12,7 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
-import { logoutUser } from "../../actions/auth";
+import {logoutUser} from "../../actions/auth";
 import PermissionHelper from "../PermissionHelper";
 
 class Sidebar extends React.Component {
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
 
   componentDidMount() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ userType: userInfo.user_type });
+    this.setState({userType: userInfo.user_type});
   }
 
   onMouseEnter() {
@@ -74,11 +74,7 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
-        <nav
-          // onMouseEnter={this.onMouseEnter}
-          // onMouseLeave={this.onMouseLeave}
-          className={s.root}
-        >
+        <nav className={s.root}>
           <header
             className={s.logo}
             onClick={() => {
@@ -91,44 +87,44 @@ class Sidebar extends React.Component {
           </header>
 
           <ul className={s.nav}>
-            {this.state.userType === "Brand" ? (
-              <>
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Shop"
-                  link="/app/linkinbio-shop"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="All"
-                  link="/app/linkinbio"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                {/* <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Brand"
-                  link="/app/brands"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
+            <>
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Bio Shop"
+                link="/app/linkinbio-shop"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="All Posts"
+                link="/app/linkinbio"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-th-list"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Links"
+                link="/app/my/links"
+                isHeader
+                iconElement={<span className="glyphicon glyphicon-link"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              {PermissionHelper.validate(["access_analytics"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Analytics"
@@ -139,40 +135,47 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
+              ) : null}
+
+              <div className={`settings-bottom ${s.bottomLinks}`}>
                 <LinksGroup
-                  className="sidebar-nav-links"
-                  header="My Coupon"
-                  link="/app/extra/coupon"
-                  isHeader
-                  iconElement={<span className="fa fa-gift"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                {/* <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Media Library"
-                  // link="/app/extra/gallery"
-                  link="/app/media/library"
-                  isHeader
-                  iconElement={<span className="glyphicon glyphicon-picture" />}
-                  //label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Collect Media"
-                  // link="/app/tables/static"
-                  link="/app/extra/couponss"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-download-alt"></span>
+                  className="sidebar-nav-links "
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
                   }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                /> */}
+                  activeItem={this.props.activeItem}
+                  header="Settings"
+                  isHeader
+                  labelColor="danger"
+                  iconElement={
+                    <span
+                      className="fa fa-cogs	
+                    "
+                    ></span>
+                  }
+                  iconName="flaticon-user"
+                  link="/admin"
+                  index="admin"
+                  exact={false}
+                  childrenLinks={[
+                    {
+                      header: "My Profile",
+                      link: "/app/account/profile",
+                    },
+                    {
+                      header: "Category Setup",
+                      link: "/app/account/categories",
+                    },
+                    {
+                      header: "Account Setup",
+                      link: "/app/account/setup",
+                    },
+                    {
+                      header: "Delete Account",
+                      link: "/app/account/delete",
+                    },
+                  ]}
+                />
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Sign Out"
@@ -185,114 +188,8 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              </>
-            ) : (
-              <>
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Bio Shop"
-                  link="/app/linkinbio-shop"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-shopping-cart"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="All Posts"
-                  link="/app/linkinbio"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-th-list"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Links"
-                  link="/app/my/links"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-link"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-
-                {PermissionHelper.validate(["access_analytics"]) ? (
-                  <LinksGroup
-                    className="sidebar-nav-links"
-                    header="Analytics"
-                    link="/app/analysis"
-                    isHeader
-                    iconElement={<span className="fa fa-bar-chart-o"></span>}
-                    // label="Awesome"
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-                ) : null}
-
-                <div className={`settings-bottom ${s.bottomLinks}`}>
-                  <LinksGroup
-                    className="sidebar-nav-links "
-                    onActiveSidebarItemChange={(activeItem) =>
-                      this.props.dispatch(changeActiveSidebarItem(activeItem))
-                    }
-                    activeItem={this.props.activeItem}
-                    header="Settings"
-                    isHeader
-                    labelColor="danger"
-                    iconElement={
-                      <span
-                        className="fa fa-cogs	
-                    "
-                      ></span>
-                    }
-                    iconName="flaticon-user"
-                    link="/admin"
-                    index="admin"
-                    exact={false}
-                    childrenLinks={[
-                      {
-                        header: "My Profile",
-                        link: "/app/account/profile",
-                      },
-                      {
-                        header: "Category Setup",
-                        link: "/app/account/categories",
-                      },
-                      {
-                        header: "Account Setup",
-                        link: "/app/account/setup",
-                      },
-                      {
-                        header: "Delete Account",
-                        link: "/app/account/delete",
-                      },
-                    ]}
-                  />
-                  <LinksGroup
-                    className="sidebar-nav-links"
-                    header="Sign Out"
-                    link="/logout"
-                    isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-log-out"></span>
-                    }
-                    // label="Awesome"
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-                </div>
-              </>
-            )}
+              </div>
+            </>
           </ul>
         </nav>
       </div>
