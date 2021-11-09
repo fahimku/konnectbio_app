@@ -30,15 +30,15 @@ export default function ResetAccount(props) {
     <>
       <div className="white-box">
         <Row>
-          <Col md={12}>
+          <Col xl={12}>
             <h5 className="page-title line-heading">Reset Account</h5>
           </Col>
         </Row>
         <Row>
-          <Col md={2}>
+          <Col md={4} xl={2}>
             <div className="category_count">This will reset your account.</div>
           </Col>
-          <Col md={3} className="text-right">
+          <Col md={4} xl={3} className="text-right">
             <Button
               onClick={() => {
                 props.resetModal(true);

@@ -150,7 +150,7 @@ class AccountSetup extends React.Component {
               <div className="white-box mt-5">
                 <h5 className="page-title line-heading">Manage Plan</h5>
                 <Row>
-                  <Col md={8}>
+                  <Col  md={8}>
                     <h4 className="package_name">
                       Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
@@ -158,8 +158,8 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={2}>Change Plan:</Col>
-                  <Col md={3}>
+                  <Col  md={4}  xl={2}>Change Plan:</Col>
+                  <Col  md={4}  xl={3}>
                     <Select
                       isSearchable={false}
                       isOptionDisabled={(option) => option.isdisabled} // disable an option
@@ -178,8 +178,8 @@ class AccountSetup extends React.Component {
                   this.state.upgrade && (
                     <Row className="mt-4">
                       <>
-                        <Col md={2}>Status Activity:</Col>
-                        <Col md={3}>
+                        <Col md={4}  xl={2}>Status Activity:</Col>
+                        <Col md={4}  xl={3}>
                           <Button
                             variant="primary"
                             className="btn-block"
@@ -206,26 +206,26 @@ class AccountSetup extends React.Component {
                     </Row>
                   )}
                 <Row className="mt-4">
-                  <Col md={2}>
+                  <Col xl={2} md={4}>
                     Categories Included:{" "}
                     {this.state.singlePackage.category_count}
                   </Col>
                   {this.state.singlePackage.package_name !==
                     "Business Plus" && (
-                    <Col md={3}>
+                    <Col xl={2} md={6}>
                       <p>Change Plan to have more categories</p>
                     </Col>
                   )}
                 </Row>
 
                 <Row className="mt-4">
-                  <Col md={2}>
+                  <Col md={4} xl={2}>
                     Links Included: {this.state.singlePackage.link_count}
                   </Col>
 
                   {this.state.singlePackage.package_name !==
                     "Business Plus" && (
-                    <Col md={3}>
+                    <Col md={6} xl={3}>
                       <p>Change Plan to have more links</p>
                     </Col>
                   )}
@@ -236,12 +236,12 @@ class AccountSetup extends React.Component {
                   <>
                     <div className="white-box">
                       <Row>
-                        <Col md={12}>
+                        <Col xl={12}>
                           <h5 className="page-title line-heading">Payment</h5>
                         </Col>
                       </Row>
                       <Row>
-                        <Col md={3}>
+                        <Col md={5} xl={3}>
                           <div className="checkbox abc-checkbox">
                             <Input
                               defaultChecked
@@ -259,7 +259,7 @@ class AccountSetup extends React.Component {
                             {this.state.singlePackage.package_amount_monthly}
                           </div>
                         </Col>
-                        <Col md={4}>
+                        <Col md={4} xl={4}>
                           <div className="checkbox abc-checkbox">
                             <Input
                               name="payment"
