@@ -13,6 +13,20 @@ import React from "react";
 class Home extends React.Component {
   render() {
     return (
+    
+<>    
+
+      <div className="row">
+        <div className="container">test</div>
+      </div>
+
+
+
+
+
+
+
+
       <div className="row">
         <div
           onClick={() => {
@@ -108,6 +122,7 @@ class Home extends React.Component {
           </div>
         </div>
       </div>
+   </>
     );
   }
 }

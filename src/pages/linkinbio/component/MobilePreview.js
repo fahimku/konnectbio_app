@@ -18,57 +18,61 @@ const MobilePreview = ({
         instaPosts.push(
           <Col key={i} xs="4">
             <div className="mobile-image-box">
-              <img
-                className={
-                  instagramPosts.data[i].linked || instagramPosts.data[i].select
-                    ? "linked"
-                    : ""
-                }
-                key={i}
-                id={"img" + i}
-                onClick={(ev) => selectPost(true, i)}
-                src={instagramPosts.data[i].media_url}
-                alt="instagramPosts"
-              />
-              {instagramPosts.data[i].linked ? (
-                <span className="linked-label">LINKED</span>
-              ) : (
-                ""
-              )}
-            </div>
+              <div class="mobile_box_inr">
+                  <img
+                    className={
+                      instagramPosts.data[i].linked || instagramPosts.data[i].select
+                        ? "linked"
+                        : ""
+                    }
+                    key={i}
+                    id={"img" + i}
+                    onClick={(ev) => selectPost(true, i)}
+                    src={instagramPosts.data[i].media_url}
+                    alt="instagramPosts"
+                  />
+                  {instagramPosts.data[i].linked ? (
+                    <span className="linked-label">LINKED</span>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
           </Col>
         );
       } else {
         instaPosts.push(
           <Col key={i} xs="4" onClick={(ev) => selectPost(true, i)}>
             <div className="mobile-image-box">
-              <video
-                oncontextmenu="return false;"
-                // id="myVideo"
-                autoplay
-                controlsList="nodownload"
-                className={
-                  instagramPosts.data[i].linked || instagramPosts.data[i].select
-                    ? "linked"
-                    : ""
-                }
-                key={i}
-                id={"img" + i}
-              >
-                <source
-                  src={instagramPosts.data[i].media_url}
-                  type="video/mp4"
-                ></source>
-              </video>
-              <span
-                className="video-label fa fa-play"
-                aria-hidden="true"
-              ></span>
-              {instagramPosts.data[i].linked ? (
-                <span className="linked-label">LINKED</span>
-              ) : (
-                ""
-              )}
+                <div className="mobile_box_inr">
+                <video
+                  oncontextmenu="return false;"
+                  // id="myVideo"
+                  autoplay
+                  controlsList="nodownload"
+                  className={
+                    instagramPosts.data[i].linked || instagramPosts.data[i].select
+                      ? "linked"
+                      : ""
+                  }
+                  key={i}
+                  id={"img" + i}
+                >
+                  <source
+                    src={instagramPosts.data[i].media_url}
+                    type="video/mp4"
+                  ></source>
+                </video>
+                <span
+                  className="video-label fa fa-play"
+                  aria-hidden="true"
+                ></span>
+                {instagramPosts.data[i].linked ? (
+                  <span className="linked-label">LINKED</span>
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </Col>
         );
