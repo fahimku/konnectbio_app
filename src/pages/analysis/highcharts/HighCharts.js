@@ -366,7 +366,6 @@ class HighCharts extends PureComponent {
                 moment().subtract(1, "month").endOf("month"),
               ],
             }}
-            style={{ width: "20%" }}
             format={dateFormat}
             onChange={this.dateRangePickerChanger.bind(this)}
           />
