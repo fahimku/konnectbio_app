@@ -4,8 +4,14 @@ const portApi = process.env.NODE_ENV === "development" ? "" : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const baseURLApiToken = `${hostApi}${portApi ? `:${portApi}` : ``}`;
 
-const redirectURL = process.env.NODE_ENV === "development"? "https://app.konnect.bio": "https://app.konnect.bio";
-const visitorURL = process.env.NODE_ENV === "development"? "http://localhost:3001": "https://konnect.bio";
+const redirectURL =
+  process.env.NODE_ENV === "development"
+    ? "https://app.konnect.bio"
+    : "https://app.konnect.bio";
+const visitorURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3001"
+    : "https://konnect.bio";
 
 export default {
   redirectURL,

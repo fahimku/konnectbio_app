@@ -4,9 +4,15 @@ import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-
 import CustomCategory from "./component/CustomCategory";
 import { createBrowserHistory } from "history";
+import EditCustomCategory from "./component/EditCustomCategory";
+// import Confirm from "../../components/Helpers/ConfirmationHelper";
+import {
+  SortableContainer,
+  SortableElement,
+  arrayMove,
+} from "react-sortable-hoc";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -18,6 +24,7 @@ class MyCategory extends React.Component {
     super(props);
     this.state = {
       myCategory: "",
+      myCustomCategory: "",
       user_id: "",
       category: [],
       defaultCategory: "",
@@ -37,6 +44,7 @@ class MyCategory extends React.Component {
     this.fetchMyCategory();
     this.fetchSaveCategory();
     this.getPackages();
+    this.fetchCustomCategory();
     //Connect Instagram Code
   }
 
@@ -61,7 +69,7 @@ class MyCategory extends React.Component {
 
   fetchMyCategory = async () => {
     await axios
-      .get(`/customcategory/receive?user=${userInfo.user_id}`)
+      .get("/customcategory/receive")
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
@@ -97,6 +105,25 @@ class MyCategory extends React.Component {
           // defaultCategory: myCategories,
           saveCategories: saveCategories,
         });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  fetchCustomCategory = async () => {
+    await axios
+      .get("/customcategory/receive?custom=1")
+      .then((response) => {
+        const selectCategories = [];
+        const myCustomCategories = response.data.message;
+        myCustomCategories.map(({ category_id, category_name, image_url }) => {
+          return selectCategories.push({
+            value: category_id,
+            label: category_name,
+            image: image_url,
+          });
+        });
+        this.setState({ myCustomCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -152,140 +179,254 @@ class MyCategory extends React.Component {
       });
     // }
   };
+  deleteCustomCat = async (id) => {
+    await axios
+      .delete(`/customcategory/remove/${id}`)
+      .then((response) => {
+        let categoryResponse = response.data;
+        if (categoryResponse.success) {
+          toast.success(categoryResponse.message);
+          this.fetchCustomCategory();
+        }
+      })
+      .catch((err) => {
+        console.log(err.response, "err");
+        toast.error(err.response.data.message);
+      });
+  };
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState({
+      saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
+    });
+  };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    return (
-      <div className="category-page">
-        <div
-          className={
-            this.props.className ? this.props.className : "container-fluid"
+    const SortableItem = SortableElement(({ value }) => (
+      <div key={value.value} className="cat-box col-sm-3 col-6">
+        <img
+          key={value.value}
+          src={
+            value.image === "" || value.image === undefined
+              ? placeholder
+              : value.image
           }
-        >
-          <div className="">
-            <div className="connections mt-5">
-              <div className="page-title">
-                <h3>Category Setup</h3>
-              </div>
-              <div className="white-box mt-5">
-                <h5 className="page-title line-heading">Manage Category</h5>
-                <Row className="mt-4 align-items-center">
-                  <Col md={2}>
-                    <div className="package_name">
-                      Current Plan:{" "}
-                      {userInfo1.package ? userInfo1.package.package_name : ""}
-                    </div>
-                  </Col>
-                  <Col md={6} lg={3}>
-                    <div className="package_detail">
+          alt="cat-logo"
+          className="img-fluid cat-image"
+        />
+        <div>{value.label}</div>
+      </div>
+    ));
+    const SortableList = SortableContainer(({ items }) => (
+      <Row>
+        {items.map((value, index) => (
+          <SortableItem
+            key={`item-${index.toString()}`}
+            index={index}
+            value={value}
+          />
+        ))}
+      </Row>
+    ));
+
+    return (
+      <React.Fragment>
+        <div className="category-page">
+          <div
+            className={
+              this.props.className ? this.props.className : "container-fluid"
+            }
+          >
+            <div className="">
+              <div className="connections mt-5">
+                <div className="page-title">
+                  <h3>Category Setup</h3>
+                </div>
+                <div className="white-box mt-5">
+                  <h5 className="page-title line-heading">Current Plan</h5>
+                  <Row className="mt-4 align-items-center">
+                    <Col md={2}>
+                      <div className="package_name">Current Plan:</div>
+                    </Col>
+                    <Col md={6} lg={3}>
+                      <div className="package_detail">
+                        {userInfo1.package
+                          ? userInfo1.package.package_name
+                          : ""}
+                      </div>
+                    </Col>
+                    <Col md={5}></Col>
+                  </Row>
+                  <Row className="mt-4 align-items-center">
+                    <Col md={2}>
+                      <div className="package_name">Categories Included: </div>
+                    </Col>
+                    <Col md={6} lg={3}>
+                      <div className="package_detail">
+                        {userInfo1.package
+                          ? userInfo1.package.category_count
+                          : ""}
+                        {/* Change Plan to have more categories */}
+                      </div>
+                    </Col>
+                    <Col md={5}></Col>
+                  </Row>
+                  <Row className="mt-4 align-items-center">
+                    <Col md={2}>
+                      <div className="package_name">
+                        Change plan to have more categories:
+                      </div>
+                    </Col>
+                    <Col md={6} lg={3}>
+                      <div className="package_detail">
+                        <Button
+                          variant="primary"
+                          className="btn-block"
+                          onClick={() =>
+                            this.props.history.push("/app/account/setup")
+                          }
+                        >
+                          Upgrade
+                        </Button>
+                      </div>
+                    </Col>
+                    <Col md={5}></Col>
+                  </Row>
+                </div>
+
+                <div className="white-box mt-5">
+                  <h5 className="page-title line-heading">Custom Categories</h5>
+
+                  <Row className="mt-4 align-items-center">
+                    <Col md={2}>
+                      <div className="package_name">Custom Categories:</div>
+                    </Col>
+                    <Col md={6} lg={3}>
+                      <CustomCategory
+                        userID={userInfo1.user_id}
+                        fetchMyCategory={this.fetchMyCategory}
+                        fetchCustomCategory={this.fetchCustomCategory}
+                      />
+                    </Col>
+                    <Col md={5}></Col>
+                  </Row>
+                  <Row className="mt-4 align-items-center">
+                    <Col md={7}>
+                      <Row>
+                        {this.state.myCustomCategory.length === 0 ? (
+                          <span className="ml-4">
+                            No Custom Category Selected
+                          </span>
+                        ) : (
+                          // <SortableList
+                          //   items={this.state.myCustomCategory}
+                          //   onSortEnd={this.onSortEnd}
+                          //   axis="x"
+                          // />
+                          this.state.myCustomCategory.map((cat, i) => (
+                            <React.Fragment key={i}>
+                              <div key={i} className="cat-box col-sm-3 col-6">
+                                <img
+                                  key={i}
+                                  src={
+                                    cat.image === "" || cat.image === undefined
+                                      ? placeholder
+                                      : cat.image
+                                  }
+                                  alt="cat-logo"
+                                  className="img-fluid cat-image"
+                                />
+                                <div>{cat.label}</div>
+                                <div className="action">
+                                  <EditCustomCategory
+                                    userID={userInfo1.user_id}
+                                    fetchMyCategory={this.fetchMyCategory}
+                                    fetchCustomCategory={
+                                      this.fetchCustomCategory
+                                    }
+                                    catData={cat}
+                                  />
+                                  <button
+                                    className="btn btn-link edit-icon"
+                                    onClick={() =>
+                                      this.deleteCustomCat(cat.value)
+                                    }
+                                  >
+                                    <span
+                                      className="fa fa-trash"
+                                      title="Delete"
+                                    ></span>
+                                  </button>
+                                </div>
+                              </div>
+                            </React.Fragment>
+                          ))
+                        )}
+                      </Row>
+                    </Col>
+                  </Row>
+                </div>
+
+                <form onSubmit={this.handleSubmit} className="white-box">
+                  <h5 className="page-title line-heading">Select Categories</h5>
+                  <Row>
+                    <Col md={7}>
+                      {/* <label>Select Category: </label> */}
+                      {this.state.saveCategories === "" ? null : (
+                        <Select
+                          isMulti={true}
+                          name="category"
+                          className="selectCustomization"
+                          options={this.state.myCategory}
+                          defaultValue={this.state.saveCategories}
+                          placeholder="Select Category"
+                          onChange={(options, e) =>
+                            this.handleSelect(e, options)
+                          }
+                        />
+                      )}
+                      <span className="text-danger">
+                        {this.state.categoryError}
+                      </span>
+
+                      {this.state.saveCategories.length === 0 ? (
+                        <Row>
+                          <span className="ml-4">No Category Selected</span>
+                        </Row>
+                      ) : (
+                        <SortableList
+                          items={this.state.saveCategories}
+                          onSortEnd={this.onSortEnd}
+                          axis="xy"
+                        />
+                      )}
+                    </Col>
+                  </Row>
+
+                  <Row className="">
+                    <Col md={4}></Col>
+                    <Col md={3}>
                       <Button
                         variant="primary"
-                        className="btn-block"
-                        onClick={() => this.props.history.push("/app/account/setup")}
+                        type="submit"
+                        className="category-btn btn-block"
+                        disabled={
+                          this.state.saveCategories.length &&
+                          !this.state.loading
+                            ? false
+                            : true
+                        }
                       >
-                        Change Plan
+                        Save
                       </Button>
-                    </div>
-                  </Col>
-                  <Col md={5}></Col>
-                </Row>
-                <Row className="mt-4 align-items-center">
-                  <Col md={2}>
-                    <div className="package_name">
-                      Categories Included:{" "}
-                      {userInfo1.package
-                        ? userInfo1.package.category_count
-                        : ""}
-                    </div>
-                  </Col>
-                  <Col md={6} lg={3}>
-                    <div className="package_detail">
-                      Change Plan to have more categories
-                    </div>
-                  </Col>
-                  <Col md={5}></Col>
-                </Row>
-                <Row className="mt-4 align-items-center">
-                  <Col md={2}>
-                    <div className="package_name">Custom Categories:</div>
-                  </Col>
-                  <Col md={6} lg={3}>
-                    <CustomCategory
-                      userID={userInfo1.user_id}
-                      fetchMyCategory={this.fetchMyCategory}
-                    />
-                  </Col>
-                  <Col md={5}></Col>
-                </Row>
+                    </Col>
+                  </Row>
+                </form>
               </div>
-
-              <form onSubmit={this.handleSubmit} className="white-box">
-                <h5 className="page-title line-heading">Manage Categories</h5>
-                <Row>
-                  <Col md={7}>
-                    <label>Select Category: </label>
-                    {this.state.saveCategories === "" ? null : (
-                      <Select
-                        isMulti={true}
-                        name="category"
-                        className="selectCustomization"
-                        options={this.state.myCategory}
-                        defaultValue={this.state.saveCategories}
-                        placeholder="Select Category"
-                        onChange={(options, e) => this.handleSelect(e, options)}
-                      />
-                    )}
-                    <span className="text-danger">
-                      {this.state.categoryError}
-                    </span>
-                    <Row>
-                      {this.state.saveCategories.length === 0 ? (
-                        <span className="ml-4">No Category Selected</span>
-                      ) : (
-                        this.state.saveCategories.map((cat, i) => (
-                          <React.Fragment key={i}>
-                            <div key={i} className="cat-box col-sm-3 col-6">
-                              <img
-                                key={i}
-                                src={
-                                  cat.image === "" || cat.image === undefined
-                                    ? placeholder
-                                    : cat.image
-                                }
-                                alt="cat-logo"
-                                className="img-fluid cat-image"
-                              />
-                              <div>{cat.label}</div>
-                            </div>
-                          </React.Fragment>
-                        ))
-                      )}
-                    </Row>
-                  </Col>
-                </Row>
-
-                <Row className="">
-                  <Col md={4}></Col>
-                  <Col md={3}>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      className="category-btn btn-block"
-                      disabled={
-                        this.state.saveCategories.length && !this.state.loading
-                          ? false
-                          : true
-                      }
-                    >
-                      Save
-                    </Button>
-                  </Col>
-                </Row>
-              </form>
             </div>
           </div>
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
