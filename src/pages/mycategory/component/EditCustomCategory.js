@@ -159,7 +159,7 @@ class EditCustomCategory extends React.Component {
                   type="submit"
                   className="category-btn btn-block "
                 >
-                  Edit Category
+                  Update Category
                 </Button>
               )}
             </Col>

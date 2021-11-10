@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button} from "react-bootstrap";
-import {Label, Input} from "reactstrap";
-import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
+import { Row, Col, Button } from "react-bootstrap";
+import { Label, Input } from "reactstrap";
+import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -49,15 +49,15 @@ class AccountSetup extends React.Component {
 
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({userInfo: userInfo});
+    this.setState({ userInfo: userInfo });
     // const params = queryString.parse(window.location.search);
     if (this.props.resetAccount === false) {
-      this.setState({resetAccount: false});
+      this.setState({ resetAccount: false });
     }
     if (userInfo.access_token !== "") {
-      this.setState({isInstagramConnected: true});
+      this.setState({ isInstagramConnected: true });
     }
-    this.setState({userId: userInfo.user_id});
+    this.setState({ userId: userInfo.user_id });
     this.getPackages();
   }
 
@@ -76,17 +76,17 @@ class AccountSetup extends React.Component {
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
-          this.setState({upgrade: true});
+          this.setState({ upgrade: true });
         }
 
-        if (index) {
-          this.setState({upgrade: false});
+        if (index === 0) {
+          this.setState({ upgrade: false });
         }
 
-        this.setState({packageIndex: index});
-        this.setState({allPackages: packages});
-        this.setState({singlePackage: singlePackage[0]});
-        packages.map(({package_id, package_name}, index1) => {
+        this.setState({ packageIndex: index });
+        this.setState({ allPackages: packages });
+        this.setState({ singlePackage: singlePackage[0] });
+        packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
           if (index > index1) {
             disabledSelect = true;
@@ -99,7 +99,7 @@ class AccountSetup extends React.Component {
             index: index1,
           });
         });
-        this.setState({packages: selectPackages});
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -107,36 +107,32 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
+    const maxIndex = this.state.allPackages.length - 1;
 
     this.setState({ singlePackage: singlePackage[0] });
-    this.setState({package: event.label});
+    this.setState({ package: event.label });
 
     if (this.state.packageIndex < event.index) {
-      this.setState({upgrade: true});
-      this.setState({ showPaymentButton: false });
-    }
-    else if (this.state.packageIndex > event.index) {
+      this.setState({ upgrade: true });
+    } else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
-      this.setState({ showPaymentButton: false });
-    }
-
-    else if (event.index === this.state.packageIndex) {
+    } else if (event.index === this.state.packageIndex) {
       this.setState({ upgrade: false });
-      this.setState({ showPaymentButton: false });
     }
   };
 
   toggleModal = () => {
-    const {modal} = this.state;
+    const { modal } = this.state;
     this.setState({
       modal: !modal,
     });
   };
 
   togglerResetModal = () => {
-    const {resetModal} = this.state;
+    const { resetModal } = this.state;
     this.setState({
       resetModal: !resetModal,
     });
@@ -206,9 +202,9 @@ class AccountSetup extends React.Component {
                                 alert(
                                   "For support please contact support@konnect.bio"
                                 );
-                                this.setState({showPaymentButton: false});
+                                this.setState({ showPaymentButton: false });
                               } else {
-                                this.setState({showPaymentButton: true});
+                                this.setState({ showPaymentButton: true });
                               }
                             }}
                           >
@@ -264,7 +260,7 @@ class AccountSetup extends React.Component {
                               id="checkbox1"
                               type="radio"
                               onChange={(e) => {
-                                this.setState({plan: e.target.value});
+                                this.setState({ plan: e.target.value });
                               }}
                             />{" "}
                             <Label for="checkbox1" />
@@ -281,7 +277,7 @@ class AccountSetup extends React.Component {
                               id="checkbox2"
                               type="radio"
                               onChange={(e) => {
-                                this.setState({plan: e.target.value});
+                                this.setState({ plan: e.target.value });
                               }}
                             />{" "}
                             <Label for="checkbox2" />
@@ -310,13 +306,13 @@ class AccountSetup extends React.Component {
                 username={this.props.username}
                 username1={userInfo1.username}
                 modal={(boolean) => {
-                  this.setState({modal: boolean});
+                  this.setState({ modal: boolean });
                 }}
                 url={this.props.url}
                 show={this.state.modal}
                 onHide={this.toggleModal}
                 loading={(boolean) => {
-                  this.setState({loadingInsta: boolean});
+                  this.setState({ loadingInsta: boolean });
                 }}
                 disabled={this.state.loadingInsta ? true : false}
               />
@@ -324,13 +320,13 @@ class AccountSetup extends React.Component {
                 <ResetAccount
                   userId={userInfo1.user_id}
                   resetModal={(boolean) => {
-                    this.setState({resetModal: boolean});
+                    this.setState({ resetModal: boolean });
                   }}
                   show={this.state.resetModal}
                   onHide={this.togglerResetModal}
                   disabled={this.state.loadingInsta ? true : false}
                   loading={(boolean) => {
-                    this.setState({loadingInsta: boolean});
+                    this.setState({ loadingInsta: boolean });
                   }}
                 />
               )}
