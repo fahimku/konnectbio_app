@@ -7,7 +7,7 @@ import placeholder from "../../../src/images/placeholder.svg";
 import CustomCategory from "./component/CustomCategory";
 import { createBrowserHistory } from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
-// import Confirm from "../../components/Helpers/ConfirmationHelper";
+import Swal from "sweetalert2";
 import {
   SortableContainer,
   SortableElement,
@@ -180,19 +180,32 @@ class MyCategory extends React.Component {
     // }
   };
   deleteCustomCat = async (id) => {
-    await axios
-      .delete(`/customcategory/remove/${id}`)
-      .then((response) => {
-        let categoryResponse = response.data;
-        if (categoryResponse.success) {
-          toast.success(categoryResponse.message);
-          this.fetchCustomCategory();
-        }
-      })
-      .catch((err) => {
-        console.log(err.response, "err");
-        toast.error(err.response.data.message);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/customcategory/remove/${id}`)
+          .then((response) => {
+            let categoryResponse = response.data;
+            if (categoryResponse.success) {
+              // toast.success(categoryResponse.message);
+              Swal.fire("Deleted!", categoryResponse.message, "success");
+              this.fetchCustomCategory();
+            }
+          })
+          .catch((err) => {
+            console.log(err.response, "err");
+            toast.error(err.response.data.message);
+          });
+      }
+    });
   };
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
