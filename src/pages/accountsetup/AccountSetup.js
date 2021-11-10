@@ -67,19 +67,18 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id
-        );
+        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
           this.setState({upgrade: true});
         }
-        if (index) {
+
+        if (index==index) {
           this.setState({upgrade: false});
         }
+
         this.setState({packageIndex: index});
         this.setState({allPackages: packages});
         this.setState({singlePackage: singlePackage[0]});
