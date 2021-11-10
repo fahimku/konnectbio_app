@@ -87,8 +87,11 @@ class Register extends React.Component {
       .then((response) => {
         const selectCities = [];
         const cities = response.data.message;
-        cities.map(({ name }) => {
-          return selectCities.push({ value: name, label: name });
+        cities.map(({ name, stateCode }) => {
+          return selectCities.push({
+            value: name + " " + stateCode,
+            label: name + " " + stateCode,
+          });
         });
         this.setState({ cities: selectCities });
         this.setState({ loading: false });
