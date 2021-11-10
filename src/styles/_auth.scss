@@ -171,7 +171,6 @@
   flex-direction: column;
   align-items: center;
   background-size: auto;
-  height: calc(100vh - 65px);
   overflow: auto;
   padding: 6rem 0;
 }
@@ -249,4 +248,46 @@
   background-image: url(../images/login-right.jpg);
   background-repeat: no-repeat;
   background-position: center top; 
+}
+.custom_confirmation{
+  width: 550px;
+  margin: 0 1rem;
+  padding: 1rem;
+  background: #fff;
+  position: relative;
+  border-radius: 5px;
+
+  .confirm_ift{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .env-ift{
+    font-size: 8rem;
+    color:#185887;
+  }
+
+  .we_have_ift{
+    font-size: 1rem;
+    color: #364554;
+  }
+  .continue_link_ifti{
+    background-color: #185887;
+    color: #FFF;
+    font-size: 1.2rem;
+    margin-top: 30px;
+    width: 80%;
+    padding: 10px 0;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .continue_link_ifti:hover{
+    background-color: #000;
+  }
+
+
+
 }

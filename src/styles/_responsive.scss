@@ -380,9 +380,12 @@
         display: block;
     }
 
-    .custome_signup {
+    .custome_signup, .custom_confirmation {
         width: 100%;
         padding: 1rem;
+    }
+    .custom_confirmation .continue_link_ifti{
+        font-size: 1rem;
     }
 
     .kon_pg_title,

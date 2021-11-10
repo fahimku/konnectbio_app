@@ -231,18 +231,20 @@ class Register extends React.Component {
         <div className="custome_container_auth_ift">
           <div class="custome_container_auth_inr">
             {this.props.successMessage ? (
-              <Widget className="custome_signup d-flex align-items-center justify-content-center">
-                <Alert className="alert-sm align-items-center" color="success">
+              <Widget className="custom_confirmation">
+                <div className="confirm_ift align-items-center">
+                  <span className="env-ift"><i class="fa fa-envelope-open-o" aria-hidden="true"></i></span>
+                  <span className="we_have_ift">We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.</span>
                   {this.props.successMessage}{" "}
                   <span
-                    className="continue-link link"
+                    className="continue_link_ifti"
                     onClick={() => {
                       this.props.history.push("/login");
                     }}
                   >
                     Continue
                   </span>
-                </Alert>
+                </div>
               </Widget>
             ) : (
               <>
