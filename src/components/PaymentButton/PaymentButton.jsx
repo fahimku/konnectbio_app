@@ -125,45 +125,6 @@ const PaymentButton = (props) => {
   else if (props.paymentMethod === "Influencer" && props.plan === "Monthly")
     return (
       <>
-        {/* <form
-          action="https://checkout.globalgatewaye4.firstdata.com/pay"
-          id="influencer_monthly_form"
-          method="post"
-        >
-          <input type="hidden" name="x_user_id" value={userId} />
-          <input type="hidden" name="x_package_id" value={packageId} />
-          <input
-            type="hidden"
-            name="x_recurring_payment_type"
-            value={props.plan}
-          />
-
-          <input type="hidden" name="x_recurring_billing" value="TRUE" />
-          <input name="x_recurring_billing_amount" value="25" type="hidden" />
-          <input
-            name="x_recurring_billing_id"
-            value="MB-KONNE-66-1635196"
-            type="hidden"
-          />
-          <input type="hidden" name="x_login" value="WSP-KONNE-A4sMaADiRQ" />
-          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
-          <input
-            type="hidden"
-            name="x_fp_sequence"
-            value="16360934351335682202"
-          />
-          <input
-            type="hidden"
-            name="x_fp_hash"
-            value="PNB-1.0-46df6738dd859aebe5580e85564fef3d49d59221"
-          />
-          <input type="hidden" name="x_amount" value="25" />
-          <input type="hidden" name="x_currency_code" value="USD" />
-          <input type="hidden" name="x_test_request" value="FALSE" />
-          <input type="hidden" name="x_relay_response" value="" />
-          <input type="hidden" name="donation_prompt" value="" />
-          <input type="hidden" name="button_code" value="Pay Now Influencer" />
-        </form> */}
         <form
           action="https://checkout.globalgatewaye4.firstdata.com/pay"
           id="influencer_monthly_form"

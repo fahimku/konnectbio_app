@@ -287,7 +287,7 @@ class Package extends React.Component {
                   <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
-                    packageIdInfluencer={influencer.package_id}
+                    packageId={influencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
                     paymentMethod={"Influencer"}
@@ -593,7 +593,7 @@ class Package extends React.Component {
                   <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
-                    packageIdInfluencer={influencer.package_id}
+                    packageId={influencer.package_id}
                     name={"Select Plan"}
                     variant="dark"
                     paymentMethod={"Influencer"}
