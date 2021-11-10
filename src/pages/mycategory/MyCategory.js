@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import {Row, Col, Button} from "react-bootstrap";
-import {toast} from "react-toastify";
+import { Row, Col, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
 import CustomCategory from "./component/CustomCategory";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
 import Swal from "sweetalert2";
 import {
@@ -40,7 +40,7 @@ class MyCategory extends React.Component {
 
   componentDidMount() {
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({user_id: userInfo.user_id});
+    this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
     this.fetchSaveCategory();
     this.getPackages();
@@ -54,13 +54,13 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        packages.map(({package_id, package_name, package_amount}) => {
+        packages.map(({ package_id, package_name, package_amount }) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
           });
         });
-        this.setState({packages: selectPackages});
+        this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
         console.log(error);
@@ -73,14 +73,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
+        myCategories.map(({ category_id, category_name, image_url }) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({myCategory: selectCategories});
+        this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +94,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({category_id, category_name, image_url}) => {
+        optionCategories.map(({ category_id, category_name, image_url }) => {
           return saveCategories.push({
             value: category_id,
             label: category_name,
@@ -116,14 +116,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCustomCategories = response.data.message;
-        myCustomCategories.map(({category_id, category_name, image_url}) => {
+        myCustomCategories.map(({ category_id, category_name, image_url }) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({myCustomCategory: selectCategories});
+        this.setState({ myCustomCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -157,7 +157,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({loading: true});
+    this.setState({ loading: true });
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -167,15 +167,15 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({categoryError: ""});
-          this.setState({loading: false});
+          this.setState({ categoryError: "" });
+          this.setState({ loading: false });
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({loading: false});
-        this.setState({categoryError: err.response.data.message});
+        this.setState({ loading: false });
+        this.setState({ categoryError: err.response.data.message });
       });
     // }
   };
@@ -185,7 +185,7 @@ class MyCategory extends React.Component {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -207,7 +207,7 @@ class MyCategory extends React.Component {
       }
     });
   };
-  onSortEnd = ({oldIndex, newIndex}) => {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
     });
@@ -215,7 +215,7 @@ class MyCategory extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    const SortableItem = SortableElement(({value}) => (
+    const SortableItem = SortableElement(({ value }) => (
       <div key={value.value} className="cat-box col-sm-3 col-6">
         <img
           key={value.value}
@@ -230,7 +230,7 @@ class MyCategory extends React.Component {
         <div>{value.label}</div>
       </div>
     ));
-    const SortableList = SortableContainer(({items}) => (
+    const SortableList = SortableContainer(({ items }) => (
       <Row>
         {items.map((value, index) => (
           <SortableItem
@@ -313,7 +313,7 @@ class MyCategory extends React.Component {
                       <div className="package_name">Custom Categories:</div>
                     </Col>
 
-                    <Col  md={5} xl={3} lg={3}>
+                    <Col md={5} xl={3} lg={3}>
                       <CustomCategory
                         userID={userInfo1.user_id}
                         fetchMyCategory={this.fetchMyCategory}
