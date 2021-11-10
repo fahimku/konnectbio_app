@@ -1,11 +1,11 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
+import {Row, Col, Button} from "react-bootstrap";
+import {toast} from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
 import CustomCategory from "./component/CustomCategory";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
 // import Confirm from "../../components/Helpers/ConfirmationHelper";
 import {
@@ -40,7 +40,7 @@ class MyCategory extends React.Component {
 
   componentDidMount() {
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ user_id: userInfo.user_id });
+    this.setState({user_id: userInfo.user_id});
     this.fetchMyCategory();
     this.fetchSaveCategory();
     this.getPackages();
@@ -54,13 +54,13 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        packages.map(({ package_id, package_name, package_amount }) => {
+        packages.map(({package_id, package_name, package_amount}) => {
           return selectPackages.push({
             value: package_id,
             label: package_name,
           });
         });
-        this.setState({ packages: selectPackages });
+        this.setState({packages: selectPackages});
       })
       .catch(function (error) {
         console.log(error);
@@ -73,14 +73,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({ category_id, category_name, image_url }) => {
+        myCategories.map(({category_id, category_name, image_url}) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({ myCategory: selectCategories });
+        this.setState({myCategory: selectCategories});
       })
       .catch((error) => {
         console.log(error);
@@ -94,7 +94,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({ category_id, category_name, image_url }) => {
+        optionCategories.map(({category_id, category_name, image_url}) => {
           return saveCategories.push({
             value: category_id,
             label: category_name,
@@ -116,14 +116,14 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCustomCategories = response.data.message;
-        myCustomCategories.map(({ category_id, category_name, image_url }) => {
+        myCustomCategories.map(({category_id, category_name, image_url}) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
             image: image_url,
           });
         });
-        this.setState({ myCustomCategory: selectCategories });
+        this.setState({myCustomCategory: selectCategories});
       })
       .catch((error) => {
         console.log(error);
@@ -157,7 +157,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return category.value;
           });
-    this.setState({ loading: true });
+    this.setState({loading: true});
 
     await axios
       .put(`/users/revise/categories/${userInfo.user_id}`, {
@@ -167,15 +167,15 @@ class MyCategory extends React.Component {
         let categoryResponse = response.data;
         if (categoryResponse.success) {
           toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
-          this.setState({ loading: false });
+          this.setState({categoryError: ""});
+          this.setState({loading: false});
           this.fetchSaveCategory();
         }
       })
       .catch((err) => {
         console.log(err.response, "err");
-        this.setState({ loading: false });
-        this.setState({ categoryError: err.response.data.message });
+        this.setState({loading: false});
+        this.setState({categoryError: err.response.data.message});
       });
     // }
   };
@@ -194,7 +194,7 @@ class MyCategory extends React.Component {
         toast.error(err.response.data.message);
       });
   };
-  onSortEnd = ({ oldIndex, newIndex }) => {
+  onSortEnd = ({oldIndex, newIndex}) => {
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
     });
@@ -202,7 +202,7 @@ class MyCategory extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    const SortableItem = SortableElement(({ value }) => (
+    const SortableItem = SortableElement(({value}) => (
       <div key={value.value} className="cat-box col-sm-3 col-6">
         <img
           key={value.value}
@@ -217,7 +217,7 @@ class MyCategory extends React.Component {
         <div>{value.label}</div>
       </div>
     ));
-    const SortableList = SortableContainer(({ items }) => (
+    const SortableList = SortableContainer(({items}) => (
       <Row>
         {items.map((value, index) => (
           <SortableItem
@@ -245,10 +245,10 @@ class MyCategory extends React.Component {
                 <div className="white-box mt-5">
                   <h5 className="page-title line-heading">Current Plan</h5>
                   <Row className="mt-4 align-items-center">
-                    <Col md={2}>
+                    <Col xl={2} md={4}>
                       <div className="package_name">Current Plan:</div>
                     </Col>
-                    <Col md={6} lg={3}>
+                    <Col md={6} xl={6} lg={3}>
                       <div className="package_detail">
                         {userInfo1.package
                           ? userInfo1.package.package_name
@@ -258,10 +258,10 @@ class MyCategory extends React.Component {
                     <Col md={5}></Col>
                   </Row>
                   <Row className="mt-4 align-items-center">
-                    <Col md={2}>
+                    <Col md={4} xl={2}>
                       <div className="package_name">Categories Included: </div>
                     </Col>
-                    <Col md={6} lg={3}>
+                    <Col md={4} xl={3} lg={3}>
                       <div className="package_detail">
                         {userInfo1.package
                           ? userInfo1.package.category_count
@@ -272,12 +272,12 @@ class MyCategory extends React.Component {
                     <Col md={5}></Col>
                   </Row>
                   <Row className="mt-4 align-items-center">
-                    <Col md={2}>
+                    <Col md={6} xl={2}>
                       <div className="package_name">
                         Change plan to have more categories:
                       </div>
                     </Col>
-                    <Col md={6} lg={3}>
+                    <Col md={5} xl={3} lg={3}>
                       <div className="package_detail">
                         <Button
                           variant="primary"
@@ -290,28 +290,26 @@ class MyCategory extends React.Component {
                         </Button>
                       </div>
                     </Col>
-                    <Col md={5}></Col>
                   </Row>
                 </div>
 
                 <div className="white-box mt-5">
                   <h5 className="page-title line-heading">Custom Categories</h5>
-
                   <Row className="mt-4 align-items-center">
-                    <Col md={2}>
+                    <Col md={6} xl={2}>
                       <div className="package_name">Custom Categories:</div>
                     </Col>
-                    <Col md={6} lg={3}>
+
+                    <Col  md={5} xl={3} lg={3}>
                       <CustomCategory
                         userID={userInfo1.user_id}
                         fetchMyCategory={this.fetchMyCategory}
                         fetchCustomCategory={this.fetchCustomCategory}
                       />
                     </Col>
-                    <Col md={5}></Col>
                   </Row>
                   <Row className="mt-4 align-items-center">
-                    <Col md={7}>
+                    <Col md={12} xl={7}>
                       <Row>
                         {this.state.myCustomCategory.length === 0 ? (
                           <span className="ml-4">
@@ -325,7 +323,7 @@ class MyCategory extends React.Component {
                           // />
                           this.state.myCustomCategory.map((cat, i) => (
                             <React.Fragment key={i}>
-                              <div key={i} className="cat-box col-sm-3 col-6">
+                              <div key={i} className="cat-box col-sm-3 col-12">
                                 <img
                                   key={i}
                                   src={
@@ -370,7 +368,7 @@ class MyCategory extends React.Component {
                 <form onSubmit={this.handleSubmit} className="white-box">
                   <h5 className="page-title line-heading">Select Categories</h5>
                   <Row>
-                    <Col md={7}>
+                    <Col md={12} xl={7}>
                       {/* <label>Select Category: </label> */}
                       {this.state.saveCategories === "" ? null : (
                         <Select
@@ -403,9 +401,9 @@ class MyCategory extends React.Component {
                     </Col>
                   </Row>
 
-                  <Row className="">
-                    <Col md={4}></Col>
-                    <Col md={3}>
+                  <Row>
+                    <Col md={6} xl={4}></Col>
+                    <Col md={5} xl={3}>
                       <Button
                         variant="primary"
                         type="submit"
