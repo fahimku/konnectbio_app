@@ -79,7 +79,7 @@ class AccountSetup extends React.Component {
           this.setState({upgrade: true});
         }
 
-        if (index === 0) {
+        if (index) {
           this.setState({upgrade: false});
         }
 
