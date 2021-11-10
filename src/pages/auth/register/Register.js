@@ -198,9 +198,10 @@ class Register extends React.Component {
           referred_by: this.state.referred_by,
         })
       );
-      setTimeout(() => {
-        this.props.dispatch(authSuccess(""));
-      }, 10000);
+      this.props.dispatch(authSuccess(""));
+      // setTimeout(() => {
+      //   this.props.dispatch(authSuccess(""));
+      // }, 10000);
     }
   }
 
@@ -217,7 +218,7 @@ class Register extends React.Component {
             </div>
             <div class="header_inr_right">
               <div class="create_account">
-              <span>Already have an account?</span>&nbsp;
+                <span>Already have an account?</span>&nbsp;
                 <button
                   className="btn btn-link"
                   onClick={() => {
@@ -244,7 +245,7 @@ class Register extends React.Component {
                   </Alert>
                 )}
 
-                {this.props.successMessage && (
+                {!this.props.successMessage && (
                   <Alert className="alert-sm" color="success">
                     {this.props.successMessage}{" "}
                     <span
