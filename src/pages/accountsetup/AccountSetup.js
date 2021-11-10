@@ -172,6 +172,7 @@ class AccountSetup extends React.Component {
                       isOptionDisabled={(option) => option.isdisabled} // disable an option
                       options={this.state.packages}
                       placeholder="Select package"
+                     
                       value={{
                         label: this.state.package,
                         value: this.state.package,
@@ -221,7 +222,7 @@ class AccountSetup extends React.Component {
                   </Col>
                   {this.state.singlePackage.package_name !==
                     "Business Plus" && (
-                    <Col xl={2} md={6}>
+                    <Col xl={4} lg={4} md={6}>
                       <p>Change Plan to have more categories</p>
                     </Col>
                   )}
