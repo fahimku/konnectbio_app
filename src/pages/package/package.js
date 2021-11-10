@@ -76,7 +76,7 @@ class Package extends React.Component {
       });
   };
   render() {
-    const individual = this.state.packages.Individual || {};
+    // const individual = this.state.packages.Individual || {};
     const business = this.state.packages.Business || {};
     const businessPlus = this.state.packages.BusinessPlus || {};
     const influencer = this.state.packages.Influencer || {};
@@ -113,7 +113,7 @@ class Package extends React.Component {
           >
             <Tab eventKey="home" title="Monthly">
               <div className="package_parent">
-                <div className="custom_pkg">
+                {/* <div className="custom_pkg">
                   <h4>{individual.package_name}</h4>
                   <p>
                     Individual account allows you to create profile, add up to{" "}
@@ -162,7 +162,7 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button>
-                </div>
+                </div> */}
                 <div className="custom_pkg">
                   <h4>{microInfluencer.package_name}</h4>
                   <p>
@@ -210,7 +210,7 @@ class Package extends React.Component {
                       Access To Marketplace.
                     </li>
                   </ul>
-                  <PaymentButton
+                  {/* <PaymentButton
                     key="1"
                     userId={userInfo.user_id}
                     packageId={microInfluencer.package_id}
@@ -218,7 +218,19 @@ class Package extends React.Component {
                     variant="dark"
                     paymentMethod={"Micro Influencer"}
                     plan="Monthly"
-                  />
+                  /> */}
+                  <Button
+                    variant="dark"
+                    className="btn_individual"
+                    onClick={() => {
+                      this.updatePackage(
+                        userInfo.user_id,
+                        microInfluencer.package_id
+                      );
+                    }}
+                  >
+                    Select Plan
+                  </Button>
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
@@ -408,7 +420,7 @@ class Package extends React.Component {
             </Tab>
             <Tab eventKey="profile" title="Yearly">
               <div className="package_parent">
-                <div className="custom_pkg">
+                {/* <div className="custom_pkg">
                   <h4>{individual.package_name}</h4>
                   <p>
                     Individual account allows you to create profile, add up to{" "}
@@ -457,7 +469,7 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button>
-                </div>
+                </div> */}
                 <div className="custom_pkg">
                   <h4>{microInfluencer.package_name}</h4>
                   <p>
@@ -505,7 +517,7 @@ class Package extends React.Component {
                       Access To Marketplace.
                     </li>
                   </ul>
-                  <PaymentButton
+                  {/* <PaymentButton
                     key="1"
                     userId={userInfo.user_id}
                     packageId={microInfluencer.package_id}
@@ -513,7 +525,19 @@ class Package extends React.Component {
                     variant="dark"
                     paymentMethod={"Micro Influencer"}
                     plan="Yearly"
-                  />
+                  /> */}
+                  <Button
+                    variant="dark"
+                    className="btn_individual"
+                    onClick={() => {
+                      this.updatePackage(
+                        userInfo.user_id,
+                        microInfluencer.package_id
+                      );
+                    }}
+                  >
+                    Select Plan
+                  </Button>
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
