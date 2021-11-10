@@ -110,7 +110,7 @@ class AccountSetup extends React.Component {
     const singlePackage = this.state.allPackages.filter(
       (x) => x.package_id === event.value
     );
-    const maxIndex = this.state.allPackages.length - 1;
+    // const maxIndex = this.state.allPackages.length - 1;
 
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
