@@ -245,7 +245,7 @@ class Register extends React.Component {
                   </Alert>
                 )}
 
-                {!this.props.successMessage && (
+                {this.props.successMessage && (
                   <Alert className="alert-sm" color="success">
                     {this.props.successMessage}{" "}
                     <span
