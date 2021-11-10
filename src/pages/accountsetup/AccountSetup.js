@@ -115,11 +115,13 @@ class AccountSetup extends React.Component {
 
     if (this.state.packageIndex < event.index) {
       this.setState({upgrade: true});
+      this.setState({ showPaymentButton: false });
     }
     else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
       this.setState({ showPaymentButton: false });
     }
+
     else if (event.index === this.state.packageIndex) {
       this.setState({ upgrade: false });
       this.setState({ showPaymentButton: false });
