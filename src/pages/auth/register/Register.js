@@ -199,9 +199,10 @@ class Register extends React.Component {
           referred_by: this.state.referred_by,
         })
       );
-      setTimeout(() => {
-        this.props.dispatch(authSuccess(""));
-      }, 10000);
+      this.props.dispatch(authSuccess(""));
+      // setTimeout(() => {
+      //   this.props.dispatch(authSuccess(""));
+      // }, 10000);
     }
   }
 
@@ -246,7 +247,7 @@ class Register extends React.Component {
                   </Alert>
                 )}
 
-                {this.props.successMessage && (
+                {!this.props.successMessage && (
                   <Alert className="alert-sm" color="success">
                     {this.props.successMessage}{" "}
                     <span

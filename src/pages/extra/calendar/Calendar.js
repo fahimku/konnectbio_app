@@ -20,7 +20,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-import interactionPlugin, {Draggable} from "@fullcalendar/interaction";
+import interactionPlugin, { Draggable } from "@fullcalendar/interaction";
 
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
@@ -123,7 +123,7 @@ class Calendar extends React.Component {
         interactionPlugin,
         listPlugin,
       ],
-      dragOptions: {zIndex: 999, revert: true, revertDuration: 0},
+      dragOptions: { zIndex: 999, revert: true, revertDuration: 0 },
     };
   }
 
@@ -138,14 +138,14 @@ class Calendar extends React.Component {
   };
 
   handleChange = (e) => {
-    this.setState({event: {...this.state.event, title: e.target.value}});
+    this.setState({ event: { ...this.state.event, title: e.target.value } });
   };
   createEvent = () => {
     this.fullCalendar.getApi().addEvent(this.state.event);
     this.fullCalendar.getApi().unselect();
     this.toggleModal();
   };
-  select = ({start, end, allDay}) => {
+  select = ({ start, end, allDay }) => {
     this.setState({
       event: {
         start,
@@ -159,7 +159,7 @@ class Calendar extends React.Component {
     this.toggleModal();
   };
   eventClick = (e) => {
-    this.setState({event: e.event});
+    this.setState({ event: e.event });
     this.toggleModalEvent();
   };
   prev = () => {
@@ -172,17 +172,17 @@ class Calendar extends React.Component {
     this.fullCalendar.getApi().today();
   };
   changeView = (view) => {
-    this.setState({calendarView: view});
+    this.setState({ calendarView: view });
     this.fullCalendar.getApi().changeView(view);
   };
   getFormattedDate = (date) => {
     return moment(date).format("YYYY-MM-DD");
   };
   toggleModal = () => {
-    this.setState({modal: !this.state.modal});
+    this.setState({ modal: !this.state.modal });
   };
   toggleModalEvent = () => {
-    this.setState({modalEvent: !this.state.modalEvent});
+    this.setState({ modalEvent: !this.state.modalEvent });
   };
 
   render() {

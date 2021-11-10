@@ -1,5 +1,5 @@
 import React from "react";
-import {Row, Col, Progress, Table, Label, Input} from "reactstrap";
+import { Row, Col, Progress, Table, Label, Input } from "reactstrap";
 
 import Widget from "../../components/Widget";
 
@@ -447,7 +447,7 @@ class Dashboard extends React.Component {
 
               <div
                 className="widget-body mt-xlg chart-overflow-bottom"
-                style={{height: "100px"}}
+                style={{ height: "100px" }}
               >
                 <Rickshaw height={100} />
               </div>
