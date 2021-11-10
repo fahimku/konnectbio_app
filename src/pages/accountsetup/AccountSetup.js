@@ -67,15 +67,19 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const singlePackage = packages.filter(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
           this.setState({upgrade: true});
         }
 
-        if (index==index) {
+        if (index === 0) {
           this.setState({upgrade: false});
         }
 
@@ -87,7 +91,7 @@ class AccountSetup extends React.Component {
           if (index > index1) {
             disabledSelect = true;
           }
-        
+
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -103,18 +107,20 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
+
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
     const maxIndex = this.state.allPackages.length - 1;
-    this.setState({singlePackage: singlePackage[0]});
+
+    this.setState({ singlePackage: singlePackage[0] });
     this.setState({package: event.label});
 
-    if (this.state.packageIndex < event.index && event.index !== maxIndex) {
+    if (this.state.packageIndex < event.index) {
       this.setState({upgrade: true});
-    } else if (this.state.packageIndex > event.index) {
+    }
+    else if (this.state.packageIndex > event.index) {
       this.setState({upgrade: false});
-    } else if (event.index === this.state.packageIndex) {
+    }
+    else if (event.index === this.state.packageIndex) {
       this.setState({upgrade: false});
     }
   };
@@ -150,7 +156,7 @@ class AccountSetup extends React.Component {
               <div className="white-box mt-5">
                 <h5 className="page-title line-heading">Manage Plan</h5>
                 <Row>
-                  <Col  md={8}>
+                  <Col md={8}>
                     <h4 className="package_name">
                       Current Plan:{" "}
                       {userInfo1.package ? userInfo1.package.package_name : ""}
@@ -158,8 +164,10 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col  md={4}  xl={2}>Change Plan:</Col>
-                  <Col  md={4}  xl={3}>
+                  <Col md={4} xl={2}>
+                    Change Plan:
+                  </Col>
+                  <Col md={4} xl={3}>
                     <Select
                       isSearchable={false}
                       isOptionDisabled={(option) => option.isdisabled} // disable an option
@@ -178,8 +186,10 @@ class AccountSetup extends React.Component {
                   this.state.upgrade && (
                     <Row className="mt-4">
                       <>
-                        <Col md={4}  xl={2}>Status Activity:</Col>
-                        <Col md={4}  xl={3}>
+                        <Col md={4} xl={2}>
+                          Status Activity:
+                        </Col>
+                        <Col md={4} xl={3}>
                           <Button
                             variant="primary"
                             className="btn-block"
