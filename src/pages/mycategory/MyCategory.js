@@ -295,9 +295,7 @@ class MyCategory extends React.Component {
                         <Button
                           variant="primary"
                           className="btn-block"
-                          onClick={() =>
-                            this.props.history.push("/app/account/setup")
-                          }
+                          onClick={() => history.push("/app/account/setup")}
                         >
                           Upgrade
                         </Button>
