@@ -72,7 +72,6 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    console.log(this.props.activeItem, "activeItem");
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav className={s.root}>

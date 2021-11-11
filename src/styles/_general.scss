@@ -123,9 +123,44 @@ h1 small {
 .cat-box:hover .action {
   opacity: 1;
 }
+/*
+  Analysis Summary
+*/
+.summary-main-box {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.summary-box .count-box .count-title {
+  color: #798892;
+  font-size: 1rem;
+}
+.summary-box .count-box {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.summary-box .count-box .count {
+  font-size: 1rem;
+}
+.post-analytics-tab .selectCustomization .css-yk16xz-control {
+  min-height: 44px;
+  border-radius: 0;
+}
+.post-search {
+  margin-top: 35px;
+  padding: 9px 0px;
+}
+.post-analytics-tab .selectCustomization .css-1fhf3k1-control {
+  min-height: 44px;
+}
 @media (max-width: 576px) {
   .category-page .package_detail .btn,
   .category-page .catmodel-box .btn {
     margin-top: 10px;
+  }
+  .post-search {
+    margin-top: 15px;
   }
 }
