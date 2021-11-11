@@ -244,11 +244,9 @@ class Register extends React.Component {
                     <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
                   </span>
                   <span className="we_have_ift">
-                    We have sent an email with a confirmation link to your email
-                    address. In order to complete the sign-up process, please
-                    click the confirmation link.
+                  {this.props.successMessage}
                   </span>
-                  {this.props.successMessage}{" "}
+                  {" "}
                   <span
                     className="continue_link_ifti"
                     onClick={() => {

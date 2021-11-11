@@ -256,7 +256,7 @@ export function registerUser(creds) {
           });
           dispatch(
             authSuccess(
-              "We have sent an email with a confirmation link to your email address."
+              "We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link."
             )
           );
         })
