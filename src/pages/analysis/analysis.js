@@ -16,6 +16,7 @@ import classnames from "classnames";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 import LinkAnalytic from "./Linkperformance/linkanalytics";
+import SummaryComponent from "./Summary/SummaryComponent";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class Analysis extends React.Component {
 
     this.state = {
       activeFirstTab: "tab11",
-      activeSecondTab: "tab22",
+      activeSecondTab: "tab20",
       username: username,
     };
   }
@@ -62,6 +63,18 @@ class Analysis extends React.Component {
                     <NavItem>
                       <NavLink
                         className={classnames({
+                          active: this.state.activeSecondTab === "tab20",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab20");
+                        }}
+                      >
+                        <span>Summary</span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
                           active: this.state.activeSecondTab === "tab22",
                         })}
                         onClick={() => {
@@ -71,7 +84,7 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -94,22 +107,26 @@ class Analysis extends React.Component {
                       >
                         <span>Konnect.bio Analytics</span>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
 
                   <TabContent
                     className="mb-lg"
                     activeTab={this.state.activeSecondTab}
                   >
-                    <TabPane tabId="tab21">
-                      <HighCharts username={this.state.username} />
+                    <TabPane tabId="tab20">
+                      <SummaryComponent username={this.state.username} />
                     </TabPane>
                     <TabPane tabId="tab22">
                       <PostAnalytic username={this.state.username} />
                     </TabPane>
-                    <TabPane tabId="tab23">
+                    {/* <TabPane tabId="tab21">
+                      <HighCharts username={this.state.username} />
+                    </TabPane> */}
+
+                    {/* <TabPane tabId="tab23">
                       <LinkAnalytic username={this.state.username} />
-                    </TabPane>
+                    </TabPane> */}
                   </TabContent>
                 </Col>
               </Row>

@@ -5,6 +5,7 @@ import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import Select from "react-select";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
@@ -29,17 +30,20 @@ class PostDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      // fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      // toDate: moment(new Date(), "YYYY-MM-DD"),
-      // today: moment().startOf("year").format("YYYY-MM-DD"),
-      // lastSevenDays: moment().subtract(7, "days").format("YYYY-MM-DD"),
       fromDate: moment().startOf("year").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
       page: 1,
-      limit: 6,
+      limit: 9,
       previous: "",
+      myCategory: "",
+      saveCategory: "",
+      optionCategory: "",
+      saveSort: "",
+      optionSort: "",
+      saveSortOrder: "",
+      optionSortOrder: "",
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -51,10 +55,23 @@ class PostDataComponent extends React.Component {
       this.state.lastYear,
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
-      this.state.page
+      this.state.page,
+      "",
+      "",
+      "asc"
     );
+    this.fetchMyCategory();
   }
-  async fetchPostPerformance(username, fromDate, toDate, limit, page) {
+  async fetchPostPerformance(
+    username,
+    fromDate,
+    toDate,
+    limit,
+    page,
+    categoryId,
+    sortId,
+    orderBy
+  ) {
     this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseAllPosts", {
@@ -64,6 +81,9 @@ class PostDataComponent extends React.Component {
         page: page,
         limit: limit,
         post_type: "image",
+        category_id: categoryId,
+        sort: sortId,
+        order_by: orderBy === "" ? "asc" : "desc",
       })
       .then((response) => {
         this.setState({ data: response.data.message.data, loading: false });
@@ -79,66 +99,239 @@ class PostDataComponent extends React.Component {
         }
       });
   }
+  fetchMyCategory = async () => {
+    await axios
+      .get("/users/receive/categories")
+      .then((response) => {
+        const selectCategories = [];
+        const myCategories = response.data.message;
+        myCategories.map(({ category_id, category_name, image_url }) => {
+          return selectCategories.push({
+            value: category_id,
+            label: category_name,
+            image: image_url,
+          });
+        });
+        this.setState({ myCategory: selectCategories });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({ fromDate: fromDate, toDate: toDate });
-    this.fetchPostPerformance(
-      this.state.username,
-      fromDate,
-      toDate,
-      this.state.limit,
-      1
-    );
+    // this.fetchPostPerformance(
+    //   this.state.username,
+    //   fromDate,
+    //   toDate,
+    //   this.state.limit,
+    //   1
+    // );
   }
   pagination = () => {
     let { username, fromDate, toDate, limit, page } = this.state;
-    this.fetchPostPerformance(username, fromDate, toDate, limit, page);
+    this.fetchPostPerformance(
+      username,
+      fromDate,
+      toDate,
+      limit,
+      page,
+      this.state.saveCategory,
+      this.state.saveSort,
+      this.state.saveSortOrder
+    );
   };
   paginationPrev = () => {
     let { username, fromDate, toDate, limit, previous } = this.state;
-    this.fetchPostPerformance(username, fromDate, toDate, limit, previous);
+    this.fetchPostPerformance(
+      username,
+      fromDate,
+      toDate,
+      limit,
+      previous,
+      this.state.saveCategory,
+      this.state.saveSort,
+      this.state.saveSortOrder
+    );
   };
   disabledDate(current) {
     return current && current > moment().endOf("day");
   }
+  handleSelect = (event) => {
+    this.setState({
+      saveCategory: event.value,
+      optionCategory: event,
+    });
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    this.fetchPostPerformance(
+      this.state.username,
+      this.state.fromDate,
+      this.state.toDate,
+      this.state.limit,
+      1,
+      this.state.saveCategory,
+      this.state.saveSort,
+      this.state.saveSortOrder
+    );
+  };
+  clearFilter = () => {
+    this.setState({
+      optionCategory: "",
+      optionSort: "",
+      optionSortOrder: "",
+      // fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      // toDate: moment(new Date()).format("YYYY-MM-DD"),
+      // lastYear: moment(),
+      // today: moment(),
+    });
+    this.fetchPostPerformance(
+      this.state.username,
+      this.state.lastYear,
+      moment(new Date()).format("YYYY-MM-DD"),
+      this.state.limit,
+      this.state.page,
+      "",
+      "",
+      ""
+    );
+  };
+  handleSort = (event) => {
+    this.setState({
+      saveSort: event.value,
+      optionSort: event,
+    });
+  };
+  handleSortOrder = (event) => {
+    this.setState({
+      saveSortOrder: event.value,
+      optionSortOrder: event,
+    });
+  };
 
   render() {
+    const sortOptions = [
+      // { value: "date", label: "Date" },
+      { value: "impressions", label: "Impressions" },
+      { value: "clicks", label: "Clicks" },
+      { value: "engagement", label: "Engagement" },
+      // { value: "revenue", label: "Revenue" },
+    ];
+    const sortOrderOptions = [
+      { value: "asc", label: "ASC" },
+      { value: "desc", label: "DESC" },
+    ];
+    console.log(this.state.optionSortOrder, "sds");
+
     return (
       <>
-        <Row>
+        <Row className="post-analytics-tab">
           <Col xs={12} xl={12} md={12}>
-            <p>Select Start Date / End Date</p>
-            <RangePicker
-              disabledDate={this.disabledDate}
-              key={4}
-              defaultValue={[
-                moment(this.state.lastYear),
-                moment(this.state.today),
-              ]}
-              defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-              allowClear={false}
-              ranges={{
-                Today: [moment(), moment()],
-                Tomorrow: [moment().add(1, "days"), moment().add(1, "days")],
-                Yesterday: [
-                  moment().subtract(1, "days"),
-                  moment().subtract(1, "days"),
-                ],
-                "This Month": [
-                  moment().startOf("month"),
-                  moment().endOf("month"),
-                ],
-                "Last Month": [
-                  moment().subtract(1, "month").startOf("month"),
-                  moment().subtract(1, "month").endOf("month"),
-                ],
-              }}
-              format={dateFormat}
-              onChange={this.dateRangePickerChanger.bind(this)}
-            />
+            <form onSubmit={this.handleSubmit}>
+              <Row>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Select Start Date / End Date</p>
+                  <RangePicker
+                    disabledDate={this.disabledDate}
+                    key={4}
+                    defaultValue={[
+                      moment(this.state.lastYear),
+                      moment(this.state.today),
+                    ]}
+                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      Yesterday: [
+                        moment().subtract(1, "days"),
+                        moment().subtract(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                      "Last Month": [
+                        moment().subtract(1, "month").startOf("month"),
+                        moment().subtract(1, "month").endOf("month"),
+                      ],
+                    }}
+                    format={dateFormat}
+                    onChange={this.dateRangePickerChanger.bind(this)}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Select Category</p>
+                  <Select
+                    // isMulti={true}
+                    name="category"
+                    className="selectCustomization"
+                    options={this.state.myCategory}
+                    value={this.state.optionCategory}
+                    placeholder="Select Category"
+                    // onChange={(options, e) => this.handleSelect(e, options)}
+                    onChange={(event) => this.handleSelect(event)}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Sort By</p>
+                  <Select
+                    // isMulti={true}
+                    name="sort"
+                    className="selectCustomization"
+                    options={sortOptions}
+                    value={this.state.optionSort}
+                    placeholder="Sort By"
+                    onChange={(event) => this.handleSort(event)}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Order By</p>
+                  <Select
+                    // isMulti={true}
+                    name="sort"
+                    className="selectCustomization"
+                    options={sortOrderOptions}
+                    value={
+                      this.state.optionSortOrder === ""
+                        ? { value: "asc", label: "ASC" }
+                        : this.state.optionSortOrder
+                    }
+                    placeholder="Order By"
+                    onChange={(event) => this.handleSortOrder(event)}
+                    isDisabled={this.state.optionSort === "" ? true : false}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    className="post-search btn-block"
+                  >
+                    Search
+                  </Button>
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <Button
+                    onClick={this.clearFilter}
+                    variant="gray"
+                    className="post-search btn-block"
+                  >
+                    Clear
+                  </Button>
+                </Col>
+              </Row>
+            </form>
           </Col>
         </Row>
+
         <hr />
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
@@ -146,7 +339,7 @@ class PostDataComponent extends React.Component {
           <>
             <Row>
               {!this.state.data.length ? (
-                <div className="no-data">No Data Available</div>
+                <div className="no-data col-md-12">No Data Available</div>
               ) : (
                 this.state.data.map((record) => (
                   <>
@@ -161,16 +354,40 @@ class PostDataComponent extends React.Component {
                             />
                           </div>
                           <div className="col-8 analytic-caption">
-                            <div className="card-block px-2">
+                            {/* <div className="card-block px-2">
                               <p className="card-text">
                                 {record.caption === ""
                                   ? "No Caption Added"
                                   : limitCharacter(record.caption, 55)}
                               </p>
+                            </div> */}
+                            <div className="row count-main-box">
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Impressions</h5>
+                                <h3 className="count">
+                                  {numberWithCommas(record.views)}
+                                </h3>
+                              </div>
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Clicks</h5>
+                                <h3 className="count">
+                                  {numberWithCommas(record.clicks)}
+                                </h3>
+                              </div>
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Engagement</h5>
+                                <h3 className="count">
+                                  {twodecimalplace(record.ctr)}%
+                                </h3>
+                              </div>
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Revenue</h5>
+                                <h3 className="count">{record.revenue}</h3>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="row count-main-box">
+                        {/* <div className="row count-main-box">
                           <div className="col-6 count-box">
                             <h5 className="count-title">Impressions</h5>
                             <h3 className="count">
@@ -188,8 +405,8 @@ class PostDataComponent extends React.Component {
                             <h3 className="count">
                               {twodecimalplace(record.ctr)}%
                             </h3>
-                          </div>
-                          {/* <div className="col-6 count-box">
+                          </div> */}
+                        {/* <div className="col-6 count-box">
                         <h4>Date Start</h4>
                         <h3 className="count">1st October 2021</h3>
                       </div>
@@ -197,7 +414,7 @@ class PostDataComponent extends React.Component {
                         <h4>Date Start</h4>
                         <h3 className="count">31st October 2021</h3>
                       </div> */}
-                        </div>
+                        {/* </div> */}
                       </div>
                     </Col>
                   </>
