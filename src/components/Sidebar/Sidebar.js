@@ -90,7 +90,7 @@ class Sidebar extends React.Component {
             <>
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Bio Shop"
+                header="BioShop"
                 link="/app/linkinbio-shop"
                 isHeader
                 iconElement={

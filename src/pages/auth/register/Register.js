@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Alert, Button} from "reactstrap";
 import Widget from "../../../components/Widget";
-import {registerUser, authError, authSuccess} from "../../../actions/auth";
+import {registerUser, authError} from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 import Loader from "../../../components/Loader";
 
@@ -87,8 +87,15 @@ class Register extends React.Component {
       .then((response) => {
         const selectCities = [];
         const cities = response.data.message;
-        cities.map(({name}) => {
-          return selectCities.push({value: name, label: name});
+        cities.map(({name, stateCode}) => {
+          let value;
+          if (countryCode === "US") value = name + " , " + stateCode;
+          else
+            value = name
+            return selectCities.push({
+              value: value,
+              label: value,
+            });
         });
         this.setState({cities: selectCities});
         this.setState({loading: false});
@@ -233,9 +240,13 @@ class Register extends React.Component {
             {this.props.successMessage ? (
               <Widget className="custom_confirmation">
                 <div className="confirm_ift align-items-center">
-                  <span className="env-ift"><i class="fa fa-envelope-open-o" aria-hidden="true"></i></span>
-                  <span className="we_have_ift">We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.</span>
-                  {this.props.successMessage}{" "}
+                  <span className="env-ift">
+                    <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                  </span>
+                  <span className="we_have_ift">
+                  {this.props.successMessage}
+                  </span>
+                  {" "}
                   <span
                     className="continue_link_ifti"
                     onClick={() => {
@@ -407,17 +418,18 @@ class Register extends React.Component {
                     </p>
                   </form>
                 </Widget>
-             
-            <div class="signup_right">
-              <h3>Turn your Followers into Customers</h3>
-              <p>
-                Staying just an influencer is not all! Turn your followers into
-                customers with just a few clicks. Create a trackable link, find
-                out what is popular, and aim to monetize on it. Design your
-                social media accordingly and become an entrepreneur.
-              </p>
-                  </div>
-                  </>
+
+                <div class="signup_right">
+                  <h3>Turn your Followers into Customers</h3>
+                  <p>
+                    Staying just an influencer is not all! Turn your followers
+                    into customers with just a few clicks. Create a trackable
+                    link, find out what is popular, and aim to monetize on it.
+                    Design your social media accordingly and become an
+                    entrepreneur.
+                  </p>
+                </div>
+              </>
             )}
           </div>
         </div>

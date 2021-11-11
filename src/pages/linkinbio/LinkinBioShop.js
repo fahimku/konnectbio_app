@@ -232,7 +232,7 @@ class LinkinBioShop extends React.Component {
         );
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({instagramPosts: instagramPosts});
-        toast.success("Bio Shop Updated Successfully");
+        toast.success("BioShop Updated Successfully");
         this.setState({loading: false});
         this.selectPost(false, "");
       });
