@@ -191,7 +191,7 @@ class MyProfile extends React.Component {
                     color="default"
                     className="select-image"
                   >
-                    <label for="fileupload2">Choose Image</label>
+                    <label htmlFor="fileupload2">Choose Image</label>
                   </Button>
                   <Button
                     onClick={this.clearImage}
@@ -211,7 +211,7 @@ class MyProfile extends React.Component {
                       className="d-block upload-btn"
                       disabled={this.state.imageFiles.length > 0 ? false : true}
                     >
-                      Upload Image
+                      Save Changes
                     </Button>
                   )}
                 </Col>
