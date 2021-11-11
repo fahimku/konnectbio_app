@@ -590,7 +590,7 @@ span.icon {
   padding: 10px;
   font-size: 1.1rem;
   font-weight: 500;
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'Nunito Sans', sans-serif !important;
   letter-spacing: 1px;
   color:#3e4555;
 }
@@ -616,7 +616,7 @@ span.icon {
 }
 .custom_pkg h4{
   letter-spacing: 0.06rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 .custom_pkg p br {
   display: none;
@@ -687,8 +687,8 @@ a.pkg_read:focus, a.pkg_read:hover{
   border-radius: 25px;
   padding: 12px 0;
   border-color: #010b40;
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 600;
   font-size: 1rem;
   position: absolute;
   bottom: 1rem;
@@ -713,7 +713,33 @@ a.pkg_read:focus, a.pkg_read:hover{
   flex: 0 0 70% !important;
   max-width: 70% !important;
 }
-
+.dashboard_main_ift.container{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.dashboard_col.col-md-4{
+  padding-right: 15px;
+  padding-left:15px;
+}
+.dash_block{
+  margin-bottom: 24px;
+  background-color: #FFF;
+  box-shadow: 0px 0px 2px 1px #e4e7ed;
+}
+.dash_content{
+  transition: opacity .2s ease-out;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  overflow-x: visible;
+  min-height: 250px;
+}
+.dash_c_inr{
+  padding:20px 0;
+}
+.dash_icon{
+  color:#185887
+}
 
 
 

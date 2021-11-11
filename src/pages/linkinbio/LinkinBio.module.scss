@@ -124,7 +124,7 @@
     .place-holder-name {
       padding-left: 10px;
       padding-top: 8px;
-      font-weight: bold;
+      font-family: 'SegoeUIBold';
     }
 
 
@@ -150,11 +150,6 @@
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
     opacity: 0.5;
-  }
-
-  .mobile-gallery .row .col-4 {
-    width: 25%;
-    margin-bottom: 5px;
   }
 
   .visit-website {

@@ -16,8 +16,47 @@ class Home extends React.Component {
     
 <>    
 
-      <div className="row">
-        <div className="container"></div>
+      <div className="dashboard_main_ift container">
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+                <div className="dash_c_inr text-center">
+                  <span className="dash_icon"><i class="fa fa-user fa-4x" aria-hidden="true"></i></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content"></div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content"></div>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content"></div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content"></div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content"></div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
 

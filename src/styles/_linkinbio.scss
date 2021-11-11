@@ -18,7 +18,7 @@
     .linkin-text {
         font-size: 20px;
         padding: 5px 15px;
-        font-weight: bold;
+        font-family: 'SegoeUIBold';
         line-height: 52px;
     }
 }
@@ -160,7 +160,7 @@
         .place-holder-name {
             padding-left: 10px;
             padding-top: 6px;
-            font-weight: bold;
+            font-family: 'SegoeUIBold';
         }
 
     }
@@ -231,6 +231,7 @@
             object-fit: cover;
             -o-object-position: 50% 0;
             object-position: 50% 0;
+            cursor: pointer;
         }
 
         .linked {

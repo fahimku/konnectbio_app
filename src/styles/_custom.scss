@@ -16,7 +16,18 @@
   /* iOS 4.1- */
 }
 
+@font-face {
+  font-family: 'SegoeUIBold';
+  src: url('../fonts/segoui/FontsFreeNetSegoeUIBold.eot');
+  src: url('../fonts/segoui/FontsFreeNetSegoeUIBold.eot') format('embedded-opentype'),
+       url('../fonts/segoui/FontsFreeNetSegoeUIBold.woff2') format('woff2'),
+       url('../fonts/segoui/FontsFreeNetSegoeUIBold.woff') format('woff'),
+       url('../fonts/segoui/FontsFreeNetSegoeUIBold.ttf') format('truetype'),
+       url('../fonts/segoui/FontsFreeNetSegoeUIBold.svg#FontsFreeNetSegoeUIBold') format('svg');
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800&display=swap');
 
 body {
   font-family: "Segoe UI" !important;
@@ -34,7 +45,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: 'Rubik', sans-serif !important;
+  font-family: 'Nunito Sans', sans-serif !important;
+  font-weight: 600 !important;
 }
 
 .connect-page .social-auth {
