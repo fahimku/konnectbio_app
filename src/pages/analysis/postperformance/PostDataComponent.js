@@ -225,7 +225,16 @@ class PostDataComponent extends React.Component {
       { value: "asc", label: "ASC" },
       { value: "desc", label: "DESC" },
     ];
-    console.log(this.state.optionSortOrder, "sds");
+    const style = {
+      control: (base, state) => ({
+        ...base,
+        height: "44px",
+        boxShadow: "none",
+        "&:hover": {
+          // border: "1px solid black",
+        },
+      }),
+    };
 
     return (
       <>
@@ -270,32 +279,30 @@ class PostDataComponent extends React.Component {
                 <Col xs={12} xl={2} md={6}>
                   <p>Select Category</p>
                   <Select
-                    // isMulti={true}
                     name="category"
                     className="selectCustomization"
                     options={this.state.myCategory}
                     value={this.state.optionCategory}
                     placeholder="Select Category"
-                    // onChange={(options, e) => this.handleSelect(e, options)}
                     onChange={(event) => this.handleSelect(event)}
+                    styles={style}
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
                   <p>Sort By</p>
                   <Select
-                    // isMulti={true}
                     name="sort"
                     className="selectCustomization"
                     options={sortOptions}
                     value={this.state.optionSort}
                     placeholder="Sort By"
                     onChange={(event) => this.handleSort(event)}
+                    styles={style}
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
                   <p>Order By</p>
                   <Select
-                    // isMulti={true}
                     name="sort"
                     className="selectCustomization"
                     options={sortOrderOptions}
@@ -307,6 +314,7 @@ class PostDataComponent extends React.Component {
                     placeholder="Order By"
                     onChange={(event) => this.handleSortOrder(event)}
                     isDisabled={this.state.optionSort === "" ? true : false}
+                    styles={style}
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
