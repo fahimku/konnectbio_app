@@ -17,7 +17,7 @@ class Home extends React.Component {
 <>    
 
       <div className="row">
-        <div className="container">test</div>
+        <div className="container"></div>
       </div>
 
 
