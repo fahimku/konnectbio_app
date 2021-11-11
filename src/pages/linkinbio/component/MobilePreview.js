@@ -1,6 +1,6 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import {Row, Col} from "reactstrap";
+import {Link} from "react-router-dom";
 
 const MobilePreview = ({
   placeholder,
@@ -14,44 +14,48 @@ const MobilePreview = ({
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
-      if (instagramPosts.data[i].media_type === "IMAGE" || instagramPosts.data[i].media_type === "CAROUSEL_ALBUM" ) {
+      if (
+        instagramPosts.data[i].media_type === "IMAGE" ||
+        instagramPosts.data[i].media_type === "CAROUSEL_ALBUM"
+      ) {
         instaPosts.push(
           <Col key={i} xs="4">
             <div className="mobile-image-box">
-              <div class="mobile_box_inr">
-                  <img
-                    className={
-                      instagramPosts.data[i].linked || instagramPosts.data[i].select
-                        ? "linked"
-                        : ""
-                    }
-                    key={i}
-                    id={"img" + i}
-                    onClick={(ev) => selectPost(true, i)}
-                    src={instagramPosts.data[i].media_url}
-                    alt="instagramPosts"
-                  />
-                  {instagramPosts.data[i].linked ? (
-                    <span className="linked-label">LINKED</span>
-                  ) : (
-                    ""
-                  )}
-                </div>
+              <div onClick={(ev) => selectPost(true, i)} class="mobile_box_inr">
+                <img
+                  className={
+                    instagramPosts.data[i].linked ||
+                    instagramPosts.data[i].select
+                      ? "linked"
+                      : ""
+                  }
+                  key={i}
+                  id={"img" + i}
+                  src={instagramPosts.data[i].media_url}
+                  alt="instagramPosts"
+                />
+                {instagramPosts.data[i].linked ? (
+                  <span className="linked-label">LINKED</span>
+                ) : (
+                  ""
+                )}
               </div>
+            </div>
           </Col>
         );
       } else {
         instaPosts.push(
           <Col key={i} xs="4" onClick={(ev) => selectPost(true, i)}>
             <div className="mobile-image-box">
-                <div className="mobile_box_inr">
+              <div className="mobile_box_inr">
                 <video
                   oncontextmenu="return false;"
                   // id="myVideo"
                   autoplay
                   controlsList="nodownload"
                   className={
-                    instagramPosts.data[i].linked || instagramPosts.data[i].select
+                    instagramPosts.data[i].linked ||
+                    instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }

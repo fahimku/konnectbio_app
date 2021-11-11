@@ -5,24 +5,29 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
 import Placeholder from "../../images/placeholder.svg";
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class MyProfile extends React.Component {
-  state = {
-    form: {
-      name: "",
-      bio: "",
-    },
-    imageFiles: [],
-    user_id: "",
-    imageError: "",
-    loadingImage: false,
-    loading: false,
-    userData: "",
-    userImage: "",
-    userInfo2: "",
-  };
+
+  constructor(props){
+    super(props)
+    this.state = {
+      form: {
+        name: "",
+        bio: "",
+      },
+      imageFiles: [],
+      user_id: "",
+      imageError: "",
+      loadingImage: false,
+      loading: false,
+      userData: "",
+      userImage: "",
+      userInfo2: "",
+    };
+  }
+
+ 
 
   componentDidMount() {
     const userInfo2 = JSON.parse(localStorage.getItem("userInfo"));
@@ -48,6 +53,7 @@ class MyProfile extends React.Component {
         console.log(error, "error");
       });
   };
+ 
   setDefaultData = () => {
     const { form } = this.state;
     setTimeout(() => {
@@ -59,6 +65,7 @@ class MyProfile extends React.Component {
       });
     }, 100);
   };
+ 
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
