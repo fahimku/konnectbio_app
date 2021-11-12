@@ -206,7 +206,7 @@ class AccountSetup extends React.Component {
                     </Col>
                   )}
                 </Row>
-                {this.state.singlePackage.package_name !== "Individual" &&
+                {this.state.singlePackage.package_name !== "Micro Influencer" &&
                   this.state.upgrade && (
                     <Row className="mt-4">
                       <>
@@ -240,7 +240,7 @@ class AccountSetup extends React.Component {
                     </Row>
                   )}
               </div>
-              {this.state.singlePackage.package_name !== "Individual" &&
+              {this.state.singlePackage.package_name !== "Micro Influencer" &&
                 this.state.showPaymentButton && (
                   <>
                     <div className="white-box">
