@@ -6,7 +6,7 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
-// import ReactTable from "react-table";
+import ReactTable from "react-table";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
@@ -213,7 +213,7 @@ class PostDataComponent extends React.Component {
 
   render() {
     const sortOptions = [
-      // { value: "date", label: "Date" },
+      { value: "date", label: "Date" },
       { value: "impressions", label: "Impressions" },
       { value: "clicks", label: "Clicks" },
       { value: "engagement", label: "Engagement" },
@@ -354,7 +354,7 @@ class PostDataComponent extends React.Component {
                 // <ReactTable
                 //   data={this.state.data}
                 //   // filterable
-                //   columns={}
+                //   columns={[]}
                 //   defaultPageSize={10}
                 //   className="-striped -highlight"
                 // />
