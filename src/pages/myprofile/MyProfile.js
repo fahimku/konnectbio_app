@@ -4,8 +4,9 @@ import {Row, Col, Button} from "react-bootstrap";
 import {toast} from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
+import ScreenButton from "./component/screenButtons";
 import Placeholder from "../../images/placeholder.svg";
-import avatar from "../../images/avatar15.jpg";
+//import avatar from "../../images/avatar15.jpg";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class MyProfile extends React.Component {
@@ -149,7 +150,7 @@ class MyProfile extends React.Component {
           <div className="profile_container_main container">
             <div className="row">
               <div className="profile_box_main col-md-6">
-                <div class="dash_block_profile">
+                <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Profile</h5>
                     <div className="dp_cont mb-5">
@@ -168,9 +169,9 @@ class MyProfile extends React.Component {
                           </>
                         ) : this.state.userImage === "" ||
                           this.state.userImage === undefined ? (
-                              <img
-                              style={{width: "76px", height: "76px"}}
-                              className="circle profile-icon"
+                          <img
+                            style={{width: "76px", height: "76px"}}
+                            className="circle profile-icon"
                             alt="profile-icon"
                             src={
                               Placeholder
@@ -178,15 +179,26 @@ class MyProfile extends React.Component {
                             }
                           />
                         ) : (
-                              <img
-                              style={{width: "76px", height: "76px"}}
-                              className="circle profile-icon"
-                                alt="profile-icon" src={this.state.userImage} />
+                          <img
+                            style={{width: "76px", height: "76px"}}
+                            className="circle profile-icon"
+                            alt="profile-icon"
+                            src={this.state.userImage}
+                          />
                         )}
 
                         {/* <img src={avatar} alt="Profile" /> */}
                       </span>
                       <div className="dp_buttons">
+                        <input
+                          accept="image/*"
+                          onChange={(e) => this.onChangeInputImage(e)}
+                          id="fileupload5"
+                          type="file"
+                          name="file"
+                          className="d-none"
+                        />
+
                         <Button
                           accept="image/*"
                           onChange={(e) => this.onChangeInputImage(e)}
@@ -194,7 +206,7 @@ class MyProfile extends React.Component {
                           color="default"
                           className="select-image"
                         >
-                          <label htmlFor="fileupload2">Change Image</label>
+                          <label htmlFor="fileupload5">Change Image</label>
                         </Button>
 
                         {this.state.loadingImage ? (
@@ -214,12 +226,12 @@ class MyProfile extends React.Component {
                         )}
 
                         <Button
-                           onClick={this.clearImage}
+                          onClick={this.clearImage}
                           type="button"
                           color="default"
                           className="select-image"
                         >
-                          <label htmlFor="fileupload2">Cancel</label>
+                          <label htmlFor="fileupload5">Cancel</label>
                         </Button>
                       </div>
                     </div>
@@ -266,121 +278,13 @@ class MyProfile extends React.Component {
                 </div>
               </div>
               <div className="profile_box_main col-md-6">
-                <div class="dash_block_profile">
+                <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Screen Buttons</h5>
-                    <div className="dp_cont mb-4">
-                      <span>
-                        <img src={avatar} alt="Profile" />
-                      </span>
-                      <div className="dp_buttons">
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Change Image</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Save</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Cancel</label>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="dp_cont mb-4">
-                      <span>
-                        <img src={avatar} alt="Profile" />
-                      </span>
-                      <div className="dp_buttons">
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Change Image</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Save</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Cancel</label>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="dp_cont mb-4">
-                      <span>
-                        <img src={avatar} alt="Profile" />
-                      </span>
-                      <div className="dp_buttons">
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Change Image</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Save</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Cancel</label>
-                        </Button>
-                      </div>
-                    </div>
-                    <div className="dp_cont mb-0">
-                      <span>
-                        <img src={avatar} alt="Profile" />
-                      </span>
-                      <div className="dp_buttons">
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Change Image</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Save</label>
-                        </Button>
-                        <Button
-                          type="button"
-                          color="default"
-                          className="select-image"
-                        >
-                          <label htmlFor="fileupload2">Cancel</label>
-                        </Button>
-                      </div>
-                    </div>
+                    <ScreenButton key={0} id={0} />
+                    <ScreenButton key={1} id={1} />
+                    <ScreenButton key={2} id={2} />
+                    <ScreenButton key={3} id={3} />
                   </div>
                 </div>
               </div>
@@ -396,10 +300,10 @@ class MyProfile extends React.Component {
                     <input
                       accept="image/*"
                       onChange={(e) => this.onChangeInputImage(e)}
-                      id="fileupload2"
+                      id="fileupload5"
                       type="file"
                       name="file"
-                      className="d-none"
+                      // className="d-none"
                     />
                     <div className="fileinput-new thumbnail">
                       {this.state.imageFiles.length > 0 ? (
@@ -440,7 +344,7 @@ class MyProfile extends React.Component {
                     color="default"
                     className="select-image"
                   >
-                    <label htmlFor="fileupload2">Change Image</label>
+                    <label htmlFor="fileupload5">Change Image</label>
                   </Button>
                   <Button
                     onClick={this.clearImage}

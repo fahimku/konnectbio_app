@@ -142,6 +142,7 @@ export function loginUser(creds) {
         .then((res) => {
           const token = res.data.message.token;
           const userInfo = {
+           menu:res.data.message.menu,
             user_id: res.data.message.user_id,
             name: res.data.message.name,
             access_token: res.data.message.access_token,
@@ -157,7 +158,7 @@ export function loginUser(creds) {
           dispatch(receiveToken(token));
           dispatch(doInit());
           if (res.data.message.package) history.push("/app");
-          else history.push("/package");
+         else history.push("/package");
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
