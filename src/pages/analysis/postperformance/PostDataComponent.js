@@ -6,7 +6,7 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
-import ReactTable from "react-table";
+// import ReactPaginate from "react-paginate";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
@@ -210,6 +210,18 @@ class PostDataComponent extends React.Component {
       optionSortOrder: event,
     });
   };
+  Items({ currentItems }) {
+    return (
+      <>
+        {currentItems &&
+          currentItems.map((item) => (
+            <div>
+              <h3>Item #{item}</h3>
+            </div>
+          ))}
+      </>
+    );
+  }
 
   render() {
     const sortOptions = [
@@ -349,13 +361,6 @@ class PostDataComponent extends React.Component {
               {!this.state.data.length ? (
                 <div className="no-data col-md-12">No Data Available</div>
               ) : (
-                // <ReactTable
-                //   data={this.state.data}
-                //   // filterable
-                //   columns={[]}
-                //   defaultPageSize={10}
-                //   className="-striped -highlight"
-                // />
                 this.state.data.map((record) => (
                   <>
                     <Col xs={12} xl={4} md={6}>

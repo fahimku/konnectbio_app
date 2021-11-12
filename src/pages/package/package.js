@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
+import { Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
