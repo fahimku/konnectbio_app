@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 //import {Progress, Alert} from "reactstrap";
-import { withRouter } from "react-router-dom";
-import { dismissAlert } from "../../actions/alerts";
+import {withRouter} from "react-router-dom";
+import {dismissAlert} from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
 import {
@@ -12,7 +12,7 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
-import { logoutUser } from "../../actions/auth";
+import {logoutUser} from "../../actions/auth";
 import PermissionHelper from "../PermissionHelper";
 
 class Sidebar extends React.Component {
@@ -44,7 +44,7 @@ class Sidebar extends React.Component {
 
   componentDidMount() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ userType: userInfo.user_type });
+    this.setState({userType: userInfo.user_type});
   }
 
   onMouseEnter() {
@@ -90,6 +90,18 @@ class Sidebar extends React.Component {
             <>
               <LinksGroup
                 className="sidebar-nav-links"
+                header="Dashboard"
+                link="/app/dashba"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-dashboard"></span>
+                }
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
                 header="BioShop"
                 link="/app/linkinbio-shop"
                 isHeader
@@ -124,6 +136,17 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Campaigns"
+                link="/app/campaign"
+                isHeader
+                iconElement={<span className="glyphicon glyphicon-bullhorn"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
               {PermissionHelper.validate(["access_analytics"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
@@ -147,19 +170,14 @@ class Sidebar extends React.Component {
                   header="Settings"
                   isHeader
                   labelColor="danger"
-                  iconElement={
-                    <span
-                      className="fa fa-cogs	
-                    "
-                    ></span>
-                  }
+                  iconElement={<span className="fa fa-cogs"></span>}
                   iconName="flaticon-user"
                   link="/admin"
                   index="admin"
                   exact={false}
                   childrenLinks={[
                     {
-                      header: "My Profile",
+                      header: "Home Screen",
                       link: "/app/account/profile",
                     },
                     {

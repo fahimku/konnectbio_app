@@ -168,9 +168,9 @@ class MyProfile extends React.Component {
                           </>
                         ) : this.state.userImage === "" ||
                           this.state.userImage === undefined ? (
-                          <img
-                            style={{width: "76px", height: "76px"}}
-                            className="circle profile-icon"
+                              <img
+                              style={{width: "76px", height: "76px"}}
+                              className="circle profile-icon"
                             alt="profile-icon"
                             src={
                               Placeholder
@@ -178,12 +178,10 @@ class MyProfile extends React.Component {
                             }
                           />
                         ) : (
-                          <img
-                            style={{width: "76px", height: "76px"}}
-                            className="circle profile-icon"
-                            alt="profile-icon"
-                            src={this.state.userImage}
-                          />
+                              <img
+                              style={{width: "76px", height: "76px"}}
+                              className="circle profile-icon"
+                                alt="profile-icon" src={this.state.userImage} />
                         )}
 
                         {/* <img src={avatar} alt="Profile" /> */}
@@ -216,12 +214,12 @@ class MyProfile extends React.Component {
                         )}
 
                         <Button
-                          onClick={this.clearImage}
+                           onClick={this.clearImage}
                           type="button"
                           color="default"
                           className="select-image"
                         >
-                          Cancel
+                          <label htmlFor="fileupload2">Cancel</label>
                         </Button>
                       </div>
                     </div>
@@ -390,7 +388,7 @@ class MyProfile extends React.Component {
             <ChangePassword userID={userInfo.user_id} />
           </div>
 
-          {/* <div className="white-box">
+          <div className="white-box">
             <form onSubmit={this.handleSubmit}>
               <Row className="mb-3">
                 <Col md={12} className="text-center">
@@ -515,7 +513,7 @@ class MyProfile extends React.Component {
                 </Col>
               </Row>
             </form>
-          </div> */}
+          </div>
         </div>
       </div>
     );
