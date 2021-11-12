@@ -38,14 +38,17 @@ class AccountDelete extends React.Component {
   }
 
   deleteAccount = async () => {
+    this.setState({ loading: true });
     await axios
       .put(`/users/revise/accountdelete/${this.state.user_id}`)
       .then(() => {
         this.setState({ modal: false });
+        this.setState({ loading: false });
         history.push("/logout");
       })
       .catch((err) => {
         toast.error(err.response.data.message);
+        this.setState({ loading: false });
       });
   };
 
@@ -95,7 +98,11 @@ class AccountDelete extends React.Component {
               <Button color="default" onClick={() => this.toggle("modal")}>
                 Close
               </Button>
-              <Button color="primary" onClick={this.deleteAccount}>
+              <Button
+                color="primary"
+                onClick={this.deleteAccount}
+                disabled={!this.state.loading ? false : true}
+              >
                 Yes
               </Button>
             </ModalFooter>
