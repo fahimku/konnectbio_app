@@ -72,17 +72,16 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    console.log(this.props.activeItem, "activeItem");
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav className={s.root}>
           <header
             className={s.logo}
-            onClick={() => {
-              this.props.history.push("/app/home");
-            }}
+            // onClick={() => {
+            //   this.props.history.push("/app/home");
+            // }}
           >
-            <a href="/">
+            <a href="#">
               <span className={s.logoStyle}>&nbsp;</span>{" "}
             </a>
           </header>
