@@ -137,12 +137,12 @@ class Package extends React.Component {
         <div className="container-fluid pricing-table-ifti">
           <form onSubmit={this.handleSubmit}>
             <Row className="promo_code_ift">
-              <div className="promo_msg col-md-12">Enter Promo Code</div>
+              <div className="promo_msg col-md-12">Have Promo Code?</div>
               <div className="promo_iner col-md-12">
                 <input
                   type="text"
                   name="promo_code"
-                  placeholder="Enter Promo Code"
+                  // placeholder="Enter Promo Code"
                   onInput={this.handleChange}
                   className="form-control"
                   value={this.state.promo_code}
