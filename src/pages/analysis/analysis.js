@@ -8,14 +8,14 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
-import HighCharts from "./highcharts/HighCharts";
+// import HighCharts from "./highcharts/HighCharts";
 // import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
 //import {connect} from "react-redux";
 // import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
-import LinkAnalytic from "./Linkperformance/linkanalytics";
+// import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
 
 class Analysis extends React.Component {

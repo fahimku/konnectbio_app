@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
@@ -46,7 +46,7 @@ class SummaryDataComponent extends React.Component {
       this.state.page
     );
   }
-  async fetchSummeryPerformance(username, fromDate, toDate, limit, page) {
+  fetchSummeryPerformance = async (username, fromDate, toDate, limit, page) => {
     this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseSummary", {
@@ -60,7 +60,7 @@ class SummaryDataComponent extends React.Component {
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
       });
-  }
+  };
 
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
