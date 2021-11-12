@@ -148,7 +148,12 @@ class Package extends React.Component {
                   value={this.state.promo_code}
                   required
                 />
-                <Button type="submit">Apply</Button>
+                <Button
+                  type="submit"
+                  disabled={!this.state.loading ? false : true}
+                >
+                  Apply
+                </Button>
               </div>
             </Row>
           </form>
