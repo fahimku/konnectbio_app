@@ -1,5 +1,4 @@
 import {Button} from "react-bootstrap";
-//import avatar from "../../../images/avatar15.jpg";
 import Loader from "../../../components/Loader/Loader";
 import Placeholder from "../../../images/placeholder.svg";
 import React, {useState, useEffect} from "react";
@@ -9,12 +8,17 @@ const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 function ScreenButtons(props) {
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true)
   const [imageFiles, setImageFiles] = useState([]);
   const [userImage, setUserImage] = useState(userInfo.menu[props.id].image_url);
-  const [error, setError] = useState("");
   let menuId = props.id + 1;
-  menuId = menuId + "" + menuId + "" + menuId + "" + menuId;
+  menuId = menuId + "" + menuId + "" +  menuId + "" + menuId;
 
+
+  useEffect(() => {
+
+  });
+ 
   const onChangeInputImage = (e) => {
     const files = [];
     const reader = new FileReader();
@@ -23,6 +27,7 @@ function ScreenButtons(props) {
       files[0].preview = reader.result;
       files[0].toUpload = true;
       setImageFiles(files);
+      setDisabled(false)
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -50,11 +55,11 @@ function ScreenButtons(props) {
         parseUserInformation.menu = imageResponse.data;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
+        setDisabled(true)
       })
       .catch((err) => {
         toast.error(err.response.data.message);
         setLoading(false);
-        setError(err.response.data.message);
       });
   };
 
@@ -62,8 +67,6 @@ function ScreenButtons(props) {
     setImageFiles([]);
     setUserImage("");
   };
-
-  useEffect(() => {});
 
   return (
     <div className="dp_cont mb-4">
@@ -123,6 +126,7 @@ function ScreenButtons(props) {
           </Button>
         ) : (
           <Button
+            disabled={disabled}
             onClick={uploadImage}
             type="button"
             color="default"
