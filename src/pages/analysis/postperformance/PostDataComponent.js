@@ -81,7 +81,7 @@ class PostDataComponent extends React.Component {
         page: page,
         limit: limit,
         post_type: "image",
-        category_id: categoryId,
+        category_id: categoryId === "all" ? "" : categoryId,
         sort: sortId,
         order_by: orderBy,
       })
@@ -112,6 +112,10 @@ class PostDataComponent extends React.Component {
             image: image_url,
           });
         });
+        let all = {};
+        all.value = "all";
+        all.label = "ALL";
+        selectCategories.unshift(all);
         this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
@@ -184,6 +188,9 @@ class PostDataComponent extends React.Component {
       optionCategory: "",
       optionSort: "",
       optionSortOrder: "",
+      saveCategory: "",
+      saveSort: "",
+      saveSortOrder: "",
       fromDate: moment().startOf("year").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
@@ -233,6 +240,7 @@ class PostDataComponent extends React.Component {
         },
       }),
     };
+    console.log(this.state.myCategory, "myCategory");
 
     return (
       <>
