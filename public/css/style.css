@@ -28,7 +28,6 @@ Custome CSS
   border-color: #000;
 }
 .btn-primary {
-  background-color: #010b40 !important;
   margin-right: 5px !important;
   padding: 10px 10px !important;
   min-width: 120px;
@@ -152,11 +151,6 @@ span.icon {
   }
 }
 
-.profile-page .container {
-  max-width: 600px;
-  max-width: 960px;
-  margin: 0;
-}
 .category-page .category-btn {
   margin-top: 30px;
 }
@@ -220,7 +214,7 @@ span.icon {
   width: 100%;
 }
 .link-wrapper .activenav .icon {
-  background: #185887 !important;
+  background: #010b40 !important;
 }
 
 .mobile-menu ul li a span span:active {
@@ -713,6 +707,11 @@ a.pkg_read:focus, a.pkg_read:hover{
   flex: 0 0 70% !important;
   max-width: 70% !important;
 }
+
+
+
+/* Dashboard Style Start Here Iftikhar */
+
 .dashboard_main_ift.container{
   padding-top: 50px;
   padding-bottom: 50px;
@@ -738,9 +737,86 @@ a.pkg_read:focus, a.pkg_read:hover{
   padding:20px 0;
 }
 .dash_icon{
-  color:#185887
+  color:#010b40
 }
+/* Dashboard Style End Here */
 
+
+
+/* Profile Style Start Here Iftikhar */
+
+.profile-page .container {
+  margin: 0;
+}
+.profile_container_main.container{
+  padding-left:0;
+  padding-right:0;
+}
+.profile_box_main.col-md-6{
+  padding-right: 15px;
+  padding-left:15px;
+}
+.dash_block_profile{
+  margin-bottom: 24px;
+  background-color: #FFF;
+  box-shadow: 0px 0px 2px 1px #e4e7ed;
+  min-height: 460px;
+}
+.profile_password.profile_box_main .dash_block_profile{
+  min-height: 100px;
+}
+.dash_content_profile{
+  transition: opacity .2s ease-out;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  overflow-x: visible;
+  min-height: 250px;
+}
+.dash_content_profile h5{
+  border-bottom: 1px solid #dce4ec;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.dp_cont{
+  display: flex;
+  align-items: center;
+}
+.dp_cont.mb-5{
+  margin-bottom: 2rem !important;
+}
+.dp_cont span{
+  width: 76px;
+  height: 76px;
+  position: relative;
+}
+.dp_cont span img{
+  width: 76px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgb(126 125 125 / 40%);
+}
+.dp_buttons{
+  margin-left: 20px;
+  width:100%;
+  display:flex;
+}
+.dp_buttons button{
+  margin-bottom: 0;
+  width:100%;
+}
+.dp_buttons button:last-child{
+  margin-right: 0 !important;
+}
+.dp_fields{
+  display: flex;
+  flex-direction: column;
+}
+.pr-sv-btn{
+  display: flex;
+}
+.pr-sv-btn button{
+  margin-bottom: 0;
+}
 
 
 

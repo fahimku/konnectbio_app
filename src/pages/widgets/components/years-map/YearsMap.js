@@ -70,7 +70,7 @@ this.polygonSeries.tooltip.background.fill = am4core.color("#fff");
       "property": "fill",
       "target": polygonTemplate,
       "min": am4core.color("#ACE4F4"),
-      "max": am4core.color("#005792")
+      "max": am4core.color("#010b40")
     });
   }
 

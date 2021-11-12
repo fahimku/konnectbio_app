@@ -121,7 +121,7 @@ export default {
         'Area (square km): <b>{point.y}</b><br/>' +
         'Population density (people per square km): <b>{point.z}</b><br/>'
     },
-    colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#005792', '#010b40', '#43ADF6'],
+    colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#010b40', '#010b40', '#43ADF6'],
     series: [{
       minPointSize: 10,
       innerSize: '20%',
@@ -162,7 +162,7 @@ export default {
     credits: {
       enabled: false
     },
-    colors: ['#005792'],
+    colors: ['#010b40'],
     chart: {
       type: 'column',
       options3d: {
@@ -216,7 +216,7 @@ export default {
     subtitle: {
       text: 'Source <href="https://en.wikipedia.org/wiki/List_of_countries_by_population_(United_Nations)">Wikipedia</a>'
     },
-    colors: ['#010b40', '#21AE8C', '#FDA700', '#FD5F00', '#005792', '#3c484f', '#17a2b8'],
+    colors: ['#010b40', '#21AE8C', '#FDA700', '#FD5F00', '#010b40', '#3c484f', '#17a2b8'],
     series: [{
       type: "sunburst",
       data: sunburstData,
@@ -268,7 +268,7 @@ export default {
     credits: {
       enabled: false
     },
-    colors: ['#005792'],
+    colors: ['#010b40'],
     title: {
       text: 'Highcharts Vector plot'
     },
@@ -284,7 +284,7 @@ export default {
     series: [{
       type: 'vector',
       name: 'Sample vector field',
-      color: '#005792',
+      color: '#010b40',
       data: generateVectorData()
     }]
   },
@@ -292,7 +292,7 @@ export default {
     credits: {
       enabled: false
     },
-    colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#005792', '#010b40', '#17a2b8'],
+    colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#010b40', '#010b40', '#17a2b8'],
     series: [{
       type: 'wordcloud',
       data: wordCloudData,

@@ -21,7 +21,7 @@ export default {
     xAxis: {type: 'category'},
     yAxis: {},
     series: [{type: 'bar'}, {type: 'bar'}, {type: 'bar'}],
-    color: ['#005792', '#21AE8C', '#FD5F00', '#3c484f', ]
+    color: ['#010b40', '#21AE8C', '#FD5F00', '#3c484f', ]
   },
   pie: {
     tooltip: {
@@ -39,7 +39,7 @@ export default {
         type: 'pie',
         radius: '55%',
         center: ['50%', '60%'],
-        color: ["#1A86D0", "#FD5F00", "#FDA700", "#21AE8C", "#005792"],
+        color: ["#1A86D0", "#FD5F00", "#FDA700", "#21AE8C", "#010b40"],
         data: [
           {value: 335, name: 'Direct interview'},
           {value: 310, name: 'Email marketing'},
@@ -84,7 +84,7 @@ export default {
         type: 'line',
         showSymbol: false,
         data: polarData(),
-        color: ["#005792"]
+        color: ["#010b40"]
       }
     ],
     animationDuration: 2000
@@ -127,7 +127,7 @@ export default {
         type: 'line',
         step: 'middle',
         data: [220, 282, 201, 234, 290, 430, 410],
-        color: ["#005792"]
+        color: ["#010b40"]
       },
       {
         name: 'Step End',
@@ -214,7 +214,7 @@ export default {
         data: [{value: 64, name: 'Rate'}],
         axisLine: {
           lineStyle: {
-            color: [[0.2,'#21AE8C'], [0.8,'#005792'], [1,'#FD5F00']],
+            color: [[0.2,'#21AE8C'], [0.8,'#010b40'], [1,'#FD5F00']],
           }
         },
       }

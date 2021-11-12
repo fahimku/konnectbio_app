@@ -41,7 +41,7 @@ class Charts extends React.Component {
     sparklineData: {
       series: [{data: [1,7,3,5,7,8]}],
       options1: {
-        colors: ['#005792'],
+        colors: ['#010b40'],
         plotOptions: {
           bar: {
             columnWidth: '50%'

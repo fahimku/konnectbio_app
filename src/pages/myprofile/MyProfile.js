@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
 import Placeholder from "../../images/placeholder.svg";
+import avatar from "../../images/avatar15.jpg";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -133,12 +134,279 @@ class MyProfile extends React.Component {
     const userData = this.state.userData;
     return (
       <div className="profile-page">
-        <div className="container">
+        <div className="container-fluid">
           <Row className="mt-4">
             <Col md={12}>
               <h4 className="page-title">My Profile</h4>
             </Col>
           </Row>
+          <div className="profile_container_main container">
+            <div className="row">
+              <div className="profile_box_main col-md-6">
+                <div class="dash_block_profile">
+                  <div className="dash_content_profile">
+                    <h5>Profile</h5>
+                    <div className="dp_cont mb-5">
+                      <span><img src={avatar} alt="Profile"/></span>
+                      <div className="dp_buttons">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Choose Image</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+
+                    <div className="dp_fields mb-0">
+                      <div className="mb-3">
+                      <label>Enter Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter Name"
+                        onInput={this.handleChange}
+                        className="form-control comment-field"
+                        required
+                        defaultValue={userData.name}
+                      />
+                      </div>
+                      <div className="mb-0">
+                      <label>Enter Bio</label>
+                      <textarea
+                        name="bio"
+                        placeholder="Enter Bio"
+                        onInput={this.handleChange}
+                        className="form-control comment-field pt-2"
+                        defaultValue={userData.bio}
+                        rows="4"
+                      />
+                      </div>
+                      <div className="pr-sv-btn mt-3">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Update Profile</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+              <div className="profile_box_main col-md-6">
+                <div class="dash_block_profile">
+                  <div className="dash_content_profile">
+                  <h5>Screen Buttons</h5>
+                  <div className="dp_cont mb-4">
+                      <span><img src={avatar} alt="Profile"/></span>
+                      <div className="dp_buttons">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Choose Image</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                    <div className="dp_cont mb-4">
+                      <span><img src={avatar} alt="Profile"/></span>
+                      <div className="dp_buttons">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Choose Image</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                    <div className="dp_cont mb-4">
+                      <span><img src={avatar} alt="Profile"/></span>
+                      <div className="dp_buttons">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Choose Image</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                    <div className="dp_cont mb-0">
+                      <span><img src={avatar} alt="Profile"/></span>
+                      <div className="dp_buttons">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Choose Image</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <ChangePassword userID={userInfo.user_id} />
+
+            {/* <div className="row">
+              <di className="profile_password profile_box_main col-md-6">
+                <div className="dash_block_profile">
+                  <div className="dash_content_profile">
+                    <h5>Change Password</h5>
+                    <div className="dp_fields mb-0">
+                      <div className="mb-3">
+                      <label>Enter Old Password</label>
+                      <input
+                        type="password"
+                        name="name"
+                        placeholder=""
+                        onInput={this.handleChange}
+                        className="form-control comment-field"
+                        required
+                        defaultValue={userData.name}
+                      />
+                      </div>
+                      <div className="mb-3">
+                      <label>Enter New Password</label>
+                      <input
+                        type="password"
+                        name="name"
+                        placeholder=""
+                        onInput={this.handleChange}
+                        className="form-control comment-field"
+                        required
+                        defaultValue={userData.name}
+                      />
+                      </div>
+                      <div className="mb-0">
+                      <label>Confirm Password</label>
+                      <input
+                        type="password"
+                        name="name"
+                        placeholder=""
+                        onInput={this.handleChange}
+                        className="form-control comment-field"
+                        required
+                        defaultValue={userData.name}
+                      />
+                      </div>
+                      <div className="pr-sv-btn mt-3">
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Save</label>
+                      </Button>
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        <label htmlFor="fileupload2">Cancel</label>
+                      </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </di>
+            </div>
+   */}
+  
+          </div>
+
           <div className="white-box">
             <form onSubmit={this.handleSubmit}>
               <Row className="mb-3">
@@ -270,7 +538,7 @@ class MyProfile extends React.Component {
               <h4 className="page-title">Change Password</h4>
             </Col>
           </Row>
-          <ChangePassword userID={userInfo.user_id} />
+         
         </div>
       </div>
     );

@@ -59,7 +59,7 @@ class RickshawGraph extends React.Component {
           data: seriesData[0],
           name: 'Uploads',
         }, {
-          color: '#005792',
+          color: '#010b40',
           data: seriesData[1],
           name: 'Downloads',
         },

@@ -60,7 +60,7 @@ export default {
       xaxis: {
         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
       },
-      colors: ['#005792']
+      colors: ['#010b40']
     }
   },
   area: {
@@ -216,7 +216,7 @@ export default {
       chart: {
         stacked: true
       },
-      colors: ['#005792', '#FD5F00'],
+      colors: ['#010b40', '#FD5F00'],
       plotOptions: {
         bar: {
           horizontal: true,
@@ -294,7 +294,7 @@ export default {
       dataLabels: {
         enabled: false
       },
-      colors: ['#005792', '#1A86D0', '#21AE8C'],
+      colors: ['#010b40', '#1A86D0', '#21AE8C'],
       stroke: {
         width: [1, 1, 4]
       },
@@ -360,17 +360,17 @@ export default {
           },
           axisBorder: {
             show: true,
-            color: '#005792'
+            color: '#010b40'
           },
           labels: {
             style: {
-              color: '#005792',
+              color: '#010b40',
             },
           },
           title: {
             text: "Revenue (thousand crores)",
             style: {
-              color: '#005792',
+              color: '#010b40',
             }
           }
         },
@@ -408,7 +408,7 @@ export default {
         show: false,
         width: 0
       },
-      colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#005792'],
+      colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#010b40'],
     }
   },
   donut: {
@@ -429,7 +429,7 @@ export default {
         show: false,
         width: 0
       },
-      colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#005792'],
+      colors: ['#1A86D0', '#21AE8C', '#FDA700', '#FD5F00', '#010b40'],
     }
   },
   radial: {
@@ -439,7 +439,7 @@ export default {
       title: {
         text: 'Basic Radial Chart'
       },
-      colors: ['#005792', '#21AE8C', '#FDA700', '#FD5F00'],
+      colors: ['#010b40', '#21AE8C', '#FDA700', '#FD5F00'],
     }
   },
   heatmap: {

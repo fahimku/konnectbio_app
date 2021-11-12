@@ -46,7 +46,7 @@ class RealtimeTraffic extends React.Component {
       realtime: true,
       series: [
         {
-          color: '#005792', // 'gray-dark'
+          color: '#010b40', // 'gray-dark'
           data: seriesData[0],
           name: 'Uploads',
         }, {

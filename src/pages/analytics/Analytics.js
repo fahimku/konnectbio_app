@@ -78,7 +78,7 @@ class Analytics extends Component {
           },
         },
       },
-      colors: ["#FD5F00", "#005792", "#1A86D0"],
+      colors: ["#FD5F00", "#010b40", "#1A86D0"],
       legend: {
         align: "right",
         verticalAlign: "middle",
@@ -260,7 +260,7 @@ class Analytics extends Component {
                       </p>
                       <div style={{width: "calc(100% - 150px)"}}>
                         <Trend
-                          gradient={["#005792"]}
+                          gradient={["#010b40"]}
                           height={30}
                           smooth
                           strokeWidth="4"

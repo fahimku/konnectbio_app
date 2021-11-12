@@ -49,7 +49,7 @@ class Calendar extends React.Component {
           {
             title: "All Day Event",
             start: new Date(y, m, 1),
-            backgroundColor: "#005792",
+            backgroundColor: "#010b40",
             textColor: "#fff",
             description: "Will be busy throughout the whole day",
           },

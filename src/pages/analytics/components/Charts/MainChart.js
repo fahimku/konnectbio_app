@@ -42,7 +42,7 @@ export default class RevenueChart extends PureComponent {
           type: 'spline',
           name: 'Sing App',
           data: data[2],
-          color: '#005792'
+          color: '#010b40'
         }
       ]
     }

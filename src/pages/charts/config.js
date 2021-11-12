@@ -3,7 +3,7 @@ export default {
     colors: {
       sidebar: "#010b40",
       navbar: "#ffffff",
-      primary: "#005792",
+      primary: "#010b40",
       secondary: "#798892",
       success: "#21AE8C",
       info: "#1A86D0",
