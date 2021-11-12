@@ -29,6 +29,9 @@
         flex: 0 0 49%;
         margin-bottom: 20px;
     }
+    .promo_code_ift{
+        width:50%;
+    }
 }
 
 @media only screen and (max-width: 1050px) {
@@ -220,7 +223,12 @@
     .LayoutWrap{
         min-height: 93.5vh !important;
     }
-
+    .yearly_message{
+        width:40%;
+    }
+    .pricing_tabs_ifti.nav-tabs{
+        width: 40%;
+    }
 
 }
 
@@ -406,8 +414,26 @@
         margin-bottom: 20px;
         padding-bottom: 60px;
     }
-    .pricing_tabs_ifti.nav-tabs{
-        width:280px;
+    .yearly_message, .pricing_tabs_ifti.nav-tabs{
+        width:100%;
+    }
+    .promo_code_ift{
+        width:100%;
+        position: relative;
+        margin:0;
+        margin-bottom:2rem;
+    }
+    .promo_msg, .promo_iner{
+        padding:0;
+    }
+    .promo_code_ift .promo_iner .form-control{
+        margin-right: 10px;
+    }
+    .promo_code_ift .promo_iner .btn{
+        min-width: 90px;
+    }
+    .pricing-table-ifti{
+        margin-top: 2rem;;
     }
 
 
