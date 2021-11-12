@@ -388,7 +388,7 @@ class MyProfile extends React.Component {
             <ChangePassword userID={userInfo.user_id} />
           </div>
 
-          <div className="white-box">
+          {/* <div className="white-box">
             <form onSubmit={this.handleSubmit}>
               <Row className="mb-3">
                 <Col md={12} className="text-center">
@@ -513,7 +513,7 @@ class MyProfile extends React.Component {
                 </Col>
               </Row>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
     );
