@@ -172,7 +172,6 @@ class AccountSetup extends React.Component {
                       isOptionDisabled={(option) => option.isdisabled} // disable an option
                       options={this.state.packages}
                       placeholder="Select package"
-                     
                       value={{
                         label: this.state.package,
                         value: this.state.package,
@@ -182,12 +181,37 @@ class AccountSetup extends React.Component {
                   </Col>
                 </Row>
 
+                <Row className="mt-4">
+                  <Col xl={2} md={4}>
+                    Categories Included:{" "}
+                    {this.state.singlePackage.category_count}
+                  </Col>
+                  {this.state.singlePackage.package_name !==
+                    "Business Plus" && (
+                    <Col xl={4} lg={4} md={6}>
+                      <p>Change Plan to have more categories</p>
+                    </Col>
+                  )}
+                </Row>
+
+                <Row className="mt-4">
+                  <Col md={4} xl={2}>
+                    Links Included: {this.state.singlePackage.link_count}
+                  </Col>
+
+                  {this.state.singlePackage.package_name !==
+                    "Business Plus" && (
+                    <Col md={6} xl={3}>
+                      <p>Change Plan to have more links</p>
+                    </Col>
+                  )}
+                </Row>
                 {this.state.singlePackage.package_name !== "Individual" &&
                   this.state.upgrade && (
                     <Row className="mt-4">
                       <>
                         <Col md={4} xl={2}>
-                          Status Activity:
+                          {/* Status Activity: */}
                         </Col>
                         <Col md={4} xl={3}>
                           <Button
@@ -215,31 +239,6 @@ class AccountSetup extends React.Component {
                       </>
                     </Row>
                   )}
-                <Row className="mt-4">
-                  <Col xl={2} md={4}>
-                    Categories Included:{" "}
-                    {this.state.singlePackage.category_count}
-                  </Col>
-                  {this.state.singlePackage.package_name !==
-                    "Business Plus" && (
-                    <Col xl={4} lg={4} md={6}>
-                      <p>Change Plan to have more categories</p>
-                    </Col>
-                  )}
-                </Row>
-
-                <Row className="mt-4">
-                  <Col md={4} xl={2}>
-                    Links Included: {this.state.singlePackage.link_count}
-                  </Col>
-
-                  {this.state.singlePackage.package_name !==
-                    "Business Plus" && (
-                    <Col md={6} xl={3}>
-                      <p>Change Plan to have more links</p>
-                    </Col>
-                  )}
-                </Row>
               </div>
               {this.state.singlePackage.package_name !== "Individual" &&
                 this.state.showPaymentButton && (
