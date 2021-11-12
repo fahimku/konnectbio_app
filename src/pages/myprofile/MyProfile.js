@@ -7,6 +7,7 @@ import ChangePassword from "./component/ChangePassword";
 import Placeholder from "../../images/placeholder.svg";
 import avatar from "../../images/avatar15.jpg";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
 class MyProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -33,6 +34,7 @@ class MyProfile extends React.Component {
     });
     this.fetchUserInfo(userInfo2);
   }
+
   fetchUserInfo = async (userInfo2) => {
     await axios
       .get(`/users/receive/userinfo?user=${userInfo2.username}`)
@@ -83,7 +85,6 @@ class MyProfile extends React.Component {
   handleChange = (e) => {
     let {form} = this.state;
     form[e.target.name] = e.target.value;
-
     this.setState({
       form,
     });
@@ -153,7 +154,39 @@ class MyProfile extends React.Component {
                     <h5>Profile</h5>
                     <div className="dp_cont mb-5">
                       <span>
-                        <img src={avatar} alt="Profile" />
+                        {this.state.imageFiles.length > 0 ? (
+                          <>
+                            {this.state.imageFiles.map((file, idx) => (
+                              <img
+                                alt="..."
+                                src={file.preview}
+                                key={`img-id-${idx.toString()}`}
+                                style={{width: "76px", height: "76px"}}
+                                className="circle profile-icon"
+                              />
+                            ))}
+                          </>
+                        ) : this.state.userImage === "" ||
+                          this.state.userImage === undefined ? (
+                          <img
+                            style={{width: "76px", height: "76px"}}
+                            className="circle profile-icon"
+                            alt="profile-icon"
+                            src={
+                              Placeholder
+                              // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                            }
+                          />
+                        ) : (
+                          <img
+                            style={{width: "76px", height: "76px"}}
+                            className="circle profile-icon"
+                            alt="profile-icon"
+                            src={this.state.userImage}
+                          />
+                        )}
+
+                        {/* <img src={avatar} alt="Profile" /> */}
                       </span>
                       <div className="dp_buttons">
                         <Button
@@ -183,11 +216,12 @@ class MyProfile extends React.Component {
                         )}
 
                         <Button
+                          onClick={this.clearImage}
                           type="button"
                           color="default"
                           className="select-image"
                         >
-                          <label htmlFor="fileupload2">Cancel</label>
+                          Cancel
                         </Button>
                       </div>
                     </div>
