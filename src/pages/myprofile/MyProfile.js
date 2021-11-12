@@ -415,7 +415,7 @@ class MyProfile extends React.Component {
   
           </div>
 
-          <div className="white-box">
+          {/* <div className="white-box">
             <form onSubmit={this.handleSubmit}>
               <Row className="mb-3">
                 <Col md={12} className="text-center">
@@ -545,7 +545,7 @@ class MyProfile extends React.Component {
             <Col md={12}>
               <h4 className="page-title">Change Password</h4>
             </Col>
-          </Row>
+          </Row> */}
          
         </div>
       </div>
