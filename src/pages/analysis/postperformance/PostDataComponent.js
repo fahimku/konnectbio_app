@@ -6,17 +6,10 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
-
+// import ReactTable from "react-table";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-// const limitCharacter = (text, limit = 20) => {
-//   let shortText = text;
-//   if (text && text.length > limit) {
-//     shortText = text.slice(0, limit) + "...";
-//   }
-//   return shortText;
-// };
 const twodecimalplace = (value = 0) => {
   return parseFloat(value).toFixed(2);
 };
@@ -81,7 +74,7 @@ class PostDataComponent extends React.Component {
         page: page,
         limit: limit,
         post_type: "image",
-        category_id: categoryId,
+        category_id: categoryId === "all" ? "" : categoryId,
         sort: sortId,
         order_by: orderBy,
       })
@@ -112,6 +105,10 @@ class PostDataComponent extends React.Component {
             image: image_url,
           });
         });
+        let all = {};
+        all.value = "all";
+        all.label = "ALL";
+        selectCategories.unshift(all);
         this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
@@ -184,10 +181,11 @@ class PostDataComponent extends React.Component {
       optionCategory: "",
       optionSort: "",
       optionSortOrder: "",
-      // fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      // toDate: moment(new Date()).format("YYYY-MM-DD"),
-      // lastYear: moment(),
-      // today: moment(),
+      saveCategory: "",
+      saveSort: "",
+      saveSortOrder: "",
+      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
     this.fetchPostPerformance(
       this.state.username,
@@ -250,6 +248,10 @@ class PostDataComponent extends React.Component {
                     defaultValue={[
                       moment(this.state.lastYear),
                       moment(this.state.today),
+                    ]}
+                    value={[
+                      moment(this.state.fromDate),
+                      moment(this.state.toDate),
                     ]}
                     defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
                     allowClear={false}
@@ -347,6 +349,13 @@ class PostDataComponent extends React.Component {
               {!this.state.data.length ? (
                 <div className="no-data col-md-12">No Data Available</div>
               ) : (
+                // <ReactTable
+                //   data={this.state.data}
+                //   // filterable
+                //   columns={}
+                //   defaultPageSize={10}
+                //   className="-striped -highlight"
+                // />
                 this.state.data.map((record) => (
                   <>
                     <Col xs={12} xl={4} md={6}>
@@ -435,7 +444,7 @@ class PostDataComponent extends React.Component {
             </Row>
           </>
         )}
-        {this.state.loading || !this.state.data.length ? null : (
+        {/* {this.state.loading || !this.state.data.length ? null : (
           <div className="text-right next-button">
             <Button
               variant="primary"
@@ -452,7 +461,7 @@ class PostDataComponent extends React.Component {
               Next
             </Button>
           </div>
-        )}
+        )} */}
       </>
     );
   }

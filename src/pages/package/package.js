@@ -361,7 +361,7 @@ class Package extends React.Component {
                       Affiliate Campaigns/Coupons
                     </li>
                   </ul>
-                  <Button
+                  {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -370,7 +370,16 @@ class Package extends React.Component {
                     }}
                   >
                     Select Plan
-                  </Button>
+                  </Button> */}
+                  <PaymentButton
+                    key="2"
+                    userId={userInfo.user_id}
+                    packageId={business.package_id}
+                    name={"Select Plan"}
+                    variant="dark"
+                    paymentMethod={"Business"}
+                    plan="Monthly"
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{businessPlus.package_name}</h4>
@@ -422,7 +431,7 @@ class Package extends React.Component {
                       Affiliate Campaigns/Coupons
                     </li>
                   </ul>
-                  <Button
+                  {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -431,7 +440,16 @@ class Package extends React.Component {
                     }}
                   >
                     Select Plan
-                  </Button>
+                  </Button> */}
+                  <PaymentButton
+                    key="2"
+                    userId={userInfo.user_id}
+                    packageId={businessPlus.package_id}
+                    name={"Select Plan"}
+                    variant="dark"
+                    paymentMethod={"Business Plus"}
+                    plan="Monthly"
+                  />
                 </div>
               </div>
             </Tab>
@@ -666,7 +684,7 @@ class Package extends React.Component {
                       Affiliate Campaigns/Coupons
                     </li>
                   </ul>
-                  <Button
+                  {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -675,7 +693,16 @@ class Package extends React.Component {
                     }}
                   >
                     Select Plan
-                  </Button>
+                  </Button> */}
+                  <PaymentButton
+                    key="3"
+                    userId={userInfo.user_id}
+                    packageId={business.package_id}
+                    name={"Select Plan"}
+                    variant="dark"
+                    paymentMethod={"Business"}
+                    plan="Yearly"
+                  />
                 </div>
                 <div className="custom_pkg">
                   <h4>{businessPlus.package_name}</h4>
@@ -727,7 +754,7 @@ class Package extends React.Component {
                       Affiliate Campaigns/Coupons
                     </li>
                   </ul>
-                  <Button
+                  {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -736,7 +763,16 @@ class Package extends React.Component {
                     }}
                   >
                     Select Plan
-                  </Button>
+                  </Button> */}
+                  <PaymentButton
+                    key="2"
+                    userId={userInfo.user_id}
+                    packageId={businessPlus.package_id}
+                    name={"Select Plan"}
+                    variant="dark"
+                    paymentMethod={"Business Plus"}
+                    plan="Yearly"
+                  />
                 </div>
               </div>
             </Tab>
