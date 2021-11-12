@@ -241,6 +241,8 @@ span.icon {
   padding: 15px;
 }
 .analytic-box .media-image {
+  border: solid 1px #ccc;
+  padding: 2px;
 }
 .count-main-box {
   /* border-top: 1px solid #c8c8c8; */
@@ -250,9 +252,12 @@ span.icon {
   margin-right: 0px !important;
 }
 .analytic-box .count-box {
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  border-bottom: solid 1px #ede9e9;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 14px;
 }
 .analytic-box .count-box .count {
   font-size: 1rem;
@@ -564,23 +569,53 @@ span.icon {
 
 .pricing-table-ifti {
   max-width: 1400px;
-  margin-top: 3rem;
+  margin-top: 5rem;
+  position: relative;
+}
+.pricing-table-ifti .tab-content{
+  clear: both !important;
+}
+.yearly_message{
+  float: right;
+  width: 25%;
+  font-family: 'SegoeUIBold';
+  margin-bottom: 8px;
+}
+.promo_code_ift{
+  flex-direction: column;
+  position: absolute;
+  width: 36%;
+}
+.promo_msg{
+  font-family: 'SegoeUIBold';
+  margin-bottom: 8px;
+}
+.promo_code_ift .promo_iner{
+  display: flex;
+}
+.promo_code_ift .promo_iner .form-control{
+  margin-right:20px;
+}
+.promo_code_ift .promo_iner .btn{
+  margin-right:0 !important;
 }
 .pricing_tabs_ifti.nav-tabs {
   justify-content: space-between;
   background-color: transparent;
-  width: 300px;
-  margin: 0 auto;
+  width: 25%;
+  float: right;
   padding: 5px 5px;
   border-radius: 30px;
   border: solid 1px #ccc;
+  margin-bottom: 0 !important;
+  clear:both;
 }
 .pricing_tabs_ifti.nav-tabs > .nav-item {
   flex: 1 1;
   border: none;
   border-radius: 30px;
   margin-bottom: 0px;
-  padding: 10px;
+  padding: 7px 10px;
   font-size: 1.1rem;
   font-weight: 500;
   font-family: "Nunito Sans", sans-serif !important;
@@ -817,6 +852,10 @@ a.pkg_read:hover {
 }
 .pr-sv-btn button{
   margin-bottom: 0;
+}
+.analytics-page .ant-picker-range{
+  width:100%;
+  display:flex !important;
 }
 
 

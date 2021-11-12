@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Tabs, Tab, Modal } from "react-bootstrap";
+import { Col ,Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
@@ -84,6 +84,7 @@ class Package extends React.Component {
 
     return (
       <>
+      
         <div className="login_header">
           <div className="header_inr group">
             <div className="header_inr_left">
@@ -105,6 +106,22 @@ class Package extends React.Component {
         </div>
 
         <div className="container-fluid pricing-table-ifti">
+          <Row className="promo_code_ift">
+            <div className="promo_msg col-md-12">Enter Promo Code</div>
+            <div className="promo_iner col-md-12">
+              <input
+                type="text"
+                name="promo_code"
+                placeholder="Enter Promo Code"
+                onInput={this.handleChange}
+                className="form-control"
+                value={this.state.promo_code}
+                required
+              />
+          <Button type="submit">Apply</Button>
+          </div>
+          </Row>
+          <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
             defaultActiveKey="home"
             transition={false}
