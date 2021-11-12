@@ -1,8 +1,10 @@
 import {Button} from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
+import Placeholder from "../../../images/placeholder.svg";
 import React, {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 import axios from "axios";
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 function ScreenButtons(props) {
@@ -63,7 +65,8 @@ function ScreenButtons(props) {
 
   const clearImage = () => {
     setImageFiles([]);
-    setUserImage("");
+    setUserImage(userInfo.menu[props.id].image_url);
+    
   };
 
   return (
@@ -81,6 +84,19 @@ function ScreenButtons(props) {
               />
             ))}
           </>
+        ) : userImage === "" || userImage === undefined ? (
+          <>
+            <img
+              style={{width: "76px", height: "76px"}}
+              className="circle profile-icon"
+              alt="profile-icon"
+              src={
+                Placeholder
+                // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+              }
+            />
+            <strong>{props.name}</strong>
+          </>
         ) : (
           <>
             <img
@@ -90,7 +106,7 @@ function ScreenButtons(props) {
               src={userImage}
             />
 
-              <strong>{props.name}</strong>
+            <strong>{props.name}</strong>
           </>
         )}
         {/* <img src={avatar} alt="Profile" /> */}

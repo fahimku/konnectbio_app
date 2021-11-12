@@ -7,6 +7,7 @@ import ChangePassword from "./component/ChangePassword";
 import ScreenButton from "./component/screenButtons";
 import Placeholder from "../../images/placeholder.svg";
 //import avatar from "../../images/avatar15.jpg";
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class MyProfile extends React.Component {
@@ -30,9 +31,7 @@ class MyProfile extends React.Component {
 
   componentDidMount() {
     const userInfo2 = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({
-      userInfo2: userInfo2,
-    });
+    this.setState({userInfo2: userInfo2});
     this.fetchUserInfo(userInfo2);
   }
 
@@ -135,7 +134,7 @@ class MyProfile extends React.Component {
   clearImage = () => {
     this.setState({
       imageFiles: [],
-      userImage: "",
+      userImage: this.state.userImage,
     });
   };
 
@@ -154,7 +153,7 @@ class MyProfile extends React.Component {
               <div className="profile_box_main col-md-6">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
-                    <h5>Profile</h5>
+                    {/* <h5>Profile</h5> */}
                     <div className="dp_cont mb-5">
                       <span>
                         {this.state.imageFiles.length > 0 ? (
@@ -236,7 +235,7 @@ class MyProfile extends React.Component {
                           color="default"
                           className="select-image"
                         >
-                          <label htmlFor="fileupload5">Cancel</label>
+                          <label>Cancel</label>
                         </Button>
                       </div>
                     </div>
