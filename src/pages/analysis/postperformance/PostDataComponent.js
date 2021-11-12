@@ -184,10 +184,8 @@ class PostDataComponent extends React.Component {
       optionCategory: "",
       optionSort: "",
       optionSortOrder: "",
-      // fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      // toDate: moment(new Date()).format("YYYY-MM-DD"),
-      // lastYear: moment(),
-      // today: moment(),
+      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
     this.fetchPostPerformance(
       this.state.username,
@@ -250,6 +248,10 @@ class PostDataComponent extends React.Component {
                     defaultValue={[
                       moment(this.state.lastYear),
                       moment(this.state.today),
+                    ]}
+                    value={[
+                      moment(this.state.fromDate),
+                      moment(this.state.toDate),
                     ]}
                     defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
                     allowClear={false}
