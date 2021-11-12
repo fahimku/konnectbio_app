@@ -8,7 +8,7 @@ import Loader from "../../../components/Loader/Loader";
 import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory({
-  forceRefresh: false,
+  forceRefresh: true,
 });
 
 class ChangePassword extends React.Component {
@@ -75,7 +75,7 @@ class ChangePassword extends React.Component {
       >
         {({ values, errors, handleSubmit, handleChange, handleBlur }) => {
           return (
-            <form onSubmit={handleSubmit} className="white-box">
+            <form onSubmit={handleSubmit}>
               <Row className="mb-3">
                 <Col md={12}>
                   <label>Current Password</label>
@@ -257,7 +257,7 @@ class ChangePassword extends React.Component {
                                 color="default"
 
                               >
-                                <label htmlFor="">Save</label>
+                                Save
                               </Button>
                             )}
                             <Button
@@ -265,7 +265,7 @@ class ChangePassword extends React.Component {
                               color="default"
                               className="select-image"
                             >
-                              <label htmlFor="fileupload2">Cancel</label>
+                              Cancel
                             </Button>
                           </div>
                         </div>
