@@ -19,7 +19,6 @@ class ChangePassword extends React.Component {
 
   onSubmitting = async (values, actions) => {
     delete values.changepassword;
-
     this.setState({loading: true});
     await axios
       .put(`/users/revise/userpassword/${this.props.userID}`, values)
@@ -135,13 +134,13 @@ class ChangePassword extends React.Component {
                                 Save
                               </Button>
                             )}
-                            <Button
+                            {/* <Button
                               type="button"
                               color="default"
                               className="select-image"
                             >
                               Cancel
-                            </Button>
+                            </Button> */}
                           </div>
                         </div>
                       </div>
