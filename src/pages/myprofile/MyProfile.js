@@ -91,9 +91,7 @@ class MyProfile extends React.Component {
     });
   };
 
-  setDefaultImage = ()=> {
-
-  }
+  setDefaultImage = () => {};
 
   onChangeInputImage = (e) => {
     const files = [];
@@ -148,7 +146,7 @@ class MyProfile extends React.Component {
         <div className="container-fluid">
           <Row className="mt-4">
             <Col md={12}>
-              <h4 className="page-title">Setting - Home Screen</h4>
+              <h4 className="page-title">Settings - Home Screen</h4>
             </Col>
           </Row>
           <div className="profile_container_main container">
@@ -184,15 +182,14 @@ class MyProfile extends React.Component {
                           />
                         ) : (
                           <>
-                          <img
-                            style={{width: "76px", height: "76px"}}
-                            className="circle profile-icon"
-                            alt="profile-icon"
-                            src={this.state.userImage}
-                          />
-                          <strong>Logo</strong>
-                        
-                        </>
+                            <img
+                              style={{width: "76px", height: "76px"}}
+                              className="circle profile-icon"
+                              alt="profile-icon"
+                              src={this.state.userImage}
+                            />
+                            <strong>Logo</strong>
+                          </>
                         )}
 
                         {/* <img src={avatar} alt="Profile" /> */}
@@ -289,10 +286,10 @@ class MyProfile extends React.Component {
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Screen Buttons</h5>
-                    <ScreenButton key={0} id={0} />
-                    <ScreenButton key={1} id={1} />
-                    <ScreenButton key={2} id={2} />
-                    <ScreenButton key={3} id={3} />
+                    <ScreenButton name="Profile" key={0} id={0} />
+                    <ScreenButton name="All Posts" key={1} id={1} />
+                    <ScreenButton name="Links" key={2} id={2} />
+                    <ScreenButton name="Coupons" key={3} id={3} />
                     <hr></hr>
                     <div className="pr-sv-btn mt-3">
                       {this.state.loading ? (
@@ -300,11 +297,13 @@ class MyProfile extends React.Component {
                           <Loader />
                         </Button>
                       ) : (
-                        <Button 
-                        onClick={()=>{
-                          this.setDefaultImage()
-                        }}
-                        type="submit" color="default">
+                        <Button
+                          onClick={() => {
+                            this.setDefaultImage();
+                          }}
+                          type="submit"
+                          color="default"
+                        >
                           Default
                         </Button>
                       )}
@@ -322,133 +321,6 @@ class MyProfile extends React.Component {
             </div>
             <ChangePassword userID={userInfo.user_id} />
           </div>
-
-          {/* <div className="white-box">
-            <form onSubmit={this.handleSubmit}>
-              <Row className="mb-3">
-                <Col md={12} className="text-center">
-                  <div className="fileinput file-profile">
-                    <input
-                      accept="image/*"
-                      onChange={(e) => this.onChangeInputImage(e)}
-                      id="fileupload5"
-                      type="file"
-                      name="file"
-                      // className="d-none"
-                    />
-                    <div className="fileinput-new thumbnail">
-                      {this.state.imageFiles.length > 0 ? (
-                        <div>
-                          {this.state.imageFiles.map((file, idx) => (
-                            <img
-                              alt="..."
-                              src={file.preview}
-                              key={`img-id-${idx.toString()}`}
-                              style={{width: "150px", height: "150px"}}
-                              className="circle profile-icon"
-                            />
-                          ))}
-                        </div>
-                      ) : this.state.userImage === "" ||
-                        this.state.userImage === undefined ? (
-                        <img
-                          alt="profile-icon"
-                          src={
-                            Placeholder
-                            // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                          }
-                          style={{width: "150px", height: "150px"}}
-                          className="circle profile-icon"
-                        />
-                      ) : (
-                        <img
-                          alt="profile-icon"
-                          src={this.state.userImage}
-                          style={{width: "150px", height: "150px"}}
-                          className="circle profile-icon"
-                        />
-                      )}
-                    </div>
-                  </div>
-                  <Button
-                    type="button"
-                    color="default"
-                    className="select-image"
-                  >
-                    <label htmlFor="fileupload5">Change Image</label>
-                  </Button>
-                  <Button
-                    onClick={this.clearImage}
-                    className="select-image"
-                    // disabled={this.state.imageFiles.length > 0 ? false : true}
-                  >
-                    Clear
-                  </Button>
-
-                  {this.state.loadingImage ? (
-                    <Button className="d-block upload-btn">
-                      <Loader />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={this.uploadImage}
-                      className="d-block upload-btn"
-                      disabled={this.state.imageFiles.length > 0 ? false : true}
-                    >
-                      Save Changes
-                    </Button>
-                  )}
-                </Col>
-              </Row>
-              <Row className="mb-3">
-                <Col md={12}>
-                  <label>Enter Name</label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Enter Name"
-                    onInput={this.handleChange}
-                    className="form-control comment-field"
-                    required
-                    defaultValue={userData.name}
-                  />
-                </Col>
-              </Row>
-              <Row className="mb-3">
-                <Col md={12}>
-                  <label>Enter Bio</label>
-
-                  <textarea
-                    name="bio"
-                    placeholder="Enter Bio"
-                    onInput={this.handleChange}
-                    className="form-control comment-field pt-2"
-                    // required
-                    // maxlength="120"
-                    defaultValue={userData.bio}
-                    rows="4"
-                  />
-                </Col>
-              </Row>
-              <Row className="mb-3">
-                <Col md={12} className="update-col">
-                  {this.state.loading ? (
-                    <Button>
-                      <Loader />
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      className="category-btn btn-block "
-                    >
-                      Update Profile
-                    </Button>
-                  )}
-                </Col>
-              </Row>
-            </form>
-          </div> */}
         </div>
       </div>
     );
