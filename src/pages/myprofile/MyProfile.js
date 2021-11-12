@@ -91,6 +91,10 @@ class MyProfile extends React.Component {
     });
   };
 
+  setDefaultImage = ()=> {
+
+  }
+
   onChangeInputImage = (e) => {
     const files = [];
     const reader = new FileReader();
@@ -144,7 +148,7 @@ class MyProfile extends React.Component {
         <div className="container-fluid">
           <Row className="mt-4">
             <Col md={12}>
-              <h4 className="page-title">My Profile</h4>
+              <h4 className="page-title">Setting - Home Screen</h4>
             </Col>
           </Row>
           <div className="profile_container_main container">
@@ -179,12 +183,16 @@ class MyProfile extends React.Component {
                             }
                           />
                         ) : (
+                          <>
                           <img
                             style={{width: "76px", height: "76px"}}
                             className="circle profile-icon"
                             alt="profile-icon"
                             src={this.state.userImage}
                           />
+                          <strong>Logo</strong>
+                        
+                        </>
                         )}
 
                         {/* <img src={avatar} alt="Profile" /> */}
@@ -285,6 +293,29 @@ class MyProfile extends React.Component {
                     <ScreenButton key={1} id={1} />
                     <ScreenButton key={2} id={2} />
                     <ScreenButton key={3} id={3} />
+                    <hr></hr>
+                    <div className="pr-sv-btn mt-3">
+                      {this.state.loading ? (
+                        <Button type="submit" color="default">
+                          <Loader />
+                        </Button>
+                      ) : (
+                        <Button 
+                        onClick={()=>{
+                          this.setDefaultImage()
+                        }}
+                        type="submit" color="default">
+                          Default
+                        </Button>
+                      )}
+                      <Button
+                        type="button"
+                        color="default"
+                        className="select-image"
+                      >
+                        Save
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>

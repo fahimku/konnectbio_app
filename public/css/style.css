@@ -796,7 +796,7 @@ a.pkg_read:hover {
   margin-bottom: 24px;
   background-color: #FFF;
   box-shadow: 0px 0px 2px 1px #e4e7ed;
-  min-height: 460px;
+  min-height: 610px;
 }
 .profile_password.profile_box_main .dash_block_profile{
   min-height: 100px;
@@ -807,7 +807,9 @@ a.pkg_read:hover {
   padding: 20px;
   width: 100%;
   overflow-x: visible;
-  min-height: 250px;
+}
+.dash_content_profile hr{
+  border-color:#dce4ec;
 }
 .dash_content_profile h5{
   border-bottom: 1px solid #dce4ec;
@@ -817,14 +819,23 @@ a.pkg_read:hover {
 .dp_cont{
   display: flex;
   align-items: center;
+  margin-bottom: 2.9rem;
 }
 .dp_cont.mb-5{
-  margin-bottom: 2rem !important;
+  margin-bottom: 4rem !important;
 }
 .dp_cont span{
   width: 76px;
   height: 76px;
   position: relative;
+  text-align: center;
+}
+.dp_cont span strong{
+  font-family: 'SegoeUIBold';
+  display: block;
+  padding-top: 5px;
+  position: absolute;
+  width: 100%;
 }
 .dp_cont span img{
   width: 76px;
@@ -846,6 +857,9 @@ a.pkg_read:hover {
 .dp_fields{
   display: flex;
   flex-direction: column;
+}
+.dp_fields textarea.form-control{
+  height:219px;
 }
 .pr-sv-btn{
   display: flex;

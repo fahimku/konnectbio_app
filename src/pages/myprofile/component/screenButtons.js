@@ -1,24 +1,21 @@
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
 import Placeholder from "../../../images/placeholder.svg";
-import React, {useState, useEffect} from "react";
-import {toast} from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 function ScreenButtons(props) {
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
   const [imageFiles, setImageFiles] = useState([]);
   const [userImage, setUserImage] = useState(userInfo.menu[props.id].image_url);
   let menuId = props.id + 1;
-  menuId = menuId + "" + menuId + "" +  menuId + "" + menuId;
+  menuId = menuId + "" + menuId + "" + menuId + "" + menuId;
 
+  useEffect(() => {});
 
-  useEffect(() => {
-
-  });
- 
   const onChangeInputImage = (e) => {
     const files = [];
     const reader = new FileReader();
@@ -27,7 +24,7 @@ function ScreenButtons(props) {
       files[0].preview = reader.result;
       files[0].toUpload = true;
       setImageFiles(files);
-      setDisabled(false)
+      setDisabled(false);
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -55,7 +52,7 @@ function ScreenButtons(props) {
         parseUserInformation.menu = imageResponse.data;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-        setDisabled(true)
+        setDisabled(true);
       })
       .catch((err) => {
         toast.error(err.response.data.message);
@@ -69,7 +66,7 @@ function ScreenButtons(props) {
   };
 
   return (
-    <div className="dp_cont mb-4">
+    <div className="dp_cont">
       <span>
         {imageFiles.length > 0 ? (
           <>
@@ -78,14 +75,14 @@ function ScreenButtons(props) {
                 alt="..."
                 src={file.preview}
                 key={`img-id-${idx.toString()}`}
-                style={{width: "76px", height: "76px"}}
+                style={{ width: "76px", height: "76px" }}
                 className="circle profile-icon"
               />
             ))}
           </>
         ) : userImage === "" || userImage === undefined ? (
           <img
-            style={{width: "76px", height: "76px"}}
+            style={{ width: "76px", height: "76px" }}
             className="circle profile-icon"
             alt="profile-icon"
             src={
@@ -94,12 +91,16 @@ function ScreenButtons(props) {
             }
           />
         ) : (
-          <img
-            style={{width: "76px", height: "76px"}}
-            className="circle profile-icon"
-            alt="profile-icon"
-            src={userImage}
-          />
+          <>
+            <img
+              style={{ width: "76px", height: "76px" }}
+              className="circle profile-icon"
+              alt="profile-icon"
+              src={userImage}
+            />
+
+            <strong>Profile</strong>
+          </>
         )}
         {/* <img src={avatar} alt="Profile" /> */}
       </span>
