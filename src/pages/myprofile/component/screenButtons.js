@@ -16,8 +16,10 @@ function ScreenButtons(props) {
   menuId = menuId + "" + menuId + "" + menuId + "" + menuId;
 
   useEffect(() => {
-
-  },[]);
+    if (props.setDefaultImage) {
+      setUserImage(props.defaultImage)
+    }
+  }, [props.setDefaultImage]);
 
   const onChangeInputImage = (e) => {
     const files = [];
@@ -66,7 +68,6 @@ function ScreenButtons(props) {
   const clearImage = () => {
     setImageFiles([]);
     setUserImage(userInfo.menu[props.id].image_url);
-    
   };
 
   return (
@@ -83,6 +84,7 @@ function ScreenButtons(props) {
                 className="circle profile-icon"
               />
             ))}
+            <strong>{props.name}</strong>
           </>
         ) : userImage === "" || userImage === undefined ? (
           <>
@@ -143,7 +145,6 @@ function ScreenButtons(props) {
             <label>Save</label>
           </Button>
         )}
-
         <Button
           onClick={clearImage}
           type="button"

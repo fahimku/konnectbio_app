@@ -7,7 +7,6 @@ import ChangePassword from "./component/ChangePassword";
 import ScreenButton from "./component/screenButtons";
 import Placeholder from "../../images/placeholder.svg";
 //import avatar from "../../images/avatar15.jpg";
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class MyProfile extends React.Component {
@@ -26,6 +25,8 @@ class MyProfile extends React.Component {
       userData: "",
       userImage: "",
       userInfo2: "",
+      disabled: true,
+      setDefaultImage: false,
     };
   }
 
@@ -90,7 +91,56 @@ class MyProfile extends React.Component {
     });
   };
 
-  setDefaultImage = () => {};
+  saveDefaultImage = async () => {
+    await axios
+      .put(`/users/revise/resetUserMenuImage/${userInfo.user_id}`)
+      .then((response) => {
+        this.setState({disabled: true});
+        let imageResponse = response.data;
+        toast.success(imageResponse.message);
+        // setImageFiles([]);
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        parseUserInformation.menu = imageResponse.data;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+      });
+
+    // const userInformation = localStorage.getItem("userInfo");
+    // const parseUserInformation = JSON.parse(userInformation);
+    // parseUserInformation.menu = [
+    //   {
+    //     id: 1111,
+    //     name: "PROFILE",
+    //     image_url: "https://cdn.konnect.bio/menu/profile.jpg",
+    //   },
+    //   {
+    //     id: 2222,
+    //     name: "ALL POSTS",
+    //     image_url: "https://cdn.konnect.bio/menu/all_posts.jpg",
+    //   },
+    //   {
+    //     id: 3333,
+    //     name: "LINKS",
+    //     image_url: "https://cdn.konnect.bio/menu/links.jpg",
+    //   },
+    //   {
+    //     id: 4444,
+    //     name: "COUPON",
+    //     image_url: "https://cdn.konnect.bio/menu/coupon.PNG",
+    //   },
+    // ];
+    // const storeUserInformation = JSON.stringify(parseUserInformation);
+    // localStorage.setItem("userInfo", storeUserInformation);
+  };
+
+  setDefaultImage = () => {
+    this.setState({setDefaultImage: true});
+    this.setState({disabled: false});
+  };
 
   onChangeInputImage = (e) => {
     const files = [];
@@ -285,28 +335,50 @@ class MyProfile extends React.Component {
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Screen Buttons</h5>
-                    <ScreenButton name="Profile" key={0} id={0} />
-                    <ScreenButton name="All Posts" key={1} id={1} />
-                    <ScreenButton name="Links" key={2} id={2} />
-                    <ScreenButton name="Coupons" key={3} id={3} />
+                    <ScreenButton
+                      setDefaultImage={this.state.setDefaultImage}
+                      defaultImage="https://cdn.konnect.bio/menu/profile.jpg"
+                      name="Profile"
+                      key={0}
+                      id={0}
+                    />
+                    <ScreenButton
+                      setDefaultImage={this.state.setDefaultImage}
+                      defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
+                      name="All Posts"
+                      key={1}
+                      id={1}
+                    />
+                    <ScreenButton
+                      setDefaultImage={this.state.setDefaultImage}
+                      defaultImage="https://cdn.konnect.bio/menu/links.jpg"
+                      name="Links"
+                      key={2}
+                      id={2}
+                    />
+                    <ScreenButton
+                      setDefaultImage={this.state.setDefaultImage}
+                      defaultImage="https://cdn.konnect.bio/menu/coupon.PNG"
+                      name="Coupons"
+                      key={3}
+                      id={3}
+                    />
                     <hr></hr>
                     <div className="pr-sv-btn mt-3">
-                      {this.state.loading ? (
-                        <Button type="submit" color="default">
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() => {
-                            this.setDefaultImage();
-                          }}
-                          type="submit"
-                          color="default"
-                        >
-                          Default
-                        </Button>
-                      )}
                       <Button
+                        onClick={() => {
+                          this.setDefaultImage();
+                        }}
+                        type="submit"
+                        color="default"
+                      >
+                        Default
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          this.saveDefaultImage();
+                        }}
+                        disabled={this.state.disabled}
                         type="button"
                         color="default"
                         className="select-image"
