@@ -319,20 +319,18 @@ class PostDataComponent extends React.Component {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl={4} md={6}>
                   <Button
                     type="submit"
                     variant="primary"
-                    className="post-search btn-block"
+                    className="fltr-h btn btn-primary"
                   >
                     Search
                   </Button>
-                </Col>
-                <Col xs={12} xl={2} md={6}>
                   <Button
                     onClick={this.clearFilter}
                     variant="gray"
-                    className="post-search btn-block"
+                    className="fltr-h btn btn-primary"
                   >
                     Clear
                   </Button>
@@ -363,12 +361,18 @@ class PostDataComponent extends React.Component {
                     <Col xs={12} xl={4} md={6}>
                       <div className="card analytic-box">
                         <div className="row">
-                          <div className="col-4">
-                            <img
-                              src={record.media_url}
-                              className="img-fluid media-image"
-                              alt={record.media_type}
-                            />
+                          <div className="any-post-img-col col-4">
+                            <div className="any-post-image">
+                              <div className="any-image-box">
+                                <div className="any-image-box-iner">
+                                  <img
+                                    src={record.media_url}
+                                    className="img-fluid media-image"
+                                    alt={record.media_type}
+                                  />
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <div className="col-8 analytic-caption">
                             {/* <div className="card-block px-2">

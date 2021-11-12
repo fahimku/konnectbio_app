@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Tabs, Tab, Modal, Row, Col } from "react-bootstrap";
+import { Col, Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
@@ -135,8 +135,24 @@ class Package extends React.Component {
         </div>
 
         <div className="container-fluid pricing-table-ifti">
-          <span></span>
-          <span></span>
+          <form onSubmit={this.handleSubmit}>
+            <Row className="promo_code_ift">
+              <div className="promo_msg col-md-12">Enter Promo Code</div>
+              <div className="promo_iner col-md-12">
+                <input
+                  type="text"
+                  name="promo_code"
+                  placeholder="Enter Promo Code"
+                  onInput={this.handleChange}
+                  className="form-control"
+                  value={this.state.promo_code}
+                  required
+                />
+                <Button type="submit">Apply</Button>
+              </div>
+            </Row>
+          </form>
+          <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
             defaultActiveKey="home"
             transition={false}
@@ -252,18 +268,24 @@ class Package extends React.Component {
                     plan="Monthly"
                   /> */}
 
-                  <Button
-                    variant="dark"
-                    className="btn_individual"
-                    onClick={() => {
-                      this.updatePackage(
-                        userInfo.user_id,
-                        microInfluencer.package_id
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="dark"
+                      className="btn_individual"
+                      onClick={() => {
+                        this.updatePackage(
+                          userInfo.user_id,
+                          microInfluencer.package_id
+                        );
+                      }}
+                    >
+                      Select Plan
+                    </Button>
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
@@ -594,18 +616,24 @@ class Package extends React.Component {
                     paymentMethod={"Micro Influencer"}
                     plan="Yearly"
                   /> */}
-                  <Button
-                    variant="dark"
-                    className="btn_individual"
-                    onClick={() => {
-                      this.updatePackage(
-                        userInfo.user_id,
-                        microInfluencer.package_id
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="dark"
+                      className="btn_individual"
+                      onClick={() => {
+                        this.updatePackage(
+                          userInfo.user_id,
+                          microInfluencer.package_id
+                        );
+                      }}
+                    >
+                      Select Plan
+                    </Button>
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
@@ -828,28 +856,6 @@ class Package extends React.Component {
               </div>
             </Tab>
           </Tabs>
-          <form onSubmit={this.handleSubmit}>
-            <Row className="align-items-center justify-content-center">
-              <Col sm={2} className="my-1 text-right">
-                Have Promo Code?
-              </Col>
-              <Col sm={3} className="my-1">
-                <input
-                  type="text"
-                  name="promo_code"
-                  placeholder="Enter Promo Code"
-                  onInput={this.handleChange}
-                  className="form-control"
-                  value={this.state.promo_code}
-                  required
-                />
-              </Col>
-
-              <Col xs="auto" className="my-1">
-                <Button type="submit">Verify</Button>
-              </Col>
-            </Row>
-          </form>
         </div>
 
         <Modal
