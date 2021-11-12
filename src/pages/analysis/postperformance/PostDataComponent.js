@@ -6,17 +6,10 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
-
+// import ReactTable from "react-table";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-// const limitCharacter = (text, limit = 20) => {
-//   let shortText = text;
-//   if (text && text.length > limit) {
-//     shortText = text.slice(0, limit) + "...";
-//   }
-//   return shortText;
-// };
 const twodecimalplace = (value = 0) => {
   return parseFloat(value).toFixed(2);
 };
@@ -240,7 +233,6 @@ class PostDataComponent extends React.Component {
         },
       }),
     };
-    console.log(this.state.myCategory, "myCategory");
 
     return (
       <>
@@ -359,6 +351,13 @@ class PostDataComponent extends React.Component {
               {!this.state.data.length ? (
                 <div className="no-data col-md-12">No Data Available</div>
               ) : (
+                // <ReactTable
+                //   data={this.state.data}
+                //   // filterable
+                //   columns={}
+                //   defaultPageSize={10}
+                //   className="-striped -highlight"
+                // />
                 this.state.data.map((record) => (
                   <>
                     <Col xs={12} xl={4} md={6}>
@@ -441,7 +440,7 @@ class PostDataComponent extends React.Component {
             </Row>
           </>
         )}
-        {this.state.loading || !this.state.data.length ? null : (
+        {/* {this.state.loading || !this.state.data.length ? null : (
           <div className="text-right next-button">
             <Button
               variant="primary"
@@ -458,7 +457,7 @@ class PostDataComponent extends React.Component {
               Next
             </Button>
           </div>
-        )}
+        )} */}
       </>
     );
   }
