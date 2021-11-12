@@ -1,8 +1,10 @@
 import React from "react";
-import { Col ,Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
+import { Col, Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import { toast } from "react-toastify";
+
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -17,6 +19,8 @@ class Package extends React.Component {
     showBusiness: false,
     showBusinessPlus: false,
     packages: "",
+    loading: false,
+    promo_code: "",
   };
   componentDidMount() {
     this.getPackages();
@@ -75,6 +79,32 @@ class Package extends React.Component {
         console.log(error);
       });
   };
+  handleChange = (e) => {
+    this.setState({
+      promo_code: e.target.value,
+    });
+  };
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    this.setState({ loading: true });
+    await axios
+      .post("/payment/validatepromocode", { promo_code: this.state.promo_code })
+      .then((response) => {
+        this.setState({ loading: false });
+        toast.success(response.data.message);
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        parseUserInformation.package = response.data.message;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+        history.push("/connect");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        toast.error(err.response.data.message);
+        this.setState({ loading: false, promo_code: "" });
+      });
+  };
   render() {
     // const individual = this.state.packages.Individual || {};
     const business = this.state.packages.Business || {};
@@ -84,7 +114,6 @@ class Package extends React.Component {
 
     return (
       <>
-      
         <div className="login_header">
           <div className="header_inr group">
             <div className="header_inr_left">
@@ -106,21 +135,23 @@ class Package extends React.Component {
         </div>
 
         <div className="container-fluid pricing-table-ifti">
-          <Row className="promo_code_ift">
-            <div className="promo_msg col-md-12">Enter Promo Code</div>
-            <div className="promo_iner col-md-12">
-              <input
-                type="text"
-                name="promo_code"
-                placeholder="Enter Promo Code"
-                onInput={this.handleChange}
-                className="form-control"
-                value={this.state.promo_code}
-                required
-              />
-          <Button type="submit">Apply</Button>
-          </div>
-          </Row>
+          <form onSubmit={this.handleSubmit}>
+            <Row className="promo_code_ift">
+              <div className="promo_msg col-md-12">Have Promo Code?</div>
+              <div className="promo_iner col-md-12">
+                <input
+                  type="text"
+                  name="promo_code"
+                  // placeholder="Enter Promo Code"
+                  onInput={this.handleChange}
+                  className="form-control"
+                  value={this.state.promo_code}
+                  required
+                />
+                <Button type="submit">Apply</Button>
+              </div>
+            </Row>
+          </form>
           <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
             defaultActiveKey="home"
@@ -236,18 +267,25 @@ class Package extends React.Component {
                     paymentMethod={"Micro Influencer"}
                     plan="Monthly"
                   /> */}
-                  <Button
-                    variant="dark"
-                    className="btn_individual"
-                    onClick={() => {
-                      this.updatePackage(
-                        userInfo.user_id,
-                        microInfluencer.package_id
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="dark"
+                      className="btn_individual"
+                      onClick={() => {
+                        this.updatePackage(
+                          userInfo.user_id,
+                          microInfluencer.package_id
+                        );
+                      }}
+                    >
+                      Select Plan
+                    </Button>
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
@@ -300,16 +338,21 @@ class Package extends React.Component {
                       Access To Marketplace
                     </li>
                   </ul>
-
-                  <PaymentButton
-                    key="2"
-                    userId={userInfo.user_id}
-                    packageId={influencer.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Influencer"}
-                    plan="Monthly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="2"
+                      userId={userInfo.user_id}
+                      packageId={influencer.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Influencer"}
+                      plan="Monthly"
+                    />
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{business.package_name}</h4>
@@ -371,15 +414,21 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  <PaymentButton
-                    key="2"
-                    userId={userInfo.user_id}
-                    packageId={business.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Business"}
-                    plan="Monthly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="2"
+                      userId={userInfo.user_id}
+                      packageId={business.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Business"}
+                      plan="Monthly"
+                    />
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{businessPlus.package_name}</h4>
@@ -441,15 +490,21 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  <PaymentButton
-                    key="2"
-                    userId={userInfo.user_id}
-                    packageId={businessPlus.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Business Plus"}
-                    plan="Monthly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="2"
+                      userId={userInfo.user_id}
+                      packageId={businessPlus.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Business Plus"}
+                      plan="Monthly"
+                    />
+                  )}
                 </div>
               </div>
             </Tab>
@@ -561,18 +616,24 @@ class Package extends React.Component {
                     paymentMethod={"Micro Influencer"}
                     plan="Yearly"
                   /> */}
-                  <Button
-                    variant="dark"
-                    className="btn_individual"
-                    onClick={() => {
-                      this.updatePackage(
-                        userInfo.user_id,
-                        microInfluencer.package_id
-                      );
-                    }}
-                  >
-                    Select Plan
-                  </Button>
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="dark"
+                      className="btn_individual"
+                      onClick={() => {
+                        this.updatePackage(
+                          userInfo.user_id,
+                          microInfluencer.package_id
+                        );
+                      }}
+                    >
+                      Select Plan
+                    </Button>
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{influencer.package_name}</h4>
@@ -625,15 +686,21 @@ class Package extends React.Component {
                       Access To Marketplace
                     </li>
                   </ul>
-                  <PaymentButton
-                    key="2"
-                    userId={userInfo.user_id}
-                    packageId={influencer.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Influencer"}
-                    plan="Yearly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="2"
+                      userId={userInfo.user_id}
+                      packageId={influencer.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Influencer"}
+                      plan="Yearly"
+                    />
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{business.package_name}</h4>
@@ -694,15 +761,21 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  <PaymentButton
-                    key="3"
-                    userId={userInfo.user_id}
-                    packageId={business.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Business"}
-                    plan="Yearly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="3"
+                      userId={userInfo.user_id}
+                      packageId={business.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Business"}
+                      plan="Yearly"
+                    />
+                  )}
                 </div>
                 <div className="custom_pkg">
                   <h4>{businessPlus.package_name}</h4>
@@ -764,15 +837,21 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  <PaymentButton
-                    key="2"
-                    userId={userInfo.user_id}
-                    packageId={businessPlus.package_id}
-                    name={"Select Plan"}
-                    variant="dark"
-                    paymentMethod={"Business Plus"}
-                    plan="Yearly"
-                  />
+                  {this.state.promo_code !== "" ? (
+                    <Button variant="dark" className="btn_individual" disabled>
+                      Select Plan
+                    </Button>
+                  ) : (
+                    <PaymentButton
+                      key="2"
+                      userId={userInfo.user_id}
+                      packageId={businessPlus.package_id}
+                      name={"Select Plan"}
+                      variant="dark"
+                      paymentMethod={"Business Plus"}
+                      plan="Yearly"
+                    />
+                  )}
                 </div>
               </div>
             </Tab>
