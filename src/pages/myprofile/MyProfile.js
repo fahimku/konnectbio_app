@@ -28,6 +28,7 @@ class MyProfile extends React.Component {
       userInfo2: "",
       disabled: true,
       setDefaultImage: false,
+      cancelDefaultImage: false,
     };
   }
 
@@ -94,6 +95,8 @@ class MyProfile extends React.Component {
           .catch((err) => {
             toast.error(err.response.data.message);
           });
+      } else {
+        this.setState({cancelDefaultImage: true});
       }
     });
   };
@@ -122,25 +125,6 @@ class MyProfile extends React.Component {
     this.setState({
       form,
     });
-  };
-
-  saveDefaultImage = async () => {
-    await axios
-      .put(`/users/revise/resetUserMenuImage/${userInfo.user_id}`)
-      .then((response) => {
-        this.setState({disabled: true});
-        let imageResponse = response.data;
-        toast.success(imageResponse.message);
-        // setImageFiles([]);
-        const userInformation = localStorage.getItem("userInfo");
-        const parseUserInformation = JSON.parse(userInformation);
-        parseUserInformation.menu = imageResponse.data;
-        const storeUserInformation = JSON.stringify(parseUserInformation);
-        localStorage.setItem("userInfo", storeUserInformation);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-      });
   };
 
   setDefaultImage = () => {
@@ -342,6 +326,7 @@ class MyProfile extends React.Component {
                   <div className="dash_content_profile">
                     <h5>Screen Buttons</h5>
                     <ScreenButton
+                      cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       defaultImage="https://cdn.konnect.bio/menu/profile.jpg"
                       name="Profile"
@@ -349,6 +334,7 @@ class MyProfile extends React.Component {
                       id={0}
                     />
                     <ScreenButton
+                      cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
                       name="All Posts"
@@ -356,6 +342,7 @@ class MyProfile extends React.Component {
                       id={1}
                     />
                     <ScreenButton
+                      cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       defaultImage="https://cdn.konnect.bio/menu/links.jpg"
                       name="Links"
@@ -363,6 +350,7 @@ class MyProfile extends React.Component {
                       id={2}
                     />
                     <ScreenButton
+                      cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       defaultImage="https://cdn.konnect.bio/menu/coupon.PNG"
                       name="Coupons"

@@ -21,6 +21,13 @@ function ScreenButtons(props) {
     }
   }, [props.setDefaultImage]);
 
+
+  useEffect(() => {
+    if (props.cancelDefaultImage) {
+      clearImage();
+    }
+  }, [props.cancelDefaultImage]);
+
   const onChangeInputImage = (e) => {
     const files = [];
     const reader = new FileReader();
