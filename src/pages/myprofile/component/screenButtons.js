@@ -1,6 +1,5 @@
 import {Button} from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
-import Placeholder from "../../../images/placeholder.svg";
 import React, {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 import axios from "axios";
@@ -21,12 +20,12 @@ function ScreenButtons(props) {
     }
   }, [props.setDefaultImage]);
 
-
   useEffect(() => {
     if (props.cancelDefaultImage) {
       clearImage();
     }
   }, [props.cancelDefaultImage]);
+
 
   const onChangeInputImage = (e) => {
     const files = [];
@@ -37,6 +36,7 @@ function ScreenButtons(props) {
       files[0].toUpload = true;
       setImageFiles(files);
       setDisabled(false);
+
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -47,7 +47,6 @@ function ScreenButtons(props) {
     formData.append("image", imageFiles[0]);
     formData.append("instagram_username", userInfo.username);
     formData.append("menu_id", menuId);
-
     await axios
       .put(`/users/revise/changeUserMenuImage/${userInfo.user_id}`, formData, {
         headers: {
@@ -76,8 +75,12 @@ function ScreenButtons(props) {
     setImageFiles([]);
     setUserImage(userInfo.menu[props.id].image_url);
   };
-
+  console.log('testing');
+  console.log(imageFiles.length);
+  console.log(props.setDefaultImage);
+ 
   return (
+   
     <div className="dp_cont">
       <span>
         {imageFiles.length > 0 && !props.setDefaultImage ? (
