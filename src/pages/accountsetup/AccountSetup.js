@@ -7,6 +7,7 @@ import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
+import CancelSubsciption from "./CancelSubsciption";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -239,6 +240,15 @@ class AccountSetup extends React.Component {
                       </>
                     </Row>
                   )}
+                {/* <Row className="mt-4">
+                  <Col md={4} xl={2}>
+                    Cancel Subscription:
+                  </Col>
+                  <Col md={4} xl={3}>
+                    
+                    <CancelSubsciption userId={userInfo1.user_id} />
+                  </Col>
+                </Row> */}
               </div>
               {this.state.singlePackage.package_name !== "Micro Influencer" &&
                 this.state.showPaymentButton && (
