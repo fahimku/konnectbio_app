@@ -16,12 +16,14 @@ function ScreenButtons(props) {
 
   useEffect(() => {
     if (props.setDefaultImage) {
+      
       setUserImage(props.defaultImage);
     }
   }, [props.setDefaultImage]);
 
   useEffect(() => {
     if (props.cancelDefaultImage) {
+      
       clearImage();
     }
   }, [props.cancelDefaultImage]);
