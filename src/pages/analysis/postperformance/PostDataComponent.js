@@ -28,8 +28,8 @@ class PostDataComponent extends React.Component {
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
-      page: "",
-      limit: "",
+      page: "1",
+      limit: "9",
       previous: "",
       myCategory: "",
       saveCategory: "",
@@ -440,15 +440,8 @@ class PostDataComponent extends React.Component {
             <Row>{this.state.postData}</Row>
 
             <ReactPaginate
-              // previousLabel={"prev"}
-              // nextLabel={"next"}
-              // breakLabel={"..."}
-              // breakClassName={"break-me"}
               previousLabel="Previous"
               nextLabel="Next"
-              // previousClassName="custom-paginate-prev"
-              // nextClassName="custom-paginate-next"
-              // disabledClassName="custom-disabled"
               pageClassName="page-item "
               pageLinkClassName="page-link custom-paginate-link btn btn-primary"
               previousClassName="page-item"
