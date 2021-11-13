@@ -207,6 +207,7 @@ class MyCategory extends React.Component {
       }
     });
   };
+  
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),

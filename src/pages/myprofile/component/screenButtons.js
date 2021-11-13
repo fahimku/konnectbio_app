@@ -17,7 +17,7 @@ function ScreenButtons(props) {
 
   useEffect(() => {
     if (props.setDefaultImage) {
-      setUserImage(props.defaultImage)
+      setUserImage(props.defaultImage);
     }
   }, [props.setDefaultImage]);
 
@@ -73,7 +73,7 @@ function ScreenButtons(props) {
   return (
     <div className="dp_cont">
       <span>
-        {imageFiles.length > 0 ? (
+        {imageFiles.length > 0 && !props.setDefaultImage ? (
           <>
             {imageFiles.map((file, idx) => (
               <img
@@ -86,19 +86,6 @@ function ScreenButtons(props) {
             ))}
             <strong>{props.name}</strong>
           </>
-        ) : userImage === "" || userImage === undefined ? (
-          <>
-            <img
-              style={{width: "76px", height: "76px"}}
-              className="circle profile-icon"
-              alt="profile-icon"
-              src={
-                Placeholder
-                // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-              }
-            />
-            <strong>{props.name}</strong>
-          </>
         ) : (
           <>
             <img
@@ -107,12 +94,11 @@ function ScreenButtons(props) {
               alt="profile-icon"
               src={userImage}
             />
-
             <strong>{props.name}</strong>
           </>
         )}
-        {/* <img src={avatar} alt="Profile" /> */}
       </span>
+
       <div className="dp_buttons">
         <input
           accept="image/*"

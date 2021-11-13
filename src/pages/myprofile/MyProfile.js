@@ -6,6 +6,7 @@ import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
 import ScreenButton from "./component/screenButtons";
 import Placeholder from "../../images/placeholder.svg";
+import Swal from "sweetalert2";
 //import avatar from "../../images/avatar15.jpg";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -65,6 +66,38 @@ class MyProfile extends React.Component {
     }, 100);
   };
 
+  resetImages = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Reset Default",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`/users/revise/resetUserMenuImage/${userInfo.user_id}`)
+          .then((response) => {
+            this.setState({disabled: true});
+            let imageResponse = response.data;
+            toast.success(imageResponse.message);
+            // setImageFiles([]);
+            const userInformation = localStorage.getItem("userInfo");
+            const parseUserInformation = JSON.parse(userInformation);
+            parseUserInformation.menu = imageResponse.data;
+            const storeUserInformation = JSON.stringify(parseUserInformation);
+            localStorage.setItem("userInfo", storeUserInformation);
+            Swal.fire("Default Pictures Reset Successfully");
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+          });
+      }
+    });
+  };
+
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({loading: true});
@@ -108,33 +141,6 @@ class MyProfile extends React.Component {
       .catch((err) => {
         toast.error(err.response.data.message);
       });
-
-    // const userInformation = localStorage.getItem("userInfo");
-    // const parseUserInformation = JSON.parse(userInformation);
-    // parseUserInformation.menu = [
-    //   {
-    //     id: 1111,
-    //     name: "PROFILE",
-    //     image_url: "https://cdn.konnect.bio/menu/profile.jpg",
-    //   },
-    //   {
-    //     id: 2222,
-    //     name: "ALL POSTS",
-    //     image_url: "https://cdn.konnect.bio/menu/all_posts.jpg",
-    //   },
-    //   {
-    //     id: 3333,
-    //     name: "LINKS",
-    //     image_url: "https://cdn.konnect.bio/menu/links.jpg",
-    //   },
-    //   {
-    //     id: 4444,
-    //     name: "COUPON",
-    //     image_url: "https://cdn.konnect.bio/menu/coupon.PNG",
-    //   },
-    // ];
-    // const storeUserInformation = JSON.stringify(parseUserInformation);
-    // localStorage.setItem("userInfo", storeUserInformation);
   };
 
   setDefaultImage = () => {
@@ -376,7 +382,7 @@ class MyProfile extends React.Component {
                       </Button>
                       <Button
                         onClick={() => {
-                          this.saveDefaultImage();
+                          this.resetImages();
                         }}
                         disabled={this.state.disabled}
                         type="button"
