@@ -3,10 +3,10 @@ import Loader from "../../../components/Loader/Loader";
 import React, {useState, useEffect} from "react";
 import {toast} from "react-toastify";
 import axios from "axios";
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-function ScreenButtons(props) {
+export default function ScreenButtons(props) {
+
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [imageFiles, setImageFiles] = useState([]);
@@ -16,14 +16,12 @@ function ScreenButtons(props) {
 
   useEffect(() => {
     if (props.setDefaultImage) {
-      
       setUserImage(props.defaultImage);
     }
   }, [props.setDefaultImage]);
 
   useEffect(() => {
     if (props.cancelDefaultImage) {
-      
       clearImage();
     }
   }, [props.cancelDefaultImage]);
@@ -38,7 +36,6 @@ function ScreenButtons(props) {
       files[0].toUpload = true;
       setImageFiles(files);
       setDisabled(false);
-
     };
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -77,9 +74,9 @@ function ScreenButtons(props) {
     setImageFiles([]);
     setUserImage(userInfo.menu[props.id].image_url);
   };
-  console.log('testing');
-  console.log(imageFiles.length);
-  console.log(props.setDefaultImage);
+  // console.log('testing');
+  // console.log(imageFiles.length);
+  // console.log(props.setDefaultImage);
  
   return (
    
@@ -155,4 +152,3 @@ function ScreenButtons(props) {
     </div>
   );
 }
-export default ScreenButtons;
