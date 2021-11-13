@@ -6,7 +6,8 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
-// import ReactPaginate from "react-paginate";
+import ReactPaginate from "react-paginate";
+
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
@@ -27,18 +28,22 @@ class PostDataComponent extends React.Component {
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
-      page: 1,
-      limit: 9,
+      page: "",
+      limit: "",
       previous: "",
       myCategory: "",
       saveCategory: "",
       optionCategory: "",
-      saveSort: "",
+      saveSort: "date",
       optionSort: "",
-      saveSortOrder: "asc",
+      saveSortOrder: "desc",
       optionSortOrder: "",
+      offset: 0,
+      perPage: 9,
+      currentPage: 0,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -50,8 +55,8 @@ class PostDataComponent extends React.Component {
       this.state.limit,
       this.state.page,
       "",
-      "",
-      "asc"
+      this.state.saveSort,
+      this.state.saveSortOrder
     );
     this.fetchMyCategory();
   }
@@ -80,16 +85,17 @@ class PostDataComponent extends React.Component {
       })
       .then((response) => {
         this.setState({ data: response.data.message.data, loading: false });
-        if (response.data.message.hasOwnProperty("next")) {
-          this.setState({ page: response.data.message.next.page });
-        } else {
-          this.setState({ page: 0 });
-        }
-        if (response.data.message.hasOwnProperty("previous")) {
-          this.setState({ previous: response.data.message.previous.page });
-        } else {
-          this.setState({ previous: 0 });
-        }
+        this.postData();
+        // if (response.data.message.hasOwnProperty("next")) {
+        //   this.setState({ page: response.data.message.next.page });
+        // } else {
+        //   this.setState({ page: 0 });
+        // }
+        // if (response.data.message.hasOwnProperty("previous")) {
+        //   this.setState({ previous: response.data.message.previous.page });
+        // } else {
+        //   this.setState({ previous: 0 });
+        // }
       });
   }
   fetchMyCategory = async () => {
@@ -164,13 +170,16 @@ class PostDataComponent extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-
+    this.setState({
+      offset: 0,
+      currentPage: 0,
+    });
     this.fetchPostPerformance(
       this.state.username,
       this.state.fromDate,
       this.state.toDate,
       this.state.limit,
-      1,
+      this.state.page,
       this.state.saveCategory,
       this.state.saveSort,
       this.state.saveSortOrder
@@ -182,8 +191,8 @@ class PostDataComponent extends React.Component {
       optionSort: "",
       optionSortOrder: "",
       saveCategory: "",
-      saveSort: "",
-      saveSortOrder: "",
+      // saveSort: "",
+      // saveSortOrder: "",
       fromDate: moment().startOf("year").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
@@ -192,10 +201,10 @@ class PostDataComponent extends React.Component {
       this.state.lastYear,
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
-      1,
+      this.state.page,
       "",
-      "",
-      this.state.saveSortOrder
+      this.state.saveSort,
+      "desc"
     );
   };
   handleSort = (event) => {
@@ -210,25 +219,84 @@ class PostDataComponent extends React.Component {
       optionSortOrder: event,
     });
   };
-  Items({ currentItems }) {
-    return (
-      <>
-        {currentItems &&
-          currentItems.map((item) => (
-            <div>
-              <h3>Item #{item}</h3>
-            </div>
-          ))}
-      </>
-    );
-  }
 
+  handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const offset = selectedPage * this.state.perPage;
+    console.log(selectedPage, "selectedPage");
+    console.log(offset, "offset");
+
+    this.setState(
+      {
+        currentPage: selectedPage,
+        offset: offset,
+      },
+      () => {
+        this.postData();
+      }
+    );
+  };
+  postData = () => {
+    const data = this.state.data;
+    const slice = data.slice(
+      this.state.offset,
+      this.state.offset + this.state.perPage
+    );
+    const postData = slice.map((record) => (
+      <React.Fragment>
+        <Col xs={12} xl={4} md={6}>
+          <div className="card analytic-box">
+            <div className="row">
+              <div className="any-post-img-col col-4">
+                <div className="any-post-image">
+                  <div className="any-image-box">
+                    <div className="any-image-box-iner">
+                      <img
+                        src={record.media_url}
+                        className="img-fluid media-image"
+                        alt={record.media_type}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-8 analytic-caption">
+                <div className="row count-main-box">
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Impressions</h5>
+                    <h3 className="count">{numberWithCommas(record.views)}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Clicks</h5>
+                    <h3 className="count">{numberWithCommas(record.clicks)}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Engagement</h5>
+                    <h3 className="count">{twodecimalplace(record.ctr)}%</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Revenue</h5>
+                    <h3 className="count">{record.revenue}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Col>
+      </React.Fragment>
+    ));
+
+    this.setState({
+      pageCount: Math.ceil(data.length / this.state.perPage),
+      postData,
+    });
+  };
   render() {
     const sortOptions = [
-      { value: "date", label: "Date" },
-      { value: "impressions", label: "Impressions" },
-      { value: "clicks", label: "Clicks" },
-      { value: "engagement", label: "Engagement" },
+      { value: "date", label: "DATE" },
+      { value: "impressions", label: "IMPRESSIONS" },
+      { value: "clicks", label: "CLICKS" },
+      { value: "engagement", label: "ENGAGEMENT" },
       // { value: "revenue", label: "Revenue" },
     ];
     const sortOrderOptions = [
@@ -296,7 +364,12 @@ class PostDataComponent extends React.Component {
                     name="category"
                     className="selectCustomization"
                     options={this.state.myCategory}
-                    value={this.state.optionCategory}
+                    // value={this.state.optionCategory}
+                    value={
+                      this.state.optionCategory === ""
+                        ? { value: "all", label: "ALL" }
+                        : this.state.optionCategory
+                    }
                     placeholder="Select Category"
                     onChange={(event) => this.handleSelect(event)}
                     styles={style}
@@ -308,7 +381,12 @@ class PostDataComponent extends React.Component {
                     name="sort"
                     className="selectCustomization"
                     options={sortOptions}
-                    value={this.state.optionSort}
+                    // value={this.state.optionSort}
+                    value={
+                      this.state.optionSort === ""
+                        ? { value: "date", label: "DATE" }
+                        : this.state.optionSort
+                    }
                     placeholder="Sort By"
                     onChange={(event) => this.handleSort(event)}
                     styles={style}
@@ -322,12 +400,12 @@ class PostDataComponent extends React.Component {
                     options={sortOrderOptions}
                     value={
                       this.state.optionSortOrder === ""
-                        ? { value: "asc", label: "ASC" }
+                        ? { value: "desc", label: "DESC" }
                         : this.state.optionSortOrder
                     }
                     placeholder="Order By"
                     onChange={(event) => this.handleSortOrder(event)}
-                    isDisabled={this.state.optionSort === "" ? true : false}
+                    // isDisabled={this.state.optionSort === "" ? true : false}
                     styles={style}
                   />
                 </Col>
@@ -355,98 +433,41 @@ class PostDataComponent extends React.Component {
         <hr />
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
+        ) : !this.state.data.length ? (
+          <div className="row no-data col-md-12">No Data Available</div>
         ) : (
           <>
-            <Row>
-              {!this.state.data.length ? (
-                <div className="no-data col-md-12">No Data Available</div>
-              ) : (
-                this.state.data.map((record) => (
-                  <>
-                    <Col xs={12} xl={4} md={6}>
-                      <div className="card analytic-box">
-                        <div className="row">
-                          <div className="any-post-img-col col-4">
-                            <div className="any-post-image">
-                              <div className="any-image-box">
-                                <div className="any-image-box-iner">
-                                  <img
-                                    src={record.media_url}
-                                    className="img-fluid media-image"
-                                    alt={record.media_type}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-8 analytic-caption">
-                            {/* <div className="card-block px-2">
-                              <p className="card-text">
-                                {record.caption === ""
-                                  ? "No Caption Added"
-                                  : limitCharacter(record.caption, 55)}
-                              </p>
-                            </div> */}
-                            <div className="row count-main-box">
-                              <div className="col-12 count-box">
-                                <h5 className="count-title">Impressions</h5>
-                                <h3 className="count">
-                                  {numberWithCommas(record.views)}
-                                </h3>
-                              </div>
-                              <div className="col-12 count-box">
-                                <h5 className="count-title">Clicks</h5>
-                                <h3 className="count">
-                                  {numberWithCommas(record.clicks)}
-                                </h3>
-                              </div>
-                              <div className="col-12 count-box">
-                                <h5 className="count-title">Engagement</h5>
-                                <h3 className="count">
-                                  {twodecimalplace(record.ctr)}%
-                                </h3>
-                              </div>
-                              <div className="col-12 count-box">
-                                <h5 className="count-title">Revenue</h5>
-                                <h3 className="count">{record.revenue}</h3>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {/* <div className="row count-main-box">
-                          <div className="col-6 count-box">
-                            <h5 className="count-title">Impressions</h5>
-                            <h3 className="count">
-                              {numberWithCommas(record.views)}
-                            </h3>
-                          </div>
-                          <div className="col-6 count-box">
-                            <h5 className="count-title">Clicks</h5>
-                            <h3 className="count">
-                              {numberWithCommas(record.clicks)}
-                            </h3>
-                          </div>
-                          <div className="col-6 count-box">
-                            <h5 className="count-title">Engagement</h5>
-                            <h3 className="count">
-                              {twodecimalplace(record.ctr)}%
-                            </h3>
-                          </div> */}
-                        {/* <div className="col-6 count-box">
-                        <h4>Date Start</h4>
-                        <h3 className="count">1st October 2021</h3>
-                      </div>
-                      <div className="col-6 count-box">
-                        <h4>Date Start</h4>
-                        <h3 className="count">31st October 2021</h3>
-                      </div> */}
-                        {/* </div> */}
-                      </div>
-                    </Col>
-                  </>
-                ))
-              )}
-            </Row>
+            <Row>{this.state.postData}</Row>
+
+            <ReactPaginate
+              // previousLabel={"prev"}
+              // nextLabel={"next"}
+              // breakLabel={"..."}
+              // breakClassName={"break-me"}
+              previousLabel="Previous"
+              nextLabel="Next"
+              // previousClassName="custom-paginate-prev"
+              // nextClassName="custom-paginate-next"
+              // disabledClassName="custom-disabled"
+              pageClassName="page-item "
+              pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+              previousClassName="page-item"
+              previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+              nextClassName="page-item"
+              nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={
+                "pagination justify-content-center mt-2 custom-paginate"
+              }
+              // subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
           </>
         )}
         {/* {this.state.loading || !this.state.data.length ? null : (
