@@ -201,30 +201,32 @@ class MyProfile extends React.Component {
                         {this.state.imageFiles.length > 0 ? (
                           <>
                             {this.state.imageFiles.map((file, idx) => (
-                              <img
-                                alt="..."
-                                src={file.preview}
-                                key={`img-id-${idx.toString()}`}
-                                style={{width: "76px", height: "76px"}}
-                                className="circle profile-icon"
-                              />
+                              <>
+                                <img
+                                  alt="..."
+                                  src={file.preview}
+                                  key={`img-id-${idx.toString()}`}
+                                  style={{width: "76px", height: "76px"}}
+                                  className="circle profile-icon"
+                                />
+                                <strong>Logo</strong>
+                              </>
                             ))}
                           </>
                         ) : this.state.userImage === "" ||
                           this.state.userImage === undefined ? (
                           <>
-                          <img
-                            style={{width: "76px", height: "76px"}}
-                            className="circle profile-icon"
-                            alt="profile-icon"
-                            src={
-                              Placeholder
-                              // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
-                                }
-                                
-                              />
-                              <strong>Logo</strong>
-                        </>
+                            <img
+                              style={{width: "76px", height: "76px"}}
+                              className="circle profile-icon"
+                              alt="profile-icon"
+                              src={
+                                Placeholder
+                                // "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTEiIGhlaWdodD0iMTQxIj48cmVjdCB3aWR0aD0iMTkxIiBoZWlnaHQ9IjE0MSIgZmlsbD0iI2VlZSIvPjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijk1LjUiIHk9IjcwLjUiIHN0eWxlPSJmaWxsOiNhYWE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LXNpemU6MTJweDtmb250LWZhbWlseTpBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZjtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj4xOTF4MTQxPC90ZXh0Pjwvc3ZnPg=="
+                              }
+                            />
+                            <strong>Logo</strong>
+                          </>
                         ) : (
                           <>
                             <img
@@ -335,7 +337,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage:false})
+                        this.setState({setDefaultImage: false});
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/profile.jpg"
                       name="Profile"
@@ -346,7 +348,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage:false})
+                        this.setState({setDefaultImage: false});
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
                       name="All Posts"
@@ -357,7 +359,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage:false})
+                        this.setState({setDefaultImage: false});
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/links.jpg"
                       name="Links"
@@ -368,7 +370,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage:false})
+                        this.setState({setDefaultImage: false});
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/coupon.PNG"
                       name="Coupons"
