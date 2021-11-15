@@ -1,5 +1,6 @@
-import React from "react";
-// import axios from "axios";
+import React, {useState, useEffect} from "react";
+import Loader from "../../components/Loader/Loader";
+import axios from "axios";
 // import {
 //   Container,
 //   Button,
@@ -11,6 +12,29 @@ import React from "react";
 // import {Link} from "react-router-dom";
 
 export default function Dashboard(props) {
+  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userData = userInfo;
+  const [username, setUserName] = useState(userInfo.username);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchSummeryPerformance(username, "image");
+  }, []);
+
+  async function fetchSummeryPerformance(username, postType) {
+    setLoading(true);
+    await axios
+      .post("analytics/receive/getSummarizeAnalyticsForDashboard", {
+        instagram_username: username,
+        post_type: postType,
+      })
+      .then((response) => {
+        setData(response.data.message);
+        setLoading(false);
+      });
+  }
+
   return (
     <>
       <div className="dashboard_main_ift container">
@@ -21,7 +45,13 @@ export default function Dashboard(props) {
                 <span className="dash_icon-top">
                   <i className="fa fa-eye fa-3x" aria-hidden="true"></i>
                 </span>
-                <div className="imp-t text-right">1500</div>
+                <div className="imp-t text-right">
+                  {loading ? (
+                    <Loader className="dashboard-loader" />
+                  ) : (
+                    data.post_views
+                  )}
+                </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
                   Total Impression
                 </div>
@@ -37,7 +67,13 @@ export default function Dashboard(props) {
                     aria-hidden="true"
                   ></i>
                 </span>
-                <div className="imp-t text-right">300</div>
+                <div className="imp-t text-right">
+                  {loading ? (
+                    <Loader className="dashboard-loader" />
+                  ) : (
+                    data.post_clicks
+                  )}
+                </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
                   Total Clicks
                 </div>
@@ -50,7 +86,13 @@ export default function Dashboard(props) {
                 <span className="dash_icon-top">
                   <i className="fa fa-handshake-o fa-3x" aria-hidden="true"></i>
                 </span>
-                <div className="imp-t text-right">0.38%</div>
+                <div className="imp-t text-right">
+                  {loading ? (
+                    <Loader className="dashboard-loader" />
+                  ) : (
+                    data.ctr + " %"
+                  )}
+                </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
                   Total Engagement
                 </div>
@@ -63,7 +105,7 @@ export default function Dashboard(props) {
                 <span className="dash_icon-top">
                   <i className="fa fa-usd fa-3x" aria-hidden="true"></i>
                 </span>
-                <div className="imp-t text-right">$500.00</div>
+                <div className="imp-t text-right">$0.00</div>
                 <div className="imp-tx text-uppercase text-muted text-right">
                   Total Revenue
                 </div>
@@ -83,6 +125,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/account/profile");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
@@ -237,7 +282,7 @@ export default function Dashboard(props) {
                   <span className="dash_icon">
                     <i className="fa fa-check fa-3x" aria-hidden="true"></i>
                   </span>
-                  <h4>Business Plan</h4>
+                  <h4>{userData.package.package_description}</h4>
                   <div className="text-muted">
                     This is your current active plan
                   </div>
