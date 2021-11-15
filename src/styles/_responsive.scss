@@ -52,6 +52,10 @@
     .dp_cont.mb-5{
         margin-bottom: 2rem;
     }
+    .dsh-top .dashboard_col.col-md-3{
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
 }
 
 @media only screen and (max-width: 1050px) {
@@ -251,6 +255,9 @@
     .analytics-page .nav-tabs{
         padding-left:0;
         padding-right:0;
+    }
+    .dash_c_inr h4, .dash_c_pkg h4{
+        font-size: 1.1rem;
     }
 
 }
@@ -474,6 +481,16 @@
         min-width: 80px !important;
         width: auto;
         font-size: 0.9rem;
+    }
+    .dsh-top .dash_content{
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .dsh-top .dash_icon-top{
+        display: none;
+    }
+    .dash_block{
+        margin-bottom: 12px;
     }
 
 

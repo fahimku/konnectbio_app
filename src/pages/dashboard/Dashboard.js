@@ -14,7 +14,7 @@ export default function Dashboard(props) {
   return (
     <>
       <div className="dashboard_main_ift container">
-        <div className="dashboard_inr row">
+        <div className="dsh-top dashboard_inr row">
           <div className="dashboard_col col-md-3">
             <div className="dash_block">
               <div className="dash_content clearfix">
@@ -71,7 +71,7 @@ export default function Dashboard(props) {
             </div>
           </div>
         </div>
-        <div className="dashboard_inr row">
+        <div className="dsh-mid dashboard_inr row">
           <div className="dashboard_col col-md-4">
             <div className="dash_block">
               <div className="dash_content">
@@ -140,7 +140,7 @@ export default function Dashboard(props) {
           </div>
         </div>
 
-        <div className="dashboard_inr row">
+        <div className="dah-mid2 dashboard_inr row">
           <div className="dashboard_col col-md-4">
             <div className="dash_block">
               <div className="dash_content">
@@ -208,7 +208,7 @@ export default function Dashboard(props) {
             </div>
           </div>
         </div>
-        <div className="dashboard_inr row">
+        <div className="dsh-bottom dashboard_inr row">
           <div className="dashboard_col col-md-6">
             <div className="dash_block">
               <div className="dash_content">

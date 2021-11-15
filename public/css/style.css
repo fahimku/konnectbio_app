@@ -759,9 +759,9 @@ a.pkg_read:hover {
 
 .dashboard_main_ift.container{
   padding-top: 50px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
-.dashboard_col.col-md-4 {
+.dashboard_col.col-md-4, .dashboard_col.col-md-3 {
   padding-right: 15px;
   padding-left: 15px;
 }
