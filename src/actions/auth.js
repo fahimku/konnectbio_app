@@ -137,6 +137,7 @@ export function loginUser(creds) {
     });
 
     if (creds.email.length > 0 && creds.password.length > 0) {
+    
       axios
         .post("/signin/user", creds)
         .then((res) => {
@@ -160,8 +161,12 @@ export function loginUser(creds) {
           if (res.data.message.package) history.push("/app");
          else history.push("/package");
         })
-        .catch((err) => {
-          dispatch(authError(err.response.data.message));
+        .catch((error) => {
+          
+          // if (error.response) {
+          //   console.log(error);
+          // }
+         dispatch(authError(error.response.data.message));
         });
     } else {
       dispatch(authError("Something was wrong. Try again"));

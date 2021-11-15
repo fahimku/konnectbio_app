@@ -30,9 +30,12 @@ axios.interceptors.response.use(undefined, function (error) {
 //    logoutUser();
   window.location.href = '/logout';
     // alert('test')
+  }
+  else {
     return Promise.reject(error);
   }
 });
+
 export const store = createStore(
   createRootReducer(history),
   compose(
