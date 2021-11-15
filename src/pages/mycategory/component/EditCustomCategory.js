@@ -32,15 +32,13 @@ class EditCustomCategory extends React.Component {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  handleChange = (e) => {
-    this.setState({
-      category_name: e.target.value,
-    });
-  };
+  // handleChange = (e) => {
+  //   this.setState({
+  //     category_name: e.target.value,
+  //   });
+  // };
 
-  onSubmitting = async (e) => {
-    e.preventDefault();
-
+  onSubmitting = async () => {
     var formData = new FormData();
     formData.append(
       "image",
@@ -50,7 +48,7 @@ class EditCustomCategory extends React.Component {
     // formData.append("user_id", this.props.userID);
     this.setState({ loading: true });
     await axios
-      .put(`/customcategory/revise/${this.state.cat_id}`, formData, {
+      .put(`/usercategory/revise/${this.state.cat_id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -60,7 +58,8 @@ class EditCustomCategory extends React.Component {
         let imageResponse = response.data;
         toast.success(imageResponse.message);
         this.props.fetchMyCategory();
-        this.props.fetchCustomCategory();
+        // this.props.fetchCustomCategory();
+        this.props.fetchSaveCategory();
         this.categoryToggleModal();
       })
       .catch((err) => {
@@ -91,47 +90,47 @@ class EditCustomCategory extends React.Component {
         <Modal.Header closeButton>
           <Modal.Title>Edit Custom Category</Modal.Title>
         </Modal.Header>
-        <form onSubmit={this.onSubmitting}>
-          <div className="mb-3">
-            <Col md={12} className="text-center">
-              <div className="fileinput file-profile">
-                <input
-                  accept="image/*"
-                  onChange={(e) => this.onChangeInputImage(e)}
-                  id="fileupload2"
-                  type="file"
-                  name="file"
-                  className="d-none"
-                />
-                <div className="fileinput-new thumbnail">
-                  {this.state.imageFiles.length > 0 ? (
-                    <div>
-                      {this.state.imageFiles.map((file, idx) => (
-                        <img
-                          alt="profile-icon"
-                          src={file.preview}
-                          key={`img-id-${idx.toString()}`}
-                          style={{ width: "100px", height: "100px" }}
-                          className="circle profile-icon"
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <img
-                      alt="profile-icon"
-                      src={this.state.cat_image}
-                      style={{ width: "100px", height: "100px" }}
-                      className="circle profile-icon"
-                    />
-                  )}
-                </div>
+        {/* <form onSubmit={this.onSubmitting}> */}
+        <div className="mb-3">
+          <Col md={12} className="text-center">
+            <div className="fileinput file-profile">
+              <input
+                accept="image/*"
+                onChange={(e) => this.onChangeInputImage(e)}
+                id="fileupload2"
+                type="file"
+                name="file"
+                className="d-none"
+              />
+              <div className="fileinput-new thumbnail">
+                {this.state.imageFiles.length > 0 ? (
+                  <div>
+                    {this.state.imageFiles.map((file, idx) => (
+                      <img
+                        alt="profile-icon"
+                        src={file.preview}
+                        key={`img-id-${idx.toString()}`}
+                        style={{ width: "100px", height: "100px" }}
+                        className="circle profile-icon"
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <img
+                    alt="profile-icon"
+                    src={this.state.cat_image}
+                    style={{ width: "100px", height: "100px" }}
+                    className="circle profile-icon"
+                  />
+                )}
               </div>
-              <Button type="button" color="default" className="select-image">
-                <label for="fileupload2">Choose Category Image</label>
-              </Button>
-            </Col>
-          </div>
-          <div className="mb-3">
+            </div>
+            <Button type="button" color="default" className="select-image">
+              <label for="fileupload2">Choose Category Image</label>
+            </Button>
+          </Col>
+        </div>
+        {/* <div className="mb-3">
             <Col md={12}>
               <label>Enter Category Name</label>
               <input
@@ -145,26 +144,27 @@ class EditCustomCategory extends React.Component {
                 autoComplete="off"
               />
             </Col>
-          </div>
+          </div> */}
 
-          <div className="mb-3">
-            <Col md={12} className="update-col">
-              {this.state.loading ? (
-                <Button>
-                  <Loader />
-                </Button>
-              ) : (
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="category-btn btn-block "
-                >
-                  Update Category
-                </Button>
-              )}
-            </Col>
-          </div>
-        </form>
+        <div className="mb-3">
+          <Col md={12} className="update-col">
+            {this.state.loading ? (
+              <Button>
+                <Loader />
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                // type="submit"
+                className="category-btn btn-block "
+                onClick={this.onSubmitting}
+              >
+                Update Category
+              </Button>
+            )}
+          </Col>
+        </div>
+        {/* </form> */}
       </Modal>
     );
   };
@@ -172,12 +172,17 @@ class EditCustomCategory extends React.Component {
   render() {
     return (
       <>
-        <button
+        {/* <button
           className="btn btn-link edit-icon"
-          onClick={this.categoryToggleModal}
+          // onClick={this.categoryToggleModal}
         >
-          <span className="fa fa-edit" title="Edit"></span>
-        </button>
+          
+        </button> */}
+        <span
+          onClick={this.categoryToggleModal}
+          className="fa fa-edit edit-icon link"
+          title="Edit"
+        ></span>
         {this.categoryModal()}
       </>
     );
