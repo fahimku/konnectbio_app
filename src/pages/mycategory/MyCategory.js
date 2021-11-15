@@ -207,7 +207,7 @@ class MyCategory extends React.Component {
       }
     });
   };
-  
+
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
@@ -285,27 +285,29 @@ class MyCategory extends React.Component {
                     </Col>
                     <Col md={5}></Col>
                   </Row>
-                  <Row className="mt-4 align-items-center">
-                    <Col md={6} xl={2}>
-                      <div className="package_name">
-                        Change plan to have more categories:
-                      </div>
-                    </Col>
-                    <Col md={5} xl={3} lg={3}>
-                      <div className="package_detail">
-                        <Button
-                          variant="primary"
-                          className="btn-block"
-                          onClick={() => history.push("/app/account/setup")}
-                        >
-                          Upgrade
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
+                  {userInfo1.package.package_name !== "Business Plus" ? (
+                    <Row className="mt-4 align-items-center">
+                      <Col md={6} xl={2}>
+                        <div className="package_name">
+                          Change plan to have more categories:
+                        </div>
+                      </Col>
+                      <Col md={5} xl={3} lg={3}>
+                        <div className="package_detail">
+                          <Button
+                            variant="primary"
+                            className="btn-block"
+                            onClick={() => history.push("/app/account/setup")}
+                          >
+                            Upgrade
+                          </Button>
+                        </div>
+                      </Col>
+                    </Row>
+                  ) : null}
                 </div>
 
-                <div className="white-box mt-5">
+                {/* <div className="white-box mt-5">
                   <h5 className="page-title line-heading">Custom Categories</h5>
                   <Row className="mt-4 align-items-center">
                     <Col md={6} xl={2}>
@@ -375,7 +377,7 @@ class MyCategory extends React.Component {
                       </Row>
                     </Col>
                   </Row>
-                </div>
+                </div> */}
 
                 <form onSubmit={this.handleSubmit} className="white-box">
                   <h5 className="page-title line-heading">Select Categories</h5>
