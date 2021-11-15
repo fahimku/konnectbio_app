@@ -246,7 +246,7 @@ class PostDataComponent extends React.Component {
       <React.Fragment>
         <Col xs={12} xl={4} md={6}>
           <div className="card analytic-box">
-            <div className="row">
+            <div className="card-row row">
               <div className="any-post-img-col col-4">
                 <div className="any-post-image">
                   <div className="any-image-box">
@@ -440,8 +440,8 @@ class PostDataComponent extends React.Component {
             <Row>{this.state.postData}</Row>
 
             <ReactPaginate
-              previousLabel="Previous"
-              nextLabel="Next"
+              previousLabel=""
+              nextLabel=""
               pageClassName="page-item "
               pageLinkClassName="page-link custom-paginate-link btn btn-primary"
               previousClassName="page-item"

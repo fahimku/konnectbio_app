@@ -15,6 +15,9 @@
     .custom_pkg p br {
         display: block;
     }
+    .dp_buttons button{
+        min-width: 60px !important;
+    }
 }
 
 @media only screen and (max-width: 1250px) {
@@ -31,6 +34,23 @@
     }
     .promo_code_ift{
         width:50%;
+    }
+    .profile_box_main.col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .dash_block_profile{
+        min-height: 100px;
+    }
+    .dp_buttons button{
+        min-width: 120px !important;
+        width: auto;
+    }
+    .dp_fields textarea.form-control{
+        height: auto;
+    }
+    .dp_cont.mb-5{
+        margin-bottom: 2rem;
     }
 }
 
@@ -206,7 +226,6 @@
     }
     .analytics-page {
         padding:1rem;
-        background-color:#FFF;
     }
     .analytics-page .nav-tabs > .nav-item{
         flex-grow: 1 !important;
@@ -228,6 +247,10 @@
     }
     .pricing_tabs_ifti.nav-tabs{
         width: 40%;
+    }
+    .analytics-page .nav-tabs{
+        padding-left:0;
+        padding-right:0;
     }
 
 }
@@ -435,6 +458,23 @@
     .pricing-table-ifti{
         margin-top: 2rem;;
     }
+    .dash_content_profile{
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .dp_cont{
+        flex-direction: column;
+    }
+    .dp_buttons{
+        margin-left:0;
+        margin-top:3rem;
+        width:auto;
+    }
+    .dp_buttons button{
+        min-width: 80px !important;
+        width: auto;
+        font-size: 0.9rem;
+    }
 
 
 }
@@ -514,5 +554,17 @@
 
     .source-button button.dropdown-toggle::after {
         margin-left: 5px;
+    }
+    .card-row {
+        flex-direction: column;
+    }
+    .analytics-page .any-post-img-col{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .analytic-box .analytic-caption{
+        padding-left:20px;
+        flex: 0 0 100%;
+        max-width: 100%;
     }
 }

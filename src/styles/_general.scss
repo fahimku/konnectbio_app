@@ -211,10 +211,25 @@ h1 small {
 }
 .custom-paginate .custom-paginate-link {
   min-width: 40px !important;
+  height: 40px;
 }
 .custom-paginate .page-item.active .page-link {
 }
 .custom-paginate .page-item.disabled .page-link {
   border: 1px solid #d6dee5;
   color: #ccc;
+}
+.custom-paginate .custom-paginate-prev, .custom-paginate .custom-paginate-next{
+  min-width: 40px !important;
+  height: 40px;
+}
+.custom-paginate .custom-paginate-prev:before{
+  content: "\f053";
+  font-family: 'FontAwesome';
+  
+}
+.custom-paginate .custom-paginate-next:before{
+  content: "\f054";
+  font-family: 'FontAwesome';
+  
 }
