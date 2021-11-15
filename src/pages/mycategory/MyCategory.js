@@ -43,8 +43,8 @@ class MyCategory extends React.Component {
     this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
     this.fetchSaveCategory();
-    this.getPackages();
-    this.fetchCustomCategory();
+    // this.getPackages();
+    // this.fetchCustomCategory();
     //Connect Instagram Code
   }
 
@@ -69,7 +69,7 @@ class MyCategory extends React.Component {
 
   fetchMyCategory = async () => {
     await axios
-      .get("/customcategory/receive")
+      .get("/usercategory/receive")
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
@@ -94,13 +94,16 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
-        optionCategories.map(({ category_id, category_name, image_url }) => {
-          return saveCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
+        optionCategories.map(
+          ({ category_id, category_name, image_url, editable }) => {
+            return saveCategories.push({
+              value: category_id,
+              label: category_name,
+              image: image_url,
+              editable: editable,
+            });
+          }
+        );
         this.setState({
           // defaultCategory: myCategories,
           saveCategories: saveCategories,
@@ -155,28 +158,46 @@ class MyCategory extends React.Component {
       this.state.saveCategories === null
         ? []
         : this.state.saveCategories.map((category) => {
-            return category.value;
+            return {
+              category_name: category.label,
+              category_id: category.value,
+              image_url: category.image,
+            };
           });
     this.setState({ loading: true });
-
     await axios
-      .put(`/users/revise/categories/${userInfo.user_id}`, {
+      .post(`/usercategory/reserve`, {
         categories: category,
       })
       .then((response) => {
-        let categoryResponse = response.data;
-        if (categoryResponse.success) {
-          toast.success(categoryResponse.message);
-          this.setState({ categoryError: "" });
-          this.setState({ loading: false });
-          this.fetchSaveCategory();
-        }
+        this.setState({ loading: false });
+        let imageResponse = response.data;
+        toast.success(imageResponse.message);
+        this.fetchSaveCategory();
       })
       .catch((err) => {
-        console.log(err.response, "err");
+        toast.error(err.response.data.message);
         this.setState({ loading: false });
-        this.setState({ categoryError: err.response.data.message });
       });
+
+    // await axios
+    //   .put(`/users/revise/categories/${userInfo.user_id}`, {
+    //     categories: category,
+    //   })
+    //   .then((response) => {
+    //     let categoryResponse = response.data;
+    //     if (categoryResponse.success) {
+    //       toast.success(categoryResponse.message);
+    //       this.setState({ categoryError: "" });
+    //       this.setState({ loading: false });
+    //       this.fetchSaveCategory();
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response, "err");
+    //     this.setState({ loading: false });
+    //     this.setState({ categoryError: err.response.data.message });
+    //   });
     // }
   };
   deleteCustomCat = async (id) => {
@@ -229,6 +250,17 @@ class MyCategory extends React.Component {
           className="img-fluid cat-image"
         />
         <div>{value.label}</div>
+        {value.editable ? (
+          <div className="action">
+            <EditCustomCategory
+              userID={userInfo1.user_id}
+              fetchMyCategory={this.fetchMyCategory}
+              // fetchCustomCategory={this.fetchCustomCategory}
+              fetchSaveCategory={this.fetchSaveCategory}
+              catData={value}
+            />
+          </div>
+        ) : null}
       </div>
     ));
     const SortableList = SortableContainer(({ items }) => (
@@ -242,6 +274,9 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
+
+    // console.log(this.state.myCategory, "cat");
+    // console.log(this.state.saveCategories, "saveCategories");
 
     return (
       <React.Fragment>
@@ -390,7 +425,10 @@ class MyCategory extends React.Component {
                           name="category"
                           className="selectCustomization"
                           options={this.state.myCategory}
-                          defaultValue={this.state.saveCategories}
+                          value={this.state.saveCategories}
+                          // value={MIGRATIONOPTIONS.filter(
+                          //   (option) => option.value === migration.status
+                          // )}
                           placeholder="Select Category"
                           onChange={(options, e) =>
                             this.handleSelect(e, options)
@@ -410,6 +448,9 @@ class MyCategory extends React.Component {
                           items={this.state.saveCategories}
                           onSortEnd={this.onSortEnd}
                           axis="xy"
+                          lockToContainerEdges={true}
+                          lockOffset="0%"
+                          distance={1}
                         />
                       )}
                     </Col>
