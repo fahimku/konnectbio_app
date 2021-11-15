@@ -19,6 +19,7 @@ const numberWithCommas = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 };
+
 class SummaryDataComponent extends React.Component {
   constructor(props) {
     super(props);

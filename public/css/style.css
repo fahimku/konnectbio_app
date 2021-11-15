@@ -809,6 +809,9 @@ a.pkg_read:hover {
   float: left;
   margin-top:10px;
 }
+.dashboard-loader {
+  display:block !important;
+}
 .dash_icon-top{
   color: #e4e7ed;
   float: left;
