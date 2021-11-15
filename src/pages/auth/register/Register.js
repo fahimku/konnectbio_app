@@ -167,7 +167,7 @@ class Register extends React.Component {
       if (!this.state.password) {
         this.props.dispatch(authError("Password field is empty"));
       } else {
-        this.props.dispatch(authError("Passwords are not equal"));
+        this.props.dispatch(authError("The password and confirmation password do not match."));
       }
       setTimeout(() => {
         this.props.dispatch(authError());

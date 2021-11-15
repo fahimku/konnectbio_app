@@ -204,8 +204,15 @@ span.icon {
 .select-image label {
   margin-bottom: 0px;
   cursor: pointer;
+  width:100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px!important;
 }
 .select-image {
+  padding:0px !important;
   margin-bottom: 12px;
 }
 .settings-bottom {

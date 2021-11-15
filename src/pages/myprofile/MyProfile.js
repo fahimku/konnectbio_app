@@ -97,6 +97,8 @@ class MyProfile extends React.Component {
           });
       } else {
         this.setState({cancelDefaultImage: true});
+        this.setState({setDefaultImage: false});
+        this.setState({disabled: true});
       }
     });
   };
@@ -128,6 +130,7 @@ class MyProfile extends React.Component {
   };
 
   setDefaultImage = () => {
+    this.setState({cancelDefaultImage: false});
     this.setState({setDefaultImage: true});
     this.setState({disabled: false});
   };

@@ -12,6 +12,7 @@ export const history = createBrowserHistory({
 });
 
 class ChangePassword extends React.Component {
+
   state = {
     loading: false,
     pass_modal: false,
@@ -25,7 +26,6 @@ class ChangePassword extends React.Component {
       .then((response) => {
         this.setState({loading: false});
         let passwordResponse = response.data;
-
         toast.success(passwordResponse.message);
         history.push("/logout");
       })
@@ -134,13 +134,6 @@ class ChangePassword extends React.Component {
                                 Save
                               </Button>
                             )}
-                            {/* <Button
-                              type="button"
-                              color="default"
-                              className="select-image"
-                            >
-                              Cancel
-                            </Button> */}
                           </div>
                         </div>
                       </div>

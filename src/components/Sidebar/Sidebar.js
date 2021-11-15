@@ -138,7 +138,7 @@ class Sidebar extends React.Component {
 
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Campaigns"
+                header="Affiliate"
                 link="/app/campaign"
                 isHeader
                 iconElement={<span className="glyphicon glyphicon-bullhorn"></span>}
