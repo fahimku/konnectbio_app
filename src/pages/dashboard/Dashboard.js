@@ -149,6 +149,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/linkinbio");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
@@ -173,6 +176,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/linkinbio-shop");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
@@ -200,6 +206,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/my/links");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
@@ -221,6 +230,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/analysis");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
@@ -242,6 +254,9 @@ export default function Dashboard(props) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <a
+                      onClick={() => {
+                        props.history.push("/app/account/categories");
+                      }}
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
