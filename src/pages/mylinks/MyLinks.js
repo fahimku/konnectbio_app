@@ -150,6 +150,7 @@ class MyLinks extends React.Component {
         this.setState({loading: false});
       })
       .catch((err) => {
+        this.setState({loading: false});
         toast.error(err.response.data.message);
         console.log(err.response.data.message);
       });
