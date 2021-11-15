@@ -143,7 +143,9 @@ class SummaryDataComponent extends React.Component {
                       <div className="col-12 count-box">
                         <h5 className="count-title">Engagement</h5>
                         <h3 className="count">
-                          {data.ctr === null ? "-" : twodecimalplace(data.ctr)}%
+                          {data.ctr === null || data.ctr === 0
+                            ? "0%"
+                            : twodecimalplace(data.ctr) + "%"}
                         </h3>
                       </div>
                       <div className="col-12 count-box mb-0">

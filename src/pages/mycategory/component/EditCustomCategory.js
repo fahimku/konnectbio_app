@@ -168,25 +168,6 @@ class EditCustomCategory extends React.Component {
       </Modal>
     );
   };
-  // fetchSingleCategory = async (id) => {
-  //   await axios
-  //     .put(`/customcategory/revise/${id}`)
-  //     .then((response) => {
-  //       const selectCategories = [];
-  //       const myCustomCategories = response.data.message;
-  //       myCustomCategories.map(({ category_id, category_name, image_url }) => {
-  //         return selectCategories.push({
-  //           value: category_id,
-  //           label: category_name,
-  //           image: image_url,
-  //         });
-  //       });
-  //       this.setState({ myCustomCategory: selectCategories });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
 
   render() {
     return (
