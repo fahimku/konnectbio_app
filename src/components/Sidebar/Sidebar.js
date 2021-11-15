@@ -91,7 +91,7 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Dashboard"
-                link="/app/dashba"
+                link="/app/dashboard"
                 isHeader
                 iconElement={
                   <span className="glyphicon glyphicon-dashboard"></span>

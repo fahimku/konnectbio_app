@@ -1,6 +1,7 @@
 {
-  "name": "dashboard",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./Dashboard.js"
-}
+    "name": "Home",
+    "version": "0.0.0",
+    "main": "./Home.js",
+    "private": true
+  }
+  

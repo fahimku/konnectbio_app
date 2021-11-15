@@ -55,8 +55,7 @@ import Charts from "../../pages/charts";
 import ApexCharts from "../../pages/charts/apex";
 import Echarts from "../../pages/charts/echarts";
 import HighCharts from "../../pages/charts/highcharts";
-import DashboardAnalytics from "../../pages/analytics";
-import Dashboard from "../../pages/dashboard";
+
 import UserFormPage from "../Users/form/UsersFormPage";
 import UserListPage from "../Users/list/UsersListPage";
 import UserViewPage from "../Users/view/UsersViewPage";
@@ -90,7 +89,7 @@ import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
 import AccountSetup from "../../pages/accountsetup/AccountSetup";
 // import Payment from "../../pages/payment/payment";
-import Home from "../../pages/home/Home";
+import Dashboard from "../../pages/dashboard/Dashboard";
 import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
@@ -214,21 +213,13 @@ class Layout extends React.Component {
                           this.props.history.push("/connect");
                         }}
                       />
-                      <Route
-                        path="/app/main/dashboard"
-                        exact
-                        component={Dashboard}
-                      />
+              
                       <Route
                         path="/app/main/widgets"
                         exact
                         component={Widgets}
                       />
-                      <Route
-                        path="/app/main/analytics"
-                        exact
-                        component={DashboardAnalytics}
-                      />
+               
                       <Route
                         path="/app/edit_profile"
                         exact
@@ -533,7 +524,7 @@ class Layout extends React.Component {
 
                       {/* <Route path="/app/payment" exact component={Payment} /> */}
                       <Route path="/app/my/links" exact component={MyLinks} />
-                      <Route path="/app/home" exact component={Home} />
+                      <Route path="/app/dashboard" exact component={Dashboard} />
                     </Switch>
                   </Router>
                 </CSSTransition>
