@@ -127,7 +127,9 @@ export default function ScreenButtons(props) {
         ) : (
           <Button
             disabled={disabled}
-            onClick={uploadImage}
+            onClick={() => {
+              uploadImage();
+            }}
             type="button"
             color="default"
             className="select-image"
@@ -136,7 +138,9 @@ export default function ScreenButtons(props) {
           </Button>
         )}
         <Button
-          onClick={clearImage}
+          onClick={() => {
+            clearImage();
+          }}
           type="button"
           color="default"
           className="select-image"
