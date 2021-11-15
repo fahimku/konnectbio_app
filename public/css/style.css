@@ -830,6 +830,9 @@ a.pkg_read:hover {
 .border-r{
   border-right: 1px solid #e4e7ed!important;
 }
+.dsh-mid .text-muted, .dsh-mid2 .text-muted{
+  display: none;
+}
 /* Dashboard Style End Here */
 
 

@@ -140,7 +140,7 @@ export default function Dashboard(props) {
           </div>
         </div>
 
-        <div className="dah-mid2 dashboard_inr row">
+        <div className="dsh-mid2 dashboard_inr row">
           <div className="dashboard_col col-md-4">
             <div className="dash_block">
               <div className="dash_content">
