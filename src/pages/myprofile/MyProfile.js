@@ -96,9 +96,9 @@ class MyProfile extends React.Component {
             toast.error(err.response.data.message);
           });
       } else {
-        this.setState({ cancelDefaultImage: true });
+        this.setState({cancelDefaultImage: true});
         this.setState({setDefaultImage: false});
-        this.setState({ disabled:true})
+        this.setState({disabled: true});
       }
     });
   };
@@ -130,7 +130,7 @@ class MyProfile extends React.Component {
   };
 
   setDefaultImage = () => {
-    this.setState({ cancelDefaultImage: false });
+    this.setState({cancelDefaultImage: false});
     this.setState({setDefaultImage: true});
     this.setState({disabled: false});
   };

@@ -6,7 +6,6 @@ import axios from "axios";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 export default function ScreenButtons(props) {
-
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [imageFiles, setImageFiles] = useState([]);
@@ -25,7 +24,6 @@ export default function ScreenButtons(props) {
       clearImage();
     }
   }, [props.cancelDefaultImage]);
-
 
   const onChangeInputImage = (e) => {
     const files = [];
@@ -77,9 +75,8 @@ export default function ScreenButtons(props) {
   // console.log('testing');
   // console.log(imageFiles.length);
   // console.log(props.setDefaultImage);
- 
+
   return (
-   
     <div className="dp_cont">
       <span>
         {imageFiles.length > 0 && !props.setDefaultImage ? (
