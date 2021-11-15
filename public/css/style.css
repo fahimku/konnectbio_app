@@ -201,6 +201,7 @@ span.icon {
   display: block !important;
   margin: 0px !important;
 }
+
 .select-image label {
   margin-bottom: 0px;
   cursor: pointer;
@@ -211,6 +212,7 @@ span.icon {
   align-items: center;
   padding: 10px 10px!important;
 }
+
 .select-image {
   padding:0px !important;
   margin-bottom: 12px;

@@ -84,7 +84,6 @@ class MyProfile extends React.Component {
             this.setState({disabled: true});
             let imageResponse = response.data;
             toast.success(imageResponse.message);
-            // setImageFiles([]);
             const userInformation = localStorage.getItem("userInfo");
             const parseUserInformation = JSON.parse(userInformation);
             parseUserInformation.menu = imageResponse.data;
@@ -331,6 +330,9 @@ class MyProfile extends React.Component {
                     <ScreenButton
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
+                      setImageDefault={() => {
+                        this.setState({setDefaultImage:false})
+                      }}
                       defaultImage="https://cdn.konnect.bio/menu/profile.jpg"
                       name="Profile"
                       key={0}
@@ -339,6 +341,9 @@ class MyProfile extends React.Component {
                     <ScreenButton
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
+                      setImageDefault={() => {
+                        this.setState({setDefaultImage:false})
+                      }}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
                       name="All Posts"
                       key={1}
@@ -347,6 +352,9 @@ class MyProfile extends React.Component {
                     <ScreenButton
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
+                      setImageDefault={() => {
+                        this.setState({setDefaultImage:false})
+                      }}
                       defaultImage="https://cdn.konnect.bio/menu/links.jpg"
                       name="Links"
                       key={2}
@@ -355,6 +363,9 @@ class MyProfile extends React.Component {
                     <ScreenButton
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
+                      setImageDefault={() => {
+                        this.setState({setDefaultImage:false})
+                      }}
                       defaultImage="https://cdn.konnect.bio/menu/coupon.PNG"
                       name="Coupons"
                       key={3}

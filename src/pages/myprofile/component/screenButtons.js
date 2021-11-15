@@ -26,6 +26,7 @@ export default function ScreenButtons(props) {
   }, [props.cancelDefaultImage]);
 
   const onChangeInputImage = (e) => {
+    props.setImageDefault(true);
     const files = [];
     const reader = new FileReader();
     files.push(e.target.files[0]);
@@ -72,9 +73,6 @@ export default function ScreenButtons(props) {
     setImageFiles([]);
     setUserImage(userInfo.menu[props.id].image_url);
   };
-  // console.log('testing');
-  // console.log(imageFiles.length);
-  // console.log(props.setDefaultImage);
 
   return (
     <div className="dp_cont">
@@ -143,7 +141,7 @@ export default function ScreenButtons(props) {
           color="default"
           className="select-image"
         >
-          Cancel
+          <label>Cancel</label>
         </Button>
       </div>
     </div>
