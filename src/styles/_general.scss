@@ -252,3 +252,84 @@ h1 small {
 .affiliate-page .image-post-box {
   padding: 0px;
 }
+
+.main-carousel .circles {
+  border-radius: 50% !important;
+  border: 1px solid #ccc;
+  padding: 2px;
+  width: 65px;
+  height: 65px;
+}
+.main-carousel span {
+  display: block;
+  padding-top: 0.3rem;
+  font-weight: 400;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.main-carousel .carousel-items {
+  text-align: center;
+}
+.react-multiple-carousel__arrow {
+  min-height: 100% !important;
+  min-width: auto !important;
+}
+.react-multiple-carousel__arrow--right {
+  right: calc(0% + 1px) !important;
+  background: none !important;
+}
+.react-multiple-carousel__arrow--left {
+  left: calc(0% + 1px) !important;
+  background: none !important;
+}
+.react-multiple-carousel__arrow::before {
+  color: #ccc !important;
+}
+
+.main-carousel .carousel-items a {
+  text-transform: capitalize;
+  font-weight: 600;
+  color: #000;
+}
+.main-carousel .carousel-items a:hover {
+  color: #222;
+}
+@media screen and (max-width: 768px) {
+  .react-multi-carousel-item {
+    text-align: center;
+    word-break: break-word;
+    /* margin: 0px 15px; */
+  }
+  .react-multi-carousel-list span {
+    font-weight: 400;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* width: 75px; */
+    /* display: inline-block; */
+  }
+  .react-multi-carousel-list {
+    overflow-x: scroll !important;
+  }
+  .react-multi-carousel-list::-webkit-scrollbar {
+    display: none !important;
+  }
+  .react-multiple-carousel__arrow {
+    display: none;
+  }
+}
+@media (max-width: 500px) and (min-width: 280px) {
+  img.circles {
+    width: 56px;
+    height: 56px;
+  }
+  ul.react-multi-carousel-track {
+    transition: transform 10000s ease-in-out !important;
+  }
+
+  .react-multi-carousel-list span {
+    // width: 75px;
+  }
+}

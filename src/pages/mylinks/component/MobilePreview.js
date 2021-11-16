@@ -24,9 +24,9 @@ const MobilePreview = ({
         <Col key={i} xs="12">
           <div
             onClick={() => {
-              if (!myLinks[i].media_id)
+              if (!myLinks[i].post_id)
                 addNewLink(myLinks[i].caption, myLinks[i].redirected_url);
-              else fetchSingleLink(myLinks[i].media_id);
+              else fetchSingleLink(myLinks[i].post_id);
             }}
             className={style.links}
           >
