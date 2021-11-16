@@ -180,7 +180,7 @@ span.icon {
   border: 1px solid #ccc;
 }
 .cat-box span {
-  margin-left: 20px;
+  margin-left: 10px;
 }
 /* .file-profile {
   justify-content: space-between;
@@ -205,16 +205,16 @@ span.icon {
 .select-image label {
   margin-bottom: 0px;
   cursor: pointer;
-  width:100%;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 10px!important;
+  padding: 10px 10px !important;
 }
 
 .select-image {
-  padding:0px !important;
+  padding: 0px !important;
   margin-bottom: 12px;
 }
 .settings-bottom {
@@ -581,32 +581,32 @@ span.icon {
   margin-top: 3rem;
   position: relative;
 }
-.pricing-table-ifti .tab-content{
+.pricing-table-ifti .tab-content {
   clear: both !important;
 }
-.yearly_message{
+.yearly_message {
   float: right;
   width: 25%;
-  font-family: 'SegoeUIBold';
+  font-family: "SegoeUIBold";
   margin-bottom: 8px;
 }
-.promo_code_ift{
+.promo_code_ift {
   flex-direction: column;
   position: absolute;
   width: 36%;
 }
-.promo_msg{
-  font-family: 'SegoeUIBold';
+.promo_msg {
+  font-family: "SegoeUIBold";
   margin-bottom: 8px;
 }
-.promo_code_ift .promo_iner{
+.promo_code_ift .promo_iner {
   display: flex;
 }
-.promo_code_ift .promo_iner .form-control{
-  margin-right:20px;
+.promo_code_ift .promo_iner .form-control {
+  margin-right: 20px;
 }
-.promo_code_ift .promo_iner .btn{
-  margin-right:0 !important;
+.promo_code_ift .promo_iner .btn {
+  margin-right: 0 !important;
 }
 .pricing_tabs_ifti.nav-tabs {
   justify-content: space-between;
@@ -617,7 +617,7 @@ span.icon {
   border-radius: 30px;
   border: solid 1px #ccc;
   margin-bottom: 0 !important;
-  clear:both;
+  clear: both;
 }
 .pricing_tabs_ifti.nav-tabs > .nav-item {
   flex: 1 1;
@@ -753,15 +753,14 @@ a.pkg_read:hover {
   max-width: 70% !important;
 }
 
-
-
 /* Dashboard Style Start Here Iftikhar */
 
-.dashboard_main_ift.container{
+.dashboard_main_ift.container {
   padding-top: 50px;
   padding-bottom: 20px;
 }
-.dashboard_col.col-md-4, .dashboard_col.col-md-3 {
+.dashboard_col.col-md-4,
+.dashboard_col.col-md-3 {
   padding-right: 15px;
   padding-left: 15px;
 }
@@ -780,20 +779,21 @@ a.pkg_read:hover {
 .dash_c_inr {
   padding: 20px 0;
 }
-.dash_icon{
-  color:#125a96;
+.dash_icon {
+  color: #125a96;
   display: block;
   margin-bottom: 20px;
 }
-.dash_c_inr h4, .dash_c_pkg h4{
+.dash_c_inr h4,
+.dash_c_pkg h4 {
   font-size: 1.3rem;
   color: #575757;
   margin-bottom: 5px;
 }
-.pt-20{
-  padding-top:20px;
+.pt-20 {
+  padding-top: 20px;
 }
-.dash_c_inr .btn-rounded{
+.dash_c_inr .btn-rounded {
   border-radius: 50px;
   margin-right: 0 !important;
   padding: 9px 14px !important;
@@ -801,147 +801,135 @@ a.pkg_read:hover {
   background-color: #c8e2f8;
   color: #125a96;
 }
-.dashboard_col.col-md-3{
+.dashboard_col.col-md-3 {
   padding-right: 15px;
   padding-left: 15px;
 }
-.dsh_icons{
+.dsh_icons {
   float: left;
-  margin-top:10px;
+  margin-top: 10px;
 }
 .dashboard-loader {
-  display:block !important;
+  display: block !important;
 }
-.dash_icon-top{
+.dash_icon-top {
   color: #e4e7ed;
   float: left;
   margin-top: 0;
 }
-.imp-t{
+.imp-t {
   font-weight: 600;
   font-size: 1.57142857rem;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   line-height: 1.5;
   color: #575757;
 }
-.imp-tx{
-  font-size: .928571429rem;
+.imp-tx {
+  font-size: 0.928571429rem;
 }
-.text-body-bg-dark{
+.text-body-bg-dark {
   color: #e4e7ed;
 }
-.border-r{
-  border-right: 1px solid #e4e7ed!important;
+.border-r {
+  border-right: 1px solid #e4e7ed !important;
 }
-.dsh-mid .text-muted, .dsh-mid2 .text-muted{
+.dsh-mid .text-muted,
+.dsh-mid2 .text-muted {
   display: none;
 }
 /* Dashboard Style End Here */
-
-
 
 /* Profile Style Start Here Iftikhar */
 
 .profile-page .container {
   margin: 0;
 }
-.profile_container_main.container{
-  padding-left:0;
-  padding-right:0;
+.profile_container_main.container {
+  padding-left: 0;
+  padding-right: 0;
 }
-.profile_box_main.col-md-6{
+.profile_box_main.col-md-6 {
   padding-right: 15px;
-  padding-left:15px;
+  padding-left: 15px;
 }
-.dash_block_profile{
+.dash_block_profile {
   margin-bottom: 24px;
-  background-color: #FFF;
+  background-color: #fff;
   box-shadow: 0px 0px 2px 1px #e4e7ed;
   min-height: 610px;
 }
-.profile_password.profile_box_main .dash_block_profile{
+.profile_password.profile_box_main .dash_block_profile {
   min-height: 100px;
 }
-.dash_content_profile{
-  transition: opacity .2s ease-out;
+.dash_content_profile {
+  transition: opacity 0.2s ease-out;
   margin: 0 auto;
   padding: 20px;
   width: 100%;
   overflow-x: visible;
 }
-.dash_content_profile hr{
-  border-color:#dce4ec;
+.dash_content_profile hr {
+  border-color: #dce4ec;
 }
-.dash_content_profile h5{
+.dash_content_profile h5 {
   border-bottom: 1px solid #dce4ec;
   padding-bottom: 10px;
   margin-bottom: 15px;
 }
-.dp_cont{
+.dp_cont {
   display: flex;
   align-items: center;
   margin-bottom: 2.9rem;
 }
-.dp_cont.mb-5{
+.dp_cont.mb-5 {
   margin-bottom: 4rem !important;
 }
-.dp_cont span{
+.dp_cont span {
   width: 76px;
   height: 76px;
   position: relative;
   text-align: center;
 }
-.dp_cont span strong{
-  font-family: 'SegoeUIBold';
+.dp_cont span strong {
+  font-family: "SegoeUIBold";
   display: block;
   padding-top: 5px;
   position: absolute;
   width: 100%;
 }
-.dp_cont span img{
+.dp_cont span img {
   width: 76px;
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgb(126 125 125 / 40%);
 }
-.dp_buttons{
+.dp_buttons {
   margin-left: 20px;
-  width:100%;
-  display:flex;
+  width: 100%;
+  display: flex;
 }
-.dp_buttons button{
+.dp_buttons button {
   margin-bottom: 0;
-  width:100%;
+  width: 100%;
 }
-.dp_buttons button:last-child{
+.dp_buttons button:last-child {
   margin-right: 0 !important;
 }
-.dp_fields{
+.dp_fields {
   display: flex;
   flex-direction: column;
 }
-.dp_fields textarea.form-control{
-  height:266px;
+.dp_fields textarea.form-control {
+  height: 266px;
 }
-.pr-sv-btn{
+.pr-sv-btn {
   display: flex;
 }
-.pr-sv-btn button{
+.pr-sv-btn button {
   margin-bottom: 0;
 }
-.analytics-page .ant-picker-range{
-  width:100%;
-  display:flex !important;
+.analytics-page .ant-picker-range {
+  width: 100%;
+  display: flex !important;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /**Media Queries Iftikhar */

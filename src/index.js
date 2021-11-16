@@ -9,7 +9,7 @@ import axios from 'axios';
 import App from './components/App';
 import config from './config';
 import createRootReducer from './reducers';
-import { doInit } from './actions/auth';
+import { doInit,logoutUser } from './actions/auth';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -24,6 +24,17 @@ const token = localStorage.getItem('token');
 if (token) {
     axios.defaults.headers.common['Authorization'] = "Bearer " + token;
 }
+
+axios.interceptors.response.use(undefined, function (error) {
+  if (error.response.status === 401) {
+//    logoutUser();
+  window.location.href = '/logout';
+    // alert('test')
+  }
+  else {
+    return Promise.reject(error);
+  }
+});
 
 export const store = createStore(
   createRootReducer(history),
