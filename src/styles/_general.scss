@@ -232,3 +232,23 @@ h1 small {
   content: "\f054";
   font-family: "FontAwesome";
 }
+
+/*************/
+.affiliate-page {
+}
+.post-box .post-image {
+}
+.affiliate-page .post-image {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.affiliate-page .post-box {
+  max-height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: 0px 30px;
+}
+.affiliate-page .image-post-box {
+  padding: 0px;
+}
