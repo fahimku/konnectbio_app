@@ -238,7 +238,7 @@ class MyCategory extends React.Component {
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const SortableItem = SortableElement(({ value }) => (
-      <div key={value.value} className="cat-box col-sm-3 col-6">
+      <div key={value.value} className="cat-box col-sm-3 col-4">
         <img
           key={value.value}
           src={
@@ -249,7 +249,7 @@ class MyCategory extends React.Component {
           alt="cat-logo"
           className="img-fluid cat-image"
         />
-        <div>{value.label}</div>
+        <div className="cat-lable">{value.label}</div>
         {value.editable ? (
           <div className="action">
             <EditCustomCategory
@@ -280,66 +280,73 @@ class MyCategory extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="category-page">
+        <div className="profile-page category-page">
           <div
             className={
               this.props.className ? this.props.className : "container-fluid"
             }
           >
-            <div className="">
-              <div className="connections mt-5">
-                <div className="page-title">
-                  <h3>Category Setup</h3>
-                </div>
-                <div className="white-box mt-5">
-                  <h5 className="page-title line-heading">Current Plan</h5>
-                  <Row className="mt-4 align-items-center">
-                    <Col xl={2} md={4}>
-                      <div className="package_name">Current Plan:</div>
-                    </Col>
-                    <Col md={6} xl={6} lg={3}>
-                      <div className="package_detail">
-                        {userInfo1.package
-                          ? userInfo1.package.package_name
-                          : ""}
-                      </div>
-                    </Col>
-                    <Col md={5}></Col>
-                  </Row>
-                  <Row className="mt-4 align-items-center">
-                    <Col md={4} xl={2}>
-                      <div className="package_name">Categories Included: </div>
-                    </Col>
-                    <Col md={4} xl={3} lg={3}>
-                      <div className="package_detail">
-                        {userInfo1.package
-                          ? userInfo1.package.category_count
-                          : ""}
-                        {/* Change Plan to have more categories */}
-                      </div>
-                    </Col>
-                    <Col md={5}></Col>
-                  </Row>
-                  {userInfo1.package.package_name !== "Business Plus" ? (
-                    <Row className="mt-4 align-items-center">
-                      <Col md={6} xl={2}>
-                        <div className="package_name">
-                          Change plan to have more categories:
+            <div className="mt-4 row">
+              <div class="col-md-12">
+                <h4 class="page-title">Category Setup</h4>
+              </div>
+            </div>
+
+            <div className="profile_container_main container">
+              <div className="row-rev row">
+                <div className="profile_box_main col-md-4">
+                  <div className="dash_block_profile">
+                    <div className="dash_content_profile">
+                      <h5>Plan Detail</h5>
+                      <div className="category-box">
+                        <div className="category-count-row col-12">
+                          <h4 className="category-count-title">
+                            Current Plan:
+                          </h4>
+                          <h3 className="category-count-right">
+                            {userInfo1.package
+                              ? userInfo1.package.package_name
+                              : ""}
+                          </h3>
                         </div>
-                      </Col>
-                      <Col md={5} xl={3} lg={3}>
-                        <div className="package_detail">
-                          <Button
-                            variant="primary"
-                            className="btn-block"
-                            onClick={() => history.push("/app/account/setup")}
-                          >
-                            Upgrade
-                          </Button>
+                      </div>
+
+                      <div className="category-box">
+                        <div className="category-count-row col-12">
+                          <h4 className="category-count-title">
+                            Categories Included:{" "}
+                          </h4>
+                          <h3 className="category-count-right">
+                            {userInfo1.package
+                              ? userInfo1.package.category_count
+                              : ""}
+                          </h3>
                         </div>
-                      </Col>
-                    </Row>
-                  ) : null}
+                      </div>
+
+                      {userInfo1.package.package_name !== "Business Plus" ? (
+                        <div className="category-box">
+                          <div className="category-count-row col-12">
+                            <h4 className="category-count-title">
+                              Change plan to have more categories:
+                            </h4>
+                          </div>
+                          <div className="category-count-row col-12">
+                            
+                              <Button
+                                variant="primary"
+                                className="btn-block mr-0"
+                                onClick={() =>
+                                  history.push("/app/account/setup")
+                                }
+                              >
+                                Upgrade
+                              </Button>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
 
                 {/* <div className="white-box mt-5">
@@ -414,67 +421,74 @@ class MyCategory extends React.Component {
                   </Row>
                 </div> */}
 
-                <form onSubmit={this.handleSubmit} className="white-box">
-                  <h5 className="page-title line-heading">Select Categories</h5>
-                  <Row>
-                    <Col md={12} xl={7}>
-                      {/* <label>Select Category: </label> */}
-                      {this.state.saveCategories === "" ? null : (
-                        <Select
-                          isMulti={true}
-                          name="category"
-                          className="selectCustomization"
-                          options={this.state.myCategory}
-                          value={this.state.saveCategories}
-                          // value={MIGRATIONOPTIONS.filter(
-                          //   (option) => option.value === migration.status
-                          // )}
-                          placeholder="Select Category"
-                          onChange={(options, e) =>
-                            this.handleSelect(e, options)
-                          }
-                        />
-                      )}
-                      <span className="text-danger">
-                        {this.state.categoryError}
-                      </span>
-
-                      {this.state.saveCategories.length === 0 ? (
+                <div className="profile_box_main col-md-8">
+                  <div className="dash_block_profile">
+                    <div className="dash_content_profile">
+                      <form onSubmit={this.handleSubmit}>
+                        <h5>Select Categories</h5>
                         <Row>
-                          <span className="ml-4">No Category Selected</span>
-                        </Row>
-                      ) : (
-                        <SortableList
-                          items={this.state.saveCategories}
-                          onSortEnd={this.onSortEnd}
-                          axis="xy"
-                          lockToContainerEdges={true}
-                          lockOffset="0%"
-                          distance={1}
-                        />
-                      )}
-                    </Col>
-                  </Row>
+                          <Col md={12}>
+                            {/* <label>Select Category: </label> */}
+                            {this.state.saveCategories === "" ? null : (
+                              <Select
+                                isMulti={true}
+                                name="category"
+                                className="selectCustomization"
+                                options={this.state.myCategory}
+                                value={this.state.saveCategories}
+                                // value={MIGRATIONOPTIONS.filter(
+                                //   (option) => option.value === migration.status
+                                // )}
+                                placeholder="Select Category"
+                                onChange={(options, e) =>
+                                  this.handleSelect(e, options)
+                                }
+                              />
+                            )}
+                            <span className="text-danger">
+                              {this.state.categoryError}
+                            </span>
 
-                  <Row>
-                    <Col md={6} xl={4}></Col>
-                    <Col md={5} xl={3}>
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        className="category-btn btn-block"
-                        disabled={
-                          this.state.saveCategories.length &&
-                          !this.state.loading
-                            ? false
-                            : true
-                        }
-                      >
-                        Save
-                      </Button>
-                    </Col>
-                  </Row>
-                </form>
+                            {this.state.saveCategories.length === 0 ? (
+                              <Row>
+                                <span className="ml-4">
+                                  No Category Selected
+                                </span>
+                              </Row>
+                            ) : (
+                              <SortableList
+                                items={this.state.saveCategories}
+                                onSortEnd={this.onSortEnd}
+                                axis="xy"
+                                lockToContainerEdges={true}
+                                lockOffset="0%"
+                                distance={1}
+                              />
+                            )}
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col md={5} xl={3}>
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              className="category-btn btn-block"
+                              disabled={
+                                this.state.saveCategories.length &&
+                                !this.state.loading
+                                  ? false
+                                  : true
+                              }
+                            >
+                              Save
+                            </Button>
+                          </Col>
+                        </Row>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
