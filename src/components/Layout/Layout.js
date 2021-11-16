@@ -92,6 +92,7 @@ import AccountSetup from "../../pages/accountsetup/AccountSetup";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
+import Affiliate from "../../pages/affiliate/Affiliate";
 export const history = createBrowserHistory({
   forceRefresh: false,
 });
@@ -213,13 +214,13 @@ class Layout extends React.Component {
                           this.props.history.push("/connect");
                         }}
                       />
-              
+
                       <Route
                         path="/app/main/widgets"
                         exact
                         component={Widgets}
                       />
-               
+
                       <Route
                         path="/app/edit_profile"
                         exact
@@ -524,7 +525,12 @@ class Layout extends React.Component {
 
                       {/* <Route path="/app/payment" exact component={Payment} /> */}
                       <Route path="/app/my/links" exact component={MyLinks} />
-                      <Route path="/app/dashboard" exact component={Dashboard} />
+                      <Route
+                        path="/app/dashboard"
+                        exact
+                        component={Dashboard}
+                      />
+                      <Route path="/app/campaign" exact component={Affiliate} />
                     </Switch>
                   </Router>
                 </CSSTransition>
