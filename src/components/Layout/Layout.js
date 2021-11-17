@@ -530,7 +530,7 @@ class Layout extends React.Component {
                         exact
                         component={Dashboard}
                       />
-                      <Route path="/app/campaign" exact component={Affiliate} />
+                      {/* <Route path="/app/campaign" exact component={Affiliate} /> */}
                     </Switch>
                   </Router>
                 </CSSTransition>
