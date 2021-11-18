@@ -101,6 +101,7 @@ class AffiliateCreateCampaign extends React.Component {
         console.log(err, "err");
       });
   };
+
   affToggleModal = () => {
     const { aff_modal } = this.state;
     this.setState({
