@@ -42,14 +42,13 @@ class Affiliate extends React.Component {
       });
     }
   }
-
   render() {
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="tab-section">
-          <div className="affiliate_p_col">
+          <Col md="12" xs="12">
             <Row>
-              <div className="affiliate_in_col">
+              <Col xs="12" className="mb-5">
                 <Nav tabs className={`${s.coloredNav}`}>
                   <NavItem>
                     <NavLink
@@ -101,7 +100,7 @@ class Affiliate extends React.Component {
                   </NavItem>
                 </Nav>
 
-                <TabContent className="affiliate_tab_ift" activeTab={this.state.activeTab}>
+                <TabContent className="mb-lg" activeTab={this.state.activeTab}>
                   <TabPane tabId="dashboard">
                     <AffiliateDashboard username={this.state.username} />
                   </TabPane>
@@ -118,9 +117,9 @@ class Affiliate extends React.Component {
                     <AffiliateAccounting username={this.state.username} />
                   </TabPane>
                 </TabContent>
-              </div>
+              </Col>
             </Row>
-          </div>
+          </Col>
         </Row>
       </div>
     );
