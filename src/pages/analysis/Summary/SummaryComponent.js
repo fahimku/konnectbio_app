@@ -18,4 +18,5 @@ class SummaryComponent extends React.Component {
     );
   }
 }
+
 export default SummaryComponent;

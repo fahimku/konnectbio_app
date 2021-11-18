@@ -17,6 +17,7 @@ class AffiliateCreateCampaign extends React.Component {
     affData: "",
     countries: "",
     affDataLoading: false,
+    id: "",
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -91,16 +92,18 @@ class AffiliateCreateCampaign extends React.Component {
       });
   };
   categoryFilter = async (id) => {
-    await axios
-      .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
-      .then((response) => {
-        const allpost = response.data.message.result.data;
-        this.setState({ data: allpost });
-      })
-      .catch((err) => {
-        console.log(err, "err");
-      });
+    this.setState({ id: id });
+    // await axios
+    //   .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
+    //   .then((response) => {
+    //     const allpost = response.data.message.result.data;
+    //     this.setState({ data: allpost });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err, "err");
+    //   });
   };
+
   affToggleModal = () => {
     const { aff_modal } = this.state;
     this.setState({
@@ -155,7 +158,10 @@ class AffiliateCreateCampaign extends React.Component {
                     allCategory={this.state.allCategory}
                     categoryFilter={this.categoryFilter}
                   />
-                  <PostGallery />
+                  <PostGallery
+                    selectPost={this.selectPost}
+                    id={this.state.id}
+                  />
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">

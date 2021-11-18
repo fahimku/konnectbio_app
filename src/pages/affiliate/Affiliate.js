@@ -1,18 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import s from "./Affiliate.module.scss";
-import {
-  Row,
-  Col,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import {Row, Col, TabContent, TabPane, Nav, NavItem, NavLink} from "reactstrap";
 import classnames from "classnames";
-import { createBrowserHistory } from "history";
+import {createBrowserHistory} from "history";
 import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
@@ -23,18 +15,18 @@ export const history = createBrowserHistory({
 });
 
 class Affiliate extends React.Component {
+ 
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
-    let user_id = userInfo.user_id;
     super(props);
     this.toggleTabs = this.toggleTabs.bind(this);
-
     this.state = {
       activeTab: "dashboard",
       username: username,
     };
   }
+ 
   toggleTabs(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({

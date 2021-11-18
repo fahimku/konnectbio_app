@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react'
-import { connect } from 'react-redux'
-import * as postAct from "../../../../actions/posts"
-import InfiniteScroll from 'react-infinite-scroller';
+import React, {useEffect, useRef} from "react";
+import {connect} from "react-redux";
+import * as postAct from "../../../../actions/posts";
+import InfiniteScroll from "react-infinite-scroller";
 
-function PostGallery({ getPosts, posts }) {
+function PostGallery({ getPosts, posts,id ,selectPost,clearPost}) {
+    console.log("dsf",id)
     useEffect(() => {
-        getPosts(1)
-    }, [])
+        clearPost()
+        getPosts((posts.next?.page)?posts.next.page:1,id)
+    }, [id])
     return (
         <>
             {posts.data.length>0?(
@@ -15,7 +17,7 @@ function PostGallery({ getPosts, posts }) {
                 <InfiniteScroll
                 pageStart={0}
                 className="af-rm-mn row"
-                loadMore={()=>getPosts(posts.next?.page)}
+                loadMore={()=>getPosts(posts.next?.page,id)}
                 hasMore={(posts.next?.page)?true:false}
                 loader={
                     <div className="col-md-12">
@@ -33,7 +35,7 @@ function PostGallery({ getPosts, posts }) {
                         <div className="image-post-box-aff" key={i}>
                             <div className="image-post-box-aff-inr">
                                 <div
-                                    onClick={() => this.selectPost(item.post_id)}
+                                    onClick={() => selectPost(item.post_id)}
                                     className="image-post-box-aff-inr-inr"
                                 >
                                     {item.media_type === "VIDEO" ? (
@@ -68,8 +70,8 @@ function PostGallery({ getPosts, posts }) {
     )
 }
 
-function mapStateToProps({ posts }) {
-    return { posts }
+function mapStateToProps({posts}) {
+  return {posts};
 }
 
-export default connect(mapStateToProps, postAct)(PostGallery)
+export default connect(mapStateToProps, postAct)(PostGallery);

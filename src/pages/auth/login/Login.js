@@ -106,16 +106,16 @@ class Login extends React.Component {
   render() {
     return (
       <div className="auth-page">
-        <div class="login_header">
-          <div class="header_inr group">
-            <div class="header_inr_left">
-              <div class="konnect_logo">
+        <div className="login_header">
+          <div className="header_inr group">
+            <div className="header_inr_left">
+              <div className="konnect_logo">
                 <img className="logo" src={logo} alt="logo" />
               </div>
-              <h3 class="kon_pg_title">Sign In</h3>
+              <h3 className="kon_pg_title">Sign In</h3>
             </div>
-            <div class="header_inr_right">
-              <div class="create_account">
+            <div className="header_inr_right">
+              <div className="create_account">
                 <span>New to KonnectBio?</span>&nbsp;
                 <button
                   className="btn btn-link"
@@ -131,7 +131,7 @@ class Login extends React.Component {
         </div>
 
         <div className="custome_container_auth_ift">
-          <div class="custome_container_auth_inr">
+          <div className="custome_container_auth_inr">
             <Widget
               className="custome_login custome_signup"
               title={<h3 className="mt-0">Sign In</h3>}
@@ -197,7 +197,7 @@ class Login extends React.Component {
                 Forgot password?
               </span>
             </Widget>
-            <div class="login_right signup_right">
+            <div className="login_right signup_right">
               <h3>Maximize Possibilities with KonnectBio</h3>
             </div>
           </div>

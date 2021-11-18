@@ -14,6 +14,7 @@ const twodecimalplace = (value = 0) => {
     return parseFloat(value).toFixed(2);
   }
 };
+
 const numberWithCommas = (x) => {
   if (x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
