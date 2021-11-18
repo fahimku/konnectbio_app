@@ -3,7 +3,6 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { NavLink } from "react-router-dom";
 import Post from "../../../../images/Post2.jpg";
-import PostGallery from "./PostGallery";
 
 class CarouselComponent extends React.Component {
   state = {
@@ -18,11 +17,11 @@ class CarouselComponent extends React.Component {
       },
       desktop: {
         breakpoint: { max: 3000, min: 1024 },
-        items: 6,
+        items: 4,
       },
       tablet: {
         breakpoint: { max: 1024, min: 464 },
-        items: 5,
+        items: 4,
       },
       mobile: {
         breakpoint: { max: 464, min: 0 },
@@ -92,7 +91,6 @@ class CarouselComponent extends React.Component {
             ))}
           </Carousel>
         )}
-        <PostGallery/>
       </React.Fragment>
     );
   }

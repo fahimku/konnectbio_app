@@ -14,11 +14,11 @@ function PostGallery({ getPosts, posts }) {
                 className="post-box no-gutters">
                 <InfiniteScroll
                 pageStart={0}
-                className="row"
+                className="af-rm-mn row"
                 loadMore={()=>getPosts(posts.next?.page)}
                 hasMore={(posts.next?.page)?true:false}
                 loader={
-                    <div className="col col-12 image-post-box">
+                    <div className="col-md-12">
                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 5 }}>
                             <i
                             className="la la-spinner la-spin"
@@ -30,30 +30,32 @@ function PostGallery({ getPosts, posts }) {
                 useWindow={false}
                         >
                 {posts.data.map((item,i) => (
-                        <div className="col col-4 image-post-box" key={i}>
-                            <div
-                                onClick={() => this.selectPost(item.post_id)}
-                                className="mobile_box_inr link"
-                            >
-                                {item.media_type === "VIDEO" ? (
-                                    <video
-                                        id={`post-video-${item.post_id}`}
-                                        autoPlay
-                                        controls
-                                        controlsList="nodownload"
-                                    >
-                                        <source
+                        <div className="image-post-box-aff" key={i}>
+                            <div className="image-post-box-aff-inr">
+                                <div
+                                    onClick={() => this.selectPost(item.post_id)}
+                                    className="image-post-box-aff-inr-inr"
+                                >
+                                    {item.media_type === "VIDEO" ? (
+                                        <video
+                                            id={`post-video-${item.post_id}`}
+                                            autoPlay
+                                            controls
+                                            controlsList="nodownload"
+                                        >
+                                            <source
+                                                src={item.media_url}
+                                                type="video/mp4"
+                                            ></source>
+                                        </video>
+                                    ) : (
+                                        <img
                                             src={item.media_url}
-                                            type="video/mp4"
-                                        ></source>
-                                    </video>
-                                ) : (
-                                    <img
-                                        src={item.media_url}
-                                        alt="post-img"
-                                        className="post-image"
-                                    />
-                                )}
+                                            alt="post-img"
+                                            className="post-image"
+                                        />
+                                    )}
+                                </div>
                             </div>
                         </div>
                 ))}

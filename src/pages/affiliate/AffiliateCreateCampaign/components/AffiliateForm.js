@@ -4,8 +4,13 @@ import Formsy from "formsy-react";
 import { Button } from "reactstrap";
 import moment from "moment";
 import { Select } from "antd";
+import Select2 from "react-select";
+import { toast } from "react-toastify";
 import InputValidation from "../../../../components/InputValidation";
 import { DatePicker } from "antd";
+import axios from "axios";
+import Loader from "../../../../components/Loader/Loader";
+import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -17,12 +22,19 @@ class AffiliateForm extends React.Component {
     this.state = {
       username: this.props.username,
       campaign_name: "",
-      campaignType: "",
+      campaign_type: "",
       pay_per_hundred: "",
       budget: "",
       startDate: moment(),
       endDate: moment().add(30, "days"),
-      inputList: [{ firstName: "", lastName: "" }],
+      inputList: [{ country: "", state: "", city: "", zip: "" }],
+      loading: false,
+      country: "",
+      state: "",
+      city: "",
+      zip: "",
+      cities: "",
+      stateList: "",
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -48,25 +60,99 @@ class AffiliateForm extends React.Component {
     const { value } = e.target;
 
     this.setState({
-      campaignType: value,
+      campaign_type: value,
     });
   };
-  changeCountry = (e, options) => {
-    this.setState({ country: options });
+  changeCountry = (e, options, name, index) => {
+    const list = [...this.state.inputList];
+    list[index][name] = options.value;
+    this.setState({ country: options, inputList: list });
+    this.getState(options.value);
   };
-  saveCampaign = (id) => {
-    console.log(this.state.campaign_name, "campaign_name ");
-    console.log(this.state.campaignType, "campaignType ");
-    console.log(this.state.budget, "budget ");
-    console.log(this.state.pay_per_hundred, "pay_per_hundred ");
+  changeState = (e, options, name, index) => {
+    const list = [...this.state.inputList];
+    list[index][name] = options.value;
+    this.setState({ state: options, inputList: list });
+    this.getCities(options.countryCode, options.value);
   };
-  // handle input change
-  handleInputChange = (e, index) => {
+  changeCity = (e, options, name, index) => {
+    const list = [...this.state.inputList];
+    list[index][name] = options.value;
+    this.setState({ city: options, inputList: list });
+  };
+  getState = async (countryCode) => {
+    await axios
+      .post(`/common/receive/states`, { country_code: countryCode })
+      .then((response) => {
+        const selectState = [];
+        const states = response.data.message;
+        states.map(({ name, countryCode, isoCode }) => {
+          return selectState.push({
+            value: isoCode,
+            label: name,
+            countryCode: countryCode,
+          });
+        });
+        this.setState({ stateList: selectState });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  getCities = async (countryCode, stateCode) => {
+    await axios
+      .post(`/common/receive/cities`, {
+        country_code: countryCode,
+        state_code: stateCode,
+      })
+      .then((response) => {
+        const selectCities = [];
+        const cities = response.data.message;
+        cities.map(({ name }) => {
+          return selectCities.push({
+            value: name,
+            label: name,
+          });
+        });
+        this.setState({ cities: selectCities });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  saveCampaign = async (id) => {
+    this.setState({ loading: true });
+    await axios
+      .post(`/campaigns/reserve`, {
+        post_id: id,
+        campaign_name: this.state.campaign_name,
+        campaign_type: this.state.campaign_type,
+        redirected_url: this.props.affData.redirected_url,
+        media_url: this.props.affData.media_url,
+        category_id: this.props.affData.categories[0].category_id,
+        budget: parseInt(this.state.budget),
+        pay_per_hundred: parseInt(this.state.pay_per_hundred),
+        traffic: 100,
+        demographics: this.state.inputList,
+        start_date: this.state.startDate,
+        end_date: this.state.endDate,
+      })
+      .then((response) => {
+        toast.success("Your Campaign is Created Successfully");
+        this.setState({ loading: false });
+        console.log(response.data.message);
+      })
+      .catch((err) => {
+        this.setState({ loading: false });
+        toast.error("Something went wrong");
+      });
+  };
+  // handle Zip input change
+  handleZipChange = (e, index) => {
     const { name, value } = e.target;
     const list = [...this.state.inputList];
     list[index][name] = value;
     this.setState({ inputList: list });
-    // setInputList(list);
   };
 
   // handle click event of the Remove button
@@ -80,24 +166,29 @@ class AffiliateForm extends React.Component {
   // handle click event of the Add button
   handleAddClick = () => {
     this.setState({
-      inputList: [...this.state.inputList, { firstName: "", lastName: "" }],
+      inputList: [
+        ...this.state.inputList,
+        { country: "", state: "", city: "", zip: "" },
+      ],
     });
-    // setInputList([...inputList, { firstName: "", lastName: "" }]);
   };
 
   render() {
     const { affData } = this.props;
     let category = affData.categories ? affData.categories[0].category_id : [];
-    console.log(this.props.countries, "countries");
     return (
       <React.Fragment>
-        <Formsy.Form>
+        <Formsy.Form
+          onValidSubmit={() =>
+            this.saveCampaign(affData.post_id, affData.redirected_url)
+          }
+        >
           <div className="image-wrapper">
             <div className="image-box">
               <img src={`${affData.media_url}`} alt="media_url" />
             </div>
             <div className="image-edit-links">
-              <div className="">
+              <div className="campaign-name">
                 <span>Campaign Name</span>
                 <InputValidation
                   className=""
@@ -238,178 +329,183 @@ class AffiliateForm extends React.Component {
               </div>
             </div>
           </div>
-          <div className="demographic-section">
-            <div className="row">
-              <div className="col-md-2">
-                <span>Pay per 100 {this.state.campaignType}</span>
-              </div>
-              <div className="col-md-3">
-                <div class="mb-2 input-group">
-                  <span class="input-group-text">$</span>
-                  <input
-                    type="number"
-                    id="pay_per_hundred"
-                    name="pay_per_hundred"
-                    class="form-control"
-                    onChange={(evt) => {
-                      this.ppClick(evt.target.value);
-                    }}
-                    autoComplete="off"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-2">
-                <span>Budget</span>
-              </div>
-              <div className="col-md-3">
-                <div class="mb-2 input-group">
-                  <span class="input-group-text">$</span>
-                  <input
-                    type="number"
-                    id="budget"
-                    name="budget"
-                    class="form-control"
-                    onChange={(evt) => {
-                      this.budget(evt.target.value);
-                    }}
-                    autoComplete="off"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="">
-              {this.state.inputList.map((x, i) => {
-                return (
-                  <div className="row mt-3">
-                    <div className="col-md-2">
-                      <Select
-                        className="form-control"
-                        value={this.state.country}
-                        onChange={(options, e) =>
-                          this.changeCountry(e, options)
-                        }
-                        placeholder="Select Country"
-                        style={{ width: "100%" }}
-                        options={this.props.countries}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      <Select
-                        className="form-control"
-                        value={this.state.country}
-                        onChange={(options, e) => this.changeGender(e, options)}
-                        placeholder="Select state"
-                        style={{ width: "100%" }}
-                        // options={genderList}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      <Select
-                        className="form-control"
-                        value={this.state.country}
-                        onChange={(options, e) => this.changeGender(e, options)}
-                        placeholder="Select City"
-                        style={{ width: "100%" }}
-                        // options={genderList}
-                      />
-                    </div>
-                    <div className="col-md-2">
-                      <input
-                        className="form-control"
-                        name="lastName"
-                        placeholder="Zip"
-                        value={x.lastName}
-                        onChange={(e) => this.handleInputChange(e, i)}
-                      />
-                    </div>
-
-                    {/* <input
-                      name="firstName"
-                      placeholder="Enter First Name"
-                      value={x.firstName}
-                      onChange={(e) => this.handleInputChange(e, i)}
-                    />
-                    <input
-                      className="ml10"
-                      name="lastName"
-                      placeholder="Enter Last Name"
-                      value={x.lastName}
-                      onChange={(e) => this.handleInputChange(e, i)}
-                    /> */}
-
-                    <div className="col-md-4">
-                      {this.state.inputList.length !== 1 && (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => this.handleRemoveClick(i)}
-                        >
-                          Remove
-                        </button>
-                      )}
-                      {this.state.inputList.length - 1 === i && (
-                        <button
-                          className="btn btn-primary ml-2"
-                          onClick={this.handleAddClick}
-                        >
-                          Add
-                        </button>
-                      )}
-                    </div>
+          {this.state.campaign_type !== "" ? (
+            <>
+              <div className="demographic-section">
+                <div className="row">
+                  <div className="col-md-2">
+                    <span>Budget</span>
                   </div>
-                );
-              })}
-              {/* <div style={{ marginTop: 20 }}>
-                {JSON.stringify(this.state.inputList)}
-              </div> */}
-            </div>
-            {/* <div className="row">
-              <div className="col-md-2">
-                <span>Gender</span>
-              </div>
-              <div className="col-md-3">
-                <Select
-                  className="form-control"
-                  value={this.state.gender}
-                  onChange={(options, e) => this.changeGender(e, options)}
-                  placeholder="Select Gender"
-                  options={genderList}
-                />
-              </div>
-              
-            </div> */}
-          </div>
-          <div className="edit_button_main pane-button">
-            <Button
-              className="custom_btns_ift"
-              color="primary"
-              onClick={(ev) =>
-                this.saveCampaign(affData.post_id, affData.redirected_url)
-              }
-            >
-              &nbsp;Review&nbsp;
-            </Button>
+                  <div className="col-md-3">
+                    <InputNumberValidation
+                      type="number"
+                      id="budget"
+                      name="budget"
+                      onChange={(evt) => {
+                        this.budget(evt.target.value);
+                      }}
+                      required
+                    />
+                    {/* <div class="mb-2 input-group">
+                      <span class="input-group-text">$</span>
+                      <input
+                        type="number"
+                        id="budget"
+                        name="budget"
+                        class="form-control"
+                        onChange={(evt) => {
+                          this.budget(evt.target.value);
+                        }}
+                        autoComplete="off"
+                        
+                      />
+                    </div> */}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-2">
+                    <span>Pay per 100 {this.state.campaign_type}</span>
+                  </div>
+                  <div className="col-md-3">
+                    <InputNumberValidation
+                      type="number"
+                      id="pay_per_hundred"
+                      name="pay_per_hundred"
+                      onChange={(evt) => {
+                        this.ppClick(evt.target.value);
+                      }}
+                      required
+                    />
+                  </div>
+                </div>
 
-            <Button
-              className="custom_btns_ift"
-              color="primary"
-              onClick={() => {
-                this.selectPost(false, "");
-                this.closeModel(true);
-              }}
-            >
-              &nbsp;Cancel&nbsp;
-            </Button>
+                <div className="country-select">
+                  {this.state.inputList.map((x, i) => {
+                    return (
+                      <div className="row mt-3">
+                        <div className="col-md-2">
+                          <span>Country {i + 1}</span>
+                          <Select2
+                            name="country"
+                            // value={x.country}
+                            onChange={(options, e) =>
+                              this.changeCountry(e, options, "country", i)
+                            }
+                            placeholder="Select Country"
+                            style={{ width: "100%" }}
+                            options={this.props.countries}
+                            showSearch
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <span>State {i + 1}</span>
+                          <Select2
+                            name="state"
+                            // value={x.state}
+                            onChange={(options, e) =>
+                              this.changeState(e, options, "state", i)
+                            }
+                            placeholder="Select State"
+                            style={{ width: "100%" }}
+                            options={this.state.stateList}
+                            isDisabled={
+                              this.state.stateList === "" ? true : false
+                            }
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <span>City {i + 1}</span>
+                          <Select2
+                            name="city"
+                            // value={x.city}
+                            onChange={(options, e) =>
+                              this.changeCity(e, options, "city", i)
+                            }
+                            placeholder="Select City"
+                            style={{ width: "100%" }}
+                            options={this.state.cities}
+                            isDisabled={this.state.cities === "" ? true : false}
+                          />
+                        </div>
+                        <div className="col-md-2">
+                          <span>Zip {i + 1}</span>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="zip"
+                            placeholder="Zip"
+                            value={x.zip}
+                            onChange={(e) => this.handleZipChange(e, i)}
+                          />
+                        </div>
 
-            <Button
-              className="custom_btns_ift"
-              color="primary"
-              onClick={() => this.deletePost(affData.media_id)}
-            >
-              &nbsp;Reset&nbsp;
-            </Button>
-          </div>
+                        <div className="col-md-4">
+                          {this.state.inputList.length !== 1 && (
+                            <button
+                              className="btn btn-primary mt-3"
+                              onClick={() => this.handleRemoveClick(i)}
+                            >
+                              Remove
+                            </button>
+                          )}
+                          {this.state.inputList.length - 1 === i && (
+                            <button
+                              className="btn btn-primary ml-2 mt-3"
+                              onClick={this.handleAddClick}
+                            >
+                              Add
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="edit_button_main pane-button">
+                {this.state.loading ? (
+                  <Button>
+                    <Loader />
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      className="custom_btns_ift"
+                      color="primary"
+                      type="submit"
+                      // onClick={(ev) =>
+                      //   this.saveCampaign(
+                      //     affData.post_id,
+                      //     affData.redirected_url
+                      //   )
+                      // }
+                    >
+                      &nbsp;Save&nbsp;
+                    </Button>
+
+                    <Button
+                      className="custom_btns_ift"
+                      color="primary"
+                      onClick={() => this.reset()}
+                    >
+                      &nbsp;Reset&nbsp;
+                    </Button>
+
+                    <Button
+                      className="custom_btns_ift"
+                      color="primary"
+                      onClick={() => {
+                        this.props.affCloseModal();
+                      }}
+                    >
+                      &nbsp;Cancel&nbsp;
+                    </Button>
+                  </>
+                )}
+              </div>
+            </>
+          ) : null}
         </Formsy.Form>
       </React.Fragment>
     );
