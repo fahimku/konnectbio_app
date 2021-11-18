@@ -70,7 +70,8 @@ class CarouselComponent extends React.Component {
                 > */}
                 <button
                   onClick={() =>
-                    this.props.categoryFilter(category.category_id)
+                    {
+                    this.props.categoryFilter(category.category_id)}
                   }
                   className="btn-link"
                 >
