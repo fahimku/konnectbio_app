@@ -42,6 +42,7 @@ class Affiliate extends React.Component {
       });
     }
   }
+
   render() {
     return (
       <div className="analytics-page affiliate-page linkin-bio">
