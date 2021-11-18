@@ -64,19 +64,9 @@ class AffiliateCreateCampaign extends React.Component {
       .get(`/posts/retrieve/${post_id}`)
       .then((response) => {
         this.setState({ affData: response.data.message });
-        // this.setState({ media_id: media_id });
-        // let category = response.data.message.categories[0].category_id;
-        // this.setState({ category: category });
-
-        console.log(response.data.message, "data");
       })
       .catch((err) => {
         console.log(err, "err");
-        // this.setState({
-        //   category: [],
-        // });
-        // this.setState({ subCategory: [] });
-        // this.setState({ postType: "image" });
       });
   };
   getCountries = async () => {
@@ -89,17 +79,6 @@ class AffiliateCreateCampaign extends React.Component {
           return selectCountries.push({ value: code1, label: name });
         });
         this.setState({ countries: selectCountries });
-
-        // countries.map(({ name, code1, selected }) => {
-        //   if (selected) {
-        //     // console.log({name, code1, selected});
-        //     this.setState({ country: name, countryCode: code1 });
-        //   } else {
-        //     this.setState({ country: "Pakistan", countryCode: "PK" });
-        //   }
-        //   return selectCountries.push({ value: code1, label: name });
-        // });
-        // this.setState({ countries: selectCountries });
       })
       .catch(function (error) {
         console.log(error);
@@ -110,7 +89,6 @@ class AffiliateCreateCampaign extends React.Component {
       .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
       .then((response) => {
         const allpost = response.data.message.result.data;
-        console.log(response.data.message, "data");
         this.setState({ data: allpost });
       })
       .catch((err) => {
@@ -131,6 +109,7 @@ class AffiliateCreateCampaign extends React.Component {
           <AffiliateForm
             affData={this.state.affData}
             countries={this.state.countries}
+            affCloseModal={this.affToggleModal}
           />
         </Alert>
         {window.innerWidth <= 760 && (
