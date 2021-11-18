@@ -464,6 +464,7 @@ class AffiliateCampaign extends React.Component {
               </form>
             </Col>
           </Row>
+          
 
           <hr />
           {this.state.loading ? (
