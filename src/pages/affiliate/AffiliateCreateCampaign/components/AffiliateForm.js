@@ -346,20 +346,6 @@ class AffiliateForm extends React.Component {
                       }}
                       required
                     />
-                    {/* <div class="mb-2 input-group">
-                      <span class="input-group-text">$</span>
-                      <input
-                        type="number"
-                        id="budget"
-                        name="budget"
-                        class="form-control"
-                        onChange={(evt) => {
-                          this.budget(evt.target.value);
-                        }}
-                        autoComplete="off"
-                        
-                      />
-                    </div> */}
                   </div>
                 </div>
                 <div className="row">

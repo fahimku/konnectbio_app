@@ -4,6 +4,7 @@ import { Col, Row, Modal, ModalBody, Alert } from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
+import Loader from "../../../components/Loader/Loader";
 
 class AffiliateCreateCampaign extends React.Component {
   state = {
@@ -14,6 +15,7 @@ class AffiliateCreateCampaign extends React.Component {
     aff_modal: false,
     affData: "",
     countries: "",
+    affDataLoading: false,
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -60,13 +62,16 @@ class AffiliateCreateCampaign extends React.Component {
 
   // Fetch Single Post
   fetchSinglePost = async (post_id) => {
+    this.setState({ affDataLoading: true });
     await axios
       .get(`/posts/retrieve/${post_id}`)
       .then((response) => {
         this.setState({ affData: response.data.message });
+        this.setState({ affDataLoading: false });
       })
       .catch((err) => {
         console.log(err, "err");
+        this.setState({ affDataLoading: false });
       });
   };
   getCountries = async () => {
@@ -102,15 +107,20 @@ class AffiliateCreateCampaign extends React.Component {
     });
   };
   affiliateModal = () => {
+    console.log(this.state.affData, "affdata");
     return this.state.aff_modal ? (
       <div className="affiliate-model image-edit-box">
         <Alert onClose={this.affToggleModal} dismissible>
           <Alert.Heading>Create Campaign</Alert.Heading>
-          <AffiliateForm
-            affData={this.state.affData}
-            countries={this.state.countries}
-            affCloseModal={this.affToggleModal}
-          />
+          {this.state.affDataLoading ? (
+            <Loader className="analytics-loading" size={60} />
+          ) : (
+            <AffiliateForm
+              affData={this.state.affData}
+              countries={this.state.countries}
+              affCloseModal={this.affToggleModal}
+            />
+          )}
         </Alert>
         {window.innerWidth <= 760 && (
           <Modal
@@ -128,7 +138,9 @@ class AffiliateCreateCampaign extends React.Component {
         )}
       </div>
     ) : (
-      <div className="create_campaign_heading"><h4>Create campaign</h4></div>
+      <div className="create_campaign_heading">
+        <h4>Create campaign</h4>
+      </div>
     );
   };
   render() {
