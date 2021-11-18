@@ -17,10 +17,16 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+
+      countryLoading: false,
+      stateLoading: false,
+      cityLoading:false,
       name: "",
       email: "",
       countries: "",
+      countryStates: "",
+      countryStateCode: "",
+      countryState: "",
       cities: "",
       genderList: [
         {value: "male", label: "Male"},
@@ -50,6 +56,7 @@ class Register extends React.Component {
     this.changeGender = this.changeGender.bind(this);
     this.changeUserType = this.changeUserType.bind(this);
     this.changeCountry = this.changeCountry.bind(this);
+    this.changeState = this.changeState.bind(this);
     this.changeCity = this.changeCity.bind(this);
     this.changePassword = this.changePassword.bind(this);
     this.changeConfirmPassword = this.changeConfirmPassword.bind(this);
@@ -61,50 +68,9 @@ class Register extends React.Component {
 
   async componentDidMount() {
     await this.getCountries();
-    await this.getCities(this.state.countryCode);
-  }
+    await this.getStates(this.state.countryCode);
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.successMessage !== this.props.successMessage) {
-      this.setState({
-        name: "",
-        email: "",
-        gender: "",
-        city: "",
-        password: "",
-        confirmPassword: "",
-        zip: "",
-        referred_by: "",
-      });
-      this.setState({country: "Pakistan", countryCode: "PK"});
-    }
   }
-
-  getCities = async (countryCode) => {
-    this.setState({loading: true});
-    await axios
-      .post(`/common/receive/cities`, {country_code: countryCode})
-      .then((response) => {
-        const selectCities = [];
-        const cities = response.data.message;
-        cities.map(({name, stateCode}) => {
-          let value;
-          if (countryCode === "US") value = name + " , " + stateCode;
-          else
-            value = name
-            return selectCities.push({
-              value: value,
-              label: value,
-            });
-        });
-        this.setState({cities: selectCities});
-        this.setState({loading: false});
-        // this.setState({  })
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
 
   getCountries = async () => {
     await axios
@@ -122,6 +88,55 @@ class Register extends React.Component {
           return selectCountries.push({value: code1, label: name});
         });
         this.setState({countries: selectCountries});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  getStates = async (countryCode) => {
+    this.setState({ stateLoading: true });
+    await axios
+      .post(`/common/receive/states`, {country_code: countryCode})
+      .then((response) => {
+        const selectStates = [];
+        const states = response.data.message;
+        states.map(({name, isoCode, selected}) => {
+          if (selected) {
+            this.setState({countryState: name, countryStateCode: isoCode});
+          }
+          return selectStates.push({value: isoCode, label: name});
+        });
+        this.setState({ countryStates: selectStates });
+        this.setState({ stateLoading: false });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  getCities = async (countryCode, stateCode) => {
+    this.setState({cityLoading: true});
+    await axios
+      .post(`/common/receive/cities`, {
+        country_code: countryCode,
+        state_code: stateCode,
+      })
+      .then((response) => {
+        const selectCities = [];
+        const cities = response.data.message;
+        cities.map(({name, stateCode}) => {
+          let value;
+          if (countryCode === "US") value = name + " , " + stateCode;
+          else value = name;
+          return selectCities.push({
+            value: value,
+            label: value,
+          });
+        });
+
+        this.setState({cities: selectCities});
+        this.setState({cityLoading: false});
       })
       .catch(function (error) {
         console.log(error);
@@ -147,7 +162,12 @@ class Register extends React.Component {
   changeCountry(event) {
     this.setState({city: ""});
     this.setState({country: event.label, countryCode: event.value});
-    this.getCities(event.value);
+    this.getStates(event.value);
+  }
+
+  changeState(event) {
+    this.setState({countryState: event.label, countryStateCode: event.value});
+    this.getCities(this.state.countryCode, event.value);
   }
 
   changeCity(event) {
@@ -167,7 +187,9 @@ class Register extends React.Component {
       if (!this.state.password) {
         this.props.dispatch(authError("Password field is empty"));
       } else {
-        this.props.dispatch(authError("The password and confirmation password do not match."));
+        this.props.dispatch(
+          authError("The password and confirmation password do not match.")
+        );
       }
       setTimeout(() => {
         this.props.dispatch(authError());
@@ -200,6 +222,7 @@ class Register extends React.Component {
           email: this.state.email,
           gender: this.state.gender,
           country: this.state.countryCode,
+          state:this.state.countryStateCode,
           city: this.state.city,
           password: this.state.password,
           zip: this.state.zip,
@@ -212,16 +235,16 @@ class Register extends React.Component {
   render() {
     return (
       <div className="auth-page">
-        <div class="login_header">
-          <div class="header_inr group">
-            <div class="header_inr_left">
-              <div class="konnect_logo">
+        <div className="login_header">
+          <div className="header_inr group">
+            <div className="header_inr_left">
+              <div className="konnect_logo">
                 <img className="logo" src={logo} alt="logo" />
               </div>
-              <h3 class="kon_pg_title">Create Account</h3>
+              <h3 className="kon_pg_title">Create Account</h3>
             </div>
-            <div class="header_inr_right">
-              <div class="create_account">
+            <div className="header_inr_right">
+              <div className="create_account">
                 <span>Already have an account?</span>&nbsp;
                 <button
                   className="btn btn-link"
@@ -236,17 +259,16 @@ class Register extends React.Component {
           </div>
         </div>
         <div className="custome_container_auth_ift">
-          <div class="custome_container_auth_inr">
+          <div className="custome_container_auth_inr">
             {this.props.successMessage ? (
               <Widget className="custom_confirmation">
                 <div className="confirm_ift align-items-center">
                   <span className="env-ift">
-                    <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                    <i className="fa fa-envelope-open-o" aria-hidden="true"></i>
                   </span>
                   <span className="we_have_ift">
-                  {this.props.successMessage}
-                  </span>
-                  {" "}
+                    {this.props.successMessage}
+                  </span>{" "}
                   <span
                     className="continue_link_ifti"
                     onClick={() => {
@@ -334,25 +356,43 @@ class Register extends React.Component {
                         />
                       )}
                     </div>
+
                     <div className="form-group">
-                      {this.state.loading && <Loader />}
-                      {this.state.country && !this.state.loading ? (
+                      {this.state.stateLoading && <Loader />}
+                      {this.state.country && !this.state.stateLoading && (
                         <Select
                           className="form_select_group"
-                          onChange={this.changeCity}
+                          onChange={this.changeState}
                           filterOption={createFilter({ignoreAccents: false})}
-                          placeholder="Select City"
-                          options={this.state.cities}
+                          placeholder="Select State"
+                          options={this.state.countryStates}
                           value={
-                            this.state.city && {
-                              label: this.state.city,
-                              value: this.state.city,
+                            this.state.countryState && {
+                              label: this.state.countryState,
+                              value: this.state.countryState,
                             }
                           }
                         />
-                      ) : (
-                        ""
                       )}
+                    </div>
+
+                    <div className="form-group">
+                      {this.state.cityLoading && <Loader />}
+                        {this.state.countryState && !this.state.cityLoading && (
+                          <Select
+                            className="form_select_group"
+                            onChange={this.changeCity}
+                            filterOption={createFilter({ ignoreAccents: false })}
+                            placeholder="Select City"
+                            options={this.state.cities}
+                            value={
+                              this.state.city && {
+                                label: this.state.city,
+                                value: this.state.city,
+                              }
+                            }
+                          />
+                        )}
                     </div>
                     <div className="form-group">
                       <input
@@ -419,7 +459,7 @@ class Register extends React.Component {
                   </form>
                 </Widget>
 
-                <div class="signup_right">
+                <div className="signup_right">
                   <h3>Turn your Followers into Customers</h3>
                   <p>
                     Staying just an influencer is not all! Turn your followers

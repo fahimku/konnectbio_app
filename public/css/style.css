@@ -991,4 +991,92 @@ a.pkg_read:hover {
 /* Category Page End Here Iftikhar */
 
 
+
+/* Affiliate Page Start Here Iftikhar */
+
+.affiliate_p_col, .affiliate_in_col{
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding-left:20px;
+  padding-right: 20px;
+}
+.tab-content.affiliate_tab_ift{
+  width: 100%;
+  height: -moz-calc(100% - 57px);
+  height: -webkit-calc(100% - 57px);
+  height: -o-calc(100% - 57px);
+  height: calc(100% - 57px);
+  position: absolute;
+  left:0;
+}
+.analytics-page.affiliate-page .tab-content > .tab-pane{
+  padding:0;
+}
+.affiliate_tab_ift .tab-pane .container-fluid{
+  padding-left:0;
+  padding-right: 0;
+}
+.create-affiliate .app_main_cont_ift .right-bar{
+  padding-top:20px;
+  padding-bottom: 20px;
+}
+.affiliate-model.image-edit-box{
+  border:none;
+  padding:0;
+  box-shadow: none;
+}
+.affiliate-page .image-post-box-aff{
+  position: relative;
+  max-width: 33.333%;
+  flex: 0 0 33.333%;
+  cursor: pointer;
+}
+.affiliate-page .image-post-box-aff:after{
+  content: "";
+  padding-top: 100%;
+  display: block;
+}
+.affiliate-page .image-post-box-aff .image-post-box-aff-inr{
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  border: 1px solid;
+  border-color: #f6f6f6 #f3f3f3 #eee;
+}
+.affiliate-page .image-post-box-aff .image-post-box-aff-inr .image-post-box-aff-inr-inr{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+  margin: 0;
+  display: block;
+}
+.image-post-box-aff-inr-inr .post-image{
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 0px !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: 50% 0;
+  object-position: 50% 0;
+}
+.create_campaign_heading{
+  display: flex;
+  max-width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Affiliate Page End Here Iftikhar */
+
+
+
+
+
 /**Media Queries Iftikhar */
