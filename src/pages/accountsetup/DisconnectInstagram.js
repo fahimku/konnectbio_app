@@ -24,48 +24,53 @@ export default function DisconnectInstagram(props) {
   }
   return (
     <>
-      <div className="white-box">
-        <Row>
-          <Col xl={12}>
-            <h5 className="page-title line-heading">Instagram Connection</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={4} xl={2}>
-            <div className="category_count">Connection Status</div>
-          </Col>
-          <Col md={4} xl={3} className="text-right">
-            {props.username1 !== "" || props.username ? (
-              <>
-                <div className="connected-text text-left mb-2">
-                  Connected: @
-                  {props.username1 !== "" ? props.username1 : props.username}
-                </div>
-                <Button
-                  variant="primary"
-                  className="btn-block cat-right-btn"
-                  onClick={() => {
-                    props.modal(true);
-                  }}
-                >
-                  Disconnect Instagram
-                </Button>
-              </>
-            ) : (
-              <Button
-                onClick={() => {
-                  window.location.replace(props.url);
-                }}
-                variant="primary"
-                className="btn-block cat-right-btn"
-              >
-                <i className="fa fa-instagram" />
-                &nbsp;&nbsp; Connect Instagram
-              </Button>
-            )}
-          </Col>
-        </Row>
+      <div className="profile_box_main col-md-4">
+        <div className="dash_block_profile">
+          <div className="dash_content_profile">
+                <h5>Instagram Connection</h5>
+            <Row>
+            <Col md={12}>
+              <div className="dp_fields-setup mb-3">
+                <div className="category_count">Connection Status</div>
+              </div>
+              <div className="dp_fields-setup">
+                {props.username1 !== "" || props.username ? (
+                  <>
+                    <div className="connected-text text-left mb-2">
+                      Connected: @
+                      {props.username1 !== ""
+                        ? props.username1
+                        : props.username}
+                    </div>
+                    <Button
+                      variant="primary"
+                      className="btn-block cat-right-btn"
+                      onClick={() => {
+                        props.modal(true);
+                      }}
+                    >
+                      Disconnect Instagram
+                    </Button>
+                  </>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      window.location.replace(props.url);
+                    }}
+                    variant="primary"
+                    className="btn-block cat-right-btn"
+                  >
+                    <i className="fa fa-instagram" />
+                    &nbsp;&nbsp; Connect Instagram
+                  </Button>
+                )}
+              </div>
+              </Col>
+            </Row>
+          </div>
+        </div>
       </div>
+
       <Modal
         show={props.show}
         onHide={props.onHide}

@@ -127,7 +127,7 @@ export default function Dashboard(props) {
                       className="btn btn-rounded btn-primary"
                       href="javascript:void(0)"
                     >
-                      <i className="fa fa-cog mr-1"></i> Manage Setting
+                      <i className="fa fa-cog mr-1"></i> Manage Home Screen
                     </a>
                   </div>
                 </div>

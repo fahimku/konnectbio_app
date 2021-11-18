@@ -142,105 +142,121 @@ class AccountSetup extends React.Component {
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
-      <div className="category-page">
+      <div className="profile-page account-setup">
         <div
           className={
             this.props.className ? this.props.className : "container-fluid"
           }
         >
-          <div className="justify-content-md-center">
-            <div className="connections mt-5">
-              <div className="page-title">
-                <h3>Account Setup</h3>
-              </div>
-              <div className="white-box mt-5">
-                <h5 className="page-title line-heading">Manage Plan</h5>
-                <Row>
-                  <Col md={8}>
-                    <h4 className="package_name">
-                      Current Plan:{" "}
-                      {userInfo1.package ? userInfo1.package.package_name : ""}
-                    </h4>
-                  </Col>
-                </Row>
-                <Row className="mt-4">
-                  <Col md={4} xl={2}>
-                    Change Plan:
-                  </Col>
-                  <Col md={4} xl={3}>
-                    <Select
-                      isSearchable={false}
-                      isOptionDisabled={(option) => option.isdisabled} // disable an option
-                      options={this.state.packages}
-                      placeholder="Select package"
-                      value={{
-                        label: this.state.package,
-                        value: this.state.package,
-                      }}
-                      onChange={(event) => this.handlePackage(event)}
-                    />
-                  </Col>
-                </Row>
+          <div className="mt-4 row">
+            <div className="col-md-12">
+              <h4 className="page-title">Account Setup</h4>
+            </div>
+          </div>
 
-                <Row className="mt-4">
-                  <Col xl={2} md={4}>
-                    Categories Included:{" "}
-                    {this.state.singlePackage.category_count}
-                  </Col>
-                  {this.state.singlePackage.package_name !==
-                    "Business Plus" && (
-                    <Col xl={4} lg={4} md={6}>
-                      <p>Change Plan to have more categories</p>
-                    </Col>
-                  )}
-                </Row>
+          <div className="profile_container_main container">
+            <div className="row">
+              <div className="profile_box_main col-md-4">
+                <div className="dash_block_profile">
+                  <div className="dash_content_profile">
+                    <h5>Manage Plan</h5>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="dp_fields-setup mb-0">
+                          <h4 className="package_name">
+                            Current Plan:{" "}
+                            {userInfo1.package
+                              ? userInfo1.package.package_name
+                              : ""}
+                          </h4>
+                        </div>
 
-                <Row className="mt-4">
-                  <Col md={4} xl={2}>
-                    Links Included: {this.state.singlePackage.link_count}
-                  </Col>
+                        <div className="dp_fields-setup">
+                          <div className="mb-3">
+                            <label>Change Plan:</label>
 
-                  {this.state.singlePackage.package_name !==
-                    "Business Plus" && (
-                    <Col md={6} xl={3}>
-                      <p>Change Plan to have more links</p>
-                    </Col>
-                  )}
-                </Row>
-                {this.state.singlePackage.package_name !== "Micro Influencer" &&
-                  this.state.upgrade && (
-                    <Row className="mt-4">
-                      <>
-                        <Col md={4} xl={2}>
-                          {/* Status Activity: */}
-                        </Col>
-                        <Col md={4} xl={3}>
-                          <Button
-                            variant="primary"
-                            className="btn-block"
-                            onClick={() => {
-                              if (
-                                this.state.singlePackage.package_name ===
-                                  "Business" ||
-                                this.state.singlePackage.package_name ===
-                                  "Business Plus"
-                              ) {
-                                alert(
-                                  "For support please contact support@konnect.bio"
-                                );
-                                this.setState({ showPaymentButton: false });
-                              } else {
-                                this.setState({ showPaymentButton: true });
-                              }
-                            }}
-                          >
-                            Upgrade Subscription
-                          </Button>
-                        </Col>
-                      </>
-                    </Row>
-                  )}
-                {/* <Row className="mt-4">
+                            <Select
+                              isSearchable={false}
+                              isOptionDisabled={(option) => option.isdisabled} // disable an option
+                              options={this.state.packages}
+                              placeholder="Select package"
+                              value={{
+                                label: this.state.package,
+                                value: this.state.package,
+                              }}
+                              onChange={(event) => this.handlePackage(event)}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="dp_fields-setup">
+                          <div className="sm-b mb-3">
+                              <span>
+                            Categories Included:{" "}
+                            <strong>{this.state.singlePackage.category_count}</strong>
+                          </span>
+                          {this.state.singlePackage.package_name !==
+                            "Business Plus" && (
+                            <span>
+                              Change Plan to have more categories
+                            </span>
+                          )}
+                          </div>
+                        </div>
+
+                        <div className="dp_fields-setup">
+                          <div className="sm-b">
+                          <span>
+                            Links Included:{" "}
+                            <strong>{this.state.singlePackage.link_count}</strong>
+                          </span>
+
+                          {this.state.singlePackage.package_name !==
+                            "Business Plus" && (
+                            <span>Change Plan to have more links</span>
+                          )}
+                          </div>
+                        </div>
+                        {this.state.singlePackage.package_name !==
+                          "Micro Influencer" &&
+                          this.state.upgrade && (
+                            <div className="dp_fields-setup">
+                              <>
+                                
+                                <div className="mt-3">
+                                  <Button
+                                    variant="primary"
+                                    className="btn-block"
+                                    onClick={() => {
+                                      if (
+                                        this.state.singlePackage
+                                          .package_name === "Business" ||
+                                        this.state.singlePackage
+                                          .package_name === "Business Plus"
+                                      ) {
+                                        alert(
+                                          "For support please contact support@konnect.bio"
+                                        );
+                                        this.setState({
+                                          showPaymentButton: false,
+                                        });
+                                      } else {
+                                        this.setState({
+                                          showPaymentButton: true,
+                                        });
+                                      }
+                                    }}
+                                  >
+                                    Upgrade Subscription
+                                  </Button>
+                                </div>
+                              </>
+                            </div>
+                          )}
+                      </div>
+                    </div>
+
+                    {/* <Row className="mt-4">
                   <Col md={4} xl={2}>
                     Cancel Subscription:
                   </Col>
@@ -249,7 +265,10 @@ class AccountSetup extends React.Component {
                     <CancelSubsciption userId={userInfo1.user_id} />
                   </Col>
                 </Row> */}
+                  </div>
+                </div>
               </div>
+
               {this.state.singlePackage.package_name !== "Micro Influencer" &&
                 this.state.showPaymentButton && (
                   <>

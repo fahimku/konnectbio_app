@@ -150,7 +150,7 @@ span.icon {
 }
 
 .category-page .category-btn {
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .white-box {
   position: relative;
@@ -174,8 +174,8 @@ span.icon {
   margin-top: 10px;
 }
 .cat-box .cat-image {
-  width: 80px;
-  height: 80px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   border: 1px solid #ccc;
 }
@@ -931,5 +931,64 @@ a.pkg_read:hover {
   width: 100%;
   display: flex !important;
 }
+
+
+/* Category Page Start Here Iftikhar */
+
+.row-rev{
+  flex-direction: row-reverse;
+}
+.category-page .profile_container_main .profile_box_main .dash_block_profile{
+  min-height: 100px;
+}
+.category-box{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.category-count-row.col-12{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #ede9e9;
+  padding-left: 0;
+  padding-right: 0;
+  margin-bottom: 14px;
+}
+.category-count-title{
+  color: #798892;
+  font-size: 1rem;
+}
+.category-count-right{
+  font-size: 1rem;
+  font-weight: 700 !important;
+}
+.cat-lable{
+  font-weight: 700;
+  font-family: "SegoeUIBold";
+  font-size: 0.8rem;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+.profile_box_main.col-md-4, .profile_box_main.col-md-8{
+  padding-left:15px;
+  padding-right: 15px;
+}
+.dp_fields-setup{
+  display: flex;
+  flex-direction: column;
+}
+.dp_fields-setup .sm-b span{
+  float: left;
+  width:100%;
+}
+.dp_fields-setup .sm-b span strong{
+  font-family: "SegoeUIBold";
+}
+.account-setup .profile_container_main .dash_block_profile{
+  min-height: 306px;
+}
+
+/* Category Page End Here Iftikhar */
+
 
 /**Media Queries Iftikhar */

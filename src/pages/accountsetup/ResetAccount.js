@@ -28,28 +28,32 @@ export default function ResetAccount(props) {
   }
   return (
     <>
-      <div className="white-box">
-        <Row>
-          <Col xl={12}>
-            <h5 className="page-title line-heading">Reset Account</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={4} xl={2}>
-            <div className="category_count">This will reset your account.</div>
-          </Col>
-          <Col md={4} xl={3} className="text-right">
-            <Button
-              onClick={() => {
-                props.resetModal(true);
-              }}
-              variant="primary"
-              className="btn-block cat-right-btn"
-            >
-              Reset Account
-            </Button>
-          </Col>
-        </Row>
+      <div className="profile_box_main col-md-4">
+        <div className="dash_block_profile">
+          <div className="dash_content_profile">
+            <h5>Reset Account</h5>
+            <Row>
+              <Col md={12}>
+                <div className="dp_fields-setup mb-3">
+                  <div className="category_count">
+                    This will reset your account.
+                  </div>
+                </div>
+                <div className="dp_fields-setup">
+                  <Button
+                    onClick={() => {
+                      props.resetModal(true);
+                    }}
+                    variant="primary"
+                    className="btn-block cat-right-btn"
+                  >
+                    Reset Account
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </div>
       </div>
 
       <Modal
