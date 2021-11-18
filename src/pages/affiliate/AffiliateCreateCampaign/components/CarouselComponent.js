@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { NavLink } from "react-router-dom";
 import Post from "../../../../images/Post2.jpg";
+import PostGallery from "./PostGallery";
 
 class CarouselComponent extends React.Component {
   state = {
@@ -61,7 +62,7 @@ class CarouselComponent extends React.Component {
             </div>
 
             {this.props.allCategory.map((category, i) => (
-              <div className="carousel-items">
+              <div className="carousel-items" key={i}>
                 {/* <NavLink
                   to=""
                   onClick={() => this.categoryFilter}
@@ -91,6 +92,7 @@ class CarouselComponent extends React.Component {
             ))}
           </Carousel>
         )}
+        <PostGallery/>
       </React.Fragment>
     );
   }

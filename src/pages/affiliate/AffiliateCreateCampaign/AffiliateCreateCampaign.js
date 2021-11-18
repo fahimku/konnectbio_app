@@ -18,20 +18,20 @@ class AffiliateCreateCampaign extends React.Component {
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({ userInfo: userInfo });
-    this.getAllPost();
+    // this.getAllPost();
     this.fetchAllCategory();
   }
-  getAllPost = async () => {
-    await axios
-      .get("shop/posts" + `?limit=16&page=1&post_type=image`)
-      .then((response) => {
-        const allpost = response.data.message.result.data;
-        this.setState({ data: allpost });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  // getAllPost = async () => {
+  //   await axios
+  //     .get("shop/posts" + `?limit=16&page=1&post_type=image`)
+  //     .then((response) => {
+  //       const allpost = response.data.message.result.data;
+  //       this.setState({ data: allpost });
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
   fetchAllCategory = async () => {
     await axios
       .get("/usercategory/receive")
@@ -164,38 +164,6 @@ class AffiliateCreateCampaign extends React.Component {
                     allCategory={this.state.allCategory}
                     categoryFilter={this.categoryFilter}
                   />
-                </div>
-                <div className="row post-box no-gutters">
-                  {this.state.data.map((item) => (
-                    <React.Fragment>
-                      <div className="col col-4 image-post-box">
-                        <div
-                          onClick={() => this.selectPost(item.post_id)}
-                          className="mobile_box_inr link"
-                        >
-                          {item.media_type === "VIDEO" ? (
-                            <video
-                              id={`post-video-${item.post_id}`}
-                              autoPlay
-                              controls
-                              controlsList="nodownload"
-                            >
-                              <source
-                                src={item.media_url}
-                                type="video/mp4"
-                              ></source>
-                            </video>
-                          ) : (
-                            <img
-                              src={item.media_url}
-                              alt="post-img"
-                              className="post-image"
-                            />
-                          )}
-                        </div>
-                      </div>
-                    </React.Fragment>
-                  ))}
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">

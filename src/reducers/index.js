@@ -7,6 +7,8 @@ import products from './products';
 import analytics from './analytics';
 import chat from './chat';
 import users from './usersReducers';
+import categories from './category/categories';
+import posts from './post/post';
 import { connectRouter } from 'connected-react-router';
 
 export default (history) =>
@@ -20,4 +22,6 @@ export default (history) =>
     analytics,
     chat,
     users,
+    categories,
+    posts
 });

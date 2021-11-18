@@ -13,7 +13,7 @@ import { doInit,logoutUser } from './actions/auth';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
-
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export function getHistory() {
   return history;
 }
@@ -38,7 +38,7 @@ axios.interceptors.response.use(undefined, function (error) {
 
 export const store = createStore(
   createRootReducer(history),
-  compose(
+  composeEnhancers(
     applyMiddleware(
       routerMiddleware(history),
       ReduxThunk
