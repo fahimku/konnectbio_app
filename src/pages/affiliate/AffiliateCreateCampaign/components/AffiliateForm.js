@@ -172,6 +172,9 @@ class AffiliateForm extends React.Component {
       ],
     });
   };
+  reset = () => {
+    alert("reset");
+  };
 
   render() {
     const { affData } = this.props;

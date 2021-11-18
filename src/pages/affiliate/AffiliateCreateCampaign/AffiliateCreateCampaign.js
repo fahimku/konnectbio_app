@@ -108,7 +108,6 @@ class AffiliateCreateCampaign extends React.Component {
     });
   };
   affiliateModal = () => {
-    console.log(this.state.affData, "affdata");
     return this.state.aff_modal ? (
       <div className="affiliate-model image-edit-box">
         <Alert onClose={this.affToggleModal} dismissible>
@@ -156,7 +155,7 @@ class AffiliateCreateCampaign extends React.Component {
                     allCategory={this.state.allCategory}
                     categoryFilter={this.categoryFilter}
                   />
-                  <PostGallery/>
+                  <PostGallery />
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">
