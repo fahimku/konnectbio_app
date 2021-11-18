@@ -1,7 +1,9 @@
 import React from "react";
-import { Row, Col } from "reactstrap";
+// import { Row, Col } from "reactstrap";
+import { Col, Row, Modal, ModalBody, Alert } from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
+import AffiliateForm from "./components/AffiliateForm";
 
 class AffiliateCreateCampaign extends React.Component {
   state = {
@@ -9,6 +11,9 @@ class AffiliateCreateCampaign extends React.Component {
     user_id: this.props.user_id,
     data: [],
     allCategory: [],
+    aff_modal: false,
+    affData: "",
+    countries: "",
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -45,32 +50,25 @@ class AffiliateCreateCampaign extends React.Component {
         console.log(error);
       });
   };
+  selectPost = (postId) => {
+    this.setState({
+      aff_modal: true,
+    });
+    this.fetchSinglePost(postId);
+    this.getCountries();
+  };
 
   // Fetch Single Post
   fetchSinglePost = async (post_id) => {
     await axios
       .get(`/posts/retrieve/${post_id}`)
       .then((response) => {
-        // this.setState({ postType: response.data.message.post_type });
+        this.setState({ affData: response.data.message });
         // this.setState({ media_id: media_id });
         // let category = response.data.message.categories[0].category_id;
         // this.setState({ category: category });
 
         console.log(response.data.message, "data");
-        console.log("endDate");
-
-        // this.changeDateRange(
-        //   response.data.message.start_date,
-        //   response.data.message.end_date
-        // );
-
-        // let subCategory = [];
-        // this.fetchSubCategories(category).then(function () {
-        //   response.data.message.sub_categories.map((subCategoryId) => {
-        //     return subCategory.push(subCategoryId.sub_category_id);
-        //   });
-        //   that.setState({subCategory: subCategory});
-        // });
       })
       .catch((err) => {
         console.log(err, "err");
@@ -81,6 +79,79 @@ class AffiliateCreateCampaign extends React.Component {
         // this.setState({ postType: "image" });
       });
   };
+  getCountries = async () => {
+    await axios
+      .post(`/common/receive/countries`)
+      .then((response) => {
+        const selectCountries = [];
+        const countries = response.data.message;
+        countries.map(({ name, code1 }) => {
+          return selectCountries.push({ value: code1, label: name });
+        });
+        this.setState({ countries: selectCountries });
+
+        // countries.map(({ name, code1, selected }) => {
+        //   if (selected) {
+        //     // console.log({name, code1, selected});
+        //     this.setState({ country: name, countryCode: code1 });
+        //   } else {
+        //     this.setState({ country: "Pakistan", countryCode: "PK" });
+        //   }
+        //   return selectCountries.push({ value: code1, label: name });
+        // });
+        // this.setState({ countries: selectCountries });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+  categoryFilter = async (id) => {
+    await axios
+      .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
+      .then((response) => {
+        const allpost = response.data.message.result.data;
+        console.log(response.data.message, "data");
+        this.setState({ data: allpost });
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
+  };
+  affToggleModal = () => {
+    const { aff_modal } = this.state;
+    this.setState({
+      aff_modal: !aff_modal,
+    });
+  };
+  affiliateModal = () => {
+    return this.state.aff_modal ? (
+      <div className="affiliate-model image-edit-box">
+        <Alert onClose={this.affToggleModal} dismissible>
+          <Alert.Heading>Create Campaign</Alert.Heading>
+          <AffiliateForm
+            affData={this.state.affData}
+            countries={this.state.countries}
+          />
+        </Alert>
+        {window.innerWidth <= 760 && (
+          <Modal
+            show={this.state.aff_modal}
+            onHide={this.affToggleModal}
+            backdrop="static"
+            className="affiliate-model"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Create Campaign</Modal.Title>
+            </Modal.Header>
+
+            <AffiliateForm affData={this.state.affData} />
+          </Modal>
+        )}
+      </div>
+    ) : (
+      "Create campaign"
+    );
+  };
   render() {
     return (
       <React.Fragment>
@@ -89,15 +160,18 @@ class AffiliateCreateCampaign extends React.Component {
             <Row className="app_main_cont_ift main-container">
               <Col className="left-column" md="5" xs="12" xl="3">
                 <div className="">
-                  <CarouselComponent allCategory={this.state.allCategory} />
+                  <CarouselComponent
+                    allCategory={this.state.allCategory}
+                    categoryFilter={this.categoryFilter}
+                  />
                 </div>
                 <div className="row post-box no-gutters">
                   {this.state.data.map((item) => (
                     <React.Fragment>
                       <div className="col col-4 image-post-box">
                         <div
-                          onClick={() => this.fetchSinglePost(item.post_id)}
-                          class="mobile_box_inr"
+                          onClick={() => this.selectPost(item.post_id)}
+                          className="mobile_box_inr link"
                         >
                           {item.media_type === "VIDEO" ? (
                             <video
@@ -125,7 +199,7 @@ class AffiliateCreateCampaign extends React.Component {
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">
-                Right
+                {this.affiliateModal()}
               </Col>
             </Row>
           </div>

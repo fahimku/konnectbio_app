@@ -286,13 +286,24 @@ h1 small {
   color: #ccc !important;
 }
 
-.main-carousel .carousel-items a {
+.main-carousel .carousel-items a,
+.main-carousel .carousel-items button {
   text-transform: capitalize;
   font-weight: 600;
   color: #000;
 }
-.main-carousel .carousel-items a:hover {
+.main-carousel .carousel-items a:hover,
+.main-carousel .carousel-items button:hover {
   color: #222;
+  text-decoration: none;
+}
+.main-carousel .carousel-items a:focus,
+.main-carousel .carousel-items button:focus {
+  color: #222;
+  text-decoration: none;
+}
+.main-carousel .react-multi-carousel-track {
+  padding: auto;
 }
 @media screen and (max-width: 768px) {
   .react-multi-carousel-item {
@@ -332,4 +343,90 @@ h1 small {
   .react-multi-carousel-list span {
     // width: 75px;
   }
+}
+
+.affiliate-model .alert button.close {
+  color: #000;
+  font-size: 30px;
+  font-weight: bold;
+  // top: -28px;
+  // position: relative;
+}
+.affiliate-model .alert {
+  margin: 0px;
+  padding: 0px;
+}
+.affiliate-model .form-control,
+.affiliate-model
+  .ant-select-single:not(.ant-select-customize-input)
+  .ant-select-selector,
+.affiliate-model
+  .ant-select-single
+  .ant-select-selector
+  .ant-select-selection-item,
+.affiliate-model .ant-picker {
+  min-height: 35px;
+  height: 35px !important;
+  line-height: 35px !important;
+}
+.type-campaign {
+  display: flex;
+}
+.col1 {
+  margin-right: 10px;
+}
+.col1 img {
+  height: 65px;
+  width: 65px;
+  cursor: pointer;
+  transition: transform 1s;
+  // object-fit: cover;
+  border-radius: 50%;
+}
+.col1 label {
+  overflow: hidden;
+  position: relative;
+}
+.imgbgchk:checked + label > .tick_container {
+  opacity: 1;
+}
+.imgbgchk:checked + label > img {
+  // transform: scale(1.25);
+  opacity: 0.3;
+}
+.tick_container {
+  transition: 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  cursor: pointer;
+  text-align: center;
+}
+.tick {
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  padding: 6px 12px;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+}
+.type-label {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+.demographic-section {
+  margin-top: 10px;
+}
+.demographic-section .input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 0;
+}
+.demographic-section input[type="number"] {
+  padding-right: 0px;
 }

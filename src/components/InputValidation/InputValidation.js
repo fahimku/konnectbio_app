@@ -78,6 +78,7 @@ class InputValidation extends React.Component {
           placeholder={this.props.placeholder}
           value={this.props.value}
           onChange={this.props.onChange}
+          disabled={this.props.disabled ? true : false}
         />
         {required}
         {errorList}

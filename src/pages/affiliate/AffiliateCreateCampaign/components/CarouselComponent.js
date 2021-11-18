@@ -28,59 +28,69 @@ class CarouselComponent extends React.Component {
         items: 4,
       },
     };
+
     return (
       <React.Fragment>
-        <Carousel
-          responsive={responsive}
-          autoPlay={false}
-          arrows={true}
-          slidesToSlide={2}
-          customTransition="transform 600ms ease-in-out"
-          transitionDuration="600"
-          partialVisible={true}
-          className="main-carousel py-3 mb-2"
-          itemClass="carousel-item-padding-40-px"
-        >
-          <div className="carousel-items">
-            <NavLink
-              to={"/"}
-              // to={`/${props.username}`}
-              //             onClick={() => categoryFilter("")}
-            >
-              <img
-                src={Post}
-                width="56px"
-                height="56px"
-                alt=""
-                className="circles"
-              />
-              <span>My Posts</span>
-            </NavLink>
-          </div>
-
-          {this.props.allCategory.map((category, i) => (
+        {this.props.allCategory.length === 0 ? null : (
+          <Carousel
+            responsive={responsive}
+            autoPlay={false}
+            arrows={true}
+            slidesToSlide={2}
+            customTransition="transform 600ms ease-in-out"
+            transitionDuration="600"
+            partialVisible={true}
+            className="main-carousel py-3 mb-2"
+            itemClass="carousel-item-padding-40-px"
+          >
             <div className="carousel-items">
               <NavLink
                 to={"/"}
-                key={i}
-                // to={`/${props.username}/post/${category.category_id}`}
+                // to={`/${props.username}`}
+                //             onClick={() => categoryFilter("")}
               >
                 <img
-                  src={
-                    category.image_url === ""
-                      ? "https://via.placeholder.com/56"
-                      : category.image_url
-                  }
-                  width="65px"
-                  height="65px"
+                  src={Post}
+                  width="56px"
+                  height="56px"
                   alt=""
                   className="circles"
                 />
-                <span>{category.category_name}</span>
+                <span>My Posts</span>
               </NavLink>
             </div>
-          ))}
-        </Carousel>
+
+            {this.props.allCategory.map((category, i) => (
+              <div className="carousel-items">
+                {/* <NavLink
+                  to=""
+                  onClick={() => this.categoryFilter}
+                  key={i}
+                  // to={`/${props.username}/post/${category.category_id}`}
+                > */}
+                <button
+                  onClick={() =>
+                    this.props.categoryFilter(category.category_id)
+                  }
+                  className="btn-link"
+                >
+                  <img
+                    src={
+                      category.image_url === ""
+                        ? "https://via.placeholder.com/56"
+                        : category.image_url
+                    }
+                    width="65px"
+                    height="65px"
+                    alt=""
+                    className="circles"
+                  />
+                  <span>{category.category_name}</span>
+                </button>
+              </div>
+            ))}
+          </Carousel>
+        )}
       </React.Fragment>
     );
   }
