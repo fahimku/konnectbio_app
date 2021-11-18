@@ -149,7 +149,7 @@ class AffiliateCreateCampaign extends React.Component {
         )}
       </div>
     ) : (
-      "Create campaign"
+      <div className="create_campaign_heading"><h4>Create campaign</h4></div>
     );
   };
   render() {
@@ -168,30 +168,32 @@ class AffiliateCreateCampaign extends React.Component {
                 <div className="row post-box no-gutters">
                   {this.state.data.map((item) => (
                     <React.Fragment>
-                      <div className="col col-4 image-post-box">
-                        <div
-                          onClick={() => this.selectPost(item.post_id)}
-                          className="mobile_box_inr link"
-                        >
-                          {item.media_type === "VIDEO" ? (
-                            <video
-                              id={`post-video-${item.post_id}`}
-                              autoPlay
-                              controls
-                              controlsList="nodownload"
-                            >
-                              <source
+                      <div className="image-post-box-aff">
+                        <div className="image-post-box-aff-inr">
+                          <div
+                            onClick={() => this.selectPost(item.post_id)}
+                            className="image-post-box-aff-inr-inr"
+                          >
+                            {item.media_type === "VIDEO" ? (
+                              <video
+                                id={`post-video-${item.post_id}`}
+                                autoPlay
+                                controls
+                                controlsList="nodownload"
+                              >
+                                <source
+                                  src={item.media_url}
+                                  type="video/mp4"
+                                ></source>
+                              </video>
+                            ) : (
+                              <img
                                 src={item.media_url}
-                                type="video/mp4"
-                              ></source>
-                            </video>
-                          ) : (
-                            <img
-                              src={item.media_url}
-                              alt="post-img"
-                              className="post-image"
-                            />
-                          )}
+                                alt="post-img"
+                                className="post-image"
+                              />
+                            )}
+                          </div>
                         </div>
                       </div>
                     </React.Fragment>

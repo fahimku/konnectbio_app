@@ -234,25 +234,20 @@ h1 small {
 }
 
 /*************/
-.affiliate-page {
-}
-.post-box .post-image {
-}
-.affiliate-page .post-image {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
+
 .affiliate-page .post-box {
-  max-height: 500px;
   overflow: scroll;
   overflow-x: hidden;
-  margin: 0px 30px;
+  margin: 0 20px;
+  position: absolute;
+  left: 0;
+  top: 110px;
+  right:0;
+  height: -moz-calc(100% - 150px);
+  height: -webkit-calc(100% - 150px);
+  height: -o-calc(100% - 150px);
+  height: calc(100% - 150px);
 }
-.affiliate-page .image-post-box {
-  padding: 0px;
-}
-
 .main-carousel .circles {
   border-radius: 50% !important;
   border: 1px solid #ccc;
