@@ -44,7 +44,7 @@ class Affiliate extends React.Component {
   }
   render() {
     return (
-      <div className="analytics-page affiliate-page">
+      <div className="analytics-page affiliate-page linkin-bio">
         <Row className="tab-section">
           <Col md="12" xs="12">
             <Row>

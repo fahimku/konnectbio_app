@@ -124,6 +124,7 @@
     "react-joyride": "^2.3.0",
     "react-maskedinput": "^4.0.1",
     "react-mde": "2.3.4",
+    "react-multi-carousel": "^2.6.5",
     "react-paginate": "^8.0.0",
     "react-redux": "^7.2.4",
     "react-router": "5.2.0",
