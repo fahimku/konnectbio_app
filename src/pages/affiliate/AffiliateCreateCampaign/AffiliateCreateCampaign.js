@@ -1,6 +1,6 @@
 import React from "react";
 // import { Row, Col } from "reactstrap";
-import { Col, Row, Modal, ModalBody, Alert } from "react-bootstrap";
+import {Col, Row, Modal, ModalBody, Alert} from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
@@ -21,7 +21,7 @@ class AffiliateCreateCampaign extends React.Component {
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ userInfo: userInfo });
+    this.setState({userInfo: userInfo});
     // this.getAllPost();
     this.fetchAllCategory();
   }
@@ -48,7 +48,7 @@ class AffiliateCreateCampaign extends React.Component {
         //     image: image_url,
         //   });
         // });
-        this.setState({ allCategory: myCategories });
+        this.setState({allCategory: myCategories});
       })
       .catch((error) => {
         console.log(error);
@@ -64,48 +64,49 @@ class AffiliateCreateCampaign extends React.Component {
 
   // Fetch Single Post
   fetchSinglePost = async (post_id) => {
-    this.setState({ affDataLoading: true });
+    this.setState({affDataLoading: true});
     await axios
       .get(`/posts/retrieve/${post_id}`)
       .then((response) => {
-        this.setState({ affData: response.data.message });
-        this.setState({ affDataLoading: false });
+        this.setState({affData: response.data.message});
+        this.setState({affDataLoading: false});
       })
       .catch((err) => {
         console.log(err, "err");
-        this.setState({ affDataLoading: false });
+        this.setState({affDataLoading: false});
       });
   };
+
   getCountries = async () => {
     await axios
       .post(`/common/receive/countries`)
       .then((response) => {
         const selectCountries = [];
         const countries = response.data.message;
-        countries.map(({ name, code1 }) => {
-          return selectCountries.push({ value: code1, label: name });
+        countries.map(({name, code1}) => {
+          return selectCountries.push({value: code1, label: name});
         });
-        this.setState({ countries: selectCountries });
+        this.setState({countries: selectCountries});
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+
   categoryFilter = async (id) => {
-    this.setState({id:id})
-    // await axios
-    //   .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
-    //   .then((response) => {
-    //     const allpost = response.data.message.result.data;
-    //     this.setState({ data: allpost });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err, "err");
-    //   });
+    await axios
+      .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
+      .then((response) => {
+        const allpost = response.data.message.result.data;
+        this.setState({data: allpost});
+      })
+      .catch((err) => {
+        console.log(err, "err");
+      });
   };
 
   affToggleModal = () => {
-    const { aff_modal } = this.state;
+    const {aff_modal} = this.state;
     this.setState({
       aff_modal: !aff_modal,
     });
@@ -136,7 +137,6 @@ class AffiliateCreateCampaign extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Create Campaign</Modal.Title>
             </Modal.Header>
-
             <AffiliateForm affData={this.state.affData} />
           </Modal>
         )}
@@ -159,10 +159,7 @@ class AffiliateCreateCampaign extends React.Component {
                     allCategory={this.state.allCategory}
                     categoryFilter={this.categoryFilter}
                   />
-                  <PostGallery
-                  selectPost={this.selectPost}
-                  id={this.state.id}
-                  />
+                  <PostGallery />
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">
