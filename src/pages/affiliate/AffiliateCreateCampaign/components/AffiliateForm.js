@@ -11,6 +11,10 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import Loader from "../../../../components/Loader/Loader";
 import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
+import click from "../../../../images/campaign/click.svg";
+import sale from "../../../../images/campaign/sale.svg";
+import impression from "../../../../images/campaign/impression.svg";
+import { log } from "nvd3";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -172,10 +176,49 @@ class AffiliateForm extends React.Component {
       ],
     });
   };
+  reset = () => {
+    this.setState({
+      campaign_name: "",
+      pay_per_hundred: "",
+      budget: "",
+      inputList: [{ country: "", state: "", city: "", zip: "" }],
+      startDate: moment(),
+      endDate: moment().add(30, "days"),
+      country: "",
+      state: "",
+      city: "",
+      zip: "",
+      cities: "",
+      stateList: "",
+    });
+  };
 
   render() {
     const { affData } = this.props;
     let category = affData.categories ? affData.categories[0].category_id : [];
+    const renderConValue = (x) => {
+      const exit = this.props.countries.filter(
+        (item) => item.value == x.country
+      );
+      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    };
+    console.log(this.state.inputList, "inputList");
+    const renderStateValue = (x) => {
+      const exit =
+        this.state.stateList === ""
+          ? []
+          : this.state.stateList.filter((item) => item.value == x.state);
+
+      return exit[0];
+    };
+    const renderCityValue = (x) => {
+      const exit =
+        this.state.cities === ""
+          ? []
+          : this.state.cities.filter((item) => item.value == x.city);
+
+      return exit[0];
+    };
     return (
       <React.Fragment>
         <Formsy.Form
@@ -196,7 +239,7 @@ class AffiliateForm extends React.Component {
                   id="campaign_name"
                   name="campaign_name"
                   required
-                  // value={affData.title}
+                  value={this.state.campaign_name}
                   placeholder="Campaign Name"
                   onChange={(evt) => {
                     this.titleChange(evt.target.value);
@@ -282,7 +325,8 @@ class AffiliateForm extends React.Component {
                     onChange={this.changeType}
                   />
                   <label for="impressions">
-                    <img src="https://dummyimage.com/65/000/fff" alt="Image1" />
+                    <img src={impression} alt="Image1" />
+                    <div>Impressions</div>
                     {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
@@ -300,7 +344,8 @@ class AffiliateForm extends React.Component {
                     onChange={this.changeType}
                   />
                   <label for="clicks">
-                    <img src="https://dummyimage.com/65/000/fff" alt="Image2" />
+                    <img src={click} alt="Image2" />
+                    <div>Clicks</div>
                     {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
@@ -318,7 +363,8 @@ class AffiliateForm extends React.Component {
                     onChange={this.changeType}
                   />
                   <label for="sales">
-                    <img src="https://dummyimage.com/65/000/fff" alt="Image3" />
+                    <img src={sale} alt="Image3" />
+                    <div>Sales</div>
                     {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
@@ -341,6 +387,7 @@ class AffiliateForm extends React.Component {
                       type="number"
                       id="budget"
                       name="budget"
+                      value={this.state.budget}
                       onChange={(evt) => {
                         this.budget(evt.target.value);
                       }}
@@ -357,6 +404,7 @@ class AffiliateForm extends React.Component {
                       type="number"
                       id="pay_per_hundred"
                       name="pay_per_hundred"
+                      value={this.state.pay_per_hundred}
                       onChange={(evt) => {
                         this.ppClick(evt.target.value);
                       }}
@@ -372,22 +420,24 @@ class AffiliateForm extends React.Component {
                         <div className="col-md-2">
                           <span>Country {i + 1}</span>
                           <Select2
+                            key={i}
                             name="country"
-                            // value={x.country}
+                            value={renderConValue(x)}
                             onChange={(options, e) =>
                               this.changeCountry(e, options, "country", i)
                             }
                             placeholder="Select Country"
                             style={{ width: "100%" }}
                             options={this.props.countries}
-                            showSearch
+                            // showSearch
                           />
                         </div>
                         <div className="col-md-2">
                           <span>State {i + 1}</span>
                           <Select2
+                            key={i}
                             name="state"
-                            // value={x.state}
+                            value={renderStateValue(x)}
                             onChange={(options, e) =>
                               this.changeState(e, options, "state", i)
                             }
@@ -395,22 +445,30 @@ class AffiliateForm extends React.Component {
                             style={{ width: "100%" }}
                             options={this.state.stateList}
                             isDisabled={
-                              this.state.stateList === "" ? true : false
+                              // this.state.stateList === ""
+                              this.state.inputList[i].country === ""
+                                ? true
+                                : false
                             }
                           />
                         </div>
                         <div className="col-md-2">
                           <span>City {i + 1}</span>
                           <Select2
+                            key={i}
                             name="city"
-                            // value={x.city}
+                            value={renderCityValue(x)}
                             onChange={(options, e) =>
                               this.changeCity(e, options, "city", i)
                             }
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={this.state.cities}
-                            isDisabled={this.state.cities === "" ? true : false}
+                            isDisabled={
+                              this.state.inputList[i].state === ""
+                                ? true
+                                : false
+                            }
                           />
                         </div>
                         <div className="col-md-2">
@@ -422,6 +480,12 @@ class AffiliateForm extends React.Component {
                             placeholder="Zip"
                             value={x.zip}
                             onChange={(e) => this.handleZipChange(e, i)}
+                            autoComplete="off"
+                            onKeyDown={(evt) =>
+                              ["e", "E", "+", "-"].includes(evt.key) &&
+                              evt.preventDefault()
+                            }
+                            min="0"
                           />
                         </div>
 
@@ -438,6 +502,14 @@ class AffiliateForm extends React.Component {
                             <button
                               className="btn btn-primary ml-2 mt-3"
                               onClick={this.handleAddClick}
+                              disabled={
+                                this.state.inputList[i].country === "" ||
+                                this.state.inputList[i].state === "" ||
+                                this.state.inputList[i].city === "" ||
+                                this.state.inputList[i].zip === ""
+                                  ? true
+                                  : false
+                              }
                             >
                               Add
                             </button>

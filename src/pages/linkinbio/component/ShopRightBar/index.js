@@ -175,7 +175,7 @@ const ShopRightBar = (props) => {
                 )}
 
                 <div className="date-range mt-3">
-                  <span>Select Start Date / End Date</span>
+                  <span>BioShop</span>
                   <RangePicker
                     key={1}
                     defaultValue={[moment(startDate), moment(endDate)]}

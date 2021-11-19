@@ -17,7 +17,7 @@ class AffiliateCreateCampaign extends React.Component {
     affData: "",
     countries: "",
     affDataLoading: false,
-    id:""
+    id: "",
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -76,6 +76,7 @@ class AffiliateCreateCampaign extends React.Component {
         this.setState({ affDataLoading: false });
       });
   };
+
   getCountries = async () => {
     await axios
       .post(`/common/receive/countries`)
@@ -91,8 +92,9 @@ class AffiliateCreateCampaign extends React.Component {
         console.log(error);
       });
   };
+
   categoryFilter = async (id) => {
-    this.setState({id:id})
+    this.setState({ id: id });
     // await axios
     //   .get(`/shop/filter?limit=16&page=1&post_type=image&id=${id}`)
     //   .then((response) => {
@@ -111,7 +113,6 @@ class AffiliateCreateCampaign extends React.Component {
     });
   };
   affiliateModal = () => {
-    console.log(this.state.affData, "affdata");
     return this.state.aff_modal ? (
       <div className="affiliate-model image-edit-box">
         <Alert onClose={this.affToggleModal} dismissible>
@@ -136,7 +137,6 @@ class AffiliateCreateCampaign extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Create Campaign</Modal.Title>
             </Modal.Header>
-
             <AffiliateForm affData={this.state.affData} />
           </Modal>
         )}
@@ -160,8 +160,8 @@ class AffiliateCreateCampaign extends React.Component {
                     categoryFilter={this.categoryFilter}
                   />
                   <PostGallery
-                  selectPost={this.selectPost}
-                  id={this.state.id}
+                    selectPost={this.selectPost}
+                    id={this.state.id}
                   />
                 </div>
               </Col>

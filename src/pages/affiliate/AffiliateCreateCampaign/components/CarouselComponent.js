@@ -73,10 +73,9 @@ class CarouselComponent extends React.Component {
                   // to={`/${props.username}/post/${category.category_id}`}
                 > */}
                 <button
-                  onClick={() =>
-                    {
-                    this.props.categoryFilter(category.category_id)}
-                  }
+                  onClick={() => {
+                    this.props.categoryFilter(category.category_id);
+                  }}
                   className="btn-link"
                 >
                   <img

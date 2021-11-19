@@ -82,6 +82,9 @@ class InputNumberValidation extends React.Component {
             onChange={this.props.onChange}
             disabled={this.props.disabled ? true : false}
             autoComplete="off"
+            onKeyDown={(evt) =>
+              ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()
+            }
           />
         </div>
         {required}
