@@ -73,20 +73,20 @@ class AffiliateForm extends React.Component {
     list[index][name] = options.value;
     this.setState({ country: options, inputList: list });
     this.getState(options.value);
-    this.reachCampaign();
+    // this.reachCampaign();
   };
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
     this.setState({ state: options, inputList: list });
     this.getCities(options.countryCode, options.value);
-    this.reachCampaign();
+    // this.reachCampaign();
   };
   changeCity = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
     this.setState({ city: options, inputList: list });
-    this.reachCampaign();
+    // this.reachCampaign();
   };
   getState = async (countryCode) => {
     await axios
