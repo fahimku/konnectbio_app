@@ -200,8 +200,7 @@ class AffiliateForm extends React.Component {
       const exit = this.props.countries.filter(
         (item) => item.value == x.country
       );
-
-      return exit[0];
+      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
     console.log(this.state.inputList, "inputList");
     const renderStateValue = (x) => {
@@ -446,7 +445,8 @@ class AffiliateForm extends React.Component {
                             style={{ width: "100%" }}
                             options={this.state.stateList}
                             isDisabled={
-                              this.state.stateList === "" && i === i + 1
+                              // this.state.stateList === ""
+                              this.state.inputList[i].country === ""
                                 ? true
                                 : false
                             }
@@ -465,7 +465,7 @@ class AffiliateForm extends React.Component {
                             style={{ width: "100%" }}
                             options={this.state.cities}
                             isDisabled={
-                              this.state.cities === "" && i === i + 1
+                              this.state.inputList[i].state === ""
                                 ? true
                                 : false
                             }
@@ -502,6 +502,14 @@ class AffiliateForm extends React.Component {
                             <button
                               className="btn btn-primary ml-2 mt-3"
                               onClick={this.handleAddClick}
+                              disabled={
+                                this.state.inputList[i].country === "" ||
+                                this.state.inputList[i].state === "" ||
+                                this.state.inputList[i].city === "" ||
+                                this.state.inputList[i].zip === ""
+                                  ? true
+                                  : false
+                              }
                             >
                               Add
                             </button>
