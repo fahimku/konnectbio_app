@@ -43,12 +43,16 @@ class CarouselComponent extends React.Component {
             className="main-carousel py-3 mb-2"
             itemClass="carousel-item-padding-40-px"
           >
-            <div className="carousel-items">
-              <NavLink
-                to={"/"}
-                // to={`/${props.username}`}
-                //             onClick={() => categoryFilter("")}
-              >
+            <div className="carousel-items"
+            
+            onClick={() =>
+              {
+              this.props.categoryFilter("allPost")}
+            }
+            >
+                <button
+                className="btn-link"
+                >
                 <img
                   src={Post}
                   width="56px"
@@ -57,7 +61,7 @@ class CarouselComponent extends React.Component {
                   className="circles"
                 />
                 <span>My Posts</span>
-              </NavLink>
+                </button>
             </div>
 
             {this.props.allCategory.map((category, i) => (

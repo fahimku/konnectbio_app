@@ -76,6 +76,7 @@ class AffiliateCreateCampaign extends React.Component {
         this.setState({ affDataLoading: false });
       });
   };
+
   getCountries = async () => {
     await axios
       .post(`/common/receive/countries`)
@@ -91,6 +92,7 @@ class AffiliateCreateCampaign extends React.Component {
         console.log(error);
       });
   };
+
   categoryFilter = async (id) => {
     this.setState({ id: id });
     // await axios
@@ -135,7 +137,6 @@ class AffiliateCreateCampaign extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Create Campaign</Modal.Title>
             </Modal.Header>
-
             <AffiliateForm affData={this.state.affData} />
           </Modal>
         )}

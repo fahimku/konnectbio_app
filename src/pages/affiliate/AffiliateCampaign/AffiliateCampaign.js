@@ -20,7 +20,6 @@ const numberWithCommas = (x) => {
 };
 
 class AffiliateCampaign extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -138,6 +137,7 @@ class AffiliateCampaign extends React.Component {
     //   1
     // );
   }
+
   pagination = () => {
     let {username, fromDate, toDate, limit, page} = this.state;
     this.fetchPostPerformance(
@@ -151,6 +151,7 @@ class AffiliateCampaign extends React.Component {
       this.state.saveSortOrder
     );
   };
+
   paginationPrev = () => {
     let {username, fromDate, toDate, limit, previous} = this.state;
     this.fetchPostPerformance(
@@ -193,6 +194,7 @@ class AffiliateCampaign extends React.Component {
       this.state.saveSortOrder
     );
   };
+
   clearFilter = () => {
     this.setState({
       optionCategory: "",
@@ -215,12 +217,14 @@ class AffiliateCampaign extends React.Component {
       "desc"
     );
   };
+
   handleSort = (event) => {
     this.setState({
       saveSort: event.value,
       optionSort: event,
     });
   };
+
   handleSortOrder = (event) => {
     this.setState({
       saveSortOrder: event.value,
@@ -249,6 +253,7 @@ class AffiliateCampaign extends React.Component {
       this.state.offset,
       this.state.offset + this.state.perPage
     );
+
     const postData = slice.map((record) => (
       <React.Fragment>
         <Col xs={12} xl={4} md={6}>
@@ -464,7 +469,6 @@ class AffiliateCampaign extends React.Component {
               </form>
             </Col>
           </Row>
-          
 
           <hr />
           {this.state.loading ? (

@@ -81,7 +81,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Post Performance</span>
+                        <span>BioShop</span>
                       </NavLink>
                     </NavItem>
                     {/* <NavItem>
