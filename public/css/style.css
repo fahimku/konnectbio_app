@@ -362,16 +362,13 @@ span.icon {
     height: 58px !important;
   }
   .analytic-box .count-box .count-title {
-    font-size: 16px;
+    font-size: 1rem;
   }
   .link-caption {
     font-size: 24px;
   }
   .cat-right-btn {
     margin-top: 15px;
-  }
-  .analytic-box.campaign-box .count-box .count-title{
-    font-size: 1rem;
   }
 }
 .source-button .btn-primary:not(:disabled):not(.disabled):active,

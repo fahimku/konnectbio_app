@@ -261,7 +261,7 @@ class AffiliateCampaign extends React.Component {
             <div className="camp-row row">
               <div className="campaign-header col-12">
                 <h6>My Campaign Name Here</h6>
-                <div class="custom-control custom-switch custom-switch-md">
+                <div class="form-check custom-switch custom-switch-md">
                 <input type="checkbox" class="custom-control-input" id="customSwitch4" readOnly />
                 <label class="custom-control-label" htmlFor="customSwitch4"></label>
               </div>
