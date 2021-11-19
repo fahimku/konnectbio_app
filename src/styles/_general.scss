@@ -433,12 +433,13 @@ h1 small {
   margin-top: -7px !important;
   margin-bottom: 7px;
 }
-
-
-
+.country-select .reached {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
 /* for md */
-.custom-switch{
-  top:-5px;
+.custom-switch {
+  top: -5px;
 }
 .custom-switch.custom-switch-md .custom-control-label {
   padding-left: 0.6rem;
@@ -451,9 +452,9 @@ h1 small {
   width: calc(2rem + 0.75rem);
   border-radius: 3rem;
 }
-.custom-control-input:checked ~ .custom-control-label::before{
-  background-color: #04AA6D;
-  border-color: #04AA6D;
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #04aa6d;
+  border-color: #04aa6d;
 }
 
 .custom-switch.custom-switch-md .custom-control-label::after {
@@ -462,6 +463,8 @@ h1 small {
   border-radius: calc(2rem - (1.5rem / 2));
 }
 
-.custom-switch.custom-switch-md .custom-control-input:checked ~ .custom-control-label::after {
+.custom-switch.custom-switch-md
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
   transform: translateX(calc(1.5rem - 0.25rem));
 }

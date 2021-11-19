@@ -39,6 +39,7 @@ class AffiliateForm extends React.Component {
       zip: "",
       cities: "",
       stateList: "",
+      reach: "",
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -72,17 +73,20 @@ class AffiliateForm extends React.Component {
     list[index][name] = options.value;
     this.setState({ country: options, inputList: list });
     this.getState(options.value);
+    this.reachCampaign();
   };
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
     this.setState({ state: options, inputList: list });
     this.getCities(options.countryCode, options.value);
+    this.reachCampaign();
   };
   changeCity = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
     this.setState({ city: options, inputList: list });
+    this.reachCampaign();
   };
   getState = async (countryCode) => {
     await axios
@@ -97,6 +101,10 @@ class AffiliateForm extends React.Component {
             countryCode: countryCode,
           });
         });
+        let all = {};
+        all.value = "all";
+        all.label = "All";
+        selectState.unshift(all);
         this.setState({ stateList: selectState });
       })
       .catch(function (error) {
@@ -118,6 +126,10 @@ class AffiliateForm extends React.Component {
             label: name,
           });
         });
+        let all = {};
+        all.value = "all";
+        all.label = "All";
+        selectCities.unshift(all);
         this.setState({ cities: selectCities });
       })
       .catch(function (error) {
@@ -136,15 +148,16 @@ class AffiliateForm extends React.Component {
         category_id: this.props.affData.categories[0].category_id,
         budget: parseInt(this.state.budget),
         pay_per_hundred: parseInt(this.state.pay_per_hundred),
-        traffic: 100,
-        demographics: this.state.inputList,
+        // traffic: 100,
+        demographics:
+          this.state.inputList[0].country === "" ? "" : this.state.inputList,
         start_date: this.state.startDate,
         end_date: this.state.endDate,
       })
       .then((response) => {
         toast.success("Your Campaign is Created Successfully");
         this.setState({ loading: false });
-        console.log(response.data.message);
+        this.props.affCloseModal();
       })
       .catch((err) => {
         this.setState({ loading: false });
@@ -169,12 +182,26 @@ class AffiliateForm extends React.Component {
 
   // handle click event of the Add button
   handleAddClick = () => {
+    // this.reachCampaign();
     this.setState({
       inputList: [
         ...this.state.inputList,
         { country: "", state: "", city: "", zip: "" },
       ],
     });
+  };
+  reachCampaign = async () => {
+    await axios
+      .post(`/campaigns/reach`, {
+        demographics: this.state.inputList,
+      })
+      .then((response) => {
+        console.log(response.data.message);
+        this.setState({ reach: response.data.message.influencers });
+      })
+      .catch((err) => {
+        toast.error("Something went wrong");
+      });
   };
   reset = () => {
     this.setState({
@@ -195,14 +222,16 @@ class AffiliateForm extends React.Component {
 
   render() {
     const { affData } = this.props;
-    let category = affData.categories ? affData.categories[0].category_id : [];
+    let category =
+      affData.categories.length !== 0 ? affData.categories[0].category_id : [];
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
         (item) => item.value == x.country
       );
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.inputList, "inputList");
+    console.log(this.state.inputList, "input");
+
     const renderStateValue = (x) => {
       const exit =
         this.state.stateList === ""
@@ -361,6 +390,7 @@ class AffiliateForm extends React.Component {
                     class="d-none imgbgchk"
                     value="sales"
                     onChange={this.changeType}
+                    disabled
                   />
                   <label for="sales">
                     <img src={sale} alt="Image3" />
@@ -429,7 +459,11 @@ class AffiliateForm extends React.Component {
                             placeholder="Select Country"
                             style={{ width: "100%" }}
                             options={this.props.countries}
-                            // showSearch
+                            isDisabled={
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
                           />
                         </div>
                         <div className="col-md-2">
@@ -446,7 +480,8 @@ class AffiliateForm extends React.Component {
                             options={this.state.stateList}
                             isDisabled={
                               // this.state.stateList === ""
-                              this.state.inputList[i].country === ""
+                              this.state.inputList[i].country === "" ||
+                              this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
@@ -465,7 +500,8 @@ class AffiliateForm extends React.Component {
                             style={{ width: "100%" }}
                             options={this.state.cities}
                             isDisabled={
-                              this.state.inputList[i].state === ""
+                              this.state.inputList[i].state === "" ||
+                              this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
@@ -486,6 +522,11 @@ class AffiliateForm extends React.Component {
                               evt.preventDefault()
                             }
                             min="0"
+                            disabled={
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
                           />
                         </div>
 
@@ -505,8 +546,7 @@ class AffiliateForm extends React.Component {
                               disabled={
                                 this.state.inputList[i].country === "" ||
                                 this.state.inputList[i].state === "" ||
-                                this.state.inputList[i].city === "" ||
-                                this.state.inputList[i].zip === ""
+                                this.state.inputList[i].city === ""
                                   ? true
                                   : false
                               }
@@ -518,6 +558,13 @@ class AffiliateForm extends React.Component {
                       </div>
                     );
                   })}
+                  {this.state.reach === "" ? (
+                    ""
+                  ) : (
+                    <h5 className="mt-4">
+                      Influencers Reached: {this.state.reach.toString()}
+                    </h5>
+                  )}
                 </div>
               </div>
 
