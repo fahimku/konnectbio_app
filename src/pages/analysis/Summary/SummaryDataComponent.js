@@ -41,7 +41,7 @@ class SummaryDataComponent extends React.Component {
   componentDidMount() {
     this.fetchSummeryPerformance(
       this.state.username,
-      this.state.lastYear,
+      this.state.fromDate,
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
       this.state.page
