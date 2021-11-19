@@ -285,12 +285,6 @@ span.icon {
   align-items: center;
   padding-left: 0;
 }
-@media screen and (max-width: 768px) {
-  .analytics-page .container-fluid {
-    padding: 0;
-  }
-}
-
 .connections button {
   display: flex;
   justify-content: center;
@@ -375,6 +369,9 @@ span.icon {
   }
   .cat-right-btn {
     margin-top: 15px;
+  }
+  .analytic-box.campaign-box .count-box .count-title{
+    font-size: 1rem;
   }
 }
 .source-button .btn-primary:not(:disabled):not(.disabled):active,
@@ -1009,10 +1006,7 @@ a.pkg_read:hover {
   position: absolute;
   left:0;
 }
-.analytics-page.affiliate-page .tab-content > .tab-pane{
-  padding:0;
-}
-.affiliate_tab_ift .tab-pane .container-fluid{
+.affiliate_tab_ift .tab-pane .aff-container-fulid{
   padding-left:0;
   padding-right: 0;
 }
@@ -1076,7 +1070,40 @@ a.pkg_read:hover {
   justify-content: center;
   align-items: center;
 }
-
+.camp-row.row{
+  flex-direction: column;
+}
+.analytic-box.campaign-box .analytic-caption{
+  padding-left:20px;
+}
+.campaign-box .camp-row .any-post-img-col .any-post-image:after{
+  padding-top:60%;
+}
+.campaign-box .camp-row .any-post-img-col .any-post-image .any-image-box{
+  border:none;
+}
+.campaign-box .camp-row .any-post-img-col .any-post-image .any-image-box-iner img{
+  object-position: center center;
+  border-radius: 0.3rem !important;
+  border: none;
+  padding: 0;
+}
+.analytic-box.campaign-box .count-box:last-child{
+  margin-bottom: 0;
+  border:none;
+}
+.campaign-header .campaign-icon{
+  width:55px;
+  height: 55px;
+}
+.campaign-header.col-12{
+  display: flex;
+  justify-content: space-between;
+}
+.campaign-header h6{
+  font-family: "SegoeUIBold" !important;
+  margin-bottom: 1rem;
+}
 /* Affiliate Page End Here Iftikhar */
 
 

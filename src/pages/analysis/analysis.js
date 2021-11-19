@@ -56,9 +56,9 @@ class Analysis extends React.Component {
       <>
         <div className="analytics-page">
           <Row className="tab-section">
-            <Col md="12" xs="12">
+            <div className="affiliate_p_col">
               <Row>
-                <Col xs="12" className="mb-5">
+                <div className="affiliate_in_col">
                   <Nav tabs className={`${s.coloredNav}`}>
                     <NavItem>
                       <NavLink
@@ -111,7 +111,7 @@ class Analysis extends React.Component {
                   </Nav>
 
                   <TabContent
-                    className="mb-lg"
+                    className="tab-content affiliate_tab_ift"
                     activeTab={this.state.activeSecondTab}
                   >
                     <TabPane tabId="tab20">
@@ -128,9 +128,9 @@ class Analysis extends React.Component {
                       <LinkAnalytic username={this.state.username} />
                     </TabPane> */}
                   </TabContent>
-                </Col>
+                </div>
               </Row>
-            </Col>
+            </div>
           </Row>
         </div>
       </>

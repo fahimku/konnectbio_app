@@ -32,7 +32,7 @@ class AffiliateCampaign extends React.Component {
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
       page: "1",
-      limit: "9",
+      limit: "8",
       previous: "",
       myCategory: "",
       saveCategory: "",
@@ -42,7 +42,7 @@ class AffiliateCampaign extends React.Component {
       saveSortOrder: "desc",
       optionSortOrder: "",
       offset: 0,
-      perPage: 9,
+      perPage: 8,
       currentPage: 0,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
@@ -251,10 +251,17 @@ class AffiliateCampaign extends React.Component {
     );
     const postData = slice.map((record) => (
       <React.Fragment>
-        <Col xs={12} xl={4} md={6}>
-          <div className="card analytic-box">
-            <div className="card-row row">
-              <div className="any-post-img-col col-4">
+        <Col xs={12} xl={3} md={6}>
+          <div className="card analytic-box campaign-box">
+            <div className="camp-row row">
+              <div className="campaign-header col-12">
+                <h6>My Campaign Name Here</h6>
+                <div class="custom-control custom-switch custom-switch-md">
+                <input type="checkbox" class="custom-control-input" id="customSwitch4" readOnly />
+                <label class="custom-control-label" htmlFor="customSwitch4"></label>
+              </div>
+              </div>
+              <div className="any-post-img-col col-12">
                 <div className="any-post-image">
                   <div className="any-image-box">
                     <div className="any-image-box-iner">
@@ -267,33 +274,10 @@ class AffiliateCampaign extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-8 analytic-caption">
+              <div className="col-12 analytic-caption">
                 <div className="row count-main-box">
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Activate/Deactivate</h5>
-                    <h3 className="count">
-                      <div className="custom-control custom-switch">
-                        <input
-                          type="checkbox"
-                          className="custom-control-input"
-                          id="customSwitches"
-                          //      checked={this.state.switch1}
-                          //    onChange={this.handleSwitchChange(1)}
-                          readOnly
-                        />
-                        <label
-                          className="custom-control-label"
-                          htmlFor="customSwitches"
-                        ></label>
-                      </div>
-                    </h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Campaign Name</h5>
-                    <h3 className="count">{numberWithCommas(record.views)}</h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Category Name</h5>
+                    <h5 className="count-title">Category</h5>
                     <h3 className="count">{numberWithCommas(record.views)}</h3>
                   </div>
                   <div className="col-12 count-box">

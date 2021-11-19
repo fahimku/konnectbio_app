@@ -278,6 +278,16 @@
         display: none;
     }
 }
+@media screen and (max-width: 768px) {
+    .analytics-page .container-fluid {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .affiliate_tab_ift .tab-pane .aff-container-fulid{
+        padding-left: 0;
+        padding-right: 0;
+    }
+  }
 
 @media only screen and (max-width: 760px) {
 

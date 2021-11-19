@@ -150,7 +150,7 @@ class AffiliateCreateCampaign extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="container-fluid">
+        <div className="aff-container-fulid container-fluid">
           <div className="create-affiliate">
             <Row className="app_main_cont_ift main-container">
               <Col className="left-column" md="5" xs="12" xl="3">
