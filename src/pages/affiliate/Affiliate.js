@@ -95,19 +95,19 @@ class Affiliate extends React.Component {
 
                 <TabContent className="affiliate_tab_ift" activeTab={this.state.activeTab}>
                   <TabPane tabId="dashboard">
-                    <AffiliateDashboard username={this.state.username} />
+                    {this.state.activeTab=="dashboard"?<AffiliateDashboard username={this.state.username} />:null}
                   </TabPane>
                   <TabPane tabId="campaign">
-                    <AffiliateCampaign username={this.state.username} />
+                    {this.state.activeTab=="campaign"?<AffiliateCampaign username={this.state.username} />:null}
                   </TabPane>
                   <TabPane tabId="create-campaign">
-                    <AffiliateCreateCampaign
+                    {this.state.activeTab=='create-campaign'?<AffiliateCreateCampaign
                       username={this.state.username}
                       user_id={this.state.user_id}
-                    />
+                    />:null}
                   </TabPane>
                   <TabPane tabId="accounting">
-                    <AffiliateAccounting username={this.state.username} />
+                    {this.state.activeTab==="accounting"?<AffiliateAccounting username={this.state.username} />:null}
                   </TabPane>
                 </TabContent>
               </div>

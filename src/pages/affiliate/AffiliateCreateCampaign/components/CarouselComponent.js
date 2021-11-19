@@ -7,6 +7,7 @@ import Post from "../../../../images/Post2.jpg";
 class CarouselComponent extends React.Component {
   state = {
     username: this.props.username,
+    active:"allPost"
   };
 
   render() {
@@ -47,6 +48,7 @@ class CarouselComponent extends React.Component {
             
             onClick={() =>
               {
+              this.setState({active:'allPost'})
               this.props.categoryFilter("allPost")}
             }
             >
@@ -59,6 +61,7 @@ class CarouselComponent extends React.Component {
                   height="56px"
                   alt=""
                   className="circles"
+                  style={{border:this.state.active==='allPost'?"1px solid #010b40":null}}
                 />
                 <span>My Posts</span>
                 </button>
@@ -73,9 +76,11 @@ class CarouselComponent extends React.Component {
                   // to={`/${props.username}/post/${category.category_id}`}
                 > */}
                 <button
-                  onClick={() => {
-                    this.props.categoryFilter(category.category_id);
-                  }}
+                  onClick={() =>
+                    {
+                      this.setState({active:category.category_id})
+                    this.props.categoryFilter(category.category_id)}
+                  }
                   className="btn-link"
                 >
                   <img
@@ -88,6 +93,7 @@ class CarouselComponent extends React.Component {
                     height="65px"
                     alt=""
                     className="circles"
+                    style={{border:this.state.active===category.category_id?"1px solid #010b40":null}}
                   />
                   <span>{category.category_name}</span>
                 </button>
