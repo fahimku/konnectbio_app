@@ -125,16 +125,12 @@ class Register extends React.Component {
       .then((response) => {
         const selectCities = [];
         const cities = response.data.message;
-        cities.map(({name, stateCode}) => {
-          let value;
-          if (countryCode === "US") value = name + " , " + stateCode;
-          else value = name;
+        cities.map(({name}) => {
           return selectCities.push({
-            value: value,
-            label: value,
+            value: name,
+            label: name,
           });
         });
-
         this.setState({cities: selectCities});
         this.setState({cityLoading: false});
       })

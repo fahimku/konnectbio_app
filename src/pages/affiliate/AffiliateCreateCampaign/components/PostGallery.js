@@ -101,8 +101,8 @@ function PostGallery({ getPosts, posts,id ,selectPost,clearPost}) {
     }
 }
 
-function mapStateToProps({ posts }) {
-    return { posts }
+function mapStateToProps({posts}) {
+  return {posts};
 }
 
-export default connect(mapStateToProps, postAct)(PostGallery)
+export default connect(mapStateToProps, postAct)(PostGallery);
