@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Row,
-  Col,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 // import HighCharts from "./highcharts/HighCharts";
 // import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
@@ -81,7 +73,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>BioShop</span>
+                        <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
                     {/* <NavItem>

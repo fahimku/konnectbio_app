@@ -1,7 +1,7 @@
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
-import React, {useState, useEffect} from "react";
-import {toast} from "react-toastify";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -84,7 +84,7 @@ export default function ScreenButtons(props) {
                 alt="..."
                 src={file.preview}
                 key={`img-id-${idx.toString()}`}
-                style={{width: "76px", height: "76px"}}
+                style={{ width: "76px", height: "76px" }}
                 className="circle profile-icon"
               />
             ))}
@@ -93,7 +93,7 @@ export default function ScreenButtons(props) {
         ) : (
           <>
             <img
-              style={{width: "76px", height: "76px"}}
+              style={{ width: "76px", height: "76px" }}
               className="circle profile-icon"
               alt="profile-icon"
               src={userImage}

@@ -9,11 +9,12 @@ import axios from 'axios';
 import App from './components/App';
 import config from './config';
 import createRootReducer from './reducers';
-import { doInit,logoutUser } from './actions/auth';
+import { doInit } from './actions/auth';
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export function getHistory() {
   return history;
 }

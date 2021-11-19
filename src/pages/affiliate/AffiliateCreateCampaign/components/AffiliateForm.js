@@ -228,7 +228,8 @@ class AffiliateForm extends React.Component {
       const exit = this.props.countries.filter(
         (item) => item.value == x.country
       );
-      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+
+      return exit[0];
     };
     console.log(this.state.inputList, "input");
 

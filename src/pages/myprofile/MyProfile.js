@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import {Row, Col, Button} from "react-bootstrap";
-import {toast} from "react-toastify";
+import { Row, Col, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import ChangePassword from "./component/ChangePassword";
 import ScreenButton from "./component/screenButtons";
@@ -34,7 +34,7 @@ class MyProfile extends React.Component {
 
   componentDidMount() {
     const userInfo2 = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({userInfo2: userInfo2});
+    this.setState({ userInfo2: userInfo2 });
     this.fetchUserInfo(userInfo2);
   }
 
@@ -57,7 +57,7 @@ class MyProfile extends React.Component {
   };
 
   setDefaultData = () => {
-    const {form} = this.state;
+    const { form } = this.state;
     setTimeout(() => {
       form.name = this.state.userData.name;
       form.bio = this.state.userData.bio;
@@ -81,7 +81,7 @@ class MyProfile extends React.Component {
         axios
           .put(`/users/revise/resetUserMenuImage/${userInfo.user_id}`)
           .then((response) => {
-            this.setState({disabled: true});
+            this.setState({ disabled: true });
             let imageResponse = response.data;
             toast.success(imageResponse.message);
             const userInformation = localStorage.getItem("userInfo");
@@ -95,20 +95,20 @@ class MyProfile extends React.Component {
             toast.error(err.response.data.message);
           });
       } else {
-        this.setState({cancelDefaultImage: true});
-        this.setState({setDefaultImage: false});
-        this.setState({disabled: true});
+        this.setState({ cancelDefaultImage: true });
+        this.setState({ setDefaultImage: false });
+        this.setState({ disabled: true });
       }
     });
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await axios
       .put(`/users/revise/profilefields/${userInfo.user_id}`, this.state.form)
       .then((response) => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
         this.fetchUserInfo(this.state.userInfo2);
@@ -116,12 +116,12 @@ class MyProfile extends React.Component {
       .catch((err) => {
         console.log(err.response.data);
         toast.error(err.response.data.message);
-        this.setState({loading: false});
+        this.setState({ loading: false });
       });
   };
 
   handleChange = (e) => {
-    let {form} = this.state;
+    let { form } = this.state;
     form[e.target.name] = e.target.value;
     this.setState({
       form,
@@ -129,9 +129,9 @@ class MyProfile extends React.Component {
   };
 
   setDefaultImage = () => {
-    this.setState({cancelDefaultImage: false});
-    this.setState({setDefaultImage: true});
-    this.setState({disabled: false});
+    this.setState({ cancelDefaultImage: false });
+    this.setState({ setDefaultImage: true });
+    this.setState({ disabled: false });
   };
 
   onChangeInputImage = (e) => {
@@ -152,7 +152,7 @@ class MyProfile extends React.Component {
     var formData = new FormData();
     formData.append("image", this.state.imageFiles[0]);
     formData.append("instagram_username", userInfo.username);
-    this.setState({loadingImage: true});
+    this.setState({ loadingImage: true });
     await axios
       .put(`/users/revise/profileimage/${userInfo.user_id}`, formData, {
         headers: {
@@ -160,16 +160,16 @@ class MyProfile extends React.Component {
         },
       })
       .then((response) => {
-        this.setState({loadingImage: false});
+        this.setState({ loadingImage: false });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
         this.fetchUserInfo(this.state.userInfo2);
-        this.setState({imageFiles: []});
+        this.setState({ imageFiles: [] });
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-        this.setState({loadingImage: false});
-        this.setState({imageError: err.response.data.message});
+        this.setState({ loadingImage: false });
+        this.setState({ imageError: err.response.data.message });
       });
   };
 
@@ -206,7 +206,7 @@ class MyProfile extends React.Component {
                                   alt="..."
                                   src={file.preview}
                                   key={`img-id-${idx.toString()}`}
-                                  style={{width: "76px", height: "76px"}}
+                                  style={{ width: "76px", height: "76px" }}
                                   className="circle profile-icon"
                                 />
                                 <strong>Logo</strong>
@@ -217,7 +217,7 @@ class MyProfile extends React.Component {
                           this.state.userImage === undefined ? (
                           <>
                             <img
-                              style={{width: "76px", height: "76px"}}
+                              style={{ width: "76px", height: "76px" }}
                               className="circle profile-icon"
                               alt="profile-icon"
                               src={Placeholder}
@@ -227,7 +227,7 @@ class MyProfile extends React.Component {
                         ) : (
                           <>
                             <img
-                              style={{width: "76px", height: "76px"}}
+                              style={{ width: "76px", height: "76px" }}
                               className="circle profile-icon"
                               alt="profile-icon"
                               src={this.state.userImage}
@@ -333,7 +333,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage: false});
+                        this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/profile.jpg"
                       name="Profile"
@@ -344,7 +344,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage: false});
+                        this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
                       name="All Posts"
@@ -355,7 +355,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage: false});
+                        this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/links.jpg"
                       name="Links"
@@ -366,7 +366,7 @@ class MyProfile extends React.Component {
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
-                        this.setState({setDefaultImage: false});
+                        this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/coupon.PNG"
                       name="Coupons"

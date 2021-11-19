@@ -1,15 +1,24 @@
 import axios from "axios";
 import React from "react";
-import Select, {createFilter} from "react-select";
+import BaseSelect, { createFilter } from "react-select";
+import FixRequiredSelect from "../../../hooks/FixRequiredSelect";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
-import {Alert, Button} from "reactstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import {registerUser, authError} from "../../../actions/auth";
+import { registerUser, authError } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 import Loader from "../../../components/Loader";
 
+const Select = props => (
+  <FixRequiredSelect
+    {...props}
+    SelectComponent={BaseSelect}
+   
+
+  />
+);
 class Register extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -20,7 +29,7 @@ class Register extends React.Component {
 
       countryLoading: false,
       stateLoading: false,
-      cityLoading:false,
+      cityLoading: false,
       name: "",
       email: "",
       countries: "",
@@ -29,15 +38,15 @@ class Register extends React.Component {
       countryState: "",
       cities: "",
       genderList: [
-        {value: "male", label: "Male"},
-        {value: "female", label: "Female"},
-        {value: "other", label: "Other"},
+        { value: "male", label: "Male" },
+        { value: "female", label: "Female" },
+        { value: "other", label: "Other" },
       ],
       gender: "",
       userType: "",
       accountTypes: [
-        {value: "Influencer", label: "Influencer"},
-        {value: "Brand", label: "Brand"},
+        { value: "Influencer", label: "Influencer" },
+        { value: "Brand", label: "Brand" },
       ],
       country: "",
       city: "",
@@ -69,7 +78,6 @@ class Register extends React.Component {
   async componentDidMount() {
     await this.getCountries();
     await this.getStates(this.state.countryCode);
-
   }
 
   getCountries = async () => {
@@ -78,16 +86,16 @@ class Register extends React.Component {
       .then((response) => {
         const selectCountries = [];
         const countries = response.data.message;
-        countries.map(({name, code1, selected}) => {
+        countries.map(({ name, code1, selected }) => {
           if (selected) {
             // console.log({name, code1, selected});
-            this.setState({country: name, countryCode: code1});
+            this.setState({ country: name, countryCode: code1 });
           } else {
-            this.setState({country: "Pakistan", countryCode: "PK"});
+            this.setState({ country: "Pakistan", countryCode: "PK" });
           }
-          return selectCountries.push({value: code1, label: name});
+          return selectCountries.push({ value: code1, label: name });
         });
-        this.setState({countries: selectCountries});
+        this.setState({ countries: selectCountries });
       })
       .catch(function (error) {
         console.log(error);
@@ -97,15 +105,15 @@ class Register extends React.Component {
   getStates = async (countryCode) => {
     this.setState({ stateLoading: true });
     await axios
-      .post(`/common/receive/states`, {country_code: countryCode})
+      .post(`/common/receive/states`, { country_code: countryCode })
       .then((response) => {
         const selectStates = [];
         const states = response.data.message;
-        states.map(({name, isoCode, selected}) => {
+        states.map(({ name, isoCode, selected }) => {
           if (selected) {
-            this.setState({countryState: name, countryStateCode: isoCode});
+            this.setState({ countryState: name, countryStateCode: isoCode });
           }
-          return selectStates.push({value: isoCode, label: name});
+          return selectStates.push({ value: isoCode, label: name });
         });
         this.setState({ countryStates: selectStates });
         this.setState({ stateLoading: false });
@@ -116,7 +124,7 @@ class Register extends React.Component {
   };
 
   getCities = async (countryCode, stateCode) => {
-    this.setState({cityLoading: true});
+    this.setState({ cityLoading: true });
     await axios
       .post(`/common/receive/cities`, {
         country_code: countryCode,
@@ -125,14 +133,14 @@ class Register extends React.Component {
       .then((response) => {
         const selectCities = [];
         const cities = response.data.message;
-        cities.map(({name}) => {
+        cities.map(({ name }) => {
           return selectCities.push({
             value: name,
             label: name,
           });
         });
-        this.setState({cities: selectCities});
-        this.setState({cityLoading: false});
+        this.setState({ cities: selectCities });
+        this.setState({ cityLoading: false });
       })
       .catch(function (error) {
         console.log(error);
@@ -140,42 +148,42 @@ class Register extends React.Component {
   };
 
   changeName(event) {
-    this.setState({name: event.target.value});
+    this.setState({ name: event.target.value });
   }
 
   changeEmail(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   changeGender(event) {
-    this.setState({gender: event.value});
+    this.setState({ gender: event.value });
   }
 
   changeUserType(event) {
-    this.setState({userType: event.value});
+    this.setState({ userType: event.value });
   }
 
   changeCountry(event) {
-    this.setState({city: ""});
-    this.setState({country: event.label, countryCode: event.value});
+    this.setState({ city: "" });
+    this.setState({ country: event.label, countryCode: event.value });
     this.getStates(event.value);
   }
 
   changeState(event) {
-    this.setState({countryState: event.label, countryStateCode: event.value});
+    this.setState({ countryState: event.label, countryStateCode: event.value });
     this.getCities(this.state.countryCode, event.value);
   }
 
   changeCity(event) {
-    this.setState({city: event.value});
+    this.setState({ city: event.value });
   }
 
   changePassword(event) {
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
   changeConfirmPassword(event) {
-    this.setState({confirmPassword: event.target.value});
+    this.setState({ confirmPassword: event.target.value });
   }
 
   checkPassword() {
@@ -199,11 +207,11 @@ class Register extends React.Component {
     );
   }
   changeZip(event) {
-    this.setState({zip: event.target.value});
+    this.setState({ zip: event.target.value });
   }
 
   changeReferred(event) {
-    this.setState({referred_by: event.target.value});
+    this.setState({ referred_by: event.target.value });
   }
 
   doRegister(e) {
@@ -218,7 +226,7 @@ class Register extends React.Component {
           email: this.state.email,
           gender: this.state.gender,
           country: this.state.countryCode,
-          state:this.state.countryStateCode,
+          state: this.state.countryStateCode,
           city: this.state.city,
           password: this.state.password,
           zip: this.state.zip,
@@ -316,6 +324,7 @@ class Register extends React.Component {
                     </div>
                     <div className="form-group">
                       <Select
+                        required
                         className="form_select_group"
                         value={
                           this.state.gender && {
@@ -334,6 +343,7 @@ class Register extends React.Component {
                     <div className="form-group">
                       {this.state.country && (
                         <Select
+                          required
                           className="form_select_group"
                           defaultValue={{
                             label: this.state.country,
@@ -346,7 +356,7 @@ class Register extends React.Component {
                             }
                           }
                           onChange={this.changeCountry}
-                          filterOption={createFilter({ignoreAccents: false})}
+                          filterOption={createFilter({ ignoreAccents: false })}
                           placeholder="Select Country"
                           options={this.state.countries}
                         />
@@ -357,9 +367,10 @@ class Register extends React.Component {
                       {this.state.stateLoading && <Loader />}
                       {this.state.country && !this.state.stateLoading && (
                         <Select
+                          required
                           className="form_select_group"
                           onChange={this.changeState}
-                          filterOption={createFilter({ignoreAccents: false})}
+                          filterOption={createFilter({ ignoreAccents: false })}
                           placeholder="Select State"
                           options={this.state.countryStates}
                           value={
@@ -374,21 +385,22 @@ class Register extends React.Component {
 
                     <div className="form-group">
                       {this.state.cityLoading && <Loader />}
-                        {this.state.countryState && !this.state.cityLoading && (
-                          <Select
-                            className="form_select_group"
-                            onChange={this.changeCity}
-                            filterOption={createFilter({ ignoreAccents: false })}
-                            placeholder="Select City"
-                            options={this.state.cities}
-                            value={
-                              this.state.city && {
-                                label: this.state.city,
-                                value: this.state.city,
-                              }
+                      {this.state.countryState && !this.state.cityLoading && (
+                        <Select
+                          required
+                          className="form_select_group"
+                          onChange={this.changeCity}
+                          filterOption={createFilter({ ignoreAccents: false })}
+                          placeholder="Select City"
+                          options={this.state.cities}
+                          value={
+                            this.state.city && {
+                              label: this.state.city,
+                              value: this.state.city,
                             }
-                          />
-                        )}
+                          }
+                        />
+                      )}
                     </div>
                     <div className="form-group">
                       <input
