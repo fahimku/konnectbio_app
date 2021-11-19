@@ -242,7 +242,7 @@ h1 small {
   position: absolute;
   left: 0;
   top: 110px;
-  right:0;
+  right: 0;
   height: -moz-calc(100% - 150px);
   height: -webkit-calc(100% - 150px);
   height: -o-calc(100% - 150px);
@@ -377,17 +377,21 @@ h1 small {
   transition: transform 1s;
   // object-fit: cover;
   border-radius: 50%;
+  background: gray;
+  padding: 15px;
 }
 .col1 label {
   overflow: hidden;
   position: relative;
+  text-align: center;
 }
 .imgbgchk:checked + label > .tick_container {
   opacity: 1;
 }
 .imgbgchk:checked + label > img {
   // transform: scale(1.25);
-  opacity: 0.3;
+  // opacity: 0.3;
+  background: #000;
 }
 .tick_container {
   transition: 0.5s ease;
