@@ -33,15 +33,15 @@ class Register extends React.Component {
     }
 
     changeEmail(event) {
-        this.setState({email: event.target.value});
+        this.setState({ email: event.target.value });
     }
 
     changePassword(event) {
-        this.setState({password: event.target.value});
+        this.setState({ password: event.target.value });
     }
 
     changeConfirmPassword(event) {
-        this.setState({confirmPassword: event.target.value});
+        this.setState({ confirmPassword: event.target.value });
     }
 
     checkPassword() {
@@ -58,7 +58,7 @@ class Register extends React.Component {
     }
 
     isPasswordValid() {
-       return this.state.password && this.state.password === this.state.confirmPassword;
+        return this.state.password && this.state.password === this.state.confirmPassword;
     }
 
     doRegister(e) {
@@ -77,20 +77,20 @@ class Register extends React.Component {
     }
 
     googleLogin() {
-        this.props.dispatch(loginUser({social: "google"}));
+        this.props.dispatch(loginUser({ social: "google" }));
     }
 
     microsoftLogin() {
-        this.props.dispatch(loginUser({social: "microsoft"}));
+        this.props.dispatch(loginUser({ social: "microsoft" }));
     }
 
     render() {
-        const {from} = this.props.location.state || {from: {pathname: '/app'}}; // eslint-disable-line
+        const { from } = this.props.location.state || { from: { pathname: '/app' } }; // eslint-disable-line
 
         // cant access login page while logged in
         if (Login.isAuthenticated(localStorage.getItem('token'))) {
             return (
-                <Redirect to={from}/>
+                <Redirect to={from} />
             );
         }
 
@@ -98,9 +98,9 @@ class Register extends React.Component {
             <div className="auth-page">
                 <Container>
                     <h5 className="auth-logo">
-                        <i className="fa fa-circle text-gray"/>
+                        <i className="fa fa-circle text-gray" />
                         Sing App
-                        <i className="fa fa-circle text-warning"/>
+                        <i className="fa fa-circle text-warning" />
                     </h5>
                     <Widget className="widget-auth mx-auto" title={<h3 className="mt-0">Create an Account</h3>}>
                         <p className="widget-auth-info">
@@ -116,29 +116,29 @@ class Register extends React.Component {
                             }
                             <div className="form-group">
                                 <input className="form-control no-border" value={this.state.email}
-                                       onChange={this.changeEmail} type="text" required name="email"
-                                       placeholder="Email"/>
+                                    onChange={this.changeEmail} type="text" required name="email"
+                                    placeholder="Email" />
                             </div>
                             <div className="form-group">
                                 <input className="form-control no-border" value={this.state.password}
-                                       onChange={this.changePassword} type="password" required name="password"
-                                       placeholder="Password"/>
+                                    onChange={this.changePassword} type="password" required name="password"
+                                    placeholder="Password" />
                             </div>
                             <div className="form-group">
                                 <input className="form-control no-border" value={this.state.confirmPassword}
-                                       onChange={this.changeConfirmPassword} onBlur={this.checkPassword} type="password" required name="confirmPassword"
-                                       placeholder="Confirm"/>
+                                    onChange={this.changeConfirmPassword} onBlur={this.checkPassword} type="password" required name="confirmPassword"
+                                    placeholder="Confirm" />
                             </div>
                             <Button type="submit" color="inverse" className="auth-btn mb-3" size="sm">{this.props.isFetching ? 'Loading...' : 'Register'}</Button>
                             <p className="widget-auth-info">or sign up with</p>
                             <div className="social-buttons">
                                 <Button onClick={this.googleLogin} color="primary" className="social-button mb-2">
-                                    <i className="social-icon social-google"/>
+                                    <i className="social-icon social-google" />
                                     <p className="social-text">GOOGLE</p>
                                 </Button>
                                 <Button onClick={this.microsoftLogin} color="success" className="social-button">
                                     <i className="social-icon social-microsoft"
-                                       style={{backgroundImage: `url(${microsoft})`}}/>
+                                        style={{ backgroundImage: `url(${microsoft})` }} />
                                     <p className="social-text">MICROSOFT</p>
                                 </Button>
                             </div>

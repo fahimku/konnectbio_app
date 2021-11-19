@@ -15,10 +15,9 @@ const Select = props => (
   <FixRequiredSelect
     {...props}
     SelectComponent={BaseSelect}
-   
-
   />
 );
+
 class Register extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -165,11 +164,13 @@ class Register extends React.Component {
 
   changeCountry(event) {
     this.setState({ city: "" });
+    this.setState({ countryState: "" });
     this.setState({ country: event.label, countryCode: event.value });
     this.getStates(event.value);
   }
 
   changeState(event) {
+    this.setState({ city: "" });
     this.setState({ countryState: event.label, countryStateCode: event.value });
     this.getCities(this.state.countryCode, event.value);
   }
@@ -382,7 +383,6 @@ class Register extends React.Component {
                         />
                       )}
                     </div>
-
                     <div className="form-group">
                       {this.state.cityLoading && <Loader />}
                       {this.state.countryState && !this.state.cityLoading && (
