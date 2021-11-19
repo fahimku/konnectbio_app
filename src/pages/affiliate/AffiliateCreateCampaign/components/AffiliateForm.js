@@ -217,6 +217,7 @@ class AffiliateForm extends React.Component {
       zip: "",
       cities: "",
       stateList: "",
+      campaign_type: "",
     });
   };
 
@@ -231,7 +232,7 @@ class AffiliateForm extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.inputList, "input");
+    console.log(this.state.campaign_type, "campaign_type");
 
     const renderStateValue = (x) => {
       const exit =
@@ -353,6 +354,9 @@ class AffiliateForm extends React.Component {
                     class="d-none imgbgchk"
                     value="impressions"
                     onChange={this.changeType}
+                    checked={
+                      this.state.campaign_type === "impressions" ? true : false
+                    }
                   />
                   <label for="impressions">
                     <img src={impression} alt="Image1" />
@@ -372,6 +376,9 @@ class AffiliateForm extends React.Component {
                     class="d-none imgbgchk"
                     value="clicks"
                     onChange={this.changeType}
+                    checked={
+                      this.state.campaign_type === "clicks" ? true : false
+                    }
                   />
                   <label for="clicks">
                     <img src={click} alt="Image2" />
