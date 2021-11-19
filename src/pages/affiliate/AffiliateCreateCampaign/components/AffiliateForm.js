@@ -229,7 +229,7 @@ class AffiliateForm extends React.Component {
         (item) => item.value == x.country
       );
 
-      return exit[0];
+      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
     console.log(this.state.inputList, "input");
 
