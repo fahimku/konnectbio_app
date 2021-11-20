@@ -1,13 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import Post from "../../../../images/Post2.jpg";
 
 class CarouselComponent extends React.Component {
   state = {
     username: this.props.username,
-    active:"allPost"
+    active: "allPost",
   };
 
   render() {
@@ -44,17 +44,14 @@ class CarouselComponent extends React.Component {
             className="main-carousel py-3 mb-2"
             itemClass="carousel-item-padding-40-px"
           >
-            <div className="carousel-items"
-            
-            onClick={() =>
-              {
-              this.setState({active:'allPost'})
-              this.props.categoryFilter("allPost")}
-            }
+            <div
+              className="carousel-items"
+              onClick={() => {
+                this.setState({ active: "allPost" });
+                this.props.categoryFilter("allPost");
+              }}
             >
-                <button
-                className="btn-link"
-                >
+              <button className="btn-link">
                 <img
                   src={Post}
                   width="56px"
@@ -63,9 +60,14 @@ class CarouselComponent extends React.Component {
                   className="circles"
                 />
                 <span
-                style={{color:this.state.active==='allPost'?"#010b40":null,fontWeight:this.state.active==='allPost'?'bold':null}}
-                >My Posts</span>
-                </button>
+                  style={{
+                    color: this.state.active === "allPost" ? "#010b40" : null,
+                    fontWeight: this.state.active === "allPost" ? "bold" : null,
+                  }}
+                >
+                  My Posts
+                </span>
+              </button>
             </div>
 
             {this.props.allCategory.map((category, i) => (
@@ -77,11 +79,10 @@ class CarouselComponent extends React.Component {
                   // to={`/${props.username}/post/${category.category_id}`}
                 > */}
                 <button
-                  onClick={() =>
-                    {
-                      this.setState({active:category.category_id})
-                    this.props.categoryFilter(category.category_id)}
-                  }
+                  onClick={() => {
+                    this.setState({ active: category.category_id });
+                    this.props.categoryFilter(category.category_id);
+                  }}
                   className="btn-link"
                 >
                   <img
@@ -96,8 +97,19 @@ class CarouselComponent extends React.Component {
                     className="circles"
                   />
                   <span
-                  style={{color:this.state.active===category.category_id?"#010b40":null,fontWeight:this.state.active===category.category_id?'bold':'normal'}}
-                  >{category.category_name}</span>
+                    style={{
+                      color:
+                        this.state.active === category.category_id
+                          ? "#010b40"
+                          : null,
+                      fontWeight:
+                        this.state.active === category.category_id
+                          ? "bold"
+                          : "normal",
+                    }}
+                  >
+                    {category.category_name}
+                  </span>
                 </button>
               </div>
             ))}

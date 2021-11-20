@@ -14,13 +14,12 @@ import InputNumberValidation from "../../../../components/InputValidation/InputN
 import click from "../../../../images/campaign/click.svg";
 import sale from "../../../../images/campaign/sale.svg";
 import impression from "../../../../images/campaign/impression.svg";
-import { log } from "nvd3";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
-import { Country, State, City } from "country-state-city";
+// import { Country, State, City } from "country-state-city";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const dateFormat = "YYYY-MM-DD";
+// const dateFormat = "YYYY-MM-DD";
 
 class AffiliateForm extends React.Component {
   constructor(props) {
@@ -55,8 +54,6 @@ class AffiliateForm extends React.Component {
     this.setState({ budget: value });
   };
   dateRangePickerChanger(value, dataString) {
-    console.log(value, "value");
-    console.log(dataString, "dataString");
     let startDate = dataString[0];
     let endDate = dataString[1];
     this.setState({ startDate: startDate });
@@ -79,7 +76,6 @@ class AffiliateForm extends React.Component {
   };
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
-    console.log(this.state.country.value, "country");
     list[index][name] = options.value;
     this.getCities(options.countryCode, options.value);
     this.setState({ state: options, inputList: list });
@@ -259,29 +255,6 @@ class AffiliateForm extends React.Component {
       return exit[0];
     };
 
-    let countryall = [];
-    let stateall = [];
-    let cityall = [];
-    Country.getAllCountries().map(({ name, isoCode }) => {
-      return countryall.push({ value: isoCode, label: name });
-    });
-
-    State.getStatesOfCountry("US").map(({ name, isoCode, countryCode }) => {
-      return stateall.push({
-        value: isoCode,
-        label: name,
-        countryCode: countryCode,
-      });
-    });
-    City.getCitiesOfCountry("US").map(({ name, countryCode }) => {
-      return cityall.push({
-        value: countryCode,
-        label: name,
-      });
-    });
-    console.log(City.getCitiesOfCountry("US"), "city");
-    // getStateByCodeAndCountry(stateCode, countryCode);
-
     return (
       <React.Fragment>
         <Formsy.Form
@@ -441,40 +414,6 @@ class AffiliateForm extends React.Component {
                       </div>
                     </div> */}
                   </label>
-                </div>
-              </div>
-              <div className="mt-3">
-                <div className="row">
-                  <div className="col-md-4">
-                    <Select2
-                      name="country"
-                      placeholder="Select country"
-                      options={countryall}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <Select2
-                      name="state"
-                      placeholder="Select State"
-                      options={stateall}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <Select2
-                      name="city"
-                      placeholder="Select City"
-                      options={cityall}
-                    />
-                    {/* <select class="form-control" id="sel1">
-                      {cityall.map((option, index) => {
-                        return (
-                          <option key={index} value={option.value}>
-                            {option.label}
-                          </option>
-                        );
-                      })}
-                    </select> */}
-                  </div>
                 </div>
               </div>
             </div>
