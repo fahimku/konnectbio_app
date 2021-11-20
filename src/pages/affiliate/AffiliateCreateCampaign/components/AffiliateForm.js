@@ -15,6 +15,8 @@ import click from "../../../../images/campaign/click.svg";
 import sale from "../../../../images/campaign/sale.svg";
 import impression from "../../../../images/campaign/impression.svg";
 import { log } from "nvd3";
+import { connect } from "react-redux";
+import * as postActions from "../../../../actions/posts";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -73,20 +75,22 @@ class AffiliateForm extends React.Component {
     list[index][name] = options.value;
     this.setState({ country: options, inputList: list });
     this.getState(options.value);
-    // this.reachCampaign();
+    this.reachCampaign();
   };
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
+    console.log(this.state.country.value, "country");
     list[index][name] = options.value;
-    this.setState({ state: options, inputList: list });
     this.getCities(options.countryCode, options.value);
-    // this.reachCampaign();
+    this.setState({ state: options, inputList: list });
+
+    this.reachCampaign();
   };
   changeCity = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
     this.setState({ city: options, inputList: list });
-    // this.reachCampaign();
+    this.reachCampaign();
   };
   getState = async (countryCode) => {
     await axios
@@ -104,6 +108,7 @@ class AffiliateForm extends React.Component {
         let all = {};
         all.value = "all";
         all.label = "All";
+        all.countryCode = this.state.country.value;
         selectState.unshift(all);
         this.setState({ stateList: selectState });
       })
@@ -129,6 +134,7 @@ class AffiliateForm extends React.Component {
         let all = {};
         all.value = "all";
         all.label = "All";
+        all.countryCode = this.state.country.value;
         selectCities.unshift(all);
         this.setState({ cities: selectCities });
       })
@@ -157,6 +163,9 @@ class AffiliateForm extends React.Component {
       .then((response) => {
         toast.success("Your Campaign is Created Successfully");
         this.setState({ loading: false });
+        // this.props.affCloseModal();
+        // this.props.getPosts(1, null, this.props.clearPost);
+        this.props.updatePost(id);
         this.props.affCloseModal();
       })
       .catch((err) => {
@@ -196,7 +205,6 @@ class AffiliateForm extends React.Component {
         demographics: this.state.inputList,
       })
       .then((response) => {
-        console.log(response.data.message);
         this.setState({ reach: response.data.message.influencers });
       })
       .catch((err) => {
@@ -218,6 +226,7 @@ class AffiliateForm extends React.Component {
       cities: "",
       stateList: "",
       campaign_type: "",
+      reach: "",
     });
   };
 
@@ -232,7 +241,7 @@ class AffiliateForm extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.campaign_type, "campaign_type");
+    console.log(this.state.inputList, "inputList");
 
     const renderStateValue = (x) => {
       const exit =
@@ -570,7 +579,7 @@ class AffiliateForm extends React.Component {
                     ""
                   ) : (
                     <h5 className="mt-4">
-                      Influencers Reached: {this.state.reach.toString()}
+                      Influencer's Reach: {this.state.reach.toString()}
                     </h5>
                   )}
                 </div>
@@ -624,4 +633,4 @@ class AffiliateForm extends React.Component {
     );
   }
 }
-export default AffiliateForm;
+export default connect(null, postActions)(AffiliateForm);
