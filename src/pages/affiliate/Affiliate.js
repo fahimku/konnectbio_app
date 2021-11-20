@@ -1,10 +1,18 @@
 import React from "react";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import s from "./Affiliate.module.scss";
-import {Row, Col, TabContent, TabPane, Nav, NavItem, NavLink} from "reactstrap";
+import {
+  Row,
+  Col,
+  TabContent,
+  TabPane,
+  Nav,
+  NavItem,
+  NavLink,
+} from "reactstrap";
 import classnames from "classnames";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
@@ -15,7 +23,6 @@ export const history = createBrowserHistory({
 });
 
 class Affiliate extends React.Component {
- 
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -26,7 +33,7 @@ class Affiliate extends React.Component {
       username: username,
     };
   }
- 
+
   toggleTabs(tab) {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -64,7 +71,7 @@ class Affiliate extends React.Component {
                         this.toggleTabs("campaign");
                       }}
                     >
-                      <span>Active Campaign</span>
+                      <span>Campaigns</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -93,21 +100,32 @@ class Affiliate extends React.Component {
                   </NavItem>
                 </Nav>
 
-                <TabContent className="affiliate_tab_ift" activeTab={this.state.activeTab}>
+                <TabContent
+                  className="affiliate_tab_ift"
+                  activeTab={this.state.activeTab}
+                >
                   <TabPane tabId="dashboard">
-                    {this.state.activeTab=="dashboard"?<AffiliateDashboard username={this.state.username} />:null}
+                    {this.state.activeTab == "dashboard" ? (
+                      <AffiliateDashboard username={this.state.username} />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="campaign">
-                    {this.state.activeTab=="campaign"?<AffiliateCampaign username={this.state.username} />:null}
+                    {this.state.activeTab == "campaign" ? (
+                      <AffiliateCampaign username={this.state.username} />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="create-campaign">
-                    {this.state.activeTab=='create-campaign'?<AffiliateCreateCampaign
-                      username={this.state.username}
-                      user_id={this.state.user_id}
-                    />:null}
+                    {this.state.activeTab == "create-campaign" ? (
+                      <AffiliateCreateCampaign
+                        username={this.state.username}
+                        user_id={this.state.user_id}
+                      />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="accounting">
-                    {this.state.activeTab==="accounting"?<AffiliateAccounting username={this.state.username} />:null}
+                    {this.state.activeTab === "accounting" ? (
+                      <AffiliateAccounting username={this.state.username} />
+                    ) : null}
                   </TabPane>
                 </TabContent>
               </div>

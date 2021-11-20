@@ -155,25 +155,32 @@ class AffiliateCreateCampaign extends React.Component {
             <Row className="app_main_cont_ift main-container">
               <Col className="left-column" md="5" xs="12" xl="3">
                 <div className="">
-                  {this.state.allCategory.length>0?(
+                  {this.state.allCategory.length > 0 ? (
                     <>
                       <CarouselComponent
-                      allCategory={this.state.allCategory}
-                      categoryFilter={this.categoryFilter}
-                    />
+                        allCategory={this.state.allCategory}
+                        categoryFilter={this.categoryFilter}
+                      />
                     </>
-                  ):(
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 5 }}>
-                          <i
-                              className="la la-spinner la-spin"
-                              style={{ fontSize: 40 }}
-                          />
+                  ) : (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: 5,
+                      }}
+                    >
+                      <i
+                        className="la la-spinner la-spin"
+                        style={{ fontSize: 40 }}
+                      />
                     </div>
                   )}
-                    <PostGallery
+                  <PostGallery
                     selectPost={this.selectPost}
                     id={this.state.id}
-                    />
+                  />
                 </div>
               </Col>
               <Col className="right-bar bg-white" md="7" xs="12" xl="9">
