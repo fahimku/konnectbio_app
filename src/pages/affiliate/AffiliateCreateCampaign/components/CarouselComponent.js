@@ -63,7 +63,7 @@ class CarouselComponent extends React.Component {
                   className="circles"
                 />
                 <span
-                style={{color:this.state.active==='allPost'?"#010b40":null,fontWeight:this.state.active==='allPost'?'bold':null}}
+                className={this.state.active==='allPost'?"aff-active-circle":null}
                 >My Posts</span>
                 </button>
             </div>
@@ -96,7 +96,7 @@ class CarouselComponent extends React.Component {
                     className="circles"
                   />
                   <span
-                  style={{color:this.state.active===category.category_id?"#010b40":null,fontWeight:this.state.active===category.category_id?'bold':'normal'}}
+                  className={this.state.active===category.category_id?"aff-active-circle":null}
                   >{category.category_name}</span>
                 </button>
               </div>

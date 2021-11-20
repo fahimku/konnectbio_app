@@ -129,7 +129,7 @@ class AffiliateCreateCampaign extends React.Component {
         </Alert> */}
         <div className="image-box-info">
           <h4>
-            Add New Link
+            Create Campaign
             <span
                onClick={this.affToggleModal}
               className="fa fa-times"
