@@ -115,7 +115,7 @@ class AffiliateCreateCampaign extends React.Component {
   affiliateModal = () => {
     return this.state.aff_modal ? (
       <div className="affiliate-model image-edit-box">
-        <Alert onClose={this.affToggleModal} dismissible>
+        {/* <Alert onClose={this.affToggleModal} dismissible>
           <Alert.Heading>Create Campaign</Alert.Heading>
           {this.state.affDataLoading ? (
             <Loader className="analytics-loading" size={60} />
@@ -126,7 +126,34 @@ class AffiliateCreateCampaign extends React.Component {
               affCloseModal={this.affToggleModal}
             />
           )}
-        </Alert>
+        </Alert> */}
+        <div className="image-box-info">
+          <h4>
+            Add New Link
+            <span
+               onClick={this.affToggleModal}
+              className="fa fa-times"
+            ></span>
+          </h4>
+        </div>
+
+        
+        {this.state.affDataLoading ? (
+            <Loader className="analytics-loading" size={60} />
+          ) : (
+            <AffiliateForm
+              affData={this.state.affData}
+              countries={this.state.countries}
+              affCloseModal={this.affToggleModal}
+            />
+          )}
+        
+
+        
+
+
+
+
         {window.innerWidth <= 760 && (
           <Modal
             show={this.state.aff_modal}

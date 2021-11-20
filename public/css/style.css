@@ -1101,6 +1101,9 @@ a.pkg_read:hover {
   font-family: "SegoeUIBold" !important;
   margin-bottom: 1rem;
 }
+.analytics-page.affiliate-page .tab-content > .tab-pane.tab-create-campaign{
+  padding:0;
+}
 /* Affiliate Page End Here Iftikhar */
 
 
