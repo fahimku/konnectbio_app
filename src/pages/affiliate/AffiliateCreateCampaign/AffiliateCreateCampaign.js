@@ -137,7 +137,15 @@ class AffiliateCreateCampaign extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Create Campaign</Modal.Title>
             </Modal.Header>
-            <AffiliateForm affData={this.state.affData} />
+            {this.state.affDataLoading ? (
+              <Loader className="analytics-loading" size={60} />
+            ) : (
+              <AffiliateForm
+                affData={this.state.affData}
+                countries={this.state.countries}
+                affCloseModal={this.affToggleModal}
+              />
+            )}
           </Modal>
         )}
       </div>

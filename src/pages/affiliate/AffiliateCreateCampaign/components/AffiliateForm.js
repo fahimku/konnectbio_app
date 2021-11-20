@@ -17,7 +17,7 @@ import impression from "../../../../images/campaign/impression.svg";
 import { log } from "nvd3";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
-
+import { Country, State, City } from "country-state-city";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
@@ -241,7 +241,6 @@ class AffiliateForm extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.inputList, "inputList");
 
     const renderStateValue = (x) => {
       const exit =
@@ -259,6 +258,30 @@ class AffiliateForm extends React.Component {
 
       return exit[0];
     };
+
+    let countryall = [];
+    let stateall = [];
+    let cityall = [];
+    Country.getAllCountries().map(({ name, isoCode }) => {
+      return countryall.push({ value: isoCode, label: name });
+    });
+
+    State.getStatesOfCountry("US").map(({ name, isoCode, countryCode }) => {
+      return stateall.push({
+        value: isoCode,
+        label: name,
+        countryCode: countryCode,
+      });
+    });
+    City.getCitiesOfCountry("US").map(({ name, countryCode }) => {
+      return cityall.push({
+        value: countryCode,
+        label: name,
+      });
+    });
+    console.log(City.getCitiesOfCountry("US"), "city");
+    // getStateByCodeAndCountry(stateCode, countryCode);
+
     return (
       <React.Fragment>
         <Formsy.Form
@@ -420,8 +443,43 @@ class AffiliateForm extends React.Component {
                   </label>
                 </div>
               </div>
+              <div className="mt-3">
+                <div className="row">
+                  <div className="col-md-4">
+                    <Select2
+                      name="country"
+                      placeholder="Select country"
+                      options={countryall}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <Select2
+                      name="state"
+                      placeholder="Select State"
+                      options={stateall}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <Select2
+                      name="city"
+                      placeholder="Select City"
+                      options={cityall}
+                    />
+                    {/* <select class="form-control" id="sel1">
+                      {cityall.map((option, index) => {
+                        return (
+                          <option key={index} value={option.value}>
+                            {option.label}
+                          </option>
+                        );
+                      })}
+                    </select> */}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
           {this.state.campaign_type !== "" ? (
             <>
               <div className="demographic-section">
