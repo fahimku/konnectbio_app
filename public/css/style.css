@@ -1107,6 +1107,10 @@ a.pkg_read:hover {
 .aff-active-circle{
   font-family: "SegoeUIBold";
 }
+.threedots:after {
+  content: "\2807";
+  font-size: 30px;
+}
 /* Affiliate Page End Here Iftikhar */
 
 
