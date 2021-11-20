@@ -1110,6 +1110,7 @@ a.pkg_read:hover {
 .threedots:after {
   content: "\2807";
   font-size: 30px;
+  color:black;
 }
 /* Affiliate Page End Here Iftikhar */
 
