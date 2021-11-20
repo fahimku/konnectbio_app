@@ -114,21 +114,11 @@ class Affiliate extends React.Component {
                       <AffiliateCampaign username={this.state.username} />
                     ) : null}
                   </TabPane>
-<<<<<<< HEAD
                   <TabPane tabId="create-campaign" className="tab-create-campaign">
                     {this.state.activeTab=='create-campaign'?<AffiliateCreateCampaign
                       username={this.state.username}
                       user_id={this.state.user_id}
                     />:null}
-=======
-                  <TabPane tabId="create-campaign">
-                    {this.state.activeTab == "create-campaign" ? (
-                      <AffiliateCreateCampaign
-                        username={this.state.username}
-                        user_id={this.state.user_id}
-                      />
-                    ) : null}
->>>>>>> 04b2c698d91bc28503ad5c51f00b26fd8471deaf
                   </TabPane>
                   <TabPane tabId="accounting">
                     {this.state.activeTab === "accounting" ? (
