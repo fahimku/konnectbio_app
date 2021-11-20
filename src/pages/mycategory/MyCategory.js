@@ -4,7 +4,7 @@ import Select from "react-select";
 import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
-import CustomCategory from "./component/CustomCategory";
+// import CustomCategory from "./component/CustomCategory";
 import { createBrowserHistory } from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
 import Swal from "sweetalert2";
@@ -332,16 +332,13 @@ class MyCategory extends React.Component {
                             </h4>
                           </div>
                           <div className="category-count-row col-12">
-                            
-                              <Button
-                                variant="primary"
-                                className="btn-block mr-0"
-                                onClick={() =>
-                                  history.push("/app/account/setup")
-                                }
-                              >
-                                Upgrade
-                              </Button>
+                            <Button
+                              variant="primary"
+                              className="btn-block mr-0"
+                              onClick={() => history.push("/app/account/setup")}
+                            >
+                              Upgrade
+                            </Button>
                           </div>
                         </div>
                       ) : null}

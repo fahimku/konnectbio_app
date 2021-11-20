@@ -14,13 +14,12 @@ import InputNumberValidation from "../../../../components/InputValidation/InputN
 import click from "../../../../images/campaign/click.svg";
 import sale from "../../../../images/campaign/sale.svg";
 import impression from "../../../../images/campaign/impression.svg";
-import { log } from "nvd3";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
-
+// import { Country, State, City } from "country-state-city";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-const dateFormat = "YYYY-MM-DD";
+// const dateFormat = "YYYY-MM-DD";
 
 class AffiliateForm extends React.Component {
   constructor(props) {
@@ -55,8 +54,6 @@ class AffiliateForm extends React.Component {
     this.setState({ budget: value });
   };
   dateRangePickerChanger(value, dataString) {
-    console.log(value, "value");
-    console.log(dataString, "dataString");
     let startDate = dataString[0];
     let endDate = dataString[1];
     this.setState({ startDate: startDate });
@@ -79,7 +76,6 @@ class AffiliateForm extends React.Component {
   };
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
-    console.log(this.state.country.value, "country");
     list[index][name] = options.value;
     this.getCities(options.countryCode, options.value);
     this.setState({ state: options, inputList: list });
@@ -241,7 +237,6 @@ class AffiliateForm extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.inputList, "inputList");
 
     const renderStateValue = (x) => {
       const exit =
@@ -259,6 +254,7 @@ class AffiliateForm extends React.Component {
 
       return exit[0];
     };
+
     return (
       <React.Fragment>
         <Formsy.Form
@@ -422,6 +418,7 @@ class AffiliateForm extends React.Component {
               </div>
             </div>
           </div>
+
           {this.state.campaign_type !== "" ? (
             <>
               <div className="demographic-section">

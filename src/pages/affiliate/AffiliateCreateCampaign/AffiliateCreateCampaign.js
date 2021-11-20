@@ -1,6 +1,6 @@
 import React from "react";
 // import { Row, Col } from "reactstrap";
-import { Col, Row, Modal, ModalBody, Alert } from "react-bootstrap";
+import { Col, Row, Modal, Alert } from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
@@ -164,7 +164,15 @@ class AffiliateCreateCampaign extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Create Campaign</Modal.Title>
             </Modal.Header>
-            <AffiliateForm affData={this.state.affData} />
+            {this.state.affDataLoading ? (
+              <Loader className="analytics-loading" size={60} />
+            ) : (
+              <AffiliateForm
+                affData={this.state.affData}
+                countries={this.state.countries}
+                affCloseModal={this.affToggleModal}
+              />
+            )}
           </Modal>
         )}
       </div>

@@ -7,7 +7,7 @@ import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
-import CancelSubsciption from "./CancelSubsciption";
+// import CancelSubsciption from "./CancelSubsciption";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -191,30 +191,32 @@ class AccountSetup extends React.Component {
 
                         <div className="dp_fields-setup">
                           <div className="sm-b mb-3">
-                              <span>
-                            Categories Included:{" "}
-                            <strong>{this.state.singlePackage.category_count}</strong>
-                          </span>
-                          {this.state.singlePackage.package_name !==
-                            "Business Plus" && (
                             <span>
-                              Change Plan to have more categories
+                              Categories Included:{" "}
+                              <strong>
+                                {this.state.singlePackage.category_count}
+                              </strong>
                             </span>
-                          )}
+                            {this.state.singlePackage.package_name !==
+                              "Business Plus" && (
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
                         <div className="dp_fields-setup">
                           <div className="sm-b">
-                          <span>
-                            Links Included:{" "}
-                            <strong>{this.state.singlePackage.link_count}</strong>
-                          </span>
+                            <span>
+                              Links Included:{" "}
+                              <strong>
+                                {this.state.singlePackage.link_count}
+                              </strong>
+                            </span>
 
-                          {this.state.singlePackage.package_name !==
-                            "Business Plus" && (
-                            <span>Change Plan to have more links</span>
-                          )}
+                            {this.state.singlePackage.package_name !==
+                              "Business Plus" && (
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -222,7 +224,6 @@ class AccountSetup extends React.Component {
                           this.state.upgrade && (
                             <div className="dp_fields-setup">
                               <>
-                                
                                 <div className="mt-3">
                                   <Button
                                     variant="primary"
