@@ -61,9 +61,10 @@ class CarouselComponent extends React.Component {
                   height="56px"
                   alt=""
                   className="circles"
-                  style={{border:this.state.active==='allPost'?"1px solid #010b40":null}}
                 />
-                <span>My Posts</span>
+                <span
+                style={{color:this.state.active==='allPost'?"#010b40":null,fontWeight:this.state.active==='allPost'?'bold':null}}
+                >My Posts</span>
                 </button>
             </div>
 
@@ -93,9 +94,10 @@ class CarouselComponent extends React.Component {
                     height="65px"
                     alt=""
                     className="circles"
-                    style={{border:this.state.active===category.category_id?"1px solid #010b40":null}}
                   />
-                  <span>{category.category_name}</span>
+                  <span
+                  style={{color:this.state.active===category.category_id?"#010b40":null,fontWeight:this.state.active===category.category_id?'bold':'normal'}}
+                  >{category.category_name}</span>
                 </button>
               </div>
             ))}
