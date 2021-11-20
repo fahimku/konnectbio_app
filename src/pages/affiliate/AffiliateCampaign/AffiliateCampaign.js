@@ -1,29 +1,48 @@
 import axios from "axios";
 import React from "react";
-import {Row, Col, Button} from "react-bootstrap";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { Row, Col } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
-import {DatePicker} from "antd";
+//import { DatePicker } from "antd";
 import "antd/dist/antd.css";
-import Select from "react-select";
+//import Select from "react-select";
 import ReactPaginate from "react-paginate";
 
-const {RangePicker} = DatePicker;
-const dateFormat = "YYYY-MM-DD";
+// const { RangePicker } = DatePicker;
+// const dateFormat = "YYYY-MM-DD";
 
-const twodecimalplace = (value = 0) => {
-  return parseFloat(value).toFixed(2);
-};
+// const twodecimalplace = (value = 0) => {
+//   return parseFloat(value).toFixed(2);
+// };
 
-const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-};
+// const numberWithCommas = (x) => {
+//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+// };
+
+
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <a
+    href=""
+    ref={ref}
+    onClick={e => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+    <span className="threedots" />
+  </a>
+));
 
 class AffiliateCampaign extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: this.props.username,
+      toggleCampaign: false,
       data: [],
       loading: false,
       fromDate: moment().startOf("year").format("YYYY-MM-DD"),
@@ -44,8 +63,8 @@ class AffiliateCampaign extends React.Component {
       perPage: 8,
       currentPage: 0,
     };
-    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
-    this.handlePageClick = this.handlePageClick.bind(this);
+    //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
+    //  this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -60,8 +79,79 @@ class AffiliateCampaign extends React.Component {
       this.state.saveSort,
       this.state.saveSortOrder
     );
-    this.fetchMyCategory();
+    //this.fetchMyCategory();
   }
+
+  toggleCampaign = async (status, campaignId) => {
+    let statusName = status ? "Disabled" : "Enabled";
+    Swal.fire({
+      title: `Are you sure you want to ${statusName} this campaign?`,
+      // text: "You won't be able to revert this!",
+      icon: status ? "warning" : 'success',
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`campaigns/revise/campaignstatus/${campaignId}`, {
+            is_active: !status
+          })
+          .then(() => {
+            this.fetchPostPerformance(
+              this.state.username,
+              this.state.lastYear,
+              moment(new Date()).format("YYYY-MM-DD"),
+              this.state.limit,
+              this.state.page,
+              "",
+              this.state.saveSort,
+              this.state.saveSortOrder
+            );
+            Swal.fire("Campaign Disabled Successfully");
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+          });
+      }
+    });
+  };
+
+  deleteCampaign = async (campaignId) => {
+    Swal.fire({
+      title: `Are you sure you want to delete this campaign?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`/campaigns/remove/${campaignId}`)
+          .then(() => {
+            this.fetchPostPerformance(
+              this.state.username,
+              this.state.lastYear,
+              moment(new Date()).format("YYYY-MM-DD"),
+              this.state.limit,
+              this.state.page,
+              "",
+              this.state.saveSort,
+              this.state.saveSortOrder
+            );
+            Swal.fire("Campaign Deleted Successfully");
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+          });
+      }
+    });
+  };
+
+
   async fetchPostPerformance(
     username,
     fromDate,
@@ -72,21 +162,21 @@ class AffiliateCampaign extends React.Component {
     sortId,
     orderBy
   ) {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await axios
-      .post("analytics/receive/analyseAllPosts", {
+      .get("campaigns/receive", {
         username: username,
-        from_date: fromDate,
-        to_date: toDate,
-        page: page,
-        limit: limit,
-        post_type: "image",
-        category_id: categoryId === "all" ? "" : categoryId,
-        sort: sortId,
-        order_by: orderBy,
+        // from_date: fromDate,
+        // to_date: toDate,
+        // page: page,
+        // limit: limit,
+        // post_type: "image",
+        // category_id: categoryId === "all" ? "" : categoryId,
+        // sort: sortId,
+        // order_by: orderBy,
       })
       .then((response) => {
-        this.setState({data: response.data.message.data, loading: false});
+        this.setState({ data: response.data.message, loading: false });
         this.postData();
         // if (response.data.message.hasOwnProperty("next")) {
         //   this.setState({ page: response.data.message.next.page });
@@ -101,45 +191,45 @@ class AffiliateCampaign extends React.Component {
       });
   }
 
-  fetchMyCategory = async () => {
-    await axios
-      .get("/users/receive/categories")
-      .then((response) => {
-        const selectCategories = [];
-        const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
-          return selectCategories.push({
-            value: category_id,
-            label: category_name,
-            image: image_url,
-          });
-        });
-        let all = {};
-        all.value = "all";
-        all.label = "ALL";
-        selectCategories.unshift(all);
-        this.setState({myCategory: selectCategories});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // fetchMyCategory = async () => {
+  //   await axios
+  //     .get("/users/receive/categories")
+  //     .then((response) => {
+  //       const selectCategories = [];
+  //       const myCategories = response.data.message;
+  //       myCategories.map(({ category_id, category_name, image_url }) => {
+  //         return selectCategories.push({
+  //           value: category_id,
+  //           label: category_name,
+  //           image: image_url,
+  //         });
+  //       });
+  //       let all = {};
+  //       all.value = "all";
+  //       all.label = "ALL";
+  //       selectCategories.unshift(all);
+  //       this.setState({ myCategory: selectCategories });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
 
-  dateRangePickerChanger(value, dataString) {
-    let fromDate = dataString[0];
-    let toDate = dataString[1];
-    this.setState({fromDate: fromDate, toDate: toDate});
-    // this.fetchPostPerformance(
-    //   this.state.username,
-    //   fromDate,
-    //   toDate,
-    //   this.state.limit,
-    //   1
-    // );
-  }
+  // dateRangePickerChanger(value, dataString) {
+  //   let fromDate = dataString[0];
+  //   let toDate = dataString[1];
+  //   this.setState({ fromDate: fromDate, toDate: toDate });
+  //   // this.fetchPostPerformance(
+  //   //   this.state.username,
+  //   //   fromDate,
+  //   //   toDate,
+  //   //   this.state.limit,
+  //   //   1
+  //   // );
+  // }
 
   pagination = () => {
-    let {username, fromDate, toDate, limit, page} = this.state;
+    let { username, fromDate, toDate, limit, page } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -153,7 +243,7 @@ class AffiliateCampaign extends React.Component {
   };
 
   paginationPrev = () => {
-    let {username, fromDate, toDate, limit, previous} = this.state;
+    let { username, fromDate, toDate, limit, previous } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -170,82 +260,82 @@ class AffiliateCampaign extends React.Component {
     return current && current > moment().endOf("day");
   }
 
-  handleSelect = (event) => {
-    this.setState({
-      saveCategory: event.value,
-      optionCategory: event,
-    });
-  };
+  // handleSelect = (event) => {
+  //   this.setState({
+  //     saveCategory: event.value,
+  //     optionCategory: event,
+  //   });
+  // };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.setState({
-      offset: 0,
-      currentPage: 0,
-    });
-    this.fetchPostPerformance(
-      this.state.username,
-      this.state.fromDate,
-      this.state.toDate,
-      this.state.limit,
-      this.state.page,
-      this.state.saveCategory,
-      this.state.saveSort,
-      this.state.saveSortOrder
-    );
-  };
+  // handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   this.setState({
+  //     offset: 0,
+  //     currentPage: 0,
+  //   });
+  //   this.fetchPostPerformance(
+  //     this.state.username,
+  //     // this.state.fromDate,
+  //     // this.state.toDate,
+  //     // this.state.limit,
+  //     // this.state.page,
+  //     // this.state.saveCategory,
+  //     // this.state.saveSort,
+  //     // this.state.saveSortOrder
+  //   );
+  // };
 
-  clearFilter = () => {
-    this.setState({
-      optionCategory: "",
-      optionSort: "",
-      optionSortOrder: "",
-      saveCategory: "",
-      // saveSort: "",
-      // saveSortOrder: "",
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      toDate: moment(new Date()).format("YYYY-MM-DD"),
-    });
-    this.fetchPostPerformance(
-      this.state.username,
-      this.state.lastYear,
-      moment(new Date()).format("YYYY-MM-DD"),
-      this.state.limit,
-      this.state.page,
-      "",
-      this.state.saveSort,
-      "desc"
-    );
-  };
+  // clearFilter = () => {
+  //   this.setState({
+  //     optionCategory: "",
+  //     optionSort: "",
+  //     optionSortOrder: "",
+  //     saveCategory: "",
+  //     // saveSort: "",
+  //     // saveSortOrder: "",
+  //     fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+  //     toDate: moment(new Date()).format("YYYY-MM-DD"),
+  //   });
+  //   this.fetchPostPerformance(
+  //     this.state.username,
+  //     this.state.lastYear,
+  //     moment(new Date()).format("YYYY-MM-DD"),
+  //     this.state.limit,
+  //     this.state.page,
+  //     "",
+  //     this.state.saveSort,
+  //     "desc"
+  //   );
+  // };
 
-  handleSort = (event) => {
-    this.setState({
-      saveSort: event.value,
-      optionSort: event,
-    });
-  };
+  // handleSort = (event) => {
+  //   this.setState({
+  //     saveSort: event.value,
+  //     optionSort: event,
+  //   });
+  // };
 
-  handleSortOrder = (event) => {
-    this.setState({
-      saveSortOrder: event.value,
-      optionSortOrder: event,
-    });
-  };
+  // handleSortOrder = (event) => {
+  //   this.setState({
+  //     saveSortOrder: event.value,
+  //     optionSortOrder: event,
+  //   });
+  // };
 
-  handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    const offset = selectedPage * this.state.perPage;
+  // handlePageClick = (e) => {
+  //   const selectedPage = e.selected;
+  //   const offset = selectedPage * this.state.perPage;
 
-    this.setState(
-      {
-        currentPage: selectedPage,
-        offset: offset,
-      },
-      () => {
-        this.postData();
-      }
-    );
-  };
+  //   this.setState(
+  //     {
+  //       currentPage: selectedPage,
+  //       offset: offset,
+  //     },
+  //     () => {
+  //       this.postData();
+  //     }
+  //   );
+  // };
 
   postData = () => {
     const data = this.state.data;
@@ -253,18 +343,28 @@ class AffiliateCampaign extends React.Component {
       this.state.offset,
       this.state.offset + this.state.perPage
     );
-
-    const postData = slice.map((record) => (
+    const postData = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div className="card analytic-box campaign-box">
+          <Dropdown>
+                  <Dropdown.Toggle as={CustomToggle} />
+                  <Dropdown.Menu size="sm" title="">
+                    <Dropdown.Header>Options</Dropdown.Header>
+                    <Dropdown.Item>abcd</Dropdown.Item>
+                    <Dropdown.Item>erty</Dropdown.Item>
+                    <Dropdown.Item>hnjm</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
             <div className="camp-row row">
               <div className="campaign-header col-12">
-                <h6>My Campaign Name Here</h6>
+
+                <h6>{record.campaign_name}</h6>
                 <div class="form-check custom-switch custom-switch-md">
-                <input type="checkbox" class="custom-control-input" id="customSwitch4" readOnly />
-                <label class="custom-control-label" htmlFor="customSwitch4"></label>
-              </div>
+                  <input type="checkbox" checked={record.is_active} onClick={() => { this.toggleCampaign(record.is_active, record.campaign_id) }} class="custom-control-input" id={`customSwitch` + index} readOnly />
+                  <label class="custom-control-label" htmlFor={`customSwitch` + index}></label>
+                </div>
+            
               </div>
               <div className="any-post-img-col col-12">
                 <div className="any-post-image">
@@ -283,23 +383,21 @@ class AffiliateCampaign extends React.Component {
                 <div className="row count-main-box">
                   <div className="col-12 count-box">
                     <h5 className="count-title">Category</h5>
-                    <h3 className="count">{numberWithCommas(record.views)}</h3>
+                    <h3 className="count">
+                      {record.categories.map((item) => item.category_name)}
+                    </h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Impressions</h5>
-                    <h3 className="count">{numberWithCommas(record.views)}</h3>
+                    <h5 className="count-title">Campaign Type</h5>
+                    <h3 className="count">{record.campaign_type}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Clicks</h5>
-                    <h3 className="count">{numberWithCommas(record.clicks)}</h3>
+                    <h5 className="count-title">Budget</h5>
+                    <h3 className="count">{record.budget}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Engagement</h5>
-                    <h3 className="count">{twodecimalplace(record.ctr)}%</h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Revenue</h5>
-                    <h3 className="count">{record.revenue}</h3>
+                    <h5 className="count-title">Pay per 100 impressions</h5>
+                    <h3 className="count">{record.pay_per_hundred}</h3>
                   </div>
                 </div>
               </div>
@@ -315,32 +413,35 @@ class AffiliateCampaign extends React.Component {
     });
   };
   render() {
-    const sortOptions = [
-      {value: "date", label: "DATE"},
-      {value: "impressions", label: "IMPRESSIONS"},
-      {value: "clicks", label: "CLICKS"},
-      {value: "engagement", label: "ENGAGEMENT"},
-      // { value: "revenue", label: "Revenue" },
-    ];
-    const sortOrderOptions = [
-      {value: "asc", label: "ASC"},
-      {value: "desc", label: "DESC"},
-    ];
-    const style = {
-      control: (base, state) => ({
-        ...base,
-        height: "44px",
-        boxShadow: "none",
-        "&:hover": {
-          // border: "1px solid black",
-        },
-      }),
-    };
+
+    // const sortOptions = [
+    //   { value: "date", label: "DATE" },
+    //   { value: "impressions", label: "IMPRESSIONS" },
+    //   { value: "clicks", label: "CLICKS" },
+    //   { value: "engagement", label: "ENGAGEMENT" },
+    //   // { value: "revenue", label: "Revenue" },
+    // ];
+
+    // const sortOrderOptions = [
+    //   { value: "asc", label: "ASC" },
+    //   { value: "desc", label: "DESC" },
+    // ];
+
+    // const style = {
+    //   control: (base, state) => ({
+    //     ...base,
+    //     height: "44px",
+    //     boxShadow: "none",
+    //     "&:hover": {
+    //       // border: "1px solid black",
+    //     },
+    //   }),
+    // };
 
     return (
       <>
         <div className="container-fluid">
-          <Row className="post-analytics-tab">
+          {/* <Row className="post-analytics-tab d-none">
             <Col xs={12} xl={12} md={12}>
               <form onSubmit={this.handleSubmit}>
                 <Row>
@@ -391,7 +492,7 @@ class AffiliateCampaign extends React.Component {
                       // value={this.state.optionCategory}
                       value={
                         this.state.optionCategory === ""
-                          ? {value: "all", label: "ALL"}
+                          ? { value: "all", label: "ALL" }
                           : this.state.optionCategory
                       }
                       placeholder="Select Category"
@@ -408,7 +509,7 @@ class AffiliateCampaign extends React.Component {
                       // value={this.state.optionSort}
                       value={
                         this.state.optionSort === ""
-                          ? {value: "date", label: "DATE"}
+                          ? { value: "date", label: "DATE" }
                           : this.state.optionSort
                       }
                       placeholder="Sort By"
@@ -424,7 +525,7 @@ class AffiliateCampaign extends React.Component {
                       options={sortOrderOptions}
                       value={
                         this.state.optionSortOrder === ""
-                          ? {value: "desc", label: "DESC"}
+                          ? { value: "desc", label: "DESC" }
                           : this.state.optionSortOrder
                       }
                       placeholder="Order By"
@@ -452,9 +553,8 @@ class AffiliateCampaign extends React.Component {
                 </Row>
               </form>
             </Col>
-          </Row>
-
-          <hr />
+          </Row> 
+          <hr />*/}
           {this.state.loading ? (
             <Loader className="analytics-loading" size={60} />
           ) : !this.state.data.length ? (
