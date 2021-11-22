@@ -33,7 +33,8 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-    <span className="threedots" />
+    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+
   </a>
 ));
 
