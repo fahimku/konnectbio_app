@@ -65,7 +65,7 @@ class AffiliateCampaign extends React.Component {
       currentPage: 0,
     };
     //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
-    //  this.handlePageClick = this.handlePageClick.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
@@ -110,7 +110,7 @@ class AffiliateCampaign extends React.Component {
               this.state.saveSort,
               this.state.saveSortOrder
             );
-            Swal.fire("Campaign Disabled Successfully");
+            toast.success("Campaign Disabled Successfully");
           })
           .catch((err) => {
             toast.error(err.response.data.message);
@@ -143,7 +143,7 @@ class AffiliateCampaign extends React.Component {
               this.state.saveSort,
               this.state.saveSortOrder
             );
-            Swal.fire("Campaign Deleted Successfully");
+            toast.success("Campaign Deleted Successfully");
           })
           .catch((err) => {
             toast.error(err.response.data.message);
@@ -166,14 +166,14 @@ class AffiliateCampaign extends React.Component {
     await axios
       .get("campaigns/receive", {
         username: username,
-        // from_date: fromDate,
-        // to_date: toDate,
-        // page: page,
-        // limit: limit,
-        // post_type: "image",
-        // category_id: categoryId === "all" ? "" : categoryId,
-        // sort: sortId,
-        // order_by: orderBy,
+        from_date: fromDate,
+        to_date: toDate,
+        page: page,
+        limit: limit,
+        post_type: "image",
+        category_id: categoryId === "all" ? "" : categoryId,
+        sort: sortId,
+        order_by: orderBy,
       })
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
@@ -322,20 +322,19 @@ class AffiliateCampaign extends React.Component {
   //   });
   // };
 
-  // handlePageClick = (e) => {
-  //   const selectedPage = e.selected;
-  //   const offset = selectedPage * this.state.perPage;
-
-  //   this.setState(
-  //     {
-  //       currentPage: selectedPage,
-  //       offset: offset,
-  //     },
-  //     () => {
-  //       this.postData();
-  //     }
-  //   );
-  // };
+  handlePageClick = (e) => {
+    const selectedPage = e.selected;
+    const offset = selectedPage * this.state.perPage;
+    this.setState(
+      {
+        currentPage: selectedPage,
+        offset: offset,
+      },
+      () => {
+        this.postData();
+      }
+    );
+  };
 
   postData = () => {
     const data = this.state.data;
@@ -358,7 +357,6 @@ class AffiliateCampaign extends React.Component {
             </Dropdown>
             <div className="camp-row row">
               <div className="campaign-header col-12">
-
                 <h6>{record.campaign_name}</h6>
                 <div class="form-check custom-switch custom-switch-md">
                   <input type="checkbox" checked={record.is_active} onClick={() => { this.toggleCampaign(record.is_active, record.campaign_id) }} class="custom-control-input" id={`customSwitch` + index} readOnly />
@@ -407,11 +405,9 @@ class AffiliateCampaign extends React.Component {
       </React.Fragment>
     ));
 
-    this.setState({
-      pageCount: Math.ceil(data.length / this.state.perPage),
-      postData,
-    });
+    this.setState({ pageCount: Math.ceil(data.length / this.state.perPage), postData, });
   };
+
   render() {
 
     // const sortOptions = [
@@ -578,9 +574,7 @@ class AffiliateCampaign extends React.Component {
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={
-                  "pagination justify-content-center mt-2 custom-paginate"
-                }
+                containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
                 // subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
               />
