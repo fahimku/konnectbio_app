@@ -29,7 +29,7 @@ import { connect } from "react-redux";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href=""
+    href="#"
     ref={ref}
     onClick={e => {
       e.preventDefault();
@@ -54,7 +54,7 @@ class AffiliateCampaign extends React.Component {
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
-      page: "1",
+      page: "2",
       limit: "8",
       previous: "",
       myCategory: "",
@@ -91,7 +91,7 @@ class AffiliateCampaign extends React.Component {
   }
 
   toggleCampaign = async (status, campaignId) => {
-    let statusName = status ? "Disabled" : "Enabled";
+    let statusName = status ? "Disable" : "Enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
       // text: "You won't be able to revert this!",
@@ -107,17 +107,13 @@ class AffiliateCampaign extends React.Component {
             is_active: !status
           })
           .then(() => {
-            this.fetchPostPerformance(
-              this.state.username,
-              this.state.lastYear,
-              moment(new Date()).format("YYYY-MM-DD"),
-              this.state.limit,
-              this.state.page,
-              "",
-              this.state.saveSort,
-              this.state.saveSortOrder
-            );
-            toast.success("Campaign Disabled Successfully");
+            let data =
+              this.state.data;
+            let objIndex = data.findIndex((obj => obj.campaign_id === campaignId));
+            data[objIndex].is_active = !status;
+            this.setState({ data: data });
+            this.postData();
+            toast.success("Campaign Disable Successfully");
           })
           .catch((err) => {
             toast.error(err.response.data.message);
@@ -139,17 +135,12 @@ class AffiliateCampaign extends React.Component {
       if (result.isConfirmed) {
         axios
           .delete(`/campaigns/remove/${campaignId}`)
-          .then(() => {
-            this.fetchPostPerformance(
-              this.state.username,
-              this.state.lastYear,
-              moment(new Date()).format("YYYY-MM-DD"),
-              this.state.limit,
-              this.state.page,
-              "",
-              this.state.saveSort,
-              this.state.saveSortOrder
-            );
+          .then(() => {            
+            let data = this.state.data.filter(function (item) {
+              return item.campaign_id !== campaignId;
+            });
+            this.setState({ data: data });
+            this.postData();
             toast.success("Campaign Deleted Successfully");
           })
           .catch((err) => {
@@ -641,20 +632,6 @@ class AffiliateCampaign extends React.Component {
                 }}
               />
             </Modal.Body>
-            {/* <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.setState({modal:false})
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              className="disconnect-btn"
-            >
-              Yes
-            </Button>
-          </Modal.Footer> */}
           </Modal>
         </div>
       </>
