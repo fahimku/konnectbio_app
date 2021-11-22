@@ -155,8 +155,15 @@ class UpdateModal extends React.Component {
         console.log(error);
       });
   };
-  saveCampaign = async (id) => {
+  updateCampaign = async (id) => {
       this.setState({submit:true})
+      const place=this.state.inputList.reduce((acc,item)=>{
+          if(!item.country || !item.state || !item.city){
+              acc=false
+          }
+          return acc
+      },true)
+
       const {
           campaign_name,
           redirected_url,
@@ -166,7 +173,7 @@ class UpdateModal extends React.Component {
           endDate,
           campaign_type
       }=this.state
-    if(campaign_name && budget && pay_per_hundred && startDate && endDate && campaign_type){
+    if(campaign_name && budget && pay_per_hundred && startDate && endDate && campaign_type && place){
         this.setState({ loading: true });
         await axios
           .put(`/campaigns/revise/affiliatecampaign/${this.props.affData?.campaign_id}`, {
@@ -289,7 +296,7 @@ class UpdateModal extends React.Component {
       <React.Fragment>
         <Formsy.Form
           onValidSubmit={() =>
-            this.saveCampaign(affData.post_id, affData.redirected_url)
+            this.updateCampaign(affData.post_id, affData.redirected_url)
           }
         >
           <div className="image-wrapper">
@@ -518,6 +525,11 @@ class UpdateModal extends React.Component {
                             //     : false
                             // }
                           />
+                          {this.state.submit && !x.country?(
+                               <span className={"number-error help-block text-danger"} style={{marginTop:'5px !important'}}>
+                                    This value is required.
+                                </span>
+                           ):null}
                         </div>
                         <div className="col-md-2">
                           <span>State {i + 1}</span>
@@ -588,6 +600,8 @@ class UpdateModal extends React.Component {
                                     })
                                 )
                             }
+                            clearable={false}
+                            disabled={x.state?false:true}
                             // isDisabled={
                             //   this.state.inputList[i].state === "" ||
                             //   this.state.inputList.length - 1 !== i

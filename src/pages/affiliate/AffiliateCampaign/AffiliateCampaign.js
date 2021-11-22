@@ -614,6 +614,7 @@ class AffiliateCampaign extends React.Component {
           )}
           <Modal
             show={this.state.modal}
+            onHide={()=>this.setState({ modal: false })}
             className="change-password"
             centered
             size="xl"

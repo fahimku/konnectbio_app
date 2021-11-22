@@ -38,7 +38,7 @@ class AffiliateCreateCampaign extends React.Component {
   // };
   fetchAllCategory = async () => {
     await axios
-      .get("/usercategory/receive")
+      .get("/users/receive/categories")
       .then((response) => {
         const myCategories = response.data.message;
         // myCategories.map(({ category_id, category_name, image_url }) => {
