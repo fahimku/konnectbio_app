@@ -20,13 +20,9 @@ class Marketplace extends React.Component {
 
   render() {
     return (
-      <div className="marketplace-page">
+      <div className="marketplace-page mt-4">
         <div className="container-fluid">
-          <div className="mt-4 row">
-            <div class="col-md-12">
-              <h4 class="page-title">Marketplace</h4>
-            </div>
-          </div>
+          <h4 class="page-title">Marketplace</h4>
         </div>
       </div>
     );

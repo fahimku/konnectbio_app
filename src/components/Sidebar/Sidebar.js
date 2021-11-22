@@ -136,8 +136,8 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-              {userInfo1.package.package_name === "Business Plus" ||
-              userInfo1.package.package_name === "Business" ? (
+
+              {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Affiliate"
@@ -150,7 +150,8 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : (
+              ) : null}
+              {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Marketplace"
@@ -161,9 +162,9 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              )}
+              ) : null}
 
-              {PermissionHelper.validate(["access_analytics"]) ? (
+              {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Analytics"

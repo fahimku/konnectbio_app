@@ -532,7 +532,7 @@ class Layout extends React.Component {
                         exact
                         component={Dashboard}
                       />
-                      {userInfo1.package.package_name === "Business Plus" ||
+                      {/* {userInfo1.package.package_name === "Business Plus" ||
                       userInfo1.package.package_name === "Business" ? (
                         <Route
                           path="/app/campaign"
@@ -545,7 +545,20 @@ class Layout extends React.Component {
                           exact
                           component={Marketplace}
                         />
-                      )}
+                      )} */}
+
+                      <PrivateRoute
+                        path="/app/campaign"
+                        exact
+                        component={Affiliate}
+                        permissions={["affiliate_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/marketplace"
+                        exact
+                        component={Marketplace}
+                        permissions={["marketplace_access"]}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>
