@@ -28,7 +28,7 @@ export default function ResetAccount(props) {
   }
   return (
     <>
-      <div className="profile_box_main col-md-4">
+      <div className="profile_box_main col">
         <div className="dash_block_profile">
           <div className="dash_content_profile">
             <h5>Reset Account</h5>

@@ -80,7 +80,7 @@ import LinkinBio from "../../pages/linkinbio/LinkinBio";
 //import Analytic from '../../pages/analytic/Analytic';
 import Analysis from "../../pages/analysis/analysis";
 import Brands from "../../pages/brands/search";
-import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
+
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
@@ -123,20 +123,7 @@ class Layout extends React.Component {
     };
   }
 
-  componentDidMount() {
-    //this.handleResize();
-    // window.addEventListener("resize", this.handleResize.bind(this));
-  }
 
-  componentWillUnmount() {
-    //  window.removeEventListener("resize", this.handleResize.bind(this));
-  }
-
-  handleResize() {
-    if (window.innerWidth <= 768 && this.props.sidebarStatic) {
-      // this.props.dispatch(toggleSidebar());
-    }
-  }
 
   handleSwipe(e) {
     if ("ontouchstart" in window) {
@@ -497,11 +484,7 @@ class Layout extends React.Component {
                         exact
                         component={LinkinBio}
                       />
-                      <Route
-                        path="/app/media/library"
-                        exact
-                        component={MediaLibrary}
-                      />
+                  
                       <Route path="/app/coupons" exact component={Coupons} />
                       <Route
                         path="/app/account/delete"
@@ -563,9 +546,6 @@ class Layout extends React.Component {
                   </Router>
                 </CSSTransition>
               </TransitionGroup>
-              {/* <footer className={s.contentFooter}>
-                Sing App React Admin Dashboard Template - Made by <a href="https://flatlogic.com" rel="nofollow noopener noreferrer" target="_blank">Flatlogic</a>
-              </footer> */}
             </main>
           </Hammer>
         </div>

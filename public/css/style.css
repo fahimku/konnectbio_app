@@ -838,6 +838,11 @@ a.pkg_read:hover {
 .profile-page .container {
   margin: 0;
 }
+
+.profile-page .container-center {
+margin:0 auto !important;
+}
+
 .profile_container_main.container {
   padding-left: 0;
   padding-right: 0;

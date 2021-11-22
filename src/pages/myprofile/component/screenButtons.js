@@ -23,6 +23,7 @@ export default function ScreenButtons(props) {
     if (props.cancelDefaultImage) {
       clearImage();
     }
+
   }, [props.cancelDefaultImage]);
 
   const onChangeInputImage = (e) => {
