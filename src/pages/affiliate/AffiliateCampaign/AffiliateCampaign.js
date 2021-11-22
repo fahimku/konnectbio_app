@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Modal, Button } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
@@ -10,6 +10,10 @@ import Loader from "../../../components/Loader/Loader"; // eslint-disable-line c
 import "antd/dist/antd.css";
 //import Select from "react-select";
 import ReactPaginate from "react-paginate";
+import UpdateModal from "./UpdateModal";
+import * as countryAct from "../../../actions/countries"
+import * as campAct from "../../../actions/campaign"
+import { connect } from "react-redux";
 
 // const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
@@ -63,6 +67,8 @@ class AffiliateCampaign extends React.Component {
       offset: 0,
       perPage: 8,
       currentPage: 0,
+      modal: false,
+      currentCampaign: {}
     };
     //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -70,6 +76,7 @@ class AffiliateCampaign extends React.Component {
 
   componentDidMount() {
     // const date_to = moment(this.state.today).format("YYYY-MM-DD");
+    this.props.getCountries()
     this.fetchPostPerformance(
       this.state.username,
       this.state.lastYear,
@@ -350,35 +357,41 @@ class AffiliateCampaign extends React.Component {
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
                 <div className="cmp-h-right col-md-6">
-                <div class="form-check custom-switch custom-switch-md">
-                  <input
-                    type="checkbox"
-                    checked={record.is_active}
-                    onClick={() => {
-                      this.toggleCampaign(record.is_active, record.campaign_id);
-                    }}
-                    class="custom-control-input"
-                    id={`customSwitch` + index}
-                    readOnly
-                  />
-                  <label
-                    class="custom-control-label"
-                    htmlFor={`customSwitch` + index}
-                  ></label>
-                </div>
-                <Dropdown>
-                  <Dropdown.Toggle as={CustomToggle} />
-                  <Dropdown.Menu size="sm" title="">
-                    <Dropdown.Item>View</Dropdown.Item>
-                    <Dropdown.Item
+                  <div class="form-check custom-switch custom-switch-md">
+                    <input
+                      type="checkbox"
+                      checked={record.is_active}
                       onClick={() => {
-                        this.deleteCampaign(record.campaign_id);
+                        this.toggleCampaign(record.is_active, record.campaign_id);
                       }}
-                    >
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                      class="custom-control-input"
+                      id={`customSwitch` + index}
+                      readOnly
+                    />
+                    <label
+                      class="custom-control-label"
+                      htmlFor={`customSwitch` + index}
+                    ></label>
+                  </div>
+                  <Dropdown>
+                    <Dropdown.Toggle as={CustomToggle} />
+                    <Dropdown.Menu size="sm" title="">
+                      <Dropdown.Item onClick={() => {
+                        this.setState({ currentCampaign: record })
+                        this.setState({ modal: true })
+
+                      }}
+                      >Edit
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={() => {
+                          this.deleteCampaign(record.campaign_id);
+                        }}
+                      >
+                        Delete
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                 </div>
               </div>
               <div className="any-post-img-col col-12">
@@ -599,9 +612,56 @@ class AffiliateCampaign extends React.Component {
               />
             </>
           )}
+          <Modal
+            show={this.state.modal}
+            className="change-password"
+            centered
+            size="xl"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Edit Campaign</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="bg-white">
+              <UpdateModal
+                affData={this.state.currentCampaign}
+                countries={this.props.countries}
+                affCloseModal={() => this.setState({ modal: false })}
+                reload={() => {
+                  this.fetchPostPerformance(
+                    this.state.username,
+                    this.state.lastYear,
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    this.state.limit,
+                    this.state.page,
+                    "",
+                    this.state.saveSort,
+                    this.state.saveSortOrder
+                  );
+                }}
+              />
+            </Modal.Body>
+            {/* <Modal.Footer>
+            <Button
+              onClick={() => {
+                this.setState({modal:false})
+              }}
+            >
+              Close
+            </Button>
+            <Button
+              className="disconnect-btn"
+            >
+              Yes
+            </Button>
+          </Modal.Footer> */}
+          </Modal>
         </div>
       </>
     );
   }
 }
-export default AffiliateCampaign;
+
+function mapStateToProps({ countries, campaign }) {
+  return { countries, campaign }
+}
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);

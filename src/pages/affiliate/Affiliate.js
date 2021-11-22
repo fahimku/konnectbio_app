@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import s from "./Affiliate.module.scss";
+import  "./selector.css";
 import {
   Row,
   Col,
