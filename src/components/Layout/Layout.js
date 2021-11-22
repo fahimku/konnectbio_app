@@ -93,6 +93,7 @@ import Dashboard from "../../pages/dashboard/Dashboard";
 import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
 import Affiliate from "../../pages/affiliate/Affiliate";
+import Marketplace from "../../pages/marketplace/Marketplace";
 export const history = createBrowserHistory({
   forceRefresh: false,
 });
@@ -531,6 +532,11 @@ class Layout extends React.Component {
                         component={Dashboard}
                       />
                       <Route path="/app/campaign" exact component={Affiliate} />
+                      <Route
+                        path="/app/marketplace"
+                        exact
+                        component={Marketplace}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>
