@@ -111,7 +111,7 @@ class AffiliateCampaign extends React.Component {
             data[objIndex].is_active = !status;
             this.setState({ data: data });
             this.postData();
-            toast.success("Campaign Disable Successfully");
+            toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
             toast.error(err.response.data.message);
