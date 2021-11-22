@@ -152,7 +152,6 @@ class AffiliateCampaign extends React.Component {
     });
   };
 
-
   async fetchPostPerformance(
     username,
     fromDate,
@@ -348,15 +347,15 @@ class AffiliateCampaign extends React.Component {
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div className="card analytic-box campaign-box">
-          <Dropdown>
-                  <Dropdown.Toggle as={CustomToggle} />
-                  <Dropdown.Menu size="sm" title="">
-                    <Dropdown.Header>Options</Dropdown.Header>
-                    <Dropdown.Item>abcd</Dropdown.Item>
-                    <Dropdown.Item>erty</Dropdown.Item>
-                    <Dropdown.Item>hnjm</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle as={CustomToggle} />
+              <Dropdown.Menu size="sm" title="">
+                <Dropdown.Item>View</Dropdown.Item>
+                <Dropdown.Item onClick={() => {
+                  this.deleteCampaign(record.campaign_id)
+                }}>Delete</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <div className="camp-row row">
               <div className="campaign-header col-12">
 
@@ -365,7 +364,7 @@ class AffiliateCampaign extends React.Component {
                   <input type="checkbox" checked={record.is_active} onClick={() => { this.toggleCampaign(record.is_active, record.campaign_id) }} class="custom-control-input" id={`customSwitch` + index} readOnly />
                   <label class="custom-control-label" htmlFor={`customSwitch` + index}></label>
                 </div>
-            
+
               </div>
               <div className="any-post-img-col col-12">
                 <div className="any-post-image">
@@ -394,11 +393,11 @@ class AffiliateCampaign extends React.Component {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Budget</h5>
-                    <h3 className="count">{record.budget}</h3>
+                    <h3 className="count">${record.budget}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Pay per 100 impressions</h5>
-                    <h3 className="count">{record.pay_per_hundred}</h3>
+                    <h5 className="count-title">Pay per 100 {record.campaign_type}</h5>
+                    <h3 className="count">${record.pay_per_hundred}</h3>
                   </div>
                 </div>
               </div>
