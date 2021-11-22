@@ -16,7 +16,9 @@ import sale from "../../../../images/campaign/sale.svg";
 import impression from "../../../../images/campaign/impression.svg";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
-// import { Country, State, City } from "country-state-city";
+import { Country, State, City } from "country-state-city";
+import VirtualizedSelect from "react-virtualized-select";
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
@@ -41,6 +43,7 @@ class AffiliateForm extends React.Component {
       cities: "",
       stateList: "",
       reach: "",
+      submit: false,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -67,26 +70,38 @@ class AffiliateForm extends React.Component {
       campaign_type: value,
     });
   };
-  changeCountry = (e, options, name, index) => {
+  changeCountry = (option, index) => {
     const list = [...this.state.inputList];
-    list[index][name] = options.value;
-    this.setState({ country: options, inputList: list });
-    this.getState(options.value);
-    this.reachCampaign();
+    list[index] = {
+      country: option.value,
+      name: option.label,
+      state: "",
+      city: "",
+      zip: "",
+    };
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
-  changeState = (e, options, name, index) => {
+  changeState = (option, index) => {
     const list = [...this.state.inputList];
-    list[index][name] = options.value;
-    this.getCities(options.countryCode, options.value);
-    this.setState({ state: options, inputList: list });
-
-    this.reachCampaign();
+    list[index] = {
+      ...list[index],
+      state: option.value,
+    };
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
-  changeCity = (e, options, name, index) => {
+  changeCity = (option, index) => {
     const list = [...this.state.inputList];
-    list[index][name] = options.value;
-    this.setState({ city: options, inputList: list });
-    this.reachCampaign();
+    list[index] = {
+      ...list[index],
+      city: option.value,
+    };
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
   getState = async (countryCode) => {
     await axios
@@ -139,35 +154,61 @@ class AffiliateForm extends React.Component {
       });
   };
   saveCampaign = async (id) => {
-    this.setState({ loading: true });
-    await axios
-      .post(`/campaigns/reserve`, {
-        post_id: id,
-        campaign_name: this.state.campaign_name,
-        campaign_type: this.state.campaign_type,
-        redirected_url: this.props.affData.redirected_url,
-        media_url: this.props.affData.media_url,
-        category_id: this.props.affData.categories[0].category_id,
-        budget: parseInt(this.state.budget),
-        pay_per_hundred: parseInt(this.state.pay_per_hundred),
-        // traffic: 100,
-        demographics:
-          this.state.inputList[0].country === "" ? "" : this.state.inputList,
-        start_date: this.state.startDate,
-        end_date: this.state.endDate,
-      })
-      .then((response) => {
-        toast.success("Your Campaign is Created Successfully");
-        this.setState({ loading: false });
-        // this.props.affCloseModal();
-        // this.props.getPosts(1, null, this.props.clearPost);
-        this.props.updatePost(id);
-        this.props.affCloseModal();
-      })
-      .catch((err) => {
-        this.setState({ loading: false });
-        toast.error("Something went wrong");
-      });
+    this.setState({ submit: true });
+    const place = this.state.inputList.reduce((acc, item) => {
+      if (!item.country || !item.state || !item.city) {
+        acc = false;
+      }
+      return acc;
+    }, true);
+    const {
+      campaign_name,
+      redirected_url,
+      budget,
+      pay_per_hundred,
+      startDate,
+      endDate,
+      campaign_type,
+    } = this.state;
+    if (
+      campaign_name &&
+      budget &&
+      pay_per_hundred &&
+      startDate &&
+      endDate &&
+      campaign_type &&
+      place
+    ) {
+      this.setState({ loading: true });
+      await axios
+        .post(`/campaigns/reserve`, {
+          post_id: id,
+          campaign_name: this.state.campaign_name,
+          campaign_type: this.state.campaign_type,
+          redirected_url: this.props.affData.redirected_url,
+          media_url: this.props.affData.media_url,
+          category_id: this.props.affData.categories[0].category_id,
+          budget: parseInt(this.state.budget),
+          pay_per_hundred: parseInt(this.state.pay_per_hundred),
+          // traffic: 100,
+          demographics:
+            this.state.inputList[0].country === "" ? "" : this.state.inputList,
+          start_date: this.state.startDate,
+          end_date: this.state.endDate,
+        })
+        .then((response) => {
+          toast.success("Your Campaign is Created Successfully");
+          this.setState({ loading: false });
+          // this.props.affCloseModal();
+          // this.props.getPosts(1, null, this.props.clearPost);
+          this.props.updatePost(id);
+          this.props.affCloseModal();
+        })
+        .catch((err) => {
+          this.setState({ loading: false });
+          toast.error("Something went wrong");
+        });
+    }
   };
   // handle Zip input change
   handleZipChange = (e, index) => {
@@ -230,30 +271,6 @@ class AffiliateForm extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
-    const renderConValue = (x) => {
-      const exit = this.props.countries.filter(
-        (item) => item.value == x.country
-      );
-
-      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-    };
-
-    const renderStateValue = (x) => {
-      const exit =
-        this.state.stateList === ""
-          ? []
-          : this.state.stateList.filter((item) => item.value == x.state);
-
-      return exit[0];
-    };
-    const renderCityValue = (x) => {
-      const exit =
-        this.state.cities === ""
-          ? []
-          : this.state.cities.filter((item) => item.value == x.city);
-
-      return exit[0];
-    };
 
     return (
       <React.Fragment>
@@ -398,7 +415,10 @@ class AffiliateForm extends React.Component {
                     />
                     <label for="clicks">
                       <span className="imp-click">
-                        <i class="fa fa-hand-pointer-o fa-2x" aria-hidden="true"></i>
+                        <i
+                          class="fa fa-hand-pointer-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
                       </span>
                       <span className="imp-name">Clicks</span>
                       {/* <div class="tick_container">
@@ -467,7 +487,7 @@ class AffiliateForm extends React.Component {
                   </div>
                 </div>
 
-                <div className="country-select">
+                {/* <div className="country-select">
                   {this.state.inputList.map((x, i) => {
                     return (
                       <div className="c-con-select row">
@@ -601,6 +621,205 @@ class AffiliateForm extends React.Component {
                       Influencer's Reach: {this.state.reach.toString()}
                     </h5>
                   )}
+                </div> */}
+                <div className="country-select">
+                  {this.state.inputList.map((x, i) => {
+                    return (
+                      <div className="row mt-3">
+                        <div className="col-md-2">
+                          <span>Country {i + 1}</span>
+                          <Select2
+                            key={i}
+                            name="country"
+                            value={
+                              x.country
+                                ? {
+                                    value: Country.getCountryByCode(x.country)
+                                      .isoCode,
+                                    label: Country.getCountryByCode(x.country)
+                                      .name,
+                                  }
+                                : { value: "", label: "Select Country" }
+                            }
+                            onChange={(options, e) =>
+                              this.changeCountry(options, i)
+                            }
+                            placeholder="Select Country"
+                            style={{ width: "100%" }}
+                            options={Country.getAllCountries().map((item) => {
+                              return { value: item.isoCode, label: item.name };
+                            })}
+                            // isDisabled={
+                            //   this.state.inputList.length - 1 !== i
+                            //     ? true
+                            //     : false
+                            // }
+                          />
+                          {this.state.submit && !x.country ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-2">
+                          <span>State {i + 1}</span>
+                          <Select2
+                            key={i}
+                            name="state"
+                            value={
+                              x.state
+                                ? x.state != "all"
+                                  ? {
+                                      value: State.getStateByCodeAndCountry(
+                                        x.state,
+                                        x.country
+                                      ).isoCode,
+                                      label: State.getStateByCodeAndCountry(
+                                        x.state,
+                                        x.country
+                                      ).name,
+                                    }
+                                  : { value: "all", label: "All" }
+                                : { value: "", label: "Select State" }
+                            }
+                            onChange={(options, e) => {
+                              this.changeState(options, i);
+                            }}
+                            placeholder="Select State"
+                            style={{ width: "100%" }}
+                            options={[
+                              { isoCode: "all", name: "All" },
+                              ...State.getStatesOfCountry(x.country),
+                            ].map((item) => {
+                              return { value: item.isoCode, label: item.name };
+                            })}
+                            isDisabled={x.country ? false : true}
+                            // isDisabled={
+                            //   // this.state.stateList === ""
+                            //   this.state.inputList[i].country === "" ||
+                            //   this.state.inputList.length - 1 !== i
+                            //     ? true
+                            //     : false
+                            // }
+                          />
+                          {this.state.submit && !x.state ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-2">
+                          <span>City {i + 1}</span>
+                          <VirtualizedSelect
+                            className
+                            key={i}
+                            name="city"
+                            value={
+                              x.city
+                                ? {
+                                    value: x.city,
+                                    label: x.city,
+                                  }
+                                : { value: "", label: "Select City" }
+                            }
+                            onChange={(options, e) =>
+                              this.changeCity(options, i)
+                            }
+                            placeholder="Select City"
+                            style={{ width: "100%" }}
+                            options={
+                              x.state != "all"
+                                ? City.getCitiesOfState(x.country, x.state).map(
+                                    (item) => {
+                                      return {
+                                        value: item.name,
+                                        label: item.name,
+                                      };
+                                    }
+                                  )
+                                : City.getCitiesOfCountry(x.country).map(
+                                    (item) => {
+                                      return {
+                                        value: item.name,
+                                        label: item.name,
+                                      };
+                                    }
+                                  )
+                            }
+                            clearable={false}
+                            disabled={x.state ? false : true}
+                            // isDisabled={
+                            //   this.state.inputList[i].state === "" ||
+                            //   this.state.inputList.length - 1 !== i
+                            //     ? true
+                            //     : false
+                            // }
+                          />
+                          {this.state.submit && !x.city ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-2">
+                          <span>Zip {i + 1}</span>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="zip"
+                            placeholder="Zip"
+                            value={x.zip}
+                            onChange={(e) => this.handleZipChange(e, i)}
+                            autoComplete="off"
+                            onKeyDown={(evt) =>
+                              [("e", "E", "+", "-")].includes(evt.key) &&
+                              evt.preventDefault()
+                            }
+                            min="0"
+
+                            // disabled={
+                            //   this.state.inputList.length - 1 !== i
+                            //     ? true
+                            //     : false
+                            // }
+                          />
+                        </div>
+
+                        <div className="col-md-4">
+                          {this.state.inputList.length !== 1 && (
+                            <button
+                              className="btn btn-primary mt-3"
+                              onClick={() => this.handleRemoveClick(i)}
+                            >
+                              Remove
+                            </button>
+                          )}
+                          {this.state.inputList.length - 1 === i && (
+                            <button
+                              className="btn btn-primary ml-2 mt-3"
+                              onClick={this.handleAddClick}
+                              disabled={
+                                this.state.inputList[i].country === "" ||
+                                this.state.inputList[i].state === "" ||
+                                this.state.inputList[i].city === ""
+                                  ? true
+                                  : false
+                              }
+                            >
+                              Add
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {this.state.reach === "" ? (
+                    ""
+                  ) : (
+                    <h5 className="mt-4">
+                      Influencer's Reach: {this.state.reach.toString()}
+                    </h5>
+                  )}
                 </div>
               </div>
 
@@ -616,12 +835,6 @@ class AffiliateForm extends React.Component {
                         className="custom_btns_ift"
                         color="primary"
                         type="submit"
-                        // onClick={(ev) =>
-                        //   this.saveCampaign(
-                        //     affData.post_id,
-                        //     affData.redirected_url
-                        //   )
-                        // }
                       >
                         &nbsp;Save&nbsp;
                       </Button>
