@@ -175,6 +175,7 @@ class Layout extends React.Component {
         />
       );
     };
+    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
         className={[
@@ -531,12 +532,20 @@ class Layout extends React.Component {
                         exact
                         component={Dashboard}
                       />
-                      <Route path="/app/campaign" exact component={Affiliate} />
-                      <Route
-                        path="/app/marketplace"
-                        exact
-                        component={Marketplace}
-                      />
+                      {userInfo1.package.package_name === "Business Plus" ||
+                      userInfo1.package.package_name === "Business" ? (
+                        <Route
+                          path="/app/campaign"
+                          exact
+                          component={Affiliate}
+                        />
+                      ) : (
+                        <Route
+                          path="/app/marketplace"
+                          exact
+                          component={Marketplace}
+                        />
+                      )}
                     </Switch>
                   </Router>
                 </CSSTransition>
