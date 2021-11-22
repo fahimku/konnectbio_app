@@ -1,4 +1,5 @@
 import React from "react";
+import AffiliateSummaryComponent from "./AffiliateSummaryComponent";
 // import SummaryDataComponent from "./SummaryDataComponent";
 
 class AffiliateDashboard extends React.Component {
@@ -11,7 +12,7 @@ class AffiliateDashboard extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h3>Dashboard</h3>
-          {/* <SummaryDataComponent username={this.state.username} /> */}
+          <AffiliateSummaryComponent username={this.state.username} />
         </div>
       </React.Fragment>
     );

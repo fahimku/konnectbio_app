@@ -93,6 +93,7 @@ import Dashboard from "../../pages/dashboard/Dashboard";
 import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
 import Affiliate from "../../pages/affiliate/Affiliate";
+import Marketplace from "../../pages/marketplace/Marketplace";
 export const history = createBrowserHistory({
   forceRefresh: false,
 });
@@ -174,6 +175,7 @@ class Layout extends React.Component {
         />
       );
     };
+    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
         className={[
@@ -530,7 +532,33 @@ class Layout extends React.Component {
                         exact
                         component={Dashboard}
                       />
-                      <Route path="/app/campaign" exact component={Affiliate} />
+                      {/* {userInfo1.package.package_name === "Business Plus" ||
+                      userInfo1.package.package_name === "Business" ? (
+                        <Route
+                          path="/app/campaign"
+                          exact
+                          component={Affiliate}
+                        />
+                      ) : (
+                        <Route
+                          path="/app/marketplace"
+                          exact
+                          component={Marketplace}
+                        />
+                      )} */}
+
+                      <PrivateRoute
+                        path="/app/campaign"
+                        exact
+                        component={Affiliate}
+                        permissions={["affiliate_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/marketplace"
+                        exact
+                        component={Marketplace}
+                        permissions={["marketplace_access"]}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>

@@ -130,29 +130,19 @@ class AffiliateCreateCampaign extends React.Component {
         <div className="image-box-info">
           <h4>
             Create Campaign
-            <span
-               onClick={this.affToggleModal}
-              className="fa fa-times"
-            ></span>
+            <span onClick={this.affToggleModal} className="fa fa-times"></span>
           </h4>
         </div>
 
-        
         {this.state.affDataLoading ? (
-            <Loader className="analytics-loading" size={60} />
-          ) : (
-            <AffiliateForm
-              affData={this.state.affData}
-              countries={this.state.countries}
-              affCloseModal={this.affToggleModal}
-            />
-          )}
-        
-
-        
-
-
-
+          <Loader className="analytics-loading" size={60} />
+        ) : (
+          <AffiliateForm
+            affData={this.state.affData}
+            countries={this.state.countries}
+            affCloseModal={this.affToggleModal}
+          />
+        )}
 
         {window.innerWidth <= 760 && (
           <Modal

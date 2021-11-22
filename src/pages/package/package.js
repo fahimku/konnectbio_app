@@ -23,6 +23,9 @@ class Package extends React.Component {
     promo_code: "",
   };
   componentDidMount() {
+    if (userInfo.hasOwnProperty("package")) {
+      history.push('/app/main')
+    }
     this.getPackages();
   }
 

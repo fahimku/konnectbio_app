@@ -2,8 +2,8 @@ import AccountUpgrade from "../pages/accountupgrade/AccountUpgrade";
 
 const validate = (modulePermission) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userPermissions = userInfo.package.features
-    ? userInfo.package.features
+  const userPermissions = userInfo.package.permission
+    ? userInfo.package.permission
     : [];
 
   const permit = modulePermission.filter((permission) => {
@@ -17,13 +17,12 @@ const categoryCheck = () => {
   const userPermissions = userInfo.package.category_count
     ? userInfo.package.category_count
     : 0;
-
   return userPermissions === 0 ? true : false;
 };
 
 const checkPermissions = (Component, props) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  let permissions = userInfo.package.features || "";
+  let permissions = userInfo.package.permission || "";
   let componentPermissions = props.permissions || [];
 
   let permissionFilter = componentPermissions.filter((p) => {
