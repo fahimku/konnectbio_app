@@ -354,9 +354,7 @@ h1 small {
 .type-campaign {
   display: flex;
 }
-.col1 {
-  margin-right: 10px;
-}
+
 .col1 img {
   height: 65px;
   width: 65px;
@@ -367,19 +365,11 @@ h1 small {
   background: gray;
   padding: 4px 20px;
 }
-.col1 label {
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-}
+
 .imgbgchk:checked + label > .tick_container {
   opacity: 1;
 }
-.imgbgchk:checked + label > img {
-  // transform: scale(1.25);
-  // opacity: 0.3;
-  background: #000;
-}
+
 .tick_container {
   transition: 0.5s ease;
   opacity: 0;
@@ -405,9 +395,6 @@ h1 small {
   align-items: center;
   margin-right: 15px;
 }
-.demographic-section {
-  margin-top: 10px;
-}
 .demographic-section .input-group-text {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -427,6 +414,7 @@ h1 small {
 /* for md */
 .custom-switch {
   top: -5px;
+  margin-right:10px;
 }
 .custom-switch.custom-switch-md .custom-control-label {
   padding-left: 0.6rem;

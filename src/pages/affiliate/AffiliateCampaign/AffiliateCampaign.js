@@ -33,7 +33,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+    <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
 
   </a>
 ));
@@ -347,24 +347,40 @@ class AffiliateCampaign extends React.Component {
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div className="card analytic-box campaign-box">
-            <Dropdown>
-              <Dropdown.Toggle as={CustomToggle} />
-              <Dropdown.Menu size="sm" title="">
-                <Dropdown.Item>View</Dropdown.Item>
-                <Dropdown.Item onClick={() => {
-                  this.deleteCampaign(record.campaign_id)
-                }}>Delete</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
             <div className="camp-row row">
               <div className="campaign-header col-12">
-
                 <h6>{record.campaign_name}</h6>
+                <div className="cmp-h-right col-md-6">
                 <div class="form-check custom-switch custom-switch-md">
-                  <input type="checkbox" checked={record.is_active} onClick={() => { this.toggleCampaign(record.is_active, record.campaign_id) }} class="custom-control-input" id={`customSwitch` + index} readOnly />
-                  <label class="custom-control-label" htmlFor={`customSwitch` + index}></label>
+                  <input
+                    type="checkbox"
+                    checked={record.is_active}
+                    onClick={() => {
+                      this.toggleCampaign(record.is_active, record.campaign_id);
+                    }}
+                    class="custom-control-input"
+                    id={`customSwitch` + index}
+                    readOnly
+                  />
+                  <label
+                    class="custom-control-label"
+                    htmlFor={`customSwitch` + index}
+                  ></label>
                 </div>
-
+                <Dropdown>
+                  <Dropdown.Toggle as={CustomToggle} />
+                  <Dropdown.Menu size="sm" title="">
+                    <Dropdown.Item>View</Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        this.deleteCampaign(record.campaign_id);
+                      }}
+                    >
+                      Delete
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                </div>
               </div>
               <div className="any-post-img-col col-12">
                 <div className="any-post-image">
@@ -396,7 +412,9 @@ class AffiliateCampaign extends React.Component {
                     <h3 className="count">${record.budget}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Pay per 100 {record.campaign_type}</h5>
+                    <h5 className="count-title">
+                      Pay per 100 {record.campaign_type}
+                    </h5>
                     <h3 className="count">${record.pay_per_hundred}</h3>
                   </div>
                 </div>

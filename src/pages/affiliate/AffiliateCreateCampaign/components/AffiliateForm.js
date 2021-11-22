@@ -267,153 +267,169 @@ class AffiliateForm extends React.Component {
               <img src={`${affData.media_url}`} alt="media_url" />
             </div>
             <div className="image-edit-links">
-              <div className="campaign-name">
-                <span>Campaign Name</span>
-                <InputValidation
-                  className=""
-                  type="text"
-                  id="campaign_name"
-                  name="campaign_name"
-                  required
-                  value={this.state.campaign_name}
-                  placeholder="Campaign Name"
-                  onChange={(evt) => {
-                    this.titleChange(evt.target.value);
-                  }}
-                />
-              </div>
-              <div className="mt-3">
-                <span>URL</span>
-                <InputValidation
-                  className=""
-                  placeholder="Please Enter Website Address"
-                  type="text"
-                  id="website"
-                  required
-                  name="website"
-                  value={affData.redirected_url}
-                  disabled
-                />
-              </div>
-
-              <div className="select-categories mt-3">
-                <span>Category</span>
-                <Select
-                  key={Date.now()}
-                  value={category}
-                  style={{ width: "100%" }}
-                  placeholder="Category"
-                  disabled={true}
-                >
-                  {affData.categories
-                    ? affData.categories.map(
-                        ({ category_id, category_name }, i) => (
-                          <Option value={category_id}>{category_name}</Option>
-                        )
-                      )
-                    : []}
-                </Select>
-              </div>
-
-              <div className="date-range mt-3">
-                <span>Select Start Date / End Date</span>
-                <RangePicker
-                  key={1}
-                  defaultValue={[
-                    moment(this.state.startDate),
-                    moment(this.state.endDate),
-                  ]}
-                  value={[
-                    moment(this.state.startDate),
-                    moment(this.state.endDate),
-                  ]}
-                  defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                  allowClear={false}
-                  ranges={{
-                    Today: [moment(), moment()],
-
-                    Tomorrow: [
-                      moment().add(1, "days"),
-                      moment().add(1, "days"),
-                    ],
-                    "This Month": [
-                      moment().startOf("month"),
-                      moment().endOf("month"),
-                    ],
-                  }}
-                  style={{ width: "100%" }}
-                  // format={dateFormat}
-                  showTime={{ format: "HH:mm" }}
-                  format="YYYY-MM-DD HH:mm"
-                  // onChange={this.dateRangePickerChanger}
-                  onChange={this.dateRangePickerChanger.bind(this)}
-                />
-              </div>
-              <div className="type-campaign mt-3">
-                <span className="type-label">Type of campaign:</span>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="impressions"
-                    class="d-none imgbgchk"
-                    value="impressions"
-                    onChange={this.changeType}
-                    checked={
-                      this.state.campaign_type === "impressions" ? true : false
-                    }
+              <div className="row">
+                <div className="campaign-name col-md-6">
+                  <label>Campaign Name</label>
+                  <InputValidation
+                    className=""
+                    type="text"
+                    id="campaign_name"
+                    name="campaign_name"
+                    required
+                    value={this.state.campaign_name}
+                    placeholder="Campaign Name"
+                    onChange={(evt) => {
+                      this.titleChange(evt.target.value);
+                    }}
                   />
-                  <label for="impressions">
-                    <img src={impression} alt="Image1" />
-                    <div>Impressions</div>
-                    {/* <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> */}
-                  </label>
                 </div>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="clicks"
-                    class="d-none imgbgchk"
-                    value="clicks"
-                    onChange={this.changeType}
-                    checked={
-                      this.state.campaign_type === "clicks" ? true : false
-                    }
-                  />
-                  <label for="clicks">
-                    <img src={click} alt="Image2" />
-                    <div>Clicks</div>
-                    {/* <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> */}
-                  </label>
-                </div>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="sales"
-                    class="d-none imgbgchk"
-                    value="sales"
-                    onChange={this.changeType}
+                <div className="campaign-url col-md-6">
+                  <label>URL</label>
+                  <InputValidation
+                    className=""
+                    placeholder="Please Enter Website Address"
+                    type="text"
+                    id="website"
+                    required
+                    name="website"
+                    value={affData.redirected_url}
                     disabled
                   />
-                  <label for="sales">
-                    <img src={sale} alt="Image3" />
-                    <div>Sales</div>
-                    {/* <div class="tick_container">
+                </div>
+              </div>
+              <div className="row  mt-3">
+                <div className="select-categories col-md-6">
+                  <label>Category</label>
+                  <Select
+                    key={Date.now()}
+                    value={category}
+                    style={{ width: "100%" }}
+                    placeholder="Category"
+                    disabled={true}
+                  >
+                    {affData.categories
+                      ? affData.categories.map(
+                          ({ category_id, category_name }, i) => (
+                            <Option value={category_id}>{category_name}</Option>
+                          )
+                        )
+                      : []}
+                  </Select>
+                </div>
+
+                <div className="date-range-aff col-md-6">
+                  <label>Select Start Date / End Date</label>
+                  <RangePicker
+                    key={1}
+                    defaultValue={[
+                      moment(this.state.startDate),
+                      moment(this.state.endDate),
+                    ]}
+                    value={[
+                      moment(this.state.startDate),
+                      moment(this.state.endDate),
+                    ]}
+                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
+
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                    }}
+                    style={{ width: "100%" }}
+                    // format={dateFormat}
+                    showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD HH:mm"
+                    // onChange={this.dateRangePickerChanger}
+                    onChange={this.dateRangePickerChanger.bind(this)}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="camp-type-ift col-md-12">
+                  <label className="n-camp-type pr-4">
+                    <strong>Type of campaign:</strong>
+                  </label>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="impressions"
+                      class="d-none imgbgchk"
+                      value="impressions"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "impressions"
+                          ? true
+                          : false
+                      }
+                    />
+                    <label for="impressions">
+                      <span className="imp-click">
+                        <i class="fa fa-picture-o fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Impressions</span>
+                      {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
                     </div> */}
-                  </label>
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="clicks"
+                      class="d-none imgbgchk"
+                      value="clicks"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "clicks" ? true : false
+                      }
+                    />
+                    <label for="clicks">
+                      <span className="imp-click">
+                        <i class="fa fa-hand-pointer-o fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Clicks</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="sales"
+                      class="d-none imgbgchk"
+                      value="sales"
+                      onChange={this.changeType}
+                      disabled
+                    />
+                    <label for="sales">
+                      <span className="imp-click">
+                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Sales</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -423,10 +439,8 @@ class AffiliateForm extends React.Component {
             <>
               <div className="demographic-section">
                 <div className="row">
-                  <div className="col-md-2">
-                    <span>Budget</span>
-                  </div>
-                  <div className="col-md-3">
+                  <div className="col-md-6 mt-3">
+                    <label>Budget</label>
                     <InputNumberValidation
                       type="number"
                       id="budget"
@@ -438,12 +452,8 @@ class AffiliateForm extends React.Component {
                       required
                     />
                   </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-2">
-                    <span>Pay per 100 {this.state.campaign_type}</span>
-                  </div>
-                  <div className="col-md-3">
+                  <div className="col-md-6 mt-3">
+                    <label>Pay per 100 {this.state.campaign_type}</label>
                     <InputNumberValidation
                       type="number"
                       id="pay_per_hundred"
@@ -460,9 +470,9 @@ class AffiliateForm extends React.Component {
                 <div className="country-select">
                   {this.state.inputList.map((x, i) => {
                     return (
-                      <div className="row mt-3">
-                        <div className="col-md-2">
-                          <span>Country {i + 1}</span>
+                      <div className="c-con-select row">
+                        <div className="col-md-3 mt-3">
+                          <label>Country {i + 1}</label>
                           <Select2
                             key={i}
                             name="country"
@@ -480,8 +490,8 @@ class AffiliateForm extends React.Component {
                             }
                           />
                         </div>
-                        <div className="col-md-2">
-                          <span>State {i + 1}</span>
+                        <div className="col-md-3 mt-3">
+                          <label>State {i + 1}</label>
                           <Select2
                             key={i}
                             name="state"
@@ -501,8 +511,8 @@ class AffiliateForm extends React.Component {
                             }
                           />
                         </div>
-                        <div className="col-md-2">
-                          <span>City {i + 1}</span>
+                        <div className="col-md-3 mt-3">
+                          <label>City {i + 1}</label>
                           <Select2
                             key={i}
                             name="city"
@@ -521,8 +531,8 @@ class AffiliateForm extends React.Component {
                             }
                           />
                         </div>
-                        <div className="col-md-2">
-                          <span>Zip {i + 1}</span>
+                        <div className="col-md-2 mt-3">
+                          <label>Zip {i + 1}</label>
                           <input
                             type="number"
                             className="form-control"
@@ -544,18 +554,24 @@ class AffiliateForm extends React.Component {
                           />
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="add-del-btns col-md-1 pl-0">
                           {this.state.inputList.length !== 1 && (
                             <button
-                              className="btn btn-primary mt-3"
+                              className="btn p-0 m-0"
                               onClick={() => this.handleRemoveClick(i)}
                             >
-                              Remove
+                              <span>
+                                <i
+                                  class="glyphicon glyphicon-trash fa-1x"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                              <strong>Remove</strong>
                             </button>
                           )}
                           {this.state.inputList.length - 1 === i && (
                             <button
-                              className="btn btn-primary ml-2 mt-3"
+                              className="btn p-0 m-0"
                               onClick={this.handleAddClick}
                               disabled={
                                 this.state.inputList[i].country === "" ||
@@ -565,7 +581,13 @@ class AffiliateForm extends React.Component {
                                   : false
                               }
                             >
-                              Add
+                              <span>
+                                <i
+                                  class="fa fa-plus fa-1x"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                              <strong>Add</strong>
                             </button>
                           )}
                         </div>
@@ -582,46 +604,48 @@ class AffiliateForm extends React.Component {
                 </div>
               </div>
 
-              <div className="edit_button_main pane-button">
-                {this.state.loading ? (
-                  <Button>
-                    <Loader />
-                  </Button>
-                ) : (
-                  <>
-                    <Button
-                      className="custom_btns_ift"
-                      color="primary"
-                      type="submit"
-                      // onClick={(ev) =>
-                      //   this.saveCampaign(
-                      //     affData.post_id,
-                      //     affData.redirected_url
-                      //   )
-                      // }
-                    >
-                      &nbsp;Save&nbsp;
+              <div className="row mt-4">
+                <div className="col-md-12">
+                  {this.state.loading ? (
+                    <Button>
+                      <Loader />
                     </Button>
+                  ) : (
+                    <>
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        type="submit"
+                        // onClick={(ev) =>
+                        //   this.saveCampaign(
+                        //     affData.post_id,
+                        //     affData.redirected_url
+                        //   )
+                        // }
+                      >
+                        &nbsp;Save&nbsp;
+                      </Button>
 
-                    <Button
-                      className="custom_btns_ift"
-                      color="primary"
-                      onClick={() => this.reset()}
-                    >
-                      &nbsp;Reset&nbsp;
-                    </Button>
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        onClick={() => this.reset()}
+                      >
+                        &nbsp;Reset&nbsp;
+                      </Button>
 
-                    <Button
-                      className="custom_btns_ift"
-                      color="primary"
-                      onClick={() => {
-                        this.props.affCloseModal();
-                      }}
-                    >
-                      &nbsp;Cancel&nbsp;
-                    </Button>
-                  </>
-                )}
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        onClick={() => {
+                          this.props.affCloseModal();
+                        }}
+                      >
+                        &nbsp;Cancel&nbsp;
+                      </Button>
+                    </>
+                  )}
+                </div>
               </div>
             </>
           ) : null}

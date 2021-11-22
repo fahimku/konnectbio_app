@@ -1,15 +1,5 @@
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (max-width: 1300px) {
-    .left-column {
-        flex: 0 0 40% !important;
-        max-width: 40% !important;
-    }
 
-    .right-bar {
-        flex: 0 0 60% !important;
-        max-width: 60% !important;
-    }
-}
 
 @media only screen and (max-width: 1390px) {
     .custom_pkg p br {
@@ -22,6 +12,69 @@
         width:55px;
         height: 55px;;
     }
+}
+@media only screen and (max-width: 1300px) {
+    .left-column {
+        flex: 0 0 40% !important;
+        max-width: 40% !important;
+    }
+
+    .right-bar {
+        flex: 0 0 60% !important;
+        max-width: 60% !important;
+    }
+    .affiliate-model .image-wrapper{
+        flex-direction: column;
+        align-items: center;
+    }
+    .affiliate-model .image-wrapper .image-box{
+        margin-bottom: 2rem;
+    }
+    .affiliate-model .image-wrapper .image-edit-links .row .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .campaign-url, .date-range-aff{
+        margin-top:1rem;
+    }
+    .demographic-section .row .col-md-6{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .demographic-section .country-select .c-con-select .col-md-3, .demographic-section .country-select .c-con-select .col-md-2,
+    .demographic-section .country-select .c-con-select .col-md-1{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .demographic-section .country-select .c-con-select .add-del-btns.col-md-1{
+        padding-left:20px !important;
+    }
+    .add-del-btns{
+        margin-top:1rem;
+    }
+    .add-del-btns button strong{
+        display: block;
+    }
+    .add-del-btns span{
+        display:none;
+    }
+    .add-del-btns .btn{
+        color: #fff;
+        background-color: #010b40;
+        border-color: #010b40;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+        border: none;
+        margin-right: 5px !important;
+        padding: 10px 10px !important;
+        min-width: 120px;
+    }
+    .add-del-btns .btn strong{
+        font-weight: normal;
+    }
+    .affiliate-model .image-wrapper .image-box img{
+        border-radius: 50% !important;
+    }
+      
 }
 
 @media only screen and (max-width: 1250px) {
@@ -98,6 +151,9 @@
     }
     .analytics-page .post-analytics-tab form .row .col-md-6{
         margin-bottom: 15px;;
+    }
+    .affiliate-page .post-box{
+        margin:0;
     }
 }
 
@@ -269,6 +325,12 @@
     }
     .dash_c_inr h4, .dash_c_pkg h4{
         font-size: 1.1rem;
+    }
+    .tab-content.affiliate_tab_ift{
+        height: -moz-calc(100% - 3px);
+        height: -webkit-calc(100% - 3px);
+        height: -o-calc(100% - 3px);
+        height: calc(100% - 3px);
     }
 
 }
