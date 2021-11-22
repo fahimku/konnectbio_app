@@ -1188,6 +1188,9 @@ a.pkg_read:hover {
 .add-del-btns button strong{
   display: none;
 }
+.swal2-title{
+  font-size: 1.1rem !important;
+}
 /* Affiliate Page End Here Iftikhar */
 
 

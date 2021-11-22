@@ -84,7 +84,7 @@ class AffiliateCampaign extends React.Component {
   }
 
   toggleCampaign = async (status, campaignId) => {
-    let statusName = status ? "Disabled" : "Enabled";
+    let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
       // text: "You won't be able to revert this!",
@@ -366,7 +366,7 @@ class AffiliateCampaign extends React.Component {
                     htmlFor={`customSwitch` + index}
                   ></label>
                 </div>
-                <Dropdown>
+                <Dropdown alignRight>
                   <Dropdown.Toggle as={CustomToggle} />
                   <Dropdown.Menu size="sm" title="">
                     <Dropdown.Item>View</Dropdown.Item>
