@@ -94,7 +94,6 @@ class AffiliateCampaign extends React.Component {
     let statusName = status ? "Disable" : "Enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
-      // text: "You won't be able to revert this!",
       icon: status ? "warning" : 'success',
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -107,8 +106,7 @@ class AffiliateCampaign extends React.Component {
             is_active: !status
           })
           .then(() => {
-            let data =
-              this.state.data;
+            let data = this.state.data;
             let objIndex = data.findIndex((obj => obj.campaign_id === campaignId));
             data[objIndex].is_active = !status;
             this.setState({ data: data });
@@ -135,7 +133,7 @@ class AffiliateCampaign extends React.Component {
       if (result.isConfirmed) {
         axios
           .delete(`/campaigns/remove/${campaignId}`)
-          .then(() => {            
+          .then(() => {
             let data = this.state.data.filter(function (item) {
               return item.campaign_id !== campaignId;
             });
@@ -605,7 +603,7 @@ class AffiliateCampaign extends React.Component {
           )}
           <Modal
             show={this.state.modal}
-            onHide={()=>this.setState({ modal: false })}
+            onHide={() => this.setState({ modal: false })}
             className="change-password"
             centered
             size="xl"
