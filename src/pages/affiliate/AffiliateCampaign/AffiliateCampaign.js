@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Row, Col, Modal, Button } from "react-bootstrap";
+import { Row, Col, Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
@@ -174,42 +174,10 @@ class AffiliateCampaign extends React.Component {
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
         this.postData();
-        // if (response.data.message.hasOwnProperty("next")) {
-        //   this.setState({ page: response.data.message.next.page });
-        // } else {
-        //   this.setState({ page: 0 });
-        // }
-        // if (response.data.message.hasOwnProperty("previous")) {
-        //   this.setState({ previous: response.data.message.previous.page });
-        // } else {
-        //   this.setState({ previous: 0 });
-        // }
       });
   }
 
-  // fetchMyCategory = async () => {
-  //   await axios
-  //     .get("/users/receive/categories")
-  //     .then((response) => {
-  //       const selectCategories = [];
-  //       const myCategories = response.data.message;
-  //       myCategories.map(({ category_id, category_name, image_url }) => {
-  //         return selectCategories.push({
-  //           value: category_id,
-  //           label: category_name,
-  //           image: image_url,
-  //         });
-  //       });
-  //       let all = {};
-  //       all.value = "all";
-  //       all.label = "ALL";
-  //       selectCategories.unshift(all);
-  //       this.setState({ myCategory: selectCategories });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+
 
   // dateRangePickerChanger(value, dataString) {
   //   let fromDate = dataString[0];
@@ -331,6 +299,7 @@ class AffiliateCampaign extends React.Component {
       }
     );
   };
+
 
   postData = () => {
     const data = this.state.data;
@@ -591,6 +560,7 @@ class AffiliateCampaign extends React.Component {
                 breakLabel="..."
                 breakClassName="page-item"
                 breakLinkClassName="page-link"
+                forcePage={this.state.currentPage}
                 pageCount={this.state.pageCount}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
@@ -627,7 +597,11 @@ class AffiliateCampaign extends React.Component {
                     this.state.saveSort,
                     this.state.saveSortOrder
                   );
-                }}
+
+
+                }
+
+                }
               />
             </Modal.Body>
           </Modal>
@@ -636,7 +610,6 @@ class AffiliateCampaign extends React.Component {
     );
   }
 }
-
 function mapStateToProps({ countries, campaign }) {
   return { countries, campaign }
 }
