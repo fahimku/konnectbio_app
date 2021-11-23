@@ -74,7 +74,7 @@ class AffiliateForm extends React.Component {
     const list = [...this.state.inputList];
     list[index] = {
       country: option.value,
-      name: option.label,
+      // name: option.label,
       state: "",
       city: "",
       zip: "",
@@ -187,7 +187,10 @@ class AffiliateForm extends React.Component {
           campaign_type: this.state.campaign_type,
           redirected_url: this.props.affData.redirected_url,
           media_url: this.props.affData.media_url,
-          category_id: this.props.affData.categories[0].category_id,
+          category_id:
+            this.props.affData.categories.length !== 0
+              ? this.props.affData.categories[0].category_id
+              : "",
           budget: parseInt(this.state.budget),
           pay_per_hundred: parseInt(this.state.pay_per_hundred),
           // traffic: 100,
@@ -245,7 +248,8 @@ class AffiliateForm extends React.Component {
         this.setState({ reach: response.data.message.influencers });
       })
       .catch((err) => {
-        toast.error("Something went wrong");
+        console.log(err);
+        // toast.error("Something went wrong");
       });
   };
   reset = () => {

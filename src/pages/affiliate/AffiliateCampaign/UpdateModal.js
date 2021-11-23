@@ -254,7 +254,8 @@ class UpdateModal extends React.Component {
         this.setState({ reach: response.data.message.influencers });
       })
       .catch((err) => {
-        toast.error("Something went wrong");
+        console.log(err);
+        // toast.error("Something went wrong");
       });
   };
   reset = () => {
@@ -280,30 +281,30 @@ class UpdateModal extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
-    const renderConValue = (x) => {
-      const exit = this.props.countries.filter(
-        (item) => item.value == x.country
-      );
+    // const renderConValue = (x) => {
+    //   const exit = this.props.countries.filter(
+    //     (item) => item.value == x.country
+    //   );
 
-      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-    };
+    //   return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    // };
 
-    const renderStateValue = (x) => {
-      const exit =
-        this.state.stateList === ""
-          ? []
-          : this.state.stateList.filter((item) => item.value == x.state);
+    // const renderStateValue = (x) => {
+    //   const exit =
+    //     this.state.stateList === ""
+    //       ? []
+    //       : this.state.stateList.filter((item) => item.value == x.state);
 
-      return exit[0];
-    };
-    const renderCityValue = (x) => {
-      const exit =
-        this.state.cities === ""
-          ? []
-          : this.state.cities.filter((item) => item.value == x.city);
+    //   return exit[0];
+    // };
+    // const renderCityValue = (x) => {
+    //   const exit =
+    //     this.state.cities === ""
+    //       ? []
+    //       : this.state.cities.filter((item) => item.value == x.city);
 
-      return exit[0];
-    };
+    //   return exit[0];
+    // };
 
     return (
       <React.Fragment>
@@ -399,7 +400,7 @@ class UpdateModal extends React.Component {
                   onChange={this.dateRangePickerChanger.bind(this)}
                 />
               </div>
-              <div className="type-campaign mt-3">
+              {/* <div className="type-campaign mt-3">
                 <span className="type-label">Type of campaign:</span>
                 <div class="col1">
                   <input
@@ -416,11 +417,11 @@ class UpdateModal extends React.Component {
                   <label for="impressions">
                     <img src={impression} alt="Image1" />
                     <div>Impressions</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
-                    </div> */}
+                    </div> 
                   </label>
                 </div>
                 <div class="col1">
@@ -438,11 +439,11 @@ class UpdateModal extends React.Component {
                   <label for="clicks">
                     <img src={click} alt="Image2" />
                     <div>Clicks</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
-                    </div> */}
+                    </div> 
                   </label>
                 </div>
                 <div class="col1">
@@ -458,12 +459,94 @@ class UpdateModal extends React.Component {
                   <label for="sales">
                     <img src={sale} alt="Image3" />
                     <div>Sales</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> 
+                  </label>
+                </div>
+              </div> */}
+              <div className="row mt-4">
+                <div className="camp-type-ift col-md-12">
+                  <label className="n-camp-type pr-4">
+                    <strong>Type of campaign:</strong>
+                  </label>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="impressions"
+                      class="d-none imgbgchk"
+                      value="impressions"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "impressions"
+                          ? true
+                          : false
+                      }
+                    />
+                    <label for="impressions">
+                      <span className="imp-click">
+                        <i class="fa fa-picture-o fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Impressions</span>
+                      {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
                     </div> */}
-                  </label>
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="clicks"
+                      class="d-none imgbgchk"
+                      value="clicks"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "clicks" ? true : false
+                      }
+                    />
+                    <label for="clicks">
+                      <span className="imp-click">
+                        <i
+                          class="fa fa-hand-pointer-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                      <span className="imp-name">Clicks</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="sales"
+                      class="d-none imgbgchk"
+                      value="sales"
+                      onChange={this.changeType}
+                      disabled
+                    />
+                    <label for="sales">
+                      <span className="imp-click">
+                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Sales</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
