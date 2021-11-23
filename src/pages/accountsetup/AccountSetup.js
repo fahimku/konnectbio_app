@@ -108,9 +108,7 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
     // const maxIndex = this.state.allPackages.length - 1;
 
     this.setState({ singlePackage: singlePackage[0] });
@@ -120,8 +118,10 @@ class AccountSetup extends React.Component {
       this.setState({ upgrade: true });
     } else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
+      this.setState({ showPaymentButton: false });
     } else if (event.index === this.state.packageIndex) {
       this.setState({ upgrade: false });
+      this.setState({ showPaymentButton: false });
     }
   };
 
