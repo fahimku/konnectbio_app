@@ -28,7 +28,7 @@ class SummaryDataComponent extends React.Component {
       username: this.props.username,
       data: "",
       loading: false,
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
@@ -42,7 +42,7 @@ class SummaryDataComponent extends React.Component {
   componentDidMount() {
     this.fetchSummeryPerformance(
       this.state.username,
-      this.state.lastYear,
+      this.state.fromDate,
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
       this.state.page
@@ -95,7 +95,7 @@ class SummaryDataComponent extends React.Component {
                     disabledDate={this.disabledDate}
                     key={4}
                     defaultValue={[
-                      moment(this.state.lastYear),
+                      moment(this.state.fromDate),
                       moment(this.state.today),
                     ]}
                     defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}

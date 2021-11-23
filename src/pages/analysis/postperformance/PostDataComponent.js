@@ -24,7 +24,7 @@ class PostDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
@@ -50,7 +50,7 @@ class PostDataComponent extends React.Component {
     // const date_to = moment(this.state.today).format("YYYY-MM-DD");
     this.fetchPostPerformance(
       this.state.username,
-      this.state.lastYear,
+      this.state.fromDate,
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
       this.state.page,
@@ -146,6 +146,7 @@ class PostDataComponent extends React.Component {
       this.state.saveSortOrder
     );
   };
+
   paginationPrev = () => {
     let {username, fromDate, toDate, limit, previous} = this.state;
     this.fetchPostPerformance(
@@ -159,9 +160,11 @@ class PostDataComponent extends React.Component {
       this.state.saveSortOrder
     );
   };
+
   disabledDate(current) {
     return current && current > moment().endOf("day");
   }
+
   handleSelect = (event) => {
     this.setState({
       saveCategory: event.value,
@@ -193,7 +196,7 @@ class PostDataComponent extends React.Component {
       saveCategory: "",
       // saveSort: "",
       // saveSortOrder: "",
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
     this.fetchPostPerformance(
