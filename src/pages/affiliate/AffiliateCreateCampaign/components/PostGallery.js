@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { connect } from "react-redux";
 import * as postAct from "../../../../actions/posts";
 import InfiniteScroll from "react-infinite-scroller";
@@ -10,11 +10,11 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
   }, []);
 
   const searchMemo = useMemo(() => {
-    if (id == "allPost") {
+    if (id === "allPost") {
       setLoading(true);
       getPosts(1, null, clearPost).then(() => setLoading(false));
     }
-    if (id && id != "allPost") {
+    if (id && id !== "allPost") {
       setLoading(true);
       getPosts(1, id, clearPost).then(() => setLoading(false));
     }
@@ -29,7 +29,7 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
               pageStart={0}
               className="af-rm-mn row"
               loadMore={() =>
-                getPosts(posts.next?.page, id && id != "allPost" ? id : null)
+                getPosts(posts.next?.page, id && id !== "allPost" ? id : null)
               }
               hasMore={posts.next?.page ? true : false}
               loader={

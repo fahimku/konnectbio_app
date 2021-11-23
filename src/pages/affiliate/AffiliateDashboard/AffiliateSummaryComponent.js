@@ -9,17 +9,17 @@ import "antd/dist/antd.css";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-const twodecimalplace = (value = 0) => {
-  if (value) {
-    return parseFloat(value).toFixed(2);
-  }
-};
+// const twodecimalplace = (value = 0) => {
+//   if (value) {
+//     return parseFloat(value).toFixed(2);
+//   }
+// };
 
-const numberWithCommas = (x) => {
-  if (x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-};
+// const numberWithCommas = (x) => {
+//   if (x) {
+//     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+//   }
+// };
 
 class AffiliateSummaryComponent extends React.Component {
   constructor(props) {
@@ -82,7 +82,7 @@ class AffiliateSummaryComponent extends React.Component {
   }
 
   render() {
-    const data = this.state.data;
+    // const data = this.state.data;
     return (
       <>
         <div className="summary_container_main container">

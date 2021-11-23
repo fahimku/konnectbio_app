@@ -1,8 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
 import "react-virtualized-select/styles.css";
-
-// Then import the virtualized Select HOC
 import VirtualizedSelect from "react-virtualized-select";
 import Formsy from "formsy-react";
 import { Button } from "reactstrap";
@@ -15,9 +12,6 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import InputNumberValidation from "../../../components/InputValidation/InputNumberValidation";
-import click from "../../../images/campaign/click.svg";
-import sale from "../../../images/campaign/sale.svg";
-import impression from "../../../images/campaign/impression.svg";
 import { connect } from "react-redux";
 import * as postActions from "../../../actions/posts";
 import { Country, State, City } from "country-state-city";
@@ -166,7 +160,6 @@ class UpdateModal extends React.Component {
 
     const {
       campaign_name,
-      redirected_url,
       budget,
       pay_per_hundred,
       startDate,
@@ -221,7 +214,7 @@ class UpdateModal extends React.Component {
   };
   // handle Zip input change
   handleZipChange = (e, index) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     const list = [...this.state.inputList];
     list[index].zip = value;
     this.setState({ inputList: list });
@@ -639,7 +632,7 @@ class UpdateModal extends React.Component {
                             name="state"
                             value={
                               x.state
-                                ? x.state != "all"
+                                ? x.state !== "all"
                                   ? {
                                       value: State.getStateByCodeAndCountry(
                                         x.state,
@@ -702,7 +695,7 @@ class UpdateModal extends React.Component {
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={
-                              x.state != "all"
+                              x.state !== "all"
                                 ? City.getCitiesOfState(x.country, x.state).map(
                                     (item) => {
                                       return {
