@@ -28,8 +28,10 @@ class UpdateModal extends React.Component {
       campaign_type: this.props.affData?.campaign_type,
       pay_per_hundred: this.props.affData?.pay_per_hundred,
       budget: this.props.affData?.budget,
-      startDate: moment(),
-      endDate: moment().add(30, "days"),
+      // startDate: moment(),
+      // endDate: moment().add(30, "days"),
+      startDate: this.props.affData?.start_date_and_time,
+      endDate: this.props.affData?.end_date_and_time,
       inputList: this.props.affData?.demographics,
       loading: false,
       country: "",
@@ -214,10 +216,15 @@ class UpdateModal extends React.Component {
   };
   // handle Zip input change
   handleZipChange = (e, index) => {
-    const { value } = e.target;
-    const list = [...this.state.inputList];
-    list[index].zip = value;
-    this.setState({ inputList: list });
+    if (e.target.value.length > 5) {
+      e.preventDefault();
+      return false;
+    } else {
+      const { value } = e.target;
+      const list = [...this.state.inputList];
+      list[index].zip = value;
+      this.setState({ inputList: list });
+    }
   };
 
   // handle click event of the Remove button
