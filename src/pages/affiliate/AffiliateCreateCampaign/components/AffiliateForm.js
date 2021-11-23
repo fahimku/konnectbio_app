@@ -28,8 +28,8 @@ class AffiliateForm extends React.Component {
       campaign_type: "",
       pay_per_hundred: "",
       budget: "",
-      startDate: moment(),
-      endDate: moment().add(30, "days"),
+      startDate: moment().format("YYYY-MM-DD HH:mm"),
+      endDate: moment().add(30, "days").format("YYYY-MM-DD HH:mm"),
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       loading: false,
       country: "",
@@ -275,7 +275,7 @@ class AffiliateForm extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
-
+    console.log(this.state.startDate, "startDate");
     return (
       <React.Fragment>
         <Formsy.Form

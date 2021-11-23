@@ -370,13 +370,13 @@ class UpdateModal extends React.Component {
                 <span>Select Start Date / End Date</span>
                 <RangePicker
                   key={1}
-                  defaultValue={[
-                    moment(this.state.startDate),
-                    moment(this.state.endDate),
-                  ]}
+                  // defaultValue={[
+                  //   moment(this.state.startDate),
+                  //   moment(this.state.endDate),
+                  // ]}
                   value={[
-                    moment(this.state.startDate),
-                    moment(this.state.endDate),
+                    moment.utc(this.state.startDate),
+                    moment.utc(this.state.endDate),
                   ]}
                   defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
                   allowClear={false}
