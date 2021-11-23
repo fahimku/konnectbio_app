@@ -7,11 +7,11 @@ const noop = () => {
 
 class FixRequiredSelect extends React.Component {
   state = {
-    value: this.props.value || ""
+    value: this.props.value || "",
   };
 
   selectRef = null;
-  setSelectRef = ref => {
+  setSelectRef = (ref) => {
     this.selectRef = ref;
   };
 
@@ -21,13 +21,13 @@ class FixRequiredSelect extends React.Component {
   };
 
   getValue = () => {
-    if (this.props.value != undefined) return this.props.value;
+    if (this.props.value !== undefined) return this.props.value;
     return this.state.value || "";
   };
 
   render() {
     const { SelectComponent, required, ...props } = this.props;
-    const { isLoading, isDisabled } = this.props;
+    const { isDisabled } = this.props;
     const enableRequired = !isDisabled;
 
     return (
@@ -45,7 +45,7 @@ class FixRequiredSelect extends React.Component {
               opacity: 0,
               width: "100%",
               height: 0,
-              position: "absolute"
+              position: "absolute",
             }}
             value={this.getValue()}
             onChange={noop}
@@ -59,14 +59,14 @@ class FixRequiredSelect extends React.Component {
 }
 
 FixRequiredSelect.defaultProps = {
-  onChange: noop
+  onChange: noop,
 };
 
 FixRequiredSelect.protoTypes = {
   // react-select component class (e.g. Select, Creatable, Async)
   selectComponent: PropTypes.func.isRequired,
   onChange: PropTypes.func,
-  required: PropTypes.bool
+  required: PropTypes.bool,
 };
 
 export default FixRequiredSelect;

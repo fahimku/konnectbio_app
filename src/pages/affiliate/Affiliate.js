@@ -1,17 +1,7 @@
 import React from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
 import s from "./Affiliate.module.scss";
-import  "./selector.css";
-import {
-  Row,
-  Col,
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-} from "reactstrap";
+import "./selector.css";
+import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import { createBrowserHistory } from "history";
 import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
@@ -106,20 +96,25 @@ class Affiliate extends React.Component {
                   activeTab={this.state.activeTab}
                 >
                   <TabPane tabId="dashboard">
-                    {this.state.activeTab == "dashboard" ? (
+                    {this.state.activeTab === "dashboard" ? (
                       <AffiliateDashboard username={this.state.username} />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="campaign">
-                    {this.state.activeTab == "campaign" ? (
+                    {this.state.activeTab === "campaign" ? (
                       <AffiliateCampaign username={this.state.username} />
                     ) : null}
                   </TabPane>
-                  <TabPane tabId="create-campaign" className="tab-create-campaign">
-                    {this.state.activeTab=='create-campaign'?<AffiliateCreateCampaign
-                      username={this.state.username}
-                      user_id={this.state.user_id}
-                    />:null}
+                  <TabPane
+                    tabId="create-campaign"
+                    className="tab-create-campaign"
+                  >
+                    {this.state.activeTab === "create-campaign" ? (
+                      <AffiliateCreateCampaign
+                        username={this.state.username}
+                        user_id={this.state.user_id}
+                      />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="accounting">
                     {this.state.activeTab === "accounting" ? (

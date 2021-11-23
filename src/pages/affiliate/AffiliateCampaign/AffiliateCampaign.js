@@ -11,8 +11,8 @@ import "antd/dist/antd.css";
 //import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
-import * as countryAct from "../../../actions/countries"
-import * as campAct from "../../../actions/campaign"
+import * as countryAct from "../../../actions/countries";
+import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
 
 // const { RangePicker } = DatePicker;
@@ -26,19 +26,17 @@ import { connect } from "react-redux";
 //   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 // };
 
-
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href="#"
+    href="/"
     ref={ref}
-    onClick={e => {
+    onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}
   >
     {children}
     <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
-
   </a>
 ));
 
@@ -68,7 +66,7 @@ class AffiliateCampaign extends React.Component {
       perPage: 8,
       currentPage: 0,
       modal: false,
-      currentCampaign: {}
+      currentCampaign: {},
     };
     //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -76,7 +74,7 @@ class AffiliateCampaign extends React.Component {
 
   componentDidMount() {
     // const date_to = moment(this.state.today).format("YYYY-MM-DD");
-    this.props.getCountries()
+    this.props.getCountries();
     this.fetchPostPerformance(
       this.state.username,
       this.state.lastYear,
@@ -94,7 +92,7 @@ class AffiliateCampaign extends React.Component {
     let statusName = status ? "Disable" : "Enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
-      icon: status ? "warning" : 'success',
+      icon: status ? "warning" : "success",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
@@ -103,11 +101,13 @@ class AffiliateCampaign extends React.Component {
       if (result.isConfirmed) {
         axios
           .put(`campaigns/revise/campaignstatus/${campaignId}`, {
-            is_active: !status
+            is_active: !status,
           })
           .then(() => {
             let data = this.state.data;
-            let objIndex = data.findIndex((obj => obj.campaign_id === campaignId));
+            let objIndex = data.findIndex(
+              (obj) => obj.campaign_id === campaignId
+            );
             data[objIndex].is_active = !status;
             this.setState({ data: data });
             this.postData();
@@ -320,7 +320,10 @@ class AffiliateCampaign extends React.Component {
                       type="checkbox"
                       checked={record.is_active}
                       onClick={() => {
-                        this.toggleCampaign(record.is_active, record.campaign_id);
+                        this.toggleCampaign(
+                          record.is_active,
+                          record.campaign_id
+                        );
                       }}
                       class="custom-control-input"
                       id={`customSwitch` + index}
@@ -334,12 +337,13 @@ class AffiliateCampaign extends React.Component {
                   <Dropdown>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
-                      <Dropdown.Item onClick={() => {
-                        this.setState({ currentCampaign: record })
-                        this.setState({ modal: true })
-
-                      }}
-                      >Edit
+                      <Dropdown.Item
+                        onClick={() => {
+                          this.setState({ currentCampaign: record });
+                          this.setState({ modal: true });
+                        }}
+                      >
+                        Edit
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => {
@@ -395,11 +399,13 @@ class AffiliateCampaign extends React.Component {
       </React.Fragment>
     ));
 
-    this.setState({ pageCount: Math.ceil(data.length / this.state.perPage), postData, });
+    this.setState({
+      pageCount: Math.ceil(data.length / this.state.perPage),
+      postData,
+    });
   };
 
   render() {
-
     // const sortOptions = [
     //   { value: "date", label: "DATE" },
     //   { value: "impressions", label: "IMPRESSIONS" },
@@ -565,7 +571,9 @@ class AffiliateCampaign extends React.Component {
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+                containerClassName={
+                  "pagination justify-content-center mt-2 custom-paginate"
+                }
                 // subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
               />
@@ -611,6 +619,8 @@ class AffiliateCampaign extends React.Component {
   }
 }
 function mapStateToProps({ countries, campaign }) {
-  return { countries, campaign }
+  return { countries, campaign };
 }
-export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(
+  AffiliateCampaign
+);
