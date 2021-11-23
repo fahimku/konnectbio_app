@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Row, Col, Modal, Button } from "react-bootstrap";
+import { Row, Col, Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
@@ -11,8 +11,8 @@ import "antd/dist/antd.css";
 //import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
-import * as countryAct from "../../../actions/countries"
-import * as campAct from "../../../actions/campaign"
+import * as countryAct from "../../../actions/countries";
+import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
 
 // const { RangePicker } = DatePicker;
@@ -26,19 +26,17 @@ import { connect } from "react-redux";
 //   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 // };
 
-
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href=""
+    href="/"
     ref={ref}
-    onClick={e => {
+    onClick={(e) => {
       e.preventDefault();
       onClick(e);
     }}
   >
     {children}
     <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
-
   </a>
 ));
 
@@ -54,7 +52,7 @@ class AffiliateCampaign extends React.Component {
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
-      page: "1",
+      page: "2",
       limit: "8",
       previous: "",
       myCategory: "",
@@ -68,7 +66,7 @@ class AffiliateCampaign extends React.Component {
       perPage: 8,
       currentPage: 0,
       modal: false,
-      currentCampaign: {}
+      currentCampaign: {},
     };
     //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
     this.handlePageClick = this.handlePageClick.bind(this);
@@ -76,7 +74,7 @@ class AffiliateCampaign extends React.Component {
 
   componentDidMount() {
     // const date_to = moment(this.state.today).format("YYYY-MM-DD");
-    this.props.getCountries()
+    this.props.getCountries();
     this.fetchPostPerformance(
       this.state.username,
       this.state.lastYear,
@@ -94,8 +92,7 @@ class AffiliateCampaign extends React.Component {
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
-      // text: "You won't be able to revert this!",
-      icon: status ? "warning" : 'success',
+      icon: status ? "warning" : "success",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
@@ -104,20 +101,17 @@ class AffiliateCampaign extends React.Component {
       if (result.isConfirmed) {
         axios
           .put(`campaigns/revise/campaignstatus/${campaignId}`, {
-            is_active: !status
+            is_active: !status,
           })
           .then(() => {
-            this.fetchPostPerformance(
-              this.state.username,
-              this.state.lastYear,
-              moment(new Date()).format("YYYY-MM-DD"),
-              this.state.limit,
-              this.state.page,
-              "",
-              this.state.saveSort,
-              this.state.saveSortOrder
+            let data = this.state.data;
+            let objIndex = data.findIndex(
+              (obj) => obj.campaign_id === campaignId
             );
-            toast.success("Campaign Disabled Successfully");
+            data[objIndex].is_active = !status;
+            this.setState({ data: data });
+            this.postData();
+            toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
             toast.error(err.response.data.message);
@@ -140,16 +134,11 @@ class AffiliateCampaign extends React.Component {
         axios
           .delete(`/campaigns/remove/${campaignId}`)
           .then(() => {
-            this.fetchPostPerformance(
-              this.state.username,
-              this.state.lastYear,
-              moment(new Date()).format("YYYY-MM-DD"),
-              this.state.limit,
-              this.state.page,
-              "",
-              this.state.saveSort,
-              this.state.saveSortOrder
-            );
+            let data = this.state.data.filter(function (item) {
+              return item.campaign_id !== campaignId;
+            });
+            this.setState({ data: data });
+            this.postData();
             toast.success("Campaign Deleted Successfully");
           })
           .catch((err) => {
@@ -185,42 +174,10 @@ class AffiliateCampaign extends React.Component {
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
         this.postData();
-        // if (response.data.message.hasOwnProperty("next")) {
-        //   this.setState({ page: response.data.message.next.page });
-        // } else {
-        //   this.setState({ page: 0 });
-        // }
-        // if (response.data.message.hasOwnProperty("previous")) {
-        //   this.setState({ previous: response.data.message.previous.page });
-        // } else {
-        //   this.setState({ previous: 0 });
-        // }
       });
   }
 
-  // fetchMyCategory = async () => {
-  //   await axios
-  //     .get("/users/receive/categories")
-  //     .then((response) => {
-  //       const selectCategories = [];
-  //       const myCategories = response.data.message;
-  //       myCategories.map(({ category_id, category_name, image_url }) => {
-  //         return selectCategories.push({
-  //           value: category_id,
-  //           label: category_name,
-  //           image: image_url,
-  //         });
-  //       });
-  //       let all = {};
-  //       all.value = "all";
-  //       all.label = "ALL";
-  //       selectCategories.unshift(all);
-  //       this.setState({ myCategory: selectCategories });
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+
 
   // dateRangePickerChanger(value, dataString) {
   //   let fromDate = dataString[0];
@@ -343,6 +300,7 @@ class AffiliateCampaign extends React.Component {
     );
   };
 
+
   postData = () => {
     const data = this.state.data;
     const slice = data.slice(
@@ -362,7 +320,10 @@ class AffiliateCampaign extends React.Component {
                       type="checkbox"
                       checked={record.is_active}
                       onClick={() => {
-                        this.toggleCampaign(record.is_active, record.campaign_id);
+                        this.toggleCampaign(
+                          record.is_active,
+                          record.campaign_id
+                        );
                       }}
                       class="custom-control-input"
                       id={`customSwitch` + index}
@@ -377,12 +338,13 @@ class AffiliateCampaign extends React.Component {
                   <Dropdown alignRight>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
-                      <Dropdown.Item onClick={() => {
-                        this.setState({ currentCampaign: record })
-                        this.setState({ modal: true })
-
-                      }}
-                      >Edit
+                      <Dropdown.Item
+                        onClick={() => {
+                          this.setState({ currentCampaign: record });
+                          this.setState({ modal: true });
+                        }}
+                      >
+                        Edit
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => {
@@ -438,11 +400,13 @@ class AffiliateCampaign extends React.Component {
       </React.Fragment>
     ));
 
-    this.setState({ pageCount: Math.ceil(data.length / this.state.perPage), postData, });
+    this.setState({
+      pageCount: Math.ceil(data.length / this.state.perPage),
+      postData,
+    });
   };
 
   render() {
-
     // const sortOptions = [
     //   { value: "date", label: "DATE" },
     //   { value: "impressions", label: "IMPRESSIONS" },
@@ -603,11 +567,14 @@ class AffiliateCampaign extends React.Component {
                 breakLabel="..."
                 breakClassName="page-item"
                 breakLinkClassName="page-link"
+                forcePage={this.state.currentPage}
                 pageCount={this.state.pageCount}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={this.handlePageClick}
-                containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+                containerClassName={
+                  "pagination justify-content-center mt-2 custom-paginate"
+                }
                 // subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
               />
@@ -615,6 +582,7 @@ class AffiliateCampaign extends React.Component {
           )}
           <Modal
             show={this.state.modal}
+            onHide={() => this.setState({ modal: false })}
             className="change-password"
             centered
             size="xl"
@@ -638,31 +606,22 @@ class AffiliateCampaign extends React.Component {
                     this.state.saveSort,
                     this.state.saveSortOrder
                   );
-                }}
+
+
+                }
+
+                }
               />
             </Modal.Body>
-            {/* <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.setState({modal:false})
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              className="disconnect-btn"
-            >
-              Yes
-            </Button>
-          </Modal.Footer> */}
           </Modal>
         </div>
       </>
     );
   }
 }
-
 function mapStateToProps({ countries, campaign }) {
-  return { countries, campaign }
+  return { countries, campaign };
 }
-export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(
+  AffiliateCampaign
+);

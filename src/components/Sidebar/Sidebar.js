@@ -72,7 +72,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    // let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav className={s.root}>
@@ -82,9 +82,8 @@ class Sidebar extends React.Component {
             //   this.props.history.push("/app/home");
             // }}
           >
-            <a href="#">
-              <span className={s.logoStyle}>&nbsp;</span>{" "}
-            </a>
+            {/* <a href="#"> */}
+            <span className={s.logoStyle}>&nbsp;</span> {/* </a> */}
           </header>
 
           <ul className={s.nav}>

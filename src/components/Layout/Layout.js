@@ -80,7 +80,7 @@ import LinkinBio from "../../pages/linkinbio/LinkinBio";
 //import Analytic from '../../pages/analytic/Analytic';
 import Analysis from "../../pages/analysis/analysis";
 import Brands from "../../pages/brands/search";
-
+// import MediaLibrary from "../../pages/medialibrary/MediaLibrary";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
 import Coupons from "../../pages/coupons";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
@@ -123,7 +123,20 @@ class Layout extends React.Component {
     };
   }
 
+  componentDidMount() {
+    //this.handleResize();
+    // window.addEventListener("resize", this.handleResize.bind(this));
+  }
 
+  componentWillUnmount() {
+    //  window.removeEventListener("resize", this.handleResize.bind(this));
+  }
+
+  handleResize() {
+    if (window.innerWidth <= 768 && this.props.sidebarStatic) {
+      // this.props.dispatch(toggleSidebar());
+    }
+  }
 
   handleSwipe(e) {
     if ("ontouchstart" in window) {
@@ -162,22 +175,19 @@ class Layout extends React.Component {
         />
       );
     };
-    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
         className={[
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${
-            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-              ? "light"
-              : localStorage.getItem("dashboardTheme")
+          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+            ? "light"
+            : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${
-            localStorage.getItem("navbarColor")
-              ? localStorage.getItem("navbarColor").replace("#", "")
-              : "FFFFFF"
+          `header-${localStorage.getItem("navbarColor")
+            ? localStorage.getItem("navbarColor").replace("#", "")
+            : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -477,14 +487,14 @@ class Layout extends React.Component {
                         exact
                         path="/app/analysis"
                         component={Analysis}
-                        permissions={["access_analytics"]}
+                        permissions={["analytics_access"]}
                       />
                       <Route
                         path="/app/linkinbio/:code"
                         exact
                         component={LinkinBio}
                       />
-                  
+
                       <Route path="/app/coupons" exact component={Coupons} />
                       <Route
                         path="/app/account/delete"
@@ -515,20 +525,6 @@ class Layout extends React.Component {
                         exact
                         component={Dashboard}
                       />
-                      {/* {userInfo1.package.package_name === "Business Plus" ||
-                      userInfo1.package.package_name === "Business" ? (
-                        <Route
-                          path="/app/campaign"
-                          exact
-                          component={Affiliate}
-                        />
-                      ) : (
-                        <Route
-                          path="/app/marketplace"
-                          exact
-                          component={Marketplace}
-                        />
-                      )} */}
 
                       <PrivateRoute
                         path="/app/campaign"
@@ -546,6 +542,9 @@ class Layout extends React.Component {
                   </Router>
                 </CSSTransition>
               </TransitionGroup>
+              {/* <footer className={s.contentFooter}>
+                Sing App React Admin Dashboard Template - Made by <a href="https://flatlogic.com" rel="nofollow noopener noreferrer" target="_blank">Flatlogic</a>
+              </footer> */}
             </main>
           </Hammer>
         </div>

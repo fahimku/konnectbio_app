@@ -1,9 +1,6 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
-import 'react-virtualized-select/styles.css'
-
-// Then import the virtualized Select HOC
-import VirtualizedSelect from 'react-virtualized-select'
+import "react-virtualized-select/styles.css";
+import VirtualizedSelect from "react-virtualized-select";
 import Formsy from "formsy-react";
 import { Button } from "reactstrap";
 import moment from "moment";
@@ -15,9 +12,6 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import InputNumberValidation from "../../../components/InputValidation/InputNumberValidation";
-import click from "../../../images/campaign/click.svg";
-import sale from "../../../images/campaign/sale.svg";
-import impression from "../../../images/campaign/impression.svg";
 import { connect } from "react-redux";
 import * as postActions from "../../../actions/posts";
 import { Country, State, City } from "country-state-city";
@@ -36,7 +30,7 @@ class UpdateModal extends React.Component {
       budget: this.props.affData?.budget,
       startDate: moment(),
       endDate: moment().add(30, "days"),
-      inputList:this.props.affData?.demographics,
+      inputList: this.props.affData?.demographics,
       loading: false,
       country: "",
       state: "",
@@ -45,7 +39,7 @@ class UpdateModal extends React.Component {
       cities: "",
       stateList: "",
       reach: "",
-      submit:false
+      submit: false,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -72,37 +66,37 @@ class UpdateModal extends React.Component {
       campaign_type: value,
     });
   };
-  changeCountry = (option,index) => {
+  changeCountry = (option, index) => {
     const list = [...this.state.inputList];
     list[index] = {
-        country:option.value,
-        name:option.label,
-        state:"",
-        city:"",
-        zip:""
+      country: option.value,
+      name: option.label,
+      state: "",
+      city: "",
+      zip: "",
     };
-    this.setState({inputList: list });
+    this.setState({ inputList: list });
     // this.getState(options.value);
     // this.reachCampaign();
   };
-  changeState = (option,index) => {
+  changeState = (option, index) => {
     const list = [...this.state.inputList];
     list[index] = {
-        ...list[index],
-        state:option.value,
+      ...list[index],
+      state: option.value,
     };
     // this.getCities(options.countryCode, options.value);
-    this.setState({inputList: list });
+    this.setState({ inputList: list });
 
     // this.reachCampaign();
   };
   changeCity = (option, index) => {
     const list = [...this.state.inputList];
-    list[index] ={
-        ...list[index],
-        city:option.value
+    list[index] = {
+      ...list[index],
+      city: option.value,
     };
-    this.setState({inputList: list });
+    this.setState({ inputList: list });
     // this.reachCampaign();
   };
   getState = async (countryCode) => {
@@ -155,21 +149,37 @@ class UpdateModal extends React.Component {
         console.log(error);
       });
   };
-  saveCampaign = async (id) => {
-      this.setState({submit:true})
-      const {
-          campaign_name,
-          redirected_url,
-          budget,
-          pay_per_hundred,
-          startDate,
-          endDate,
-          campaign_type
-      }=this.state
-    if(campaign_name && budget && pay_per_hundred && startDate && endDate && campaign_type){
-        this.setState({ loading: true });
-        await axios
-          .put(`/campaigns/revise/affiliatecampaign/${this.props.affData?.campaign_id}`, {
+  updateCampaign = async (id) => {
+    this.setState({ submit: true });
+    const place = this.state.inputList.reduce((acc, item) => {
+      if (!item.country || !item.state || !item.city) {
+        acc = false;
+      }
+      return acc;
+    }, true);
+
+    const {
+      campaign_name,
+      budget,
+      pay_per_hundred,
+      startDate,
+      endDate,
+      campaign_type,
+    } = this.state;
+    if (
+      campaign_name &&
+      budget &&
+      pay_per_hundred &&
+      startDate &&
+      endDate &&
+      campaign_type &&
+      place
+    ) {
+      this.setState({ loading: true });
+      await axios
+        .put(
+          `/campaigns/revise/affiliatecampaign/${this.props.affData?.campaign_id}`,
+          {
             post_id: id,
             campaign_name: this.state.campaign_name,
             campaign_type: this.state.campaign_type,
@@ -180,28 +190,31 @@ class UpdateModal extends React.Component {
             pay_per_hundred: parseInt(this.state.pay_per_hundred),
             // traffic: 100,
             demographics:
-              this.state.inputList[0].country === "" ? "" : this.state.inputList,
+              this.state.inputList[0].country === ""
+                ? ""
+                : this.state.inputList,
             start_date: this.state.startDate,
             end_date: this.state.endDate,
-          })
-          .then((response) => {
-            toast.success("Your Campaign is Updated Successfully");
-            this.setState({ loading: false });
-            this.props.reload()
-            // this.props.affCloseModal();
-            // this.props.getPosts(1, null, this.props.clearPost);
-            this.props.updatePost(id);
-            this.props.affCloseModal();
-          })
-          .catch((err) => {
-            this.setState({ loading: false });
-            toast.error("Something went wrong");
-          });
+          }
+        )
+        .then((response) => {
+          toast.success("Your Campaign is Updated Successfully");
+          this.setState({ loading: false });
+          this.props.reload();
+          // this.props.affCloseModal();
+          // this.props.getPosts(1, null, this.props.clearPost);
+          this.props.updatePost(id);
+          this.props.affCloseModal();
+        })
+        .catch((err) => {
+          this.setState({ loading: false });
+          toast.error("Something went wrong");
+        });
     }
   };
   // handle Zip input change
   handleZipChange = (e, index) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     const list = [...this.state.inputList];
     list[index].zip = value;
     this.setState({ inputList: list });
@@ -234,7 +247,8 @@ class UpdateModal extends React.Component {
         this.setState({ reach: response.data.message.influencers });
       })
       .catch((err) => {
-        toast.error("Something went wrong");
+        console.log(err);
+        // toast.error("Something went wrong");
       });
   };
   reset = () => {
@@ -260,36 +274,36 @@ class UpdateModal extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
-    const renderConValue = (x) => {
-      const exit = this.props.countries.filter(
-        (item) => item.value == x.country
-      );
+    // const renderConValue = (x) => {
+    //   const exit = this.props.countries.filter(
+    //     (item) => item.value == x.country
+    //   );
 
-      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-    };
+    //   return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    // };
 
-    const renderStateValue = (x) => {
-      const exit =
-        this.state.stateList === ""
-          ? []
-          : this.state.stateList.filter((item) => item.value == x.state);
+    // const renderStateValue = (x) => {
+    //   const exit =
+    //     this.state.stateList === ""
+    //       ? []
+    //       : this.state.stateList.filter((item) => item.value == x.state);
 
-      return exit[0];
-    };
-    const renderCityValue = (x) => {
-      const exit =
-        this.state.cities === ""
-          ? []
-          : this.state.cities.filter((item) => item.value == x.city);
+    //   return exit[0];
+    // };
+    // const renderCityValue = (x) => {
+    //   const exit =
+    //     this.state.cities === ""
+    //       ? []
+    //       : this.state.cities.filter((item) => item.value == x.city);
 
-      return exit[0];
-    };
+    //   return exit[0];
+    // };
 
     return (
       <React.Fragment>
         <Formsy.Form
           onValidSubmit={() =>
-            this.saveCampaign(affData.post_id, affData.redirected_url)
+            this.updateCampaign(affData.post_id, affData.redirected_url)
           }
         >
           <div className="image-wrapper">
@@ -379,7 +393,7 @@ class UpdateModal extends React.Component {
                   onChange={this.dateRangePickerChanger.bind(this)}
                 />
               </div>
-              <div className="type-campaign mt-3">
+              {/* <div className="type-campaign mt-3">
                 <span className="type-label">Type of campaign:</span>
                 <div class="col1">
                   <input
@@ -396,11 +410,11 @@ class UpdateModal extends React.Component {
                   <label for="impressions">
                     <img src={impression} alt="Image1" />
                     <div>Impressions</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
-                    </div> */}
+                    </div> 
                   </label>
                 </div>
                 <div class="col1">
@@ -418,11 +432,11 @@ class UpdateModal extends React.Component {
                   <label for="clicks">
                     <img src={click} alt="Image2" />
                     <div>Clicks</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
-                    </div> */}
+                    </div> 
                   </label>
                 </div>
                 <div class="col1">
@@ -438,12 +452,94 @@ class UpdateModal extends React.Component {
                   <label for="sales">
                     <img src={sale} alt="Image3" />
                     <div>Sales</div>
-                    {/* <div class="tick_container">
+                     <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> 
+                  </label>
+                </div>
+              </div> */}
+              <div className="row mt-4">
+                <div className="camp-type-ift col-md-12">
+                  <label className="n-camp-type pr-4">
+                    <strong>Type of campaign:</strong>
+                  </label>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="impressions"
+                      class="d-none imgbgchk"
+                      value="impressions"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "impressions"
+                          ? true
+                          : false
+                      }
+                    />
+                    <label for="impressions">
+                      <span className="imp-click">
+                        <i class="fa fa-picture-o fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Impressions</span>
+                      {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
                     </div> */}
-                  </label>
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="clicks"
+                      class="d-none imgbgchk"
+                      value="clicks"
+                      onChange={this.changeType}
+                      checked={
+                        this.state.campaign_type === "clicks" ? true : false
+                      }
+                    />
+                    <label for="clicks">
+                      <span className="imp-click">
+                        <i
+                          class="fa fa-hand-pointer-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                      <span className="imp-name">Clicks</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
+                  <div class="col1">
+                    <input
+                      type="radio"
+                      name="platform"
+                      id="sales"
+                      class="d-none imgbgchk"
+                      value="sales"
+                      onChange={this.changeType}
+                      disabled
+                    />
+                    <label for="sales">
+                      <span className="imp-click">
+                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Sales</span>
+                      {/* <div class="tick_container">
+                      <div class="tick">
+                        <i class="fa fa-check"></i>
+                      </div>
+                    </div> */}
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -497,20 +593,22 @@ class UpdateModal extends React.Component {
                             key={i}
                             name="country"
                             value={
-                                x.country?(
-                                    {
-                                        value:Country.getCountryByCode(x.country).isoCode,
-                                        label:Country.getCountryByCode(x.country).name
-                                    }
-                                ):{value:"",label:"please select"}
+                              x.country
+                                ? {
+                                    value: Country.getCountryByCode(x.country)
+                                      .isoCode,
+                                    label: Country.getCountryByCode(x.country)
+                                      .name,
+                                  }
+                                : { value: "", label: "Select Country" }
                             }
                             onChange={(options, e) =>
-                                this.changeCountry(options,i)
+                              this.changeCountry(options, i)
                             }
                             placeholder="Select Country"
                             style={{ width: "100%" }}
-                            options={Country.getAllCountries().map(item=>{
-                                return { value: item.isoCode, label: item.name }
+                            options={Country.getAllCountries().map((item) => {
+                              return { value: item.isoCode, label: item.name };
                             })}
                             // isDisabled={
                             //   this.state.inputList.length - 1 !== i
@@ -518,6 +616,14 @@ class UpdateModal extends React.Component {
                             //     : false
                             // }
                           />
+                          {this.state.submit && !x.country ? (
+                            <span
+                              className={"number-error help-block text-danger"}
+                              style={{ marginTop: "5px !important" }}
+                            >
+                              This value is required.
+                            </span>
+                          ) : null}
                         </div>
                         <div className="col-md-2">
                           <span>State {i + 1}</span>
@@ -525,25 +631,33 @@ class UpdateModal extends React.Component {
                             key={i}
                             name="state"
                             value={
-                                x.state?(
-                                    x.state!="all"?(
-                                        {
-                                            value:State.getStateByCodeAndCountry(x.state,x.country).isoCode,
-                                            label:State.getStateByCodeAndCountry(x.state,x.country).name
-                                        }
-                                    ):{value:"all",label:"All"}
-                                ):{value:"",label:"please select"}
+                              x.state
+                                ? x.state !== "all"
+                                  ? {
+                                      value: State.getStateByCodeAndCountry(
+                                        x.state,
+                                        x.country
+                                      ).isoCode,
+                                      label: State.getStateByCodeAndCountry(
+                                        x.state,
+                                        x.country
+                                      ).name,
+                                    }
+                                  : { value: "all", label: "All" }
+                                : { value: "", label: "Select State" }
                             }
-                            onChange={(options, e) =>{
-                                this.changeState(options,i)
-                            }
-                            }
+                            onChange={(options, e) => {
+                              this.changeState(options, i);
+                            }}
                             placeholder="Select State"
-                            style={{ width: "100%"}}
-                            options={[{isoCode:'all',name:'All'},...State.getStatesOfCountry(x.country)].map(item=>{
-                                return { value: item.isoCode, label: item.name }
+                            style={{ width: "100%" }}
+                            options={[
+                              { isoCode: "all", name: "All" },
+                              ...State.getStatesOfCountry(x.country),
+                            ].map((item) => {
+                              return { value: item.isoCode, label: item.name };
                             })}
-                            isDisabled={x.country?false:true}
+                            isDisabled={x.country ? false : true}
                             // isDisabled={
                             //   // this.state.stateList === ""
                             //   this.state.inputList[i].country === "" ||
@@ -552,25 +666,28 @@ class UpdateModal extends React.Component {
                             //     : false
                             // }
                           />
-                          {this.state.submit && !x.state?(
-                               <span className={"number-error help-block text-danger"} style={{marginTop:'5px !important'}}>
-                                    This value is required.
-                                </span>
-                           ):null}
+                          {this.state.submit && !x.state ? (
+                            <span
+                              className={"number-error help-block text-danger"}
+                              style={{ marginTop: "5px !important" }}
+                            >
+                              This value is required.
+                            </span>
+                          ) : null}
                         </div>
                         <div className="col-md-2">
                           <span>City {i + 1}</span>
                           <VirtualizedSelect
-                          className
+                            className
                             key={i}
                             name="city"
                             value={
-                                x.city?(
-                                    {
-                                        value:x.city,
-                                        label:x.city
-                                    }
-                                ):{value:"",label:"please select"}
+                              x.city
+                                ? {
+                                    value: x.city,
+                                    label: x.city,
+                                  }
+                                : { value: "", label: "Select City" }
                             }
                             onChange={(options, e) =>
                               this.changeCity(options, i)
@@ -578,16 +695,26 @@ class UpdateModal extends React.Component {
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={
-                                x.state!="all"?(
-                                    City.getCitiesOfState(x.country,x.state).map(item=>{
-                                        return { value: item.name, label: item.name }
-                                    })
-                                ):(
-                                    City.getCitiesOfCountry(x.country).map(item=>{
-                                        return { value: item.name, label: item.name }
-                                    })
-                                )
+                              x.state !== "all"
+                                ? City.getCitiesOfState(x.country, x.state).map(
+                                    (item) => {
+                                      return {
+                                        value: item.name,
+                                        label: item.name,
+                                      };
+                                    }
+                                  )
+                                : City.getCitiesOfCountry(x.country).map(
+                                    (item) => {
+                                      return {
+                                        value: item.name,
+                                        label: item.name,
+                                      };
+                                    }
+                                  )
                             }
+                            clearable={false}
+                            disabled={x.state ? false : true}
                             // isDisabled={
                             //   this.state.inputList[i].state === "" ||
                             //   this.state.inputList.length - 1 !== i
@@ -595,11 +722,14 @@ class UpdateModal extends React.Component {
                             //     : false
                             // }
                           />
-                           {this.state.submit && !x.city?(
-                               <span className={"number-error help-block text-danger"} style={{marginTop:'5px !important'}}>
-                                    This value is required.
-                                </span>
-                           ):null}
+                          {this.state.submit && !x.city ? (
+                            <span
+                              className={"number-error help-block text-danger"}
+                              style={{ marginTop: "5px !important" }}
+                            >
+                              This value is required.
+                            </span>
+                          ) : null}
                         </div>
                         <div className="col-md-2">
                           <span>Zip {i + 1}</span>
@@ -674,7 +804,7 @@ class UpdateModal extends React.Component {
                       color="primary"
                       type="submit"
                     >
-                      &nbsp;Save&nbsp;
+                      &nbsp;Update&nbsp;
                     </Button>
 
                     <Button

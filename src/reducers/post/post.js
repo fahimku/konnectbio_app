@@ -16,7 +16,7 @@ export default function posts(state = initialState, action) {
       return action.payload;
     case UPDATE_POST:
       const data = [...state.data].map((item) => {
-        if (item.post_id == action.payload.post_id) {
+        if (item.post_id === action.payload.post_id) {
           return {
             ...item,
             linked: true,

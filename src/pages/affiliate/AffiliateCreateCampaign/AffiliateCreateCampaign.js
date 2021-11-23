@@ -1,6 +1,6 @@
 import React from "react";
 // import { Row, Col } from "reactstrap";
-import { Col, Row, Modal, Alert } from "react-bootstrap";
+import { Col, Row, Modal } from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
@@ -38,7 +38,7 @@ class AffiliateCreateCampaign extends React.Component {
   // };
   fetchAllCategory = async () => {
     await axios
-      .get("/usercategory/receive")
+      .get("/users/receive/categories")
       .then((response) => {
         const myCategories = response.data.message;
         // myCategories.map(({ category_id, category_name, image_url }) => {

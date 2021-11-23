@@ -4,5 +4,8 @@ export const CLEAR_POST = "clearPost";
 export const UPDATE_POST = "updatePost";
 export const GET_COUNTRIES = "getCountries";
 export const GET_CAMPAIGN = "getCampaign";
+export const DELETE_CAMPAIGN = "deleteCampaign"
+export const GET_MARKET_PLACE = "getMarketPlace";
+
 
 
