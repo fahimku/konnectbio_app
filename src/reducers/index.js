@@ -10,6 +10,8 @@ import users from './usersReducers';
 import categories from './category/categories';
 import posts from './post/post';
 import { connectRouter } from 'connected-react-router';
+import countries from './countries/countries';
+import campaign from './campaign/campaign';
 
 export default (history) =>
   combineReducers({
@@ -23,5 +25,7 @@ export default (history) =>
     chat,
     users,
     categories,
-    posts
+    posts,
+    countries,
+    campaign
 });

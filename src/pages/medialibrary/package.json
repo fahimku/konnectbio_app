@@ -1,6 +1,0 @@
-{
-    "name": "MediaLibrary",
-    "version": "0.0.0",
-    "private": true,
-    "main": "./MediaLibrary.js"
-}

@@ -142,7 +142,7 @@ class AccountSetup extends React.Component {
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
-      <div className="profile-page account-setup">
+      <div className={`profile-page account-setup ${this.props.className ? 'container' : ''}`} >
         <div
           className={
             this.props.className ? this.props.className : "container-fluid"
@@ -154,9 +154,9 @@ class AccountSetup extends React.Component {
             </div>
           </div>
 
-          <div className="profile_container_main container">
+          <div className={`profile_container_main container  container`}>
             <div className="row">
-              <div className="profile_box_main col-md-4">
+              <div className="profile_box_main col">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Manage Plan</h5>
@@ -199,8 +199,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more categories</span>
-                            )}
+                                <span>Change Plan to have more categories</span>
+                              )}
                           </div>
                         </div>
 
@@ -215,8 +215,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more links</span>
-                            )}
+                                <span>Change Plan to have more links</span>
+                              )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -229,23 +229,23 @@ class AccountSetup extends React.Component {
                                     variant="primary"
                                     className="btn-block"
                                     onClick={() => {
-                                      if (
-                                        this.state.singlePackage
-                                          .package_name === "Business" ||
-                                        this.state.singlePackage
-                                          .package_name === "Business Plus"
-                                      ) {
-                                        alert(
-                                          "For support please contact support@konnect.bio"
-                                        );
-                                        this.setState({
-                                          showPaymentButton: false,
-                                        });
-                                      } else {
-                                        this.setState({
-                                          showPaymentButton: true,
-                                        });
-                                      }
+                                      // if (
+                                      //   this.state.singlePackage
+                                      //     .package_name === "Business" ||
+                                      //   this.state.singlePackage
+                                      //     .package_name === "Business Plus"
+                                      // ) {
+                                      //   alert(
+                                      //     "For support please contact support@konnect.bio"
+                                      //   );
+                                      //   this.setState({
+                                      //     showPaymentButton: false,
+                                      //   });
+                                      // } else {
+                                      this.setState({
+                                        showPaymentButton: true,
+                                      });
+                                      //}
                                     }}
                                   >
                                     Upgrade Subscription
@@ -269,67 +269,6 @@ class AccountSetup extends React.Component {
                   </div>
                 </div>
               </div>
-
-              {this.state.singlePackage.package_name !== "Micro Influencer" &&
-                this.state.showPaymentButton && (
-                  <>
-                    <div className="white-box">
-                      <Row>
-                        <Col xl={12}>
-                          <h5 className="page-title line-heading">Payment</h5>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col md={5} xl={3}>
-                          <div className="checkbox abc-checkbox">
-                            <Input
-                              defaultChecked
-                              name="payment"
-                              value="Monthly"
-                              className="mt-0"
-                              id="checkbox1"
-                              type="radio"
-                              onChange={(e) => {
-                                this.setState({ plan: e.target.value });
-                              }}
-                            />{" "}
-                            <Label for="checkbox1" />
-                            Pay Monthly: $
-                            {this.state.singlePackage.package_amount_monthly}
-                          </div>
-                        </Col>
-                        <Col md={4} xl={4}>
-                          <div className="checkbox abc-checkbox">
-                            <Input
-                              name="payment"
-                              value="Yearly"
-                              className="mt-0"
-                              id="checkbox2"
-                              type="radio"
-                              onChange={(e) => {
-                                this.setState({ plan: e.target.value });
-                              }}
-                            />{" "}
-                            <Label for="checkbox2" />
-                            Pay Yearly & Save: $
-                            {
-                              this.state.singlePackage.package_amount_yearly
-                            }{" "}
-                            &nbsp; (Save{" "}
-                            {this.state.singlePackage.yearly_discount}%)
-                          </div>
-                        </Col>
-                      </Row>
-                      <br />
-                      <PaymentButton
-                        plan={this.state.plan}
-                        userId={userInfo1.user_id}
-                        packageId={this.state.singlePackage.package_id}
-                        paymentMethod={this.state.singlePackage.package_name}
-                      />
-                    </div>
-                  </>
-                )}
 
               <DisconnectInstagram
                 userId={userInfo1.user_id}
@@ -361,6 +300,67 @@ class AccountSetup extends React.Component {
                 />
               )}
             </div>
+
+            {this.state.singlePackage.package_name !== "Micro Influencer" &&
+              this.state.showPaymentButton && (
+                <>
+                  <div className="white-box col">
+                    <Row>
+                      <Col xl={4}>
+                        <h5 className="page-title line-heading">Payment</h5>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={12} xl={12}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            defaultChecked
+                            name="payment"
+                            value="Monthly"
+                            className="mt-0"
+                            id="checkbox1"
+                            type="radio"
+                            onChange={(e) => {
+                              this.setState({ plan: e.target.value });
+                            }}
+                          />{" "}
+                          <Label for="checkbox1" />
+                          Pay Monthly: $
+                          {this.state.singlePackage.package_amount_monthly}
+                        </div>
+                      </Col>
+                      <Col md={12} xl={12}>
+                        <div className="checkbox abc-checkbox">
+                          <Input
+                            name="payment"
+                            value="Yearly"
+                            className="mt-0"
+                            id="checkbox2"
+                            type="radio"
+                            onChange={(e) => {
+                              this.setState({ plan: e.target.value });
+                            }}
+                          />{" "}
+                          <Label for="checkbox2" />
+                          Pay Yearly & Save: $
+                          {
+                            this.state.singlePackage.package_amount_yearly
+                          }{" "}
+                          &nbsp; (Save{" "}
+                          {this.state.singlePackage.yearly_discount}%)
+                        </div>
+                      </Col>
+                    </Row>
+                    <br />
+                    <PaymentButton
+                      plan={this.state.plan}
+                      userId={userInfo1.user_id}
+                      packageId={this.state.singlePackage.package_id}
+                      paymentMethod={this.state.singlePackage.package_name}
+                    />
+                  </div>
+                </>
+              )}
           </div>
         </div>
       </div>
