@@ -12,6 +12,7 @@ import posts from './post/post';
 import { connectRouter } from 'connected-react-router';
 import countries from './countries/countries';
 import campaign from './campaign/campaign';
+import marketPlace from "./marketPlace/marketPlace"
 
 export default (history) =>
   combineReducers({
@@ -27,5 +28,6 @@ export default (history) =>
     categories,
     posts,
     countries,
-    campaign
+    campaign,
+    marketPlace
 });
