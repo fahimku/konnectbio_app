@@ -177,8 +177,6 @@ class AffiliateCampaign extends React.Component {
       });
   }
 
-
-
   // dateRangePickerChanger(value, dataString) {
   //   let fromDate = dataString[0];
   //   let toDate = dataString[1];
@@ -300,7 +298,6 @@ class AffiliateCampaign extends React.Component {
     );
   };
 
-
   postData = () => {
     const data = this.state.data;
     const slice = data.slice(
@@ -334,7 +331,7 @@ class AffiliateCampaign extends React.Component {
                       htmlFor={`customSwitch` + index}
                     ></label>
                   </div>
-                  
+
                   <Dropdown alignRight>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
@@ -583,14 +580,14 @@ class AffiliateCampaign extends React.Component {
           <Modal
             show={this.state.modal}
             onHide={() => this.setState({ modal: false })}
-            className="change-password"
+            className="edit-campaign linkin-bio"
             centered
             size="xl"
           >
             <Modal.Header closeButton>
               <Modal.Title>Edit Campaign</Modal.Title>
             </Modal.Header>
-            <Modal.Body className="bg-white">
+            <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
               <UpdateModal
                 affData={this.state.currentCampaign}
                 countries={this.props.countries}
@@ -606,11 +603,7 @@ class AffiliateCampaign extends React.Component {
                     this.state.saveSort,
                     this.state.saveSortOrder
                   );
-
-
-                }
-
-                }
+                }}
               />
             </Modal.Body>
           </Modal>
