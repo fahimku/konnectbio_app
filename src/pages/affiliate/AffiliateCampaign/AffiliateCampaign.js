@@ -334,7 +334,7 @@ class AffiliateCampaign extends React.Component {
                       htmlFor={`customSwitch` + index}
                     ></label>
                   </div>
-                  
+
                   <Dropdown alignRight>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
@@ -606,10 +606,7 @@ class AffiliateCampaign extends React.Component {
                     this.state.saveSort,
                     this.state.saveSortOrder
                   );
-
-
                 }
-
                 }
               />
             </Modal.Body>

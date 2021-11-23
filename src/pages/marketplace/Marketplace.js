@@ -32,33 +32,38 @@ function Marketplace({ getMarketPlace, marketPlace }) {
         <div className="marketplace-page mt-4">
           <div className="container-fluid">
             <h4 className="page-title">Marketplace</h4>
-            <Row>
-              {marketPlace.message && (marketPlace.message.map((item, index) =>
-                <Col xs={12} xl={3} md={6}>
-                  <Box item={item} index={index} />
-                </Col>))}
-            </Row>
-            <ReactPaginate
-              previousLabel=""
-              nextLabel=""
-              pageClassName="page-item "
-              pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-              previousClassName="page-item"
-              previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-              nextClassName="page-item"
-              nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              forcePage={currentPage}
-              pageCount={Math.ceil(marketPlace.totalCount / limit)}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
-              // subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
+
+            {marketPlace.message && (
+              <>
+                <Row>
+                  {marketPlace.message && (marketPlace.message.map((item, index) =>
+                    <Col xs={12} xl={3} md={6}>
+                      <Box item={item} index={index} />
+                    </Col>))}
+                </Row>
+                <ReactPaginate
+                  previousLabel=""
+                  nextLabel=""
+                  pageClassName="page-item "
+                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  forcePage={currentPage}
+                  pageCount={Math.ceil(marketPlace.totalCount / limit)}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+                  // subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
