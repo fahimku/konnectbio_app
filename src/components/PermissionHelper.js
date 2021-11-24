@@ -1,4 +1,5 @@
 import AccountUpgrade from "../pages/accountupgrade/AccountUpgrade";
+import Dashboard from "../pages/dashboard/Dashboard";
 
 const validate = (modulePermission) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -30,7 +31,11 @@ const checkPermissions = (Component, props) => {
   });
 
   if (permissionFilter.length > 0) return Component;
-  else return AccountUpgrade;
+  else if (userInfo.package.package_name === "Business Plus") {
+    return Dashboard;
+  } else {
+    return AccountUpgrade;
+  }
 };
 
 const PermissionHelper = {
