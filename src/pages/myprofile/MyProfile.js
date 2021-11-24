@@ -14,6 +14,7 @@ class MyProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fetchLoading: false,
       form: {
         name: "",
         bio: "",
@@ -39,6 +40,7 @@ class MyProfile extends React.Component {
   }
 
   fetchUserInfo = async (userInfo2) => {
+    this.setState({ fetchLoading: true });
     await axios
       .get(`/users/receive/userinfo?user=${userInfo2.username}`)
       .then((response) => {
@@ -49,6 +51,7 @@ class MyProfile extends React.Component {
             userImage: userInfo.profile_image_url,
           });
           this.setDefaultData();
+          this.setState({ fetchLoading: false });
         }
       })
       .catch((error) => {

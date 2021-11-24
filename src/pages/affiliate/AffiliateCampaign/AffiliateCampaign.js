@@ -79,6 +79,7 @@ class AffiliateCampaign extends React.Component {
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
       icon: status ? "warning" : "success",
+      cancelButtonText:"No",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",

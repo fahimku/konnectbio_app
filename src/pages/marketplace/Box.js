@@ -82,7 +82,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                       confirmAddToCampaign(
                         item.campaign_id,
                         item.category_id,
-                        userInfo.user_id
+                        item.user_id
                       );
                     }}
                     className="btn-connect"
