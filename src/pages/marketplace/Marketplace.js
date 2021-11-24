@@ -29,9 +29,9 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
   if (!loading) {
     return (
       <div>
-        <div className="marketplace-page mt-4">
+        <div className="analytics-page affiliate-page linkin-bio">
           <div className="container-fluid">
-            <h4 className="page-title">Marketplace</h4>
+            <h4 className="page-title mt-4">Marketplace</h4>
             {marketPlace.message && (
               <>
                 <Row>

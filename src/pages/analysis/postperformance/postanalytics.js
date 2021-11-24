@@ -11,7 +11,7 @@ class PostAnalytic extends React.Component {
     return (
       <>
         <div className="container-fluid">
-          <h3>Post Performance</h3>
+          <h4 className="page-title">Post Performance</h4>
           <PostDataComponent username={this.state.username} />
         </div>
       </>

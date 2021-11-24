@@ -11,7 +11,7 @@ class AffiliateDashboard extends React.Component {
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <h3>Dashboard</h3>
+          <h4 className="page-title">Dashboard</h4>
           <AffiliateSummaryComponent username={this.state.username} />
         </div>
       </React.Fragment>

@@ -10,7 +10,7 @@ class AffiliateAccounting extends React.Component {
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <h3>Affiliate Accounting</h3>
+          <h4 className="page-title">Affiliate Accounting</h4>
           {/* <SummaryDataComponent username={this.state.username} /> */}
         </div>
       </React.Fragment>

@@ -8,8 +8,8 @@ export const history = createBrowserHistory({
 class AccountUpgrade extends React.Component {
   render() {
     return (
-      <div className="account-upgrade-page">
-         {/* <iframe
+      <div className="analytics-page">
+        {/* <iframe
                   id="iframe"
                   //key={this.state.iframeKey}
                   src={`https://konnect.bio/kbiouser3?coupon=no&brand=no&iframe=yes&mypost=hide`}
@@ -17,20 +17,15 @@ class AccountUpgrade extends React.Component {
                   className="myshop-iframe"
                 ></iframe> */}
         <div className={"container-fluid"}>
-          <div className="justify-content-md-center">
-            <div className="connections mt-5">
-              <div className="page-title">
-                <h3>Account Upgrade</h3>
-              </div>
-              <div className="white-box mt-5">
-                <h5 className="page-title line-heading">Upgrade Plan</h5>
-                <Row>
-                  <Col md={8}>
-                    <h4 className="package_name">
-                      Please upgrade your plan to unlock more features.
-                    </h4>
-                  </Col>
-                </Row>
+          <h4 className="page-title mt-4">Account Upgrade</h4>
+          <div className="summary_container_main container">
+            <div className="row">
+              <div className="summary_box_main col-md-6">
+                <div className="summary_block_profile">
+                  <div className="summary_content_profile">
+                    <h5>Please upgrade your plan to unlock more features.</h5>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

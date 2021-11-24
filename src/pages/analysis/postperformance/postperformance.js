@@ -70,7 +70,7 @@ class PostPerfomance extends React.Component {
         /> */}
         <div className="container-fluid">
           {" "}
-          <h3>Detailed Post Performance</h3>
+          <h3 className="page-title">Detailed Post Performance</h3>
           <HtmlTable columns={this.state.columns} rows={this.state.data} />
         </div>
       </>
