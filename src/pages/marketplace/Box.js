@@ -6,7 +6,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
 
     const [addCampaign, setAddCampaign] = useState(item.is_linked);
 
-    const confirmAddToCampaign = (campaignId, userId) => {
+    const confirmAddToCampaign = (campaignId, categoryId, userId) => {
         Swal.fire({
             title: `Are you sure you want to add this campaign?`,
             icon: "warning",
@@ -16,7 +16,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
             confirmButtonText: `Yes`,
         }).then((result) => {
             if (result.isConfirmed) {
-                addCampaignToShop(campaignId, userId).then(() => {
+                addCampaignToShop(campaignId, categoryId, userId).then(() => {
                     toast.success('Campaign Added Successfully');
                     setAddCampaign(true);
                 })
@@ -83,7 +83,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                                     Campaign Added
                                 </Button> : <Button
                                     onClick={() => {
-                                        confirmAddToCampaign(item.campaign_id, userInfo.user_id);
+                                        confirmAddToCampaign(item.campaign_id, item.category_id, userInfo.user_id);
                                     }}
                                     className="btn-connect"
                                 >

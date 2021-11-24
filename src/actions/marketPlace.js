@@ -2,10 +2,11 @@ import axios from "axios";
 import { GET_MARKET_PLACE, ADD_CAMPAIGN_TO_SHOP } from "./type";
 import config from "../config";
 
-export const addCampaignToShop = (campaignId, advertiserId) => async (dispatch) => {
+export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async (dispatch) => {
     try {
         const res = await axios.post(`${config.baseURLApi}/users/marketPlace/campaignPost`, {
             campaign_id: campaignId,
+            category_id: categoryId,
             advertiser_id: advertiserId,
         })
         dispatch({
@@ -17,7 +18,6 @@ export const addCampaignToShop = (campaignId, advertiserId) => async (dispatch) 
     }
 };
 
-
 export const getMarketPlace = (page, limit) => async (dispatch) => {
     try {
         const res = await axios.post(`${config.baseURLApi}/users/marketPlace/getCampaigns?limit=${limit}&page=${page}`)
@@ -25,10 +25,7 @@ export const getMarketPlace = (page, limit) => async (dispatch) => {
             type: GET_MARKET_PLACE,
             payload: res.data
         })
-
     } catch (err) {
         console.log(err);
     }
-
-
 };
