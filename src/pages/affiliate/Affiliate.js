@@ -113,6 +113,9 @@ class Affiliate extends React.Component {
                       <AffiliateCreateCampaign
                         username={this.state.username}
                         user_id={this.state.user_id}
+                        toggleTabs={() => {
+                          this.toggleTabs("campaign");
+                        }}
                       />
                     ) : null}
                   </TabPane>

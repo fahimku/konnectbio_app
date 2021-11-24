@@ -141,6 +141,7 @@ class AffiliateCreateCampaign extends React.Component {
             affData={this.state.affData}
             countries={this.state.countries}
             affCloseModal={this.affToggleModal}
+            toggleTabs={this.props.toggleTabs}
           />
         )}
 
@@ -161,6 +162,7 @@ class AffiliateCreateCampaign extends React.Component {
                 affData={this.state.affData}
                 countries={this.state.countries}
                 affCloseModal={this.affToggleModal}
+                toggleTabs={this.props.toggleTabs}
               />
             )}
           </Modal>
