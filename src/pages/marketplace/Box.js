@@ -51,7 +51,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                             <div className="col-12 count-box">
                                 <Button
                                     onClick={() => {
-                                        addCampaignToShop(item._id, userInfo.user_id);
+                                        addCampaignToShop(item.campaign_id, userInfo.user_id);
                                     }}
                                     className="btn-connect"
                                 >

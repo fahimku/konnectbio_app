@@ -10,7 +10,7 @@ export const addCampaignToShop = (campaignId, advertiserId) => async (dispatch) 
         })
         dispatch({
             type: ADD_CAMPAIGN_TO_SHOP,
-            payload: res.data.message
+            payload: res.message
         })
     } catch (err) {
         console.log(err);
