@@ -12,7 +12,7 @@ import Loader from "../../../../components/Loader/Loader";
 import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
-// import { Country, State, City } from "country-state-city";
+import { Country, State, City } from "country-state-city";
 import VirtualizedSelect from "react-virtualized-select";
 
 const { Option } = Select;
@@ -490,7 +490,7 @@ class AffiliateForm extends React.Component {
                   </div>
                 </div>
 
-                {/* <div className="country-select">
+                <div className="country-select">
                   {this.state.inputList.map((x, i) => {
                     return (
                       <div className="c-con-select row">
@@ -694,7 +694,7 @@ class AffiliateForm extends React.Component {
                       Influencer's Reach: {this.state.reach.toString()}
                     </h5>
                   )}
-                </div> */}
+                </div>
               </div>
 
               <div className="row mt-4">

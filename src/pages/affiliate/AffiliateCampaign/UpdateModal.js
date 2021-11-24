@@ -14,7 +14,7 @@ import Loader from "../../../components/Loader/Loader";
 import InputNumberValidation from "../../../components/InputValidation/InputNumberValidation";
 import { connect } from "react-redux";
 import * as postActions from "../../../actions/posts";
-// import { Country, State, City } from "country-state-city";
+import { Country, State, City } from "country-state-city";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
@@ -587,7 +587,7 @@ class UpdateModal extends React.Component {
                   </div>
                 </div>
 
-                {/* <div className="country-select">
+                <div className="country-select">
                   {this.state.inputList.map((x, i) => {
                     return (
                       <div className="c-con-select row">
@@ -805,7 +805,7 @@ class UpdateModal extends React.Component {
                       Influencer's Reach: {this.state.reach.toString()}
                     </h5>
                   )}
-                </div> */}
+                </div>
               </div>
 
               <div className="row mt-4">
