@@ -458,6 +458,7 @@ class Register extends React.Component {
                       <span
                         className="text-center link"
                         onClick={() => {
+                          this.props.dispatch(authError(""));
                           this.props.history.push("/login");
                         }}
                       >

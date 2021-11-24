@@ -16,7 +16,7 @@ export const getCampaign = (id) => async (dispatch) => {
 
 export const deleteCampaign = (id) => async (dispatch) => {
     try {
-        const res = await axios.get(`${config.baseURLApi}//campaigns/remove/${id}`)
+        const res = await axios.get(`${config.baseURLApi}/campaigns/remove/${id}`)
         dispatch({
             type: DELETE_CAMPAIGN,
             payload: res.data.message

@@ -16,6 +16,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
     getMarketPlace(1, limit).then(() => {
       setLoading(false);
     })
+
   }, [])
 
   const handlePageClick = (e) => {
@@ -36,8 +37,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
               <>
                 <Row>
                   {marketPlace.message.map((item, index) =>
-                    <Col xs={12} xl={3} md={6}>
-                      <Box
+                    <Col key={index} xs={12} xl={3} md={6}>
+                      <Box key={index}
                         userInfo={userInfo}
                         addCampaignToShop={addCampaignToShop}
                         item={item} index={index} />
