@@ -16,7 +16,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
     getMarketPlace(1, limit).then(() => {
       setLoading(false);
     })
-
+    return () => {
+    }
   }, [])
 
   const handlePageClick = (e) => {
@@ -26,6 +27,9 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
       setLoading(false);
     })
   }
+
+
+  
 
   if (!loading) {
     return (

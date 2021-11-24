@@ -6,25 +6,12 @@ import { Row, Col, Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
-//import { DatePicker } from "antd";
 import "antd/dist/antd.css";
-//import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
-
-// const { RangePicker } = DatePicker;
-// const dateFormat = "YYYY-MM-DD";
-
-// const twodecimalplace = (value = 0) => {
-//   return parseFloat(value).toFixed(2);
-// };
-
-// const numberWithCommas = (x) => {
-//   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-// };
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
@@ -68,12 +55,11 @@ class AffiliateCampaign extends React.Component {
       modal: false,
       currentCampaign: {},
     };
-    //    this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
+
     this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
-    // const date_to = moment(this.state.today).format("YYYY-MM-DD");
     this.props.getCountries();
     this.fetchPostPerformance(
       this.state.username,
@@ -131,6 +117,7 @@ class AffiliateCampaign extends React.Component {
       confirmButtonText: `Yes`,
     }).then((result) => {
       if (result.isConfirmed) {
+
         axios
           .delete(`/campaigns/remove/${campaignId}`)
           .then(() => {
@@ -177,19 +164,6 @@ class AffiliateCampaign extends React.Component {
       });
   }
 
-  // dateRangePickerChanger(value, dataString) {
-  //   let fromDate = dataString[0];
-  //   let toDate = dataString[1];
-  //   this.setState({ fromDate: fromDate, toDate: toDate });
-  //   // this.fetchPostPerformance(
-  //   //   this.state.username,
-  //   //   fromDate,
-  //   //   toDate,
-  //   //   this.state.limit,
-  //   //   1
-  //   // );
-  // }
-
   pagination = () => {
     let { username, fromDate, toDate, limit, page } = this.state;
     this.fetchPostPerformance(
@@ -222,67 +196,6 @@ class AffiliateCampaign extends React.Component {
     return current && current > moment().endOf("day");
   }
 
-  // handleSelect = (event) => {
-  //   this.setState({
-  //     saveCategory: event.value,
-  //     optionCategory: event,
-  //   });
-  // };
-
-  // handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   this.setState({
-  //     offset: 0,
-  //     currentPage: 0,
-  //   });
-  //   this.fetchPostPerformance(
-  //     this.state.username,
-  //     // this.state.fromDate,
-  //     // this.state.toDate,
-  //     // this.state.limit,
-  //     // this.state.page,
-  //     // this.state.saveCategory,
-  //     // this.state.saveSort,
-  //     // this.state.saveSortOrder
-  //   );
-  // };
-
-  // clearFilter = () => {
-  //   this.setState({
-  //     optionCategory: "",
-  //     optionSort: "",
-  //     optionSortOrder: "",
-  //     saveCategory: "",
-  //     // saveSort: "",
-  //     // saveSortOrder: "",
-  //     fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-  //     toDate: moment(new Date()).format("YYYY-MM-DD"),
-  //   });
-  //   this.fetchPostPerformance(
-  //     this.state.username,
-  //     this.state.lastYear,
-  //     moment(new Date()).format("YYYY-MM-DD"),
-  //     this.state.limit,
-  //     this.state.page,
-  //     "",
-  //     this.state.saveSort,
-  //     "desc"
-  //   );
-  // };
-
-  // handleSort = (event) => {
-  //   this.setState({
-  //     saveSort: event.value,
-  //     optionSort: event,
-  //   });
-  // };
-
-  // handleSortOrder = (event) => {
-  //   this.setState({
-  //     saveSortOrder: event.value,
-  //     optionSortOrder: event,
-  //   });
-  // };
 
   handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -404,147 +317,12 @@ class AffiliateCampaign extends React.Component {
   };
 
   render() {
-    // const sortOptions = [
-    //   { value: "date", label: "DATE" },
-    //   { value: "impressions", label: "IMPRESSIONS" },
-    //   { value: "clicks", label: "CLICKS" },
-    //   { value: "engagement", label: "ENGAGEMENT" },
-    //   // { value: "revenue", label: "Revenue" },
-    // ];
 
-    // const sortOrderOptions = [
-    //   { value: "asc", label: "ASC" },
-    //   { value: "desc", label: "DESC" },
-    // ];
-
-    // const style = {
-    //   control: (base, state) => ({
-    //     ...base,
-    //     height: "44px",
-    //     boxShadow: "none",
-    //     "&:hover": {
-    //       // border: "1px solid black",
-    //     },
-    //   }),
-    // };
 
     return (
       <>
         <div className="container-fluid">
-          {/* <Row className="post-analytics-tab d-none">
-            <Col xs={12} xl={12} md={12}>
-              <form onSubmit={this.handleSubmit}>
-                <Row>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Select Start Date / End Date</p>
-                    <RangePicker
-                      disabledDate={this.disabledDate}
-                      key={4}
-                      defaultValue={[
-                        moment(this.state.lastYear),
-                        moment(this.state.today),
-                      ]}
-                      value={[
-                        moment(this.state.fromDate),
-                        moment(this.state.toDate),
-                      ]}
-                      defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                      allowClear={false}
-                      ranges={{
-                        Today: [moment(), moment()],
-                        Tomorrow: [
-                          moment().add(1, "days"),
-                          moment().add(1, "days"),
-                        ],
-                        Yesterday: [
-                          moment().subtract(1, "days"),
-                          moment().subtract(1, "days"),
-                        ],
-                        "This Month": [
-                          moment().startOf("month"),
-                          moment().endOf("month"),
-                        ],
-                        "Last Month": [
-                          moment().subtract(1, "month").startOf("month"),
-                          moment().subtract(1, "month").endOf("month"),
-                        ],
-                      }}
-                      format={dateFormat}
-                      onChange={this.dateRangePickerChanger.bind(this)}
-                    />
-                  </Col>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Select Category</p>
-                    <Select
-                      name="category"
-                      className="selectCustomization"
-                      options={this.state.myCategory}
-                      // value={this.state.optionCategory}
-                      value={
-                        this.state.optionCategory === ""
-                          ? { value: "all", label: "ALL" }
-                          : this.state.optionCategory
-                      }
-                      placeholder="Select Category"
-                      onChange={(event) => this.handleSelect(event)}
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Sort By</p>
-                    <Select
-                      name="sort"
-                      className="selectCustomization"
-                      options={sortOptions}
-                      // value={this.state.optionSort}
-                      value={
-                        this.state.optionSort === ""
-                          ? { value: "date", label: "DATE" }
-                          : this.state.optionSort
-                      }
-                      placeholder="Sort By"
-                      onChange={(event) => this.handleSort(event)}
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Order By</p>
-                    <Select
-                      name="sort"
-                      className="selectCustomization"
-                      options={sortOrderOptions}
-                      value={
-                        this.state.optionSortOrder === ""
-                          ? { value: "desc", label: "DESC" }
-                          : this.state.optionSortOrder
-                      }
-                      placeholder="Order By"
-                      onChange={(event) => this.handleSortOrder(event)}
-                      // isDisabled={this.state.optionSort === "" ? true : false}
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl={4} md={6}>
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      className="fltr-h btn btn-primary"
-                    >
-                      Search
-                    </Button>
-                    <Button
-                      onClick={this.clearFilter}
-                      variant="gray"
-                      className="fltr-h btn btn-primary"
-                    >
-                      Clear
-                    </Button>
-                  </Col>
-                </Row>
-              </form>
-            </Col>
-          </Row> 
-          <hr />*/}
+
           {this.state.loading ? (
             <Loader className="analytics-loading" size={60} />
           ) : !this.state.data.length ? (
@@ -612,9 +390,8 @@ class AffiliateCampaign extends React.Component {
     );
   }
 }
+
 function mapStateToProps({ countries, campaign }) {
   return { countries, campaign };
 }
-export default connect(mapStateToProps, { ...countryAct, ...campAct })(
-  AffiliateCampaign
-);
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);

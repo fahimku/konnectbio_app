@@ -1,9 +1,29 @@
 import React, { useState } from 'react'
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-
+import Swal from "sweetalert2";
 export default function Box({ item, addCampaignToShop, userInfo }) {
+
     const [addCampaign, setAddCampaign] = useState(item.is_linked);
+
+    const confirmAddToCampaign = (campaignId, categoryId, userId) => {
+        Swal.fire({
+            title: `Are you sure you want to add this campaign?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#010b40",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                addCampaignToShop(campaignId, categoryId, userId).then(() => {
+                    toast.success('Campaign Added Successfully');
+                    setAddCampaign(true);
+                })
+            }
+        })
+    }
+
     return (
         <React.Fragment>
             <div className="card analytic-box campaign-box">
@@ -63,10 +83,7 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                                     Campaign Added
                                 </Button> : <Button
                                     onClick={() => {
-                                        addCampaignToShop(item.campaign_id, userInfo.user_id).then(() => {
-                                            toast.success('Campaign Added Successfully');
-                                            setAddCampaign(true);
-                                        })
+                                        confirmAddToCampaign(item.campaign_id, item.category_id, userInfo.user_id);
                                     }}
                                     className="btn-connect"
                                 >
