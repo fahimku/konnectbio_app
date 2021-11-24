@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+
 export default function Box({ item, addCampaignToShop, userInfo }) {
+    const [addCampaign, setAddCampaign] = useState(item.is_linked);
     return (
         <React.Fragment>
             <div className="card analytic-box campaign-box">
@@ -39,6 +42,11 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                             </div>
 
                             <div className="col-12 count-box">
+                                <h5 className="count-title">Commission</h5>
+                                <h3 className="count">${item.commission}</h3>
+                            </div>
+
+                            <div className="col-12 count-box">
                                 <h5 className="count-title">Start Date</h5>
                                 <h3 className="count">{item.created_date}</h3>
                             </div>
@@ -49,14 +57,22 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
                             </div>
 
                             <div className="col-12 count-box">
-                                <Button
+                                {addCampaign ? <Button
+                                    className="btn-connect"
+                                >
+                                    Campaign Added
+                                </Button> : <Button
                                     onClick={() => {
-                                        addCampaignToShop(item.campaign_id, userInfo.user_id);
+                                        addCampaignToShop(item.campaign_id, userInfo.user_id).then(() => {
+                                            toast.success('Campaign Added Successfully');
+                                            setAddCampaign(true);
+                                        })
                                     }}
                                     className="btn-connect"
                                 >
                                     Select Campaign
                                 </Button>
+                                }
                             </div>
                         </div>
                     </div>
