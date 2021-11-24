@@ -45,6 +45,18 @@ class UpdateModal extends React.Component {
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
+  async componentDidMount() {
+    await axios
+      .post(`/campaigns/reach`, {
+        demographics: this.state.inputList,
+      })
+      .then((response) => {
+        this.setState({ reach: response.data.message.influencers });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   titleChange = (value) => {
     this.setState({ campaign_name: value });
   };
@@ -72,14 +84,14 @@ class UpdateModal extends React.Component {
     const list = [...this.state.inputList];
     list[index] = {
       country: option.value,
-      name: option.label,
+      // name: option.label,
       state: "",
       city: "",
       zip: "",
     };
-    this.setState({ inputList: list });
-    // this.getState(options.value);
-    // this.reachCampaign();
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
   changeState = (option, index) => {
     const list = [...this.state.inputList];
@@ -87,10 +99,9 @@ class UpdateModal extends React.Component {
       ...list[index],
       state: option.value,
     };
-    // this.getCities(options.countryCode, options.value);
-    this.setState({ inputList: list });
-
-    // this.reachCampaign();
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
   changeCity = (option, index) => {
     const list = [...this.state.inputList];
@@ -98,8 +109,9 @@ class UpdateModal extends React.Component {
       ...list[index],
       city: option.value,
     };
-    this.setState({ inputList: list });
-    // this.reachCampaign();
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
   };
   getState = async (countryCode) => {
     await axios
@@ -260,20 +272,20 @@ class UpdateModal extends React.Component {
   };
   reset = () => {
     this.setState({
-      campaign_name: "",
-      pay_per_hundred: "",
-      budget: "",
-      inputList: [{ country: "", state: "", city: "", zip: "" }],
-      startDate: moment(),
-      endDate: moment().add(30, "days"),
       country: "",
       state: "",
       city: "",
       zip: "",
       cities: "",
       stateList: "",
-      campaign_type: "",
       reach: "",
+      campaign_name: this.props.affData?.campaign_name,
+      campaign_type: this.props.affData?.campaign_type,
+      pay_per_hundred: this.props.affData?.pay_per_hundred,
+      budget: this.props.affData?.budget,
+      startDate: this.props.affData?.start_date_and_time,
+      endDate: this.props.affData?.end_date_and_time,
+      inputList: this.props.affData?.demographics,
     });
   };
 
@@ -281,6 +293,7 @@ class UpdateModal extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
+    console.log(this.state.inputList, "sdsd");
     // const renderConValue = (x) => {
     //   const exit = this.props.countries.filter(
     //     (item) => item.value == x.country
@@ -403,73 +416,7 @@ class UpdateModal extends React.Component {
                   />
                 </div>
               </div>
-              {/* <div className="type-campaign mt-3">
-                <span className="type-label">Type of campaign:</span>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="impressions"
-                    class="d-none imgbgchk"
-                    value="impressions"
-                    onChange={this.changeType}
-                    checked={
-                      this.state.campaign_type === "impressions" ? true : false
-                    }
-                  />
-                  <label for="impressions">
-                    <img src={impression} alt="Image1" />
-                    <div>Impressions</div>
-                     <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> 
-                  </label>
-                </div>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="clicks"
-                    class="d-none imgbgchk"
-                    value="clicks"
-                    onChange={this.changeType}
-                    checked={
-                      this.state.campaign_type === "clicks" ? true : false
-                    }
-                  />
-                  <label for="clicks">
-                    <img src={click} alt="Image2" />
-                    <div>Clicks</div>
-                     <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> 
-                  </label>
-                </div>
-                <div class="col1">
-                  <input
-                    type="radio"
-                    name="platform"
-                    id="sales"
-                    class="d-none imgbgchk"
-                    value="sales"
-                    onChange={this.changeType}
-                    disabled
-                  />
-                  <label for="sales">
-                    <img src={sale} alt="Image3" />
-                    <div>Sales</div>
-                     <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> 
-                  </label>
-                </div>
-              </div> */}
+
               <div className="row mt-4">
                 <div className="camp-type-ift col-md-12">
                   <label className="n-camp-type pr-4">
@@ -700,22 +647,27 @@ class UpdateModal extends React.Component {
                             style={{ width: "100%" }}
                             options={
                               x.state !== "all"
-                                ? City.getCitiesOfState(x.country, x.state).map(
-                                    (item) => {
-                                      return {
-                                        value: item.name,
-                                        label: item.name,
-                                      };
-                                    }
-                                  )
-                                : City.getCitiesOfCountry(x.country).map(
-                                    (item) => {
-                                      return {
-                                        value: item.name,
-                                        label: item.name,
-                                      };
-                                    }
-                                  )
+                                ? [
+                                    { value: "all", name: "All" },
+                                    ...City.getCitiesOfState(
+                                      x.country,
+                                      x.state
+                                    ),
+                                  ].map((item) => {
+                                    return {
+                                      value: item.name,
+                                      label: item.name,
+                                    };
+                                  })
+                                : [
+                                    { value: "all", name: "All" },
+                                    ...City.getCitiesOfCountry(x.country),
+                                  ].map((item) => {
+                                    return {
+                                      value: item.name,
+                                      label: item.name,
+                                    };
+                                  })
                             }
                             clearable={false}
                             disabled={x.state ? false : true}
