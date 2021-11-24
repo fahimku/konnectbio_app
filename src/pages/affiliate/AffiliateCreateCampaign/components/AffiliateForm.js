@@ -30,8 +30,8 @@ class AffiliateForm extends React.Component {
       campaign_type: "",
       pay_per_hundred: "",
       budget: "",
-      startDate: moment(),
-      endDate: moment().add(30, "days"),
+      startDate: moment().format("YYYY-MM-DD HH:mm"),
+      endDate: moment().add(30, "days").format("YYYY-MM-DD HH:mm"),
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       loading: false,
       country: "",
@@ -398,7 +398,10 @@ class AffiliateForm extends React.Component {
                     />
                     <label for="clicks">
                       <span className="imp-click">
-                        <i class="fa fa-hand-pointer-o fa-2x" aria-hidden="true"></i>
+                        <i
+                          class="fa fa-hand-pointer-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
                       </span>
                       <span className="imp-name">Clicks</span>
                       {/* <div class="tick_container">
