@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row } from "react-bootstrap";
+// import { Col, Row } from "react-bootstrap";
 import Formsy from "formsy-react";
 import { Button } from "reactstrap";
 import moment from "moment";
@@ -11,9 +11,9 @@ import { DatePicker } from "antd";
 import axios from "axios";
 import Loader from "../../../../components/Loader/Loader";
 import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
-import click from "../../../../images/campaign/click.svg";
-import sale from "../../../../images/campaign/sale.svg";
-import impression from "../../../../images/campaign/impression.svg";
+// import click from "../../../../images/campaign/click.svg";
+// import sale from "../../../../images/campaign/sale.svg";
+// import impression from "../../../../images/campaign/impression.svg";
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
 // import { Country, State, City } from "country-state-city";
@@ -232,7 +232,7 @@ class AffiliateForm extends React.Component {
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
-        (item) => item.value == x.country
+        (item) => item.value === x.country
       );
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
@@ -242,7 +242,7 @@ class AffiliateForm extends React.Component {
       const exit =
         this.state.stateList === ""
           ? []
-          : this.state.stateList.filter((item) => item.value == x.state);
+          : this.state.stateList.filter((item) => item.value === x.state);
 
       return exit[0];
     };
@@ -250,7 +250,7 @@ class AffiliateForm extends React.Component {
       const exit =
         this.state.cities === ""
           ? []
-          : this.state.cities.filter((item) => item.value == x.city);
+          : this.state.cities.filter((item) => item.value === x.city);
 
       return exit[0];
     };
