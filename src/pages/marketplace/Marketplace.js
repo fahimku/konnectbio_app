@@ -5,11 +5,11 @@ import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace"
 import ReactPaginate from "react-paginate";
 
-function Marketplace({ getMarketPlace, marketPlace }) {
-
+function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const limit = 2;
+  const limit = 9;
 
   useEffect(() => {
     setLoading(true);
@@ -32,14 +32,16 @@ function Marketplace({ getMarketPlace, marketPlace }) {
         <div className="marketplace-page mt-4">
           <div className="container-fluid">
             <h4 className="page-title">Marketplace</h4>
-
             {marketPlace.message && (
               <>
                 <Row>
-                  {marketPlace.message && (marketPlace.message.map((item, index) =>
+                  {marketPlace.message.map((item, index) =>
                     <Col xs={12} xl={3} md={6}>
-                      <Box item={item} index={index} />
-                    </Col>))}
+                      <Box
+                        userInfo={userInfo}
+                        addCampaignToShop={addCampaignToShop}
+                        item={item} index={index} />
+                    </Col>)}
                 </Row>
                 <ReactPaginate
                   previousLabel=""
