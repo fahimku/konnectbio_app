@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-export default function Box({ item, addCampaignToShop, userInfo }) {
-  const [addCampaign, setAddCampaign] = useState(item.is_linked);
 
+export default function Box({ item, addCampaignToShop }) {
+
+  const [addCampaign, setAddCampaign] = useState(item.is_linked);
   const confirmAddToCampaign = (campaignId, categoryId, userId) => {
     Swal.fire({
       title: `Are you sure you want to add this campaign?`,
@@ -15,10 +16,12 @@ export default function Box({ item, addCampaignToShop, userInfo }) {
       confirmButtonText: `Yes`,
     }).then((result) => {
       if (result.isConfirmed) {
-        addCampaignToShop(campaignId, categoryId, userId).then(() => {
-          toast.success("Campaign Added Successfully");
+        addCampaignToShop(campaignId, categoryId, userId).then(function (result) {
           setAddCampaign(true);
-        });
+          toast.error('Campaign Added Successfully');
+        }, function (error) {
+          toast.error(error.response.data.message)
+        })
       }
     });
   };

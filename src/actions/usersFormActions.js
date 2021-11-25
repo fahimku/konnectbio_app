@@ -25,10 +25,10 @@ const actions = {
         dispatch({
           type: 'USERS_FORM_FIND_STARTED',
         });
-  
+
         axios.get(`/users/${id}`).then(res => {
           const record = res.data;
-  
+
           dispatch({
             type: 'USERS_FORM_FIND_SUCCESS',
             payload: record,
@@ -36,11 +36,11 @@ const actions = {
         })
       } catch (error) {
         Errors.handle(error);
-  
+
         dispatch({
           type: 'USERS_FORM_FIND_ERROR',
         });
-  
+
         dispatch(push('/admin/users'));
       }
     }
@@ -78,7 +78,7 @@ const actions = {
         type: 'USERS_FORM_UPDATE_STARTED',
       });
 
-      await axios.put(`/users/${id}`, {id, data: values});
+      await axios.put(`/users/${id}`, { id, data: values });
 
       dispatch(doInit());
 
@@ -101,16 +101,15 @@ const actions = {
     }
   },
 
-  doChangePassword: ({newPassword, currentPassword}) => async (dispatch) => {
+  doChangePassword: ({ newPassword, currentPassword }) => async (dispatch) => {
     try {
       dispatch({
         type: 'USERS_FORM_CREATE_STARTED',
       });
-      await axios.put('/auth/password-update', {newPassword, currentPassword})
+      await axios.put('/auth/password-update', { newPassword, currentPassword })
       dispatch({
         type: 'USERS_PASSWORD_UPDATE_SUCCESS',
       });
-
       toast.success('Password has been updated');
       dispatch(push('/app/main'));
 

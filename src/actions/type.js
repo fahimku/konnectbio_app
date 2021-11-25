@@ -7,7 +7,7 @@ export const GET_CAMPAIGN = "getCampaign";
 export const ADD_CAMPAIGN_TO_SHOP = "ADD_CAMPAIGN_TO_SHOP";
 export const DELETE_CAMPAIGN = "deleteCampaign"
 export const GET_MARKET_PLACE = "getMarketPlace";
-
+export const MARKETPLACE_ERROR = 'MARKET_PLACE_ERROR'
 
 
 

@@ -4,7 +4,6 @@ import Box from "./Box";
 import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace"
 import ReactPaginate from "react-paginate";
-import Swal from "sweetalert2";
 
 function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
 
@@ -13,15 +12,14 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
   const [currentPage, setCurrentPage] = useState(0);
   const limit = 9;
 
+
   useEffect(() => {
     setLoading(true);
     getMarketPlace(1, limit).then(() => {
       setLoading(false);
     })
-
     return () => {
     }
-
   }, [])
 
   const handlePageClick = (e) => {
@@ -29,27 +27,6 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
     setCurrentPage(page);
     getMarketPlace(page + 1, limit).then(() => {
       setLoading(false);
-    })
-  }
-
-  const confirmAddToCampaign = (campaignId, categoryId, userId) => {
-    Swal.fire({
-      title: `Are you sure you want to add this campaign?`,
-      icon: "success",
-      showCancelButton: true,
-      cancelButtonText: "No",
-      confirmButtonColor: "#010b40",
-      cancelButtonColor: "#d33",
-      confirmButtonText: `Yes`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        addCampaignToShop(campaignId, categoryId, userId).then((response) => {
-          console.log('response')
-          console.log(response)
-          // toast.success('Campaign Added Successfully');
-          // setAddCampaign(true);
-        })
-      }
     })
   }
 
@@ -67,7 +44,6 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
                     <Col key={index} xs={12} xl={3} md={6}>
                       <Box key={index}
                         userInfo={userInfo}
-                        confirmAddToCampaign={confirmAddToCampaign}
                         addCampaignToShop={addCampaignToShop}
                         item={item} index={index} />
                     </Col>)}
@@ -122,5 +98,4 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
 function mapStateToProps({ marketPlace }) {
   return { marketPlace }
 }
-
 export default connect(mapStateToProps, markActions)(Marketplace);
