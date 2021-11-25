@@ -583,6 +583,13 @@
     .affiliate-model .image-box-info h4{
         display: block;
     }
+    .affiliate-block{
+        display: block;
+        position: absolute;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        z-index: 2;
+    }
 
 
 }
@@ -674,5 +681,8 @@
         padding-left:20px;
         flex: 0 0 100%;
         max-width: 100%;
+    }
+    .aff-sub-button .btn-primary{
+        min-width: 60px;
     }
 }

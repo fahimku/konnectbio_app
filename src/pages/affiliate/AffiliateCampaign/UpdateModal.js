@@ -769,7 +769,7 @@ class UpdateModal extends React.Component {
               </div>
 
               <div className="row mt-4">
-                <div className="col-md-12">
+                <div className="aff-sub-button col-md-12">
                   {this.state.loading ? (
                     <Button>
                       <Loader />
