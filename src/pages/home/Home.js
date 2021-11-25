@@ -1,0 +1,195 @@
+import React from "react";
+// import axios from "axios";
+// import {
+//   Container,
+//   Button,
+//   Modal,
+//   ModalHeader,
+//   ModalBody,
+//   ModalFooter,
+// } from "reactstrap";
+// import {Link} from "react-router-dom";
+
+class Home extends React.Component {
+  render() {
+    return (
+    
+<>    
+
+      <div className="dashboard_main_ift container">
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-3">
+            <div className="dash_block">
+              <div className="dash_content clearfix">
+                <span className="dash_icon-top"><i class="fa fa-eye fa-3x" aria-hidden="true"></i></span>
+                <div className="imp-t text-right">1500</div>
+                <div className="imp-tx text-uppercase text-muted text-right">Total Impressions</div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-3">
+            <div className="dash_block">
+            <div className="dash_content clearfix">
+                <span className="dash_icon-top"><i class="fa fa-hand-pointer-o fa-3x" aria-hidden="true"></i></span>
+                <div className="imp-t text-right">300</div>
+                <div className="imp-tx text-uppercase text-muted text-right">Total Clicks</div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-3">
+            <div className="dash_block">
+            <div className="dash_content clearfix">
+                <span className="dash_icon-top"><i class="fa fa-handshake-o fa-3x" aria-hidden="true"></i></span>
+                <div className="imp-t text-right">0.38%</div>
+                <div className="imp-tx text-uppercase text-muted text-right">Total Engagement</div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-3">
+            <div className="dash_block">
+            <div className="dash_content clearfix">
+                <span className="dash_icon-top"><i class="fa fa-usd fa-3x" aria-hidden="true"></i></span>
+                <div className="imp-t text-right">$500.00</div>
+                <div className="imp-tx text-uppercase text-muted text-right">Total Revenue</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+                <div className="dash_c_inr text-center">
+                  <span className="dash_icon"><i class="fa fa-user fa-3x" aria-hidden="true"></i></span>
+                  <h4>Settings - Home Screen</h4>
+                  <div class="text-muted">kbiouser3</div>
+                  <div class="pt-20">
+                    <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                      <i class="fa fa-cog mr-1"></i> Manage Setting
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+              <div className="dash_c_inr text-center">
+                <span className="dash_icon"><i class="fa fa-th-list fa-3x" aria-hidden="true"></i></span>
+                <h4>All Posts</h4>
+                <div class="text-muted">kbiouser3</div>
+                <div class="pt-20">
+                  <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                    <i class="fa fa-cog mr-1"></i> Manage All Posts
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+              <div className="dash_c_inr text-center">
+                <span className="dash_icon"><i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i></span>
+                <h4>Bio Shop</h4>
+                <div class="text-muted">kbiouser3</div>
+                <div class="pt-20">
+                  <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                    <i class="fa fa-cog mr-1"></i> Manage Bio Shop
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+              <div className="dash_c_inr text-center">
+                <span className="dash_icon"><i class="glyphicon glyphicon-link fa-3x" aria-hidden="true"></i></span>
+                <h4>Links</h4>
+                <div class="text-muted">kbiouser3</div>
+                <div class="pt-20">
+                  <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                    <i class="fa fa-cog mr-1"></i> Manage Links
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+              <div className="dash_c_inr text-center">
+                <span className="dash_icon"><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i></span>
+                <h4>Analytics</h4>
+                <div class="text-muted">kbiouser3</div>
+                <div class="pt-20">
+                  <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                    <i class="fa fa-cog mr-1"></i> Manage Analytics
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-4">
+            <div className="dash_block">
+              <div className="dash_content">
+              <div className="dash_c_inr text-center">
+                <span className="dash_icon"><i class="fa fa-list-alt fa-3x" aria-hidden="true"></i></span>
+                <h4>Category Setup</h4>
+                <div class="text-muted">kbiouser3</div>
+                <div class="pt-20">
+                  <a class="btn btn-rounded btn-primary" href="javascript:void(0)">
+                    <i class="fa fa-cog mr-1"></i> Manage Category Setup
+                  </a>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="dashboard_inr row">
+          <div className="dashboard_col col-md-6">
+            <div className="dash_block">
+              <div className="dash_content">
+              <i class="fa fa-list-alt fa-2x text-body-bg-dark"></i>
+              <div className="row pb-3 pt-3">
+                <div className="col-6 text-right border-r">
+                  <div className="imp-t text-right">132</div>
+                  <div className="imp-tx text-uppercase text-muted text-right">Total Posts</div>
+                </div>
+                <div className="col-6 text-left">
+                  <div className="imp-t">55</div>
+                  <div className="imp-tx text-uppercase text-muted">Linked Posts</div>
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard_col col-md-6">
+            <div className="dash_block">
+              <div className="dash_content">
+                <div className="dash_c_pkg text-center">
+                  <span className="dash_icon"><i class="fa fa-check fa-3x" aria-hidden="true"></i></span>
+                  <h4>Business Plan</h4>
+                  <div class="text-muted">This is your current active plan</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+   </>
+    );
+  }
+}
+export default Home;

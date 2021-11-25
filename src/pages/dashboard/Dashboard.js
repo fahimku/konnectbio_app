@@ -42,7 +42,7 @@ export default function Dashboard(props) {
                   )}
                 </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
-                  Total Impression
+                  Total Impressions
                 </div>
               </div>
             </div>
