@@ -162,6 +162,7 @@ class MyCategory extends React.Component {
               category_name: category.label,
               category_id: category.value,
               image_url: category.image,
+              editable: category.editable,
             };
           });
     this.setState({ loading: true });
