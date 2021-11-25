@@ -33,6 +33,7 @@ class AffiliateCampaign extends React.Component {
     this.state = {
       username: this.props.username,
       toggleCampaign: false,
+      toggleLoading: false,
       data: [],
       loading: false,
       fromDate: moment().startOf("year").format("YYYY-MM-DD"),
@@ -75,11 +76,12 @@ class AffiliateCampaign extends React.Component {
   }
 
   toggleCampaign = async (status, campaignId) => {
+    this.setState({ toggleLoading: true });
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
       icon: status ? "warning" : "success",
-      cancelButtonText:"No",
+      cancelButtonText: "No",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
@@ -91,18 +93,20 @@ class AffiliateCampaign extends React.Component {
             is_active: !status,
           })
           .then(() => {
+            this.setState({ toggleLoading: false });
             let data = this.state.data;
-            let objIndex = data.findIndex(
-              (obj) => obj.campaign_id === campaignId
-            );
+            let objIndex = data.findIndex((obj) => obj.campaign_id === campaignId);
             data[objIndex].is_active = !status;
             this.setState({ data: data });
+
             this.postData();
             toast.success("Campaign " + statusName + " Successfully");
+           
           })
           .catch((err) => {
             toast.error(err.response.data.message);
           });
+
       }
     });
   };
@@ -118,7 +122,6 @@ class AffiliateCampaign extends React.Component {
       confirmButtonText: `Yes`,
     }).then((result) => {
       if (result.isConfirmed) {
-
         axios
           .delete(`/campaigns/remove/${campaignId}`)
           .then(() => {
@@ -226,6 +229,7 @@ class AffiliateCampaign extends React.Component {
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
                 <div className="cmp-h-right col-md-6">
+                  {this.state.toggleLoading && <Loader />}
                   <div class="form-check custom-switch custom-switch-md">
                     <input
                       type="checkbox"
@@ -318,12 +322,9 @@ class AffiliateCampaign extends React.Component {
   };
 
   render() {
-
-
     return (
       <>
         <div className="container-fluid">
-
           {this.state.loading ? (
             <Loader className="analytics-loading" size={60} />
           ) : !this.state.data.length ? (

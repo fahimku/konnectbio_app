@@ -22,13 +22,12 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
   }, [])
 
   const handlePageClick = (e) => {
-    let page = e.selected;
+    const page = e.selected;
     setCurrentPage(page);
     getMarketPlace(page + 1, limit).then(() => {
       setLoading(false);
     })
   }
-
 
   if (!loading) {
     return (
