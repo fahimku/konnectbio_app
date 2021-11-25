@@ -210,7 +210,14 @@ class AffiliateCreateCampaign extends React.Component {
                   />
                 </div>
               </Col>
-              <Col className="right-bar-affiliate bg-white" md="7" xs="12" xl="9">
+              <Col
+                className={`right-bar-affiliate bg-white ${
+                  this.state.aff_modal ? "affiliate-block" : ""
+                }`}
+                md="7"
+                xs="12"
+                xl="9"
+              >
                 {this.affiliateModal()}
               </Col>
             </Row>
