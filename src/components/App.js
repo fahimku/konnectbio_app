@@ -26,18 +26,13 @@ import Forgot from "../pages/auth/forgot";
 import Package from "../pages/package/package";
 import Payment from "../pages/payment/payment";
 
-// import { createBrowserHistory } from "history";
-
-// export const history = createBrowserHistory({
-//   forceRefresh: true,
-// });
-
 const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
 );
 
 class App extends React.PureComponent {
   render() {
+
     if (this.props.loadingInit) {
       return <div />;
     }

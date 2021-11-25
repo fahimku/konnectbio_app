@@ -12,7 +12,6 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
   const [currentPage, setCurrentPage] = useState(0);
   const limit = 9;
 
-
   useEffect(() => {
     setLoading(true);
     getMarketPlace(1, limit).then(() => {
@@ -45,7 +44,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
                       <Box key={index}
                         userInfo={userInfo}
                         addCampaignToShop={addCampaignToShop}
-                        item={item} index={index} />
+                        item={item}
+                        index={index} />
                     </Col>)}
                 </Row>
                 <ReactPaginate
@@ -94,7 +94,6 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop }) {
     );
   }
 }
-
 function mapStateToProps({ marketPlace }) {
   return { marketPlace }
 }

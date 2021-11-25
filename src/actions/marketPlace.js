@@ -16,7 +16,6 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
             category_id: categoryId,
             advertiser_id: advertiserId,
         }).then((response) => {
-            console.log(response.data.messsage)
             dispatch({
                 type: ADD_CAMPAIGN_TO_SHOP,
                 payload: response.message
@@ -27,9 +26,7 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
         });
     });
     return promise;
-   
 };
-
 
 export const getMarketPlace = (page, limit) => async (dispatch) => {
     try {
