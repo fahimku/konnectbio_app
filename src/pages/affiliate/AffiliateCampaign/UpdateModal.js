@@ -1,6 +1,6 @@
 import React from "react";
-// import "react-virtualized-select/styles.css";
-// import VirtualizedSelect from "react-virtualized-select";
+import "react-virtualized-select/styles.css";
+import VirtualizedSelect from "react-virtualized-select";
 import Formsy from "formsy-react";
 import { Button } from "reactstrap";
 import moment from "moment";
@@ -14,7 +14,6 @@ import Loader from "../../../components/Loader/Loader";
 import InputNumberValidation from "../../../components/InputValidation/InputNumberValidation";
 import { connect } from "react-redux";
 import * as postActions from "../../../actions/posts";
-// import { Country, State, City } from "country-state-city";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
@@ -42,6 +41,8 @@ class UpdateModal extends React.Component {
       stateList: "",
       reach: "",
       submit: false,
+      cities2: [],
+      states: [],
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -56,6 +57,26 @@ class UpdateModal extends React.Component {
       .catch((err) => {
         console.log(err);
       });
+
+    const cityPromises = this.state.inputList.map((item) => {
+      return axios.post(`/common/receive/cities`, {
+        country_code: item.country,
+        state_code: item.state,
+      });
+    });
+
+    const statePromises = this.state.inputList.map((item) => {
+      return axios.post(`/common/receive/states`, {
+        country_code: item.country,
+      });
+    });
+
+    Promise.all(cityPromises).then((res) => {
+      this.setState({ cities2: res });
+    });
+    Promise.all(statePromises).then((res) => {
+      this.setState({ states: res });
+    });
   }
   titleChange = (value) => {
     this.setState({ campaign_name: value });
@@ -80,7 +101,7 @@ class UpdateModal extends React.Component {
       campaign_type: value,
     });
   };
-  changeCountry = (option, index) => {
+  changeCountry = async (option, index) => {
     const list = [...this.state.inputList];
     list[index] = {
       country: option.value,
@@ -89,16 +110,31 @@ class UpdateModal extends React.Component {
       city: "",
       zip: "",
     };
+    const res = await axios.post(`/common/receive/states`, {
+      country_code: option.value,
+    });
+
+    const oldState = this.state.states;
+    oldState.splice(index, 1, res);
+
+    this.setState({ states: oldState });
     this.setState({ inputList: list }, () => {
       this.reachCampaign();
     });
   };
-  changeState = (option, index) => {
+  changeState = async (option, index) => {
     const list = [...this.state.inputList];
     list[index] = {
       ...list[index],
       state: option.value,
     };
+    const res = await axios.post(`/common/receive/cities`, {
+      country_code: this.state.inputList[index].country,
+      state_code: option.value,
+    });
+    const oldCities = this.state.cities2;
+    oldCities.splice(index, 1, res);
+    this.setState({ cities2: oldCities });
     this.setState({ inputList: list }, () => {
       this.reachCampaign();
     });
@@ -293,32 +329,43 @@ class UpdateModal extends React.Component {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
-    console.log(this.state.inputList, "sdsd");
-    // const renderConValue = (x) => {
-    //   const exit = this.props.countries.filter(
-    //     (item) => item.value == x.country
-    //   );
 
-    //   return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-    // };
+    const renderConValue = (x) => {
+      const exit = this.props.countries.filter(
+        (item) => item.value === x.country
+      );
 
-    // const renderStateValue = (x) => {
-    //   const exit =
-    //     this.state.stateList === ""
-    //       ? []
-    //       : this.state.stateList.filter((item) => item.value == x.state);
+      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    };
 
-    //   return exit[0];
-    // };
-    // const renderCityValue = (x) => {
-    //   const exit =
-    //     this.state.cities === ""
-    //       ? []
-    //       : this.state.cities.filter((item) => item.value == x.city);
+    const renderStateValue = (x, i) => {
+      if (x.country) {
+        const exit = [
+          { isoCode: "all", name: "All" },
+          ...this.state.states[i].data.message,
+        ].filter((item) => item.isoCode === x.state);
 
-    //   return exit[0];
-    // };
+        return exit[0]
+          ? { value: exit[0].isoCode, label: exit[0].name }
+          : { value: "", label: "Select State" };
+      } else {
+        return { value: "", label: "Select State" };
+      }
+    };
+    const renderCityValue = (x, i) => {
+      if (x.state) {
+        const exit = [
+          { value: "all", label: "all" },
+          ...this.state.cities2[i].data.message,
+        ].filter((item) => item.name === x.city);
 
+        return exit[0]
+          ? { value: exit[0].name, label: exit[0].name }
+          : { value: "", label: "Select City" };
+      } else {
+        return { value: "", label: "Select City" };
+      }
+    };
     return (
       <React.Fragment>
         <Formsy.Form
@@ -422,7 +469,7 @@ class UpdateModal extends React.Component {
                   <label className="n-camp-type pr-4">
                     <strong>Type of campaign:</strong>
                   </label>
-                  <div class="col1">
+                  {/* <div class="col1">
                     <input
                       type="radio"
                       name="platform"
@@ -441,13 +488,9 @@ class UpdateModal extends React.Component {
                         <i class="fa fa-picture-o fa-2x" aria-hidden="true"></i>
                       </span>
                       <span className="imp-name">Impressions</span>
-                      {/* <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> */}
+                     
                     </label>
-                  </div>
+                  </div> */}
                   <div class="col1">
                     <input
                       type="radio"
@@ -507,7 +550,7 @@ class UpdateModal extends React.Component {
               <div className="demographic-section">
                 <div className="row">
                   <div className="col-md-6 mt-3">
-                    <label>Budget</label>
+                    <label>Total Budget</label>
                     <InputNumberValidation
                       type="number"
                       id="budget"
@@ -534,7 +577,7 @@ class UpdateModal extends React.Component {
                   </div>
                 </div>
 
-                {/* <div className="country-select">
+                <div className="country-select">
                   {this.state.inputList.map((x, i) => {
                     return (
                       <div className="c-con-select row">
@@ -543,24 +586,13 @@ class UpdateModal extends React.Component {
                           <Select2
                             key={i}
                             name="country"
-                            value={
-                              x.country
-                                ? {
-                                    value: Country.getCountryByCode(x.country)
-                                      .isoCode,
-                                    label: Country.getCountryByCode(x.country)
-                                      .name,
-                                  }
-                                : { value: "", label: "Select Country" }
-                            }
+                            value={renderConValue(x)}
                             onChange={(options, e) =>
                               this.changeCountry(options, i)
                             }
                             placeholder="Select Country"
                             style={{ width: "100%" }}
-                            options={Country.getAllCountries().map((item) => {
-                              return { value: item.isoCode, label: item.name };
-                            })}
+                            options={this.props.countries}
                             // isDisabled={
                             //   this.state.inputList.length - 1 !== i
                             //     ? true
@@ -582,32 +614,28 @@ class UpdateModal extends React.Component {
                             key={i}
                             name="state"
                             value={
-                              x.state
-                                ? x.state !== "all"
-                                  ? {
-                                      value: State.getStateByCodeAndCountry(
-                                        x.state,
-                                        x.country
-                                      ).isoCode,
-                                      label: State.getStateByCodeAndCountry(
-                                        x.state,
-                                        x.country
-                                      ).name,
-                                    }
-                                  : { value: "all", label: "All" }
-                                : { value: "", label: "Select State" }
+                              this.state.states.length > 0
+                                ? renderStateValue(x, i)
+                                : { value: "", lable: "loading" }
                             }
                             onChange={(options, e) => {
                               this.changeState(options, i);
                             }}
                             placeholder="Select State"
                             style={{ width: "100%" }}
-                            options={[
-                              { isoCode: "all", name: "All" },
-                              ...State.getStatesOfCountry(x.country),
-                            ].map((item) => {
-                              return { value: item.isoCode, label: item.name };
-                            })}
+                            options={
+                              this.state.states.length > 0 && x.country
+                                ? [
+                                    { isoCode: "all", name: "All" },
+                                    ...this.state.states[i]?.data?.message,
+                                  ].map((item) => {
+                                    return {
+                                      value: item.isoCode,
+                                      label: item.name,
+                                    };
+                                  })
+                                : []
+                            }
                             isDisabled={x.country ? false : true}
                             // isDisabled={
                             //   // this.state.stateList === ""
@@ -633,12 +661,9 @@ class UpdateModal extends React.Component {
                             key={i}
                             name="city"
                             value={
-                              x.city
-                                ? {
-                                    value: x.city,
-                                    label: x.city,
-                                  }
-                                : { value: "", label: "Select City" }
+                              this.state.cities2.length > 0
+                                ? renderCityValue(x, i)
+                                : { value: "loading", label: "loading" }
                             }
                             onChange={(options, e) =>
                               this.changeCity(options, i)
@@ -646,37 +671,20 @@ class UpdateModal extends React.Component {
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={
-                              x.state !== "all"
+                              this.state.cities2.length > 0 && x.state
                                 ? [
                                     { value: "all", name: "All" },
-                                    ...City.getCitiesOfState(
-                                      x.country,
-                                      x.state
-                                    ),
+                                    ...this.state.cities2[i].data.message,
                                   ].map((item) => {
                                     return {
                                       value: item.name,
                                       label: item.name,
                                     };
                                   })
-                                : [
-                                    { value: "all", name: "All" },
-                                    ...City.getCitiesOfCountry(x.country),
-                                  ].map((item) => {
-                                    return {
-                                      value: item.name,
-                                      label: item.name,
-                                    };
-                                  })
+                                : []
                             }
                             clearable={false}
                             disabled={x.state ? false : true}
-                            // isDisabled={
-                            //   this.state.inputList[i].state === "" ||
-                            //   this.state.inputList.length - 1 !== i
-                            //     ? true
-                            //     : false
-                            // }
                           />
                           {this.state.submit && !x.city ? (
                             <span
@@ -757,7 +765,7 @@ class UpdateModal extends React.Component {
                       Influencer's Reach: {this.state.reach.toString()}
                     </h5>
                   )}
-                </div> */}
+                </div>
               </div>
 
               <div className="row mt-4">
