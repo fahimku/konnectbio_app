@@ -13,7 +13,7 @@ import InputNumberValidation from "../../../../components/InputValidation/InputN
 import { connect } from "react-redux";
 import * as postActions from "../../../../actions/posts";
 // import { Country, State, City } from "country-state-city";
-// import VirtualizedSelect from "react-virtualized-select";
+import VirtualizedSelect from "react-virtualized-select";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -299,7 +299,7 @@ class AffiliateForm extends React.Component {
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
-        (item) => item.value == x.country
+        (item) => item.value === x.country
       );
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
@@ -309,7 +309,7 @@ class AffiliateForm extends React.Component {
       const exit =
         this.state.stateList === ""
           ? []
-          : this.state.stateList.filter((item) => item.value == x.state);
+          : this.state.stateList.filter((item) => item.value === x.state);
 
       return exit[0];
     };
@@ -317,7 +317,7 @@ class AffiliateForm extends React.Component {
       const exit =
         this.state.cities === ""
           ? []
-          : this.state.cities.filter((item) => item.value == x.city);
+          : this.state.cities.filter((item) => item.value === x.city);
 
       return exit[0];
     };
@@ -424,7 +424,7 @@ class AffiliateForm extends React.Component {
                   <label className="n-camp-type pr-4">
                     <strong>Type of campaign:</strong>
                   </label>
-                  <div class="col1">
+                  {/* <div class="col1">
                     <input
                       type="radio"
                       name="platform"
@@ -443,13 +443,9 @@ class AffiliateForm extends React.Component {
                         <i class="fa fa-picture-o fa-2x" aria-hidden="true"></i>
                       </span>
                       <span className="imp-name">Impressions</span>
-                      {/* <div class="tick_container">
-                      <div class="tick">
-                        <i class="fa fa-check"></i>
-                      </div>
-                    </div> */}
+                      
                     </label>
-                  </div>
+                  </div> */}
                   <div class="col1">
                     <input
                       type="radio"
@@ -509,7 +505,7 @@ class AffiliateForm extends React.Component {
               <div className="demographic-section">
                 <div className="row">
                   <div className="col-md-6 mt-3">
-                    <label>Budget</label>
+                    <label>Total Budget</label>
                     <InputNumberValidation
                       type="number"
                       id="budget"
@@ -802,7 +798,7 @@ class AffiliateForm extends React.Component {
                         </div>
                         <div className="col-md-3 mt-3">
                           <label>City {i + 1}</label>
-                          <Select2
+                          <VirtualizedSelect
                             key={i}
                             name="city"
                             value={renderCityValue(x)}
@@ -812,7 +808,7 @@ class AffiliateForm extends React.Component {
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={this.state.cities}
-                            isDisabled={
+                            disabled={
                               this.state.inputList[i].state === "" ||
                               this.state.inputList.length - 1 !== i
                                 ? true

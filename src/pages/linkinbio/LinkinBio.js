@@ -134,7 +134,7 @@ class LinkinBio extends React.Component {
         // let that = this;
         this.setState({ postType: response.data.message.post_type });
         this.setState({ media_id: media_id });
-        let category = response.data.message.categories[0].category_id;
+        let category = response.data.message.categories[0].parent_id;
         this.setState({ category: category });
 
         this.changeDateRange(
@@ -158,9 +158,9 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const categories = response.data.message;
-        categories.map(({ category_id, category_name }) => {
+        categories.map(({ parent_id, category_name }) => {
           return selectCategories.push({
-            value: category_id,
+            value: parent_id,
             label: category_name,
           });
         });

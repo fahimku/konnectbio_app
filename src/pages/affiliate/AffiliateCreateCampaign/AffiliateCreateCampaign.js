@@ -145,7 +145,7 @@ class AffiliateCreateCampaign extends React.Component {
           />
         )}
 
-        {window.innerWidth <= 760 && (
+        {/* {window.innerWidth <= 760 && (
           <Modal
             show={this.state.aff_modal}
             onHide={this.affToggleModal}
@@ -166,7 +166,7 @@ class AffiliateCreateCampaign extends React.Component {
               />
             )}
           </Modal>
-        )}
+        )} */}
       </div>
     ) : (
       <div className="create_campaign_heading">
