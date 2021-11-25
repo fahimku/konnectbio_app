@@ -616,7 +616,7 @@ class UpdateModal extends React.Component {
                             value={
                               this.state.states.length > 0
                                 ? renderStateValue(x, i)
-                                : { value: "", lable: "loading" }
+                                : { value: "loading", label: "Loading..." }
                             }
                             onChange={(options, e) => {
                               this.changeState(options, i);
@@ -663,7 +663,7 @@ class UpdateModal extends React.Component {
                             value={
                               this.state.cities2.length > 0
                                 ? renderCityValue(x, i)
-                                : { value: "loading", label: "loading" }
+                                : { value: "loading", label: "Loading..." }
                             }
                             onChange={(options, e) =>
                               this.changeCity(options, i)
