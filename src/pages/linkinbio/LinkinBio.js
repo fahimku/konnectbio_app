@@ -134,7 +134,7 @@ class LinkinBio extends React.Component {
         // let that = this;
         this.setState({ postType: response.data.message.post_type });
         this.setState({ media_id: media_id });
-        let category = response.data.message.categories[0].parent_id;
+        let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
 
         this.changeDateRange(
@@ -158,10 +158,11 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const categories = response.data.message;
-        categories.map(({ parent_id, category_name }) => {
+        categories.map(({ parent_id, category_name, category_id }) => {
           return selectCategories.push({
-            value: parent_id,
+            value: category_id,
             label: category_name,
+            parentId: parent_id,
           });
         });
         this.setState({ categories: selectCategories });
@@ -184,6 +185,7 @@ class LinkinBio extends React.Component {
         }),
         async () => {
           this.setState({ loading: true });
+
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
