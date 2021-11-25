@@ -808,6 +808,7 @@ class AffiliateForm extends React.Component {
                             placeholder="Select City"
                             style={{ width: "100%" }}
                             options={this.state.cities}
+                            clearable={false}
                             disabled={
                               this.state.inputList[i].state === "" ||
                               this.state.inputList.length - 1 !== i
