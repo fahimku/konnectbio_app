@@ -4,9 +4,7 @@ import config from "../config";
 
 export const getCountries = () => async (dispatch) => {
   try {
-    const res = await axios.post(
-      `${config.baseURLApi}/common/receive/countries`
-    );
+    const res = await axios.post(`${config.baseURLApi}/campaigns/countries`);
     dispatch({
       type: GET_COUNTRIES,
       payload: res.data.message,

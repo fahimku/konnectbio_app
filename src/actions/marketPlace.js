@@ -1,13 +1,6 @@
 import axios from "axios";
-import { GET_MARKET_PLACE, ADD_CAMPAIGN_TO_SHOP, MARKETPLACE_ERROR } from "./type";
+import { GET_MARKET_PLACE, ADD_CAMPAIGN_TO_SHOP } from "./type";
 import config from "../config";
-
-export function marketPlaceError(payload) {
-    return {
-        type: MARKETPLACE_ERROR,
-        payload,
-    };
-}
 
 export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
@@ -18,7 +11,7 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
         }).then((response) => {
             dispatch({
                 type: ADD_CAMPAIGN_TO_SHOP,
-                payload: response.message
+                payload: response.data.message
             })
             resolve('success');
         }).catch((error) => {

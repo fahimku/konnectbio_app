@@ -101,7 +101,7 @@ class AffiliateCampaign extends React.Component {
 
             this.postData();
             toast.success("Campaign " + statusName + " Successfully");
-           
+
           })
           .catch((err) => {
             toast.error(err.response.data.message);
@@ -111,11 +111,13 @@ class AffiliateCampaign extends React.Component {
     });
   };
 
+
   deleteCampaign = async (campaignId) => {
     Swal.fire({
       title: `Are you sure you want to delete this campaign?`,
       text: "You won't be able to revert this!",
       icon: "warning",
+      cancelButtonText: "No",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
@@ -298,7 +300,9 @@ class AffiliateCampaign extends React.Component {
                     <h3 className="count">{record.campaign_type}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Budget</h5>
+                    <h5 className="count-title">
+                      Total Budget
+                    </h5>
                     <h3 className="count">${record.budget}</h3>
                   </div>
                   <div className="col-12 count-box">

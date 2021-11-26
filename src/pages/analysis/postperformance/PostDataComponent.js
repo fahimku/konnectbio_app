@@ -98,6 +98,7 @@ class PostDataComponent extends React.Component {
         // }
       });
   }
+  
   fetchMyCategory = async () => {
     await axios
       .get("/users/receive/categories")
@@ -121,6 +122,7 @@ class PostDataComponent extends React.Component {
         console.log(error);
       });
   };
+
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];

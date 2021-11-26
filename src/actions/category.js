@@ -1,6 +1,6 @@
 import axios from "axios"
 import config from "../config"
-import { GET_CATEGORIES } from "./type"
+import { GET_CATEGORIES, GET_USER_CATEGORIES } from "./type"
 
 export const getCategories = () => async (dispatch) => {
     try {
@@ -13,3 +13,18 @@ export const getCategories = () => async (dispatch) => {
         console.log(err)
     }
 }
+
+export const getUserCategories = () => async (dispatch) => {
+    let promise = new Promise((resolve, reject) => {
+        axios.get(`${config.baseURLApi}/users/receive/categories`).then((res) => {
+            dispatch({
+                type: GET_USER_CATEGORIES,
+                payload: res.data?.message
+            })
+            resolve('success');
+        }).catch((error) => {
+            reject(error)
+        });
+    });
+    return promise;
+};

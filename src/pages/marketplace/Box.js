@@ -21,12 +21,12 @@ export default function Box({ item, addCampaignToShop, index }) {
     }).then((result) => {
       if (result.isConfirmed) {
         setLoading(true);
-        addCampaignToShop(campaignId, categoryId, userId).then(function (result) {
+        addCampaignToShop(campaignId, categoryId, userId).then(function () {
           setAddCampaign(true);
-          toast.error('Campaign Added Successfully');
+          toast.success('Campaign Added Successfully');
           setLoading(false);
         }, function (error) {
-          toast.error(error.response.data.message)
+          toast.error(error?.response?.data?.message)
           setLoading(false);
         })
       }
