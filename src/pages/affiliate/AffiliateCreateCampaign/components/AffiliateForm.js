@@ -109,7 +109,19 @@ class AffiliateForm extends React.Component {
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
-    this.getCities(options.countryCode, options.value);
+
+    if (options.value !== "all") {
+      this.getCities(options.countryCode, options.value);
+    } else {
+      list[index]["city"] = "all";
+      const selectCities = [];
+      let all = {};
+      all.value = "all";
+      all.label = "All";
+      all.countryCode = this.state.country.value;
+      selectCities.unshift(all);
+      this.setState({ cities: selectCities });
+    }
     this.setState({ state: options, inputList: list });
 
     this.reachCampaign();
@@ -315,14 +327,18 @@ class AffiliateForm extends React.Component {
 
       return exit[0];
     };
-    const renderCityValue = (x) => {
-      const exit =
-        this.state.cities === ""
-          ? []
-          : this.state.cities.filter((item) => item.value === x.city);
-
-      return exit[0];
+    const renderCityValue = (x, i) => {
+      if (this.state.state.value === "all") {
+        return { value: "all", label: "All" };
+      } else {
+        const exit =
+          this.state.cities === ""
+            ? []
+            : this.state.cities.filter((item) => item.value === x.city);
+        return exit[0];
+      }
     };
+
     return (
       <React.Fragment>
         <Formsy.Form
@@ -800,10 +816,10 @@ class AffiliateForm extends React.Component {
                         </div>
                         <div className="col-md-3 mt-3">
                           <label>City {i + 1}</label>
-                          <VirtualizedSelect
+                          {/* <VirtualizedSelect
                             key={i}
                             name="city"
-                            value={renderCityValue(x)}
+                            value={renderCityValue(x, i)}
                             onChange={(options, e) =>
                               this.changeCity(e, options, "city", i)
                             }
@@ -817,6 +833,33 @@ class AffiliateForm extends React.Component {
                                 ? true
                                 : false
                             }
+                          /> */}
+                          <VirtualizedSelect
+                            className
+                            key={i}
+                            name="city"
+                            value={
+                              x.city
+                                ? {
+                                    value: x.city,
+                                    label: x.city,
+                                  }
+                                : { value: "", label: "Select City" }
+                            }
+                            onChange={(options, e) =>
+                              this.changeCity(e, options, "city", i)
+                            }
+                            placeholder="Select City"
+                            style={{ width: "100%" }}
+                            options={this.state.cities}
+                            clearable={false}
+                            disabled={x.state ? false : true}
+                            // isDisabled={
+                            //   this.state.inputList[i].state === "" ||
+                            //   this.state.inputList.length - 1 !== i
+                            //     ? true
+                            //     : false
+                            // }
                           />
                           {this.state.submit && !x.city ? (
                             <span className={"help-block text-danger"}>

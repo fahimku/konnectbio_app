@@ -357,12 +357,16 @@ class UpdateModal extends React.Component {
     const renderCityValue = (x, i) => {
       if (x.state) {
         const exit = [
-          { value: "all", label: "all" },
+          { value: "all", name: "all" },
+
           ...this.state.cities2[i].data.message,
         ].filter((item) => item.name === x.city);
 
         return exit[0]
-          ? { value: exit[0].name, label: exit[0].name }
+          ? {
+              value: exit[0].name,
+              label: exit[0].name === "all" ? "All" : exit[0].name,
+            }
           : { value: "", label: "Select City" };
       } else {
         return { value: "", label: "Select City" };
@@ -639,7 +643,11 @@ class UpdateModal extends React.Component {
                                   })
                                 : []
                             }
-                            isDisabled={x.country ? false : true}
+                            isDisabled={
+                              this.state.states.length > 0 && x.country
+                                ? false
+                                : true
+                            }
                             // isDisabled={
                             //   // this.state.stateList === ""
                             //   this.state.inputList[i].country === "" ||
@@ -676,12 +684,13 @@ class UpdateModal extends React.Component {
                             options={
                               this.state.cities2.length > 0 && x.state
                                 ? [
-                                    { value: "all", name: "All" },
+                                    { value: "all", name: "all" },
                                     ...this.state.cities2[i].data.message,
                                   ].map((item) => {
                                     return {
                                       value: item.name,
-                                      label: item.name,
+                                      label:
+                                        item.name === "all" ? "All" : item.name,
                                     };
                                   })
                                 : []
