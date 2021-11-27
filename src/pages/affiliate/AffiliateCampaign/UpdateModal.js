@@ -368,7 +368,7 @@ class UpdateModal extends React.Component {
         return { value: "", label: "Select City" };
       }
     };
-    console.log(this.state.inputList, "sdsd");
+
     return (
       <React.Fragment>
         <Formsy.Form
