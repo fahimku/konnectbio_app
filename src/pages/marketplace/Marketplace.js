@@ -48,8 +48,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
     setSearchLoading(true);
     setClearLoading(true);
     setCategory({ value: "all", label: "All" });
-    setOrderBy({ value: 'commission', label: 'Commission' });
-    setSortBy({ value: 'desc', label: 'Desc' })
+    setSortBy({ value: 'commission', label: 'Commission' });
+    setOrderBy({ value: 'desc', label: 'DESC' })
     setCurrentPage();
     e.preventDefault();
     getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
