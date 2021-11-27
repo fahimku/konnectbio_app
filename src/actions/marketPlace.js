@@ -9,10 +9,10 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
             category_id: categoryId,
             advertiser_id: advertiserId,
         }).then((response) => {
-            dispatch({
-                type: ADD_CAMPAIGN_TO_SHOP,
-                payload: response.data.message
-            })
+            // dispatch({
+            //     type: ADD_CAMPAIGN_TO_SHOP,
+            //     payload: response?.data?.message
+            // })
             resolve('success');
         }).catch((error) => {
             reject(error)
