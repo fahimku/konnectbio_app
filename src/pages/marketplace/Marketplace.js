@@ -45,7 +45,6 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
 
 
   const clearMarketPlace = (e) => {
-    setSearchLoading(true);
     setClearLoading(true);
     setCategory({ value: "all", label: "All" });
     setSortBy({ value: 'commission', label: 'Commission' });
