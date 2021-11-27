@@ -23,13 +23,13 @@ axios.defaults.baseURL = config.baseURLApi;
 axios.defaults.headers.common['Content-Type'] = "application/json";
 const token = localStorage.getItem('token');
 if (token) {
-    axios.defaults.headers.common['Authorization'] = "Bearer " + token;
+  axios.defaults.headers.common['Authorization'] = "Bearer " + token;
 }
 
 axios.interceptors.response.use(undefined, function (error) {
-  if (error.response.status === 401) {
-//    logoutUser();
-  window.location.href = '/logout';
+  if (error.response?.status === 401) {
+    //    logoutUser();
+    window.location.href = '/logout';
     // alert('test')
   }
   else {
@@ -48,10 +48,10 @@ export const store = createStore(
 );
 store.dispatch(doInit());
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
-    document.getElementById('root')
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

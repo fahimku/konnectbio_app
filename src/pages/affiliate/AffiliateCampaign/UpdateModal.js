@@ -279,13 +279,15 @@ class UpdateModal extends React.Component {
   handleRemoveClick = (index) => {
     const list = [...this.state.inputList];
     list.splice(index, 1);
-    this.setState({ inputList: list });
+    this.setState({ inputList: list }, () => {
+      this.reachCampaign();
+    });
     // setInputList(list);
   };
 
   // handle click event of the Add button
   handleAddClick = () => {
-    // this.reachCampaign();
+    this.reachCampaign();
     this.setState({
       inputList: [
         ...this.state.inputList,
@@ -366,6 +368,7 @@ class UpdateModal extends React.Component {
         return { value: "", label: "Select City" };
       }
     };
+    console.log(this.state.inputList, "sdsd");
     return (
       <React.Fragment>
         <Formsy.Form

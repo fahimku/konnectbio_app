@@ -1,6 +1,6 @@
 import React from "react";
 // import { Row, Col } from "reactstrap";
-import { Col, Row, Modal } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import axios from "axios";
 import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
@@ -79,7 +79,7 @@ class AffiliateCreateCampaign extends React.Component {
 
   getCountries = async () => {
     await axios
-      .post(`/common/receive/countries`)
+      .get(`/campaigns/countries`)
       .then((response) => {
         const selectCountries = [];
         const countries = response.data.message;

@@ -2,25 +2,32 @@ import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import Loader from "../../components/Loader/Loader";
 
-export default function Box({ item, addCampaignToShop }) {
+export default function Box({ item, addCampaignToShop, index }) {
 
   const [addCampaign, setAddCampaign] = useState(item.is_linked);
+  const [loading, setLoading] = useState(false);
   const confirmAddToCampaign = (campaignId, categoryId, userId) => {
+
     Swal.fire({
       title: `Are you sure you want to add this campaign?`,
       icon: "warning",
       showCancelButton: true,
+      cancelButtonText: "No",
       confirmButtonColor: "#010b40",
       cancelButtonColor: "#d33",
       confirmButtonText: `Yes`,
     }).then((result) => {
       if (result.isConfirmed) {
-        addCampaignToShop(campaignId, categoryId, userId).then(function (result) {
+        setLoading(true);
+        addCampaignToShop(campaignId, categoryId, userId).then(function () {
           setAddCampaign(true);
-          toast.error('Campaign Added Successfully');
+          toast.success('Campaign Added Successfully');
+          setLoading(false);
         }, function (error) {
-          toast.error(error.response.data.message)
+          toast.error(error?.response?.data?.message)
+          setLoading(false);
         })
       }
     });
@@ -77,22 +84,31 @@ export default function Box({ item, addCampaignToShop }) {
               </div>
 
               <div className="col-12 count-box">
-                {addCampaign ? (
-                  <Button className="btn-connect">Campaign Added</Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      confirmAddToCampaign(
-                        item.campaign_id,
-                        item.category_id,
-                        item.user_id
-                      );
-                    }}
-                    className="btn-connect"
-                  >
-                    Select Campaign
-                  </Button>
-                )}
+                <div className="count-title">
+                  {addCampaign ? (
+                    <Button
+                      key={index}
+                      className="btn-connect">Campaign Added</Button>
+                  ) : (
+                    loading ?
+                      <Button
+                        key={index}
+                        className="btn-connect"><Loader /> </Button>:
+                      <Button
+                        key={index}
+                        onClick={() => {
+                          confirmAddToCampaign(
+                            item.campaign_id,
+                            item.category_id,
+                            item.user_id
+                          );
+                        }}
+                        className="btn-connect"
+                      >
+                        Select Campaign
+                      </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Loader from "../../components/Loader/Loader";
 import axios from "axios";
+import numeral from "numeral";
 
 export default function Dashboard(props) {
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -21,6 +22,9 @@ export default function Dashboard(props) {
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
       });
   }
 
@@ -37,8 +41,10 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
+                  ) : data.post_views ? (
+                    numeral(data.post_views).format("0,0")
                   ) : (
-                    data.post_views
+                    "0"
                   )}
                 </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
@@ -47,6 +53,7 @@ export default function Dashboard(props) {
               </div>
             </div>
           </div>
+
           <div className="dashboard_col col-md-3">
             <div className="dash_block">
               <div className="dash_content clearfix">
@@ -59,8 +66,10 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
+                  ) : data.post_clicks ? (
+                    numeral(data.post_clicks).format("0,0")
                   ) : (
-                    data.post_clicks
+                    "0"
                   )}
                 </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
@@ -78,8 +87,10 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : (
+                  ) : data.ctr ? (
                     data.ctr + " %"
+                  ) : (
+                    "0%"
                   )}
                 </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
@@ -98,8 +109,10 @@ export default function Dashboard(props) {
                   {" "}
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : (
+                  ) : data.revenue ? (
                     data.revenue
+                  ) : (
+                    "$0.00"
                   )}
                 </div>
                 <div className="imp-tx text-uppercase text-muted text-right">
@@ -274,8 +287,10 @@ export default function Dashboard(props) {
                     <div className="imp-t text-right">
                       {loading ? (
                         <Loader className="dashboard-loader" />
-                      ) : (
+                      ) : data.total_posts ? (
                         data.total_posts
+                      ) : (
+                        "0"
                       )}
                     </div>
                     <div className="imp-tx text-uppercase text-muted text-right">
@@ -287,8 +302,10 @@ export default function Dashboard(props) {
                       {" "}
                       {loading ? (
                         <Loader className="dashboard-loader" />
-                      ) : (
+                      ) : data.linked_posts ? (
                         data.linked_posts
+                      ) : (
+                        "0"
                       )}
                     </div>
                     <div className="imp-tx text-uppercase text-muted">

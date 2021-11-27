@@ -154,10 +154,10 @@ class Layout extends React.Component {
 
   render() {
     const loggedIn = localStorage.getItem("token");
-
     const PrivateRoute = ({ component: Component, ...rest }) => {
-      const Components = PermissionHelper.checkPermissions(Component, rest);
-      return (
+    const Components = PermissionHelper.checkPermissions(Component, rest);
+    
+    return (
         <Route
           {...rest}
           render={(props) =>
