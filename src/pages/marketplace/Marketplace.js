@@ -14,12 +14,13 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
-  const [categoryId, setCategoryId] = useState("all");
-  const [sortBy, setSortBy] = useState('commission');
-  const [orderBy, setOrderBy] = useState('desc');
+  const [clearLoading, setClearLoading] = useState(false);
+  const [category, setCategory] = useState({ value: 'all', label: 'All' });
+  const [sortBy, setSortBy] = useState({ value: 'commission', label: 'Commission' });
+  const [orderBy, setOrderBy] = useState({ value: 'desc', label: 'DESC' });
   const [currentPage, setCurrentPage] = useState(0);
-  const limit = 6;
-  
+  const limit = 9;
+
   useEffect(() => {
     setLoading(true);
     getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
@@ -34,7 +35,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
     setSearchLoading(true);
     setCurrentPage(0);
     e.preventDefault();
-    getMarketPlace(1, limit, categoryId, sortBy, orderBy).then(function () {
+    getMarketPlace(1, limit, category.value, sortBy.value, orderBy.value).then(function () {
       setLoading(false);
       setSearchLoading(false);
     }, function (error) {
@@ -45,11 +46,16 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
 
   const clearMarketPlace = (e) => {
     setSearchLoading(true);
+    setClearLoading(true);
+    setCategory({ value: "all", label: "All" });
+    setOrderBy({ value: 'commission', label: 'Commission' });
+    setSortBy({ value: 'desc', label: 'Desc' })
     setCurrentPage();
     e.preventDefault();
     getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
       setLoading(false);
       setSearchLoading(false);
+      setClearLoading(false);
     }, function (error) {
       toast.error(error?.response?.data?.message)
     })
@@ -58,7 +64,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
-    getMarketPlace(page + 1, limit, categoryId, sortBy, orderBy).then(function () {
+    getMarketPlace(page + 1, limit, category.value, sortBy.value, orderBy.value).then(function () {
       setLoading(false);
     })
   }
@@ -98,12 +104,14 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                     <Col xs={12} xl={2} md={6}>
                       <p>Select Category</p>
                       <Select
+                        value={category}
                         name="sort"
                         className="selectCustomization"
                         options={categories}
                         onChange={(e) => {
-                          setCategoryId(e.value);
+                          setCategory(e)
                         }}
+
                         placeholder="Select Category"
                         styles={style}
                       />
@@ -111,11 +119,12 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                     <Col xs={12} xl={2} md={6}>
                       <p>Sort By</p>
                       <Select
+                        value={sortBy}
                         name="sort"
                         className="selectCustomization"
                         options={sortByOptions}
                         onChange={(e) => {
-                          setSortBy(e.value);
+                          setSortBy(e);
                         }}
                         placeholder="Sort By"
                         styles={style}
@@ -124,11 +133,12 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                     <Col xs={12} xl={2} md={6}>
                       <p>Order By</p>
                       <Select
+                        value={orderBy}
                         name="sort"
                         className="selectCustomization"
                         options={sortOrderOptions}
                         onChange={(e) => {
-                          setOrderBy(e.value);
+                          setOrderBy(e);
                         }}
                         placeholder="Order By"
                         styles={style}
@@ -150,13 +160,20 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                           Search
                         </Button>
                       }
-                      <Button
-                        onClick={clearMarketPlace}
-                        variant="gray"
-                        className="fltr-h btn btn-primary"
-                      >
-                        Clear
-                      </Button>
+                      {clearLoading ?
+                        <Button
+                          variant="gray"
+                          className="fltr-h btn btn-primary"
+                        ><Loader />
+                        </Button>
+                        : <Button
+                          onClick={clearMarketPlace}
+                          variant="gray"
+                          className="fltr-h btn btn-primary"
+                        >
+                          Clear
+                        </Button>
+                      }
                     </Col>
                   </Row>
                 </form>
