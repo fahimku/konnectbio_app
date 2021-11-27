@@ -180,7 +180,7 @@ class LinkinBioShop extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               this.selectPost(false, "");
             })
             .catch((err) => {
@@ -264,9 +264,9 @@ class LinkinBioShop extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
+        parseInt(node.clientHeight);
     if (bottom) {
       if (this.state.page) {
         this.nextPageInstagramPosts(
@@ -471,15 +471,17 @@ class LinkinBioShop extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
             xs="12"
             xl="9"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {/* <iframe
                 key={this.state.iframeKey}
