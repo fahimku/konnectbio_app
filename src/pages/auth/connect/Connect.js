@@ -51,7 +51,6 @@ class Connect extends React.Component {
 
   async fetchInstagramPostsFirstTime(token) {
     const userInformation = localStorage.getItem("userInfo");
-
     const parseUserInformation = JSON.parse(userInformation);
     await axios
       .post(`/social/ig/data/${token}`, {email: parseUserInformation.email})

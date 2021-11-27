@@ -1,6 +1,7 @@
-import React from "react";
-import {Row, Col} from "reactstrap";
-import {Link} from "react-router-dom";
+import React, { useEffect } from "react";
+import { Row, Col, Button } from "react-bootstrap";
+import { connect } from "react-redux";
+import * as instaActions from "../../../actions/instagram"
 
 const MobilePreview = ({
   placeholder,
@@ -10,7 +11,14 @@ const MobilePreview = ({
   instagramPosts,
   selectPost,
   pageName,
+  getInstagramURL,
+  instagram
 }) => {
+
+  useEffect(() => {
+    getInstagramURL();
+  }, [])
+
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
@@ -25,7 +33,7 @@ const MobilePreview = ({
                 <img
                   className={
                     instagramPosts.data[i].linked ||
-                    instagramPosts.data[i].select
+                      instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -55,7 +63,7 @@ const MobilePreview = ({
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||
-                    instagramPosts.data[i].select
+                      instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -84,6 +92,7 @@ const MobilePreview = ({
     }
   }
   return (
+
     <div className="mobile-preview">
       <div className="mobile-header">
         <img
@@ -96,9 +105,14 @@ const MobilePreview = ({
       </div>
       {error ? (
         <div className="error">
-          {error.message}
+          {error}
           <br></br>
-          <Link to="/connect">Connect Instagram</Link>
+          <Button
+            onClick={() => {
+              window.location.href = instagram
+            }}
+            variant="primary"
+            className="btn-block btn-primary">Connect Instagram</Button>
         </div>
       ) : (
         <div>
@@ -111,4 +125,8 @@ const MobilePreview = ({
     </div>
   );
 };
-export default MobilePreview;
+
+function mapStateToProps({ instagram }) {
+  return { instagram }
+}
+export default connect(mapStateToProps, instaActions)(MobilePreview);

@@ -229,23 +229,10 @@ class AccountSetup extends React.Component {
                                     variant="primary"
                                     className="btn-block"
                                     onClick={() => {
-                                      // if (
-                                      //   this.state.singlePackage
-                                      //     .package_name === "Business" ||
-                                      //   this.state.singlePackage
-                                      //     .package_name === "Business Plus"
-                                      // ) {
-                                      //   alert(
-                                      //     "For support please contact support@konnect.bio"
-                                      //   );
-                                      //   this.setState({
-                                      //     showPaymentButton: false,
-                                      //   });
-                                      // } else {
+
                                       this.setState({
                                         showPaymentButton: true,
                                       });
-                                      //}
                                     }}
                                   >
                                     Upgrade Subscription
@@ -256,16 +243,6 @@ class AccountSetup extends React.Component {
                           )}
                       </div>
                     </div>
-
-                    {/* <Row className="mt-4">
-                  <Col md={4} xl={2}>
-                    Cancel Subscription:
-                  </Col>
-                  <Col md={4} xl={3}>
-                    
-                    <CancelSubsciption userId={userInfo1.user_id} />
-                  </Col>
-                </Row> */}
                   </div>
                 </div>
               </div>

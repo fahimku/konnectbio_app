@@ -5,7 +5,7 @@ import React from "react";
 import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory({
-  forceRefresh: true,
+  forceRefresh: false,
 });
 
 export const AdminRoute = ({ currentUser, dispatch, component, ...rest }) => {
@@ -30,7 +30,7 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     //    return (<Redirect to="/login" />)
-    return history.push("/login");
+    return history.push("/app/linkinbio");
   } else {
     return (
       // eslint-disable-line

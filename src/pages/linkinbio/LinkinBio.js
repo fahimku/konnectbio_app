@@ -12,27 +12,25 @@ import {
 import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
-// import {connect} from "react-redux";
-// import {addUserInfo} from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 import { createBrowserHistory } from "history";
-
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const username = userInfo.username;
     const userId = userInfo.user_id;
-
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      showInstagramButton: false,
       iframeKey: 0,
       nextPageCount: 0,
       deleteId: "",
@@ -88,7 +86,17 @@ class LinkinBio extends React.Component {
           this.setState({ nextPageUrl: response.data.paging.next });
       })
       .catch((err) => {
-        console.log(err);
+        if (err?.response?.data?.code === 190) {
+          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
+          parseUserInformation.access_token = '';
+          parseUserInformation.username = '';
+          const storeUserInformation = JSON.stringify(parseUserInformation);
+          localStorage.setItem("userInfo", storeUserInformation);
+          this.setState({error:"Connect Your Instagram Account to Continue"})
+          this.setState({ showInstagramButton: true })
+          this.props.history.push('/connect');
+        
+        }
       });
   }
   //Next Page Instagram Posts Request From User
@@ -114,15 +122,16 @@ class LinkinBio extends React.Component {
         this.setState({ instagramPost: instagramPosts });
       })
       .catch((err) => {
-        if (err.response.data.message.type) {
-          localStorage.removeItem("access_token");
-          this.setState({
-            error: {
-              type: "InstagramAuthFail",
-              message:
-                "Your Instagram connection is expired. pleased connect in again",
-            },
-          });
+
+        if (err?.response?.data?.code === 190) {
+          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
+          parseUserInformation.access_token = '';
+          parseUserInformation.username = '';
+          const storeUserInformation = JSON.stringify(parseUserInformation);
+          localStorage.setItem("userInfo", storeUserInformation);
+          this.setState({error:"Connect Your Instagram Account to Continue"})
+          this.setState({ showInstagramButton: true });
+          this.props.history.push('/connect');
         }
       });
   }
@@ -213,7 +222,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => {});
+              this.setState({ instagramPosts: instagramPosts }, () => { });
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -308,9 +317,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-        parseInt(node.clientHeight) ||
+      parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-        parseInt(node.clientHeight);
+      parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -484,6 +493,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              showInstagramButton={this.state.showInstagramButton}
               pageName={`My Post`}
               placeholder={placeholder}
               username={this.state.username}
@@ -494,25 +504,22 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${
-              !this.state.selectPost ? "no-padding" : ""
-            } `}
+            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
+              } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${
-                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
-              }`}
+              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
+                }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${
-                    this.state.url + this.state.username
-                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${this.state.url + this.state.username
+                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>
