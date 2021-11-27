@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Box from "./Box";
 import Select from "react-select";
+import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace"
@@ -13,40 +14,57 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
-
+  const [categoryId, setCategoryId] = useState("all");
+  const [sortBy, setSortBy] = useState('commission');
+  const [orderBy, setOrderBy] = useState('desc');
   const [currentPage, setCurrentPage] = useState(0);
-  const limit = 9;
-
+  const limit = 6;
+  
   useEffect(() => {
-
     setLoading(true);
-
-    getMarketPlace(1, limit).then(() => {
+    getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
       setLoading(false);
     })
-
-    getUserCategories().then(() => {
-    });
-
+    getUserCategories();
     return () => {
     }
   }, [])
 
   const searchMarketPlace = (e) => {
     setSearchLoading(true);
+    setCurrentPage(0);
     e.preventDefault();
+    getMarketPlace(1, limit, categoryId, sortBy, orderBy).then(function () {
+      setLoading(false);
+      setSearchLoading(false);
+    }, function (error) {
+      toast.error(error?.response?.data?.message)
+    })
+  }
+
+
+  const clearMarketPlace = (e) => {
+    setSearchLoading(true);
+    setCurrentPage();
+    e.preventDefault();
+    getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
+      setLoading(false);
+      setSearchLoading(false);
+    }, function (error) {
+      toast.error(error?.response?.data?.message)
+    })
   }
 
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
-    getMarketPlace(page + 1, limit).then(() => {
+    getMarketPlace(page + 1, limit, categoryId, sortBy, orderBy).then(function () {
       setLoading(false);
     })
   }
 
   const style = {
-    control: (base, state) => ({
+    control: (base) => ({
       ...base,
       height: "44px",
       boxShadow: "none",
@@ -55,6 +73,12 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
       },
     }),
   };
+
+  const sortByOptions = [
+    { value: "commission", label: "Commission" },
+    { value: "date", label: "Date" },
+
+  ];
 
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -74,11 +98,26 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                     <Col xs={12} xl={2} md={6}>
                       <p>Select Category</p>
                       <Select
-
                         name="sort"
                         className="selectCustomization"
                         options={categories}
+                        onChange={(e) => {
+                          setCategoryId(e.value);
+                        }}
                         placeholder="Select Category"
+                        styles={style}
+                      />
+                    </Col>
+                    <Col xs={12} xl={2} md={6}>
+                      <p>Sort By</p>
+                      <Select
+                        name="sort"
+                        className="selectCustomization"
+                        options={sortByOptions}
+                        onChange={(e) => {
+                          setSortBy(e.value);
+                        }}
+                        placeholder="Sort By"
                         styles={style}
                       />
                     </Col>
@@ -88,6 +127,9 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                         name="sort"
                         className="selectCustomization"
                         options={sortOrderOptions}
+                        onChange={(e) => {
+                          setOrderBy(e.value);
+                        }}
                         placeholder="Order By"
                         styles={style}
                       />
@@ -109,6 +151,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                         </Button>
                       }
                       <Button
+                        onClick={clearMarketPlace}
                         variant="gray"
                         className="fltr-h btn btn-primary"
                       >
@@ -182,5 +225,4 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
 function mapStateToProps({ marketPlace, categories }) {
   return { marketPlace, categories }
 }
-
 export default connect(mapStateToProps, { ...markActions, ...catActions })(Marketplace);

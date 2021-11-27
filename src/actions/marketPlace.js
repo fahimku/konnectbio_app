@@ -21,14 +21,21 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
     return promise;
 };
 
-export const getMarketPlace = (page, limit) => async (dispatch) => {
-    try {
-        const res = await axios.post(`${config.baseURLApi}/users/marketPlace/getCampaigns?limit=${limit}&page=${page}`)
-        dispatch({
-            type: GET_MARKET_PLACE,
-            payload: res.data
+export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy) => async (dispatch) => {
+    let promise = new Promise((resolve, reject) => {
+        axios.post(`${config.baseURLApi}/users/marketPlace/getCampaigns?limit=${limit}&page=${page}`, {
+            category_id: categoryId,
+            sort_by: sortBy,
+            order_by: orderBy
+        }).then((res) => {
+            dispatch({
+                type: GET_MARKET_PLACE,
+                payload: res.data
+            })
+            resolve('success');
+        }).catch((error) => {
+            reject(error)
         })
-    } catch (err) {
-        console.log(err);
-    }
+    });
+    return promise;
 };
