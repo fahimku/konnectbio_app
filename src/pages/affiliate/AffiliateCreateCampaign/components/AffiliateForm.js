@@ -842,7 +842,7 @@ class AffiliateForm extends React.Component {
                               x.city
                                 ? {
                                     value: x.city,
-                                    label: x.city,
+                                    label: x.city === "all" ? "All" : x.city,
                                   }
                                 : { value: "", label: "Select City" }
                             }
@@ -853,7 +853,13 @@ class AffiliateForm extends React.Component {
                             style={{ width: "100%" }}
                             options={this.state.cities}
                             clearable={false}
-                            disabled={x.state ? false : true}
+                            disabled={
+                              this.state.inputList[i].state === "" ||
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
+
                             // isDisabled={
                             //   this.state.inputList[i].state === "" ||
                             //   this.state.inputList.length - 1 !== i
