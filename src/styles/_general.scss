@@ -447,3 +447,31 @@ h1 small {
   ~ .custom-control-label::after {
   transform: translateX(calc(1.5rem - 0.25rem));
 }
+/*****Update Form Url Copy******/
+.url-copy {
+  // display: flex;
+}
+.url-copy .your-copy-link {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e1e1ee;
+  height: 45px;
+  line-height: 44px;
+  background: #fff;
+}
+.url-copy .your-copy-link .item-a {
+  display: inline-block;
+  padding: 0px 10px;
+  font-size: 14px;
+  overflow: hidden;
+}
+.url-copy .your-copy-link .item-a a {
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 400;
+  font-size: 14px;
+}
+.url-copy .your-copy-link .item-b {
+  padding: 0px 10px;
+  cursor: pointer;
+  border-left: 1px solid #e1e1e1;
+}

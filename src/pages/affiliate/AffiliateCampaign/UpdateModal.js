@@ -326,6 +326,15 @@ class UpdateModal extends React.Component {
       inputList: this.props.affData?.demographics,
     });
   };
+  copyToClipboard = (url) => {
+    let textField = document.createElement("textarea");
+    textField.innerText = url;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    toast.success("Copied to Clipboard!");
+  };
 
   render() {
     const { affData } = this.props;
@@ -403,7 +412,7 @@ class UpdateModal extends React.Component {
                 </div>
                 <div className="campaign-url col-md-6">
                   <label>URL</label>
-                  <InputValidation
+                  {/* <InputValidation
                     className=""
                     placeholder="Please Enter Website Address"
                     type="text"
@@ -412,7 +421,28 @@ class UpdateModal extends React.Component {
                     name="website"
                     value={affData.redirected_url}
                     disabled
-                  />
+                  /> */}
+                  <div className="url-copy">
+                    <div className="your-copy-link">
+                      <div className="item-a">
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={affData.redirected_url}
+                        >
+                          {affData.redirected_url}
+                        </a>
+                      </div>
+                      <div
+                        onClick={() =>
+                          this.copyToClipboard(affData.redirected_url)
+                        }
+                        className="item-b"
+                      >
+                        Copy
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -617,7 +647,7 @@ class UpdateModal extends React.Component {
                         </div>
                         <div className="col-md-3 mt-3">
                           <label>State {i + 1}</label>
-                          <Select2
+                          <VirtualizedSelect
                             key={i}
                             name="state"
                             value={
@@ -643,11 +673,12 @@ class UpdateModal extends React.Component {
                                   })
                                 : []
                             }
-                            isDisabled={
+                            disabled={
                               this.state.states.length > 0 && x.country
                                 ? false
                                 : true
                             }
+                            clearable={false}
                             // isDisabled={
                             //   // this.state.stateList === ""
                             //   this.state.inputList[i].country === "" ||
