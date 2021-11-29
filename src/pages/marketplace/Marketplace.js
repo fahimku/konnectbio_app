@@ -8,22 +8,34 @@ import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace"
 import * as catActions from "../../actions/category"
 import ReactPaginate from "react-paginate";
+import { DatePicker } from "antd";
+import moment from "moment";
+const { RangePicker } = DatePicker;
+const dateFormat = "YYYY-MM-DD";
 
 function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCategories, categories }) {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
+
   const [category, setCategory] = useState({ value: 'all', label: 'All' });
   const [sortBy, setSortBy] = useState({ value: 'commission', label: 'Commission' });
   const [orderBy, setOrderBy] = useState({ value: 'desc', label: 'DESC' });
   const [currentPage, setCurrentPage] = useState(0);
-  const limit = 9;
 
+  const fromDate = moment().subtract(30 , "day").format("YYYY-MM-DD");
+  const toDate = moment(new Date()).format("YYYY-MM-DD");
+  const [startDate, setStartDate] = useState(fromDate);
+  const [endDate, setEndDate] = useState(toDate);
+
+  const limit = 9;
+ 
   useEffect(() => {
     setLoading(true);
-    getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
+    getMarketPlace(1, limit, "all", "commission", "desc",startDate,endDate).then(function () {
       setLoading(false);
     })
     getUserCategories();
@@ -35,7 +47,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
     setSearchLoading(true);
     setCurrentPage(0);
     e.preventDefault();
-    getMarketPlace(1, limit, category.value, sortBy.value, orderBy.value).then(function () {
+    getMarketPlace(1, limit, category.value, sortBy.value, orderBy.value,startDate,endDate).then(function () {
       setLoading(false);
       setSearchLoading(false);
     }, function (error) {
@@ -51,7 +63,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
     setOrderBy({ value: 'desc', label: 'DESC' })
     setCurrentPage();
     e.preventDefault();
-    getMarketPlace(1, limit, "all", "commission", "desc").then(function () {
+    getMarketPlace(1, limit, "all", "commission", "desc",startDate,endDate).then(function () {
       setLoading(false);
       setSearchLoading(false);
       setClearLoading(false);
@@ -90,6 +102,14 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
     { value: "desc", label: "DESC" },
   ];
 
+
+  const  dateRangePickerChanger = (value, dataString) =>{
+    const startDate = dataString[0];
+    const endDate = dataString[1];
+    setStartDate(startDate);
+    setEndDate(endDate)
+  }
+
   if (!loading) {
     return (
       <>
@@ -100,6 +120,44 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
               <Col xs={12} xl={12} md={12}>
                 <form onSubmit={searchMarketPlace}>
                   <Row>
+                    <Col xs={12} xl={2} md={6}>
+                      <p>Select Start Date / End Date</p>
+                      <RangePicker
+//                        disabledDate={this.disabledDate}
+                        key={4}
+                        defaultValue={[
+                          moment(fromDate),
+                          moment(toDate),
+                        ]}
+                        value={[
+                          moment(startDate),
+                          moment(endDate),
+                        ]}
+                        defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                        allowClear={false}
+                        ranges={{
+                          Today: [moment(), moment()],
+                          Tomorrow: [
+                            moment().add(1, "days"),
+                            moment().add(1, "days"),
+                          ],
+                          Yesterday: [
+                            moment().subtract(1, "days"),
+                            moment().subtract(1, "days"),
+                          ],
+                          "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                          ],
+                          "Last Month": [
+                            moment().subtract(1, "month").startOf("month"),
+                            moment().subtract(1, "month").endOf("month"),
+                          ],
+                        }}
+                  format={dateFormat}
+                   onChange={dateRangePickerChanger}
+                      />
+                    </Col>
                     <Col xs={12} xl={2} md={6}>
                       <p>Select Category</p>
                       <Select
@@ -239,6 +297,9 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
 }
 
 function mapStateToProps({ marketPlace, categories }) {
-  return { marketPlace, categories }
+  return {
+    marketPlace,
+    categories
+  }
 }
 export default connect(mapStateToProps, { ...markActions, ...catActions })(Marketplace);

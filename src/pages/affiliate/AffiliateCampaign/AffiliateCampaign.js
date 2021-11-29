@@ -98,15 +98,16 @@ class AffiliateCampaign extends React.Component {
             let objIndex = data.findIndex((obj) => obj.campaign_id === campaignId);
             data[objIndex].is_active = !status;
             this.setState({ data: data });
-
             this.postData();
             toast.success("Campaign " + statusName + " Successfully");
-
           })
           .catch((err) => {
-            toast.error(err.response.data.message);
+            this.setState({ toggleLoading: false });
+            toast.error(err.response?.data.message);
           });
-
+      }
+      else {
+        this.setState({toggleLoading:false})
       }
     });
   };
@@ -204,6 +205,7 @@ class AffiliateCampaign extends React.Component {
 
 
   handlePageClick = (e) => {
+
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
     this.setState(
@@ -212,6 +214,7 @@ class AffiliateCampaign extends React.Component {
         offset: offset,
       },
       () => {
+        
         this.postData();
       }
     );

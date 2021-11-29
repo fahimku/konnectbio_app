@@ -14,10 +14,12 @@ import countries from './countries/countries';
 import campaign from './campaign/campaign';
 import marketPlace from "./marketPlace/marketPlace"
 import instagram from "./instagram/instagram"
+import links from "./links/links"
 
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
+    links,
     alerts,
     auth,
     navigation,
