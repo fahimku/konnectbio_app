@@ -488,7 +488,6 @@ class LinkinBio extends React.Component {
   };
 
   render() {
-    console.log(this.state.instagramPosts, "instagramPost");
     return (
       <div className="linkin-bio">
         <Row className="app_main_cont_ift main-container">
