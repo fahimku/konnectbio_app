@@ -4,18 +4,17 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Row, Col, Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
-
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
+
 import { connect } from "react-redux";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href="/"
+    href="#"
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -29,11 +28,10 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 
 function AffiliateCampaign(props) {
 
-  const [toggleLoading, setToggleLoading] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
-  const perPage=8;
+  const perPage = 8;
   const [currentPage, setCurrentPage] = useState(0);
   const [modal, setModal] = useState(false);
   const [pageCount, setPageCount] = useState(0);
@@ -46,7 +44,7 @@ function AffiliateCampaign(props) {
 
 
   const toggleCampaigns = async (status, campaignId) => {
-    setToggleLoading(true);
+
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
@@ -63,20 +61,15 @@ function AffiliateCampaign(props) {
             is_active: !status,
           })
           .then(() => {
-            setToggleLoading(false);
             let data1 = [...data];
             let objIndex = data1.findIndex((obj) => obj.campaign_id === campaignId);
             data1[objIndex].is_active = !status;
-            setData(data1)         
+            setData(data1)
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
-            setToggleLoading(false);
             toast.error(err.response?.data.message);
           });
-      }
-      else {
-        setToggleLoading(false);
       }
     });
   };
@@ -142,7 +135,7 @@ function AffiliateCampaign(props) {
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
                 <div className="cmp-h-right col-md-6">
-                  {toggleLoading && <Loader />}
+                  {/* {toggleLoading && <Loader />} */}
                   <div class="form-check custom-switch custom-switch-md">
                     <input
                       type="checkbox"
@@ -236,31 +229,36 @@ function AffiliateCampaign(props) {
     return (
       <>
         <div className="container-fluid">
-          
-          <Row>{postData()}</Row>
-          <ReactPaginate
-            previousLabel=""
-            nextLabel=""
-            pageClassName="page-item "
-            pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-            previousClassName="page-item"
-            previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-            nextClassName="page-item"
-            nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-            breakLabel="..."
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            forcePage={currentPage}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={handlePageClick}
-            containerClassName={
-              "pagination justify-content-center mt-2 custom-paginate"
-            }
-            // subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
+          {data.length > 0 ? (<>
+            <Row>{postData()}</Row>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel=""
+              pageClassName="page-item "
+              pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+              previousClassName="page-item"
+              previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+              nextClassName="page-item"
+              nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              forcePage={currentPage}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName={
+                "pagination justify-content-center mt-2 custom-paginate"
+              }
+              // subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </>
+          ) : (<>
+            No Data Found
+          </>)
+          }
           <Modal
             show={modal}
             onHide={() => setModal(false)}
