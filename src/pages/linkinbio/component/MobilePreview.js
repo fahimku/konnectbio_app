@@ -11,11 +11,11 @@ const MobilePreview = ({
   instagramPosts,
   selectPost,
   pageName,
-  getInstagramURL,
+  // getInstagramURL,
   instagram,
 }) => {
   useEffect(() => {
-    getInstagramURL();
+    // getInstagramURL();
   }, []);
 
   const instaPosts = [];
@@ -119,7 +119,7 @@ const MobilePreview = ({
         <span className="place-holder-name">{username}</span>
         <div className="page-name">{pageName}</div>
       </div>
-      {error ? (
+      {/* {error ? (
         <div className="error">
           {error}
           <br></br>
@@ -133,19 +133,16 @@ const MobilePreview = ({
             Connect Instagram
           </Button>
         </div>
-      ) : (
-        <div>
-          {/* <div className="visit-website">Visit Website</div> */}
-          <div ref={paneDidMount} className="mobile-gallery">
-            <Row>{instaPosts}</Row>
-          </div>
+      ) : ( */}
+      <div>
+        {/* <div className="visit-website">Visit Website</div> */}
+        <div ref={paneDidMount} className="mobile-gallery">
+          <Row>{instaPosts}</Row>
         </div>
-      )}
+      </div>
+      {/* )} */}
     </div>
   );
 };
 
-function mapStateToProps({ instagram }) {
-  return { instagram };
-}
-export default connect(mapStateToProps, instaActions)(MobilePreview);
+export default MobilePreview;

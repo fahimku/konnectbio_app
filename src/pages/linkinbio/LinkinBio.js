@@ -21,7 +21,6 @@ export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
-
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -87,15 +86,18 @@ class LinkinBio extends React.Component {
       })
       .catch((err) => {
         if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
-          parseUserInformation.access_token = '';
-          parseUserInformation.username = '';
+          const parseUserInformation = JSON.parse(
+            localStorage.getItem("userInfo")
+          );
+          parseUserInformation.access_token = "";
+          parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error:"Connect Your Instagram Account to Continue"})
-          this.setState({ showInstagramButton: true })
-          this.props.history.push('/connect');
-        
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
+          this.setState({ showInstagramButton: true });
+          this.props.history.push("/connect");
         }
       });
   }
@@ -122,16 +124,19 @@ class LinkinBio extends React.Component {
         this.setState({ instagramPost: instagramPosts });
       })
       .catch((err) => {
-
         if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
-          parseUserInformation.access_token = '';
-          parseUserInformation.username = '';
+          const parseUserInformation = JSON.parse(
+            localStorage.getItem("userInfo")
+          );
+          parseUserInformation.access_token = "";
+          parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error:"Connect Your Instagram Account to Continue"})
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
           this.setState({ showInstagramButton: true });
-          this.props.history.push('/connect');
+          this.props.history.push("/connect");
         }
       });
   }
@@ -222,7 +227,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -317,9 +322,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
+        parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -483,6 +488,7 @@ class LinkinBio extends React.Component {
   };
 
   render() {
+    console.log(this.state.instagramPosts, "instagramPost");
     return (
       <div className="linkin-bio">
         <Row className="app_main_cont_ift main-container">
@@ -504,22 +510,25 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${this.state.url + this.state.username
-                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${
+                    this.state.url + this.state.username
+                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>
