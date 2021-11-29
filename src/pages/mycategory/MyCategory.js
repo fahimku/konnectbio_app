@@ -95,12 +95,13 @@ class MyCategory extends React.Component {
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
         optionCategories.map(
-          ({ category_id, category_name, image_url, editable }) => {
+          ({ parent_id, category_name, image_url, editable, category_id }) => {
             return saveCategories.push({
-              value: category_id,
+              value: parent_id,
               label: category_name,
               image: image_url,
               editable: editable,
+              category_id: category_id,
             });
           }
         );
