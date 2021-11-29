@@ -21,9 +21,11 @@ export const addCampaignToShop = (campaignId, categoryId, advertiserId) => async
     return promise;
 };
 
-export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy) => async (dispatch) => {
+export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy,startDate,endDate) => async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
         axios.post(`${config.baseURLApi}/users/marketPlace/getCampaigns?limit=${limit}&page=${page}`, {
+            start_date: startDate,
+            end_date:endDate,
             category_id: categoryId,
             sort_by: sortBy,
             order_by: orderBy

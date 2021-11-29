@@ -5,6 +5,7 @@ import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 
 const AddNewLink = (props) => {
+
   const [canSubmit, setCanSubmit] = useState(false);
   const formRef = useRef("LinkForm");
 

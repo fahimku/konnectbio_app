@@ -13,12 +13,14 @@ import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import TopBar from "../../components/Topbar";
+import Loader from "../../components/Loader/Loader";
 import MobilePreview from "./component/MobilePreview";
 import AddNewLink from "./component/AddNewLink/index";
 import style from "./MyLinks.module.scss";
 import moment from "moment";
 
 class MyLinks extends React.Component {
+
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -27,6 +29,7 @@ class MyLinks extends React.Component {
     this.error = this.error.bind(this);
     this.state = {
       isDeleted: false,
+      singlePostLoading: false,
       confirmModal: false,
       iframeKey: 0,
       loading: false,
@@ -98,9 +101,7 @@ class MyLinks extends React.Component {
       .get(`/posts/receive?user=${username}&post_type=link`)
       .then((response) => {
         const myLinks = [...this.state.myLinks, ...response.data.message];
-        const uniqueMyLinks = [
-          ...new Map(myLinks.map((item) => [item["caption"], item])).values(),
-        ];
+        const uniqueMyLinks = [...new Map(myLinks.map((item) => [item["caption"], item])).values()];
         this.setState({ myLinks: uniqueMyLinks });
       })
       .catch((error) => {
@@ -117,6 +118,7 @@ class MyLinks extends React.Component {
   };
 
   fetchSingleLink = async (linkId) => {
+    this.setState({ singlePostLoading: true });
     await axios
       .get(`posts/retrieve/${linkId}?post_type=link`)
       .then((res) => {
@@ -127,14 +129,17 @@ class MyLinks extends React.Component {
         this.setState({ linkId: linkId });
         this.setState({ modal: true });
         this.setState({ selectPost: true });
+        this.setState({ singlePostLoading: false });
       })
       .catch((error) => {
+        this.setState({ singlePostLoading: false });
         console.log(error);
       });
   };
 
   saveLink = async () => {
     this.setState({ loading: true });
+    this.setState({ singlePostLoading: true });
     await axios
       .post("posts/reserve", {
         caption: this.state.title,
@@ -148,48 +153,63 @@ class MyLinks extends React.Component {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
         this.setState({ loading: false });
+        this.setState({ singlePostLoading: false });        
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
-        console.log(err.response.data.message);
+        toast.error(err.response?.data.message);
+        this.setState({ loading: false });
+        this.setState({ singlePostLoading: false });
       });
   };
 
   updateLink = async (id, title, redirectedUrl) => {
+    this.setState({ singlePostLoading: true });
     this.setState({ loading: true });
-    await axios
-      .put(`posts/revise/${id}`, {
+    await axios.put(`posts/revise/${id}`, {
         caption: title,
         redirected_url: redirectedUrl,
         post_type: "link",
       })
       .then(() => {
-        // this.fetchMyLinks(this.state.username);
+        let data = this.state.myLinks;
+        let objIndex = data.findIndex((obj) => obj.post_id === id);
+        data[objIndex].caption = title;
+        data[objIndex].redirected_url = redirectedUrl;
+        this.setState({ data: data });
         toast.success("Link Updated");
         this.setState({ loading: false });
-        window.location.reload();
+        this.setState({ singlePostLoading: false });
+        // window.location.reload();
       })
       .catch((error) => {
-        console.log(error);
+        this.setState({ loading: false });
+        this.setState({ singlePostLoading: false });
       });
   };
 
   deleteLink = async (id) => {
     this.setState({ loading: true });
     this.setState({ isDeleted: true });
+    this.setState({ singlePostLoading: true });
     await axios
       .delete(`posts/remove/${id}?post_type=link`)
       .then(() => {
-        // this.fetchMyLinks(this.state.username);
+        const myLinks = this.state.myLinks.filter(function (item) { return item.post_id !== id; });
+        this.setState({ myLinks: myLinks })
         toast.success("Link removed successfully.");
         this.setState({ loading: false });
         this.setState({ confirmModal: false });
+        this.setState({ singlePostLoading: false });
         this.preview(false, "");
-        window.location.reload();
+        //        window.location.reload();
         //this.addNewLink();
+
+
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        this.setState({ singlePostLoading: false });
+        this.setState({ loading: false });
+        this.setState({ confirmModal: false });
       });
   };
 
@@ -311,34 +331,31 @@ class MyLinks extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${
-              !this.state.preview ? "no-padding" : ""
-            } `}
+            className={`right-bar bg-white ${!this.state.preview ? "no-padding" : ""
+              } `}
             md="7"
             xs="12"
             xl="9"
           >
-            <div
-              className={`${
-                !this.state.preview ? "show_ift_iframe" : "hidden"
-              }`}
-            >
-              {this.state.username !== "" ? (
-                <iframe
-                  key={this.state.iframeKey}
-                  src={`${
-                    this.state.url + this.state.username
-                  }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                  title="mylinks"
-                  className="myshop-iframe"
-                ></iframe>
-              ) : null}
-            </div>
-            <Row>
-              <Col xs="12" className="p-3">
-                {this.addNewLinkShop()}
-              </Col>
-            </Row>
+            {this.state.singlePostLoading ? <Loader /> : <>
+              <div className={`${!this.state.preview ? "show_ift_iframe" : "hidden"}`}>
+                {this.state.username !== "" ? (
+                  <iframe
+                    key={this.state.iframeKey}
+                    src={`${this.state.url + this.state.username
+                      }/links?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                    title="mylinks"
+                    className="myshop-iframe"
+                  ></iframe>
+                ) : null}
+              </div>
+              <Row>
+                <Col xs="12" className="p-3">
+                  {this.addNewLinkShop()}
+                </Col>
+              </Row>
+            </>
+            }
           </Col>
         </Row>
         {window.innerWidth <= 760 && (
