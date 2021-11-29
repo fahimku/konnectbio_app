@@ -78,7 +78,7 @@ class LinkinBioShop extends React.Component {
   //Second Request From User
   async fetchInstagramPosts(username, limit, page) {
     await axios
-      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image`)
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
         this.setState({ instagramPosts: response.data.message.result });
         if (response.data.message.result.hasOwnProperty("next")) {
@@ -92,7 +92,7 @@ class LinkinBioShop extends React.Component {
   //nextPageInstagramPosts
   async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image`)
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
         // console.log(response.data.message.result);
         if (response.data.message.result.hasOwnProperty("next")) {
