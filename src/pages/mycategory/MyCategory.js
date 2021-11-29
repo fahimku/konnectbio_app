@@ -161,7 +161,7 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return {
               category_name: category.label,
-              category_id: category.value,
+              category_id: category.category_id,
               image_url: category.image,
               editable: category.editable,
             };
@@ -278,7 +278,7 @@ class MyCategory extends React.Component {
     ));
 
     // console.log(this.state.myCategory, "cat");
-    // console.log(this.state.saveCategories, "saveCategories");
+    console.log(this.state.saveCategories, "saveCategories");
     return (
       <React.Fragment>
         <div className="profile-page category-page">
@@ -473,10 +473,8 @@ class MyCategory extends React.Component {
                               type="submit"
                               className="category-btn btn-block"
                               disabled={
-                                this.state.saveCategories.length &&
-                                !this.state.loading
-                                  ? false
-                                  : true
+                                // this.state.saveCategories.length &&
+                                !this.state.loading ? false : true
                               }
                             >
                               Save
