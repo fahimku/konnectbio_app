@@ -9,7 +9,6 @@ import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
-
 import { connect } from "react-redux";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -44,7 +43,6 @@ function AffiliateCampaign(props) {
 
 
   const toggleCampaigns = async (status, campaignId) => {
-
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
@@ -155,7 +153,6 @@ function AffiliateCampaign(props) {
                       htmlFor={`customSwitch` + index}
                     ></label>
                   </div>
-
                   <Dropdown alignRight>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
