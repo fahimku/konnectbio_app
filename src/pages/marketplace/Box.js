@@ -75,7 +75,7 @@ export default function Box({ item, addCampaignToShop, index }) {
 
               <div className="col-12 count-box">
                 <h5 className="count-title">Start Date</h5>
-                <h3 className="count">{item.created_date}</h3>
+                <h3 className="count">{item.start_date}</h3>
               </div>
 
               <div className="col-12 count-box">
