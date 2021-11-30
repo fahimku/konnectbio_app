@@ -7,6 +7,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
+import Loader from "../../../components/Loader/Loader";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
@@ -110,6 +111,8 @@ function AffiliateCampaign(props) {
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         postData();
+      }).catch(() => {
+        setLoading(false);
       });
   }
 
@@ -282,7 +285,7 @@ function AffiliateCampaign(props) {
     );
   }
   else {
-    return ('')
+    return (<div className="container-fluid"><Loader /></div>)
   }
 }
 
