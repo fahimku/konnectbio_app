@@ -194,22 +194,21 @@ class MyCategory extends React.Component {
               editable: category.editable,
             };
           });
-    console.log(category, "submit");
-    // this.setState({ loading: true });
-    // await axios
-    //   .post(`/usercategory/reserve`, {
-    //     categories: category,
-    //   })
-    //   .then((response) => {
-    //     this.setState({ loading: false });
-    //     let imageResponse = response.data;
-    //     toast.success(imageResponse.message);
-    //     this.fetchSaveCategory();
-    //   })
-    //   .catch((err) => {
-    //     toast.error(err.response.data.message);
-    //     this.setState({ loading: false });
-    //   });
+    this.setState({ loading: true });
+    await axios
+      .post(`/usercategory/reserve`, {
+        categories: category,
+      })
+      .then((response) => {
+        this.setState({ loading: false });
+        let imageResponse = response.data;
+        toast.success(imageResponse.message);
+        this.fetchSaveCategory();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        this.setState({ loading: false });
+      });
   };
   deleteCustomCat = async (id) => {
     Swal.fire({
