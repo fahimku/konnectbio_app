@@ -194,10 +194,6 @@ class MyCategory extends React.Component {
               editable: category.editable,
             };
           });
-<<<<<<< HEAD
-=======
-    console.log(category, "submit");
->>>>>>> development
     this.setState({ loading: true });
     await axios
       .post(`/usercategory/reserve`, {
