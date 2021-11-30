@@ -17,7 +17,7 @@ class EditCustomCategory extends React.Component {
     imageFiles: [],
     category_name: this.props.catData.label,
     cat_image: this.props.catData.image,
-    cat_id: this.props.catData.value,
+    cat_id: this.props.catData.category_id,
   };
   onChangeInputImage = (e) => {
     const files = [];
@@ -63,8 +63,8 @@ class EditCustomCategory extends React.Component {
         this.categoryToggleModal();
       })
       .catch((err) => {
-        toast.error(err.response.data.message);
         this.setState({ loading: false });
+        toast.error(err.response.data.message);
       });
   };
   categoryToggleModal = () => {
@@ -158,6 +158,7 @@ class EditCustomCategory extends React.Component {
                 // type="submit"
                 className="category-btn btn-block "
                 onClick={this.onSubmitting}
+                disabled={this.state.imageFiles[0] === undefined ? true : false}
               >
                 Update Category
               </Button>

@@ -140,8 +140,8 @@ class MyCategory extends React.Component {
     );
     if (difference.length > 0) {
       Swal.fire({
-        title: "Are you sure?",
-        text: "You want to delete this category. This will remove all your post!",
+        title: "Are you sure you want to delete this category?",
+        text: "This will uncategorize all your post related to this category.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#010b40",
@@ -194,6 +194,10 @@ class MyCategory extends React.Component {
               editable: category.editable,
             };
           });
+<<<<<<< HEAD
+=======
+    console.log(category, "submit");
+>>>>>>> development
     this.setState({ loading: true });
     await axios
       .post(`/usercategory/reserve`, {
