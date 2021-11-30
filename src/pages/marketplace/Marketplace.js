@@ -5,122 +5,83 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
-import * as markActions from "../../actions/marketPlace";
-import * as catActions from "../../actions/category";
+import * as markActions from "../../actions/marketPlace"
+import * as catActions from "../../actions/category"
 import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
 import moment from "moment";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function Marketplace({
-  getMarketPlace,
-  marketPlace,
-  addCampaignToShop,
-  getUserCategories,
-  categories,
-}) {
+function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCategories, categories }) {
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
 
-  const [category, setCategory] = useState({ value: "all", label: "All" });
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "Commission",
-  });
-  const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
+  const [category, setCategory] = useState({ value: 'all', label: 'All' });
+  const [sortBy, setSortBy] = useState({ value: 'commission', label: 'Commission' });
+  const [orderBy, setOrderBy] = useState({ value: 'desc', label: 'DESC' });
   const [currentPage, setCurrentPage] = useState(0);
 
-  const fromDate = moment().subtract(30, "day").format("YYYY-MM-DD");
-  const toDate = moment(new Date()).format("YYYY-MM-DD");
-  const [startDate, setStartDate] = useState(fromDate);
-  const [endDate, setEndDate] = useState(toDate);
+  // const fromDate = moment().subtract(30, "day").format("YYYY-MM-DD");
+  // const toDate = moment(new Date()).format("YYYY-MM-DD");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const limit = 9;
 
   useEffect(() => {
     setLoading(true);
-    getMarketPlace(
-      1,
-      limit,
-      "all",
-      "commission",
-      "desc",
-      startDate,
-      endDate
-    ).then(function () {
+    getMarketPlace(1, limit, "all", "commission", "desc", startDate, endDate).then(function () {
       setLoading(false);
-    });
+    })
     getUserCategories();
-    return () => {};
-  }, []);
+    return () => {
+    }
+  }, [])
 
   const searchMarketPlace = (e) => {
     setSearchLoading(true);
     setCurrentPage(0);
     e.preventDefault();
-    getMarketPlace(
-      1,
-      limit,
-      category.value,
-      sortBy.value,
-      orderBy.value,
-      startDate,
-      endDate
-    ).then(
-      function () {
-        setLoading(false);
-        setSearchLoading(false);
-      },
-      function (error) {
-        toast.error(error?.response?.data?.message);
-      }
-    );
-  };
+    getMarketPlace(1, limit, category.value, sortBy.value, orderBy.value, startDate, endDate).then(function () {
+      setLoading(false);
+      setSearchLoading(false);
+    }, function (error) {
+      toast.error(error?.response?.data?.message)
+    })
+  }
+
 
   const clearMarketPlace = (e) => {
+    e.preventDefault();
     setClearLoading(true);
     setCategory({ value: "all", label: "All" });
-    setSortBy({ value: "commission", label: "Commission" });
-    setOrderBy({ value: "desc", label: "DESC" });
+    setSortBy({ value: 'commission', label: 'Commission' });
+    setOrderBy({ value: 'desc', label: 'DESC' })
     setCurrentPage();
-    e.preventDefault();
-    getMarketPlace(
-      1,
-      limit,
-      "all",
-      "commission",
-      "desc",
-      startDate,
-      endDate
-    ).then(
-      function () {
-        setLoading(false);
-        setSearchLoading(false);
-        setClearLoading(false);
-      },
-      function (error) {
-        toast.error(error?.response?.data?.message);
-      }
-    );
-  };
+    setStartDate("");
+    setEndDate("");
+    getMarketPlace(1, limit, "all", "commission", "desc", "", "").then(function () {
+      setLoading(false);
+      setSearchLoading(false);
+      setClearLoading(false);
+   
+    }, function (error) {
+      toast.error(error?.response?.data?.message)
+    })
+  }
 
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
-    getMarketPlace(
-      page + 1,
-      limit,
-      category.value,
-      sortBy.value,
-      orderBy.value
-    ).then(function () {
+    getMarketPlace(page + 1, limit, category.value, sortBy.value, orderBy.value, startDate, endDate).then(function () {
       setLoading(false);
-    });
-  };
+    })
+  }
 
   const style = {
     control: (base) => ({
@@ -136,6 +97,7 @@ function Marketplace({
   const sortByOptions = [
     { value: "commission", label: "Commission" },
     { value: "date", label: "Date" },
+
   ];
 
   const sortOrderOptions = [
@@ -143,12 +105,13 @@ function Marketplace({
     { value: "desc", label: "DESC" },
   ];
 
+
   const dateRangePickerChanger = (value, dataString) => {
     const startDate = dataString[0];
     const endDate = dataString[1];
     setStartDate(startDate);
-    setEndDate(endDate);
-  };
+    setEndDate(endDate)
+  }
 
   if (!loading) {
     return (
@@ -163,11 +126,9 @@ function Marketplace({
                     <Col xs={12} xl={2} md={6}>
                       <p>Select Start Date / End Date</p>
                       <RangePicker
-                        //                        disabledDate={this.disabledDate}
-                        key={4}
-                        defaultValue={[moment(fromDate), moment(toDate)]}
-                        value={[moment(startDate), moment(endDate)]}
-                        defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                        key={4} 
+                        value={startDate && endDate ? [moment(startDate),moment(endDate)]:[]}
+
                         allowClear={false}
                         ranges={{
                           Today: [moment(), moment()],
@@ -200,8 +161,9 @@ function Marketplace({
                         className="selectCustomization"
                         options={categories}
                         onChange={(e) => {
-                          setCategory(e);
+                          setCategory(e)
                         }}
+
                         placeholder="Select Category"
                         styles={style}
                       />
@@ -235,15 +197,13 @@ function Marketplace({
                       />
                     </Col>
                     <Col xs={12} xl={4} md={6}>
-                      {searchLoading ? (
-                        <Button
-                          type="button"
-                          variant="primary"
-                          className="fltr-h btn btn-primary"
-                        >
-                          <Loader />
-                        </Button>
-                      ) : (
+                      {searchLoading ? <Button
+                        type="button"
+                        variant="primary"
+                        className="fltr-h btn btn-primary"
+                      >
+                        <Loader />
+                      </Button> :
                         <Button
                           type="submit"
                           variant="primary"
@@ -251,23 +211,21 @@ function Marketplace({
                         >
                           Search
                         </Button>
-                      )}
-                      {clearLoading ? (
+                      }
+                      {clearLoading ?
                         <Button
                           variant="gray"
                           className="fltr-h btn btn-primary"
-                        >
-                          <Loader />
+                        ><Loader />
                         </Button>
-                      ) : (
-                        <Button
+                        : <Button
                           onClick={clearMarketPlace}
                           variant="gray"
                           className="fltr-h btn btn-primary"
                         >
                           Clear
                         </Button>
-                      )}
+                      }
                     </Col>
                   </Row>
                 </form>
@@ -277,17 +235,14 @@ function Marketplace({
             {marketPlace?.message?.length > 0 ? (
               <>
                 <Row>
-                  {marketPlace.message.map((item, index) => (
+                  {marketPlace.message.map((item, index) =>
                     <Col key={index} xs={12} xl={3} md={6}>
-                      <Box
-                        key={index}
+                      <Box key={index}
                         userInfo={userInfo}
                         addCampaignToShop={addCampaignToShop}
                         item={item}
-                        index={index}
-                      />
-                    </Col>
-                  ))}
+                        index={index} />
+                    </Col>)}
                 </Row>
                 <ReactPaginate
                   previousLabel=""
@@ -306,21 +261,18 @@ function Marketplace({
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={5}
                   onPageChange={handlePageClick}
-                  containerClassName={
-                    "pagination justify-content-center mt-2 custom-paginate"
-                  }
+                  containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
                   // subContainerClassName={"pages pagination"}
                   activeClassName={"active"}
                 />
               </>
-            ) : (
-              "No Data Found"
-            )}
+            ) : ('No Data Found')}
           </div>
         </div>
       </>
-    );
-  } else {
+    )
+  }
+  else {
     return (
       <div className="col-md-12">
         <div
@@ -342,9 +294,7 @@ function Marketplace({
 function mapStateToProps({ marketPlace, categories }) {
   return {
     marketPlace,
-    categories,
-  };
+    categories
+  }
 }
-export default connect(mapStateToProps, { ...markActions, ...catActions })(
-  Marketplace
-);
+export default connect(mapStateToProps, { ...markActions, ...catActions })(Marketplace);

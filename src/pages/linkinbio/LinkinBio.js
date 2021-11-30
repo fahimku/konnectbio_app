@@ -17,7 +17,6 @@ import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 
-
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -26,7 +25,7 @@ class LinkinBio extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
-      postLoading:false,
+      postLoading: false,
       showInstagramButton: false,
       iframeKey: 0,
       nextPageCount: 0,
@@ -349,7 +348,7 @@ class LinkinBio extends React.Component {
     if (postIndex !== "") {
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
-      console.log(currentPost, "currentPost");
+      // console.log(currentPost, "currentPost");
       let mediaId = currentPost.post_id;
       let lastPost = this.state.singlePost;
 
