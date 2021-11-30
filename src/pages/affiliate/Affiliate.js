@@ -3,15 +3,11 @@ import s from "./Affiliate.module.scss";
 import "./selector.css";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import { createBrowserHistory } from "history";
 import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateAccounting from "./AffiliateAccounting/AffiliateAccounting";
 
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
 
 class Affiliate extends React.Component {
   constructor(props) {

@@ -1,23 +1,16 @@
-import React, { useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
-import { connect } from "react-redux";
-import * as instaActions from "../../../actions/instagram"
+import React from "react";
+import { Row, Col } from "react-bootstrap";
+import Loader from "../../../components/Loader/Loader";
 
 const MobilePreview = ({
   placeholder,
   username,
-  error,
   paneDidMount,
   instagramPosts,
   selectPost,
   pageName,
-  getInstagramURL,
-  instagram
+  postLoading,
 }) => {
-
-  useEffect(() => {
-    getInstagramURL();
-  }, [])
 
   const instaPosts = [];
   if (instagramPosts) {
@@ -29,7 +22,14 @@ const MobilePreview = ({
         instaPosts.push(
           <Col key={i} xs="4">
             <div className="mobile-image-box">
-              <div onClick={(ev) => selectPost(true, i)} class="mobile_box_inr">
+              <div
+                onClick={
+                  instagramPosts.data[i].post_type === "campaign"
+                    ? null
+                    : (ev) => selectPost(true, i)
+                }
+                className="mobile_box_inr"
+              >
                 <img
                   className={
                     instagramPosts.data[i].linked ||
@@ -42,7 +42,10 @@ const MobilePreview = ({
                   src={instagramPosts.data[i].media_url}
                   alt="instagramPosts"
                 />
-                {instagramPosts.data[i].linked ? (
+                {instagramPosts.data[i].linked &&
+                  instagramPosts.data[i].post_type === "campaign" ? (
+                  <span className="linked-label">CAMPAIGN</span>
+                ) : instagramPosts.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
                 ) : (
                   ""
@@ -79,8 +82,8 @@ const MobilePreview = ({
                   className="video-label fa fa-play"
                   aria-hidden="true"
                 ></span>
-                {instagramPosts.data[i].linked ? (
-                  <span className="linked-label">LINKED</span>
+                {instagramPosts.data[i].linked && instagramPosts.data[i].post_type === "campaign" ? ( <span className="linked-label">CAMPAIGN</span>
+                ) : instagramPosts.data[i].linked ? (<span className="linked-label">LINKED</span>
                 ) : (
                   ""
                 )}
@@ -92,7 +95,6 @@ const MobilePreview = ({
     }
   }
   return (
-
     <div className="mobile-preview">
       <div className="mobile-header">
         <img
@@ -103,30 +105,14 @@ const MobilePreview = ({
         <span className="place-holder-name">{username}</span>
         <div className="page-name">{pageName}</div>
       </div>
-      {error ? (
-        <div className="error">
-          {error}
-          <br></br>
-          <Button
-            onClick={() => {
-              window.location.href = instagram
-            }}
-            variant="primary"
-            className="btn-block btn-primary">Connect Instagram</Button>
+      <div>
+        <div ref={paneDidMount} className="mobile-gallery">
+          {postLoading ? <Loader /> :
+            <Row> {instaPosts}</Row>
+          }
         </div>
-      ) : (
-        <div>
-          {/* <div className="visit-website">Visit Website</div> */}
-          <div ref={paneDidMount} className="mobile-gallery">
-            <Row>{instaPosts}</Row>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 };
-
-function mapStateToProps({ instagram }) {
-  return { instagram }
-}
-export default connect(mapStateToProps, instaActions)(MobilePreview);
+export default MobilePreview;

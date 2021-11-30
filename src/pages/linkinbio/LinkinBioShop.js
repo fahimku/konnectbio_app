@@ -11,14 +11,14 @@ import {
   Button,
 } from "reactstrap";
 import { toast } from "react-toastify";
+
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
-import { connect } from "react-redux";
-import { addUserInfo } from "../../actions/user";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 import moment from "moment";
+
 class LinkinBioShop extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -27,6 +27,7 @@ class LinkinBioShop extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      postLoading:false,
       deleteId: "",
       startDate: moment(),
       endDate: moment().add(30, "days"),
@@ -60,7 +61,6 @@ class LinkinBioShop extends React.Component {
       error: "",
       autoFocus: false,
     };
-    this.props.addUserInfo("test");
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
     this.changePostType = this.changePostType.bind(this);
@@ -77,22 +77,25 @@ class LinkinBioShop extends React.Component {
 
   //Second Request From User
   async fetchInstagramPosts(username, limit, page) {
+    this.setState({ postLoading: true });
     await axios
-      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image`)
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
+        this.setState({ postLoading: false});
         this.setState({ instagramPosts: response.data.message.result });
         if (response.data.message.result.hasOwnProperty("next")) {
           this.setState({ page: response.data.message.result.next.page });
         }
       })
       .catch((err) => {
+        this.setState({ postLoading: false });
         console.log(err);
       });
   }
   //nextPageInstagramPosts
   async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image`)
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
         // console.log(response.data.message.result);
         if (response.data.message.result.hasOwnProperty("next")) {
@@ -461,6 +464,7 @@ class LinkinBioShop extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              postLoading={this.state.postLoading}
               pageName="Bio Shop"
               placeholder={placeholder}
               username={this.state.username}
@@ -551,9 +555,5 @@ class LinkinBioShop extends React.Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addUserInfo: (text) => dispatch(addUserInfo(text)),
-  };
-};
-export default connect(null, mapDispatchToProps)(LinkinBioShop);
+
+export default LinkinBioShop;

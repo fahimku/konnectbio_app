@@ -16,10 +16,6 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
-import { createBrowserHistory } from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
 
 
 class LinkinBio extends React.Component {
@@ -30,6 +26,7 @@ class LinkinBio extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      postLoading:false,
       showInstagramButton: false,
       iframeKey: 0,
       nextPageCount: 0,
@@ -76,26 +73,32 @@ class LinkinBio extends React.Component {
   }
 
   async fetchInstagramPosts(token) {
+    this.setState({ postLoading: true });
     await axios
       .post(`/social/ig/media/${token}`, {
         username: this.state.username,
       })
       .then((response) => {
+        this.setState({ postLoading: false });
         this.setState({ instagramPosts: response.data });
         if (response.data)
           this.setState({ nextPageUrl: response.data.paging.next });
       })
       .catch((err) => {
+        this.setState({ postLoading: false });
         if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
-          parseUserInformation.access_token = '';
-          parseUserInformation.username = '';
+          const parseUserInformation = JSON.parse(
+            localStorage.getItem("userInfo")
+          );
+          parseUserInformation.access_token = "";
+          parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error:"Connect Your Instagram Account to Continue"})
-          this.setState({ showInstagramButton: true })
-          this.props.history.push('/connect');
-        
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
+          this.setState({ showInstagramButton: true });
+          this.props.history.push("/connect");
         }
       });
   }
@@ -122,16 +125,19 @@ class LinkinBio extends React.Component {
         this.setState({ instagramPost: instagramPosts });
       })
       .catch((err) => {
-
         if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(localStorage.getItem("userInfo"));
-          parseUserInformation.access_token = '';
-          parseUserInformation.username = '';
+          const parseUserInformation = JSON.parse(
+            localStorage.getItem("userInfo")
+          );
+          parseUserInformation.access_token = "";
+          parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error:"Connect Your Instagram Account to Continue"})
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
           this.setState({ showInstagramButton: true });
-          this.props.history.push('/connect');
+          this.props.history.push("/connect");
         }
       });
   }
@@ -222,7 +228,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -317,9 +323,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
+        parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -493,6 +499,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              postLoading={this.state.postLoading}
               showInstagramButton={this.state.showInstagramButton}
               pageName={`My Post`}
               placeholder={placeholder}
@@ -504,22 +511,25 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${this.state.url + this.state.username
-                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${
+                    this.state.url + this.state.username
+                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>

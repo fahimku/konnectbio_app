@@ -87,14 +87,14 @@ export default function Box({ item, addCampaignToShop, index }) {
                 <div className="count-title">
                   {addCampaign ? (
                     <Button
-                    disabled style={{ pointerEvents: 'none' }}
+                      disabled style={{ pointerEvents: 'none' }}
                       key={index}
                       className="btn-connect">Campaign Added</Button>
                   ) : (
                     loading ?
                       <Button
                         key={index}
-                        className="btn-connect"><Loader /> </Button>:
+                        className="btn-connect"><Loader /> </Button> :
                       <Button
                         key={index}
                         onClick={() => {

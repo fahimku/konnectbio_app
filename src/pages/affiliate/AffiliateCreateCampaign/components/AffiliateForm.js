@@ -306,7 +306,15 @@ class AffiliateForm extends React.Component {
       reach: "",
     });
   };
-
+  copyToClipboard = (url) => {
+    let textField = document.createElement("textarea");
+    textField.innerText = url;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    toast.success("Copied to Clipboard!");
+  };
   render() {
     const { affData } = this.props;
     let category =
@@ -369,7 +377,7 @@ class AffiliateForm extends React.Component {
                 </div>
                 <div className="campaign-url col-md-6">
                   <label>URL</label>
-                  <InputValidation
+                  {/* <InputValidation
                     className=""
                     placeholder="Please Enter Website Address"
                     type="text"
@@ -378,7 +386,28 @@ class AffiliateForm extends React.Component {
                     name="website"
                     value={affData.redirected_url}
                     disabled
-                  />
+                  /> */}
+                  <div className="url-copy">
+                    <div className="your-copy-link">
+                      <div className="item-a">
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={affData.redirected_url}
+                        >
+                          {affData.redirected_url}
+                        </a>
+                      </div>
+                      <div
+                        onClick={() =>
+                          this.copyToClipboard(affData.redirected_url)
+                        }
+                        className="item-b"
+                      >
+                        Copy
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="row  mt-3">
@@ -790,7 +819,7 @@ class AffiliateForm extends React.Component {
                         </div>
                         <div className="col-md-3 mt-3">
                           <label>State {i + 1}</label>
-                          <Select2
+                          <VirtualizedSelect
                             key={i}
                             name="state"
                             value={renderStateValue(x)}
@@ -800,13 +829,14 @@ class AffiliateForm extends React.Component {
                             placeholder="Select State"
                             style={{ width: "100%" }}
                             options={this.state.stateList}
-                            isDisabled={
+                            disabled={
                               // this.state.stateList === ""
                               this.state.inputList[i].country === "" ||
                               this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
+                            clearable={false}
                           />
                           {this.state.submit && !x.state ? (
                             <span className={"help-block text-danger"}>

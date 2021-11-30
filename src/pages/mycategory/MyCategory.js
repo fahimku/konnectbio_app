@@ -73,9 +73,9 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({ category_id, category_name, image_url }) => {
+        myCategories.map(({ parent_id, category_name, image_url }) => {
           return selectCategories.push({
-            value: category_id,
+            value: parent_id,
             label: category_name,
             image: image_url,
           });
@@ -95,12 +95,13 @@ class MyCategory extends React.Component {
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
         optionCategories.map(
-          ({ category_id, category_name, image_url, editable }) => {
+          ({ parent_id, category_name, image_url, editable, category_id }) => {
             return saveCategories.push({
-              value: category_id,
+              value: parent_id,
               label: category_name,
               image: image_url,
               editable: editable,
+              category_id: category_id,
             });
           }
         );
@@ -134,72 +135,81 @@ class MyCategory extends React.Component {
   };
 
   handleSelect = (e, options) => {
-    options = options === null ? [] : options;
-    if (options.length > userInfo.package.category_count) {
-      this.setState({
-        saveCategories: options,
-      });
-      options.pop();
-      this.setState({
-        saveCategories: options,
-        categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+    let difference = this.state.saveCategories.filter(
+      (x) => !options.includes(x)
+    );
+    if (difference.length > 0) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this category. This will remove all your post!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#010b40",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.setState({
+            saveCategories: options,
+          });
+        } else {
+          this.setState({
+            saveCategories: this.state.saveCategories,
+          });
+        }
       });
     } else {
-      this.setState({
-        saveCategories: options === null ? [] : options,
-        categoryError: "",
-      });
+      options = options === null ? [] : options;
+      if (options.length > userInfo.package.category_count) {
+        this.setState({
+          saveCategories: options,
+        });
+        options.pop();
+        this.setState({
+          saveCategories: options,
+          categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+        });
+      } else {
+        this.setState({
+          saveCategories: options === null ? [] : options,
+          categoryError: "",
+        });
+      }
     }
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(this.state.saveCategories, "saveCategories");
     let category =
       this.state.saveCategories === null
         ? []
         : this.state.saveCategories.map((category) => {
             return {
               category_name: category.label,
-              category_id: category.value,
+              category_id: category.editable
+                ? category.category_id
+                : category.value,
               image_url: category.image,
               editable: category.editable,
             };
           });
-    this.setState({ loading: true });
-    await axios
-      .post(`/usercategory/reserve`, {
-        categories: category,
-      })
-      .then((response) => {
-        this.setState({ loading: false });
-        let imageResponse = response.data;
-        toast.success(imageResponse.message);
-        this.fetchSaveCategory();
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ loading: false });
-      });
-
+    console.log(category, "submit");
+    // this.setState({ loading: true });
     // await axios
-    //   .put(`/users/revise/categories/${userInfo.user_id}`, {
+    //   .post(`/usercategory/reserve`, {
     //     categories: category,
     //   })
     //   .then((response) => {
-    //     let categoryResponse = response.data;
-    //     if (categoryResponse.success) {
-    //       toast.success(categoryResponse.message);
-    //       this.setState({ categoryError: "" });
-    //       this.setState({ loading: false });
-    //       this.fetchSaveCategory();
-    //     }
+    //     this.setState({ loading: false });
+    //     let imageResponse = response.data;
+    //     toast.success(imageResponse.message);
+    //     this.fetchSaveCategory();
     //   })
     //   .catch((err) => {
-    //     console.log(err.response, "err");
+    //     toast.error(err.response.data.message);
     //     this.setState({ loading: false });
-    //     this.setState({ categoryError: err.response.data.message });
     //   });
-    // }
   };
   deleteCustomCat = async (id) => {
     Swal.fire({
@@ -275,7 +285,6 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-
     // console.log(this.state.myCategory, "cat");
     // console.log(this.state.saveCategories, "saveCategories");
 
@@ -298,7 +307,7 @@ class MyCategory extends React.Component {
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
-                      <h5>Plan Detail</h5>
+                      <h5>Plan Details</h5>
                       <div className="category-box">
                         <div className="category-count-row col-12">
                           <h4 className="category-count-title">
