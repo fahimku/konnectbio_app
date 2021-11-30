@@ -135,26 +135,52 @@ class MyCategory extends React.Component {
   };
 
   handleSelect = (e, options) => {
-    options = options === null ? [] : options;
-    if (options.length > userInfo.package.category_count) {
-      this.setState({
-        saveCategories: options,
-      });
-      options.pop();
-      this.setState({
-        saveCategories: options,
-        categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+    let difference = this.state.saveCategories.filter(
+      (x) => !options.includes(x)
+    );
+    if (difference.length > 0) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to delete this category. This will remove all your post!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#010b40",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.setState({
+            saveCategories: options,
+          });
+        } else {
+          this.setState({
+            saveCategories: this.state.saveCategories,
+          });
+        }
       });
     } else {
-      this.setState({
-        saveCategories: options === null ? [] : options,
-        categoryError: "",
-      });
+      options = options === null ? [] : options;
+      if (options.length > userInfo.package.category_count) {
+        this.setState({
+          saveCategories: options,
+        });
+        options.pop();
+        this.setState({
+          saveCategories: options,
+          categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+        });
+      } else {
+        this.setState({
+          saveCategories: options === null ? [] : options,
+          categoryError: "",
+        });
+      }
     }
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(this.state.saveCategories, "saveCategories");
     let category =
       this.state.saveCategories === null
         ? []
@@ -168,21 +194,22 @@ class MyCategory extends React.Component {
               editable: category.editable,
             };
           });
-    this.setState({ loading: true });
-    await axios
-      .post(`/usercategory/reserve`, {
-        categories: category,
-      })
-      .then((response) => {
-        this.setState({ loading: false });
-        let imageResponse = response.data;
-        toast.success(imageResponse.message);
-        this.fetchSaveCategory();
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ loading: false });
-      });
+    console.log(category, "submit");
+    // this.setState({ loading: true });
+    // await axios
+    //   .post(`/usercategory/reserve`, {
+    //     categories: category,
+    //   })
+    //   .then((response) => {
+    //     this.setState({ loading: false });
+    //     let imageResponse = response.data;
+    //     toast.success(imageResponse.message);
+    //     this.fetchSaveCategory();
+    //   })
+    //   .catch((err) => {
+    //     toast.error(err.response.data.message);
+    //     this.setState({ loading: false });
+    //   });
   };
   deleteCustomCat = async (id) => {
     Swal.fire({
