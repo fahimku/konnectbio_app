@@ -64,7 +64,7 @@ class EditCustomCategory extends React.Component {
       })
       .catch((err) => {
         this.setState({ loading: false });
-        toast.error("Something Went Wrong!");
+        toast.error(err.response.data.message);
       });
   };
   categoryToggleModal = () => {
@@ -158,6 +158,7 @@ class EditCustomCategory extends React.Component {
                 // type="submit"
                 className="category-btn btn-block "
                 onClick={this.onSubmitting}
+                disabled={this.state.imageFiles[0] === undefined ? true : false}
               >
                 Update Category
               </Button>

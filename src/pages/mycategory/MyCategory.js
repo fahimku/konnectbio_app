@@ -286,7 +286,7 @@ class MyCategory extends React.Component {
       </Row>
     ));
     // console.log(this.state.myCategory, "cat");
-    console.log(this.state.saveCategories, "saveCategories");
+    // console.log(this.state.saveCategories, "saveCategories");
 
     return (
       <React.Fragment>
