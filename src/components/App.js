@@ -39,16 +39,16 @@ class App extends React.PureComponent {
 
     return (
       <div>
-        <ToastContainer autoClose={5000} hideProgressBar closeButton={<CloseButton />}/>
+        <ToastContainer autoClose={5000} hideProgressBar closeButton={<CloseButton />} />
         <ConnectedRouter history={getHistory()}>
           <Router>
             <Switch>
               <Route path="/" exact component={Login} />
-              <Route path="/app" exact render={() => <Redirect to="/app/main" />}/>
-              <UserRoute path="/app" dispatch={this.props.dispatch} component={LayoutComponent}/>
-              <AdminRoute path="/admin" currentUser={this.props.currentUser} dispatch={this.props.dispatch} component={LayoutComponent}/>
+              <Route path="/app" exact render={() => <Redirect to="/app/main" />} />
+              <UserRoute path="/app" dispatch={this.props.dispatch} component={LayoutComponent} />
+              <AdminRoute path="/admin" currentUser={this.props.currentUser} dispatch={this.props.dispatch} component={LayoutComponent} />
               <Route path="/connect" exact component={Connect} />
-              <UserRoute path="/package" exact component={Package} dispatch={this.props.dispatch}/>
+              <UserRoute path="/package" exact component={Package} dispatch={this.props.dispatch} />
               <Route path="/logout" exact component={Logout} />
               <AuthRoute path="/register" exact component={Register} />
               <AuthRoute path="/login" exact component={Login} />
