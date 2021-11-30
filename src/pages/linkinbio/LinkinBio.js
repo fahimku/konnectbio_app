@@ -16,10 +16,7 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
-import { createBrowserHistory } from "history";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
+
 
 class LinkinBio extends React.Component {
   constructor(props) {
@@ -29,6 +26,7 @@ class LinkinBio extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
+      postLoading:false,
       showInstagramButton: false,
       iframeKey: 0,
       nextPageCount: 0,
@@ -75,16 +73,19 @@ class LinkinBio extends React.Component {
   }
 
   async fetchInstagramPosts(token) {
+    this.setState({ postLoading: true });
     await axios
       .post(`/social/ig/media/${token}`, {
         username: this.state.username,
       })
       .then((response) => {
+        this.setState({ postLoading: false });
         this.setState({ instagramPosts: response.data });
         if (response.data)
           this.setState({ nextPageUrl: response.data.paging.next });
       })
       .catch((err) => {
+        this.setState({ postLoading: false });
         if (err?.response?.data?.code === 190) {
           const parseUserInformation = JSON.parse(
             localStorage.getItem("userInfo")
@@ -498,6 +499,7 @@ class LinkinBio extends React.Component {
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
+              postLoading={this.state.postLoading}
               showInstagramButton={this.state.showInstagramButton}
               pageName={`My Post`}
               placeholder={placeholder}
