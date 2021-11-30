@@ -1,18 +1,17 @@
-import { combineReducers } from 'redux';
-import auth from './auth';
-import navigation from './navigation';
-import alerts from './alerts';
-import layout from './layout';
-import analytics from './analytics';
-import users from './usersReducers';
-import categories from './category/categories';
-import posts from './post/post';
-import { connectRouter } from 'connected-react-router';
-import countries from './countries/countries';
-import campaign from './campaign/campaign';
-import marketPlace from "./marketPlace/marketPlace"
-import instagram from "./instagram/instagram"
-import links from "./links/links"
+import { combineReducers } from "redux";
+import auth from "./auth";
+import navigation from "./navigation";
+import alerts from "./alerts";
+import layout from "./layout";
+import users from "./usersReducers";
+import categories from "./category/categories";
+import posts from "./post/post";
+import { connectRouter } from "connected-react-router";
+import countries from "./countries/countries";
+import campaign from "./campaign/campaign";
+import marketPlace from "./marketPlace/marketPlace";
+import instagram from "./instagram/instagram";
+import links from "./links/links";
 
 export default (history) =>
   combineReducers({
@@ -22,13 +21,11 @@ export default (history) =>
     auth,
     navigation,
     layout,
-    analytics,
     users,
     categories,
     posts,
     countries,
     campaign,
     marketPlace,
-    instagram
-});
-
+    instagram,
+  });

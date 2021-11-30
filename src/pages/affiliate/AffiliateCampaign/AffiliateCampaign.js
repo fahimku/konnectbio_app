@@ -27,7 +27,6 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ));
 
 function AffiliateCampaign(props) {
-
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -38,10 +37,9 @@ function AffiliateCampaign(props) {
   const [currentCampaign, setCurrentCampaign] = useState({});
 
   useEffect(() => {
-    props.getCountries()
+    props.getCountries();
     fetchPostPerformance();
-  }, [])
-
+  }, []);
 
   const toggleCampaigns = async (status, campaignId) => {
     let statusName = status ? "disable" : "enable";
@@ -61,9 +59,11 @@ function AffiliateCampaign(props) {
           })
           .then(() => {
             let data1 = [...data];
-            let objIndex = data1.findIndex((obj) => obj.campaign_id === campaignId);
+            let objIndex = data1.findIndex(
+              (obj) => obj.campaign_id === campaignId
+            );
             data1[objIndex].is_active = !status;
-            setData(data1)
+            setData(data1);
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
@@ -72,7 +72,6 @@ function AffiliateCampaign(props) {
       }
     });
   };
-
 
   const deleteCampaign = async (campaignId) => {
     Swal.fire({
@@ -103,7 +102,7 @@ function AffiliateCampaign(props) {
   };
 
   const fetchPostPerformance = async () => {
-    setLoading(true)
+    setLoading(true);
     await axios
       .get("campaigns/receive")
       .then((response) => {
@@ -111,11 +110,11 @@ function AffiliateCampaign(props) {
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         postData();
-      }).catch(() => {
+      })
+      .catch(() => {
         setLoading(false);
       });
-  }
-
+  };
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -136,16 +135,32 @@ function AffiliateCampaign(props) {
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
                 <div className="cmp-h-right col-md-6">
+                  <div className="action-btn">
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        setCurrentCampaign(record);
+                        setModal(true);
+                      }}
+                    >
+                      <i className="fa fa-pencil-square-o" />
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        deleteCampaign(record.campaign_id);
+                      }}
+                    >
+                      <i className="fa fa-trash" />
+                    </button>
+                  </div>
                   {/* {toggleLoading && <Loader />} */}
                   <div class="form-check custom-switch custom-switch-md">
                     <input
                       type="checkbox"
                       checked={record.is_active}
                       onClick={() => {
-                        toggleCampaigns(
-                          record.is_active,
-                          record.campaign_id
-                        );
+                        toggleCampaigns(record.is_active, record.campaign_id);
                       }}
                       class="custom-control-input"
                       id={`customSwitch` + index}
@@ -156,7 +171,7 @@ function AffiliateCampaign(props) {
                       htmlFor={`customSwitch` + index}
                     ></label>
                   </div>
-                  <Dropdown alignRight>
+                  {/* <Dropdown alignRight>
                     <Dropdown.Toggle as={CustomToggle} />
                     <Dropdown.Menu size="sm" title="">
                       <Dropdown.Item
@@ -175,7 +190,7 @@ function AffiliateCampaign(props) {
                         Delete
                       </Dropdown.Item>
                     </Dropdown.Menu>
-                  </Dropdown>
+                  </Dropdown> */}
                 </div>
               </div>
               <div className="any-post-img-col col-12">
@@ -204,9 +219,7 @@ function AffiliateCampaign(props) {
                     <h3 className="count">{record.campaign_type}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">
-                      Total Budget
-                    </h5>
+                    <h5 className="count-title">Total Budget</h5>
                     <h3 className="count">${record.budget}</h3>
                   </div>
                   <div className="col-12 count-box">
@@ -223,42 +236,42 @@ function AffiliateCampaign(props) {
       </React.Fragment>
     ));
     return postDataInner;
-  }
+  };
 
   if (!loading) {
     return (
       <>
         <div className="container-fluid">
-          {data.length > 0 ? (<>
-            <Row>{postData()}</Row>
-            <ReactPaginate
-              previousLabel=""
-              nextLabel=""
-              pageClassName="page-item "
-              pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-              previousClassName="page-item"
-              previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-              nextClassName="page-item"
-              nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-              breakLabel="..."
-              breakClassName="page-item"
-              breakLinkClassName="page-link"
-              forcePage={currentPage}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={handlePageClick}
-              containerClassName={
-                "pagination justify-content-center mt-2 custom-paginate"
-              }
-              // subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
-          </>
-          ) : (<>
-            No Data Found
-          </>)
-          }
+          {data.length > 0 ? (
+            <>
+              <Row>{postData()}</Row>
+              <ReactPaginate
+                previousLabel=""
+                nextLabel=""
+                pageClassName="page-item "
+                pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                previousClassName="page-item"
+                previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                nextClassName="page-item"
+                nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                forcePage={currentPage}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={
+                  "pagination justify-content-center mt-2 custom-paginate"
+                }
+                // subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            </>
+          ) : (
+            <>No Data Found</>
+          )}
           <Modal
             show={modal}
             onHide={() => setModal(false)}
@@ -283,13 +296,18 @@ function AffiliateCampaign(props) {
         </div>
       </>
     );
-  }
-  else {
-    return (<div className="container-fluid"><Loader /></div>)
+  } else {
+    return (
+      <div className="container-fluid">
+        <Loader />
+      </div>
+    );
   }
 }
 
 function mapStateToProps({ countries, campaign }) {
   return { countries, campaign };
 }
-export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(
+  AffiliateCampaign
+);

@@ -418,7 +418,7 @@ h1 small {
 /* for md */
 .custom-switch {
   top: -5px;
-  margin-right: 10px;
+  // margin-right: 10px;
 }
 .custom-switch.custom-switch-md .custom-control-label {
   padding-left: 0.6rem;
@@ -432,8 +432,8 @@ h1 small {
   border-radius: 3rem;
 }
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: #04aa6d;
-  border-color: #04aa6d;
+  background-color: #010b40;
+  border-color: #010b40;
 }
 
 .custom-switch.custom-switch-md .custom-control-label::after {
@@ -474,4 +474,14 @@ h1 small {
   padding: 0px 10px;
   cursor: pointer;
   border-left: 1px solid #e1e1e1;
+}
+.action-btn {
+  top: -2px;
+  margin-right: 4px;
+  position: relative;
+}
+.action-btn .btn {
+  padding: 0px 5px;
+  margin-left: 4px;
+  border: none;
 }

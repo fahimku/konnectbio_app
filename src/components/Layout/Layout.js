@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //import { Switch, Route, withRouter, Redirect } from "react-router";
-import {BrowserRouter as Router,
+import {
+  BrowserRouter as Router,
   Switch,
   Route,
   withRouter,
@@ -36,7 +37,6 @@ import Marketplace from "../../pages/marketplace/Marketplace";
 export const history = createBrowserHistory({
   forceRefresh: false,
 });
-
 
 //import ConnectPagee from "../../pages/auth/connect";
 class Layout extends React.Component {
@@ -91,13 +91,15 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-            ? "light"
-            : localStorage.getItem("dashboardTheme")
+          `dashboard-${
+            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+              ? "light"
+              : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${localStorage.getItem("navbarColor")
-            ? localStorage.getItem("navbarColor").replace("#", "")
-            : "FFFFFF"
+          `header-${
+            localStorage.getItem("navbarColor")
+              ? localStorage.getItem("navbarColor").replace("#", "")
+              : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -116,20 +118,77 @@ class Layout extends React.Component {
                 >
                   <Router history={history}>
                     <Switch>
-                      <Route path="/app/main" exact render={() => { this.props.history.push("/connect"); }} />
-                      <Route path="/admin" exact render={() => <Redirect to="/admin/users" />} />
-                      <Route path="/app/linkinbio" exact component={LinkinBio} />
-                      <Route path="/app/linkinbio-shop" exact component={LinkinBioShop} />
-                      <PrivateRoute exact path="/app/analysis" component={Analysis} permissions={["analytics_access"]} />
-                      <Route path="/app/linkinbio/:code" exact component={LinkinBio} />
-                      <Route path="/app/account/delete" exact component={AccountDelete} />
-                      <Route path="/app/account/profile" exact component={MyProfile} />
-                      <Route path="/app/account/categories" exact component={MyCategory} />
-                      <Route path="/app/account/setup" exact component={AccountSetup} />
+                      <Route
+                        path="/app/main"
+                        exact
+                        render={() => {
+                          this.props.history.push("/connect");
+                        }}
+                      />
+                      <Route
+                        path="/admin"
+                        exact
+                        render={() => <Redirect to="/admin/users" />}
+                      />
+                      <Route
+                        path="/app/linkinbio"
+                        exact
+                        component={LinkinBio}
+                      />
+                      <Route
+                        path="/app/linkinbio-shop"
+                        exact
+                        component={LinkinBioShop}
+                      />
+                      <PrivateRoute
+                        exact
+                        path="/app/analysis"
+                        component={Analysis}
+                        permissions={["analytics_access"]}
+                      />
+                      <Route
+                        path="/app/linkinbio/:code"
+                        exact
+                        component={LinkinBio}
+                      />
+                      <Route
+                        path="/app/account/delete"
+                        exact
+                        component={AccountDelete}
+                      />
+                      <Route
+                        path="/app/account/profile"
+                        exact
+                        component={MyProfile}
+                      />
+                      <Route
+                        path="/app/account/categories"
+                        exact
+                        component={MyCategory}
+                      />
+                      <Route
+                        path="/app/account/setup"
+                        exact
+                        component={AccountSetup}
+                      />
                       <Route path="/app/my/links" exact component={MyLinks} />
-                      <Route path="/app/dashboard" exact component={Dashboard} />
-                      <PrivateRoute path="/app/campaign" exact component={Affiliate} permissions={["affiliate_access"]} />
-                      <PrivateRoute path="/app/marketplace" exact component={Marketplace} permissions={["marketplace_access"]} />
+                      <Route
+                        path="/app/dashboard"
+                        exact
+                        component={Dashboard}
+                      />
+                      <PrivateRoute
+                        path="/app/campaign"
+                        exact
+                        component={Affiliate}
+                        permissions={["affiliate_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/marketplace"
+                        exact
+                        component={Marketplace}
+                        permissions={["marketplace_access"]}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>
