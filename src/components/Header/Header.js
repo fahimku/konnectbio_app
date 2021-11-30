@@ -343,7 +343,6 @@ function mapStateToProps(store) {
     sidebarStatic: store.navigation.sidebarStatic,
     navbarType: store.layout.navbarType,
     navbarColor: store.layout.navbarColor,
-    openUsersList: store.chat.openUsersList,
     currentUser: store.auth.currentUser,
   };
 }
