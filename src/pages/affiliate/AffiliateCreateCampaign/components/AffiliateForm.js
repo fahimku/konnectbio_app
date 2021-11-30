@@ -335,17 +335,17 @@ class AffiliateForm extends React.Component {
 
       return exit[0];
     };
-    const renderCityValue = (x, i) => {
-      if (this.state.state.value === "all") {
-        return { value: "all", label: "All" };
-      } else {
-        const exit =
-          this.state.cities === ""
-            ? []
-            : this.state.cities.filter((item) => item.value === x.city);
-        return exit[0];
-      }
-    };
+    // const renderCityValue = (x, i) => {
+    //   if (this.state.state.value === "all") {
+    //     return { value: "all", label: "All" };
+    //   } else {
+    //     const exit =
+    //       this.state.cities === ""
+    //         ? []
+    //         : this.state.cities.filter((item) => item.value === x.city);
+    //     return exit[0];
+    //   }
+    // };
 
     return (
       <React.Fragment>
@@ -846,24 +846,7 @@ class AffiliateForm extends React.Component {
                         </div>
                         <div className="col-md-3 mt-3">
                           <label>City {i + 1}</label>
-                          {/* <VirtualizedSelect
-                            key={i}
-                            name="city"
-                            value={renderCityValue(x, i)}
-                            onChange={(options, e) =>
-                              this.changeCity(e, options, "city", i)
-                            }
-                            placeholder="Select City"
-                            style={{ width: "100%" }}
-                            options={this.state.cities}
-                            clearable={false}
-                            disabled={
-                              this.state.inputList[i].state === "" ||
-                              this.state.inputList.length - 1 !== i
-                                ? true
-                                : false
-                            }
-                          /> */}
+
                           <VirtualizedSelect
                             className
                             key={i}
@@ -889,13 +872,6 @@ class AffiliateForm extends React.Component {
                                 ? true
                                 : false
                             }
-
-                            // isDisabled={
-                            //   this.state.inputList[i].state === "" ||
-                            //   this.state.inputList.length - 1 !== i
-                            //     ? true
-                            //     : false
-                            // }
                           />
                           {this.state.submit && !x.city ? (
                             <span className={"help-block text-danger"}>
