@@ -52,7 +52,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
       setSearchLoading(false);
     }, function (error) {
       toast.error(error?.response?.data?.message)
-    })
+    })  
   }
 
 
@@ -237,7 +237,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
               </Col>
             </Row>
             <hr />
-            {marketPlace?.message?.length > 0 && (
+            {marketPlace?.message?.length > 0 ? (
               <>
                 <Row>
                   {marketPlace.message.map((item, index) =>
@@ -271,7 +271,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                   activeClassName={"active"}
                 />
               </>
-            )}
+            ):('No Data Found')}
           </div>
         </div>
       </>

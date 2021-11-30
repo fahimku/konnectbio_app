@@ -73,9 +73,9 @@ class MyCategory extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({ category_id, category_name, image_url }) => {
+        myCategories.map(({ parent_id, category_name, image_url }) => {
           return selectCategories.push({
-            value: category_id,
+            value: parent_id,
             label: category_name,
             image: image_url,
           });
@@ -161,7 +161,9 @@ class MyCategory extends React.Component {
         : this.state.saveCategories.map((category) => {
             return {
               category_name: category.label,
-              category_id: category.category_id,
+              category_id: category.editable
+                ? category.category_id
+                : category.value,
               image_url: category.image,
               editable: category.editable,
             };
@@ -181,26 +183,6 @@ class MyCategory extends React.Component {
         toast.error(err.response.data.message);
         this.setState({ loading: false });
       });
-
-    // await axios
-    //   .put(`/users/revise/categories/${userInfo.user_id}`, {
-    //     categories: category,
-    //   })
-    //   .then((response) => {
-    //     let categoryResponse = response.data;
-    //     if (categoryResponse.success) {
-    //       toast.success(categoryResponse.message);
-    //       this.setState({ categoryError: "" });
-    //       this.setState({ loading: false });
-    //       this.fetchSaveCategory();
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response, "err");
-    //     this.setState({ loading: false });
-    //     this.setState({ categoryError: err.response.data.message });
-    //   });
-    // }
   };
   deleteCustomCat = async (id) => {
     Swal.fire({
@@ -276,9 +258,9 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-
     // console.log(this.state.myCategory, "cat");
-    console.log(this.state.saveCategories, "saveCategories");
+    // console.log(this.state.saveCategories, "saveCategories");
+
     return (
       <React.Fragment>
         <div className="profile-page category-page">
@@ -298,7 +280,7 @@ class MyCategory extends React.Component {
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
-                      <h5>Plan Detail</h5>
+                      <h5>Plan Details</h5>
                       <div className="category-box">
                         <div className="category-count-row col-12">
                           <h4 className="category-count-title">
@@ -473,8 +455,10 @@ class MyCategory extends React.Component {
                               type="submit"
                               className="category-btn btn-block"
                               disabled={
-                                // this.state.saveCategories.length &&
-                                !this.state.loading ? false : true
+                                this.state.saveCategories.length &&
+                                !this.state.loading
+                                  ? false
+                                  : true
                               }
                             >
                               Save

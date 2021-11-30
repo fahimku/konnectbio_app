@@ -1,21 +1,20 @@
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import React from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Row, Col, Modal } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import moment from "moment";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
+
 import { connect } from "react-redux";
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <a
-    href="/"
+    href="#"
     ref={ref}
     onClick={(e) => {
       e.preventDefault();
@@ -27,56 +26,25 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </a>
 ));
 
-class AffiliateCampaign extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: this.props.username,
-      toggleCampaign: false,
-      toggleLoading: false,
-      data: [],
-      loading: false,
-      fromDate: moment().startOf("year").format("YYYY-MM-DD"),
-      toDate: moment(new Date()).format("YYYY-MM-DD"),
-      today: moment(new Date()).format("YYYY-MM-DD"),
-      lastYear: moment().startOf("year").format("YYYY-MM-DD"),
-      page: "2",
-      limit: "8",
-      previous: "",
-      myCategory: "",
-      saveCategory: "",
-      optionCategory: "",
-      saveSort: "date",
-      optionSort: "",
-      saveSortOrder: "desc",
-      optionSortOrder: "",
-      offset: 0,
-      perPage: 8,
-      currentPage: 0,
-      modal: false,
-      currentCampaign: {},
-    };
+function AffiliateCampaign(props) {
 
-    this.handlePageClick = this.handlePageClick.bind(this);
-  }
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const perPage = 8;
+  const [currentPage, setCurrentPage] = useState(0);
+  const [modal, setModal] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentCampaign, setCurrentCampaign] = useState({});
 
-  componentDidMount() {
-    this.props.getCountries();
-    this.fetchPostPerformance(
-      this.state.username,
-      this.state.lastYear,
-      moment(new Date()).format("YYYY-MM-DD"),
-      this.state.limit,
-      this.state.page,
-      "",
-      this.state.saveSort,
-      this.state.saveSortOrder
-    );
-    //this.fetchMyCategory();
-  }
+  useEffect(() => {
+    props.getCountries()
+    fetchPostPerformance();
+  }, [])
 
-  toggleCampaign = async (status, campaignId) => {
-    this.setState({ toggleLoading: true });
+
+  const toggleCampaigns = async (status, campaignId) => {
+
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
@@ -93,27 +61,21 @@ class AffiliateCampaign extends React.Component {
             is_active: !status,
           })
           .then(() => {
-            this.setState({ toggleLoading: false });
-            let data = this.state.data;
-            let objIndex = data.findIndex((obj) => obj.campaign_id === campaignId);
-            data[objIndex].is_active = !status;
-            this.setState({ data: data });
-            this.postData();
+            let data1 = [...data];
+            let objIndex = data1.findIndex((obj) => obj.campaign_id === campaignId);
+            data1[objIndex].is_active = !status;
+            setData(data1)
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
-            this.setState({ toggleLoading: false });
             toast.error(err.response?.data.message);
           });
-      }
-      else {
-        this.setState({toggleLoading:false})
       }
     });
   };
 
 
-  deleteCampaign = async (campaignId) => {
+  const deleteCampaign = async (campaignId) => {
     Swal.fire({
       title: `Are you sure you want to delete this campaign?`,
       text: "You won't be able to revert this!",
@@ -128,11 +90,10 @@ class AffiliateCampaign extends React.Component {
         axios
           .delete(`/campaigns/remove/${campaignId}`)
           .then(() => {
-            let data = this.state.data.filter(function (item) {
+            let data1 = [...data].filter(function (item) {
               return item.campaign_id !== campaignId;
             });
-            this.setState({ data: data });
-            this.postData();
+            setData(data1);
             toast.success("Campaign Deleted Successfully");
           })
           .catch((err) => {
@@ -142,91 +103,31 @@ class AffiliateCampaign extends React.Component {
     });
   };
 
-  async fetchPostPerformance(
-    username,
-    fromDate,
-    toDate,
-    limit,
-    page,
-    categoryId,
-    sortId,
-    orderBy
-  ) {
-    this.setState({ loading: true });
+  const fetchPostPerformance = async () => {
+    setLoading(true)
     await axios
-      .get("campaigns/receive", {
-        username: username,
-        from_date: fromDate,
-        to_date: toDate,
-        page: page,
-        limit: limit,
-        post_type: "image",
-        category_id: categoryId === "all" ? "" : categoryId,
-        sort: sortId,
-        order_by: orderBy,
-      })
+      .get("campaigns/receive")
       .then((response) => {
-        this.setState({ data: response.data.message, loading: false });
-        this.postData();
+        setData(response.data.message);
+        setLoading(false);
+        setPageCount(Math.ceil(response.data.totalCount / perPage));
+        postData();
       });
   }
 
-  pagination = () => {
-    let { username, fromDate, toDate, limit, page } = this.state;
-    this.fetchPostPerformance(
-      username,
-      fromDate,
-      toDate,
-      limit,
-      page,
-      this.state.saveCategory,
-      this.state.saveSort,
-      this.state.saveSortOrder
-    );
-  };
 
-  paginationPrev = () => {
-    let { username, fromDate, toDate, limit, previous } = this.state;
-    this.fetchPostPerformance(
-      username,
-      fromDate,
-      toDate,
-      limit,
-      previous,
-      this.state.saveCategory,
-      this.state.saveSort,
-      this.state.saveSortOrder
-    );
-  };
-
-  disabledDate(current) {
-    return current && current > moment().endOf("day");
-  }
-
-
-  handlePageClick = (e) => {
-
+  const handlePageClick = (e) => {
     const selectedPage = e.selected;
-    const offset = selectedPage * this.state.perPage;
-    this.setState(
-      {
-        currentPage: selectedPage,
-        offset: offset,
-      },
-      () => {
-        
-        this.postData();
-      }
-    );
+    const offset = selectedPage * perPage;
+    setCurrentPage(selectedPage);
+    setOffset(offset);
+    postData();
   };
 
-  postData = () => {
-    const data = this.state.data;
-    const slice = data.slice(
-      this.state.offset,
-      this.state.offset + this.state.perPage
-    );
-    const postData = slice.map((record, index) => (
+  const postData = () => {
+    const data1 = data;
+    const slice = data1.slice(offset, offset + perPage);
+    const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div className="card analytic-box campaign-box">
@@ -234,13 +135,13 @@ class AffiliateCampaign extends React.Component {
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
                 <div className="cmp-h-right col-md-6">
-                  {this.state.toggleLoading && <Loader />}
+                  {/* {toggleLoading && <Loader />} */}
                   <div class="form-check custom-switch custom-switch-md">
                     <input
                       type="checkbox"
                       checked={record.is_active}
                       onClick={() => {
-                        this.toggleCampaign(
+                        toggleCampaigns(
                           record.is_active,
                           record.campaign_id
                         );
@@ -260,15 +161,15 @@ class AffiliateCampaign extends React.Component {
                     <Dropdown.Menu size="sm" title="">
                       <Dropdown.Item
                         onClick={() => {
-                          this.setState({ currentCampaign: record });
-                          this.setState({ modal: true });
+                          setCurrentCampaign(record);
+                          setModal(true)
                         }}
                       >
                         Edit
                       </Dropdown.Item>
                       <Dropdown.Item
                         onClick={() => {
-                          this.deleteCampaign(record.campaign_id);
+                          deleteCampaign(record.campaign_id);
                         }}
                       >
                         Delete
@@ -321,52 +222,46 @@ class AffiliateCampaign extends React.Component {
         </Col>
       </React.Fragment>
     ));
+    return postDataInner;
+  }
 
-    this.setState({
-      pageCount: Math.ceil(data.length / this.state.perPage),
-      postData,
-    });
-  };
-
-  render() {
+  if (!loading) {
     return (
       <>
         <div className="container-fluid">
-          {this.state.loading ? (
-            <Loader className="analytics-loading" size={60} />
-          ) : !this.state.data.length ? (
-            <div className="row no-data col-md-12">No Data Available</div>
-          ) : (
-            <>
-              <Row>{this.state.postData}</Row>
-              <ReactPaginate
-                previousLabel=""
-                nextLabel=""
-                pageClassName="page-item "
-                pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-                previousClassName="page-item"
-                previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-                nextClassName="page-item"
-                nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                forcePage={this.state.currentPage}
-                pageCount={this.state.pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={
-                  "pagination justify-content-center mt-2 custom-paginate"
-                }
-                // subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-              />
-            </>
-          )}
+          {data.length > 0 ? (<>
+            <Row>{postData()}</Row>
+            <ReactPaginate
+              previousLabel=""
+              nextLabel=""
+              pageClassName="page-item "
+              pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+              previousClassName="page-item"
+              previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+              nextClassName="page-item"
+              nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+              breakLabel="..."
+              breakClassName="page-item"
+              breakLinkClassName="page-link"
+              forcePage={currentPage}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={handlePageClick}
+              containerClassName={
+                "pagination justify-content-center mt-2 custom-paginate"
+              }
+              // subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </>
+          ) : (<>
+            No Data Found
+          </>)
+          }
           <Modal
-            show={this.state.modal}
-            onHide={() => this.setState({ modal: false })}
+            show={modal}
+            onHide={() => setModal(false)}
             className="edit-campaign linkin-bio"
             centered
             size="xl"
@@ -376,20 +271,11 @@ class AffiliateCampaign extends React.Component {
             </Modal.Header>
             <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
               <UpdateModal
-                affData={this.state.currentCampaign}
-                countries={this.props.countries}
-                affCloseModal={() => this.setState({ modal: false })}
+                affData={currentCampaign}
+                countries={props.countries}
+                affCloseModal={() => setModal(false)}
                 reload={() => {
-                  this.fetchPostPerformance(
-                    this.state.username,
-                    this.state.lastYear,
-                    moment(new Date()).format("YYYY-MM-DD"),
-                    this.state.limit,
-                    this.state.page,
-                    "",
-                    this.state.saveSort,
-                    this.state.saveSortOrder
-                  );
+                  fetchPostPerformance();
                 }}
               />
             </Modal.Body>
@@ -397,6 +283,9 @@ class AffiliateCampaign extends React.Component {
         </div>
       </>
     );
+  }
+  else {
+    return ('')
   }
 }
 
