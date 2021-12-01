@@ -29,10 +29,10 @@ import MyProfile from "../../pages/myprofile/MyProfile";
 import MyCategory from "../../pages/mycategory/MyCategory";
 import AccountSetup from "../../pages/accountsetup/AccountSetup";
 import Dashboard from "../../pages/dashboard/Dashboard";
-import PermissionHelper from "../PermissionHelper";
 import { createBrowserHistory } from "history";
 import Affiliate from "../../pages/affiliate/Affiliate";
 import Marketplace from "../../pages/marketplace/Marketplace";
+import { PrivateRoute } from "../RouteComponents";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -64,27 +64,6 @@ class Layout extends React.Component {
   }
 
   render() {
-    const loggedIn = localStorage.getItem("token");
-    const PrivateRoute = ({ component: Component, ...rest }) => {
-      const Components = PermissionHelper.checkPermissions(Component, rest);
-      return (
-        <Route
-          {...rest}
-          render={(props) =>
-            loggedIn ? (
-              <Components {...props} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: props.location },
-                }}
-              />
-            )
-          }
-        />
-      );
-    };
     return (
       <div
         className={[
@@ -144,6 +123,7 @@ class Layout extends React.Component {
                         path="/app/analysis"
                         component={Analysis}
                         permissions={["analytics_access"]}
+                        dispatch={this.props.dispatch}
                       />
                       <Route
                         path="/app/linkinbio/:code"
@@ -180,12 +160,14 @@ class Layout extends React.Component {
                         path="/app/campaign"
                         exact
                         component={Affiliate}
+                        dispatch={this.props.dispatch}
                         permissions={["affiliate_access"]}
                       />
                       <PrivateRoute
                         path="/app/marketplace"
                         exact
                         component={Marketplace}
+                        dispatch={this.props.dispatch}
                         permissions={["marketplace_access"]}
                       />
                     </Switch>

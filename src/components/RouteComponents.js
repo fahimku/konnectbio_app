@@ -3,6 +3,8 @@ import { logoutUser } from "../actions/auth";
 import { Route } from "react-router";
 import React from "react";
 import { createBrowserHistory } from "history";
+import PermissionHelper from "./PermissionHelper";
+import AccountUpgrade from "../pages/accountupgrade/AccountUpgrade";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -39,6 +41,27 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
         render={(props) => React.createElement(component, props)}
       />
     );
+  }
+};
+export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
+  const checkPermission = PermissionHelper.validate(permissions);
+  if (!Login.isAuthenticated()) {
+    dispatch(logoutUser());
+    //    return (<Redirect to="/login" />)
+    return history.push("/app/linkinbio");
+  } else {
+    if (checkPermission) {
+      return (
+        // eslint-disable-line
+        <Route
+          {...rest}
+          render={(props) => React.createElement(component, props)}
+        />
+      );
+    } else {
+      // return AccountUpgrade;
+      return <Route component={AccountUpgrade} exact />;
+    }
   }
 };
 
