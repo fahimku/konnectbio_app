@@ -1,33 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Loader from "../../components/Loader/Loader";
-import axios from "axios";
+import { connect } from "react-redux";
+import * as dashActions from "../../actions/dashboard"
 import numeral from "numeral";
 import { Link } from "react-router-dom"
 
-export default function Dashboard(props) {
-  let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+function Dashboard({ getDashboard, dashboard }) {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const userData = userInfo;
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
-    fetchSummeryPerformance(userData.access_token, "image");
+    setLoading(true);
+    getDashboard("image", userData.access_token).then(function () {
+      setLoading(false);
+    }, function (error) {
+      setLoading(false);
+    })
   }, []);
 
-  async function fetchSummeryPerformance(token, postType) {
-    setLoading(true);
-    await axios
-      .post("userdashboard/receive/" + token, {
-        post_type: postType,
-      })
-      .then((response) => {
-        setData(response.data.message);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }
+
 
   return (
     <>
@@ -42,8 +33,8 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : data.post_views ? (
-                    numeral(data.post_views).format("0,0")
+                  ) : dashboard.post_views ? (
+                    numeral(dashboard.post_views).format("0,0")
                   ) : (
                     "0"
                   )}
@@ -67,8 +58,8 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : data.post_clicks ? (
-                    numeral(data.post_clicks).format("0,0")
+                  ) : dashboard.post_clicks ? (
+                    numeral(dashboard.post_clicks).format("0,0")
                   ) : (
                     "0"
                   )}
@@ -88,8 +79,8 @@ export default function Dashboard(props) {
                 <div className="imp-t text-right">
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : data.ctr ? (
-                    data.ctr + " %"
+                  ) : dashboard.ctr ? (
+                    dashboard.ctr + " %"
                   ) : (
                     "0%"
                   )}
@@ -110,8 +101,8 @@ export default function Dashboard(props) {
                   {" "}
                   {loading ? (
                     <Loader className="dashboard-loader" />
-                  ) : data.revenue ? (
-                    data.revenue
+                  ) : dashboard.revenue ? (
+                    dashboard.revenue
                   ) : (
                     "$0.00"
                   )}
@@ -140,7 +131,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/account/profile");
                       // }}
                       className="btn btn-rounded btn-primary"
-                     // href="javascript:void(0)"
+                    // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Home Screen
                     </Link>
@@ -165,7 +156,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/linkinbio");
                       // }}
                       className="btn btn-rounded btn-primary"
-//                      href="javascript:void(0)"
+                    //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage All Posts
                     </Link>
@@ -193,7 +184,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/linkinbio-shop");
                       // }}
                       className="btn btn-rounded btn-primary"
-                     // href="javascript:void(0)"
+                    // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Bio Shop
                     </Link>
@@ -224,7 +215,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/my/links");
                       // }}
                       className="btn btn-rounded btn-primary"
-//                      href="javascript:void(0)"
+                    //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Links
                     </Link>
@@ -248,7 +239,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/analysis");
                       // }}
                       className="btn btn-rounded btn-primary"
-                   //   href="javascript:void(0)"
+                    //   href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Analytics
                     </Link>
@@ -273,7 +264,7 @@ export default function Dashboard(props) {
                       //   props.history.push("/app/account/categories");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      //href="javascript:void(0)"
+                    //href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Category Setup
                     </Link>
@@ -293,8 +284,8 @@ export default function Dashboard(props) {
                     <div className="imp-t text-right">
                       {loading ? (
                         <Loader className="dashboard-loader" />
-                      ) : data.total_posts ? (
-                        data.total_posts
+                      ) : dashboard.total_posts ? (
+                        dashboard.total_posts
                       ) : (
                         "0"
                       )}
@@ -308,8 +299,8 @@ export default function Dashboard(props) {
                       {" "}
                       {loading ? (
                         <Loader className="dashboard-loader" />
-                      ) : data.linked_posts ? (
-                        data.linked_posts
+                      ) : dashboard.linked_posts ? (
+                        dashboard.linked_posts
                       ) : (
                         "0"
                       )}
@@ -342,3 +333,10 @@ export default function Dashboard(props) {
     </>
   );
 }
+
+function mapStateToProps({ dashboard }) {
+  return {
+    dashboard
+  }
+}
+export default connect(mapStateToProps, dashActions)(Dashboard);

@@ -9,3 +9,4 @@ export const ADD_CAMPAIGN_TO_SHOP = "addCampaignToShop";
 export const DELETE_CAMPAIGN = "deleteCampaign"
 export const GET_MARKET_PLACE = "getMarketPlace";
 export const GET_INSTAGRAM_URL = 'getInstagramUrl';
+export const GET_DASHBOARD_DATA = 'getDashboardData';
