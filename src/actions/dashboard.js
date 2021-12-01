@@ -11,7 +11,7 @@ export const getDashboard = (postType,token) => async (dispatch) => {
       .then((response) => {
         dispatch({
           type: GET_DASHBOARD_DATA,
-          payload: response.data,
+          payload: response.data.message,
         });
         resolve("success");
       })
