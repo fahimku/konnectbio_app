@@ -21,8 +21,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
 
-  const [category, setCategory] = useState({ value: 'all', label: 'All' });
-  const [sortBy, setSortBy] = useState({ value: 'commission', label: 'Commission' });
+  const [category, setCategory] = useState({ value: 'all', label: 'ALL' });
+  const [sortBy, setSortBy] = useState({ value: 'commission', label: 'COMMISSION' });
   const [orderBy, setOrderBy] = useState({ value: 'desc', label: 'DESC' });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -59,8 +59,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   const clearMarketPlace = (e) => {
     e.preventDefault();
     setClearLoading(true);
-    setCategory({ value: "all", label: "All" });
-    setSortBy({ value: 'commission', label: 'Commission' });
+    setCategory({ value: "all", label: "ALL" });
+    setSortBy({ value: 'commission', label: 'COMMISSION' });
     setOrderBy({ value: 'desc', label: 'DESC' })
     setCurrentPage();
     setStartDate("");
@@ -69,7 +69,7 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
       setLoading(false);
       setSearchLoading(false);
       setClearLoading(false);
-   
+
     }, function (error) {
       toast.error(error?.response?.data?.message)
     })
@@ -95,8 +95,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
   };
 
   const sortByOptions = [
-    { value: "commission", label: "Commission" },
-    { value: "date", label: "Date" },
+    { value: "commission", label: "COMMISSION" },
+    { value: "date", label: "DATE" },
 
   ];
 
@@ -126,8 +126,8 @@ function Marketplace({ getMarketPlace, marketPlace, addCampaignToShop, getUserCa
                     <Col xs={12} xl={2} md={6}>
                       <p>Select Start Date / End Date</p>
                       <RangePicker
-                        key={4} 
-                        value={startDate && endDate ? [moment(startDate),moment(endDate)]:[]}
+                        key={4}
+                        value={startDate && endDate ? [moment(startDate), moment(endDate)] : []}
 
                         allowClear={false}
                         ranges={{

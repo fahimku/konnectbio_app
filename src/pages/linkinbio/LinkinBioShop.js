@@ -555,5 +555,4 @@ class LinkinBioShop extends React.Component {
     );
   }
 }
-
 export default LinkinBioShop;

@@ -106,7 +106,6 @@ class Layout extends React.Component {
         <Sidebar />
         <div className={"LayoutWrap " + s.wrap}>
           <Header username={this.state.username} placeholder={placeholder} />
-
           <Hammer onSwipe={this.handleSwipe}>
             <main className={s.content}>
               <BreadcrumbHistory url={this.props.location.pathname} />
