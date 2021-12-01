@@ -5,7 +5,7 @@ export default function categories(state = initialState, action) {
         case GET_CATEGORIES:
             return action.payload;
         case GET_USER_CATEGORIES:
-            return [{ value: "all", label: "All" }, ...action.payload.map(({ category_id, category_name }) => {
+            return [{ value: "all", label: "ALL" }, ...action.payload.map(({ category_id, category_name }) => {
                 return {
                     value: category_id, label: category_name
                 };

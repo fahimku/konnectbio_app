@@ -35,6 +35,7 @@ class MyCategory extends React.Component {
       package: userInfo.package.package_name,
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
+      sort: false,
     };
   }
 
@@ -180,7 +181,6 @@ class MyCategory extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(this.state.saveCategories, "saveCategories");
     let category =
       this.state.saveCategories === null
         ? []
@@ -194,20 +194,24 @@ class MyCategory extends React.Component {
               editable: category.editable,
             };
           });
+    // console.log({ categories: category, sort: this.state.sort });
     this.setState({ loading: true });
     await axios
       .post(`/usercategory/reserve`, {
         categories: category,
       })
       .then((response) => {
-        this.setState({ loading: false });
+        this.setState({
+          loading: false,
+          categoryError: "",
+        });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
         this.fetchSaveCategory();
       })
       .catch((err) => {
         toast.error(err.response.data.message);
-        this.setState({ loading: false });
+        this.setState({ loading: false, categoryError: "" });
       });
   };
   deleteCustomCat = async (id) => {
@@ -242,6 +246,7 @@ class MyCategory extends React.Component {
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
       saveCategories: arrayMove(this.state.saveCategories, oldIndex, newIndex),
+      sort: true,
     });
   };
 
@@ -442,9 +447,6 @@ class MyCategory extends React.Component {
                                 className="selectCustomization"
                                 options={this.state.myCategory}
                                 value={this.state.saveCategories}
-                                // value={MIGRATIONOPTIONS.filter(
-                                //   (option) => option.value === migration.status
-                                // )}
                                 placeholder="Select Category"
                                 onChange={(options, e) =>
                                   this.handleSelect(e, options)

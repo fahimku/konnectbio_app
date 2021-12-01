@@ -99,6 +99,7 @@ class LinkinBio extends React.Component {
           this.setState({ showInstagramButton: true });
           this.props.history.push("/connect");
         }
+        this.props.history.push("/connect");
       });
   }
   //Next Page Instagram Posts Request From User
