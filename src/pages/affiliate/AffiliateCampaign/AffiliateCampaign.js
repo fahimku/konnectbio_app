@@ -130,30 +130,11 @@ function AffiliateCampaign(props) {
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
-          <div className="card analytic-box campaign-box">
+          <div className="card any_bx analytic-box campaign-box">
             <div className="camp-row row">
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
-                <div className="cmp-h-right col-md-6">
-                  <div className="action-btn">
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {
-                        setCurrentCampaign(record);
-                        setModal(true);
-                      }}
-                    >
-                      <i className="fa fa-pencil-square-o" />
-                    </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => {
-                        deleteCampaign(record.campaign_id);
-                      }}
-                    >
-                      <i className="fa fa-trash" />
-                    </button>
-                  </div>
+                <div className="cmp-h-right">
                   {/* {toggleLoading && <Loader />} */}
                   <div class="form-check custom-switch custom-switch-md">
                     <input
@@ -230,6 +211,33 @@ function AffiliateCampaign(props) {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="cam-buttons col-12">
+              <button
+                className="btn"
+                onClick={() => {
+                  setCurrentCampaign(record);
+                  setModal(true);
+                }}
+              >
+                <i className="fa fa-pencil-square-o" /> Edit
+              </button>
+              <button
+                className="btn"
+                onClick={() => {
+                  deleteCampaign(record.campaign_id);
+                }}
+              >
+                <i className="fa fa-trash" /> Delete
+              </button>
+              <button
+                className="btn"
+                // onClick={() => {
+                //   deleteCampaign(record.campaign_id);
+                // }}
+              >
+                <i className="fa fa-bar-chart" /> Analytics
+              </button>
             </div>
           </div>
         </Col>

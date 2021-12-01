@@ -249,6 +249,9 @@ span.icon {
   margin-bottom: 20px;
   padding: 15px;
 }
+.any_bx.analytic-box{
+  padding-bottom: 40px;
+}
 .analytic-box .media-image {
   border: solid 1px #ccc;
   padding: 2px;
@@ -284,6 +287,32 @@ span.icon {
   display: flex;
   align-items: center;
   padding-left: 0;
+}
+.cam-buttons.col-12{
+  padding-left: 0;
+  padding-right: 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+}
+.cam-buttons.col-12 .btn{
+  padding: 6px 0;
+  background-color: #e4e7ed;
+  flex: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  border-right: solid 1px #FFF;
+}
+.cam-buttons.col-12 .btn i{
+  margin-right: 0.2rem;
+}
+.cam-buttons.col-12 .btn:last-child{
+  border:none;
+}
+.cam-buttons.col-12 .btn:hover{
+  background-color:#c5cdd8;
+  border-color:#c5cdd8;
 }
 .connections button {
   display: flex;

@@ -1,6 +1,12 @@
 /* Medium devices (landscape tablets, 768px and up) */
 
 
+@media only screen and (max-width: 1500px) {
+    .cam-buttons.col-12 .btn{
+        font-size: 12px;
+    }
+}
+
 @media only screen and (max-width: 1390px) {
     .custom_pkg p br {
         display: block;
