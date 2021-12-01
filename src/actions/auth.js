@@ -158,8 +158,8 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          if (res.data.message.package)
-            history.push("/app/linkinbio");
+          if (res.data.message.package) 
+          history.push("/app/linkinbio");
          else history.push("/package");
         })
         .catch((error) => {
