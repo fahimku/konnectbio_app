@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 import numeral from "numeral";
+import { Link } from "react-router-dom"
 
 export default function Dashboard(props) {
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -133,15 +134,16 @@ export default function Dashboard(props) {
                   <h4>Settings - Home Screen</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/account/profile");
-                      }}
+                    <Link
+                      to="/app/account/profile"
+                      // onClick={() => {
+                      //   props.history.push("/app/account/profile");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+                     // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Home Screen
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -157,15 +159,16 @@ export default function Dashboard(props) {
                   <h4>All Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/linkinbio");
-                      }}
+                    <Link
+                      to="/app/linkinbio"
+                      // onClick={() => {
+                      //   props.history.push("/app/linkinbio");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+//                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage All Posts
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -184,15 +187,16 @@ export default function Dashboard(props) {
                   <h4>Bio Shop</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/linkinbio-shop");
-                      }}
+                    <Link
+                      to="/app/linkinbio-shop"
+                      // onClick={() => {
+                      //   props.history.push("/app/linkinbio-shop");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+                     // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Bio Shop
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -214,15 +218,16 @@ export default function Dashboard(props) {
                   <h4>Links</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/my/links");
-                      }}
+                    <Link
+                      to="/app/my/links"
+                      // onClick={() => {
+                      //   props.history.push("/app/my/links");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+//                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Links
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -238,15 +243,15 @@ export default function Dashboard(props) {
                   <h4>Analytics</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/analysis");
-                      }}
+                    <Link to="/app/analysis"
+                      // onClick={() => {
+                      //   props.history.push("/app/analysis");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+                   //   href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Analytics
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -262,15 +267,16 @@ export default function Dashboard(props) {
                   <h4>Category Setup</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <a
-                      onClick={() => {
-                        props.history.push("/app/account/categories");
-                      }}
+                    <Link
+                      to="/app/account/categories"
+                      // onClick={() => {
+                      //   props.history.push("/app/account/categories");
+                      // }}
                       className="btn btn-rounded btn-primary"
-                      href="javascript:void(0)"
+                      //href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Category Setup
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
