@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Row, Col, Modal } from "react-bootstrap";
-import Dropdown from "react-bootstrap/Dropdown";
+//import Dropdown from "react-bootstrap/Dropdown";
 import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
@@ -12,19 +12,19 @@ import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
 
-const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-  <a
-    href="#"
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-    <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
-  </a>
-));
+// const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+//   <a
+//     href="#"
+//     ref={ref}
+//     onClick={(e) => {
+//       e.preventDefault();
+//       onClick(e);
+//     }}
+//   >
+//     {children}
+//     <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
+//   </a>
+// ));
 
 function AffiliateCampaign(props) {
   const [data, setData] = useState([]);

@@ -12,7 +12,7 @@ import campaign from "./campaign/campaign";
 import marketPlace from "./marketPlace/marketPlace";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
-
+import dashboard from "./dashboard"
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -20,6 +20,7 @@ export default (history) =>
     alerts,
     auth,
     navigation,
+    dashboard,
     layout,
     users,
     categories,
@@ -28,4 +29,4 @@ export default (history) =>
     campaign,
     marketPlace,
     instagram,
-  });
+});
