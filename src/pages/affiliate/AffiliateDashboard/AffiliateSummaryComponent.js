@@ -5,6 +5,8 @@ import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import { connect } from "react-redux";
+import { getCampaignSummary } from "../../../actions/campaignSummary";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
@@ -47,27 +49,37 @@ class AffiliateSummaryComponent extends React.Component {
     //   this.state.limit,
     //   this.state.page
     // );
+    this.props.dispatch(
+      getCampaignSummary(
+        this.state.username,
+        this.state.lastYear,
+        moment(new Date()).format("YYYY-MM-DD")
+      )
+    );
   }
-  fetchSummeryPerformance = async (username, fromDate, toDate, limit, page) => {
-    this.setState({ loading: true });
-    await axios
-      .post("analytics/receive/analyseSummary", {
-        username: username,
-        from_date: fromDate,
-        to_date: toDate,
-        page: page,
-        limit: limit,
-        post_type: "image",
-      })
-      .then((response) => {
-        this.setState({ data: response.data.message, loading: false });
-      });
-  };
+  // fetchSummeryPerformance = async (username, fromDate, toDate, limit, page) => {
+  //   this.setState({ loading: true });
+  //   await axios
+  //     .post("analytics/receive/analyseSummary", {
+  //       username: username,
+  //       from_date: fromDate,
+  //       to_date: toDate,
+  //       page: page,
+  //       limit: limit,
+  //       post_type: "image",
+  //     })
+  //     .then((response) => {
+  //       this.setState({ data: response.data.message, loading: false });
+  //     });
+  // };
 
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({ fromDate: fromDate, toDate: toDate });
+    this.props.dispatch(
+      getCampaignSummary(this.state.username, fromDate, toDate)
+    );
     // this.fetchSummeryPerformance(
     //   this.state.username,
     //   fromDate,
@@ -82,7 +94,8 @@ class AffiliateSummaryComponent extends React.Component {
   }
 
   render() {
-    // const data = this.state.data;
+    const data = this.props.campaignSummary;
+    console.log(data, "campaignSummary");
     return (
       <>
         <div className="summary_container_main container">
@@ -122,7 +135,7 @@ class AffiliateSummaryComponent extends React.Component {
                     format={dateFormat}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
-                  {this.state.loading ? (
+                  {!data.loading ? (
                     <Loader className="analytics-loading" size={60} />
                   ) : (
                     <div className="card analytic-box">
@@ -154,4 +167,9 @@ class AffiliateSummaryComponent extends React.Component {
     );
   }
 }
-export default AffiliateSummaryComponent;
+function mapStateToProps({ campaignSummary }) {
+  return {
+    campaignSummary: campaignSummary,
+  };
+}
+export default connect(mapStateToProps)(AffiliateSummaryComponent);

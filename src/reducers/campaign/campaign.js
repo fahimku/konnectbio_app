@@ -1,11 +1,11 @@
 import { GET_CAMPAIGN, DELETE_CAMPAIGN } from "../../actions/type";
-const initialState = {}
+const initialState = {};
 export default function campaign(state = initialState, action) {
   switch (action.type) {
     case GET_CAMPAIGN:
-      return action.payload
+      return action.payload;
     case DELETE_CAMPAIGN:
-      return action.payload
+      return action.payload;
     default:
       return state;
   }

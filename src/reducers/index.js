@@ -12,6 +12,7 @@ import campaign from "./campaign/campaign";
 import marketPlace from "./marketPlace/marketPlace";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
+import campaignSummary from "./campaign/campaignSummary";
 
 export default (history) =>
   combineReducers({
@@ -28,4 +29,5 @@ export default (history) =>
     campaign,
     marketPlace,
     instagram,
+    campaignSummary,
   });
