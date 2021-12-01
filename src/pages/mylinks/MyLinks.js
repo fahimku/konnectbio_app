@@ -153,7 +153,7 @@ class MyLinks extends React.Component {
         this.fetchMyLinks(this.state.username);
         toast.success("New Link Added");
         this.setState({ loading: false });
-        this.setState({ singlePostLoading: false });        
+        this.setState({ singlePostLoading: false });
       })
       .catch((err) => {
         toast.error(err.response?.data.message);
@@ -166,10 +166,10 @@ class MyLinks extends React.Component {
     this.setState({ singlePostLoading: true });
     this.setState({ loading: true });
     await axios.put(`posts/revise/${id}`, {
-        caption: title,
-        redirected_url: redirectedUrl,
-        post_type: "link",
-      })
+      caption: title,
+      redirected_url: redirectedUrl,
+      post_type: "link",
+    })
       .then(() => {
         let data = this.state.myLinks;
         let objIndex = data.findIndex((obj) => obj.post_id === id);

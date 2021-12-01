@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
 
 export default function Box({ item, addCampaignToShop, index }) {
-
-  const [addCampaign, setAddCampaign] = useState(item.is_linked);
+  const [addCampaign, setAddCampaign] = useState(false);
   const [loading, setLoading] = useState(false);
-  const confirmAddToCampaign = (campaignId, categoryId, userId) => {
 
+  const confirmAddToCampaign = (campaignId, categoryId, userId) => {
     Swal.fire({
       title: `Are you sure you want to add this campaign?`,
       icon: "warning",
@@ -21,18 +20,22 @@ export default function Box({ item, addCampaignToShop, index }) {
     }).then((result) => {
       if (result.isConfirmed) {
         setLoading(true);
-        addCampaignToShop(campaignId, categoryId, userId).then(function () {
-          setAddCampaign(true);
-          toast.success('Campaign Added Successfully');
-          setLoading(false);
-        }, function (error) {
-          toast.error(error?.response?.data?.message)
-          setLoading(false);
-        })
+        addCampaignToShop(campaignId, categoryId, userId).then(
+          function () {
+            setAddCampaign(true);
+            toast.success("Campaign Added Successfully");
+            setLoading(false);
+          },
+          function (error) {
+            toast.error(error?.response?.data?.message);
+            setLoading(false);
+          }
+        );
       }
     });
   };
-
+  console.log("is Linked");
+  console.log(addCampaign);
   return (
     <React.Fragment>
       <div className="card analytic-box campaign-box">
@@ -85,29 +88,33 @@ export default function Box({ item, addCampaignToShop, index }) {
 
               <div className="col-12 count-box">
                 <div className="count-title">
-                  {addCampaign ? (
+                  {item.is_linked || addCampaign ? (
                     <Button
-                      disabled style={{ pointerEvents: 'none' }}
+                      disabled
+                      style={{ pointerEvents: "none" }}
                       key={index}
-                      className="btn-connect">Campaign Added</Button>
+                      className="btn-connect"
+                    >
+                      Campaign Added
+                    </Button>
+                  ) : loading ? (
+                    <Button key={index} className="btn-connect">
+                      <Loader />{" "}
+                    </Button>
                   ) : (
-                    loading ?
-                      <Button
-                        key={index}
-                        className="btn-connect"><Loader /> </Button> :
-                      <Button
-                        key={index}
-                        onClick={() => {
-                          confirmAddToCampaign(
-                            item.campaign_id,
-                            item.category_id,
-                            item.user_id
-                          );
-                        }}
-                        className="btn-connect"
-                      >
-                        Select Campaign
-                      </Button>
+                    <Button
+                      key={index}
+                      onClick={() => {
+                        confirmAddToCampaign(
+                          item.campaign_id,
+                          item.category_id,
+                          item.user_id
+                        );
+                      }}
+                      className="btn-connect"
+                    >
+                      Select Campaign
+                    </Button>
                   )}
                 </div>
               </div>

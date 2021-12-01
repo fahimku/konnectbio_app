@@ -13,6 +13,7 @@ import marketPlace from "./marketPlace/marketPlace";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
+import dashboard from "./dashboard";
 
 export default (history) =>
   combineReducers({
@@ -21,6 +22,7 @@ export default (history) =>
     alerts,
     auth,
     navigation,
+    dashboard,
     layout,
     users,
     categories,
