@@ -485,3 +485,26 @@ h1 small {
   margin-left: 4px;
   border: none;
 }
+.abc-checkbox{
+  padding-left:0;
+  margin-bottom: 12px;
+}
+.acct-promo-sec{
+  width: 100%;
+  margin-top:20px;
+
+  h4{
+    font-size: 1.15rem;
+  }
+  .acct-promo-sec-inr{
+    display: flex;
+
+    .form-control{
+      margin-right:15px;
+    }
+  }
+
+  .make-canc-pay{
+    margin-top:20px;
+  }
+}

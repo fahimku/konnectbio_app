@@ -92,6 +92,10 @@
     .affiliate-model .image-wrapper .image-box img{
         border-radius: 50% !important;
     }
+    .colbx-inr.col-md-5{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
       
 }
 
@@ -131,7 +135,7 @@
         flex: 0 0 50%;
         max-width: 50%;
     }
-    .account-setup .profile_container_main .row .profile_box_main.col-md-4{
+    .account-setup .profile_container_main .row .profile_box_main.col-md-4, .profile_box_main.col-md-8{
         flex: 0 0 100%;
         max-width: 100%;
     }

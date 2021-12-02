@@ -142,7 +142,11 @@ class AccountSetup extends React.Component {
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
-      <div className={`profile-page account-setup ${this.props.className ? 'container' : ''}`} >
+      <div
+        className={`profile-page account-setup ${
+          this.props.className ? "container" : ""
+        }`}
+      >
         <div
           className={
             this.props.className ? this.props.className : "container-fluid"
@@ -156,7 +160,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container  container`}>
             <div className="row">
-              <div className="profile_box_main col">
+              <div className="profile_box_main col-md-4">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Manage Plan</h5>
@@ -199,8 +203,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -215,8 +219,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -229,7 +233,6 @@ class AccountSetup extends React.Component {
                                     variant="primary"
                                     className="btn-block"
                                     onClick={() => {
-
                                       this.setState({
                                         showPaymentButton: true,
                                       });
@@ -281,6 +284,96 @@ class AccountSetup extends React.Component {
             {this.state.singlePackage.package_name !== "Micro Influencer" &&
               this.state.showPaymentButton && (
                 <>
+                  <div className="row">
+                    <div className="profile_box_payment profile_box_main col-md-8">
+                      <div className="dash_block_profile">
+                        <div className="dash_content_profile">
+                          <h5>Manage Plan</h5>
+                          <div className="row">
+                            <div className="colbx-inr col-md-12">
+                              <div className="checkbox abc-checkbox">
+                                <Input
+                                  defaultChecked
+                                  name="payment"
+                                  value="Monthly"
+                                  className="mt-0"
+                                  id="checkbox1"
+                                  type="radio"
+                                  onChange={(e) => {
+                                    this.setState({ plan: e.target.value });
+                                  }}
+                                />{" "}
+                                <Label for="checkbox1" />
+                                Pay Monthly: $
+                                {
+                                  this.state.singlePackage
+                                    .package_amount_monthly
+                                }
+                              </div>
+                              <div className="checkbox abc-checkbox">
+                                <Input
+                                  name="payment"
+                                  value="Yearly"
+                                  className="mt-0"
+                                  id="checkbox2"
+                                  type="radio"
+                                  onChange={(e) => {
+                                    this.setState({ plan: e.target.value });
+                                  }}
+                                />{" "}
+                                <Label for="checkbox2" />
+                                Pay Yearly & Save: $
+                                {
+                                  this.state.singlePackage.package_amount_yearly
+                                }{" "}
+                                &nbsp; (Save{" "}
+                                {this.state.singlePackage.yearly_discount}%)
+                              </div>
+                              <div className="acct-promo-sec">
+                                <h4>Have Promo Code?</h4>
+                                <div className="acct-promo-sec-inr">
+                                  <input
+                                    type="text"
+                                    name="promo_code"
+                                    // placeholder="Enter Promo Code"
+                                    onInput={this.handleChange}
+                                    className="form-control"
+                                    value={this.state.promo_code}
+                                    required
+                                  />
+                                  <Button
+                                    type="submit"
+                                    disabled={
+                                      !this.state.loading ? false : true
+                                    }
+                                  >
+                                    Apply
+                                  </Button>
+                                </div>
+                                <div className="make-canc-pay">
+                                <PaymentButton
+                                  plan={this.state.plan}
+                                  userId={userInfo1.user_id}
+                                  packageId={this.state.singlePackage.package_id}
+                                  paymentMethod={this.state.singlePackage.package_name}
+                                />
+                                <Button
+                                    type="submit"
+                                    // disabled={
+                                    //   !this.state.loading ? false : true
+                                    // }
+                                  >
+                                    Cancel
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="white-box col">
                     <Row>
                       <Col xl={4}>
@@ -320,9 +413,7 @@ class AccountSetup extends React.Component {
                           />{" "}
                           <Label for="checkbox2" />
                           Pay Yearly & Save: $
-                          {
-                            this.state.singlePackage.package_amount_yearly
-                          }{" "}
+                          {this.state.singlePackage.package_amount_yearly}{" "}
                           &nbsp; (Save{" "}
                           {this.state.singlePackage.yearly_discount}%)
                         </div>
