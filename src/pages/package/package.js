@@ -34,7 +34,6 @@ class Package extends React.Component {
       .get(`/package/receive`)
       .then((response) => {
         const packages = response.data.message;
-
         this.setState({packages: this.convertArrayToObject(packages)});
       })
       .catch(function (error) {
@@ -87,6 +86,7 @@ class Package extends React.Component {
       promo_code: e.target.value,
     });
   };
+
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({loading: true});

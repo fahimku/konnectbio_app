@@ -8,6 +8,8 @@ import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
 // import CancelSubsciption from "./CancelSubsciption";
+import { toast } from "react-toastify";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -19,6 +21,7 @@ class AccountSetup extends React.Component {
     this.state = {
       packageIndex: "",
       plan: "Monthly",
+      promoLoading: false,
       upgrade: false,
       userInfo: userInfo,
       cancelSubscription: true,
@@ -45,6 +48,7 @@ class AccountSetup extends React.Component {
       packageId: userInfo.package.package_id,
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
+      promo_code: "",
     };
   }
 
@@ -125,6 +129,28 @@ class AccountSetup extends React.Component {
     }
   };
 
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    this.setState({ promoLoading: true });
+    await axios
+      .post("/payment/validatepromocode", { promo_code: this.state.promo_code })
+      .then((response) => {
+        this.setState({ promoLoading: false });
+        this.setState({ showPaymentButton: false });
+        toast.success('Promo Code Applied SuccessFully');
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        parseUserInformation.package = response.data.message;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message);
+        this.setState({ promoLoading: false, promo_code: "" });
+      });
+  };
+
   toggleModal = () => {
     const { modal } = this.state;
     this.setState({
@@ -139,13 +165,16 @@ class AccountSetup extends React.Component {
     });
   };
 
+  promoChange = (e) => this.setState({promo_code: e.target.value});
+  
+
+
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
-        className={`profile-page account-setup ${
-          this.props.className ? "container" : ""
-        }`}
+        className={`profile-page account-setup ${this.props.className ? "container" : ""
+          }`}
       >
         <div
           className={
@@ -203,8 +232,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more categories</span>
-                            )}
+                                <span>Change Plan to have more categories</span>
+                              )}
                           </div>
                         </div>
 
@@ -219,8 +248,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more links</span>
-                            )}
+                                <span>Change Plan to have more links</span>
+                              )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -306,8 +335,7 @@ class AccountSetup extends React.Component {
                                 <Label for="checkbox1" />
                                 Pay Monthly: $
                                 {
-                                  this.state.singlePackage
-                                    .package_amount_monthly
+                                  this.state.singlePackage.package_amount_monthly
                                 }
                               </div>
                               <div className="checkbox abc-checkbox">
@@ -329,51 +357,51 @@ class AccountSetup extends React.Component {
                                 &nbsp; (Save{" "}
                                 {this.state.singlePackage.yearly_discount}%)
                               </div>
-                              <div className="acct-promo-sec">
-                                <h4>Have Promo Code?</h4>
-                                <div className="acct-promo-sec-inr">
-                                  <input
-                                    type="text"
-                                    name="promo_code"
-                                    // placeholder="Enter Promo Code"
-                                    onInput=''
-                                    className="form-control"
-                                    value=''
-                                    required
-                                  />
-                                  <Button
-                                    type="submit"
-                                    disabled={
-                                      !this.state.loading ? false : true
-                                    }
-                                  >
-                                    Apply
-                                  </Button>
-                                </div>
-                                <div className="make-canc-pay">
-                                <PaymentButton
-                                  plan={this.state.plan}
-                                  userId={userInfo1.user_id}
-                                  packageId={this.state.singlePackage.package_id}
-                                  paymentMethod={this.state.singlePackage.package_name}
-                                />
-                                <Button
-                                    type="submit"
+                              <form onSubmit={this.handleSubmit}>
+                                <div className="acct-promo-sec">
+                                  <h4>Have Promo Code?</h4>
+                                  <div className="acct-promo-sec-inr">
+                                    <input
+                                      type="text"
+                                      name="promo_code"
+                                      placeholder="Enter Promo Code"
+                                      value={this.state.promo_code}
+                                      className="form-control"
+                                      onInput={this.promoChange}
+                                      required
+                                    />
+                                    <Button
+                                      type="submit"
+                                      disabled={!this.state.promoLoading ? false : true}
+                                    >
+                                      Apply
+                                    </Button>
+                                  </div>
+                                  <div className="make-canc-pay">
+                                    <PaymentButton
+                                      plan={this.state.plan}
+                                      userId={userInfo1.user_id}
+                                      packageId={this.state.singlePackage.package_id}
+                                      paymentMethod={this.state.singlePackage.package_name}
+                                    />
+                                    <Button
+                                      type="submit"
                                     // disabled={
                                     //   !this.state.loading ? false : true
                                     // }
-                                  >
-                                    Cancel
-                                  </Button>
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </div>
                                 </div>
-                              </div>
+                              </form>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-{/* 
+                  {/* 
                   <div className="white-box col">
                     <Row>
                       <Col xl={4}>
