@@ -1237,6 +1237,11 @@ margin:0 auto !important;
 .swal2-title{
   font-size: 1.1rem !important;
 }
+.aff-img-edit-link.image-edit-links{
+  width:100%;
+  max-width: 100% !important;
+  flex: auto !important;
+}
 
 /* Affiliate Page End Here Iftikhar */
 

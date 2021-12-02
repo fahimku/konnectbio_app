@@ -398,7 +398,7 @@ class UpdateModal extends React.Component {
             <div className="image-box">
               <img src={`${affData.media_url}`} alt="media_url" />
             </div>
-            <div className="image-edit-links">
+            <div className="aff-img-edit-link image-edit-links">
               <div className="row">
                 <div className="campaign-name col-md-6">
                   <label>Campaign Name</label>
