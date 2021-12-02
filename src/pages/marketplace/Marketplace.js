@@ -21,7 +21,6 @@ function Marketplace({
   categories,
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
   const [loading, setLoading] = useState(false);
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
@@ -34,10 +33,10 @@ function Marketplace({
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
-  // const fromDate = moment().subtract(30, "day").format("YYYY-MM-DD");
-  // const toDate = moment(new Date()).format("YYYY-MM-DD");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const fromDate = moment(new Date()).format("YYYY-MM-DD");
+  const toDate = moment().add(1, "year").format("YYYY-MM-DD");
+  const [startDate, setStartDate] = useState(fromDate);
+  const [endDate, setEndDate] = useState(toDate);
 
   const limit = 9;
 
@@ -342,6 +341,4 @@ function mapStateToProps({ marketPlace, categories }) {
     categories,
   };
 }
-export default connect(mapStateToProps, { ...markActions, ...catActions })(
-  Marketplace
-);
+export default connect(mapStateToProps, { ...markActions, ...catActions })(Marketplace);

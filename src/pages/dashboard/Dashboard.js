@@ -17,7 +17,7 @@ function Dashboard({ getDashboard, dashboard }) {
       setLoading(false);
     })
   }, []);
-  if (!loading) {
+
     return (
       <>
         <div className="dashboard_main_ift container">
@@ -330,7 +330,6 @@ function Dashboard({ getDashboard, dashboard }) {
         </div>
       </>
     );
-  } else { return ('') }
 }
 
 function mapStateToProps({ dashboard }) {
