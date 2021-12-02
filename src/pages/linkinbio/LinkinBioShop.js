@@ -11,7 +11,6 @@ import {
   Button,
 } from "reactstrap";
 import { toast } from "react-toastify";
-
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import TopBar from "../../components/Topbar";
@@ -27,7 +26,7 @@ class LinkinBioShop extends React.Component {
     super(props);
     this.error = this.error.bind(this);
     this.state = {
-      postLoading:false,
+      postLoading: false,
       deleteId: "",
       startDate: moment(),
       endDate: moment().add(30, "days"),
@@ -81,10 +80,13 @@ class LinkinBioShop extends React.Component {
     await axios
       .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
-        this.setState({ postLoading: false});
+        this.setState({ postLoading: false });
         this.setState({ instagramPosts: response.data.message.result });
         if (response.data.message.result.hasOwnProperty("next")) {
-          this.setState({ page: response.data.message.result.next.page });
+          console.log("testing");
+          this.setState({ page: response.data?.message?.result?.next.page });
+        } else {
+          this.setState({ page: 0 });
         }
       })
       .catch((err) => {
@@ -98,7 +100,7 @@ class LinkinBioShop extends React.Component {
       .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
         // console.log(response.data.message.result);
-        if (response.data.message.result.hasOwnProperty("next")) {
+        if (response.data?.message?.result?.hasOwnProperty("next")) {
           this.setState({ page: response.data.message.result.next.page });
         } else {
           this.setState({ page: 0 });
@@ -272,6 +274,8 @@ class LinkinBioShop extends React.Component {
         parseInt(node.clientHeight);
     if (bottom) {
       if (this.state.page) {
+        console.log("page");
+        console.log(this.state.page);
         this.nextPageInstagramPosts(
           this.state.username,
           this.state.limit,
