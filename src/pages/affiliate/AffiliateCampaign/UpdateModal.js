@@ -29,8 +29,12 @@ class UpdateModal extends React.Component {
       budget: this.props.affData?.budget,
       // startDate: moment(),
       // endDate: moment().add(30, "days"),
-      startDate: this.props.affData?.start_date_and_time,
-      endDate: this.props.affData?.end_date_and_time,
+      startDate: moment(this.props.affData?.start_date_and_time).format(
+        "YYYY-MM-DD"
+      ),
+      endDate: moment(this.props.affData?.end_date_and_time).format(
+        "YYYY-MM-DD"
+      ),
       inputList: this.props.affData?.demographics,
       loading: false,
       country: "",
@@ -106,10 +110,11 @@ class UpdateModal extends React.Component {
     list[index] = {
       country: option.value,
       // name: option.label,
-      state: "",
-      city: "",
+      state: "all",
+      city: "all",
       zip: "",
     };
+
     const res = await axios.post(`/common/receive/states`, {
       country_code: option.value,
     });
@@ -368,7 +373,7 @@ class UpdateModal extends React.Component {
         const exit = [
           { value: "all", name: "all" },
 
-          ...this.state.cities2[i].data.message,
+          this.state.cities2[0].data.message,
         ].filter((item) => item.name === x.city);
 
         return exit[0]
@@ -493,8 +498,8 @@ class UpdateModal extends React.Component {
                     }}
                     style={{ width: "100%" }}
                     // format={dateFormat}
-                    showTime={{ format: "HH:mm" }}
-                    format="YYYY-MM-DD HH:mm"
+                    // showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD"
                     // onChange={this.dateRangePickerChanger}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
@@ -716,7 +721,7 @@ class UpdateModal extends React.Component {
                               this.state.cities2.length > 0 && x.state
                                 ? [
                                     { value: "all", name: "all" },
-                                    ...this.state.cities2[i].data.message,
+                                    ...this.state.cities2[0].data.message,
                                   ].map((item) => {
                                     return {
                                       value: item.name,

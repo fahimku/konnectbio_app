@@ -15,14 +15,10 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-  // const media_id = props.singlePost.id
-  //   ? props.singlePost.id
-  //   : props.singlePost.post_id;
   const media_id = props.singlePost.post_id;
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [redirectedUrl, setRedirectedUrl] = useState("");
-
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
@@ -39,7 +35,6 @@ const ShopRightBar = (props) => {
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
-  console.log(props.singlePost, "sdsd");
   return (
     <>
       {props.startDate && props.endDate && (
@@ -64,53 +59,89 @@ const ShopRightBar = (props) => {
             ></span>
             <div className="ind-post-anlytics image-box-info">
               <div className="edit-left">
-                <h4>
-                  {props.redirectedUrl ? "Edit Post" : "Add Post"}
-                </h4>
+                <h4>{props.redirectedUrl ? "Edit Post" : "Add Post"}</h4>
                 <p>
-                  Posted on{" "}
-                  {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
+                  {props.redirectedUrl ? (
+                    props.updatedDate === "" ? (
+                      <span className="date-loader">
+                        <Loader />
+                      </span>
+                    ) : (
+                      "Updated on " +
+                      moment.utc(props.updatedDate).format("MMM Do YYYY")
+                    )
+                  ) : (
+                    "Posted on " +
+                    moment.utc(props.singlePost.timestamp).format("MMM Do YYYY")
+                  )}
                 </p>
               </div>
-              <div className="edit-right">
+             
+              {props.redirectedUrl && (<>
+                <div className="edit-right">
                 <div className="an-col col-md-3">
                   <div className="an-col-inr">
                     <div className="an-content clearfix">
-                      <span class="dash_icon-top"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></span>
-                      <div class="imp-t text-right">781</div>
-                      <div class="imp-tx text-uppercase text-muted text-right">IMPRESSIONS</div>
+                      <span class="dash_icon-top">
+                        <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <div class="imp-t text-right">{props.fetchUserPost.post_views}</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">
+                        IMPRESSIONS
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="an-col col-md-3">
                   <div className="an-col-inr">
                     <div className="an-content clearfix">
-                      <span class="dash_icon-top"><i class="fa fa-hand-pointer-o fa-2x" aria-hidden="true"></i></span>
-                      <div class="imp-t text-right">3</div>
-                      <div class="imp-tx text-uppercase text-muted text-right">CLICKS</div>
+                      <span class="dash_icon-top">
+                        <i
+                          class="fa fa-hand-pointer-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                      <div class="imp-t text-right">{props.fetchUserPost.post_clicks}</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">
+                        CLICKS
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="an-col col-md-3">
                   <div className="an-col-inr">
                     <div className="an-content clearfix">
-                      <span class="dash_icon-top"><i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i></span>
-                      <div class="imp-t text-right">0.35%</div>
-                      <div class="imp-tx text-uppercase text-muted text-right">ENGAGEMENT</div>
+                      <span class="dash_icon-top">
+                        <i
+                          class="fa fa-handshake-o fa-2x"
+                          aria-hidden="true"
+                        ></i>
+                      </span>
+                      <div class="imp-t text-right">{ props.fetchUserPost.ctr}%</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">
+                        ENGAGEMENT
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div className="an-col col-md-3">
                   <div className="an-col-inr">
                     <div className="an-content clearfix">
-                      <span class="dash_icon-top"><i class="fa fa-usd fa-2x" aria-hidden="true"></i></span>
+                      <span class="dash_icon-top">
+                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                      </span>
                       <div class="imp-t text-right">$0.00</div>
-                      <div class="imp-tx text-uppercase text-muted text-right">REVENUE</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">
+                        REVENUE
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+                </>)
+            }
             </div>
+          
 
             <div className="image-wrapper">
               <div className="image-box">

@@ -28,8 +28,8 @@ class AffiliateForm extends React.Component {
       campaign_type: "",
       pay_per_hundred: "",
       budget: "",
-      startDate: moment().format("YYYY-MM-DD HH:mm"),
-      endDate: moment().add(1, "years").format("YYYY-MM-DD HH:mm"),
+      startDate: moment().format("YYYY-MM-DD"),
+      endDate: moment().add(1, "years").format("YYYY-MM-DD"),
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       loading: false,
       country: "",
@@ -349,7 +349,7 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    console.log(this.state.inputList, "input");
+    // console.log(this.state.inputList, "input");
 
     return (
       <React.Fragment>
@@ -463,8 +463,8 @@ class AffiliateForm extends React.Component {
                     }}
                     style={{ width: "100%" }}
                     // format={dateFormat}
-                    showTime={{ format: "HH:mm" }}
-                    format="YYYY-MM-DD HH:mm"
+                    // showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD"
                     // onChange={this.dateRangePickerChanger}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
