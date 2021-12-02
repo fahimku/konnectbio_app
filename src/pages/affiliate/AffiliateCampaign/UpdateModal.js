@@ -106,10 +106,11 @@ class UpdateModal extends React.Component {
     list[index] = {
       country: option.value,
       // name: option.label,
-      state: "",
-      city: "",
+      state: "all",
+      city: "all",
       zip: "",
     };
+
     const res = await axios.post(`/common/receive/states`, {
       country_code: option.value,
     });
@@ -368,7 +369,7 @@ class UpdateModal extends React.Component {
         const exit = [
           { value: "all", name: "all" },
 
-          ...this.state.cities2[i].data.message,
+          this.state.cities2[0].data.message,
         ].filter((item) => item.name === x.city);
 
         return exit[0]
@@ -716,7 +717,7 @@ class UpdateModal extends React.Component {
                               this.state.cities2.length > 0 && x.state
                                 ? [
                                     { value: "all", name: "all" },
-                                    ...this.state.cities2[i].data.message,
+                                    ...this.state.cities2[0].data.message,
                                   ].map((item) => {
                                     return {
                                       value: item.name,
