@@ -29,8 +29,12 @@ class UpdateModal extends React.Component {
       budget: this.props.affData?.budget,
       // startDate: moment(),
       // endDate: moment().add(30, "days"),
-      startDate: this.props.affData?.start_date_and_time,
-      endDate: this.props.affData?.end_date_and_time,
+      startDate: moment(this.props.affData?.start_date_and_time).format(
+        "YYYY-MM-DD"
+      ),
+      endDate: moment(this.props.affData?.end_date_and_time).format(
+        "YYYY-MM-DD"
+      ),
       inputList: this.props.affData?.demographics,
       loading: false,
       country: "",
@@ -494,8 +498,8 @@ class UpdateModal extends React.Component {
                     }}
                     style={{ width: "100%" }}
                     // format={dateFormat}
-                    showTime={{ format: "HH:mm" }}
-                    format="YYYY-MM-DD HH:mm"
+                    // showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD"
                     // onChange={this.dateRangePickerChanger}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
