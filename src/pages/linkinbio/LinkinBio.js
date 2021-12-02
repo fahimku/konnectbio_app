@@ -60,7 +60,7 @@ class LinkinBio extends React.Component {
       autoFocus: false,
       error: "",
       updatedAt: "",
-      fetchUserPost:[]
+      fetchUserPost: [],
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -152,7 +152,7 @@ class LinkinBio extends React.Component {
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
         // let that = this;
-        this.setState({fetchUserPost:response.data.message})
+        this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
         this.setState({ media_id: media_id });
@@ -235,7 +235,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -330,9 +330,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
+        parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -365,6 +365,8 @@ class LinkinBio extends React.Component {
       } else {
         this.setState({
           category: [],
+          startDate: moment(),
+          endDate: moment().add(1, "years"),
         });
       }
 
@@ -520,22 +522,25 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${this.state.url + this.state.username
-                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${
+                    this.state.url + this.state.username
+                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>
