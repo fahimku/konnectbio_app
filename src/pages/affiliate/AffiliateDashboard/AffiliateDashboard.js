@@ -1,6 +1,5 @@
 import React from "react";
 import AffiliateSummaryComponent from "./AffiliateSummaryComponent";
-// import SummaryDataComponent from "./SummaryDataComponent";
 
 class AffiliateDashboard extends React.Component {
   state = {

@@ -39,7 +39,6 @@ const ShopRightBar = (props) => {
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
-  console.log(props.singlePost, "sdsd");
   return (
     <>
       {props.startDate && props.endDate && (
@@ -67,8 +66,19 @@ const ShopRightBar = (props) => {
                 ></span>
               </h4>
               <p>
-                Posted on{" "}
-                {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
+                {props.redirectedUrl ? (
+                  props.updatedDate === "" ? (
+                    <span className="date-loader">
+                      <Loader />
+                    </span>
+                  ) : (
+                    "Updated on " +
+                    moment.utc(props.updatedDate).format("MMM Do YYYY")
+                  )
+                ) : (
+                  "Posted on " +
+                  moment.utc(props.singlePost.timestamp).format("MMM Do YYYY")
+                )}
               </p>
             </div>
 
