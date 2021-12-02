@@ -59,6 +59,7 @@ class LinkinBio extends React.Component {
       accordionSecond: [false, true, false],
       autoFocus: false,
       error: "",
+      updatedAt: "",
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -85,7 +86,7 @@ class LinkinBio extends React.Component {
           this.setState({ nextPageUrl: response?.data?.paging?.next });
       })
       .catch((err) => {
-        console.log('error')
+        console.log("error");
         console.log(err);
         this.setState({ postLoading: false });
         if (err?.response?.data?.code === 190) {
@@ -96,7 +97,9 @@ class LinkinBio extends React.Component {
           parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error: "Connect Your Instagram Account to Continue"});
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
           this.setState({ showInstagramButton: true });
           this.props.history.push("/connect");
         }
@@ -149,6 +152,7 @@ class LinkinBio extends React.Component {
       .then((response) => {
         // let that = this;
         this.setState({ postType: response.data.message.post_type });
+        this.setState({ updatedAt: response.data.message.updated_at });
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
@@ -485,6 +489,7 @@ class LinkinBio extends React.Component {
         callBack={(e) => {
           this.setState({ redirectedUrl: e.target.value });
         }}
+        updatedDate={this.state.updatedAt}
       ></ShopRightBar>
     );
   };
