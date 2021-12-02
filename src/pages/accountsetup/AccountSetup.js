@@ -336,9 +336,9 @@ class AccountSetup extends React.Component {
                                     type="text"
                                     name="promo_code"
                                     // placeholder="Enter Promo Code"
-                                    onInput={this.handleChange}
+                                    onInput=''
                                     className="form-control"
-                                    value={this.state.promo_code}
+                                    value=''
                                     required
                                   />
                                   <Button
@@ -373,7 +373,7 @@ class AccountSetup extends React.Component {
                       </div>
                     </div>
                   </div>
-
+{/* 
                   <div className="white-box col">
                     <Row>
                       <Col xl={4}>
@@ -426,7 +426,7 @@ class AccountSetup extends React.Component {
                       packageId={this.state.singlePackage.package_id}
                       paymentMethod={this.state.singlePackage.package_name}
                     />
-                  </div>
+                  </div> */}
                 </>
               )}
           </div>
