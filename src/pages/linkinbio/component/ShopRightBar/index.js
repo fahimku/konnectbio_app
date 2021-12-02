@@ -57,18 +57,58 @@ const ShopRightBar = (props) => {
               props.isSelectPost ? "show" : "hidden"
             }`}
           >
-            <div className="image-box-info">
-              <h4>
-                {props.redirectedUrl ? "Edit Post" : "Add Post"}
-                <span
-                  onClick={() => props.selectPost(false, "")}
-                  className="fa fa-times"
-                ></span>
-              </h4>
-              <p>
-                Posted on{" "}
-                {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
-              </p>
+            <span
+              onClick={() => props.selectPost(false, "")}
+              className="fa fa-times ift-cancel"
+            ></span>
+            <div className="ind-post-anlytics image-box-info">
+              <div className="edit-left">
+                <h4>
+                  {props.redirectedUrl ? "Edit Post" : "Add Post"}
+                </h4>
+                <p>
+                  Posted on{" "}
+                  {moment(props.singlePost.timestamp).format("MMM Do YYYY")}
+                </p>
+              </div>
+              <div className="edit-right">
+                <div className="an-col col-md-3">
+                  <div className="an-col-inr">
+                    <div className="an-content clearfix">
+                      <span class="dash_icon-top"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></span>
+                      <div class="imp-t text-right">781</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">IMPRESSIONS</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="an-col col-md-3">
+                  <div className="an-col-inr">
+                    <div className="an-content clearfix">
+                      <span class="dash_icon-top"><i class="fa fa-hand-pointer-o fa-2x" aria-hidden="true"></i></span>
+                      <div class="imp-t text-right">3</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">CLICKS</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="an-col col-md-3">
+                  <div className="an-col-inr">
+                    <div className="an-content clearfix">
+                      <span class="dash_icon-top"><i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i></span>
+                      <div class="imp-t text-right">0.35%</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">ENGAGEMENT</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="an-col col-md-3">
+                  <div className="an-col-inr">
+                    <div className="an-content clearfix">
+                      <span class="dash_icon-top"><i class="fa fa-usd fa-2x" aria-hidden="true"></i></span>
+                      <div class="imp-t text-right">$0.00</div>
+                      <div class="imp-tx text-uppercase text-muted text-right">REVENUE</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="image-wrapper">
@@ -81,7 +121,7 @@ const ShopRightBar = (props) => {
                 )}
               </div>
               <div className="image-edit-links">
-                <span>URL</span>
+                <label>URL</label>
                 <InputValidation
                   className=""
                   placeholder="Please Enter Website Address"
@@ -104,7 +144,7 @@ const ShopRightBar = (props) => {
                 />
 
                 <div className="select-categories mt-3">
-                  <span>Select Category</span>
+                  <label>Select Category</label>
                   <Select
                     key={Date.now()}
                     value={props.category}
@@ -174,7 +214,7 @@ const ShopRightBar = (props) => {
                 )}
 
                 <div className="date-range mt-3">
-                  <span>BioShop</span>
+                  <label>BioShop</label>
                   <RangePicker
                     key={1}
                     defaultValue={[moment(startDate), moment(endDate)]}

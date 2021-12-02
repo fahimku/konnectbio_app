@@ -18,6 +18,18 @@
         width:55px;
         height: 55px;;
     }
+    .ind-post-anlytics{
+        flex-wrap: wrap;
+
+        .edit-left, .edit-right{
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        .edit-right .an-col.col-md-3{
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+    }
 }
 @media only screen and (max-width: 1300px) {
     .left-column {
@@ -125,6 +137,14 @@
     }
     .account-setup .profile_container_main .dash_block_profile{
         min-height: 150px;
+    }
+    .edit-right{
+        flex-wrap: wrap;
+
+        .an-col.col-md-3{
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
     }
 }
 
@@ -401,8 +421,8 @@
     }
 
     .image-box {
-        flex: 0 0 60%;
-        max-width: 60%;
+        flex: 0 0 100%;
+        max-width: 100%;
         align-items: center;
         justify-content: center;
     }
@@ -595,6 +615,9 @@
         flex: 0 0 100% !important;
         max-width: 100% !important;
         z-index: 2;
+    }
+    .ift-cancel{
+        display: none;
     }
 
 

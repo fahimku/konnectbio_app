@@ -34,16 +34,16 @@ const AddNewLink = (props) => {
   return (
     <>
       <div className={`image-edit-box ${props.isPreview ? "show" : "hidden"}`}>
+        <span
+          onClick={() => props.preview(false, "")}
+          className="fa fa-times ift-cancel"
+        ></span>
         <div className="image-box-info">
           <h4>
             Add New Link
-            <span
-              onClick={() => props.preview(false, "")}
-              className="fa fa-times"
-            ></span>
           </h4>
         </div>
-        <div className="image-wrapper">
+        <div className="c-links-wrapper">
           <Formsy.Form
             onValidSubmit={() => {
               if (props.updatePage) {
@@ -61,7 +61,7 @@ const AddNewLink = (props) => {
           >
             <div className="image-edit-links">
               <div className="mt-3">
-                <span>Title</span>
+                <label>Title</label>
                 <InputValidation
                   className=""
                   type="text"
@@ -76,7 +76,7 @@ const AddNewLink = (props) => {
                 />
               </div>
               <div className="mt-3">
-                <span>URL</span>
+                <label>URL</label>
                 <InputValidation
                   className=""
                   placeholder="Please Enter Website Address"
