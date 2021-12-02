@@ -59,6 +59,7 @@ class LinkinBioShop extends React.Component {
       accordionSecond: [false, true, false],
       error: "",
       autoFocus: false,
+      updatedAt: "",
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -291,6 +292,7 @@ class LinkinBioShop extends React.Component {
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
         this.setState({ postType: response.data.message.post_type });
+        this.setState({ updatedAt: response.data.message.updated_at });
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
@@ -453,6 +455,7 @@ class LinkinBioShop extends React.Component {
         callBack={(e) => {
           this.setState({ redirectedUrl: e.target.value });
         }}
+        updatedDate={this.state.updatedAt}
       ></ShopRightBar>
     );
   };
