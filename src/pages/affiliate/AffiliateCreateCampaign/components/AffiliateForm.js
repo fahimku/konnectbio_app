@@ -103,6 +103,8 @@ class AffiliateForm extends React.Component {
   changeCountry = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
+    list[index]["state"] = "all";
+    list[index]["city"] = "all";
     this.setState({ country: options, inputList: list });
     this.getState(options.value);
     this.reachCampaign();
@@ -347,6 +349,7 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
+    console.log(this.state.inputList, "input");
 
     return (
       <React.Fragment>
@@ -826,6 +829,7 @@ class AffiliateForm extends React.Component {
                         <div className="col-md-3 mt-3">
                           <label>State {i + 1}</label>
                           <VirtualizedSelect
+                            className
                             key={i}
                             name="state"
                             value={renderStateValue(x)}
@@ -875,7 +879,8 @@ class AffiliateForm extends React.Component {
                             clearable={false}
                             disabled={
                               this.state.inputList[i].state === "" ||
-                              this.state.inputList.length - 1 !== i
+                              this.state.inputList.length - 1 !== i ||
+                              this.state.inputList[i].state === "all"
                                 ? true
                                 : false
                             }
@@ -932,7 +937,9 @@ class AffiliateForm extends React.Component {
                                 this.state.inputList[i].country === "" ||
                                 this.state.inputList[i].state === "" ||
                                 this.state.inputList[i].city === ""
-                                  ? true
+                                  ? // (this.state.inputList[i].city === "all" &&
+                                    //   this.state.inputList[i].state === "all")
+                                    true
                                   : false
                               }
                             >
