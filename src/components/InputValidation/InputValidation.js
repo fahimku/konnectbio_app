@@ -79,6 +79,7 @@ class InputValidation extends React.Component {
           value={this.props.value}
           onChange={this.props.onChange}
           disabled={this.props.disabled ? true : false}
+          autoFocus={this.props.autoFocus ? "autofocus" : ""}
         />
         {required}
         {errorList}
