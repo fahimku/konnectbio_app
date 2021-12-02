@@ -164,7 +164,7 @@ class UpdateModal extends React.Component {
         });
         let all = {};
         all.value = "all";
-        all.label = "All";
+        all.label = "All States";
         all.countryCode = this.state.country.value;
         selectState.unshift(all);
         this.setState({ stateList: selectState });
@@ -190,7 +190,7 @@ class UpdateModal extends React.Component {
         });
         let all = {};
         all.value = "all";
-        all.label = "All";
+        all.label = "All Cities";
         all.countryCode = this.state.country.value;
         selectCities.unshift(all);
         this.setState({ cities: selectCities });
@@ -352,15 +352,15 @@ class UpdateModal extends React.Component {
     const renderStateValue = (x, i) => {
       if (x.country) {
         const exit = [
-          { isoCode: "all", name: "All" },
+          { isoCode: "all", name: "All States" },
           ...this.state.states[i].data.message,
         ].filter((item) => item.isoCode === x.state);
 
         return exit[0]
           ? { value: exit[0].isoCode, label: exit[0].name }
-          : { value: "", label: "Select State" };
+          : { value: "", label: "All States" };
       } else {
-        return { value: "", label: "Select State" };
+        return { value: "", label: "All States" };
       }
     };
     const renderCityValue = (x, i) => {
@@ -374,11 +374,11 @@ class UpdateModal extends React.Component {
         return exit[0]
           ? {
               value: exit[0].name,
-              label: exit[0].name === "all" ? "All" : exit[0].name,
+              label: exit[0].name === "all" ? "All Cities" : exit[0].name,
             }
-          : { value: "", label: "Select City" };
+          : { value: "", label: "All Cities" };
       } else {
-        return { value: "", label: "Select City" };
+        return { value: "", label: "All Cities" };
       }
     };
 
@@ -658,12 +658,12 @@ class UpdateModal extends React.Component {
                             onChange={(options, e) => {
                               this.changeState(options, i);
                             }}
-                            placeholder="Select State"
+                            placeholder="All States"
                             style={{ width: "100%" }}
                             options={
                               this.state.states.length > 0 && x.country
                                 ? [
-                                    { isoCode: "all", name: "All" },
+                                    { isoCode: "all", name: "All States" },
                                     ...this.state.states[i]?.data?.message,
                                   ].map((item) => {
                                     return {
@@ -710,7 +710,7 @@ class UpdateModal extends React.Component {
                             onChange={(options, e) =>
                               this.changeCity(options, i)
                             }
-                            placeholder="Select City"
+                            placeholder="All Cites"
                             style={{ width: "100%" }}
                             options={
                               this.state.cities2.length > 0 && x.state
@@ -721,7 +721,9 @@ class UpdateModal extends React.Component {
                                     return {
                                       value: item.name,
                                       label:
-                                        item.name === "all" ? "All" : item.name,
+                                        item.name === "all"
+                                          ? "All Cites"
+                                          : item.name,
                                     };
                                   })
                                 : []
@@ -805,7 +807,7 @@ class UpdateModal extends React.Component {
                     ""
                   ) : (
                     <h5 className="mt-4">
-                      Influencer's Reach: {this.state.reach.toString()}
+                      Total Reach: {this.state.reach.toString()}
                     </h5>
                   )}
                 </div>

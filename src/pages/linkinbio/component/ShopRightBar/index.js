@@ -39,6 +39,7 @@ const ShopRightBar = (props) => {
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
+  console.log(props.singlePost, "sdsd");
   return (
     <>
       {props.startDate && props.endDate && (

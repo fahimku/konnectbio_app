@@ -12,7 +12,7 @@ class AffiliateDashboard extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">Dashboard</h4>
-          <AffiliateSummaryComponent username={this.state.username} />
+          {/* <AffiliateSummaryComponent username={this.state.username} /> */}
         </div>
       </React.Fragment>
     );
