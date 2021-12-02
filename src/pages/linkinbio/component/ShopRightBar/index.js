@@ -15,14 +15,10 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-  // const media_id = props.singlePost.id
-  //   ? props.singlePost.id
-  //   : props.singlePost.post_id;
   const media_id = props.singlePost.post_id;
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [redirectedUrl, setRedirectedUrl] = useState("");
-
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
@@ -80,14 +76,16 @@ const ShopRightBar = (props) => {
                   )}
                 </p>
               </div>
-              <div className="edit-right">
+             
+              {props.redirectedUrl && (<>
+                <div className="edit-right">
                 <div className="an-col col-md-3">
                   <div className="an-col-inr">
                     <div className="an-content clearfix">
                       <span class="dash_icon-top">
                         <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
                       </span>
-                      <div class="imp-t text-right">781</div>
+                      <div class="imp-t text-right">{props.fetchUserPost.post_views}</div>
                       <div class="imp-tx text-uppercase text-muted text-right">
                         IMPRESSIONS
                       </div>
@@ -103,7 +101,7 @@ const ShopRightBar = (props) => {
                           aria-hidden="true"
                         ></i>
                       </span>
-                      <div class="imp-t text-right">3</div>
+                      <div class="imp-t text-right">{props.fetchUserPost.post_clicks}</div>
                       <div class="imp-tx text-uppercase text-muted text-right">
                         CLICKS
                       </div>
@@ -119,7 +117,7 @@ const ShopRightBar = (props) => {
                           aria-hidden="true"
                         ></i>
                       </span>
-                      <div class="imp-t text-right">0.35%</div>
+                      <div class="imp-t text-right">{ props.fetchUserPost.ctr}%</div>
                       <div class="imp-tx text-uppercase text-muted text-right">
                         ENGAGEMENT
                       </div>
@@ -140,7 +138,10 @@ const ShopRightBar = (props) => {
                   </div>
                 </div>
               </div>
+                </>)
+            }
             </div>
+          
 
             <div className="image-wrapper">
               <div className="image-box">
