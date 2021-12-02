@@ -82,9 +82,11 @@ class LinkinBio extends React.Component {
         this.setState({ postLoading: false });
         this.setState({ instagramPosts: response.data });
         if (response.data)
-          this.setState({ nextPageUrl: response.data.paging.next });
+          this.setState({ nextPageUrl: response?.data?.paging?.next });
       })
       .catch((err) => {
+        console.log('error')
+        console.log(err);
         this.setState({ postLoading: false });
         if (err?.response?.data?.code === 190) {
           const parseUserInformation = JSON.parse(
@@ -94,9 +96,7 @@ class LinkinBio extends React.Component {
           parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({
-            error: "Connect Your Instagram Account to Continue",
-          });
+          this.setState({error: "Connect Your Instagram Account to Continue"});
           this.setState({ showInstagramButton: true });
           this.props.history.push("/connect");
         }

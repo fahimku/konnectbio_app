@@ -58,7 +58,7 @@ class MyLinks extends React.Component {
         },
         {
           redirected_url: "",
-          caption: "My Website",
+          caption: "Website",
         },
         {
           redirected_url: "",
