@@ -6,6 +6,7 @@ import CampaignSummaryComponent from "./CampaignSummaryComponent";
 class SummaryComponent extends React.Component {
   state = {
     username: this.props.username,
+    packageName: this.props.packageName,
   };
 
   render() {
@@ -17,10 +18,13 @@ class SummaryComponent extends React.Component {
               <h4 className="page-title">Post Summary</h4>
               <SummaryDataComponent username={this.state.username} />
             </div>
-            <div className="col-md-4">
-              <h4 className="page-title">Campaign Summary</h4>
-              <CampaignSummaryComponent username={this.state.username} />
-            </div>
+            {this.state.packageName === "Influencer" ||
+            this.state.packageName === "Micro Influencer" ? (
+              <div className="col-md-4">
+                <h4 className="page-title">Campaign Summary</h4>
+                <CampaignSummaryComponent username={this.state.username} />
+              </div>
+            ) : null}
           </div>
         </div>
       </React.Fragment>
