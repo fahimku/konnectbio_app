@@ -1240,6 +1240,15 @@ margin:0 auto !important;
   max-width: 100% !important;
   flex: auto !important;
 }
+.no-data-found-mobile{
+  font-size: 1rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  font-family: 'SegoeUIBold';
+}
 
 /* Affiliate Page End Here Iftikhar */
 
