@@ -38,7 +38,7 @@ function Marketplace({
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
 
-  const limit = 9;
+  const limit = 8;
 
   useEffect(() => {
     setLoading(true);
