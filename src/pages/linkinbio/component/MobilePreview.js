@@ -11,7 +11,6 @@ const MobilePreview = ({
   pageName,
   postLoading,
 }) => {
-
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
@@ -33,7 +32,7 @@ const MobilePreview = ({
                 <img
                   className={
                     instagramPosts.data[i].linked ||
-                      instagramPosts.data[i].select
+                    instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -43,7 +42,7 @@ const MobilePreview = ({
                   alt="instagramPosts"
                 />
                 {instagramPosts.data[i].linked &&
-                  instagramPosts.data[i].post_type === "campaign" ? (
+                instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
@@ -66,7 +65,7 @@ const MobilePreview = ({
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||
-                      instagramPosts.data[i].select
+                    instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -82,8 +81,11 @@ const MobilePreview = ({
                   className="video-label fa fa-play"
                   aria-hidden="true"
                 ></span>
-                {instagramPosts.data[i].linked && instagramPosts.data[i].post_type === "campaign" ? ( <span className="linked-label">CAMPAIGN</span>
-                ) : instagramPosts.data[i].linked ? (<span className="linked-label">LINKED</span>
+                {instagramPosts.data[i].linked &&
+                instagramPosts.data[i].post_type === "campaign" ? (
+                  <span className="linked-label">CAMPAIGN</span>
+                ) : instagramPosts.data[i].linked ? (
+                  <span className="linked-label">LINKED</span>
                 ) : (
                   ""
                 )}
@@ -94,6 +96,7 @@ const MobilePreview = ({
       }
     }
   }
+  console.log(instaPosts, "instaPosts");
   return (
     <div className="mobile-preview">
       <div className="mobile-header">
@@ -107,9 +110,16 @@ const MobilePreview = ({
       </div>
       <div>
         <div ref={paneDidMount} className="mobile-gallery">
-          {postLoading ? <Loader /> :
-            <Row> {instaPosts}</Row>
-          }
+          {postLoading ? (
+            <Loader />
+          ) : instaPosts.length === 0 ? (
+            // <div class="text-center">No Post Added</div>
+            <div class="no-data-found">
+              <h1>Nothing Here Yet</h1>
+            </div>
+          ) : (
+            <Row>{instaPosts}</Row>
+          )}
         </div>
       </div>
     </div>
