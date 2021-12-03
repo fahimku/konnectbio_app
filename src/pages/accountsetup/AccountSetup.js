@@ -385,8 +385,12 @@ class AccountSetup extends React.Component {
                                       packageId={this.state.singlePackage.package_id}
                                       paymentMethod={this.state.singlePackage.package_name}
                                     />
-                                    <Button
-                                      type="submit"
+                                  <Button
+                                    onClick={() => {
+                                      this.setState({showPaymentButton: false})
+                                    }}
+                                    type="button"
+                                    
                                     // disabled={
                                     //   !this.state.loading ? false : true
                                     // }
