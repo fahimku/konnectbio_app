@@ -150,6 +150,9 @@
             max-width: 50%;
         }
     }
+    .analytics-page .post-analytics-tab form .row .col-md-6{
+        margin-bottom: 15px;;
+    }
 }
 
 @media only screen and (max-width: 1050px) {
@@ -178,9 +181,6 @@
     }
     .analytics-page .post-analytics-tab form .row {
         align-items: flex-start;
-    }
-    .analytics-page .post-analytics-tab form .row .col-md-6{
-        margin-bottom: 15px;;
     }
     .affiliate-page .post-box{
         margin:0;

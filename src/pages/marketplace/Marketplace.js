@@ -272,7 +272,7 @@ function Marketplace({
             <hr />
             {marketPlace?.message?.length > 0 ? (
               <>
-                <Row>
+                <Row className="post-analytics-tab-boxes-ift">
                   {marketPlace.message.map((item, index) => (
                     <Col key={index} xs={12} xl={3} md={6}>
                       <Box

@@ -47,9 +47,9 @@ class Analysis extends React.Component {
     return (
       <>
         <div className="analytics-page">
-          <Row className="tab-section">
+          <Row className="ml-0 mr-0 tab-section">
             <div className="affiliate_p_col">
-              <Row>
+              <Row className="ml-0 mr-0">
                 <div className="affiliate_in_col">
                   <Nav tabs className={`${s.coloredNav}`}>
                     <NavItem>
