@@ -1,38 +1,24 @@
 import React from "react";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
-// import HighCharts from "./highcharts/HighCharts";
-// import PostPerfomance from "./postperformance/postperformance";
 import classnames from "classnames";
-//import {connect} from "react-redux";
-// import placeholder from "../../images/placeholder.png";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 // import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
+import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
-    // console.log("I am a user");
-    // console.log(props.user);
-    this.toggleFirstTabs = this.toggleFirstTabs.bind(this);
     this.toggleSecondTabs = this.toggleSecondTabs.bind(this);
 
     this.state = {
-      activeFirstTab: "tab11",
       activeSecondTab: "tab20",
       username: username,
+      packageName: userInfo.package.package_name,
     };
-  }
-
-  toggleFirstTabs(tab) {
-    if (this.state.activeFirstTab !== tab) {
-      this.setState({
-        activeFirstTab: tab,
-      });
-    }
   }
 
   toggleSecondTabs(tab) {
@@ -76,6 +62,21 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
+                    {this.state.packageName === "Influencer" ||
+                    this.state.packageName === "Micro Influencer" ? (
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab23",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab23");
+                          }}
+                        >
+                          <span>Campaign Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    ) : null}
                     {/* <NavItem>
                       <NavLink
                         className={classnames({
@@ -107,11 +108,26 @@ class Analysis extends React.Component {
                     activeTab={this.state.activeSecondTab}
                   >
                     <TabPane tabId="tab20">
-                      <SummaryComponent username={this.state.username} />
+                      {this.state.activeSecondTab === "tab20" ? (
+                        <SummaryComponent
+                          username={this.state.username}
+                          packageName={this.state.packageName}
+                        />
+                      ) : null}
                     </TabPane>
                     <TabPane tabId="tab22">
-                      <PostAnalytic username={this.state.username} />
+                      {this.state.activeSecondTab === "tab22" ? (
+                        <PostAnalytic username={this.state.username} />
+                      ) : null}
                     </TabPane>
+                    {this.state.packageName === "Influencer" ||
+                    this.state.packageName === "Micro Influencer" ? (
+                      <TabPane tabId="tab23">
+                        {this.state.activeSecondTab === "tab23" ? (
+                          <CampaignAnalytics username={this.state.username} />
+                        ) : null}
+                      </TabPane>
+                    ) : null}
                     {/* <TabPane tabId="tab21">
                       <HighCharts username={this.state.username} />
                     </TabPane> */}
