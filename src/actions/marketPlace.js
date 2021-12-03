@@ -25,9 +25,7 @@ export const addCampaignToShop =
     return promise;
   };
 
-export const getMarketPlace =
-  (page, limit, categoryId, sortBy, orderBy, startDate, endDate) =>
-  async (dispatch) => {
+export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy,startDate,endDate,type) => async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
         .post(
@@ -38,18 +36,16 @@ export const getMarketPlace =
             category_id: categoryId,
             sort_by: sortBy,
             order_by: orderBy,
-          }
-        )
-        .then((res) => {
-          dispatch({
-            type: GET_MARKET_PLACE,
-            payload: res.data,
-          });
-          resolve("success");
+            key:type
+        }).then((res) => {
+            dispatch({
+                type: GET_MARKET_PLACE,
+                payload: res.data
+            })
+            resolve('success');
+        }).catch((error) => {
+            reject(error)
         })
-        .catch((error) => {
-          reject(error);
-        });
     });
     return promise;
   };
