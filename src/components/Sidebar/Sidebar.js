@@ -71,20 +71,17 @@ class Sidebar extends React.Component {
     this.props.dispatch(logoutUser());
   }
 
-
   render() {
-
     // let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav className={s.root}>
           <header
             className={s.logo}
-          // onClick={() => {
-          //   this.props.history.push("/app/home");
-          // }}
+            onClick={() => {
+              this.props.history.push("/app/dashboard");
+            }}
           >
-
             <span className={s.logoStyle}>&nbsp;</span> {/* </a> */}
           </header>
 
