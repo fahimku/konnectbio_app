@@ -252,7 +252,7 @@ function AffiliateCampaign(props) {
         <div className="container-fluid">
           {data.length > 0 ? (
             <>
-              <Row>{postData()}</Row>
+              <Row className="post-analytics-tab-boxes-ift">{postData()}</Row>
               <ReactPaginate
                 previousLabel=""
                 nextLabel=""
