@@ -9,16 +9,16 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
     getPosts(1, null, clearPost).then(() => setLoading(false));
   }, []);
 
-  const searchMemo = useMemo(() => {
-    if (id === "allPost") {
-      setLoading(true);
-      getPosts(1, null, clearPost).then(() => setLoading(false));
-    }
-    if (id && id !== "allPost") {
-      setLoading(true);
-      getPosts(1, id, clearPost).then(() => setLoading(false));
-    }
-  }, [id]);
+  // const searchMemo = useMemo(() => {
+  //   if (id === "allPost") {
+  //     setLoading(true);
+  //     getPosts(1, null, clearPost).then(() => setLoading(false));
+  //   }
+  //   if (id && id !== "allPost") {
+  //     setLoading(true);
+  //     getPosts(1, id, clearPost).then(() => setLoading(false));
+  //   }
+  // }, [id]);
 
   if (!loading) {
     return (

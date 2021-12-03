@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Row, Col, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
@@ -112,7 +112,9 @@ class AccountSetup extends React.Component {
   };
 
   handlePackage = (event) => {
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     // const maxIndex = this.state.allPackages.length - 1;
 
     this.setState({ singlePackage: singlePackage[0] });
@@ -129,7 +131,6 @@ class AccountSetup extends React.Component {
     }
   };
 
-
   handleSubmit = async (e) => {
     e.preventDefault();
     this.setState({ promoLoading: true });
@@ -138,7 +139,7 @@ class AccountSetup extends React.Component {
       .then((response) => {
         this.setState({ promoLoading: false });
         this.setState({ showPaymentButton: false });
-        toast.success('Promo Code Applied SuccessFully');
+        toast.success("Promo Code Applied SuccessFully");
         const userInformation = localStorage.getItem("userInfo");
         const parseUserInformation = JSON.parse(userInformation);
         parseUserInformation.package = response.data.message;
@@ -166,16 +167,15 @@ class AccountSetup extends React.Component {
     });
   };
 
-  promoChange = (e) => this.setState({promo_code: e.target.value});
-  
-
+  promoChange = (e) => this.setState({ promo_code: e.target.value });
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
-        className={`profile-page account-setup ${this.props.className ? "container" : ""
-          }`}
+        className={`profile-page account-setup ${
+          this.props.className ? "container" : ""
+        }`}
       >
         <div
           className={
@@ -233,8 +233,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -249,8 +249,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -336,7 +336,8 @@ class AccountSetup extends React.Component {
                                 <Label for="checkbox1" />
                                 Pay Monthly: $
                                 {
-                                  this.state.singlePackage.package_amount_monthly
+                                  this.state.singlePackage
+                                    .package_amount_monthly
                                 }
                               </div>
                               <div className="checkbox abc-checkbox">
@@ -373,7 +374,9 @@ class AccountSetup extends React.Component {
                                     />
                                     <Button
                                       type="submit"
-                                      disabled={!this.state.promoLoading ? false : true}
+                                      disabled={
+                                        !this.state.promoLoading ? false : true
+                                      }
                                     >
                                       Apply
                                     </Button>
@@ -382,18 +385,24 @@ class AccountSetup extends React.Component {
                                     <PaymentButton
                                       plan={this.state.plan}
                                       userId={userInfo1.user_id}
-                                      packageId={this.state.singlePackage.package_id}
-                                      paymentMethod={this.state.singlePackage.package_name}
+                                      packageId={
+                                        this.state.singlePackage.package_id
+                                      }
+                                      paymentMethod={
+                                        this.state.singlePackage.package_name
+                                      }
                                     />
-                                  <Button
-                                    onClick={() => {
-                                      this.setState({showPaymentButton: false})
-                                    }}
-                                    type="button"
-                                    
-                                    // disabled={
-                                    //   !this.state.loading ? false : true
-                                    // }
+                                    <Button
+                                      onClick={() => {
+                                        this.setState({
+                                          showPaymentButton: false,
+                                        });
+                                      }}
+                                      type="button"
+
+                                      // disabled={
+                                      //   !this.state.loading ? false : true
+                                      // }
                                     >
                                       Cancel
                                     </Button>
