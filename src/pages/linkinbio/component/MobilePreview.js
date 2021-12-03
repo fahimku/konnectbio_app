@@ -113,10 +113,7 @@ const MobilePreview = ({
           {postLoading ? (
             <Loader />
           ) : instaPosts.length === 0 ? (
-            // <div class="text-center">No Post Added</div>
-            <div class="no-data-found">
-              <h1>Nothing Here Yet</h1>
-            </div>
+            <div class="no-data-found-mobile text-center">No Post Added</div>
           ) : (
             <Row>{instaPosts}</Row>
           )}
