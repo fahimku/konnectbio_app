@@ -144,6 +144,7 @@ class AccountSetup extends React.Component {
         parseUserInformation.package = response.data.message;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
+        window.location.reload();
       })
       .catch((err) => {
         toast.error(err.response.data.message);
