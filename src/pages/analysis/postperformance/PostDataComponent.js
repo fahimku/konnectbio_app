@@ -1,14 +1,14 @@
 import axios from "axios";
 import React from "react";
-import {Row, Col, Button} from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
-import {DatePicker} from "antd";
+import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
 
-const {RangePicker} = DatePicker;
+const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const twodecimalplace = (value = 0) => {
@@ -54,7 +54,7 @@ class PostDataComponent extends React.Component {
       moment(new Date()).format("YYYY-MM-DD"),
       this.state.limit,
       this.state.page,
-"",
+      "",
       this.state.saveSort,
       this.state.saveSortOrder
     );
@@ -70,7 +70,7 @@ class PostDataComponent extends React.Component {
     sortId,
     orderBy
   ) {
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await axios
       .post("analytics/receive/analyseAllPosts", {
         username: username,
@@ -84,7 +84,7 @@ class PostDataComponent extends React.Component {
         order_by: orderBy,
       })
       .then((response) => {
-        this.setState({data: response.data.message.data, loading: false});
+        this.setState({ data: response.data.message.data, loading: false });
         this.postData();
         // if (response.data.message.hasOwnProperty("next")) {
         //   this.setState({ page: response.data.message.next.page });
@@ -98,14 +98,14 @@ class PostDataComponent extends React.Component {
         // }
       });
   }
-  
+
   fetchMyCategory = async () => {
     await axios
       .get("/users/receive/categories")
       .then((response) => {
         const selectCategories = [];
         const myCategories = response.data.message;
-        myCategories.map(({category_id, category_name, image_url}) => {
+        myCategories.map(({ category_id, category_name, image_url }) => {
           return selectCategories.push({
             value: category_id,
             label: category_name,
@@ -116,7 +116,7 @@ class PostDataComponent extends React.Component {
         all.value = "all";
         all.label = "ALL";
         selectCategories.unshift(all);
-        this.setState({myCategory: selectCategories});
+        this.setState({ myCategory: selectCategories });
       })
       .catch((error) => {
         console.log(error);
@@ -126,7 +126,7 @@ class PostDataComponent extends React.Component {
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];
-    this.setState({fromDate: fromDate, toDate: toDate});
+    this.setState({ fromDate: fromDate, toDate: toDate });
     // this.fetchPostPerformance(
     //   this.state.username,
     //   fromDate,
@@ -136,7 +136,7 @@ class PostDataComponent extends React.Component {
     // );
   }
   pagination = () => {
-    let {username, fromDate, toDate, limit, page} = this.state;
+    let { username, fromDate, toDate, limit, page } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -150,7 +150,7 @@ class PostDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let {username, fromDate, toDate, limit, previous} = this.state;
+    let { username, fromDate, toDate, limit, previous } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -299,15 +299,15 @@ class PostDataComponent extends React.Component {
   };
   render() {
     const sortOptions = [
-      {value: "date", label: "DATE"},
-      {value: "impressions", label: "IMPRESSIONS"},
-      {value: "clicks", label: "CLICKS"},
-      {value: "engagement", label: "ENGAGEMENT"},
+      { value: "date", label: "DATE" },
+      { value: "impressions", label: "IMPRESSIONS" },
+      { value: "clicks", label: "CLICKS" },
+      { value: "engagement", label: "ENGAGEMENT" },
       // { value: "revenue", label: "Revenue" },
     ];
     const sortOrderOptions = [
-      {value: "asc", label: "ASC"},
-      {value: "desc", label: "DESC"},
+      { value: "asc", label: "ASC" },
+      { value: "desc", label: "DESC" },
     ];
     const style = {
       control: (base, state) => ({
@@ -373,7 +373,7 @@ class PostDataComponent extends React.Component {
                     // value={this.state.optionCategory}
                     value={
                       this.state.optionCategory === ""
-                        ? {value: "all", label: "ALL"}
+                        ? { value: "all", label: "ALL" }
                         : this.state.optionCategory
                     }
                     placeholder="Select Category"
@@ -390,7 +390,7 @@ class PostDataComponent extends React.Component {
                     // value={this.state.optionSort}
                     value={
                       this.state.optionSort === ""
-                        ? {value: "date", label: "DATE"}
+                        ? { value: "date", label: "DATE" }
                         : this.state.optionSort
                     }
                     placeholder="Sort By"
@@ -406,7 +406,7 @@ class PostDataComponent extends React.Component {
                     options={sortOrderOptions}
                     value={
                       this.state.optionSortOrder === ""
-                        ? {value: "desc", label: "DESC"}
+                        ? { value: "desc", label: "DESC" }
                         : this.state.optionSortOrder
                     }
                     placeholder="Order By"
@@ -428,7 +428,7 @@ class PostDataComponent extends React.Component {
                     variant="gray"
                     className="fltr-h btn btn-primary"
                   >
-                    Clear
+                    Reset
                   </Button>
                 </Col>
               </Row>

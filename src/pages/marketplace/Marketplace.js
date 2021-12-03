@@ -261,7 +261,7 @@ function Marketplace({
                           variant="gray"
                           className="fltr-h btn btn-primary"
                         >
-                          Clear
+                          Reset
                         </Button>
                       )}
                     </Col>
@@ -341,4 +341,6 @@ function mapStateToProps({ marketPlace, categories }) {
     categories,
   };
 }
-export default connect(mapStateToProps, { ...markActions, ...catActions })(Marketplace);
+export default connect(mapStateToProps, { ...markActions, ...catActions })(
+  Marketplace
+);
