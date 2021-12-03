@@ -21,7 +21,7 @@ const numberWithCommas = (x) => {
   }
 };
 
-class SummaryDataComponent extends React.Component {
+class CampaignSummaryComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +57,7 @@ class SummaryDataComponent extends React.Component {
         to_date: toDate,
         page: page,
         limit: limit,
-        post_type: "image",
+        post_type: "campaign",
       })
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
@@ -165,4 +165,4 @@ class SummaryDataComponent extends React.Component {
     );
   }
 }
-export default SummaryDataComponent;
+export default CampaignSummaryComponent;

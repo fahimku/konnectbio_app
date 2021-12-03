@@ -9,6 +9,7 @@ import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 // import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
+import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -76,6 +77,18 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "tab23",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab23");
+                        }}
+                      >
+                        <span>Campaign Performance</span>
+                      </NavLink>
+                    </NavItem>
                     {/* <NavItem>
                       <NavLink
                         className={classnames({
@@ -111,6 +124,9 @@ class Analysis extends React.Component {
                     </TabPane>
                     <TabPane tabId="tab22">
                       <PostAnalytic username={this.state.username} />
+                    </TabPane>
+                    <TabPane tabId="tab23">
+                      <CampaignAnalytics username={this.state.username} />
                     </TabPane>
                     {/* <TabPane tabId="tab21">
                       <HighCharts username={this.state.username} />
