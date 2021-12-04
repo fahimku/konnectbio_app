@@ -153,7 +153,7 @@ function AllMarketplace({
             <>
                 <div className="analytics-page affiliate-page linkin-bio">
                     <div className="container-fluid">
-                        <h4 className="page-title mt-4">{title}</h4>
+                        <h4 className="page-title">{title}</h4>
                         <Row className="post-analytics-tab mb-4">
                             <Col xs={12} xl={12} md={12}>
                                 <form onSubmit={searchMarketPlace}>
@@ -233,7 +233,7 @@ function AllMarketplace({
                                                 styles={style}
                                             />
                                         </Col>
-                                        <Col xs={12} xl={1} md={6}>
+                                        <Col xs={12} xl={2} md={6}>
                                             <p>Order By</p>
                                             <Select
                                                 value={orderBy}
@@ -247,12 +247,12 @@ function AllMarketplace({
                                                 styles={style}
                                             />
                                         </Col>
-                                        <Col xs={12} xl={3} md={6}>
+                                        <Col className="d-flex" xs={12} xl={2} md={6}>
                                             {searchLoading ? (
                                                 <Button
                                                     type="button"
                                                     variant="primary"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr"
                                                 >
                                                     <Loader />
                                                 </Button>
@@ -260,7 +260,7 @@ function AllMarketplace({
                                                 <Button
                                                     type="submit"
                                                     variant="primary"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr"
                                                 >
                                                     Search
                                                 </Button>
@@ -268,7 +268,7 @@ function AllMarketplace({
                                             {clearLoading ? (
                                                 <Button
                                                     variant="gray"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn-primary"
                                                 >
                                                     <Loader />
                                                 </Button>
@@ -276,7 +276,7 @@ function AllMarketplace({
                                                 <Button
                                                     onClick={clearMarketPlace}
                                                     variant="gray"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn-primary"
                                                 >
                                                     Reset
                                                 </Button>

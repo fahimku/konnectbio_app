@@ -294,7 +294,7 @@ class MyCategory extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="profile-page category-page">
+        <div className="profile-page account-setup">
           <div
             className={
               this.props.className ? this.props.className : "container-fluid"

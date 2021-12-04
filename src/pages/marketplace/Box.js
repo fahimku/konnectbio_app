@@ -38,7 +38,7 @@ export default function Box({ item, addCampaignToShop, index }) {
   console.log(addCampaign);
   return (
     <React.Fragment>
-      <div className="card analytic-box campaign-box">
+      <div className="card any_bx analytic-box campaign-box">
         <div className="camp-row row">
           <div className="campaign-header col-12">
             <h6>{item.campaign_name}</h6>
@@ -85,40 +85,37 @@ export default function Box({ item, addCampaignToShop, index }) {
                 <h5 className="count-title">End Date</h5>
                 <h3 className="count">{item.end_date}</h3>
               </div>
-
-              <div className="col-12 count-box">
-                <div className="count-title">
-                  {item.is_linked || addCampaign ? (
-                    <Button
-                      disabled
-                      style={{ pointerEvents: "none" }}
-                      key={index}
-                      className="btn-connect"
-                    >
-                      Campaign Added
-                    </Button>
-                  ) : loading ? (
-                    <Button key={index} className="btn-connect">
-                      <Loader />{" "}
-                    </Button>
-                  ) : (
-                    <Button
-                      key={index}
-                      onClick={() => {
-                        confirmAddToCampaign(
-                          item.campaign_id,
-                          item.category_id,
-                          item.user_id
-                        );
-                      }}
-                      className="btn-connect"
-                    >
-                      Select Campaign
-                    </Button>
-                  )}
-                </div>
-              </div>
             </div>
+          </div>
+          <div className="cam-buttons col-12">
+            {item.is_linked || addCampaign ? (
+              <button
+                disabled
+                style={{ pointerEvents: "none" }}
+                key={index}
+                className="btn"
+              >
+                Campaign Added
+              </button>
+            ) : loading ? (
+              <button key={index} className="btn">
+                <Loader />{" "}
+              </button>
+            ) : (
+              <button
+                key={index}
+                onClick={() => {
+                  confirmAddToCampaign(
+                    item.campaign_id,
+                    item.category_id,
+                    item.user_id
+                  );
+                }}
+                className="btn"
+              >
+                Select Campaign
+              </button>
+            )}
           </div>
         </div>
       </div>

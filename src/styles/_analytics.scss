@@ -98,6 +98,18 @@
     .fltr-h:hover{
         color:#FFF !important;
     }
+    .fltr-hpr{
+        height: 44px;
+        flex: 100%;
+        max-width: 100%;
+        min-width: auto;
+    }
+    .fltr-hpr:last-child{
+        margin-right: 0 !important;
+    }
+    .fltr-hpr:hover{
+        color:#FFF !important;
+    }
     .post-analytics-tab form .row{
         align-items: flex-end;
     }
