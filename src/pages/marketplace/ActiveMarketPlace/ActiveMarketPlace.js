@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function AllMarketplace({
+function ActiveMarketPlace({
     getMarketPlace,
     marketPlace,
     getUserCategories,
@@ -193,30 +193,36 @@ function AllMarketplace({
     };
 
     const toggleCampaigns = async (status, campaignId) => {
-        let statusName = status ? "Deactivate" : "Activate";
-        Swal.fire({
-            title: `Are you sure you want to ${statusName} this campaign?`,
-            icon: status ? "warning" : "success",
-            cancelButtonText: "No",
-            showCancelButton: true,
-            confirmButtonColor: "#010b40",
-            cancelButtonColor: "#d33",
-            confirmButtonText: `Yes`,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                activateDeactivateCampaign(
-                    campaignId, status
-                ).then(
-                    function () {
-                        clearMarketPlace();
-                        toast.success("Campaign " + statusName + " Successfully");
-                    },
-                    function (error) {
-                        toast.error(error.response?.data.message);
-                    }
-                );
-            }
+
+        let promise = new Promise((resolve, reject) => {
+            let statusName = status ? "Deactivate" : "Activate";
+            Swal.fire({
+                title: `Are you sure you want to ${statusName} this campaign?`,
+                icon: status ? "warning" : "success",
+                cancelButtonText: "No",
+                showCancelButton: true,
+                confirmButtonColor: "#010b40",
+                cancelButtonColor: "#d33",
+                confirmButtonText: `Yes`,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    activateDeactivateCampaign(
+                        campaignId, status
+                    ).then(
+                        function () {
+                            clearMarketPlace();
+                            resolve('success');
+                            toast.success("Campaign " + statusName + " Successfully");
+                        },
+                        function (error) {
+                            reject('error');
+                            toast.error(error.response?.data.message);
+                        }
+                    );
+                }
+            });
         });
+        return promise;
     };
 
     const style = {
@@ -453,8 +459,9 @@ function mapStateToProps({ marketPlace, brands }) {
         brands,
     };
 }
+
 export default connect(mapStateToProps, {
     ...markActions,
     ...catActions,
     ...brandActions,
-})(AllMarketplace);
+})(ActiveMarketPlace);
