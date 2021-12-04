@@ -93,10 +93,7 @@ class AccountSetup extends React.Component {
         this.setState({ singlePackage: singlePackage[0] });
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-          // if (index > index1) {
-          //   disabledSelect = true;
-          // }
-          if (package_name === "Influencer") {
+          if (index > index1) {
             disabledSelect = true;
           }
 
@@ -174,8 +171,8 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(this.state.packages, "packages");
-    console.log(this.state.singlePackage, "singlePackage");
+    // console.log(this.state.packages, "packages");
+    // console.log(this.state.singlePackage, "singlePackage");
     return (
       <div
         className={`profile-page account-setup ${
