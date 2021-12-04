@@ -18,6 +18,8 @@ import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
 import PermissionHelper from "../PermissionHelper";
+import { NavLink } from "react-router-dom";
+
 class Header extends React.Component {
   static propTypes = {
     sidebarOpened: PropTypes.bool.isRequired,
@@ -350,11 +352,14 @@ class Header extends React.Component {
             <div className="top-logo">
               <div
                 className="logo"
-                onClick={() => {
-                  this.props.history.push("/app/dashboard");
-                }}
+                // onClick={() => {
+                //   this.props.history.push("/app/dashboard");
+                // }}
+                onClick={() => this.toggle(3)}
               >
-                <img src={logo} alt="logo" />
+                <NavLink to="/app/dashboard">
+                  <img src={logo} alt="logo" />
+                </NavLink>
               </div>
             </div>
             <TopBar text={true} username={this.state.username} />
