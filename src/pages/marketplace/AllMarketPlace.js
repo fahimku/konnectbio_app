@@ -44,7 +44,7 @@ function AllMarketplace({
     const toDate = moment().add(1, "year").format("YYYY-MM-DD");
     const [startDate, setStartDate] = useState(fromDate);
     const [endDate, setEndDate] = useState(toDate);
-    const limit = 9;
+    const limit = 8;
 
     useEffect(() => {
         setLoading(true);
