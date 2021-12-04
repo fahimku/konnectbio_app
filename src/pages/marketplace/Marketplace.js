@@ -4,6 +4,7 @@ import "./selector.css";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import AllMarketPlace from "./AllMarketPlace";
+import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace"
 
 class MarketPlace extends React.Component {
 
@@ -43,7 +44,7 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("marketplace");
                       }}
                     >
-                      <span>MarketPlace</span>
+                      <span>Marketplace</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -90,19 +91,19 @@ class MarketPlace extends React.Component {
                 >
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
-                      <AllMarketPlace title="MarketPlace" type='marketplace' />
+                      <AllMarketPlace title="Marketplace" type='marketplace' />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="active">
                     {this.state.activeTab === "active" ? (
-                      <AllMarketPlace title="Active Marketplace" type='active' />
+                      <ActiveMarketPlace title='Active Campaign' type='active' endPoint='users/marketPlace/getCampaigns' />
                     ) : null}
                   </TabPane>
                   <TabPane
                     type='inActive'
                     tabId="in-active">
                     {this.state.activeTab === "in-active" ? (
-                      <AllMarketPlace />
+                      <ActiveMarketPlace title='In Active Campaign' type='in_active' endPoint='users/marketPlace/getAllPusedCampaignPost' />
                     ) : null}
                   </TabPane>
                   <TabPane
@@ -110,13 +111,7 @@ class MarketPlace extends React.Component {
                     className="tab-expired"
                   >
                     {this.state.activeTab === "expired" ? (
-                      <AllMarketPlace
-                        title="Expired Marketplace"
-                        type='expired'
-                        toggleTabs={() => {
-                          this.toggleTabs("campaign");
-                        }}
-                      />
+                      <ActiveMarketPlace title='Expired Campaign' type='expired' endPoint='users/marketPlace/getExpiredCampaigns' />
                     ) : null}
                   </TabPane>
 

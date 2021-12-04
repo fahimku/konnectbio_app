@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
 
 export default function Box({ item, addCampaignToShop, index }) {
+
   const [addCampaign, setAddCampaign] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -27,15 +28,16 @@ export default function Box({ item, addCampaignToShop, index }) {
             setLoading(false);
           },
           function (error) {
-            toast.error(error?.response?.data?.message);
+            toast.error(error?.response?.data?.message, {
+              autoClose: false,
+            });
             setLoading(false);
           }
         );
       }
     });
   };
-  console.log("is Linked");
-  console.log(addCampaign);
+
   return (
     <React.Fragment>
       <div className="card any_bx analytic-box campaign-box">

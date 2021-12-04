@@ -155,26 +155,6 @@ function AffiliateCampaign(props) {
                       htmlFor={`customSwitch` + index}
                     ></label>
                   </div>
-                  {/* <Dropdown alignRight>
-                    <Dropdown.Toggle as={CustomToggle} />
-                    <Dropdown.Menu size="sm" title="">
-                      <Dropdown.Item
-                        onClick={() => {
-                          setCurrentCampaign(record);
-                          setModal(true)
-                        }}
-                      >
-                        Edit
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => {
-                          deleteCampaign(record.campaign_id);
-                        }}
-                      >
-                        Delete
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown> */}
                 </div>
               </div>
               <div className="any-post-img-col col-12">
