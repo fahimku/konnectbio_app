@@ -11,7 +11,7 @@ function Dashboard({ getDashboard, dashboard }) {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
-    getDashboard("image", userData.access_token).then(
+    getDashboard("image,campaign", userData.access_token).then(
       function () {
         setLoading(false);
       },
