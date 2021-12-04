@@ -11,3 +11,5 @@ export const GET_MARKET_PLACE = "getMarketPlace";
 export const GET_INSTAGRAM_URL = "getInstagramUrl";
 export const GET_CAMPAIGN_SUMMARY = "getCampaignSummary";
 export const GET_DASHBOARD_DATA = "getDashboardData";
+export const GET_USER_BRANDS = "getUserBrands";
+export const GET_BRANDS_CATEGORY = "getBrandsCategory";

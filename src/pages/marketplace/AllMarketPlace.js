@@ -7,10 +7,13 @@ import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace";
 import * as catActions from "../../actions/category";
+import * as brandActions from "../../actions/brands";
 import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
 import moment from "moment";
+
 const { RangePicker } = DatePicker;
+
 const dateFormat = "YYYY-MM-DD";
 
 function AllMarketplace({
@@ -18,17 +21,22 @@ function AllMarketplace({
     marketPlace,
     addCampaignToShop,
     getUserCategories,
-    categories,
+    getBrandsCategory,
     type,
-    title
+    title,
+    getBrands,
+    brands
 }) {
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const [loading, setLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
     const [clearLoading, setClearLoading] = useState(false);
+    const [categoryLoading, setCategoryLoading] = useState(false);
 
     const [category, setCategory] = useState({ value: "all", label: "ALL" });
+    const [categoryOptions, setCategoryOptions] = useState([]);
+    const [brand, setBrand] = useState({ value: "all", label: "ALL" });
     const [sortBy, setSortBy] = useState({ value: "commission", label: "COMMISSION" });
     const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
     const [currentPage, setCurrentPage] = useState(0);
@@ -50,13 +58,47 @@ function AllMarketplace({
             "desc",
             startDate,
             endDate,
-            type
+            type,
+            brand.value
         ).then(function () {
             setLoading(false);
         });
-        getUserCategories();
+
+        getUserCategories().then(function (res) {
+            setCategoryOptions(res.map((item, index) => {
+                return { value: item.category_id, label: item.category_name }
+            }));
+        }, function (error) {
+            toast.error(error?.response?.data?.message);
+        });
+        getBrands();
         return () => { };
     }, []);
+
+    useEffect(() => {
+        setCategoryLoading(true);
+        if (brand.value === 'all') {
+            getUserCategories().then(function (res) {
+                setCategoryOptions(res.map((item, index) => {
+                    return { value: item.category_id, label: item.category_name }
+                }));
+            }, function (error) {
+                toast.error(error?.response?.data?.message);
+            });
+        }
+        else {
+            getBrandsCategory(brand.value).then(function (res) {
+                setCategoryOptions(res.map((item, index) => {
+                    return { value: item.category_id, label: item.category_name }
+                }));
+                setCategoryLoading(false)
+            }, function (error) {
+                toast.error(error?.response?.data?.message);
+            });
+
+        }
+        return () => { };
+    }, [brand]);
 
     const searchMarketPlace = (e) => {
         setSearchLoading(true);
@@ -70,7 +112,8 @@ function AllMarketplace({
             orderBy.value,
             startDate,
             endDate,
-            type
+            type,
+            brand.value
         ).then(
             function () {
                 setLoading(false);
@@ -91,7 +134,7 @@ function AllMarketplace({
         setCurrentPage();
         setStartDate(fromDate);
         setEndDate(toDate);
-        getMarketPlace(1, limit, "all", "commission", "desc", fromDate, toDate, type).then(
+        getMarketPlace(1, limit, "all", "commission", "desc", fromDate, toDate, type, brand.value).then(
             function () {
                 setLoading(false);
                 setSearchLoading(false);
@@ -114,7 +157,8 @@ function AllMarketplace({
             orderBy.value,
             startDate,
             endDate,
-            type
+            type,
+            brand.value
         ).then(function () {
             setLoading(false);
         });
@@ -149,6 +193,7 @@ function AllMarketplace({
     };
 
     if (!loading) {
+
         return (
             <>
                 <div className="analytics-page affiliate-page linkin-bio">
@@ -194,14 +239,14 @@ function AllMarketplace({
                                         <Col xs={12} xl={2} md={6}>
                                             <p>Brands</p>
                                             <Select
-                                                value={category}
+                                                value={brand}
                                                 name="sort"
                                                 className="selectCustomization"
-                                                options={categories}
+                                                options={brands}
                                                 onChange={(e) => {
-                                                    setCategory(e);
+                                                    setBrand(e);
                                                 }}
-                                                placeholder="Select Category"
+                                                placeholder="Select Brand"
                                                 styles={style}
                                             />
                                         </Col>
@@ -211,7 +256,7 @@ function AllMarketplace({
                                                 value={category}
                                                 name="sort"
                                                 className="selectCustomization"
-                                                options={categories}
+                                                options={categoryOptions}
                                                 onChange={(e) => {
                                                     setCategory(e);
                                                 }}
@@ -233,7 +278,7 @@ function AllMarketplace({
                                                 styles={style}
                                             />
                                         </Col>
-                                        <Col xs={12} xl={1} md={6}>
+                                        <Col xs={12} xl={2} md={6}>
                                             <p>Order By</p>
                                             <Select
                                                 value={orderBy}
@@ -247,7 +292,7 @@ function AllMarketplace({
                                                 styles={style}
                                             />
                                         </Col>
-                                        <Col xs={12} xl={3} md={6}>
+                                        <Col xs={12} xl={2} md={6}>
                                             {searchLoading ? (
                                                 <Button
                                                     type="button"
@@ -351,10 +396,10 @@ function AllMarketplace({
         );
     }
 }
-function mapStateToProps({ marketPlace, categories }) {
+function mapStateToProps({ marketPlace, brands }) {
     return {
         marketPlace,
-        categories,
+        brands,
     };
 }
-export default connect(mapStateToProps, { ...markActions, ...catActions })(AllMarketplace);
+export default connect(mapStateToProps, { ...markActions, ...catActions, ...brandActions })(AllMarketplace);

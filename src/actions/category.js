@@ -21,7 +21,7 @@ export const getUserCategories = () => async (dispatch) => {
                 type: GET_USER_CATEGORIES,
                 payload: res.data?.message
             })
-            resolve('success');
+            resolve(res.data?.message);
         }).catch((error) => {
             reject(error)
         });

@@ -25,7 +25,7 @@ export const addCampaignToShop =
     return promise;
   };
 
-export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy,startDate,endDate,type) => async (dispatch) => {
+export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy,startDate,endDate,type,brandId) => async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
         .post(
@@ -36,7 +36,8 @@ export const getMarketPlace = (page, limit, categoryId, sortBy, orderBy,startDat
             category_id: categoryId,
             sort_by: sortBy,
             order_by: orderBy,
-            key:type
+            key: type,
+            brand_id:brandId
         }).then((res) => {
             dispatch({
                 type: GET_MARKET_PLACE,

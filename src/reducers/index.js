@@ -14,11 +14,15 @@ import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
 import dashboard from "./dashboard";
+import brands from "./brands/brands";
+import brandsCategory from "./brands/brandsCategory";
 
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
     links,
+    brands,
+    brandsCategory,
     alerts,
     auth,
     navigation,
