@@ -3,30 +3,32 @@ import { Row, Col, Button } from "react-bootstrap";
 import Box from "./Box";
 import Select from "react-select";
 import { toast } from "react-toastify";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../../../components/Loader/Loader";
 import { connect } from "react-redux";
-import * as markActions from "../../actions/marketPlace";
-import * as catActions from "../../actions/category";
-import * as brandActions from "../../actions/brands";
+import * as markActions from "../../../actions/marketPlace";
+import * as catActions from "../../../actions/category";
+import * as brandActions from "../../../actions/brands";
 import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
 import moment from "moment";
+import Swal from "sweetalert2";
 
 const { RangePicker } = DatePicker;
-
 const dateFormat = "YYYY-MM-DD";
 
 function AllMarketplace({
     getMarketPlace,
     marketPlace,
-    addCampaignToShop,
     getUserCategories,
     getBrandsCategory,
+    activateDeactivateCampaign,
     type,
     title,
     getBrands,
     brands,
+    endPoint
 }) {
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const [loading, setLoading] = useState(false);
     const [searchLoading, setSearchLoading] = useState(false);
@@ -58,7 +60,7 @@ function AllMarketplace({
             endDate,
             type,
             brand.value,
-            'users/marketPlace/getCampaigns'
+            endPoint
         ).then(function () {
             setLoading(false);
         });
@@ -66,7 +68,7 @@ function AllMarketplace({
         getUserCategories().then(
             function (res) {
                 setCategoryOptions(
-                    res.map((item, index) => {
+                    res.map((item) => {
                         return { value: item.category_id, label: item.category_name };
                     })
                 );
@@ -126,7 +128,7 @@ function AllMarketplace({
             endDate,
             type,
             brand.value,
-            'users/marketPlace/getCampaigns'
+            endPoint
         ).then(
             function () {
                 setLoading(false);
@@ -139,7 +141,7 @@ function AllMarketplace({
     };
 
     const clearMarketPlace = (e) => {
-        e.preventDefault();
+        //e.preventDefault();
         setClearLoading(true);
         setCategory({ value: "all", label: "ALL" });
         setBrand({ value: "all", label: "ALL" });
@@ -158,7 +160,7 @@ function AllMarketplace({
             toDate,
             type,
             'all',
-            'users/marketPlace/getCampaigns'
+            endPoint
         ).then(
             function () {
                 setLoading(false);
@@ -184,9 +186,36 @@ function AllMarketplace({
             endDate,
             type,
             brand.value,
-            'users/marketPlace/getCampaigns'
+            endPoint
         ).then(function () {
             setLoading(false);
+        });
+    };
+
+    const toggleCampaigns = async (status, campaignId) => {
+        let statusName = status ? "Deactivate" : "Activate";
+        Swal.fire({
+            title: `Are you sure you want to ${statusName} this campaign?`,
+            icon: status ? "warning" : "success",
+            cancelButtonText: "No",
+            showCancelButton: true,
+            confirmButtonColor: "#010b40",
+            cancelButtonColor: "#d33",
+            confirmButtonText: `Yes`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                activateDeactivateCampaign(
+                    campaignId, status
+                ).then(
+                    function () {
+                        clearMarketPlace();
+                        toast.success("Campaign " + statusName + " Successfully");
+                    },
+                    function (error) {
+                        toast.error(error.response?.data.message);
+                    }
+                );
+            }
         });
     };
 
@@ -362,7 +391,7 @@ function AllMarketplace({
                                             <Box
                                                 key={index}
                                                 userInfo={userInfo}
-                                                addCampaignToShop={addCampaignToShop}
+                                                toggleCampaigns={toggleCampaigns}
                                                 item={item}
                                                 index={index}
                                             />

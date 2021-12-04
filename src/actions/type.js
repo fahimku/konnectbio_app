@@ -13,3 +13,4 @@ export const GET_CAMPAIGN_SUMMARY = "getCampaignSummary";
 export const GET_DASHBOARD_DATA = "getDashboardData";
 export const GET_USER_BRANDS = "getUserBrands";
 export const GET_BRANDS_CATEGORY = "getBrandsCategory";
+export const ACTIVATE_DEACTIVATE_CAMPAIGN = 'activateDeactivateCampaign'

@@ -10,6 +10,7 @@ import { connectRouter } from "connected-react-router";
 import countries from "./countries/countries";
 import campaign from "./campaign/campaign";
 import marketPlace from "./marketPlace/marketPlace";
+import addCampaignToShop from "./marketPlace/addCampaignToShop";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
@@ -22,6 +23,7 @@ export default (history) =>
     router: connectRouter(history),
     links,
     brands,
+    addCampaignToShop,
     brandsCategory,
     alerts,
     auth,
