@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 export default function Box({ item, toggleCampaigns, index }) {
+  const [toggleCampaign, setToggleCampaign] = useState(item.is_linked);
   return (
     <React.Fragment>
       <div className="card any_bx analytic-box campaign-box">
@@ -11,9 +12,17 @@ export default function Box({ item, toggleCampaigns, index }) {
               <div className="form-check custom-switch custom-switch-md">
                 <input
                   type="checkbox"
-                  checked={item.is_linked}
+                  checked={toggleCampaign}
                   onClick={() => {
-                    toggleCampaigns(item.is_linked, item.campaign_id);
+                    toggleCampaigns(item.is_linked, item.campaign_id).then(function () {
+                      setToggleCampaign(!item.is_linked);
+                      setTimeout(() => {
+                        setToggleCampaign(item.is_linked);
+                      },300)
+                    },
+                      function () {
+                        setToggleCampaign(item.is_Linked);
+                      });
                   }}
                   className="custom-control-input"
                   id={`customSwitch` + index}
