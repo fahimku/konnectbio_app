@@ -300,7 +300,7 @@ class Header extends React.Component {
                     link="/app/account/setup"
                     isHeader
                     iconElement={
-                      <span className="glyphicon glyphicon-th"></span>
+                      <span className="glyphicon glyphicon-cog"></span>
                     }
                     iconName="flaticon-users"
                     labelColor="info"
@@ -313,7 +313,7 @@ class Header extends React.Component {
                     link="/app/account/Delete"
                     isHeader
                     iconElement={
-                      <span className="glyphicon glyphicon-th"></span>
+                      <span className="glyphicon glyphicon-trash"></span>
                     }
                     iconName="flaticon-users"
                     labelColor="info"
