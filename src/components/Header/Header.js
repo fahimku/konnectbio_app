@@ -148,8 +148,14 @@ class Header extends React.Component {
 
   toggle(id) {
     const newState = Array(4).fill(false);
+
     if (!this.state.navs[id]) {
       newState[id] = true;
+    }
+    if (newState[3]) {
+      document.body.classList.add("mb-menu-show");
+    } else {
+      document.body.classList.remove("mb-menu-show");
     }
     this.setState({ navs: newState });
   }
