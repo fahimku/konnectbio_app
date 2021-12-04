@@ -190,6 +190,18 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
+                    header="Dashboard"
+                    link="/app/dashboard"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-dashboard"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
                     header="Bio Shop"
                     link="/app/linkinbio-shop"
                     isHeader
