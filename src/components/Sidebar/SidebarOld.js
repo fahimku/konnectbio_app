@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {Progress, Alert} from "reactstrap";
-import {withRouter} from "react-router-dom";
-import {dismissAlert} from "../../actions/alerts";
+import { connect } from "react-redux";
+import { Progress, Alert } from "reactstrap";
+import { withRouter } from "react-router-dom";
+import { dismissAlert } from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
 import {
@@ -12,7 +12,7 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
-import {logoutUser} from "../../actions/auth";
+import { logoutUser } from "../../actions/auth";
 import HomeIcon from "../../images/sidebar/Outline/Home";
 import BrowserIcon from "../../images/sidebar/Outline/Browser";
 import EmailIcon from "../../images/sidebar/Outline/Email";
@@ -30,7 +30,7 @@ import PieChartIcon from "../../images/sidebar/Outline/PieChart";
 import PinIcon from "../../images/sidebar/Outline/Pin";
 import ShoppingBagIcon from "../../images/sidebar/Outline/ShoppingBag";
 
-class Sidebar extends React.Component {
+class SidebarOld extends React.Component {
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -611,4 +611,4 @@ function mapStateToProps(store) {
     sidebarColor: store.layout.sidebarColor,
   };
 }
-export default withRouter(connect(mapStateToProps)(Sidebar));
+export default withRouter(connect(mapStateToProps)(SidebarOld));

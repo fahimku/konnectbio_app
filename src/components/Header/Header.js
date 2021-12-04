@@ -1,10 +1,10 @@
 import React from "react";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router";
-import {Navbar, Nav, NavbarToggler, Collapse} from "reactstrap";
-import {logoutUser} from "../../actions/auth";
-import {STATUS} from "react-joyride";
+import { withRouter } from "react-router";
+import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
+import { logoutUser } from "../../actions/auth";
+import { STATUS } from "react-joyride";
 import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 import {
   toggleSidebar,
@@ -15,8 +15,10 @@ import {
 import logo from "../../images/logo.svg";
 
 import config from "../../../src/config";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
+import PermissionHelper from "../PermissionHelper";
+import { NavLink } from "react-router-dom";
 class Header extends React.Component {
   static propTypes = {
     sidebarOpened: PropTypes.bool.isRequired,
@@ -81,14 +83,14 @@ class Header extends React.Component {
   componentDidMount() {
     this.toggleSidebar();
     if (window.location.href.includes("main")) {
-      this.setState({run: false});
+      this.setState({ run: false });
     }
   }
 
   handleJoyrideCallback = (CallBackProps) => {
-    const {status} = CallBackProps;
+    const { status } = CallBackProps;
     if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      this.setState({run: false});
+      this.setState({ run: false });
     }
   };
 
@@ -99,7 +101,7 @@ class Header extends React.Component {
   };
 
   toggleFocus = () => {
-    this.setState({focus: !this.state.focus});
+    this.setState({ focus: !this.state.focus });
   };
 
   toggleNotifications() {
@@ -147,10 +149,16 @@ class Header extends React.Component {
 
   toggle(id) {
     const newState = Array(4).fill(false);
+
     if (!this.state.navs[id]) {
       newState[id] = true;
     }
-    this.setState({navs: newState});
+    if (newState[3]) {
+      document.body.classList.add("mb-menu-show");
+    } else {
+      document.body.classList.remove("mb-menu-show");
+    }
+    this.setState({ navs: newState });
   }
 
   copyToClipboard = (e) => {
@@ -171,7 +179,7 @@ class Header extends React.Component {
         <div className="mobile-header-responsive">
           <div
             className="top-mobile-header"
-            style={{borderBottom: "1px solid #c8c8c8"}}
+            style={{ borderBottom: "1px solid #c8c8c8" }}
           >
             <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
               <NavbarToggler
@@ -180,6 +188,18 @@ class Header extends React.Component {
               />
               <Collapse isOpen={this.state.navs[3]} navbar>
                 <Nav className="ml-auto" navbar>
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Dashboard"
+                    link="/app/dashboard"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-dashboard"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -219,6 +239,35 @@ class Header extends React.Component {
                     labelColor="info"
                   />
 
+                  {PermissionHelper.validate(["affiliate_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Affiliate"
+                      link="/app/campaign"
+                      isHeader
+                      iconElement={
+                        <span className="glyphicon glyphicon-bullhorn"></span>
+                      }
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+                  {PermissionHelper.validate(["marketplace_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Marketplace"
+                      link="/app/marketplace"
+                      isHeader
+                      iconElement={<span className="fa fa-shopping-bag"></span>}
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -233,7 +282,7 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="My Profile"
+                    header="Home Screen"
                     link="/app/account/profile"
                     isHeader
                     iconElement={
@@ -302,11 +351,14 @@ class Header extends React.Component {
             <div className="top-logo">
               <div
                 className="logo"
-                onClick={() => {
-                  this.props.history.push("/app/home");
-                }}
+                // onClick={() => {
+                //   this.props.history.push("/app/dashboard");
+                // }}
+                onClick={() => this.toggle(3)}
               >
-                <img src={logo} alt="logo" />
+                <NavLink to="/app/dashboard">
+                  <img src={logo} alt="logo" />
+                </NavLink>
               </div>
             </div>
             <TopBar text={true} username={this.state.username} />

@@ -17,6 +17,7 @@ import campaignSummary from "./campaign/campaignSummary";
 import dashboard from "./dashboard";
 import brands from "./brands/brands";
 import brandsCategory from "./brands/brandsCategory";
+import campaignAnalytics from "./campaign/campaignAnalytics";
 
 export default (history) =>
   combineReducers({
@@ -38,4 +39,5 @@ export default (history) =>
     marketPlace,
     instagram,
     campaignSummary,
+    campaignAnalytics,
   });

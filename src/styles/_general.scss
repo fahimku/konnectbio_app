@@ -485,30 +485,33 @@ h1 small {
   margin-left: 4px;
   border: none;
 }
-.abc-checkbox{
-  padding-left:0;
+.abc-checkbox {
+  padding-left: 0;
   margin-bottom: 12px;
 }
-.acct-promo-sec{
+.acct-promo-sec {
   width: 100%;
-  margin-top:20px;
+  margin-top: 20px;
 
-  h4{
+  h4 {
     font-size: 1.15rem;
   }
-  .acct-promo-sec-inr{
+  .acct-promo-sec-inr {
     display: flex;
 
-    .form-control{
-      margin-right:15px;
+    .form-control {
+      margin-right: 15px;
     }
   }
 
-  .make-canc-pay{
-    margin-top:20px;
+  .make-canc-pay {
+    margin-top: 20px;
   }
 }
 .date-loader {
   display: inline-grid;
   float: none !important;
+}
+.summary-loading {
+  height: 26vh !important;
 }

@@ -123,7 +123,10 @@ class SummaryDataComponent extends React.Component {
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
                   {this.state.loading ? (
-                    <Loader className="analytics-loading" size={60} />
+                    <Loader
+                      className="analytics-loading summary-loading"
+                      size={40}
+                    />
                   ) : (
                     <div className="card analytic-box">
                       <div className="col-12 count-box">

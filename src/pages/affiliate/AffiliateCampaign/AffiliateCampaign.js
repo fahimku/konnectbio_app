@@ -11,6 +11,7 @@ import Loader from "../../../components/Loader/Loader";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import { connect } from "react-redux";
+import AnalyticModal from "./AnalyticModal";
 
 // const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 //   <a
@@ -33,8 +34,10 @@ function AffiliateCampaign(props) {
   const perPage = 8;
   const [currentPage, setCurrentPage] = useState(0);
   const [modal, setModal] = useState(false);
+  const [analyticModal, setAnalyticModal] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [currentCampaign, setCurrentCampaign] = useState({});
+  const [campaignId, setCampaignId] = useState();
 
   useEffect(() => {
     props.getCountries();
@@ -212,9 +215,10 @@ function AffiliateCampaign(props) {
               </button>
               <button
                 className="btn"
-                // onClick={() => {
-                //   deleteCampaign(record.campaign_id);
-                // }}
+                onClick={() => {
+                  setCampaignId(record.campaign_id);
+                  setAnalyticModal(true);
+                }}
               >
                 <i className="fa fa-bar-chart" /> Analytics
               </button>
@@ -278,6 +282,24 @@ function AffiliateCampaign(props) {
                 reload={() => {
                   fetchPostPerformance();
                 }}
+              />
+            </Modal.Body>
+          </Modal>
+          {/* Analytics Modal */}
+          <Modal
+            show={analyticModal}
+            onHide={() => setAnalyticModal(false)}
+            className="edit-campaign linkin-bio"
+            centered
+            size="xl"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title>Analytics Campaign</Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
+              <AnalyticModal
+                affId={campaignId}
+                analyticCloseModal={() => setAnalyticModal(false)}
               />
             </Modal.Body>
           </Modal>
