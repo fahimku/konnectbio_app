@@ -2,6 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import SummaryDataComponent from "./SummaryDataComponent";
 import CampaignSummaryComponent from "./CampaignSummaryComponent";
+import AffiliateSummaryComponent from "../../affiliate/AffiliateDashboard/AffiliateSummaryComponent";
 
 class SummaryComponent extends React.Component {
   state = {
@@ -24,7 +25,15 @@ class SummaryComponent extends React.Component {
                 <h4 className="page-title">Campaign Summary</h4>
                 <CampaignSummaryComponent username={this.state.username} />
               </div>
-            ) : null}
+            ) : (
+              <div className="col-md-4">
+                <h4 className="page-title">Campaign Summary</h4>
+                <AffiliateSummaryComponent
+                  username={this.state.username}
+                  className="col-md-12"
+                />
+              </div>
+            )}
           </div>
         </div>
       </React.Fragment>

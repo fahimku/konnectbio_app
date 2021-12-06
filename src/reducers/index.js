@@ -15,9 +15,9 @@ import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
 import dashboard from "./dashboard";
+import campaignAnalytics from "./campaign/campaignAnalytics";
 import brands from "./brands/brands";
 import brandsCategory from "./brands/brandsCategory";
-import campaignAnalytics from "./campaign/campaignAnalytics";
 
 export default (history) =>
   combineReducers({

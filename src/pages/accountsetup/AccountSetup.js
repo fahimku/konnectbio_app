@@ -79,7 +79,9 @@ class AccountSetup extends React.Component {
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
         const maxIndex = packages.length - 1;
+
         singlePackage[0].index = index;
+
         if (index !== maxIndex) {
           this.setState({ upgrade: true });
         }
@@ -91,6 +93,7 @@ class AccountSetup extends React.Component {
         this.setState({ packageIndex: index });
         this.setState({ allPackages: packages });
         this.setState({ singlePackage: singlePackage[0] });
+
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
           if (index > index1) {
@@ -104,6 +107,7 @@ class AccountSetup extends React.Component {
             index: index1,
           });
         });
+
         this.setState({ packages: selectPackages });
       })
       .catch(function (error) {
@@ -171,7 +175,7 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    // console.log(this.state.packages, "packages");
+    console.log(this.state.packages, "packages");
     // console.log(this.state.singlePackage, "singlePackage");
     return (
       <div
@@ -218,7 +222,7 @@ class AccountSetup extends React.Component {
                               placeholder="Select package"
                               value={{
                                 label: this.state.package,
-                                value: this.state.package,
+                                value: this.state.packageId,
                               }}
                               onChange={(event) => this.handlePackage(event)}
                             />
