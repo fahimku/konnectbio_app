@@ -63,18 +63,18 @@ function AllMarketplace({
       setLoading(false);
     });
 
-    getUserCategories().then(
-      function (res) {
-        setCategoryOptions(
-          res.map((item, index) => {
-            return { value: item.category_id, label: item.category_name };
-          })
-        );
-      },
-      function (error) {
-        toast.error(error?.response?.data?.message);
-      }
-    );
+    // getUserCategories().then(
+    //   function (res) {
+    //     setCategoryOptions(
+    //       res.map((item) => {
+    //         return { value: item.category_id, label: item.category_name };
+    //       })
+    //     );
+    //   },
+    //   function (error) {
+    //     toast.error(error?.response?.data?.message);
+    //   }
+    // );
     getBrands();
     return () => { };
   }, []);
@@ -143,6 +143,12 @@ function AllMarketplace({
 
   const clearMarketPlace = (e) => {
     e.preventDefault();
+
+    let page = marketPlace.message.length === 1 ? currentPage : currentPage + 1;
+    if (page === 0) {
+      page = 1;  
+    }
+    setCurrentPage(page - 1);
     setClearLoading(true);
     setCategory({ value: "all", label: "ALL" });
     setBrand({ value: "all", label: "ALL" });
@@ -152,7 +158,7 @@ function AllMarketplace({
     setStartDate(fromDate);
     setEndDate(toDate);
     getMarketPlace(
-      1,
+      page,
       limit,
       "all",
       "commission",
@@ -192,8 +198,6 @@ function AllMarketplace({
       setLoading(false);
     });
   };
-
-
 
   const style = {
     control: (base) => ({

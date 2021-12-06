@@ -83,7 +83,18 @@ class MarketPlace extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
-
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "accounting",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("accounting");
+                      }}
+                    >
+                      <span>Accounting</span>
+                    </NavLink>
+                  </NavItem>
                 </Nav>
                 <TabContent
                   className="affiliate_tab_ift"
@@ -115,6 +126,14 @@ class MarketPlace extends React.Component {
                     ) : null}
                   </TabPane>
 
+                  <TabPane
+                    tabId="accounting"
+                    className="tab-accounting"
+                  >
+                    {this.state.activeTab === "accounting" ? (
+                    ''
+                    ) : null}
+                  </TabPane>
                 </TabContent>
               </div>
             </Row>

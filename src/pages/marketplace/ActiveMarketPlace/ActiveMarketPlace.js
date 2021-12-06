@@ -67,20 +67,20 @@ function ActiveMarketPlace({
       setLoading(false);
     });
 
-    getUserCategories().then(
-      function (res) {
-        setCategoryOptions(
-          res.map((item) => {
-            return { value: item.category_id, label: item.category_name };
-          })
-        );
-      },
-      function (error) {
-        toast.error(error?.response?.data?.message);
-      }
-    );
+    // getUserCategories().then(
+    //   function (res) {
+    //     setCategoryOptions(
+    //       res.map((item) => {
+    //         return { value: item.category_id, label: item.category_name };
+    //       })
+    //     );
+    //   },
+    //   function (error) {
+    //     toast.error(error?.response?.data?.message);
+    //   }
+    // );
     getBrands();
-    return () => {};
+    return () => { };
   }, []);
 
   useEffect(() => {
@@ -116,7 +116,7 @@ function ActiveMarketPlace({
         }
       );
     }
-    return () => {};
+    return () => { };
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -145,18 +145,24 @@ function ActiveMarketPlace({
     );
   };
 
-  const clearMarketPlace = (e) => {
+
+  const clearMarketPlace = () => {
     //e.preventDefault();
+    let page = marketPlace.message.length === 1 ? currentPage : currentPage + 1;
+    if (page === 0) {
+      page = 1;  
+    }
+    setCurrentPage(page - 1);
     setClearLoading(true);
     setCategory({ value: "all", label: "ALL" });
     setBrand({ value: "all", label: "ALL" });
     setSortBy({ value: "commission", label: "COMMISSION" });
     setOrderBy({ value: "desc", label: "DESC" });
-    setCurrentPage();
     setStartDate(fromDate);
     setEndDate(toDate);
+    
     getMarketPlace(
-      1,
+      page,
       limit,
       "all",
       "commission",
@@ -199,7 +205,7 @@ function ActiveMarketPlace({
 
   const toggleCampaigns = async (status, campaignId) => {
     let promise = new Promise((resolve, reject) => {
-      let statusName = status ? "Deactivate" : "Activate";
+    let statusName = status ? "Deactivate" : "Activate";
       Swal.fire({
         title: `Are you sure you want to ${statusName} this campaign?`,
         icon: status ? "warning" : "success",
@@ -455,6 +461,7 @@ function ActiveMarketPlace({
     );
   }
 }
+
 function mapStateToProps({ marketPlace, brands }) {
   return {
     marketPlace,
