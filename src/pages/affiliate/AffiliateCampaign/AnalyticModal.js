@@ -24,7 +24,8 @@ class AnalyticModal extends React.Component {
       <React.Fragment>
         <div className="image-wrapper">
           {!campaignAnalytics.loading ? (
-            <Loader className="analytics-loading" size={60} />
+            // <Loader className="analytics-loading" size={60} />
+            <h3>Coming Soon</h3>
           ) : (
             <div className="cam-data">data</div>
           )}

@@ -96,7 +96,6 @@ const MobilePreview = ({
       }
     }
   }
-  console.log(instaPosts, "instaPosts");
   return (
     <div className="mobile-preview">
       <div className="mobile-header">

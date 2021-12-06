@@ -62,21 +62,21 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName === "Influencer" ||
-                    this.state.packageName === "Micro Influencer" ? (
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: this.state.activeSecondTab === "tab23",
-                          })}
-                          onClick={() => {
-                            this.toggleSecondTabs("tab23");
-                          }}
-                        >
-                          <span>Campaign Performance</span>
-                        </NavLink>
-                      </NavItem>
-                    ) : null}
+                    {/* {this.state.packageName === "Influencer" ||
+                    this.state.packageName === "Micro Influencer" ? ( */}
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "tab23",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab23");
+                        }}
+                      >
+                        <span>Campaign Performance</span>
+                      </NavLink>
+                    </NavItem>
+                    {/* // ) : null} */}
                     {/* <NavItem>
                       <NavLink
                         className={classnames({
@@ -120,18 +120,20 @@ class Analysis extends React.Component {
                         <PostAnalytic username={this.state.username} />
                       ) : null}
                     </TabPane>
-                    {this.state.packageName === "Influencer" ||
-                    this.state.packageName === "Micro Influencer" ? (
-                      <TabPane tabId="tab23">
-                        {this.state.activeSecondTab === "tab23" ? (
-                          <CampaignAnalytics username={this.state.username} />
-                        ) : null}
-                      </TabPane>
-                    ) : null}
+                    {/* {this.state.packageName === "Influencer" ||
+                    this.state.packageName === "Micro Influencer" ? ( */}
+                    <TabPane tabId="tab23">
+                      {this.state.activeSecondTab === "tab23" ? (
+                        <CampaignAnalytics
+                          username={this.state.username}
+                          packageName={this.state.packageName}
+                        />
+                      ) : null}
+                    </TabPane>
+                    {/* // ) : null} */}
                     {/* <TabPane tabId="tab21">
                       <HighCharts username={this.state.username} />
                     </TabPane> */}
-
                     {/* <TabPane tabId="tab23">
                       <LinkAnalytic username={this.state.username} />
                     </TabPane> */}
