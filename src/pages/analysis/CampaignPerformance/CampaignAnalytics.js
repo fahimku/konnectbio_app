@@ -1,10 +1,12 @@
 import React from "react";
 import "antd/dist/antd.css";
 import CampaignDataComponent from "./CampaignDataComponent";
+import AffiliateDataComponent from "./AffiliateDataComponent";
 
 class CampaignAnalytics extends React.Component {
   state = {
     username: this.props.username,
+    packageName: this.props.packageName,
   };
 
   render() {
@@ -12,7 +14,12 @@ class CampaignAnalytics extends React.Component {
       <>
         <div className="container-fluid">
           <h4 className="page-title">Campaign Performance</h4>
-          <CampaignDataComponent username={this.state.username} />
+          {this.state.packageName === "Influencer" ||
+          this.state.packageName === "Micro Influencer" ? (
+            <CampaignDataComponent username={this.state.username} />
+          ) : null
+          // <AffiliateDataComponent username={this.state.username} />
+          }
         </div>
       </>
     );
