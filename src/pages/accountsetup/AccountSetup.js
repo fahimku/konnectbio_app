@@ -70,14 +70,12 @@ class AccountSetup extends React.Component {
     await axios
       .get(`/package/receive`)
       .then((response) => {
+
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
-        const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
+        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+
         const maxIndex = packages.length - 1;
 
         singlePackage[0].index = index;
@@ -96,9 +94,38 @@ class AccountSetup extends React.Component {
 
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-          if (index > index1) {
-            disabledSelect = true;
+          // if (index > index1) {
+          //   disabledSelect = true;
+          // }
+
+          //Micro Influencer Account
+          if (index === 0) {
+            if (index1 === 2 || index1 === 3) {
+              disabledSelect = true;
+            }
           }
+          //Micro Influencer Account
+          if (index === 1) {
+            if (index1 === 0 || index1 === 2 || index1 === 3) {
+              disabledSelect = true;
+            }
+          }
+
+          //Business Account
+          else if (index === 2) {
+            if (index1 === 0 || index1 === 1) {
+              disabledSelect = true;
+            }
+          }
+
+          //Business Plus Account
+          else if (index === 3) {
+            if (index1 === 0 || index1 === 1 || index1 === 2) {
+              disabledSelect = true;
+            }
+          }
+
+
 
           return selectPackages.push({
             value: package_id,
@@ -179,9 +206,8 @@ class AccountSetup extends React.Component {
     // console.log(this.state.singlePackage, "singlePackage");
     return (
       <div
-        className={`profile-page account-setup ${
-          this.props.className ? "container" : ""
-        }`}
+        className={`profile-page account-setup ${this.props.className ? "container" : ""
+          }`}
       >
         <div
           className={
@@ -239,8 +265,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more categories</span>
-                            )}
+                                <span>Change Plan to have more categories</span>
+                              )}
                           </div>
                         </div>
 
@@ -255,8 +281,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                              <span>Change Plan to have more links</span>
-                            )}
+                                <span>Change Plan to have more links</span>
+                              )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -406,9 +432,9 @@ class AccountSetup extends React.Component {
                                       }}
                                       type="button"
 
-                                      // disabled={
-                                      //   !this.state.loading ? false : true
-                                      // }
+                                    // disabled={
+                                    //   !this.state.loading ? false : true
+                                    // }
                                     >
                                       Cancel
                                     </Button>
