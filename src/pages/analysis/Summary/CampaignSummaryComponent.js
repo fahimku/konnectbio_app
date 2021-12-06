@@ -90,6 +90,7 @@ class CampaignSummaryComponent extends React.Component {
             <div className="summary_box_main col-md-12">
               <div className="summary_block_profile">
                 <div className="summary_content_profile">
+                  <h4 className="page-title">Campaign Summary</h4>
                   <label>Select Start Date / End Date</label>
                   <RangePicker
                     disabledDate={this.disabledDate}

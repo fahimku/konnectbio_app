@@ -14,12 +14,13 @@ class CampaignAnalytics extends React.Component {
       <>
         <div className="container-fluid">
           <h4 className="page-title">Campaign Performance</h4>
-          {this.state.packageName === "Influencer" ||
+          <CampaignDataComponent username={this.state.username} />
+          {/* {this.state.packageName === "Influencer" ||
           this.state.packageName === "Micro Influencer" ? (
             <CampaignDataComponent username={this.state.username} />
           ) : null
           // <AffiliateDataComponent username={this.state.username} />
-          }
+          } */}
         </div>
       </>
     );
