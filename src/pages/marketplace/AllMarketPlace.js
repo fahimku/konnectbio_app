@@ -36,10 +36,7 @@ function AllMarketplace({
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brand, setBrand] = useState({ value: "all", label: "ALL" });
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
-  });
+  const [sortBy, setSortBy] = useState({ value: "commission", label: "COMMISSION" });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -79,7 +76,7 @@ function AllMarketplace({
       }
     );
     getBrands();
-    return () => {};
+    return () => { };
   }, []);
 
   useEffect(() => {
@@ -115,7 +112,7 @@ function AllMarketplace({
         }
       );
     }
-    return () => {};
+    return () => { };
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -195,6 +192,8 @@ function AllMarketplace({
       setLoading(false);
     });
   };
+
+
 
   const style = {
     control: (base) => ({
@@ -364,15 +363,13 @@ function AllMarketplace({
               <>
                 <Row className="post-analytics-tab-boxes-ift">
                   {marketPlace.message.map((item, index) => (
-                    <Col key={index} xs={12} xl={3} md={6}>
-                      <Box
-                        key={index}
-                        userInfo={userInfo}
-                        addCampaignToShop={addCampaignToShop}
-                        item={item}
-                        index={index}
-                      />
-                    </Col>
+                    <Box
+                      key={index}
+                      userInfo={userInfo}
+                      addCampaignToShop={addCampaignToShop}
+                      item={item}
+                      index={index}
+                    />
                   ))}
                 </Row>
                 <ReactPaginate
