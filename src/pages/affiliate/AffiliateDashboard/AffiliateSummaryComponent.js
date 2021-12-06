@@ -57,7 +57,11 @@ class AffiliateSummaryComponent extends React.Component {
       <>
         <div className="summary_container_main container">
           <div className="row">
-            <div className="summary_box_main col-md-6">
+            <div
+              className={`summary_box_main ${
+                this.props.className ? this.props.className : "col-md-6"
+              }`}
+            >
               <div className="summary_block_profile">
                 <div className="summary_content_profile">
                   <label>Select Start Date / End Date</label>

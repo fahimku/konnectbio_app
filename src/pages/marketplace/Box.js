@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
 
 export default function Box({ item, addCampaignToShop, index }) {
-
   const [addCampaign, setAddCampaign] = useState(false);
   const [loading, setLoading] = useState(false);
 
