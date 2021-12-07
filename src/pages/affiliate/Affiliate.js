@@ -8,7 +8,6 @@ import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateAccounting from "./AffiliateAccounting/AffiliateAccounting";
 
-
 class Affiliate extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -49,18 +48,7 @@ class Affiliate extends React.Component {
                       <span>Dashboard</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeTab === "campaign",
-                      })}
-                      onClick={() => {
-                        this.toggleTabs("campaign");
-                      }}
-                    >
-                      <span>Campaigns</span>
-                    </NavLink>
-                  </NavItem>
+
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -71,6 +59,42 @@ class Affiliate extends React.Component {
                       }}
                     >
                       <span>Create Campaign</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "active-campaign",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("active-campaign");
+                      }}
+                    >
+                      <span>Active</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "inactive-campaign",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("inactive-campaign");
+                      }}
+                    >
+                      <span>In Active</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "expired-campaign",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("expired-campaign");
+                      }}
+                    >
+                      <span>Expired</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -96,11 +120,6 @@ class Affiliate extends React.Component {
                       <AffiliateDashboard username={this.state.username} />
                     ) : null}
                   </TabPane>
-                  <TabPane tabId="campaign">
-                    {this.state.activeTab === "campaign" ? (
-                      <AffiliateCampaign username={this.state.username} />
-                    ) : null}
-                  </TabPane>
                   <TabPane
                     tabId="create-campaign"
                     className="tab-create-campaign"
@@ -110,11 +129,36 @@ class Affiliate extends React.Component {
                         username={this.state.username}
                         user_id={this.state.user_id}
                         toggleTabs={() => {
-                          this.toggleTabs("campaign");
+                          this.toggleTabs("active-campaign");
                         }}
                       />
                     ) : null}
                   </TabPane>
+                  <TabPane tabId="active-campaign">
+                    {this.state.activeTab === "active-campaign" ? (
+                      <AffiliateCampaign
+                        username={this.state.username}
+                        type="active"
+                      />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="inactive-campaign">
+                    {this.state.activeTab === "inactive-campaign" ? (
+                      <AffiliateCampaign
+                        username={this.state.username}
+                        type="inactive"
+                      />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="expired-campaign">
+                    {this.state.activeTab === "expired-campaign" ? (
+                      <AffiliateCampaign
+                        username={this.state.username}
+                        type="expired"
+                      />
+                    ) : null}
+                  </TabPane>
+
                   <TabPane tabId="accounting">
                     {this.state.activeTab === "accounting" ? (
                       <AffiliateAccounting username={this.state.username} />

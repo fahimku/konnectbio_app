@@ -107,7 +107,7 @@ function AffiliateCampaign(props) {
   const fetchPostPerformance = async () => {
     setLoading(true);
     await axios
-      .get("campaigns/receive")
+      .get(`campaigns/receive?status=${props.type}`)
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
@@ -133,29 +133,35 @@ function AffiliateCampaign(props) {
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
-          <div className="card any_bx analytic-box campaign-box">
+          <div
+            className={`card any_bx analytic-box campaign-box ${
+              props.type !== "expired" ? "" : "pb-0"
+            }`}
+          >
             <div className="camp-row row">
               <div className="campaign-header col-12">
                 <h6>{record.campaign_name}</h6>
-                <div className="cmp-h-right">
-                  {/* {toggleLoading && <Loader />} */}
-                  <div class="form-check custom-switch custom-switch-md">
-                    <input
-                      type="checkbox"
-                      checked={record.is_active}
-                      onClick={() => {
-                        toggleCampaigns(record.is_active, record.campaign_id);
-                      }}
-                      class="custom-control-input"
-                      id={`customSwitch` + index}
-                      readOnly
-                    />
-                    <label
-                      class="custom-control-label"
-                      htmlFor={`customSwitch` + index}
-                    ></label>
+                {props.type !== "expired" ? (
+                  <div className="cmp-h-right">
+                    {/* {toggleLoading && <Loader />} */}
+                    <div class="form-check custom-switch custom-switch-md">
+                      <input
+                        type="checkbox"
+                        checked={record.is_active}
+                        onClick={() => {
+                          toggleCampaigns(record.is_active, record.campaign_id);
+                        }}
+                        class="custom-control-input"
+                        id={`customSwitch` + index}
+                        readOnly
+                      />
+                      <label
+                        class="custom-control-label"
+                        htmlFor={`customSwitch` + index}
+                      ></label>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
               <div className="any-post-img-col col-12">
                 <div className="any-post-image">
@@ -195,25 +201,26 @@ function AffiliateCampaign(props) {
                 </div>
               </div>
             </div>
-            <div className="cam-buttons col-12">
-              <button
-                className="btn"
-                onClick={() => {
-                  setCurrentCampaign(record);
-                  setModal(true);
-                }}
-              >
-                <i className="fa fa-pencil-square-o" /> Edit
-              </button>
-              <button
-                className="btn"
-                onClick={() => {
-                  deleteCampaign(record.campaign_id);
-                }}
-              >
-                <i className="fa fa-trash" /> Delete
-              </button>
-              {/* <button
+            {props.type !== "expired" ? (
+              <div className="cam-buttons col-12">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    setCurrentCampaign(record);
+                    setModal(true);
+                  }}
+                >
+                  <i className="fa fa-pencil-square-o" /> Edit
+                </button>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    deleteCampaign(record.campaign_id);
+                  }}
+                >
+                  <i className="fa fa-trash" /> Delete
+                </button>
+                {/* <button
                 className="btn"
                 onClick={() => {
                   setCampaignId(record.campaign_id);
@@ -222,7 +229,8 @@ function AffiliateCampaign(props) {
               >
                 <i className="fa fa-bar-chart" /> Analytics
               </button> */}
-            </div>
+              </div>
+            ) : null}
           </div>
         </Col>
       </React.Fragment>
