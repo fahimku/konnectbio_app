@@ -70,7 +70,7 @@ class AffiliateDataComponent extends React.Component {
   ) {
     this.setState({ loading: true });
     await axios
-      .post("analytics/receive/analyseAllPosts", {
+      .post("analytics/receive/analyseAllCampaigns", {
         username: username,
         from_date: fromDate,
         to_date: toDate,
@@ -82,18 +82,8 @@ class AffiliateDataComponent extends React.Component {
         order_by: orderBy,
       })
       .then((response) => {
-        this.setState({ data: response.data.message.data, loading: false });
+        this.setState({ data: response.data.message, loading: false });
         this.postData();
-        // if (response.data.message.hasOwnProperty("next")) {
-        //   this.setState({ page: response.data.message.next.page });
-        // } else {
-        //   this.setState({ page: 0 });
-        // }
-        // if (response.data.message.hasOwnProperty("previous")) {
-        //   this.setState({ previous: response.data.message.previous.page });
-        // } else {
-        //   this.setState({ previous: 0 });
-        // }
       });
   }
 
@@ -264,6 +254,10 @@ class AffiliateDataComponent extends React.Component {
               <div className="col-8 analytic-caption">
                 <div className="row count-main-box">
                   <div className="col-12 count-box">
+                    <h5 className="count-title">Campaign Name</h5>
+                    <h3 className="count">{record.campaign_name}</h3>
+                  </div>
+                  <div className="col-12 count-box">
                     <h5 className="count-title">Impressions</h5>
                     <h3 className="count">{numberWithCommas(record.views)}</h3>
                   </div>
@@ -274,10 +268,6 @@ class AffiliateDataComponent extends React.Component {
                   <div className="col-12 count-box">
                     <h5 className="count-title">Engagement</h5>
                     <h3 className="count">{twodecimalplace(record.ctr)}%</h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Revenue</h5>
-                    <h3 className="count">{record.revenue}</h3>
                   </div>
                 </div>
               </div>
@@ -314,6 +304,7 @@ class AffiliateDataComponent extends React.Component {
         },
       }),
     };
+    console.log(this.state.data, "data");
 
     return (
       <>

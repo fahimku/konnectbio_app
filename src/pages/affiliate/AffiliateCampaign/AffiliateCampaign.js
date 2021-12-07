@@ -213,7 +213,7 @@ function AffiliateCampaign(props) {
               >
                 <i className="fa fa-trash" /> Delete
               </button>
-              <button
+              {/* <button
                 className="btn"
                 onClick={() => {
                   setCampaignId(record.campaign_id);
@@ -221,7 +221,7 @@ function AffiliateCampaign(props) {
                 }}
               >
                 <i className="fa fa-bar-chart" /> Analytics
-              </button>
+              </button> */}
             </div>
           </div>
         </Col>
