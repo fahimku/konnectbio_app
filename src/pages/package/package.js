@@ -1,11 +1,11 @@
 import React from "react";
-import {Button, Tabs, Tab, Modal, Row} from "react-bootstrap";
+import { Button, Tabs, Tab, Modal, Row } from "react-bootstrap";
 import logo from "../../images/logo.svg";
 import axios from "axios";
-import {PaymentButton} from "../../components/PaymentButton/PaymentButton";
-import {toast} from "react-toastify";
+import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
+import { toast } from "react-toastify";
 
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -34,7 +34,7 @@ class Package extends React.Component {
       .get(`/package/receive`)
       .then((response) => {
         const packages = response.data.message;
-        this.setState({packages: this.convertArrayToObject(packages)});
+        this.setState({ packages: this.convertArrayToObject(packages) });
       })
       .catch(function (error) {
         console.log(error);
@@ -57,11 +57,11 @@ class Package extends React.Component {
     //   showBusiness,
     //   showBusinessPlus,
     // } = this.state;
-    this.setState({showIndividual: false});
-    this.setState({showMicroInfluencer: false});
-    this.setState({showInfluencer: false});
-    this.setState({showBusiness: false});
-    this.setState({showBusinessPlus: false});
+    this.setState({ showIndividual: false });
+    this.setState({ showMicroInfluencer: false });
+    this.setState({ showInfluencer: false });
+    this.setState({ showBusiness: false });
+    this.setState({ showBusinessPlus: false });
   };
 
   updatePackage = async (id, packageId) => {
@@ -89,11 +89,11 @@ class Package extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({loading: true});
+    this.setState({ loading: true });
     await axios
-      .post("/payment/validatepromocode", {promo_code: this.state.promo_code})
+      .post("/payment/validatepromocode", { promo_code: this.state.promo_code })
       .then((response) => {
-        this.setState({loading: false});
+        this.setState({ loading: false });
         toast.success(response.data.message);
         const userInformation = localStorage.getItem("userInfo");
         const parseUserInformation = JSON.parse(userInformation);
@@ -105,7 +105,7 @@ class Package extends React.Component {
       .catch((err) => {
         console.log(err.response.data);
         toast.error(err.response.data.message);
-        this.setState({loading: false, promo_code: ""});
+        this.setState({ loading: false, promo_code: "" });
       });
   };
   render() {
@@ -228,7 +228,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showMicroInfluencer: true});
+                        this.setState({ showMicroInfluencer: true });
                       }}
                     >
                       Read More
@@ -304,7 +304,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showInfluencer: true});
+                        this.setState({ showInfluencer: true });
                       }}
                     >
                       Read More
@@ -370,7 +370,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showBusiness: true});
+                        this.setState({ showBusiness: true });
                       }}
                     >
                       Read More
@@ -446,7 +446,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showBusinessPlus: true});
+                        this.setState({ showBusinessPlus: true });
                       }}
                     >
                       Read More
@@ -577,7 +577,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showMicroInfluencer: true});
+                        this.setState({ showMicroInfluencer: true });
                       }}
                     >
                       Read More
@@ -652,7 +652,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showInfluencer: true});
+                        this.setState({ showInfluencer: true });
                       }}
                     >
                       Read More
@@ -718,7 +718,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showBusiness: true});
+                        this.setState({ showBusiness: true });
                       }}
                     >
                       Read More
@@ -793,7 +793,7 @@ class Package extends React.Component {
                     <button
                       className="pkg_read btn btn-link"
                       onClick={() => {
-                        this.setState({showBusinessPlus: true});
+                        this.setState({ showBusinessPlus: true });
                       }}
                     >
                       Read More

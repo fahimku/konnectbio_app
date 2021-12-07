@@ -62,19 +62,6 @@ function AllMarketplace({
     ).then(function () {
       setLoading(false);
     });
-
-    // getUserCategories().then(
-    //   function (res) {
-    //     setCategoryOptions(
-    //       res.map((item) => {
-    //         return { value: item.category_id, label: item.category_name };
-    //       })
-    //     );
-    //   },
-    //   function (error) {
-    //     toast.error(error?.response?.data?.message);
-    //   }
-    // );
     getBrands();
     return () => { };
   }, []);
