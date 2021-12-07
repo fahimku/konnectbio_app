@@ -65,7 +65,7 @@ function ActiveMarketPlace({
     });
 
     getBrands();
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -101,7 +101,7 @@ function ActiveMarketPlace({
         }
       );
     }
-    return () => { };
+    return () => {};
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -129,7 +129,6 @@ function ActiveMarketPlace({
       }
     );
   };
-
 
   const clearMarketPlace = () => {
     //e.preventDefault();

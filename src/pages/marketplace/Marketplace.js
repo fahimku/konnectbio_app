@@ -4,10 +4,9 @@ import "./selector.css";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import AllMarketPlace from "./AllMarketPlace";
-import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace"
+import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
 
 class MarketPlace extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -102,37 +101,39 @@ class MarketPlace extends React.Component {
                 >
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
-                      <AllMarketPlace title="Marketplace" type='marketplace' />
+                      <AllMarketPlace title="Marketplace" type="marketplace" />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="active">
                     {this.state.activeTab === "active" ? (
-                      <ActiveMarketPlace title='Active Campaign' type='active' endPoint='users/marketPlace/getCampaigns' />
+                      <ActiveMarketPlace
+                        title="Active Campaign"
+                        type="active"
+                        endPoint="users/marketPlace/getCampaigns"
+                      />
                     ) : null}
                   </TabPane>
-                  <TabPane
-                    type='inActive'
-                    tabId="in-active">
+                  <TabPane type="inActive" tabId="in-active">
                     {this.state.activeTab === "in-active" ? (
-                      <ActiveMarketPlace title='In Active Campaign' type='in_active' endPoint='users/marketPlace/getAllPusedCampaignPost' />
+                      <ActiveMarketPlace
+                        title="In Active Campaign"
+                        type="in_active"
+                        endPoint="users/marketPlace/getAllPusedCampaignPost"
+                      />
                     ) : null}
                   </TabPane>
-                  <TabPane
-                    tabId="expired"
-                    className="tab-expired"
-                  >
+                  <TabPane tabId="expired" className="tab-expired">
                     {this.state.activeTab === "expired" ? (
-                      <ActiveMarketPlace title='Expired Campaign' type='expired' endPoint='users/marketPlace/getExpiredCampaigns' />
+                      <ActiveMarketPlace
+                        title="Expired Campaign"
+                        type="expired"
+                        endPoint="users/marketPlace/getExpiredCampaigns"
+                      />
                     ) : null}
                   </TabPane>
 
-                  <TabPane
-                    tabId="accounting"
-                    className="tab-accounting"
-                  >
-                    {this.state.activeTab === "accounting" ? (
-                    ''
-                    ) : null}
+                  <TabPane tabId="accounting" className="tab-accounting">
+                    {this.state.activeTab === "accounting" ? "" : null}
                   </TabPane>
                 </TabContent>
               </div>
