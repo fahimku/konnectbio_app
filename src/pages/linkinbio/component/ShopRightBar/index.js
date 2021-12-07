@@ -49,8 +49,9 @@ const ShopRightBar = (props) => {
           ref={formRef}
         >
           <div
-            className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"
-              }`}
+            className={`image-edit-box ${
+              props.isSelectPost ? "show" : "hidden"
+            }`}
           >
             <span
               onClick={() => props.selectPost(false, "")}
@@ -58,10 +59,23 @@ const ShopRightBar = (props) => {
             ></span>
             <div className="ind-post-anlytics image-box-info">
               <div className="edit-left">
-                <h4>{props.redirectedUrl ? "Edit Post" : "Add Post"}</h4>
+                <h4>
+                  {" "}
+                  {props.singlePost.linked || props.updatePage
+                    ? "Edit Post"
+                    : "Add Post"}
+                </h4>
                 <p>
-                  {props.redirectedUrl ? (
-                    props.updatedDate === "" ? (
+                  {props.singlePost.linked || props.updatePage
+                    ? "Updated on " +
+                      moment.utc(props.updatedDate).format("MMM Do YYYY")
+                    : "Posted on " +
+                      moment
+                        .utc(props.singlePost.timestamp)
+                        .format("MMM Do YYYY")}
+
+                  {/* {props.media_id ? (
+                    props.singlePost.linked || props.updatePage ? (
                       <span className="date-loader">
                         <Loader />
                       </span>
@@ -72,75 +86,90 @@ const ShopRightBar = (props) => {
                   ) : (
                     "Posted on " +
                     moment.utc(props.singlePost.timestamp).format("MMM Do YYYY")
-                  )}
+                  )} */}
                 </p>
               </div>
 
-              {media_id && (<>
-                <div className="edit-right">
-                  <div className="an-col col-md-3">
-                    <div className="an-col-inr">
-                      <div className="an-content clearfix">
-                        <span class="dash_icon-top">
-                          <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
-                        </span>
-                        <div class="imp-t text-right">{props.fetchUserPost.post_views}</div>
-                        <div class="imp-tx text-uppercase text-muted text-right">
-                          IMPRESSIONS
+              {media_id && (
+                <>
+                  <div className="edit-right">
+                    <div className="an-col col-md-3">
+                      <div className="an-col-inr">
+                        <div className="an-content clearfix">
+                          <span class="dash_icon-top">
+                            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                          </span>
+                          <div class="imp-t text-right">
+                            {props.fetchUserPost.post_views
+                              ? props.fetchUserPost.post_views
+                              : 0}
+                          </div>
+                          <div class="imp-tx text-uppercase text-muted text-right">
+                            IMPRESSIONS
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="an-col col-md-3">
+                      <div className="an-col-inr">
+                        <div className="an-content clearfix">
+                          <span class="dash_icon-top">
+                            <i
+                              class="fa fa-hand-pointer-o fa-2x"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                          <div class="imp-t text-right">
+                            {props.fetchUserPost.post_clicks
+                              ? props.fetchUserPost.post_clicks
+                              : 0}
+                          </div>
+                          <div class="imp-tx text-uppercase text-muted text-right">
+                            CLICKS
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="an-col col-md-3">
+                      <div className="an-col-inr">
+                        <div className="an-content clearfix">
+                          <span class="dash_icon-top">
+                            <i
+                              class="fa fa-handshake-o fa-2x"
+                              aria-hidden="true"
+                            ></i>
+                          </span>
+                          <div class="imp-t text-right">
+                            {props.fetchUserPost.ctr
+                              ? props.fetchUserPost.ctr === "NaN"
+                                ? 0
+                                : props.fetchUserPost.ctr
+                              : 0}
+                            %
+                          </div>
+                          <div class="imp-tx text-uppercase text-muted text-right">
+                            ENGAGEMENT
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="an-col col-md-3">
+                      <div className="an-col-inr">
+                        <div className="an-content clearfix">
+                          <span class="dash_icon-top">
+                            <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                          </span>
+                          <div class="imp-t text-right">$0.00</div>
+                          <div class="imp-tx text-uppercase text-muted text-right">
+                            REVENUE
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="an-col col-md-3">
-                    <div className="an-col-inr">
-                      <div className="an-content clearfix">
-                        <span class="dash_icon-top">
-                          <i
-                            class="fa fa-hand-pointer-o fa-2x"
-                            aria-hidden="true"
-                          ></i>
-                        </span>
-                        <div class="imp-t text-right">{props.fetchUserPost.post_clicks}</div>
-                        <div class="imp-tx text-uppercase text-muted text-right">
-                          CLICKS
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="an-col col-md-3">
-                    <div className="an-col-inr">
-                      <div className="an-content clearfix">
-                        <span class="dash_icon-top">
-                          <i
-                            class="fa fa-handshake-o fa-2x"
-                            aria-hidden="true"
-                          ></i>
-                        </span>
-                        <div class="imp-t text-right">{props.fetchUserPost.ctr}%</div>
-                        <div class="imp-tx text-uppercase text-muted text-right">
-                          ENGAGEMENT
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="an-col col-md-3">
-                    <div className="an-col-inr">
-                      <div className="an-content clearfix">
-                        <span class="dash_icon-top">
-                          <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
-                        </span>
-                        <div class="imp-t text-right">$0.00</div>
-                        <div class="imp-tx text-uppercase text-muted text-right">
-                          REVENUE
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>)
-              }
+                </>
+              )}
             </div>
-
 
             <div className="image-wrapper">
               <div className="image-box">
@@ -328,9 +357,9 @@ const ShopRightBar = (props) => {
                           <Button
                             className="custom_btns_ift"
                             color="primary"
-                          // onClick={(ev) =>
-                          //   props.savePost && props.savePost(this)
-                          // }
+                            // onClick={(ev) =>
+                            //   props.savePost && props.savePost(this)
+                            // }
                           >
                             &nbsp;Save&nbsp;
                           </Button>
