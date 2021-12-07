@@ -97,7 +97,7 @@ class LinkinBio extends React.Component {
           parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({ error: "Connect Your Instagram Account to Continue" });
+          this.setState({error: "Connect Your Instagram Account to Continue"});
           this.setState({ showInstagramButton: true });
           this.props.history.push("/connect");
         }
@@ -155,7 +155,7 @@ class LinkinBio extends React.Component {
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
-        this.changeDateRange(response.data.message.start_date, response.data.message.end_date);
+        this.changeDateRange(response.data.message.start_date,response.data.message.end_date);
       })
       .catch((err) => {
         this.setState({
@@ -228,7 +228,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -323,9 +323,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
+        parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -346,7 +346,6 @@ class LinkinBio extends React.Component {
   selectPost = (state, postIndex) => {
     this.setState((prevState) => ({ autoFocus: !prevState.autoFocus }));
     this.fetchCategories();
-    
     if (postIndex !== "") {
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
@@ -516,22 +515,25 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${this.state.url + this.state.username
-                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${
+                    this.state.url + this.state.username
+                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>

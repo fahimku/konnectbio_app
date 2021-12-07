@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postAct from "../../../../actions/posts";
 import InfiniteScroll from "react-infinite-scroller";
@@ -63,9 +63,8 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                       onClick={() => {
                         if (!item.linked) selectPost(item.post_id);
                       }}
-                      className={`image-post-box-aff-inr-inr ${
-                        item.linked ? "linked-disabled" : ""
-                      }`}
+                      className={`image-post-box-aff-inr-inr ${item.linked ? "linked-disabled" : ""
+                        }`}
                     >
                       {item.media_type === "VIDEO" ? (
                         <video
