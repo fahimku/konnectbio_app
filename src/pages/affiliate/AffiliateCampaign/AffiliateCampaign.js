@@ -104,6 +104,13 @@ function AffiliateCampaign(props) {
             );
             data1[objIndex].is_active = !status;
             setData(data1);
+
+            setTimeout(() => {
+              let data2 = [...data].filter(function (item) {
+                return item.campaign_id !== campaignId;
+              });
+              setData(data2);
+            }, 300);
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
