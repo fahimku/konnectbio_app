@@ -23,6 +23,7 @@ import BreadcrumbHistory from "../BreadcrumbHistory";
 import LinkinBio from "../../pages/linkinbio/LinkinBio";
 import Analysis from "../../pages/analysis/analysis";
 import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
+import BioShop from "../../pages/bioshop/BioShop";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
 import MyLinks from "../../pages/mylinks/MyLinks";
 import MyProfile from "../../pages/myprofile/MyProfile";
@@ -70,15 +71,13 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${
-            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-              ? "light"
-              : localStorage.getItem("dashboardTheme")
+          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+            ? "light"
+            : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${
-            localStorage.getItem("navbarColor")
-              ? localStorage.getItem("navbarColor").replace("#", "")
-              : "FFFFFF"
+          `header-${localStorage.getItem("navbarColor")
+            ? localStorage.getItem("navbarColor").replace("#", "")
+            : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -112,6 +111,11 @@ class Layout extends React.Component {
                         path="/app/linkinbio"
                         exact
                         component={LinkinBio}
+                      />
+                      <Route
+                        path="/app/bioshop"
+                        exact
+                        component={BioShop}
                       />
                       <Route
                         path="/app/linkinbio-shop"

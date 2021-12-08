@@ -29,7 +29,8 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
               pageStart={0}
               className="af-rm-mn row"
               loadMore={() =>
-                getPosts(posts.next?.page, id && id !== "allPost" ? id : null)
+  //            alert('test')
+               getPosts(posts.next?.page, id && id !== "allPost" ? id : null)
               }
               hasMore={posts.next?.page ? true : false}
               loader={
@@ -149,5 +150,4 @@ const styles = {
 function mapStateToProps({ posts }) {
   return { posts };
 }
-
 export default connect(mapStateToProps, postAct)(PostGallery);
