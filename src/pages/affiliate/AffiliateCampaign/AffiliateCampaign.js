@@ -47,8 +47,14 @@ function AffiliateCampaign(props) {
   const [campaignId, setCampaignId] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
-  const fromDate = moment(new Date()).format("YYYY-MM-DD");
-  const toDate = moment().add(1, "year").format("YYYY-MM-DD");
+  const fromDate =
+    props.type !== "expired"
+      ? moment(new Date()).format("YYYY-MM-DD")
+      : moment().startOf("year").format("YYYY-MM-DD");
+  const toDate =
+    props.type !== "expired"
+      ? moment().add(1, "year").format("YYYY-MM-DD")
+      : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const limit = 8;
@@ -110,6 +116,12 @@ function AffiliateCampaign(props) {
                 return item.campaign_id !== campaignId;
               });
               setData(data2);
+              const page = Math.ceil(data2.length / perPage) - 1;
+              const selectedPage = page;
+              const offset = selectedPage * perPage;
+              setPageCount(page + 1);
+              setCurrentPage(selectedPage);
+              setOffset(offset);
             }, 300);
             toast.success("Campaign " + statusName + " Successfully");
           })
@@ -241,6 +253,14 @@ function AffiliateCampaign(props) {
                       Pay per 100 {record.campaign_type}
                     </h5>
                     <h3 className="count">${record.pay_per_hundred}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Spent</h5>
+                    <h3 className="count">$0</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title"># of Participants</h5>
+                    <h3 className="count">0</h3>
                   </div>
                 </div>
               </div>

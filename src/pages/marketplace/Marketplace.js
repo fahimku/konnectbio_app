@@ -67,7 +67,7 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("in-active");
                       }}
                     >
-                      <span>In Active</span>
+                      <span>Paused</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -116,7 +116,7 @@ class MarketPlace extends React.Component {
                   <TabPane type="inActive" tabId="in-active">
                     {this.state.activeTab === "in-active" ? (
                       <ActiveMarketPlace
-                        title="In Active Campaign"
+                        title="Paused Campaign"
                         type="in_active"
                         endPoint="users/marketPlace/getAllPusedCampaignPost"
                       />
