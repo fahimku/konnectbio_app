@@ -243,12 +243,12 @@ function AffiliateCampaign(props) {
                     <h3 className="count">${record.pay_per_hundred}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Total Spend</h5>
-                    <h3 className="count">${record.pay_per_hundred}</h3>
+                    <h5 className="count-title">Total Spent</h5>
+                    <h3 className="count">$0</h3>
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title"># of Participants</h5>
-                    <h3 className="count">5</h3>
+                    <h3 className="count">0</h3>
                   </div>
                 </div>
               </div>
