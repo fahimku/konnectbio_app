@@ -20,19 +20,6 @@ import Select from "react-select";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
-// const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-//   <a
-//     href="#"
-//     ref={ref}
-//     onClick={(e) => {
-//       e.preventDefault();
-//       onClick(e);
-//     }}
-//   >
-//     {children}
-//     <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
-//   </a>
-// ));
 
 function AffiliateCampaign(props) {
   const [data, setData] = useState([]);
@@ -47,11 +34,17 @@ function AffiliateCampaign(props) {
   const [campaignId, setCampaignId] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
-  const fromDate = moment(new Date()).format("YYYY-MM-DD");
-  const toDate = moment().add(1, "year").format("YYYY-MM-DD");
+  const fromDate =
+    props.type !== "expired"
+      ? moment(new Date()).format("YYYY-MM-DD")
+      : moment().startOf("year").format("YYYY-MM-DD");
+  const toDate =
+    props.type !== "expired"
+      ? moment().add(1, "year").format("YYYY-MM-DD")
+      : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
-  const limit = 8;
+  // const limit = 8;
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [sortBy, setSortBy] = useState({
@@ -110,7 +103,14 @@ function AffiliateCampaign(props) {
                 return item.campaign_id !== campaignId;
               });
               setData(data2);
+              const page = Math.ceil(data2.length / perPage) - 1;
+              const selectedPage = page;
+              const offset = selectedPage * perPage;
+              setPageCount(page + 1);
+              setCurrentPage(selectedPage);
+              setOffset(offset);
             }, 300);
+
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
@@ -151,7 +151,7 @@ function AffiliateCampaign(props) {
   const fetchPostPerformance = async () => {
     setLoading(true);
     await axios
-      .get(`campaigns/receive?status=${props.type}`)
+      .post(`campaigns/receive?status=${props.type}`)
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
@@ -241,6 +241,14 @@ function AffiliateCampaign(props) {
                       Pay per 100 {record.campaign_type}
                     </h5>
                     <h3 className="count">${record.pay_per_hundred}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Spend</h5>
+                    <h3 className="count">${record.pay_per_hundred}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title"># of Participants</h5>
+                    <h3 className="count">5</h3>
                   </div>
                 </div>
               </div>

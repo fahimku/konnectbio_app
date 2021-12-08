@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { connect } from "react-redux";
 import * as postAct from "../../../../actions/posts";
 import InfiniteScroll from "react-infinite-scroller";
@@ -9,16 +9,16 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
     getPosts(1, null, clearPost).then(() => setLoading(false));
   }, []);
 
-  // const searchMemo = useMemo(() => {
-  //   if (id === "allPost") {
-  //     setLoading(true);
-  //     getPosts(1, null, clearPost).then(() => setLoading(false));
-  //   }
-  //   if (id && id !== "allPost") {
-  //     setLoading(true);
-  //     getPosts(1, id, clearPost).then(() => setLoading(false));
-  //   }
-  // }, [id]);
+  const searchMemo = useMemo(() => {
+    if (id === "allPost") {
+      setLoading(true);
+      getPosts(1, null, clearPost).then(() => setLoading(false));
+    }
+    if (id && id !== "allPost") {
+      setLoading(true);
+      getPosts(1, id, clearPost).then(() => setLoading(false));
+    }
+  }, [id]);
 
   if (!loading) {
     return (
@@ -63,8 +63,9 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                       onClick={() => {
                         if (!item.linked) selectPost(item.post_id);
                       }}
-                      className={`image-post-box-aff-inr-inr ${item.linked ? "linked-disabled" : ""
-                        }`}
+                      className={`image-post-box-aff-inr-inr ${
+                        item.linked ? "linked-disabled" : ""
+                      }`}
                     >
                       {item.media_type === "VIDEO" ? (
                         <video

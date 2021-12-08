@@ -82,7 +82,7 @@ class Affiliate extends React.Component {
                         this.toggleTabs("inactive-campaign");
                       }}
                     >
-                      <span>In Active</span>
+                      <span>Paused</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -148,7 +148,7 @@ class Affiliate extends React.Component {
                       <AffiliateCampaign
                         username={this.state.username}
                         type="inactive"
-                        title="In Active Campaign"
+                        title="Paused Campaign"
                       />
                     ) : null}
                   </TabPane>
