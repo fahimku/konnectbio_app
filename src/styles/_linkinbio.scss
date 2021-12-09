@@ -309,20 +309,15 @@
     margin-left: auto;
     display: flex;
     margin-top: 15px;
-    justify-content: space-between;
 
     button {
         flex-basis: 100%;
         color: #fff!important;
         padding: 10px 2px!important;
-        grid-gap: 0;
-        gap: 0;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: .9rem;
         border-radius: 5px;
-        min-width: 50px;
-        margin-right: 2%!important;
     }
     button:last-child{
         margin-right: 0 !important;
