@@ -38,7 +38,7 @@ class MarketPlace extends React.Component {
         <Row className="ml-0 mr-0 tab-section">
           <div className="affiliate_p_col">
             <Row className="ml-0 mr-0">
-              <div className="affiliate_in_col">
+              <div className="affiliate_in_col marketing-tabs">
                 <Nav tabs className={`${s.coloredNav}`}>
                   <NavItem>
                     <NavLink

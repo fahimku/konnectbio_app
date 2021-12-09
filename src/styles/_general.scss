@@ -515,3 +515,7 @@ h1 small {
 .summary-loading {
   height: 26vh !important;
 }
+.marketing-tabs .nav-link.disabled {
+  pointer-events: auto;
+  cursor: no-drop;
+}

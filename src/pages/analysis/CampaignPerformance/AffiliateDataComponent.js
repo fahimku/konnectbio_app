@@ -84,6 +84,10 @@ class AffiliateDataComponent extends React.Component {
       .then((response) => {
         this.setState({ data: response.data.message, loading: false });
         this.postData();
+      })
+      .catch((error) => {
+        console.log(error);
+        this.setState({ loading: false });
       });
   }
 
