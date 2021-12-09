@@ -5,6 +5,7 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import AllMarketPlace from "./AllMarketPlace";
 import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
+import BrandComponent from "./Brand/BrandComponent";
 
 class MarketPlace extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class MarketPlace extends React.Component {
     super(props);
     this.toggleTabs = this.toggleTabs.bind(this);
     this.state = {
-      activeTab: "marketplace",
+      activeTab: "brand",
       username: username,
     };
   }
@@ -34,6 +35,18 @@ class MarketPlace extends React.Component {
             <Row className="ml-0 mr-0">
               <div className="affiliate_in_col">
                 <Nav tabs className={`${s.coloredNav}`}>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "brand",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("brand");
+                      }}
+                    >
+                      <span>Brand</span>
+                    </NavLink>
+                  </NavItem>
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -99,6 +112,11 @@ class MarketPlace extends React.Component {
                   className="affiliate_tab_ift"
                   activeTab={this.state.activeTab}
                 >
+                  <TabPane tabId="brand">
+                    {this.state.activeTab === "brand" ? (
+                      <BrandComponent title="Brand" type="brand" />
+                    ) : null}
+                  </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
                       <AllMarketPlace title="Marketplace" type="marketplace" />

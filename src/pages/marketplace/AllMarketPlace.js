@@ -36,7 +36,10 @@ function AllMarketplace({
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brand, setBrand] = useState({ value: "all", label: "ALL" });
-  const [sortBy, setSortBy] = useState({ value: "commission", label: "COMMISSION" });
+  const [sortBy, setSortBy] = useState({
+    value: "commission",
+    label: "COMMISSION",
+  });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -63,7 +66,7 @@ function AllMarketplace({
       setLoading(false);
     });
     getBrands();
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -99,7 +102,7 @@ function AllMarketplace({
         }
       );
     }
-    return () => { };
+    return () => {};
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -133,7 +136,7 @@ function AllMarketplace({
 
     let page = marketPlace.message.length === 1 ? currentPage : currentPage + 1;
     if (page === 0) {
-      page = 1;  
+      page = 1;
     }
     setCurrentPage(page - 1);
     setClearLoading(true);
@@ -350,7 +353,9 @@ function AllMarketplace({
               </Col>
             </Row>
             <hr />
-            {marketPlace?.message?.length > 0 ? (
+            {marketPlace?.message ? (
+              marketPlace?.message
+            ) : marketPlace?.message?.length > 0 ? (
               <>
                 <Row className="post-analytics-tab-boxes-ift">
                   {marketPlace.message.map((item, index) => (
