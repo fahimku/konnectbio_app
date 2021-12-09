@@ -30,6 +30,16 @@
             padding-right: 5px;
         }
     }
+    .pane-button{
+        justify-content: space-between;
+
+        button{
+            grid-gap: 0;
+            gap: 0;
+            min-width: 50px;
+        margin-right: 2%!important;
+        }
+    }
 }
 
 @media screen and (max-width: 1400px) and (min-width: 1201px) {
@@ -349,9 +359,9 @@
         width:100%;
         display:flex !important;
     }
-    .LayoutWrap{
+    /*.LayoutWrap{
         min-height: 93.5vh !important;
-    }
+    }*/
     .yearly_message{
         width:40%;
     }
@@ -366,10 +376,10 @@
         font-size: 1.1rem;
     }
     .tab-content.affiliate_tab_ift{
-        height: -moz-calc(100% - 3px);
-        height: -webkit-calc(100% - 3px);
-        height: -o-calc(100% - 3px);
-        height: calc(100% - 3px);
+        height: -moz-calc(100% - 70px);
+        height: -webkit-calc(100% - 70px);
+        height: -o-calc(100% - 70px);
+        height: calc(100% - 70px);
     }
     .mb-menu-show{
         overflow: hidden;
@@ -394,6 +404,10 @@
   }
 
 @media only screen and (max-width: 760px) {
+
+    body{
+        background: #F9FBFD !important;
+    }
 
     .LayoutWrap{
         min-height: 90vh !important;
@@ -672,8 +686,8 @@
 @media only screen and (max-width: 991px) {
     .mobile-menu ul li a {
         font-size: 14px;
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
 
 }
