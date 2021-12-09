@@ -163,7 +163,9 @@ function AffiliateCampaign(props) {
   const fetchPostPerformance = async () => {
     setLoading(true);
     await axios
-      .get(`campaigns/receive?status=${props.type}`)
+      .get(
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+      )
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
@@ -260,7 +262,7 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title"># of Participants</h5>
-                    <h3 className="count">0</h3>
+                    <h3 className="count">{record.total_participant}</h3>
                   </div>
                 </div>
               </div>
@@ -315,6 +317,8 @@ function AffiliateCampaign(props) {
         setLoading(false);
         setSearchLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
+        setCurrentPage(0);
+        setOffset(0);
         postData();
       })
       .catch(() => {
@@ -337,9 +341,7 @@ function AffiliateCampaign(props) {
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
-      .get(
-        `campaigns/receive?status=${props.type}&category_id=all&sort_by=commission&order_by=desc&start_date=${fromDate}&end_date=${toDate}`
-      )
+      .get(`campaigns/receive?status=${props.type}`)
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
