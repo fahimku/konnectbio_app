@@ -329,7 +329,9 @@ function AffiliateCampaign(props) {
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
-      .get(`campaigns/receive?status=${props.type}`)
+      .get(
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+      )
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
