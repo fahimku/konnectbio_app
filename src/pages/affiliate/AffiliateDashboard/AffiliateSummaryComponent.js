@@ -55,7 +55,6 @@ class AffiliateSummaryComponent extends React.Component {
     const data = this.props.campaignSummary;
     return (
       <>
-
         <div className="summary_container_main container">
           <div className="row">
             <div
@@ -98,56 +97,64 @@ class AffiliateSummaryComponent extends React.Component {
                     format={dateFormat}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
-                  {!data.loading ? (
+                  {/* {data.loading ? (
                     <Loader
                       className="analytics-loading campaign-sum-loading"
                       size={60}
                     />
-                  ) : (
-                    <div className="card analytic-box">
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Campaigns</h5>
-                        <h3 className="count">
-                          {data.campaign_summary.total_campaigns}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Active Campaigns</h5>
-                        <h3 className="count">
-                          {data.campaign_summary.active_campaigns}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">
-                          Total In-Active Campaigns
-                        </h5>
-                        <h3 className="count">
-                          {data.campaign_summary.in_active_campaigns}
-                        </h3>
-                      </div>
-
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Budget</h5>
-                        <h3 className="count">
-                          {data.campaign_summary.total_budget}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Clicks</h5>
-                        <h3 className="count">
-                          {data.campaign_summary.total_clicks}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Spent</h5>
-                        <h3 className="count">$0</h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title"># of Participants</h5>
-                        <h3 className="count">0</h3>
-                      </div>
+                  ) : ( */}
+                  <div className="card analytic-box">
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Campaigns</h5>
+                      <h3 className="count">
+                        {data.campaign_summary.total_campaigns
+                          ? data.campaign_summary.total_campaigns
+                          : "0"}
+                      </h3>
                     </div>
-                  )}
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Active Campaigns</h5>
+                      <h3 className="count">
+                        {data.campaign_summary.active_campaigns
+                          ? data.campaign_summary.active_campaigns
+                          : "0"}
+                      </h3>
+                    </div>
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total In-Active Campaigns</h5>
+                      <h3 className="count">
+                        {data.campaign_summary.in_active_campaigns
+                          ? data.campaign_summary.in_active_campaigns
+                          : "0"}
+                      </h3>
+                    </div>
+
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Budget</h5>
+                      <h3 className="count">
+                        {data.campaign_summary.total_budget
+                          ? data.campaign_summary.total_budget
+                          : "$0"}
+                      </h3>
+                    </div>
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Clicks</h5>
+                      <h3 className="count">
+                        {data.campaign_summary.total_clicks
+                          ? data.campaign_summary.total_clicks
+                          : "0"}
+                      </h3>
+                    </div>
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Spent</h5>
+                      <h3 className="count">$0</h3>
+                    </div>
+                    <div className="col-12 count-box">
+                      <h5 className="count-title"># of Participants</h5>
+                      <h3 className="count">0</h3>
+                    </div>
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>
