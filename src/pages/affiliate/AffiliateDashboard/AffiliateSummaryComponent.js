@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
+// import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
@@ -147,11 +147,19 @@ class AffiliateSummaryComponent extends React.Component {
                     </div>
                     <div className="col-12 count-box">
                       <h5 className="count-title">Total Spent</h5>
-                      <h3 className="count">$0</h3>
+                      <h3 className="count">
+                        {data.campaign_summary.total_spent
+                          ? data.campaign_summary.total_spent
+                          : "$0"}
+                      </h3>
                     </div>
                     <div className="col-12 count-box">
                       <h5 className="count-title"># of Participants</h5>
-                      <h3 className="count">0</h3>
+                      <h3 className="count">
+                        {data.campaign_summary.total_participant
+                          ? data.campaign_summary.total_participant
+                          : "0"}
+                      </h3>
                     </div>
                   </div>
                   {/* )} */}

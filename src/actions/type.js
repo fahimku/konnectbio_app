@@ -15,3 +15,4 @@ export const GET_CAMPAIGN_ANALYTICS = "getCampaignAnalytics";
 export const GET_USER_BRANDS = "getUserBrands";
 export const GET_BRANDS_CATEGORY = "getBrandsCategory";
 export const ACTIVATE_DEACTIVATE_CAMPAIGN = "activateDeactivateCampaign";
+export const GET_POST_SUMMARY = "getPostSummary";

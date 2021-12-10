@@ -2,9 +2,11 @@ import axios from "axios";
 import React from "react";
 // import { Row, Col } from "react-bootstrap";
 import moment from "moment";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
+// import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import { connect } from "react-redux";
+import { getPostSummary } from "../../../actions/postSummary";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
@@ -40,40 +42,44 @@ class SummaryDataComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchSummeryPerformance(
-      this.state.username,
-      this.state.fromDate,
-      moment(new Date()).format("YYYY-MM-DD"),
-      this.state.limit,
-      this.state.page
+    this.props.dispatch(
+      getPostSummary(
+        this.state.username,
+        this.state.fromDate,
+        this.state.toDate,
+        this.state.limit,
+        this.state.page
+      )
     );
   }
-  fetchSummeryPerformance = async (username, fromDate, toDate, limit, page) => {
-    this.setState({ loading: true });
-    await axios
-      .post("analytics/receive/analyseSummary", {
-        username: username,
-        from_date: fromDate,
-        to_date: toDate,
-        page: page,
-        limit: limit,
-        post_type: "image",
-      })
-      .then((response) => {
-        this.setState({ data: response.data.message, loading: false });
-      });
-  };
+  // fetchSummeryPerformance = async (username, fromDate, toDate, limit, page) => {
+  //   this.setState({ loading: true });
+  //   await axios
+  //     .post("analytics/receive/analyseSummary", {
+  //       username: username,
+  //       from_date: fromDate,
+  //       to_date: toDate,
+  //       page: page,
+  //       limit: limit,
+  //       post_type: "image",
+  //     })
+  //     .then((response) => {
+  //       this.setState({ data: response.data.message, loading: false });
+  //     });
+  // };
 
   dateRangePickerChanger(value, dataString) {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({ fromDate: fromDate, toDate: toDate });
-    this.fetchSummeryPerformance(
-      this.state.username,
-      fromDate,
-      toDate,
-      this.state.limit,
-      1
+    this.props.dispatch(
+      getPostSummary(
+        this.state.username,
+        fromDate,
+        toDate,
+        this.state.limit,
+        this.state.page
+      )
     );
   }
 
@@ -82,7 +88,7 @@ class SummaryDataComponent extends React.Component {
   }
 
   render() {
-    const data = this.state.data;
+    const data = this.props.postSummary.post_summary;
     return (
       <>
         <div className="summary_container_main container">
@@ -172,4 +178,9 @@ class SummaryDataComponent extends React.Component {
     );
   }
 }
-export default SummaryDataComponent;
+function mapStateToProps({ postSummary }) {
+  return {
+    postSummary: postSummary,
+  };
+}
+export default connect(mapStateToProps)(SummaryDataComponent);

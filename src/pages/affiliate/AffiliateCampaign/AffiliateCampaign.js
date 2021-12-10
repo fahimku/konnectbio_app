@@ -91,8 +91,10 @@ function AffiliateCampaign(props) {
           })
           .then(() => {
             let data1 = [...data];
-            let objIndex = data1.findIndex((obj) => obj.campaign_id === campaignId);
-            data1[objIndex].is_active = !status;            
+            let objIndex = data1.findIndex(
+              (obj) => obj.campaign_id === campaignId
+            );
+            data1[objIndex].is_active = !status;
             setData(data1);
             setTimeout(() => {
               let data2 = [...data].filter(function (item) {
@@ -153,7 +155,7 @@ function AffiliateCampaign(props) {
         setData(response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
-       /// postData();
+        /// postData();
       })
       .catch(() => {
         setLoading(false);
@@ -165,7 +167,7 @@ function AffiliateCampaign(props) {
     const offset = selectedPage * perPage;
     setCurrentPage(selectedPage);
     setOffset(offset);
-   // postData();
+    // postData();
   };
 
   const postData = () => {
@@ -241,7 +243,7 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Total Spent</h5>
-                    <h3 className="count">$0</h3>
+                    <h3 className="count">${record.total_spent}</h3>
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title"># of Participants</h5>
@@ -309,7 +311,7 @@ function AffiliateCampaign(props) {
         setSearchLoading(false);
       });
   };
- 
+
   const clearCampaign = async (e) => {
     e.preventDefault();
     let page = data.length === 1 ? currentPage : currentPage + 1;

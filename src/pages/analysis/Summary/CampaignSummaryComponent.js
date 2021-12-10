@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 // import { Row, Col } from "react-bootstrap";
 import moment from "moment";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
+// import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 
