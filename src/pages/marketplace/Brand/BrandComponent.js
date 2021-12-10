@@ -74,49 +74,51 @@ class BrandComponent extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">{this.state.title}</h4>
-          <Row>
-            <div className="profile_box_main col-md-6">
-              <div className="brand-section dash_block_profile">
-                <div className="dash_content_profile">
-                  <form onSubmit={this.handleSubmit}>
-                    <h5>Select Brands</h5>
-                    <Row>
-                      <Col md={12}>
-                        {this.state.brandLoading ? (
-                          <Loader />
-                        ) : (
-                          <AsyncSelectField
-                            name="brand"
-                            placeholder="Search By Brand"
-                            getBrand={this.getBrand}
-                            defaultValue={this.state.myBrand}
-                          />
-                        )}
-                      </Col>
-                      {this.state.brands.length === 0 ? (
-                        <span className="text-danger col-md-12 mt-2">
-                          Please select brands to unlock marketplace.
-                        </span>
-                      ) : null}
-                    </Row>
+          <div className="brand_container_main">
+            <Row>
+              <div className="profile_box_main col-md-6">
+                <div className="brand-section dash_block_profile">
+                  <div className="dash_content_profile">
+                    <form onSubmit={this.handleSubmit}>
+                      <h5>Select Brands</h5>
+                      <Row>
+                        <Col md={12}>
+                          {this.state.brandLoading ? (
+                            <Loader />
+                          ) : (
+                            <AsyncSelectField
+                              name="brand"
+                              placeholder="Search By Brand"
+                              getBrand={this.getBrand}
+                              defaultValue={this.state.myBrand}
+                            />
+                          )}
+                        </Col>
+                        {this.state.brands.length === 0 ? (
+                          <span className="text-danger col-md-12 mt-2">
+                            Please select brands to unlock marketplace.
+                          </span>
+                        ) : null}
+                      </Row>
 
-                    <Row>
-                      <Col md={5} xl={3}>
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          className="btn-block mt-3"
-                          disabled={!this.state.loading ? false : true}
-                        >
-                          Save
-                        </Button>
-                      </Col>
-                    </Row>
-                  </form>
+                      <Row>
+                        <Col md={5} xl={3}>
+                          <Button
+                            variant="primary"
+                            type="submit"
+                            className="btn-block mt-3"
+                            disabled={!this.state.loading ? false : true}
+                          >
+                            Save
+                          </Button>
+                        </Col>
+                      </Row>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Row>
+            </Row>
+          </div>
         </div>
       </React.Fragment>
     );
