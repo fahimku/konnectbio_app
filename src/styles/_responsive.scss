@@ -713,6 +713,12 @@
     border-color: #000 !important;
 }
 
+@media only screen and (max-width: 600px) {
+    .summary_block_profile{
+        min-height: 100px !important;
+    }
+}
+
 @media only screen and (max-width: 512px) {
     .top-logo {
         width: 110px;
