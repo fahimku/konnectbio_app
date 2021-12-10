@@ -85,7 +85,7 @@ class CampaignSummaryComponent extends React.Component {
     const data = this.state.data;
     return (
       <>
-        <div className="summary_container_main container">
+        <div className="abc summary_container_main container">
           <div className="row">
             <div className="summary_box_main col-md-12">
               <div className="summary_block_profile">
