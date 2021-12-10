@@ -58,7 +58,7 @@ class AsyncSelectField extends React.Component {
     return (
       <React.Fragment>
         <div
-          style={{ height: "100%", width: "100%" }}
+          //   style={{ height: "100%", width: "100%" }}
           onPaste={(e) => this.handleOnPaste(e)}
         >
           <AsyncSelect

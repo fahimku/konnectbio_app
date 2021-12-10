@@ -271,6 +271,10 @@ span.icon {
   padding-right: 0;
   margin-bottom: 14px;
 }
+.analytic-box .count-box:last-child{
+  margin-bottom: 0;
+  border-bottom: none;
+}
 .analytic-box .count-box .count {
   font-size: 1rem;
 }
@@ -1251,6 +1255,14 @@ margin:0 auto !important;
 }
 
 /* Affiliate Page End Here Iftikhar */
+
+
+/* Brand Page Start Here Iftikhar */
+
+.brand_container_main .row .profile_box_main .dash_block_profile{
+  min-height: 300px;
+}
+
 
 
 

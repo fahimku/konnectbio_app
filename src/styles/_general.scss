@@ -513,9 +513,12 @@ h1 small {
   float: none !important;
 }
 .summary-loading {
-  height: 26vh !important;
+  height: 146px !important;
 }
 .marketing-tabs .nav-link.disabled {
   pointer-events: auto;
   cursor: no-drop;
+}
+.campaign-sum-loading {
+  height: 304px !important;
 }
