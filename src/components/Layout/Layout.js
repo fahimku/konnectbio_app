@@ -70,15 +70,13 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${
-            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-              ? "light"
-              : localStorage.getItem("dashboardTheme")
+          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+            ? "light"
+            : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${
-            localStorage.getItem("navbarColor")
-              ? localStorage.getItem("navbarColor").replace("#", "")
-              : "FFFFFF"
+          `header-${localStorage.getItem("navbarColor")
+            ? localStorage.getItem("navbarColor").replace("#", "")
+            : "FFFFFF"
           }`,
         ].join(" ")}
       >

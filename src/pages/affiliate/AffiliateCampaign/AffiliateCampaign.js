@@ -11,7 +11,6 @@ import Loader from "../../../components/Loader/Loader";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import * as catActions from "../../../actions/category";
-
 import { connect } from "react-redux";
 import AnalyticModal from "./AnalyticModal";
 import { DatePicker } from "antd";
@@ -92,12 +91,9 @@ function AffiliateCampaign(props) {
           })
           .then(() => {
             let data1 = [...data];
-            let objIndex = data1.findIndex(
-              (obj) => obj.campaign_id === campaignId
-            );
-            data1[objIndex].is_active = !status;
+            let objIndex = data1.findIndex((obj) => obj.campaign_id === campaignId);
+            data1[objIndex].is_active = !status;            
             setData(data1);
-
             setTimeout(() => {
               let data2 = [...data].filter(function (item) {
                 return item.campaign_id !== campaignId;
@@ -110,7 +106,6 @@ function AffiliateCampaign(props) {
               setCurrentPage(selectedPage);
               setOffset(offset);
             }, 300);
-
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
@@ -158,7 +153,7 @@ function AffiliateCampaign(props) {
         setData(response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
-        postData();
+       /// postData();
       })
       .catch(() => {
         setLoading(false);
@@ -170,7 +165,7 @@ function AffiliateCampaign(props) {
     const offset = selectedPage * perPage;
     setCurrentPage(selectedPage);
     setOffset(offset);
-    postData();
+   // postData();
   };
 
   const postData = () => {
@@ -314,6 +309,7 @@ function AffiliateCampaign(props) {
         setSearchLoading(false);
       });
   };
+ 
   const clearCampaign = async (e) => {
     e.preventDefault();
     let page = data.length === 1 ? currentPage : currentPage + 1;

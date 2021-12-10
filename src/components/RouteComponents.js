@@ -32,11 +32,9 @@ export const AdminRoute = ({ currentUser, dispatch, component, ...rest }) => {
 export const UserRoute = ({ dispatch, component, ...rest }) => {
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
-    //    return (<Redirect to="/login" />)
     return history.push("/app/linkinbio");
   } else {
     return (
-      // eslint-disable-line
       <Route
         {...rest}
         render={(props) => React.createElement(component, props)}
