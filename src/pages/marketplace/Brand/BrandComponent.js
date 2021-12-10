@@ -86,19 +86,21 @@ class BrandComponent extends React.Component {
                           {this.state.brandLoading ? (
                             <Loader />
                           ) : (
-                            <AsyncSelectField
-                              name="brand"
-                              placeholder="Search By Brand"
-                              getBrand={this.getBrand}
-                              defaultValue={this.state.myBrand}
-                            />
+                            <React.Fragment>
+                              <AsyncSelectField
+                                name="brand"
+                                placeholder="Search By Brand"
+                                getBrand={this.getBrand}
+                                defaultValue={this.state.myBrand}
+                              />
+                              {this.state.brands.length === 0 ? (
+                                <span className="text-danger mt-2">
+                                  Please select brands to unlock marketplace.
+                                </span>
+                              ) : null}
+                            </React.Fragment>
                           )}
                         </Col>
-                        {this.state.brands.length === 0 ? (
-                          <span className="text-danger col-md-12 mt-2">
-                            Please select brands to unlock marketplace.
-                          </span>
-                        ) : null}
                       </Row>
 
                       <Row>

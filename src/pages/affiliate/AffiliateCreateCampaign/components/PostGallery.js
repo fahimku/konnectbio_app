@@ -9,7 +9,7 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
     getPosts(1, null, clearPost).then(() => setLoading(false));
   }, []);
 
-  const searchMemo = useMemo(() => {
+  useMemo(() => {
     if (id === "allPost") {
       setLoading(true);
       getPosts(1, null, clearPost).then(() => setLoading(false));

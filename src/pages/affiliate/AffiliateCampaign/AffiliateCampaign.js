@@ -31,7 +31,7 @@ function AffiliateCampaign(props) {
   const [analyticModal, setAnalyticModal] = useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [currentCampaign, setCurrentCampaign] = useState({});
-  const [campaignId, setCampaignId] = useState();
+  // const [campaignId, setCampaignId] = useState();
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
   const fromDate =
@@ -564,7 +564,7 @@ function AffiliateCampaign(props) {
           </Modal.Header>
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <AnalyticModal
-              affId={campaignId}
+              affId={currentCampaign.campaign_id}
               analyticCloseModal={() => setAnalyticModal(false)}
             />
           </Modal.Body>

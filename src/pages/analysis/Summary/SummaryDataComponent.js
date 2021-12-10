@@ -154,10 +154,10 @@ class SummaryDataComponent extends React.Component {
                             : twodecimalplace(data.ctr) + "%"}
                         </h3>
                       </div>
-                      <div className="col-12 count-box mb-0">
+                      {/* <div className="col-12 count-box mb-0">
                         <h5 className="count-title">Revenue</h5>
                         <h3 className="count">{data.revenue}</h3>
-                      </div>
+                      </div> */}
                     </div>
                   )}
                 </div>

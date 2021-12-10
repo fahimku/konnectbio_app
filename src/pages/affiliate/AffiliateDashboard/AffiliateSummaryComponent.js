@@ -98,7 +98,10 @@ class AffiliateSummaryComponent extends React.Component {
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
                   {!data.loading ? (
-                    <Loader className="analytics-loading" size={60} />
+                    <Loader
+                      className="analytics-loading campaign-sum-loading"
+                      size={60}
+                    />
                   ) : (
                     <div className="card analytic-box">
                       <div className="col-12 count-box">
@@ -133,6 +136,14 @@ class AffiliateSummaryComponent extends React.Component {
                         <h3 className="count">
                           {data.campaign_summary.total_clicks}
                         </h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Total Spent</h5>
+                        <h3 className="count">$0</h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title"># of Participants</h5>
+                        <h3 className="count">0</h3>
                       </div>
                     </div>
                   )}
