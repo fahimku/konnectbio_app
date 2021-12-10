@@ -512,13 +512,16 @@ h1 small {
   display: inline-grid;
   float: none !important;
 }
-.summary-loading {
-  height: 146px !important;
-}
+// .summary-loading {
+//   height: 146px !important;
+// }
 .marketing-tabs .nav-link.disabled {
   pointer-events: auto;
   cursor: no-drop;
 }
-.campaign-sum-loading {
-  height: 304px !important;
+// .campaign-sum-loading {
+//   height: 304px !important;
+// }
+.summary_height {
+  min-height: auto !important;
 }
