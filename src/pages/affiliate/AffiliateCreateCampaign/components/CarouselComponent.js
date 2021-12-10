@@ -5,10 +5,13 @@ import "react-multi-carousel/lib/styles.css";
 import Post from "../../../../images/Post2.jpg";
 
 class CarouselComponent extends React.Component {
-  state = {
-    username: this.props.username,
-    active: "allPost",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: this.props.username,
+      active: "allPost",
+    };
+  }
 
   render() {
     const responsive = {

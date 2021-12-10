@@ -20,19 +20,6 @@ import Select from "react-select";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
-// const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-//   <a
-//     href="#"
-//     ref={ref}
-//     onClick={(e) => {
-//       e.preventDefault();
-//       onClick(e);
-//     }}
-//   >
-//     {children}
-//     <i class="fa fa-ellipsis-h fa-2x" aria-hidden="true"></i>
-//   </a>
-// ));
 
 function AffiliateCampaign(props) {
   const [data, setData] = useState([]);
@@ -57,7 +44,7 @@ function AffiliateCampaign(props) {
       : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
-  const limit = 8;
+  // const limit = 8;
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [sortBy, setSortBy] = useState({
@@ -123,6 +110,7 @@ function AffiliateCampaign(props) {
               setCurrentPage(selectedPage);
               setOffset(offset);
             }, 300);
+
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
@@ -163,7 +151,9 @@ function AffiliateCampaign(props) {
   const fetchPostPerformance = async () => {
     setLoading(true);
     await axios
-      .get(`campaigns/receive?status=${props.type}`)
+      .get(
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+      )
       .then((response) => {
         setData(response.data.message);
         setLoading(false);
@@ -260,7 +250,7 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title"># of Participants</h5>
-                    <h3 className="count">0</h3>
+                    <h3 className="count">{record.total_participant}</h3>
                   </div>
                 </div>
               </div>
@@ -315,6 +305,8 @@ function AffiliateCampaign(props) {
         setLoading(false);
         setSearchLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
+        setCurrentPage(0);
+        setOffset(0);
         postData();
       })
       .catch(() => {
@@ -338,7 +330,7 @@ function AffiliateCampaign(props) {
     setEndDate(toDate);
     await axios
       .get(
-        `campaigns/receive?status=${props.type}&category_id=all&sort_by=commission&order_by=desc&start_date=${fromDate}&end_date=${toDate}`
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);

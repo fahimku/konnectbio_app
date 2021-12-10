@@ -191,25 +191,29 @@ class PostDataComponent extends React.Component {
     );
   };
   clearFilter = () => {
-    this.setState({
-      optionCategory: "",
-      optionSort: "",
-      optionSortOrder: "",
-      saveCategory: "",
-      // saveSort: "",
-      // saveSortOrder: "",
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
-      toDate: moment(new Date()).format("YYYY-MM-DD"),
-    });
-    this.fetchPostPerformance(
-      this.state.username,
-      this.state.lastYear,
-      moment(new Date()).format("YYYY-MM-DD"),
-      this.state.limit,
-      this.state.page,
-      "",
-      this.state.saveSort,
-      "desc"
+    this.setState(
+      {
+        optionCategory: "",
+        optionSort: "",
+        optionSortOrder: "",
+        saveCategory: "",
+        // saveSort: "",
+        // saveSortOrder: "",
+        fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+        toDate: moment(new Date()).format("YYYY-MM-DD"),
+      },
+      () => {
+        this.fetchPostPerformance(
+          this.state.username,
+          this.state.fromDate,
+          this.state.toDate,
+          this.state.limit,
+          this.state.page,
+          "",
+          this.state.saveSort,
+          "desc"
+        );
+      }
     );
   };
   handleSort = (event) => {
