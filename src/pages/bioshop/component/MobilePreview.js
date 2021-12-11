@@ -1,33 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
-import Loader from "../../../components/Loader/Loader";
+import { connect } from "react-redux";
+import * as postAct from "../../../actions/bioshop";
 import InfiniteScroll from "react-infinite-scroller";
 
 const MobilePreview = ({
   placeholder,
   username,
-  limit,
-  nextPageInstagramPosts,
-  page,
-  instagramPosts,
-  selectPost,
   pageName,
   postLoading,
-  hasMore,
+  getBioShop,
+  bioshop,
+  getSingleBioShop,
+  showIframe,
+  showEditModal
 }) => {
 
+  useEffect(() => {
+    getBioShop(1);
+  }, []);
+
   const instaPosts = [];
-  if (instagramPosts) {
-    for (let i = 0; i < instagramPosts.data.length; i++) {
-      if (instagramPosts.data[i].media_type === "IMAGE" || instagramPosts.data[i].media_type === "CAROUSEL_ALBUM") {
+  if (bioshop) {
+    for (let i = 0; i < bioshop.data.length; i++) {
+      if (bioshop.data[i].media_type === "IMAGE" || bioshop.data[i].media_type === "CAROUSEL_ALBUM") {
         instaPosts.push(<Col key={i} xs="4">
-          <div className="mobile-image-box">
-            <div onClick={instagramPosts.data[i].post_type === "campaign" ? null : (ev) => selectPost(true, i)} className="mobile_box_inr">
-              <img className={instagramPosts.data[i].linked || instagramPosts.data[i].select ? "linked" : ""} key={i} id={"img" + i} src={instagramPosts.data[i].media_url} alt="instagramPosts"/>
-              {instagramPosts.data[i].linked &&
-                instagramPosts.data[i].post_type === "campaign" ? (
+          <div key={i} className="mobile-image-box">
+            <div onClick={bioshop.data[i].post_type === "campaign" ? null : () => {
+              getSingleBioShop(bioshop.data[i].post_id);
+              showIframe(false);
+              showEditModal(true);
+            }} className="mobile_box_inr">
+              <img className={bioshop.data[i].linked || bioshop.data[i].select ? "linked" : ""} key={i} id={"img" + i} src={bioshop.data[i].media_url} alt="bioshop" />
+              {bioshop.data[i].linked && bioshop.data[i].post_type === "campaign" ? (
                 <span className="linked-label">CAMPAIGN</span>
-              ) : instagramPosts.data[i].linked ? (
+              ) : bioshop.data[i].linked ? (
                 <span className="linked-label">LINKED</span>
               ) : (
                 ""
@@ -38,7 +45,11 @@ const MobilePreview = ({
         );
       } else {
         instaPosts.push(
-          <Col key={i} xs="4" onClick={(ev) => selectPost(true, i)}>
+          <Col key={i} xs="4" onClick={() => {
+            getSingleBioShop(bioshop.data[i].media_id);
+            showIframe(false);
+            showEditModal(true);
+          }}>
             <div className="mobile-image-box">
               <div className="mobile_box_inr">
                 <video
@@ -46,17 +57,12 @@ const MobilePreview = ({
                   // id="myVideo"
                   autoplay
                   controlsList="nodownload"
-                  className={
-                    instagramPosts.data[i].linked ||
-                      instagramPosts.data[i].select
-                      ? "linked"
-                      : ""
-                  }
+                  className={bioshop.data[i].linked || bioshop.data[i].select ? "linked" : ""}
                   key={i}
                   id={"img" + i}
                 >
                   <source
-                    src={instagramPosts.data[i].media_url}
+                    src={bioshop.data[i].media_url}
                     type="video/mp4"
                   ></source>
                 </video>
@@ -64,7 +70,7 @@ const MobilePreview = ({
                   className="video-label fa fa-play"
                   aria-hidden="true"
                 ></span>
-                {instagramPosts.data[i].linked && instagramPosts.data[i].post_type === "campaign" ? (<span className="linked-label">CAMPAIGN</span>) : instagramPosts.data[i].linked ? (
+                {bioshop.data[i].linked && bioshop.data[i].post_type === "campaign" ? (<span className="linked-label">CAMPAIGN</span>) : bioshop.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
                 ) : (
                   ""
@@ -97,10 +103,9 @@ const MobilePreview = ({
               threshold={1}
               className="af-rm-mn row"
               loadMore={() =>
-                nextPageInstagramPosts('', limit, page)
-
+                getBioShop(bioshop.next?.page)
               }
-              hasMore={page?true:false}
+              hasMore={bioshop.next?.page ? true : false}
               loader={
                 <div className="col-md-12">
                   <div
@@ -132,4 +137,8 @@ const MobilePreview = ({
   }
   else { return ('') }
 }
-export default MobilePreview;
+
+function mapStateToProps({ bioshop }) {
+  return { bioshop };
+}
+export default connect(mapStateToProps, postAct)(MobilePreview);

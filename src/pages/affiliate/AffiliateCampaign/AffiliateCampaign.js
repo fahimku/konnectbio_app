@@ -318,6 +318,4 @@ function AffiliateCampaign(props) {
 function mapStateToProps({ countries, campaign }) {
   return { countries, campaign };
 }
-export default connect(mapStateToProps, { ...countryAct, ...campAct })(
-AffiliateCampaign
-);
+export default connect(mapStateToProps, { ...countryAct, ...campAct })(AffiliateCampaign);

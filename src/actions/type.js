@@ -15,3 +15,6 @@ export const GET_CAMPAIGN_ANALYTICS = "getCampaignAnalytics";
 export const GET_USER_BRANDS = "getUserBrands";
 export const GET_BRANDS_CATEGORY = "getBrandsCategory";
 export const ACTIVATE_DEACTIVATE_CAMPAIGN = "activateDeactivateCampaign";
+export const GET_BIO_SHOP = "getBioShop";
+export const GET_SINGLE_BIO_SHOP = "getSingleBioShop";
+export const DELETE_SINGLE_BIO_SHOP = "deleteSingleBioShop";

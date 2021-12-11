@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 import Video from "../../../../components/Video";
-import { Button } from "reactstrap";
 import moment from "moment";
 import { Select } from "antd";
 import Loader from "../../../../components/Loader";
@@ -9,38 +9,96 @@ import Formsy from "formsy-react";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import PermissionHelper from "../../../../components/PermissionHelper";
-
+import axios from "axios";
+import { connect } from "react-redux";
+import * as postAct from "../../../../actions/bioshop";
+import { toast } from "react-toastify";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-  const media_id = props.singlePost.post_id;
+
+  const [redirectedUrl, setRedirectedUrl] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [redirectedUrl, setRedirectedUrl] = useState("");
+  const [category, setCategory] = useState("");
+  const [postType, setPostType] = useState("");
+  const [loading, setLoading] = useState(false);
   const formRef = useRef("LinkForm");
+  const [showIframe, setShowIframe] = useState(true);
+
+  //Delete Modal
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [postId, setPostId] = useState("");
 
   useEffect(() => {
-    setStartDate(props.startDate);
-    setEndDate(props.endDate);
-  }, [props.startDate, props.endDate]);
+    setPostId(props.singleBioShop.post_id);
+    setStartDate(props.singleBioShop.start_date);
+    setEndDate(props.singleBioShop.end_date);
+    setPostType(props.singleBioShop.post_type);
+    if (props.singleBioShop.categories) {
+      setCategory(props.singleBioShop.categories[0].category_id);
+      setShowIframe(false)
+    }
+    setRedirectedUrl(props.singleBioShop.redirected_url);
 
-  useEffect(() => {
-    setRedirectedUrl(props.redirectedUrl);
-  }, [props.redirectedUrl]);
+  }, [props.singleBioShop])
+
+
+  async function updatePost(id) {
+    setLoading(true);
+    await axios
+      .put(`/posts/revise/${id}`, {
+        redirected_url: redirectedUrl,
+        categories: category,
+        sub_categories: [],
+        post_type: postType,
+        start_date: startDate,
+        end_date: endDate,
+      }).then(() => {
+        toast.success("BioShop Updated Successfully");
+        setLoading(false);
+        props.showIframe(true)
+        setShowIframe(true);
+      })
+  };
+
+  async function deletePost(id) {
+    props.deleteSingleBioShop(id).then(() => {
+      toast.success('Post Delete Successfully');
+      setDeleteModal(false);
+      props.showIframe(true)
+        setShowIframe(true);
+    });
+  };
+
+  async function testUrl(url) {
+    let newUrl;
+    if (url.includes("http://")) {
+      newUrl = url;
+    } else if (url.includes("https://")) {
+      newUrl = url;
+    } else {
+      newUrl = "https://" + url;
+    }
+    window.open(newUrl, "_blank");
+  };
 
   function dateRangePickerChanger(value, dataString) {
-    let startDate = dataString[0];
-    let endDate = dataString[1];
-    props.dateRange(startDate, endDate);
+    setStartDate(dataString[0]);
+    setEndDate(dataString[1]);
   }
+
   return (
     <>
-      <Formsy.Form onValidSubmit={() => { props.updatePost() }} ref={formRef}>
-        <div className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"}`}>
+      <Formsy.Form onValidSubmit={() => { updatePost(props.singleBioShop.post_id) }} ref={formRef}>
+        <div className={`image-edit-box ${showIframe ? "hidden" : "show"}`}>
           <span
-            onClick={() => props.selectPost(false, "")}
+            onClick={() => {
+              props.showIframe(true)
+              setShowIframe(true);
+            }}
             className="fa fa-times ift-cancel"
           ></span>
           <div className="ind-post-anlytics image-box-info">
@@ -51,17 +109,15 @@ const ShopRightBar = (props) => {
                 {moment.utc(props.updatedDate).format("MMM Do YYYY")}
               </p>
             </div>
-
-
             <div className="edit-right">
               <div className="an-col col-md-3">
                 <div className="an-col-inr">
                   <div className="an-content clearfix">
-                    <span class="dash_icon-top">
-                      <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+                    <span className="dash_icon-top">
+                      <i className="fa fa-eye fa-2x" aria-hidden="true"></i>
                     </span>
-                    <div class="imp-t text-right">{props.fetchUserPost.post_views}</div>
-                    <div class="imp-tx text-uppercase text-muted text-right">
+                    <div className="imp-t text-right">{props.singleBioShop.post_views}</div>
+                    <div className="imp-tx text-uppercase text-muted text-right">
                       IMPRESSIONS
                     </div>
                   </div>
@@ -70,14 +126,14 @@ const ShopRightBar = (props) => {
               <div className="an-col col-md-3">
                 <div className="an-col-inr">
                   <div className="an-content clearfix">
-                    <span class="dash_icon-top">
+                    <span className="dash_icon-top">
                       <i
-                        class="fa fa-hand-pointer-o fa-2x"
+                        className="fa fa-hand-pointer-o fa-2x"
                         aria-hidden="true"
                       ></i>
                     </span>
-                    <div class="imp-t text-right">{props.fetchUserPost.post_clicks}</div>
-                    <div class="imp-tx text-uppercase text-muted text-right">
+                    <div className="imp-t text-right">{props.singleBioShop.post_clicks}</div>
+                    <div className="imp-tx text-uppercase text-muted text-right">
                       CLICKS
                     </div>
                   </div>
@@ -86,14 +142,14 @@ const ShopRightBar = (props) => {
               <div className="an-col col-md-3">
                 <div className="an-col-inr">
                   <div className="an-content clearfix">
-                    <span class="dash_icon-top">
+                    <span className="dash_icon-top">
                       <i
-                        class="fa fa-handshake-o fa-2x"
+                        className="fa fa-handshake-o fa-2x"
                         aria-hidden="true"
                       ></i>
                     </span>
-                    <div class="imp-t text-right">{props.fetchUserPost.ctr}%</div>
-                    <div class="imp-tx text-uppercase text-muted text-right">
+                    <div className="imp-t text-right">{props.singleBioShop.ctr}%</div>
+                    <div className="imp-tx text-uppercase text-muted text-right">
                       ENGAGEMENT
                     </div>
                   </div>
@@ -102,11 +158,11 @@ const ShopRightBar = (props) => {
               <div className="an-col col-md-3">
                 <div className="an-col-inr">
                   <div className="an-content clearfix">
-                    <span class="dash_icon-top">
-                      <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                    <span className="dash_icon-top">
+                      <i className="fa fa-usd fa-2x" aria-hidden="true"></i>
                     </span>
-                    <div class="imp-t text-right">$0.00</div>
-                    <div class="imp-tx text-uppercase text-muted text-right">
+                    <div className="imp-t text-right">$0.00</div>
+                    <div className="imp-tx text-uppercase text-muted text-right">
                       REVENUE
                     </div>
                   </div>
@@ -115,14 +171,13 @@ const ShopRightBar = (props) => {
             </div>
           </div>
 
-
           <div className="image-wrapper">
             <div className="image-box">
-              {props.singlePost.media_type !== "VIDEO" && (
-                <img src={`${props.singlePost.media_url}`} alt="media_url" />
+              {props.singleBioShop.media_type !== "VIDEO" && (
+                <img src={`${props.singleBioShop.media_url}`} alt="media_url" />
               )}
-              {props.singlePost.media_type === "VIDEO" && (
-                <Video src={props.singlePost.media_url} />
+              {props.singleBioShop.media_type === "VIDEO" && (
+                <Video src={props.singleBioShop.media_url} />
               )}
             </div>
             <div className="image-edit-links">
@@ -142,9 +197,9 @@ const ShopRightBar = (props) => {
                 validationError={{
                   isUrl: "This value should be a valid url.",
                 }}
-                value={props.redirectedUrl}
+                value={redirectedUrl}
                 onChange={(evt) => {
-                  props.callBack(evt);
+                  setRedirectedUrl(evt.target.value)
                 }}
               />
 
@@ -152,7 +207,7 @@ const ShopRightBar = (props) => {
                 <label>Select Category</label>
                 <Select
                   key={Date.now()}
-                  value={props.category}
+                  value={category}
                   showSearch
                   style={{ width: "100%" }}
                   placeholder="Select Category"
@@ -160,7 +215,9 @@ const ShopRightBar = (props) => {
                   clearable={false}
                   searchable={false}
                   required
-                  onChange={props.changeCategory}
+                  onChange={(e) => {
+                    setCategory(e)
+                  }}
                   // onFocus={onFocus}
                   // onBlur={onBlur}
                   // onSearch={onSearch}
@@ -176,47 +233,6 @@ const ShopRightBar = (props) => {
                   ))}
                 </Select>
               </div>
-
-              {props.singlePost.media_type === "VIDEO" && (
-                <>
-                  <div className="form-check form-check-inline mt-3">
-                    <input
-                      onChange={props.changePostType}
-                      className="form-check-input"
-                      type="radio"
-                      checked={props.postType === "video" ? "checked" : ""}
-                      name="postType"
-                      id="inlineRadio1"
-                      value="video"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="inlineRadio1"
-                    >
-                      Video
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      onChange={props.changePostType}
-                      className="form-check-input"
-                      type="radio"
-                      checked={
-                        props.postType === "advertisement" ? "checked" : ""
-                      }
-                      name="postType"
-                      id="inlineRadio2"
-                      value="advertisement"
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="inlineRadio2"
-                    >
-                      Advertisement
-                    </label>
-                  </div>
-                </>
-              )}
 
               <div className="date-range mt-3">
                 <label>BioShop</label>
@@ -244,9 +260,8 @@ const ShopRightBar = (props) => {
                 />
               </div>
               <div className="edit_button_main pane-button">
-
                 <>
-                  {props.loading ? (
+                  {loading ? (
                     <Button>
                       <Loader />
                     </Button>
@@ -255,9 +270,7 @@ const ShopRightBar = (props) => {
                       <Button
                         className="custom_btns_ift"
                         color="primary"
-                        onClick={(ev) =>
-                          props.updatePost(media_id, props.redirectedUrl)
-                        }
+                        type="submit"
                       >
                         &nbsp;Update&nbsp;
                       </Button>
@@ -265,7 +278,7 @@ const ShopRightBar = (props) => {
                       <Button
                         className="custom_btns_ift"
                         color="primary"
-                        onClick={() => props.testUrl(props.redirectedUrl)}
+                        onClick={() => testUrl(redirectedUrl)}
                       >
                         &nbsp;Test&nbsp;
                       </Button>
@@ -274,8 +287,9 @@ const ShopRightBar = (props) => {
                         className="custom_btns_ift"
                         color="primary"
                         onClick={() => {
-                          props.selectPost(false, "");
-                          props.closeModel(true);
+                          props.showIframe(true);
+                          setShowIframe(true)
+                          props.showEditModal(false);
                         }}
                       >
                         &nbsp;Cancel&nbsp;
@@ -284,20 +298,47 @@ const ShopRightBar = (props) => {
                       <Button
                         className="custom_btns_ift"
                         color="primary"
-                        onClick={() => props.deletePost(media_id)}
+                        onClick={() => setDeleteModal(true)}
                       >
                         &nbsp;Remove&nbsp;
                       </Button>
                     </>
                   )}
                 </>
-                )
               </div>
             </div>
           </div>
         </div>
+        <Modal
+          isOpen={deleteModal}
+        >
+          <ModalHeader toggle={() => setDeleteModal(false)}>
+            Delete Post
+          </ModalHeader>
+          <ModalBody className="bg-white">
+            Are you sure you want to delete?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              className="btn btn-primary"
+              onClick={() => setDeleteModal(false)}
+            >
+              Close
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => deletePost(postId)}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </Modal>
       </Formsy.Form>
     </>
   );
 };
-export default ShopRightBar;
+function mapStateToProps({ singleBioShop }) {
+  return { singleBioShop };
+}
+export default connect(mapStateToProps, postAct)(ShopRightBar);

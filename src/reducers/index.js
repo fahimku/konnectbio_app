@@ -18,6 +18,8 @@ import dashboard from "./dashboard";
 import campaignAnalytics from "./campaign/campaignAnalytics";
 import brands from "./brands/brands";
 import brandsCategory from "./brands/brandsCategory";
+import bioshop from "./bioshop/bioshop";
+import singleBioShop from "./bioshop/singleBioShop";
 
 export default (history) =>
   combineReducers({
@@ -32,6 +34,8 @@ export default (history) =>
     dashboard,
     layout,
     users,
+    bioshop,
+    singleBioShop,
     categories,
     posts,
     countries,
