@@ -34,8 +34,9 @@ class BrandComponent extends React.Component {
           });
         });
         this.setState({ myBrand: selectBrands, brands: selectBrands });
-        this.props.brandTab(this.state.myBrand);
-        this.setState({ brandLoading: false });
+        this.setState({ brandLoading: false }, () => {
+          this.props.brandTab(this.state.myBrand, this.state.brandLoading);
+        });
       })
       .catch((error) => {
         console.log(error);

@@ -17,6 +17,7 @@ class MarketPlace extends React.Component {
       activeTab: "brand",
       username: username,
       brandtab: [],
+      brandLoading: true,
     };
   }
 
@@ -27,13 +28,13 @@ class MarketPlace extends React.Component {
       });
     }
   }
-  brandTab = (brand) => {
-    this.setState({ brandtab: brand });
+  brandTab = (brand, brandLoading) => {
+    this.setState({ brandtab: brand, brandLoading: brandLoading });
   };
 
   render() {
-    const { brandtab } = this.state;
-    // console.log(brandtab, "brand");
+    const { brandtab, brandLoading } = this.state;
+
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
@@ -61,7 +62,9 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("marketplace");
                       }}
-                      disabled={brandtab.length === 0 ? true : false}
+                      disabled={
+                        !brandLoading && brandtab.length === 0 ? true : false
+                      }
                     >
                       <span>Marketplace</span>
                     </NavLink>
@@ -74,7 +77,9 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("active");
                       }}
-                      disabled={brandtab.length === 0 ? true : false}
+                      disabled={
+                        !brandLoading && brandtab.length === 0 ? true : false
+                      }
                     >
                       <span>Active</span>
                     </NavLink>
@@ -87,7 +92,9 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("in-active");
                       }}
-                      disabled={brandtab.length === 0 ? true : false}
+                      disabled={
+                        !brandLoading && brandtab.length === 0 ? true : false
+                      }
                     >
                       <span>Paused</span>
                     </NavLink>
@@ -100,7 +107,9 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("expired");
                       }}
-                      disabled={brandtab.length === 0 ? true : false}
+                      disabled={
+                        !brandLoading && brandtab.length === 0 ? true : false
+                      }
                     >
                       <span>Expired</span>
                     </NavLink>
