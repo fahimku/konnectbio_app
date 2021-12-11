@@ -22,7 +22,7 @@ import BreadcrumbHistory from "../BreadcrumbHistory";
 /*ROI SWITCH DASHBOARD PAGES*/
 import LinkinBio from "../../pages/linkinbio/LinkinBio";
 import Analysis from "../../pages/analysis/analysis";
-import LinkinBioShop from "../../pages/linkinbio/LinkinBioShop";
+import BioShop from "../../pages/bioshop/BioShop";
 import AccountDelete from "../../pages/accountdelete/AccountDelete";
 import MyLinks from "../../pages/mylinks/MyLinks";
 import MyProfile from "../../pages/myprofile/MyProfile";
@@ -111,10 +111,11 @@ class Layout extends React.Component {
                         exact
                         component={LinkinBio}
                       />
+ 
                       <Route
                         path="/app/linkinbio-shop"
                         exact
-                        component={LinkinBioShop}
+                        component={BioShop}
                       />
                       <PrivateRoute
                         exact
