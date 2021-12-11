@@ -40,6 +40,7 @@ export default function ResetAccount(props) {
                   </div>
                 </div>
                 <div className="dp_fields-setup">
+                <div class="text-left mb-2">Warning: This action is not reversible.</div>
                   <Button
                     onClick={() => {
                       props.resetModal(true);
@@ -67,7 +68,7 @@ export default function ResetAccount(props) {
         </Modal.Header>
         <Modal.Body className="bg-white">
           Are you sure you want to reset your Konnect.bio Account? This will
-          remove all your data from our platform.This action is not reversible.
+          remove all your data from our platform. This action is not reversible.
         </Modal.Body>
         <Modal.Footer>
           <Button

@@ -256,7 +256,7 @@ class AccountSetup extends React.Component {
                         </div>
 
                         <div className="dp_fields-setup">
-                          <div className="sm-b mb-3">
+                          <div className="sm-b mb-2">
                             <span>
                               Categories Included:{" "}
                               <strong>
