@@ -21,7 +21,7 @@ const redirectURL =
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"
-    ? "https://devp.konnect.bio"
+    ? "https://konnect.bio"
     : "https://konnect.bio";
 
 export default {
