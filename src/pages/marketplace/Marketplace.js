@@ -33,6 +33,7 @@ class MarketPlace extends React.Component {
 
   render() {
     const { brandtab } = this.state;
+    // console.log(brandtab, "brand");
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
