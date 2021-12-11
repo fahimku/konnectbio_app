@@ -31,13 +31,11 @@
         }
     }
     .pane-button{
-        justify-content: space-between;
 
         button{
             grid-gap: 0;
             gap: 0;
-            min-width: 50px;
-        margin-right: 2%!important;
+            margin-right: 2%!important;
         }
     }
 }
@@ -112,6 +110,12 @@
     .colbx-inr.col-md-5{
         flex: 0 0 100%;
         max-width: 100%;
+    }
+    .pane-button{
+
+        button{
+            min-width: 50px;
+        }
     }
       
 }
@@ -201,6 +205,9 @@
     }
     .affiliate-page .post-box{
         margin:0;
+    }
+    .pane-button button{
+        flex-basis: 100% !important;
     }
 }
 
@@ -382,7 +389,10 @@
     .mb-menu-show{
         overflow: hidden;
     }
-
+    .brand_container_main .row .profile_box_main .dash_block_profile{
+        min-height: 100px;
+    }
+    
 }
 
 @media only screen and (min-width: 991px) {
