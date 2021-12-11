@@ -19,3 +19,5 @@ export const GET_BIO_SHOP = "getBioShop";
 export const GET_SINGLE_BIO_SHOP = "getSingleBioShop";
 export const DELETE_SINGLE_BIO_SHOP = "deleteSingleBioShop";
 export const GET_POST_SUMMARY = "getPostSummary";
+export const CLEAR_BIO_SHOP = "clearBioShop"
+export const CLEAR_SINGLE_BIO_SHOP = 'clearSingleBioShop'

@@ -13,11 +13,18 @@ const MobilePreview = ({
   bioshop,
   getSingleBioShop,
   showIframe,
-  showEditModal
+  showEditModal,
+  clearBioShop,
+  clearSingleBioShop,
 }) => {
 
   useEffect(() => {
-    getBioShop(1);
+    getSingleBioShop('',clearSingleBioShop);
+    getBioShop(1, clearBioShop).then(() => {
+      showIframe(true);
+      showEditModal(false);
+        getSingleBioShop('',clearSingleBioShop);
+    });
   }, []);
 
   const instaPosts = [];
@@ -100,12 +107,13 @@ const MobilePreview = ({
             <InfiniteScroll
               getScrollParent={() => document.getElementById('scrollableDiv')}
               pageStart={0}
-              threshold={1}
               className="af-rm-mn row"
               loadMore={() =>
                 getBioShop(bioshop.next?.page)
               }
               hasMore={bioshop.next?.page ? true : false}
+              threshold={5}
+              
               loader={
                 <div className="col-md-12">
                   <div
@@ -137,7 +145,6 @@ const MobilePreview = ({
   }
   else { return ('') }
 }
-
 function mapStateToProps({ bioshop }) {
   return { bioshop };
 }

@@ -50,7 +50,7 @@ const BioShop = () => {
         }}
       ></ShopRightBar>
     );
-  };
+  };  
 
   return (
     <div className="linkin-bio">

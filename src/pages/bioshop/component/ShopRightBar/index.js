@@ -32,17 +32,20 @@ const ShopRightBar = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [postId, setPostId] = useState("");
 
+
   useEffect(() => {
+
+    console.log('data', props.singleBioShop);
     setPostId(props.singleBioShop.post_id);
     setStartDate(props.singleBioShop.start_date);
     setEndDate(props.singleBioShop.end_date);
     setPostType(props.singleBioShop.post_type);
     if (props.singleBioShop.categories) {
       setCategory(props.singleBioShop.categories[0].category_id);
-      setShowIframe(false)
+      setShowIframe(false);
     }
+    else { setShowIframe(true); }
     setRedirectedUrl(props.singleBioShop.redirected_url);
-
   }, [props.singleBioShop])
 
 
@@ -69,7 +72,7 @@ const ShopRightBar = (props) => {
       toast.success('Post Delete Successfully');
       setDeleteModal(false);
       props.showIframe(true)
-        setShowIframe(true);
+      setShowIframe(true);
     });
   };
 

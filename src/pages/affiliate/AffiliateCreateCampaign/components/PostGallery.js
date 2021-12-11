@@ -125,7 +125,6 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
     );
   }
 }
-
 const styles = {
   linked: {
     position: "absolute",
