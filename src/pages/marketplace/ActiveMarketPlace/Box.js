@@ -1,38 +1,42 @@
 import React, { useState } from "react";
-export default function Box({ item, toggleCampaigns, index }) {
+export default function Box({ item, toggleCampaigns, index, type }) {
   const [toggleCampaign, setToggleCampaign] = useState(item.is_linked);
   return (
     <React.Fragment>
-      <div className="card any_bx analytic-box campaign-box">
+      <div className="card any_bx analytic-box campaign-box pb-0">
         <div className="camp-row row">
           <div className="campaign-header col-12">
             <h6>{item.campaign_name}</h6>
             <div className="cmp-h-right">
               {/* {toggleLoading && <Loader />} */}
-              <div className="form-check custom-switch custom-switch-md">
-                <input
-                  type="checkbox"
-                  checked={toggleCampaign}
-                  onClick={() => {
-                    toggleCampaigns(item.is_linked, item.campaign_id).then(function () {
-                      setToggleCampaign(!item.is_linked);
-                      setTimeout(() => {
-                        setToggleCampaign(item.is_linked);
-                      },300)
-                    },
-                      function () {
-                        setToggleCampaign(item.is_Linked);
-                      });
-                  }}
-                  className="custom-control-input"
-                  id={`customSwitch` + index}
-                  readOnly
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor={`customSwitch` + index}
-                ></label>
-              </div>
+              {type !== "expired" ? (
+                <div className="form-check custom-switch custom-switch-md">
+                  <input
+                    type="checkbox"
+                    checked={toggleCampaign}
+                    onClick={() => {
+                      toggleCampaigns(item.is_linked, item.campaign_id).then(
+                        function () {
+                          setToggleCampaign(!item.is_linked);
+                          setTimeout(() => {
+                            setToggleCampaign(item.is_linked);
+                          }, 300);
+                        },
+                        function () {
+                          setToggleCampaign(item.is_Linked);
+                        }
+                      );
+                    }}
+                    className="custom-control-input"
+                    id={`customSwitch` + index}
+                    readOnly
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor={`customSwitch` + index}
+                  ></label>
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="any-post-img-col col-12">

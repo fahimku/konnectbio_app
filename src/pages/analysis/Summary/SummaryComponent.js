@@ -20,7 +20,10 @@ class SummaryComponent extends React.Component {
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
               {/* <h4 className="page-title">Post Summary</h4> */}
-              <SummaryDataComponent username={this.state.username} />
+              <SummaryDataComponent
+                username={this.state.username}
+                packageName={this.state.packageName}
+              />
             </div>
             {this.state.packageName === "Influencer" ||
             this.state.packageName === "Micro Influencer" ? (

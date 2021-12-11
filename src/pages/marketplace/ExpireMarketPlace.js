@@ -151,7 +151,6 @@ function ExpiredMarketPlace({
     if (!loading) {
         return (
             <>
-                <div className="analytics-page affiliate-page linkin-bio">
                     <div className="container-fluid">
                         <h4 className="page-title">{title}</h4>
                         <Row className="post-analytics-tab mb-4">
@@ -316,7 +315,6 @@ function ExpiredMarketPlace({
                             "No Data Found"
                         )}
                     </div>
-                </div>
             </>
         );
     } else {

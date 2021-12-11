@@ -4,18 +4,19 @@ import "./selector.css";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import AllMarketPlace from "./AllMarketPlace";
-import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace"
+import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
+import BrandComponent from "./Brand/BrandComponent";
 
 class MarketPlace extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
     super(props);
     this.toggleTabs = this.toggleTabs.bind(this);
     this.state = {
-      activeTab: "marketplace",
+      activeTab: "brand",
       username: username,
+      brandtab: [],
     };
   }
 
@@ -26,15 +27,32 @@ class MarketPlace extends React.Component {
       });
     }
   }
+  brandTab = (brand) => {
+    this.setState({ brandtab: brand });
+  };
 
   render() {
+    const { brandtab } = this.state;
+    // console.log(brandtab, "brand");
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
           <div className="affiliate_p_col">
             <Row className="ml-0 mr-0">
-              <div className="affiliate_in_col">
+              <div className="affiliate_in_col marketing-tabs">
                 <Nav tabs className={`${s.coloredNav}`}>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "brand",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("brand");
+                      }}
+                    >
+                      <span>Brand</span>
+                    </NavLink>
+                  </NavItem>
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -43,6 +61,7 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("marketplace");
                       }}
+                      disabled={brandtab.length === 0 ? true : false}
                     >
                       <span>Marketplace</span>
                     </NavLink>
@@ -55,6 +74,7 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("active");
                       }}
+                      disabled={brandtab.length === 0 ? true : false}
                     >
                       <span>Active</span>
                     </NavLink>
@@ -67,8 +87,9 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("in-active");
                       }}
+                      disabled={brandtab.length === 0 ? true : false}
                     >
-                      <span>In Active</span>
+                      <span>Paused</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -79,6 +100,7 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("expired");
                       }}
+                      disabled={brandtab.length === 0 ? true : false}
                     >
                       <span>Expired</span>
                     </NavLink>
@@ -100,39 +122,50 @@ class MarketPlace extends React.Component {
                   className="affiliate_tab_ift"
                   activeTab={this.state.activeTab}
                 >
+                  <TabPane tabId="brand">
+                    {this.state.activeTab === "brand" ? (
+                      <BrandComponent
+                        title="Brand"
+                        type="brand"
+                        brandTab={this.brandTab}
+                      />
+                    ) : null}
+                  </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
-                      <AllMarketPlace title="Marketplace" type='marketplace' />
+                      <AllMarketPlace title="Marketplace" type="marketplace" />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="active">
                     {this.state.activeTab === "active" ? (
-                      <ActiveMarketPlace title='Active Campaign' type='active' endPoint='users/marketPlace/getCampaigns' />
+                      <ActiveMarketPlace
+                        title="Active Campaign"
+                        type="active"
+                        endPoint="users/marketPlace/getCampaigns"
+                      />
                     ) : null}
                   </TabPane>
-                  <TabPane
-                    type='inActive'
-                    tabId="in-active">
+                  <TabPane type="inActive" tabId="in-active">
                     {this.state.activeTab === "in-active" ? (
-                      <ActiveMarketPlace title='In Active Campaign' type='in_active' endPoint='users/marketPlace/getAllPusedCampaignPost' />
+                      <ActiveMarketPlace
+                        title="Paused Campaign"
+                        type="in_active"
+                        endPoint="users/marketPlace/getAllPusedCampaignPost"
+                      />
                     ) : null}
                   </TabPane>
-                  <TabPane
-                    tabId="expired"
-                    className="tab-expired"
-                  >
+                  <TabPane tabId="expired" className="tab-expired">
                     {this.state.activeTab === "expired" ? (
-                      <ActiveMarketPlace title='Expired Campaign' type='expired' endPoint='users/marketPlace/getExpiredCampaigns' />
+                      <ActiveMarketPlace
+                        title="Expired Campaign"
+                        type="expired"
+                        endPoint="users/marketPlace/getExpiredCampaigns"
+                      />
                     ) : null}
                   </TabPane>
 
-                  <TabPane
-                    tabId="accounting"
-                    className="tab-accounting"
-                  >
-                    {this.state.activeTab === "accounting" ? (
-                    ''
-                    ) : null}
+                  <TabPane tabId="accounting" className="tab-accounting">
+                    {this.state.activeTab === "accounting" ? "" : null}
                   </TabPane>
                 </TabContent>
               </div>

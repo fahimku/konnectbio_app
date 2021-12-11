@@ -199,11 +199,13 @@ class MyCategory extends React.Component {
     await axios
       .post(`/usercategory/reserve`, {
         categories: category,
+        sort: this.state.sort,
       })
       .then((response) => {
         this.setState({
           loading: false,
           categoryError: "",
+          sort: false,
         });
         let imageResponse = response.data;
         toast.success(imageResponse.message);
@@ -289,7 +291,6 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-    // console.log(this.state.myCategory, "cat");
     // console.log(this.state.saveCategories, "saveCategories");
 
     return (

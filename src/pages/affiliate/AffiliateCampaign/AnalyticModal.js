@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import Select2 from "react-select";
-import Loader from "../../../components/Loader/Loader";
+// import Select2 from "react-select";
+// import Loader from "../../../components/Loader/Loader";
 import { connect } from "react-redux";
 import { getCampaignAnalytics } from "../../../actions/campaignAnalytics";
 

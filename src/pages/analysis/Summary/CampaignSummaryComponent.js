@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 // import { Row, Col } from "react-bootstrap";
 import moment from "moment";
-import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
+// import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 
@@ -85,10 +85,10 @@ class CampaignSummaryComponent extends React.Component {
     const data = this.state.data;
     return (
       <>
-        <div className="summary_container_main container">
+        <div className="abc summary_container_main container">
           <div className="row">
             <div className="summary_box_main col-md-12">
-              <div className="summary_block_profile">
+              <div className="summary_block_profile summary_height">
                 <div className="summary_content_profile">
                   <h4 className="page-title">Campaign Summary</h4>
                   <label>Select Start Date / End Date</label>
@@ -123,43 +123,46 @@ class CampaignSummaryComponent extends React.Component {
                     format={dateFormat}
                     onChange={this.dateRangePickerChanger.bind(this)}
                   />
-                  {this.state.loading ? (
+                  {/* {this.state.loading ? (
                     <Loader
                       className="analytics-loading summary-loading"
                       size={40}
                     />
-                  ) : (
-                    <div className="card analytic-box">
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Impressions</h5>
-                        <h3 className="count">
-                          {data.post_views === 0
-                            ? "0"
-                            : numberWithCommas(data.post_views)}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Total Clicks</h5>
-                        <h3 className="count">
-                          {data.post_clicks === 0
-                            ? "0"
-                            : numberWithCommas(data.post_clicks)}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box">
-                        <h5 className="count-title">Engagement</h5>
-                        <h3 className="count">
-                          {data.ctr === null || data.ctr === 0
-                            ? "0%"
-                            : twodecimalplace(data.ctr) + "%"}
-                        </h3>
-                      </div>
-                      <div className="col-12 count-box mb-0">
-                        <h5 className="count-title">Revenue</h5>
-                        <h3 className="count">{data.revenue}</h3>
-                      </div>
+                  ) : ( */}
+                  <div className="card analytic-box">
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Impressions</h5>
+                      <h3 className="count">
+                        {data.post_views === 0 || data.post_views === undefined
+                          ? "0"
+                          : numberWithCommas(data.post_views)}
+                      </h3>
                     </div>
-                  )}
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Total Clicks</h5>
+                      <h3 className="count">
+                        {data.post_clicks === 0 ||
+                        data.post_clicks === undefined
+                          ? "0"
+                          : numberWithCommas(data.post_clicks)}
+                      </h3>
+                    </div>
+                    <div className="col-12 count-box">
+                      <h5 className="count-title">Engagement</h5>
+                      <h3 className="count">
+                        {data.ctr === null ||
+                        data.ctr === 0 ||
+                        data.ctr === undefined
+                          ? "0%"
+                          : twodecimalplace(data.ctr) + "%"}
+                      </h3>
+                    </div>
+                    {/* <div className="col-12 count-box mb-0">
+                      <h5 className="count-title">Revenue</h5>
+                      <h3 className="count">{data.revenue}</h3>
+                    </div> */}
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             </div>

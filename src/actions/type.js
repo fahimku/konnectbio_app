@@ -18,3 +18,4 @@ export const ACTIVATE_DEACTIVATE_CAMPAIGN = "activateDeactivateCampaign";
 export const GET_BIO_SHOP = "getBioShop";
 export const GET_SINGLE_BIO_SHOP = "getSingleBioShop";
 export const DELETE_SINGLE_BIO_SHOP = "deleteSingleBioShop";
+export const GET_POST_SUMMARY = "getPostSummary";

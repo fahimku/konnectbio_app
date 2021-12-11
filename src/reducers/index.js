@@ -20,6 +20,7 @@ import brands from "./brands/brands";
 import brandsCategory from "./brands/brandsCategory";
 import bioshop from "./bioshop/bioshop";
 import singleBioShop from "./bioshop/singleBioShop";
+import postSummary from "./post/postSummary";
 
 export default (history) =>
   combineReducers({
@@ -44,4 +45,5 @@ export default (history) =>
     instagram,
     campaignSummary,
     campaignAnalytics,
+    postSummary,
   });
