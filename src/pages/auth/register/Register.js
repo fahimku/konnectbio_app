@@ -553,6 +553,22 @@ class Register extends React.Component {
                             Sign in
                           </span>
                         </p>
+                        <p className="already">
+                          {this.state.accountType.charAt(0).toUpperCase() +
+                            this.state.accountType.slice(1)}{" "}
+                          Account Type?&nbsp;
+                          <span
+                            className="text-center link"
+                            onClick={() =>
+                              this.setState({
+                                showRegister: false,
+                                accountType: "",
+                              })
+                            }
+                          >
+                            Change
+                          </span>
+                        </p>
                       </form>
                     </Widget>
 
