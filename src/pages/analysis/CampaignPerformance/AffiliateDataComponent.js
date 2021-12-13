@@ -24,7 +24,7 @@ class AffiliateDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       page: "1",
       limit: "9",
@@ -36,6 +36,8 @@ class AffiliateDataComponent extends React.Component {
       optionSort: "",
       saveSortOrder: "desc",
       optionSortOrder: "",
+      optionStatus: "",
+      saveStatus: "active",
       offset: 0,
       perPage: 9,
       currentPage: 0,
@@ -50,6 +52,7 @@ class AffiliateDataComponent extends React.Component {
       this.state.username,
       this.state.fromDate,
       moment(new Date()).format("YYYY-MM-DD"),
+      this.state.saveStatus,
       this.state.limit,
       this.state.page,
       "",
@@ -62,6 +65,7 @@ class AffiliateDataComponent extends React.Component {
     username,
     fromDate,
     toDate,
+    status,
     limit,
     page,
     categoryId,
@@ -74,6 +78,7 @@ class AffiliateDataComponent extends React.Component {
         username: username,
         from_date: fromDate,
         to_date: toDate,
+        status: status,
         page: page,
         limit: limit,
         post_type: "campaign",
@@ -128,11 +133,12 @@ class AffiliateDataComponent extends React.Component {
     // );
   }
   pagination = () => {
-    let { username, fromDate, toDate, limit, page } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, page } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
       toDate,
+      saveStatus,
       limit,
       page,
       this.state.saveCategory,
@@ -142,11 +148,12 @@ class AffiliateDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let { username, fromDate, toDate, limit, previous } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, previous } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
       toDate,
+      saveStatus,
       limit,
       previous,
       this.state.saveCategory,
@@ -165,6 +172,7 @@ class AffiliateDataComponent extends React.Component {
       optionCategory: event,
     });
   };
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
@@ -175,6 +183,7 @@ class AffiliateDataComponent extends React.Component {
       this.state.username,
       this.state.fromDate,
       this.state.toDate,
+      this.state.saveStatus,
       this.state.limit,
       this.state.page,
       this.state.saveCategory,
@@ -182,21 +191,22 @@ class AffiliateDataComponent extends React.Component {
       this.state.saveSortOrder
     );
   };
+
   clearFilter = () => {
     this.setState({
       optionCategory: "",
       optionSort: "",
       optionSortOrder: "",
       saveCategory: "",
-      // saveSort: "",
-      // saveSortOrder: "",
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      optionStatus: "",
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
     this.fetchPostPerformance(
       this.state.username,
-      this.state.lastYear,
+      moment().subtract(30, "day").format("YYYY-MM-DD"),
       moment(new Date()).format("YYYY-MM-DD"),
+      'active',
       this.state.limit,
       this.state.page,
       "",
@@ -204,12 +214,21 @@ class AffiliateDataComponent extends React.Component {
       "desc"
     );
   };
+
   handleSort = (event) => {
     this.setState({
       saveSort: event.value,
       optionSort: event,
     });
   };
+
+  handleStatus = (event) => {
+    this.setState({
+      saveStatus: event.value,
+      optionStatus: event,
+    });
+  };
+
   handleSortOrder = (event) => {
     this.setState({
       saveSortOrder: event.value,
@@ -273,6 +292,14 @@ class AffiliateDataComponent extends React.Component {
                     <h5 className="count-title">Engagement</h5>
                     <h3 className="count">{twodecimalplace(record.ctr)}%</h3>
                   </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Start Date</h5>
+                    <h3 className="count">{record.start_date}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">End Date</h5>
+                    <h3 className="count">{record.end_date}</h3>
+                  </div>
                 </div>
               </div>
             </div>
@@ -286,6 +313,7 @@ class AffiliateDataComponent extends React.Component {
       postData,
     });
   };
+
   render() {
     const sortOptions = [
       { value: "date", label: "DATE" },
@@ -294,10 +322,19 @@ class AffiliateDataComponent extends React.Component {
       { value: "engagement", label: "ENGAGEMENT" },
       // { value: "revenue", label: "Revenue" },
     ];
+
+
+    const statusOptions = [
+      { value: "active", label: "ACTIVE" },
+      { value: "deactive", label: "PAUSED" },
+      { value: "expired", label: "EXPIRED" },
+    ];
+
     const sortOrderOptions = [
       { value: "asc", label: "ASC" },
       { value: "desc", label: "DESC" },
     ];
+
     const style = {
       control: (base, state) => ({
         ...base,
@@ -354,6 +391,23 @@ class AffiliateDataComponent extends React.Component {
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
+                  <p>Status</p>
+                  <Select
+                    name="status"
+                    className="selectCustomization"
+                    options={statusOptions}
+                    value={
+                      this.state.optionStatus === ""
+                        ? { value: "active", label: "ACTIVE" }
+                        : this.state.optionStatus
+                    }
+                    placeholder="Select Status"
+                    onChange={(event) => this.handleStatus(event)}
+                    // isDisabled={this.state.optionSort === "" ? true : false}
+                    styles={style}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
                   <p>Select Category</p>
                   <Select
                     name="category"
@@ -404,7 +458,7 @@ class AffiliateDataComponent extends React.Component {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl={4} md={6}>
+                <Col className="d-flex" xs={12} xl={2} md={6}>
                   <Button
                     type="submit"
                     variant="primary"

@@ -28,7 +28,7 @@ class AffiliateSummaryComponent extends React.Component {
       username: this.props.username,
       data: "",
       loading: false,
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
