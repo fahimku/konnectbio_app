@@ -305,57 +305,47 @@ class Register extends React.Component {
               <>
                 {!this.state.showRegister ? (
                   <div className="row select-type">
-                    <div className="col-md-12">
-                      <h3>Choose Option</h3>
+                    <div className="col-md-12 text-center">
+                      <h3 className="mb-5">Choose Account Type</h3>
                     </div>
                     <div className="camp-type-ift col-md-12">
-                      <div class="col1">
-                        <input
-                          type="radio"
-                          name="platform"
-                          id="influencer"
-                          class="d-none imgbgchk"
-                          value="influencer"
-                          onChange={this.changeType}
-                          // type={
-                          //   this.state.campaign_name === "" ? "submit" : "radio"
-                          // }
-                          // checked={
-                          //   this.state.campaign_type === "clicks" ? true : false
-                          // }
-                          // checked={this.state.campaign_name !== "" ? true : false}
-                        />
-                        <label for="influencer">
-                          <span className="imp-click">
-                            <i
-                              class="fa fa-hand-pointer-o fa-2x"
-                              aria-hidden="true"
-                            ></i>
-                          </span>
-                          <span className="imp-name">Influencer</span>
-                        </label>
+                      <div class="role-type col-md-6">
+                        <div className="ac_type_block">
+                          <input
+                            type="radio"
+                            name="platform"
+                            id="influencer"
+                            class="d-none infchecked"
+                            value="influencer"
+                            onChange={this.changeType}
+                          />
+                          <label for="influencer">
+                            <span className="imp-inf"></span>
+                            <h4 className="mb-0 mt-4">Influencer</h4>
+                          </label>
+                        </div>
                       </div>
-                      <div class="col1">
-                        <input
-                          type="radio"
-                          name="platform"
-                          id="brand"
-                          class="d-none imgbgchk"
-                          value="brand"
-                          onChange={this.changeType}
-                        />
-                        <label for="brand">
-                          <span className="imp-click">
-                            <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span className="imp-name">Brand</span>
-                        </label>
+                      <div class="role-type col-md-6">
+                        <div className="ac_type_block">
+                          <input
+                            type="radio"
+                            name="platform"
+                            id="brand"
+                            class="d-none infchecked"
+                            value="brand"
+                            onChange={this.changeType}
+                          />
+                          <label for="brand">
+                            <span className="imp-brnd"></span>
+                            <h4 className="mb-0 mt-4">Brand</h4>
+                          </label>
+                        </div>
                       </div>
                     </div>
-                    <div className="col-md-12 text-right">
+                    <div className="col-md-12 text-center">
                       <Button
                         color="inverse"
-                        className=""
+                        className="btn btn-primary"
                         disabled={this.state.accountType === "" ? true : false}
                         onClick={() => this.setState({ showRegister: true })}
                       >
