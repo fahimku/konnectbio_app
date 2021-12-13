@@ -24,7 +24,7 @@ class Package extends React.Component {
   };
   componentDidMount() {
     if (userInfo.hasOwnProperty("package")) {
-      history.push('/app/main')
+      history.push("/app/main");
     }
     this.getPackages();
   }
@@ -114,6 +114,8 @@ class Package extends React.Component {
     const businessPlus = this.state.packages.BusinessPlus || {};
     const influencer = this.state.packages.Influencer || {};
     const microInfluencer = this.state.packages.MicroInfluencer || {};
+    console.log(Object.keys(business).length, "business");
+    console.log(Object.keys(influencer).length, "influencer");
 
     return (
       <>
@@ -219,54 +221,58 @@ class Package extends React.Component {
                     Select Plan
                   </Button>
                 </div> */}
-                <div className="custom_pkg">
-                  <h4>{microInfluencer.package_name}</h4>
-                  <p>
-                    Micro lnfluencer account allows you to create profile page,
-                    add up to {microInfluencer.link_count} social/external
-                    &nbsp;
-                    <button
-                      className="pkg_read btn btn-link"
-                      onClick={() => {
-                        this.setState({ showMicroInfluencer: true });
-                      }}
-                    >
-                      Read More
-                    </button>
-                  </p>
-                  <div className="pkg_price_ifti">
-                    <span className="pkg_limit">From</span>
-                    <sup>$</sup>
-                    <span className="monthly display-5">
-                      {microInfluencer.package_amount_monthly}
-                    </span>
-                    <small className="monthly">/mo</small>
-                    <span className="pkg_billed">billed monthly</span>
-                  </div>
-                  <ul className="pkg_detail_list_ift">
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Profile Page
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Up to {microInfluencer.link_count} social/external links.
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Create BIOSHOP With {microInfluencer.category_count}{" "}
-                      Categories.
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Analytics.
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Marketplace.
-                    </li>
-                  </ul>
-                  {/* <PaymentButton
+                {Object.keys(microInfluencer).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{microInfluencer.package_name}</h4>
+                    <p>
+                      Micro lnfluencer account allows you to create profile
+                      page, add up to {microInfluencer.link_count}{" "}
+                      social/external &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showMicroInfluencer: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {microInfluencer.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {microInfluencer.link_count} social/external
+                        links.
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP With {
+                          microInfluencer.category_count
+                        }{" "}
+                        Categories.
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics.
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Marketplace.
+                      </li>
+                    </ul>
+                    {/* <PaymentButton
                     key="1"
                     userId={userInfo.user_id}
                     packageId={microInfluencer.package_id}
@@ -276,143 +282,155 @@ class Package extends React.Component {
                     plan="Monthly"
                   /> */}
 
-                  {this.state.promo_code !== "" ? (
-                    <Button variant="dark" className="btn_individual" disabled>
-                      Select Plan
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="dark"
-                      className="btn_individual"
-                      onClick={() => {
-                        this.updatePackage(
-                          userInfo.user_id,
-                          microInfluencer.package_id
-                        );
-                      }}
-                    >
-                      Select Plan
-                    </Button>
-                  )}
-                </div>
-                <div className="custom_pkg">
-                  <h4>{influencer.package_name}</h4>
-                  <p>
-                    Influencer account allows creation of profile page, up to{" "}
-                    {influencer.link_count} social/external links and BIOSHOP
-                    &nbsp;
-                    <button
-                      className="pkg_read btn btn-link"
-                      onClick={() => {
-                        this.setState({ showInfluencer: true });
-                      }}
-                    >
-                      Read More
-                    </button>
-                  </p>
-                  <div className="pkg_price_ifti">
-                    <span className="pkg_limit">From</span>
-                    <sup>$</sup>
-                    <span className="monthly display-5">
-                      {influencer.package_amount_monthly}
-                    </span>
-                    <small className="monthly">/mo</small>
-                    <span className="pkg_billed">billed monthly</span>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        onClick={() => {
+                          this.updatePackage(
+                            userInfo.user_id,
+                            microInfluencer.package_id
+                          );
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                    )}
                   </div>
-                  <ul className="pkg_detail_list_ift">
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Profile Page
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Up to {influencer.link_count} social/external links
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Create BIOSHOP
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Up to {influencer.category_count} Product and Service
-                      Categories
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Analytics
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Marketplace
-                    </li>
-                  </ul>
-                  {this.state.promo_code !== "" ? (
-                    <Button variant="dark" className="btn_individual" disabled>
-                      Select Plan
-                    </Button>
-                  ) : (
-                    <PaymentButton
-                      key="2"
-                      userId={userInfo.user_id}
-                      packageId={influencer.package_id}
-                      name={"Select Plan"}
-                      variant="dark"
-                      paymentMethod={"Influencer"}
-                      plan="Monthly"
-                    />
-                  )}
-                </div>
-                <div className="custom_pkg">
-                  <h4>{business.package_name}</h4>
-                  <p>
-                    Business account is for large businesses and brands and
-                    allows creation of profile &nbsp;
-                    <button
-                      className="pkg_read btn btn-link"
-                      onClick={() => {
-                        this.setState({ showBusiness: true });
-                      }}
-                    >
-                      Read More
-                    </button>
-                  </p>
-                  <div className="pkg_price_ifti">
-                    <span className="pkg_limit">From</span>
-                    <sup>$</sup>
-                    <span className="monthly display-5">
-                      {" "}
-                      {business.package_amount_monthly}
-                    </span>
-                    <small className="monthly">/mo</small>
-                    <span className="pkg_billed">billed monthly</span>
+                ) : null}
+                {Object.keys(influencer).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{influencer.package_name}</h4>
+                    <p>
+                      Influencer account allows creation of profile page, up to{" "}
+                      {influencer.link_count} social/external links and BIOSHOP
+                      &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showInfluencer: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {influencer.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {influencer.link_count} social/external links
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {influencer.category_count} Product and Service
+                        Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Marketplace
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <PaymentButton
+                        key="2"
+                        userId={userInfo.user_id}
+                        packageId={influencer.package_id}
+                        name={"Select Plan"}
+                        variant="dark"
+                        paymentMethod={"Influencer"}
+                        plan="Monthly"
+                      />
+                    )}
                   </div>
-                  <ul className="pkg_detail_list_ift">
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Profile Page
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Up to {business.link_count} social/external links
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Create BIOSHOP With {business.category_count} Categories
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Analytics
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Marketplace
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Affiliate Campaigns/Coupons
-                    </li>
-                  </ul>
-                  {/* <Button
+                ) : null}
+                {Object.keys(business).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{business.package_name}</h4>
+                    <p>
+                      Business account is for large businesses and brands and
+                      allows creation of profile &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showBusiness: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {" "}
+                        {business.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {business.link_count} social/external links
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP With {business.category_count} Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Marketplace
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate Campaigns/Coupons
+                      </li>
+                    </ul>
+                    {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -422,73 +440,79 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  {this.state.promo_code !== "" ? (
-                    <Button variant="dark" className="btn_individual" disabled>
-                      Select Plan
-                    </Button>
-                  ) : (
-                    <PaymentButton
-                      key="2"
-                      userId={userInfo.user_id}
-                      packageId={business.package_id}
-                      name={"Select Plan"}
-                      variant="dark"
-                      paymentMethod={"Business"}
-                      plan="Monthly"
-                    />
-                  )}
-                </div>
-                <div className="custom_pkg">
-                  <h4>{businessPlus.package_name}</h4>
-                  <p>
-                    Business Plus account is for large businesses and brands and
-                    allows creation of profile &nbsp;
-                    <button
-                      className="pkg_read btn btn-link"
-                      onClick={() => {
-                        this.setState({ showBusinessPlus: true });
-                      }}
-                    >
-                      Read More
-                    </button>
-                  </p>
-                  <div className="pkg_price_ifti">
-                    <span className="pkg_limit">From</span>
-                    <sup>$</sup>
-                    <span className="monthly display-5">
-                      {businessPlus.package_amount_monthly}
-                    </span>
-                    <small className="monthly">/mo</small>
-                    <span className="pkg_billed">billed monthly</span>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <PaymentButton
+                        key="2"
+                        userId={userInfo.user_id}
+                        packageId={business.package_id}
+                        name={"Select Plan"}
+                        variant="dark"
+                        paymentMethod={"Business"}
+                        plan="Monthly"
+                      />
+                    )}
                   </div>
-                  <ul className="pkg_detail_list_ift">
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Profile Page
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Up to {businessPlus.link_count} social/external links
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Create BIOSHOP With {businessPlus.category_count}{" "}
-                      Categories
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Analytics
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Access To Marketplac{" "}
-                    </li>
-                    <li>
-                      <span className="glyphicon glyphicon-menu-right"></span>
-                      Affiliate Campaigns/Coupons
-                    </li>
-                  </ul>
-                  {/* <Button
+                ) : null}
+                {Object.keys(businessPlus).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{businessPlus.package_name}</h4>
+                    <p>
+                      Business Plus account is for large businesses and brands
+                      and allows creation of profile &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showBusinessPlus: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {businessPlus.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {businessPlus.link_count} social/external links
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP With {businessPlus.category_count}{" "}
+                        Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Marketplac{" "}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate Campaigns/Coupons
+                      </li>
+                    </ul>
+                    {/* <Button
                     variant="dark"
                     onClick={() => {
                       alert(
@@ -498,22 +522,27 @@ class Package extends React.Component {
                   >
                     Select Plan
                   </Button> */}
-                  {this.state.promo_code !== "" ? (
-                    <Button variant="dark" className="btn_individual" disabled>
-                      Select Plan
-                    </Button>
-                  ) : (
-                    <PaymentButton
-                      key="2"
-                      userId={userInfo.user_id}
-                      packageId={businessPlus.package_id}
-                      name={"Select Plan"}
-                      variant="dark"
-                      paymentMethod={"Business Plus"}
-                      plan="Monthly"
-                    />
-                  )}
-                </div>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <PaymentButton
+                        key="2"
+                        userId={userInfo.user_id}
+                        packageId={businessPlus.package_id}
+                        name={"Select Plan"}
+                        variant="dark"
+                        paymentMethod={"Business Plus"}
+                        plan="Monthly"
+                      />
+                    )}
+                  </div>
+                ) : null}
               </div>
             </Tab>
             <Tab eventKey="profile" title="Yearly">
