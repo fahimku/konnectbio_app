@@ -219,32 +219,23 @@ class Register extends React.Component {
     if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      console.log({
-        name: this.state.name,
-        email: this.state.email,
-        gender: this.state.gender,
-        country: this.state.countryCode,
-        state: this.state.countryStateCode,
-        city: this.state.city,
-        password: this.state.password,
-        zip: this.state.zip,
-        referred_by: this.state.referred_by,
-        account_type: this.state.accountType,
-      });
-      // this.props.dispatch(
-      //   registerUser({
-      //     name: this.state.name,
-      //     email: this.state.email,
-      //     gender: this.state.gender,
-      //     country: this.state.countryCode,
-      //     state: this.state.countryStateCode,
-      //     city: this.state.city,
-      //     password: this.state.password,
-      //     zip: this.state.zip,
-      //     referred_by: this.state.referred_by,
-      //     account_type: this.state.accountType,
-      //   })
-      // );
+      this.props.dispatch(
+        registerUser({
+          name: this.state.name,
+          email: this.state.email,
+          gender: this.state.gender,
+          country: this.state.countryCode,
+          state: this.state.countryStateCode,
+          city: this.state.city,
+          password: this.state.password,
+          zip: this.state.zip,
+          referred_by: this.state.referred_by,
+          account_type:
+            this.state.accountType === "brand"
+              ? "business"
+              : this.state.accountType,
+        })
+      );
     }
   }
   changeType = (e) => {
@@ -544,9 +535,10 @@ class Register extends React.Component {
                           </span>
                         </p>
                         <p className="already">
+                          Account type:{" "}
                           {this.state.accountType.charAt(0).toUpperCase() +
-                            this.state.accountType.slice(1)}{" "}
-                          Account Type?&nbsp;
+                            this.state.accountType.slice(1)}
+                          &nbsp;
                           <span
                             className="text-center link"
                             onClick={() =>
