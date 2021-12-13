@@ -392,6 +392,9 @@
     .brand_container_main .row .profile_box_main .dash_block_profile{
         min-height: 100px;
     }
+    .select-type{
+        width:700px;
+    }
     
 }
 
@@ -656,6 +659,22 @@
     }
     .ift-cancel{
         display: none;
+    }
+    .select-type{
+        width:100%;
+
+        .camp-type-ift.col-md-12{
+            flex-direction: column;
+            padding: 0;
+        }
+        .ac_type_block{
+            min-height: 160px;
+        }
+        .ac_type_block label .imp-inf, .ac_type_block label .imp-brnd{
+            width:70px;
+            height: 70px;
+            background-size: 70px 70px;
+        }
     }
 
 

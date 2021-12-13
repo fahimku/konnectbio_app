@@ -317,7 +317,7 @@
       align-items: center;
 
       &:hover{
-        border:solid 1px #00051a;
+        box-shadow: 0px 0px 2px 1px #00051a;
       }
 
       .imp-inf{
@@ -340,7 +340,7 @@
       }
     }
     .infchecked:checked + label{
-      border:solid 1px #00051a;
+      box-shadow: 0px 0px 2px 1px #00051a;
     }
 
   }

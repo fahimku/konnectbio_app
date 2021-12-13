@@ -304,7 +304,7 @@ class Register extends React.Component {
             ) : (
               <>
                 {!this.state.showRegister ? (
-                  <div className="row select-type">
+                  <div className="select-type">
                     <div className="col-md-12 text-center">
                       <h3 className="mb-5">Choose Account Type</h3>
                     </div>
