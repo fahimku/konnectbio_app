@@ -6,7 +6,7 @@
 // Kashif Bhai PC
 // const hostApi =
 //   process.env.NODE_ENV === "development"
-//     ? "http://172.16.1.85:9000"
+//     ? "http://172.16.1.157:9000"
 //     : "https://api.konnect.bio";
 // const hostApi = process.env.NODE_ENV === "development" ? "https://kbserverdev.herokuapp.com" : "https://api.konnect.bio";
 //const hostApi = "https://kbserverdev.herokuapp.com";
@@ -21,7 +21,7 @@ const redirectURL =
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"
-    ? "https://devp.konnect.bio"
+    ? "https://konnect.bio"
     : "https://konnect.bio";
 
 export default {
