@@ -15,7 +15,7 @@ const twodecimalplace = (value = 0) => {
   return parseFloat(value).toFixed(2);
 };
 const numberWithCommas = (x) => {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 class AffiliateDataComponent extends React.Component {
   constructor(props) {
