@@ -308,7 +308,6 @@ class AffiliateDataComponent extends React.Component {
         },
       }),
     };
-    console.log(this.state.data, "data");
 
     return (
       <>
