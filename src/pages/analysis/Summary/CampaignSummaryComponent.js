@@ -28,7 +28,7 @@ class CampaignSummaryComponent extends React.Component {
       username: this.props.username,
       data: "",
       loading: false,
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),

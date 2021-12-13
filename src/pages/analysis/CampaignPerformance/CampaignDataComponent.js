@@ -24,7 +24,7 @@ class CampaignDataComponent extends React.Component {
       username: this.props.username,
       data: [],
       loading: false,
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
       today: moment(new Date()).format("YYYY-MM-DD"),
       lastYear: moment().startOf("year").format("YYYY-MM-DD"),
@@ -37,6 +37,8 @@ class CampaignDataComponent extends React.Component {
       saveSort: "date",
       optionSort: "",
       saveSortOrder: "desc",
+      optionStatus: "",
+      saveStatus: "active",
       optionSortOrder: "",
       offset: 0,
       perPage: 9,
@@ -52,6 +54,7 @@ class CampaignDataComponent extends React.Component {
       this.state.username,
       this.state.fromDate,
       moment(new Date()).format("YYYY-MM-DD"),
+      this.state.saveStatus,
       this.state.limit,
       this.state.page,
       "",
@@ -64,6 +67,7 @@ class CampaignDataComponent extends React.Component {
     username,
     fromDate,
     toDate,
+    status,
     limit,
     page,
     categoryId,
@@ -76,6 +80,7 @@ class CampaignDataComponent extends React.Component {
         username: username,
         from_date: fromDate,
         to_date: toDate,
+        status: status,
         page: page,
         limit: limit,
         post_type: "campaign",
@@ -136,11 +141,12 @@ class CampaignDataComponent extends React.Component {
     // );
   }
   pagination = () => {
-    let { username, fromDate, toDate, limit, page } = this.state;
+    let { username, fromDate, saveStatus, toDate, limit, page } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
       toDate,
+      saveStatus,
       limit,
       page,
       this.state.saveCategory,
@@ -150,11 +156,12 @@ class CampaignDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let { username, fromDate, toDate, limit, previous } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, previous } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
       toDate,
+      saveStatus,
       limit,
       previous,
       this.state.saveCategory,
@@ -183,6 +190,7 @@ class CampaignDataComponent extends React.Component {
       this.state.username,
       this.state.fromDate,
       this.state.toDate,
+      this.state.saveStatus,
       this.state.limit,
       this.state.page,
       this.state.saveCategory,
@@ -196,15 +204,18 @@ class CampaignDataComponent extends React.Component {
       optionSort: "",
       optionSortOrder: "",
       saveCategory: "",
+      optionStatus: "",
       // saveSort: "",
       // saveSortOrder: "",
-      fromDate: moment().subtract(7, "day").format("YYYY-MM-DD"),
+      fromDate: moment().subtract(30, "day").format("YYYY-MM-DD"),
       toDate: moment(new Date()).format("YYYY-MM-DD"),
     });
+
     this.fetchPostPerformance(
       this.state.username,
-      this.state.lastYear,
+      moment().subtract(30, "day").format("YYYY-MM-DD"),
       moment(new Date()).format("YYYY-MM-DD"),
+      'active',
       this.state.limit,
       this.state.page,
       "",
@@ -218,6 +229,15 @@ class CampaignDataComponent extends React.Component {
       optionSort: event,
     });
   };
+
+  handleStatus = (event) => {
+    console.log('event', event)
+    this.setState({
+      saveStatus: event.value,
+      optionStatus: event,
+    });
+  };
+
   handleSortOrder = (event) => {
     this.setState({
       saveSortOrder: event.value,
@@ -281,6 +301,14 @@ class CampaignDataComponent extends React.Component {
                     <h3 className="count">{twodecimalplace(record.ctr)}%</h3>
                   </div>
                   <div className="col-12 count-box">
+                    <h5 className="count-title">Start Date</h5>
+                    <h3 className="count">{record.start_date}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">End Date</h5>
+                    <h3 className="count">{record.end_date}</h3>
+                  </div>
+                  <div className="col-12 count-box">
                     <h5 className="count-title">Revenue</h5>
                     <h3 className="count">{record.revenue}</h3>
                   </div>
@@ -305,6 +333,13 @@ class CampaignDataComponent extends React.Component {
       { value: "engagement", label: "ENGAGEMENT" },
       // { value: "revenue", label: "Revenue" },
     ];
+
+    const statusOptions = [
+      { value: "active", label: "ACTIVE" },
+      { value: "deactive", label: "PAUSED" },
+      { value: "expired", label: "EXPIRED" },
+    ];
+
     const sortOrderOptions = [
       { value: "asc", label: "ASC" },
       { value: "desc", label: "DESC" },
@@ -365,6 +400,23 @@ class CampaignDataComponent extends React.Component {
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
+                  <p>Status</p>
+                  <Select
+                    name="status"
+                    className="selectCustomization"
+                    options={statusOptions}
+                    value={
+                      this.state.optionStatus === ""
+                        ? { value: "active", label: "ACTIVE" }
+                        : this.state.optionStatus
+                    }
+                    placeholder="Select Status"
+                    onChange={(event) => this.handleStatus(event)}
+                    // isDisabled={this.state.optionSort === "" ? true : false}
+                    styles={style}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
                   <p>Select Category</p>
                   <Select
                     name="category"
@@ -415,7 +467,7 @@ class CampaignDataComponent extends React.Component {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl={4} md={6}>
+                <Col className="d-flex" xs={12} xl={1} md={6}>
                   <Button
                     type="submit"
                     variant="primary"

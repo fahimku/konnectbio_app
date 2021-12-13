@@ -34,8 +34,6 @@ const ShopRightBar = (props) => {
 
 
   useEffect(() => {
-
-    console.log('data', props.singleBioShop);
     setPostId(props.singleBioShop.post_id);
     setStartDate(props.singleBioShop.start_date);
     setEndDate(props.singleBioShop.end_date);
