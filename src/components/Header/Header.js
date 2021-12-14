@@ -258,7 +258,7 @@ class Header extends React.Component {
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
-                      header="Marketplace"
+                      header="Affiliate"
                       link="/app/marketplace"
                       isHeader
                       iconElement={<span className="fa fa-shopping-bag"></span>}
@@ -275,6 +275,55 @@ class Header extends React.Component {
                     link="/app/analysis"
                     isHeader
                     iconElement={<span className="fa fa-bar-chart-o"></span>}
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Schedule Posts"
+                    link="/app/schedule/posts"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th-list"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Monitor Hash Tags"
+                    link="/app/monitor/hash/tags"
+                    isHeader
+                    iconElement={<span className="fa fa-hashtag"></span>}
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Monitor Mentions"
+                    link="/app/monitor/mentions"
+                    isHeader
+                    iconElement={<span className="fa fa-at"></span>}
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Direct Messaging"
+                    link="/app/direct/messaging"
+                    isHeader
+                    iconElement={<span className="fa fa-envelope"></span>}
+                    // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
                   />

@@ -46,8 +46,14 @@ function ActiveMarketPlace({
 
   // const fromDate = moment(new Date()).format("YYYY-MM-DD");
   // const toDate = moment().add(1, "year").format("YYYY-MM-DD");
-  const fromDate = type !== "expired" ? moment(new Date()).format("YYYY-MM-DD") : moment().startOf("year").format("YYYY-MM-DD");
-  const toDate = type !== "expired" ? moment().add(1, "year").format("YYYY-MM-DD") : moment(new Date()).format("YYYY-MM-DD");
+  const fromDate =
+    type !== "expired"
+      ? moment(new Date()).format("YYYY-MM-DD")
+      : moment().startOf("year").format("YYYY-MM-DD");
+  const toDate =
+    type !== "expired"
+      ? moment().add(1, "year").format("YYYY-MM-DD")
+      : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const limit = 8;
@@ -70,7 +76,7 @@ function ActiveMarketPlace({
     });
 
     getBrands();
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -106,7 +112,7 @@ function ActiveMarketPlace({
         }
       );
     }
-    return () => { };
+    return () => {};
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -216,7 +222,8 @@ function ActiveMarketPlace({
             function (error) {
               reject("error");
               toast.error(error.response?.data.message);
-            });
+            }
+          );
         }
       });
     });
