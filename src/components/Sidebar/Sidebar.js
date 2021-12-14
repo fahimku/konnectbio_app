@@ -178,7 +178,7 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Schedule Posts"
-                link="/app/monitor1"
+                link="/app/schedule/posts"
                 isHeader
                 iconElement={<span className="glyphicon glyphicon-th-list"></span>}
                 // label="Awesome"
@@ -189,7 +189,7 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Monitor Hash Tags"
-                link="/app/monitor2"
+                link="/app/monitor/hash/tags"
                 isHeader
                 iconElement={<span className="fa fa-hashtag"></span>}
                 // label="Awesome"
@@ -200,7 +200,7 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Monitor Mentions"
-                link="/app/monitor3"
+                link="/app/monitor/mentions"
                 isHeader
                 iconElement={<span className="fa fa-at"></span>}
                 // label="Awesome"
@@ -211,7 +211,7 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Direct Messaging"
-                link="/app/monitor"
+                link="/app/direct/messaging"
                 isHeader
                 iconElement={<span className="fa fa-envelope"></span>}
                 // label="Awesome"

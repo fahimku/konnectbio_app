@@ -171,10 +171,29 @@ class Layout extends React.Component {
                         permissions={["marketplace_access"]}
                       />
                       <Route
-                        path="/app/commingsoon"
+                        path="/app/schedule/posts"
                         exact
                         component={ComingSoon}
                       />
+
+                      <Route
+                        path="/app/monitor/hash/tags"
+                        exact
+                        component={ComingSoon}
+                      />
+
+                      <Route
+                        path="/app/monitor/mentions"
+                        exact
+                        component={ComingSoon}
+                      />
+
+                      <Route
+                        path="/app/direct/messaging"
+                        exact
+                        component={ComingSoon}
+                      />
+                      
                     </Switch>
                   </Router>
                 </CSSTransition>
