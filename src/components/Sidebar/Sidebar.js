@@ -178,10 +178,10 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Schedule Posts"
-                link="/app/monitor1"
+                link="/app/schedule/posts"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
-                // label="Awesome"
+                iconElement={<span className="fa fa-calendar"></span>}
+            //    label="UpComing"
                 iconName="flaticon-users"
                 labelColor="info"
               />
@@ -189,10 +189,9 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Monitor Hash Tags"
-                link="/app/monitor2"
+                link="/app/monitor/hash/tags"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
-                // label="Awesome"
+                iconElement={<span className="fa fa-hashtag"></span>}
                 iconName="flaticon-users"
                 labelColor="info"
               />
@@ -200,21 +199,19 @@ class Sidebar extends React.Component {
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Monitor Mentions"
-                link="/app/monitor3"
+                link="/app/monitor/mentions"
                 isHeader
                 iconElement={<span className="fa fa-bar-chart-o"></span>}
-                // label="Awesome"
-                iconName="flaticon-users"
+                 iconName="flaticon-users"
                 labelColor="info"
               />
 
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Direct Messaging"
-                link="/app/monitor"
+                link="/app/direct/messaging"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
-                // label="Awesome"
+                iconElement={<span className="fa fa-envelope"></span>}
                 iconName="flaticon-users"
                 labelColor="info"
               />
