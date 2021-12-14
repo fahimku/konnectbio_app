@@ -32,6 +32,7 @@ import Dashboard from "../../pages/dashboard/Dashboard";
 import { createBrowserHistory } from "history";
 import Affiliate from "../../pages/affiliate/Affiliate";
 import Marketplace from "../../pages/marketplace/Marketplace";
+import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
 
 export const history = createBrowserHistory({
@@ -111,7 +112,7 @@ class Layout extends React.Component {
                         exact
                         component={LinkinBio}
                       />
- 
+
                       <Route
                         path="/app/linkinbio-shop"
                         exact
@@ -168,6 +169,11 @@ class Layout extends React.Component {
                         component={Marketplace}
                         dispatch={this.props.dispatch}
                         permissions={["marketplace_access"]}
+                      />
+                      <Route
+                        path="/app/commingsoon"
+                        exact
+                        component={ComingSoon}
                       />
                     </Switch>
                   </Router>

@@ -66,7 +66,7 @@ class MarketPlace extends React.Component {
                         !brandLoading && brandtab.length === 0 ? true : false
                       }
                     >
-                      <span>Marketplace</span>
+                      <span>New</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>
@@ -142,7 +142,7 @@ class MarketPlace extends React.Component {
                   </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
-                      <AllMarketPlace title="Marketplace" type="marketplace" />
+                      <AllMarketPlace title="New Campaign" type="marketplace" />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="active">
