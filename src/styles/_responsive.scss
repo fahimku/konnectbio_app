@@ -680,7 +680,16 @@
         }
     }
 
+    .coming_iner{
+        padding: 0 20px;
 
+        .coming_iner h1{
+            font-size: 2.5rem;
+          }
+          .coming_iner p{
+            font-size: 1rem;
+          }
+    }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -784,5 +793,8 @@
     }
     .aff-sub-button .btn-primary{
         min-width: 60px;
+    }
+    .coming_iner p br{
+        display: none;
     }
 }

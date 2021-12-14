@@ -180,7 +180,7 @@ class Sidebar extends React.Component {
                 header="Schedule Posts"
                 link="/app/monitor1"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                iconElement={<span className="glyphicon glyphicon-th-list"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -191,7 +191,7 @@ class Sidebar extends React.Component {
                 header="Monitor Hash Tags"
                 link="/app/monitor2"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                iconElement={<span className="fa fa-hashtag"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -202,7 +202,7 @@ class Sidebar extends React.Component {
                 header="Monitor Mentions"
                 link="/app/monitor3"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                iconElement={<span className="fa fa-at"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -213,7 +213,7 @@ class Sidebar extends React.Component {
                 header="Direct Messaging"
                 link="/app/monitor"
                 isHeader
-                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                iconElement={<span className="fa fa-envelope"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
