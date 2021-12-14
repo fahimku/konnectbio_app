@@ -1,14 +1,6 @@
 import axios from "axios";
 import React from "react";
-import {
-  Row,
-  Col,
-  Modal,
-  Button,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "reactstrap";
+import { Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -18,7 +10,6 @@ import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 class LinkinBio extends React.Component {
-
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const username = userInfo.username;
@@ -97,7 +88,9 @@ class LinkinBio extends React.Component {
           parseUserInformation.username = "";
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({error: "Connect Your Instagram Account to Continue"});
+          this.setState({
+            error: "Connect Your Instagram Account to Continue",
+          });
           this.setState({ showInstagramButton: true });
           this.props.history.push("/connect");
         }
@@ -155,7 +148,10 @@ class LinkinBio extends React.Component {
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
-        this.changeDateRange(response.data.message.start_date,response.data.message.end_date);
+        this.changeDateRange(
+          response.data.message.start_date,
+          response.data.message.end_date
+        );
       })
       .catch((err) => {
         this.setState({
@@ -398,7 +394,6 @@ class LinkinBio extends React.Component {
 
   changeCategory = (category) => {
     if (category) {
-      
       this.setState({ category: category.split() });
     }
   };
@@ -561,7 +556,6 @@ class LinkinBio extends React.Component {
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>
         )}
-
       </div>
     );
   }
