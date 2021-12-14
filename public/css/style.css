@@ -610,7 +610,7 @@ span.fa.fa-times.ift-cancel{
 }
 
 .pricing-table-ifti {
-  max-width: 1400px;
+  max-width: 980px;
   margin-top: 3rem;
   position: relative;
 }
@@ -619,14 +619,14 @@ span.fa.fa-times.ift-cancel{
 }
 .yearly_message {
   float: right;
-  width: 25%;
+  width: 30%;
   font-family: "SegoeUIBold";
   margin-bottom: 8px;
 }
 .promo_code_ift {
   flex-direction: column;
   position: absolute;
-  width: 36%;
+  width: 45%;
 }
 .promo_msg {
   font-family: "SegoeUIBold";
@@ -644,7 +644,7 @@ span.fa.fa-times.ift-cancel{
 .pricing_tabs_ifti.nav-tabs {
   justify-content: space-between;
   background-color: transparent;
-  width: 25%;
+  width: 30%;
   float: right;
   padding: 5px 5px;
   border-radius: 30px;
@@ -737,9 +737,7 @@ a.pkg_read:hover {
   position: relative;
   line-height: 1.5rem;
 }
-.pricing-table-ifti {
-  max-width: 1400px;
-}
+
 
 .pkg_detail_list_ift li .glyphicon {
   padding-right: 0;

@@ -150,7 +150,12 @@ class Package extends React.Component {
           </div>
         </div>
 
-        <div className="container-fluid pricing-table-ifti">
+        <div  className={`container-fluid pricing-table-ifti p-0 ${
+                  Object.keys(business).length !== 0 ||
+                  Object.keys(businessPlus).length !== 0
+                    ? "package_brand"
+                    : "package_influencer"
+                }`}>
           <form onSubmit={this.handleSubmit}>
             <Row className="promo_code_ift">
               <div className="promo_msg col-md-12">Have Promo Code?</div>
@@ -188,12 +193,7 @@ class Package extends React.Component {
           >
             <Tab eventKey="home" title="Monthly">
               <div
-                className={`package_parent ${
-                  Object.keys(business).length !== 0 ||
-                  Object.keys(businessPlus).length !== 0
-                    ? "package_brand"
-                    : "package_influencer"
-                }`}
+                className="package_parent"
               >
                 {/* <div className="custom_pkg">
                   <h4>{individual.package_name}</h4>
