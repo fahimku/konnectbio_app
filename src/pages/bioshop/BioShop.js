@@ -8,7 +8,6 @@ import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 const BioShop = () => {
-
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const userId = userInfo.user_id;
   const username = userInfo.username;
@@ -19,8 +18,8 @@ const BioShop = () => {
   const url = config.visitorURL + "/";
 
   useEffect(() => {
-    fetchCategories(userId)
-  }, [])
+    fetchCategories(userId);
+  }, []);
 
   //Fetch Categories
   const fetchCategories = async (userId) => {
@@ -32,7 +31,7 @@ const BioShop = () => {
         categories.map(({ category_id, category_name }) => {
           selectCategories.push({ value: category_id, label: category_name });
         });
-        setCategories(selectCategories)
+        setCategories(selectCategories);
       });
   };
 
@@ -46,20 +45,17 @@ const BioShop = () => {
         }}
         showIframe={(boolean) => {
           setShowIframe(boolean);
-          setIframeKey(iframeCount => iframeCount + 1)
+          setIframeKey((iframeCount) => iframeCount + 1);
         }}
       ></ShopRightBar>
     );
-  };  
+  };
 
   return (
     <div className="linkin-bio">
       <Row className="app_main_cont_ift main-container">
         <Col className="left-column" md="5" xs="12" xl="3">
-          <TopBar
-            username={username}
-            url={url}
-          />
+          <TopBar username={username} url={url} />
           <MobilePreview
             pageName="Bio Shop"
             placeholder={placeholder}
@@ -73,8 +69,7 @@ const BioShop = () => {
           />
         </Col>
         <Col
-          className={`right-bar bg-white ${showIframe ? "no-padding" : ""
-            } `}
+          className={`right-bar bg-white ${showIframe ? "no-padding" : ""} `}
           md="7"
           xs="12"
           xl="9"
@@ -87,8 +82,7 @@ const BioShop = () => {
                 title=""
                 className="myshop-iframe"
               ></iframe>
-            ) : null
-            }
+            ) : null}
           </div>
           <Row className="linked_edit_box">
             <Col key={1} xs="12" className="p-5">
@@ -98,19 +92,12 @@ const BioShop = () => {
         </Col>
       </Row>
       {window.innerWidth <= 760 && (
-        <Modal
-          className="abcd"
-          size="sm"
-          isOpen={modal}
-          centered
-        >
-          <ModalHeader>
-            Edit Post
-          </ModalHeader>
+        <Modal className="abcd" size="sm" isOpen={modal} centered>
+          <ModalHeader>Edit Post</ModalHeader>
           <ModalBody className="bg-white">{shopRightBar()}</ModalBody>
         </Modal>
       )}
     </div>
   );
-}
+};
 export default BioShop;
