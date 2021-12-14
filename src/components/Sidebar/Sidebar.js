@@ -152,7 +152,7 @@ class Sidebar extends React.Component {
               {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="Marketplace"
+                  header="Affiliate"
                   link="/app/marketplace"
                   isHeader
                   iconElement={<span className="fa fa-shopping-bag"></span>}
@@ -174,6 +174,50 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
               ) : null}
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Schedule Posts"
+                link="/app/monitor1"
+                isHeader
+                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Monitor Hash Tags"
+                link="/app/monitor2"
+                isHeader
+                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Monitor Mentions"
+                link="/app/monitor3"
+                isHeader
+                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Direct Messaging"
+                link="/app/monitor"
+                isHeader
+                iconElement={<span className="fa fa-bar-chart-o"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
 
               <div className={`settings-bottom ${s.bottomLinks}`}>
                 <LinksGroup

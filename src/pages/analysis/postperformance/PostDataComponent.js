@@ -341,7 +341,6 @@ class PostDataComponent extends React.Component {
 
     const statusOptions = [
       { value: "active", label: "ACTIVE" },
-      { value: "deactive", label: "PAUSED" },
       { value: "expired", label: "EXPIRED" },
     ];
 
