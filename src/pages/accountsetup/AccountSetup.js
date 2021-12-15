@@ -113,7 +113,7 @@ class AccountSetup extends React.Component {
 
           //Influencer Plus
           if (index === 2) {
-            if (index1 === 0 || index1 === 2 || index1 === 3) {
+            if (index1 === 0 || index1 === 1 ) {
               disabledSelect = true;
             }
           }
