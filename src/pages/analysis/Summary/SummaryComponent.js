@@ -26,7 +26,8 @@ class SummaryComponent extends React.Component {
               />
             </div>
             {this.state.packageName === "Influencer" ||
-            this.state.packageName === "Micro Influencer" ? (
+            this.state.packageName === "Micro Influencer" ||
+            this.state.packageName === "Influencer Plus" ? (
               <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
                 {/* <h4 className="page-title">Campaign Summary</h4> */}
                 <CampaignSummaryComponent username={this.state.username} />
