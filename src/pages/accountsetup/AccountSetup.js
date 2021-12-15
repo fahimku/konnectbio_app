@@ -104,27 +104,19 @@ class AccountSetup extends React.Component {
               disabledSelect = true;
             }
           }
-          //Micro Influencer Account
+          //Influencer Account
           if (index === 1) {
+            if (index1 === 0) {
+              disabledSelect = true;
+            }
+          }
+
+          //Influencer Plus
+          if (index === 2) {
             if (index1 === 0 || index1 === 2 || index1 === 3) {
               disabledSelect = true;
             }
           }
-
-          //Business Account
-          else if (index === 2) {
-            if (index1 === 0 || index1 === 1) {
-              disabledSelect = true;
-            }
-          }
-
-          //Business Plus Account
-          else if (index === 3) {
-            if (index1 === 0 || index1 === 1 || index1 === 2) {
-              disabledSelect = true;
-            }
-          }
-
 
 
           return selectPackages.push({
