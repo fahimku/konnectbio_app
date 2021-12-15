@@ -439,60 +439,6 @@ class AccountSetup extends React.Component {
                       </div>
                     </div>
                   </div>
-                  {/* 
-                  <div className="white-box col">
-                    <Row>
-                      <Col xl={4}>
-                        <h5 className="page-title line-heading">Payment</h5>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12} xl={12}>
-                        <div className="checkbox abc-checkbox">
-                          <Input
-                            defaultChecked
-                            name="payment"
-                            value="Monthly"
-                            className="mt-0"
-                            id="checkbox1"
-                            type="radio"
-                            onChange={(e) => {
-                              this.setState({ plan: e.target.value });
-                            }}
-                          />{" "}
-                          <Label for="checkbox1" />
-                          Pay Monthly: $
-                          {this.state.singlePackage.package_amount_monthly}
-                        </div>
-                      </Col>
-                      <Col md={12} xl={12}>
-                        <div className="checkbox abc-checkbox">
-                          <Input
-                            name="payment"
-                            value="Yearly"
-                            className="mt-0"
-                            id="checkbox2"
-                            type="radio"
-                            onChange={(e) => {
-                              this.setState({ plan: e.target.value });
-                            }}
-                          />{" "}
-                          <Label for="checkbox2" />
-                          Pay Yearly & Save: $
-                          {this.state.singlePackage.package_amount_yearly}{" "}
-                          &nbsp; (Save{" "}
-                          {this.state.singlePackage.yearly_discount}%)
-                        </div>
-                      </Col>
-                    </Row>
-                    <br />
-                    <PaymentButton
-                      plan={this.state.plan}
-                      userId={userInfo1.user_id}
-                      packageId={this.state.singlePackage.package_id}
-                      paymentMethod={this.state.singlePackage.package_name}
-                    />
-                  </div> */}
                 </>
               )}
           </div>
