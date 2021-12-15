@@ -203,19 +203,6 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Bio Shop"
-                    link="/app/linkinbio-shop"
-                    isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-shopping-cart"></span>
-                    }
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-
-                  <LinksGroup
-                    onClick={() => this.toggle(3)}
-                    className="sidebar-nav-links"
                     header="All Posts"
                     link="/app/linkinbio"
                     isHeader
@@ -225,11 +212,10 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Links"
+                    header="Manage Links"
                     link="/app/my/links"
                     isHeader
                     iconElement={
@@ -238,50 +224,10 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-
-                  {PermissionHelper.validate(["affiliate_access"]) ? (
-                    <LinksGroup
-                      onClick={() => this.toggle(3)}
-                      className="sidebar-nav-links"
-                      header="Affiliate"
-                      link="/app/campaign"
-                      isHeader
-                      iconElement={
-                        <span className="glyphicon glyphicon-bullhorn"></span>
-                      }
-                      // label="Awesome"
-                      iconName="flaticon-users"
-                      labelColor="info"
-                    />
-                  ) : null}
-                  {PermissionHelper.validate(["marketplace_access"]) ? (
-                    <LinksGroup
-                      onClick={() => this.toggle(3)}
-                      className="sidebar-nav-links"
-                      header="Affiliate"
-                      link="/app/marketplace"
-                      isHeader
-                      iconElement={<span className="fa fa-shopping-bag"></span>}
-                      // label="Awesome"
-                      iconName="flaticon-users"
-                      labelColor="info"
-                    />
-                  ) : null}
-
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Analytics"
-                    link="/app/analysis"
-                    isHeader
-                    iconElement={<span className="fa fa-bar-chart-o"></span>}
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-                  <LinksGroup
-                    onClick={() => this.toggle(3)}
-                    className="sidebar-nav-links"
-                    header="Schedule Posts"
+                    header="Schedule Post"
                     link="/app/schedule/posts"
                     isHeader
                     iconElement={
@@ -324,6 +270,58 @@ class Header extends React.Component {
                     isHeader
                     iconElement={<span className="fa fa-envelope"></span>}
                     // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Manage BioShop"
+                    link="/app/linkinbio-shop"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  {PermissionHelper.validate(["affiliate_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Manage Affiliate"
+                      link="/app/campaign"
+                      isHeader
+                      iconElement={
+                        <span className="glyphicon glyphicon-bullhorn"></span>
+                      }
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+                  {PermissionHelper.validate(["marketplace_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Manage Affiliate"
+                      link="/app/marketplace"
+                      isHeader
+                      iconElement={<span className="fa fa-shopping-bag"></span>}
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Analytics"
+                    link="/app/analysis"
+                    isHeader
+                    iconElement={<span className="fa fa-bar-chart-o"></span>}
                     iconName="flaticon-users"
                     labelColor="info"
                   />
@@ -383,7 +381,7 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Sign Out"
+                    header="Logout"
                     link="/logout"
                     isHeader
                     iconElement={
@@ -400,14 +398,14 @@ class Header extends React.Component {
             <div className="top-logo">
               <div
                 className="logo"
-                // onClick={() => {
-                //   this.props.history.push("/app/dashboard");
-                // }}
-                onClick={() => this.toggle(3)}
+                onClick={() => {
+                  window.location.href = "/app/dashboard";
+                }}
+                // onClick={() => this.toggle(3)}
               >
-                <NavLink to="/app/dashboard">
-                  <img src={logo} alt="logo" />
-                </NavLink>
+                {/* <NavLink to="/app/dashboard"> */}
+                <img src={logo} alt="logo" />
+                {/* </NavLink> */}
               </div>
             </div>
             <TopBar text={true} username={this.state.username} />

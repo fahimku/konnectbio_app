@@ -98,19 +98,6 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
-              <LinksGroup
-                className="sidebar-nav-links"
-                header="BioShop"
-                link="/app/linkinbio-shop"
-                isHeader
-                iconElement={
-                  <span className="glyphicon glyphicon-shopping-cart"></span>
-                }
-                // label="Awesome"
-                iconName="flaticon-users"
-                labelColor="info"
-              />
               <LinksGroup
                 className="sidebar-nav-links"
                 header="All Posts"
@@ -123,10 +110,9 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Links"
+                header="Manage Links"
                 link="/app/my/links"
                 isHeader
                 iconElement={<span className="glyphicon glyphicon-link"></span>}
@@ -134,53 +120,14 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
-              {PermissionHelper.validate(["affiliate_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Affiliate"
-                  link="/app/campaign"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-bullhorn"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
-              {PermissionHelper.validate(["marketplace_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Affiliate"
-                  link="/app/marketplace"
-                  isHeader
-                  iconElement={<span className="fa fa-shopping-bag"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
-
-              {PermissionHelper.validate(["analytics_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Analytics"
-                  link="/app/analysis"
-                  isHeader
-                  iconElement={<span className="fa fa-bar-chart-o"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
-
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Schedule Posts"
+                header="Schedule Post"
                 link="/app/schedule/posts"
                 isHeader
-                iconElement={<span className="glyphicon glyphicon-th-list"></span>}
+                iconElement={
+                  <span className="glyphicon glyphicon-th-list"></span>
+                }
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -219,6 +166,59 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Manage BioShop"
+                link="/app/linkinbio-shop"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              {PermissionHelper.validate(["affiliate_access"]) ? (
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Manage Affiliate"
+                  link="/app/campaign"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-bullhorn"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              ) : null}
+              {PermissionHelper.validate(["marketplace_access"]) ? (
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Manage Affiliate"
+                  link="/app/marketplace"
+                  isHeader
+                  iconElement={<span className="fa fa-shopping-bag"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              ) : null}
+
+              {PermissionHelper.validate(["analytics_access"]) ? (
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Analytics"
+                  link="/app/analysis"
+                  isHeader
+                  iconElement={<span className="fa fa-bar-chart-o"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              ) : null}
+
               <div className={`settings-bottom ${s.bottomLinks}`}>
                 <LinksGroup
                   className="sidebar-nav-links "
@@ -255,7 +255,7 @@ class Sidebar extends React.Component {
                 />
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="Sign Out"
+                  header="Logout"
                   link="/logout"
                   isHeader
                   iconElement={
