@@ -249,6 +249,14 @@ function AffiliateCampaign(props) {
                     <h5 className="count-title"># of Participants</h5>
                     <h3 className="count">{record.total_participant}</h3>
                   </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Start Date</h5>
+                    <h3 className="count">{record.start_date}</h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">End Date</h5>
+                    <h3 className="count">{record.end_date}</h3>
+                  </div>
                 </div>
               </div>
             </div>

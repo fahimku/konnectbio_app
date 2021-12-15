@@ -100,7 +100,7 @@ class Sidebar extends React.Component {
               />
               <LinksGroup
                 className="sidebar-nav-links"
-                header="All Posts"
+                header="Manage Posts"
                 link="/app/linkinbio"
                 isHeader
                 iconElement={
