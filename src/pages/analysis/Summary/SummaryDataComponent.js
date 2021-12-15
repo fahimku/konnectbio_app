@@ -97,7 +97,8 @@ class SummaryDataComponent extends React.Component {
               <div
                 className={`summary_block_profile ${
                   this.props.packageName === "Influencer" ||
-                  this.props.packageName === "Micro Influencer"
+                  this.props.packageName === "Micro Influencer" ||
+                  this.props.packageName === "Influencer Plus"
                     ? "summary_height"
                     : ""
                 }`}
