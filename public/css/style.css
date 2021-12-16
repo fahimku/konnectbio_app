@@ -65,10 +65,10 @@ nav.Sidebar_root__1FSXo {
   overflow-y: clip !important;
 }
 
-.sidebar-nav-links a span {
+/* .sidebar-nav-links a span {
   font-size: 13px !important;
   top: 0px !important;
-}
+} */
 
 span.icon {
   margin-top: 5px !important;
@@ -1035,13 +1035,7 @@ margin:0 auto !important;
   max-width: 100%;
 }
 .tab-content.affiliate_tab_ift{
-  width: 100%;
-  height: -moz-calc(100% - 57px);
-  height: -webkit-calc(100% - 57px);
-  height: -o-calc(100% - 57px);
-  height: calc(100% - 57px);
-  position: absolute;
-  left:0;
+  position: static;
 }
 .affiliate_tab_ift .tab-pane .aff-container-fulid{
   padding-left:0;
@@ -1149,6 +1143,13 @@ margin:0 auto !important;
 }
 .analytics-page.affiliate-page .tab-content > .tab-pane.tab-create-campaign{
   padding:0;
+  width: 100%;
+  height: -moz-calc(100% - 57px);
+  height: -webkit-calc(100% - 57px);
+  height: -o-calc(100% - 57px);
+  height: calc(100% - 57px);
+  position: absolute;
+  left:0;
 }
 .aff-active-circle{
   font-family: "SegoeUIBold";

@@ -387,6 +387,9 @@
         height: -webkit-calc(100% - 70px);
         height: -o-calc(100% - 70px);
         height: calc(100% - 70px);
+        position: absolute;
+        left:0;
+        right: 0;
     }
     .mb-menu-show{
         overflow: hidden;
@@ -399,6 +402,9 @@
     }
     .pricing-table-ifti{
         padding:0 20px !important;
+    }
+    .analytics-page.affiliate-page .tab-content > .tab-pane.tab-create-campaign{
+        position: static;
     }
     
 }
@@ -692,6 +698,13 @@
             font-size: 1rem;
           }
     }
+
+    .affiliate-page .post-box {
+        height: -moz-calc(100% - 80px);
+        height: -webkit-calc(100% - 80px);
+        height: -o-calc(100% - 80px);
+        height: calc(100% - 80px);
+      }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
