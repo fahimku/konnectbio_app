@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Row, Col, Modal, ModalHeader, ModalFooter,ModalBody,Button } from "reactstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
@@ -556,6 +556,32 @@ class LinkinBio extends React.Component {
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>
         )}
+         <Modal
+          isOpen={this.state.confirmModal}
+          toggle={() => this.toggle("confirmModal")}
+        >
+          <ModalHeader toggle={() => this.toggle("confirmModal")}>
+            Delete Post
+          </ModalHeader>
+          <ModalBody className="bg-white">
+            Are you sure you want to delete?
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              color="primary"
+              className="btn btn-primary"
+              onClick={() => this.toggle("confirmModal")}
+            >
+              Close
+            </Button>
+            <Button
+              color="primary"
+              onClick={() => this.deletePost(this.state.deleteId)}
+            >
+              Delete
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }
