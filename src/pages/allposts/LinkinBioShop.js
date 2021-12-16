@@ -60,7 +60,7 @@ class LinkinBioShop extends React.Component {
       error: "",
       autoFocus: false,
       updatedAt: "",
-      fetchUserPost:[],
+      fetchUserPost: [],
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -176,11 +176,15 @@ class LinkinBioShop extends React.Component {
             })
             .then((response) => {
               this.setState({ loading: false });
-              let singlePostIndex = this.state.instagramPosts.data.findIndex((item) => item.id === this.state.currentPost.id);
+              let singlePostIndex = this.state.instagramPosts.data.findIndex(
+                (item) => item.id === this.state.currentPost.id
+              );
               let currentPost = this.state.currentPost;
               currentPost.redirected_url = this.state.redirectedUrl;
               currentPost.linked = true;
-              let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
+              let instagramPosts = JSON.parse(
+                JSON.stringify(this.state.instagramPosts)
+              );
               instagramPosts.data[singlePostIndex] = currentPost;
               this.setState({ instagramPosts: instagramPosts }, () => {});
               this.selectPost(false, "");
@@ -293,10 +297,13 @@ class LinkinBioShop extends React.Component {
         this.setState({ media_id: media_id });
         let category = response.data.message.categories[0].category_id;
         this.setState({ category: category });
-        this.changeDateRange(response.data.message.start_date,response.data.message.end_date);
+        this.changeDateRange(
+          response.data.message.start_date,
+          response.data.message.end_date
+        );
       })
       .catch((err) => {
-        this.setState({category: []});
+        this.setState({ category: [] });
         this.setState({ subCategory: [] });
         this.setState({ postType: "image" });
       });
@@ -319,7 +326,9 @@ class LinkinBioShop extends React.Component {
         lastPost.select = false;
       }
       currentPost.select = true;
-      let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
+      let instagramPosts = JSON.parse(
+        JSON.stringify(this.state.instagramPosts)
+      );
       instagramPosts.data[postIndex] = currentPost;
       this.setState({ instagramPosts: instagramPosts });
       //link current post
