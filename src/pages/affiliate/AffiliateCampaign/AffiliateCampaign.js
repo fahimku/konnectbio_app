@@ -519,7 +519,7 @@ function AffiliateCampaign(props) {
                 forcePage={currentPage}
                 pageCount={pageCount}
                 marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
+                pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }
                 onPageChange={handlePageClick}
                 containerClassName={
                   "pagination justify-content-center mt-2 custom-paginate"
