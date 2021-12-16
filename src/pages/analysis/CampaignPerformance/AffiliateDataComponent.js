@@ -148,7 +148,8 @@ class AffiliateDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let { username, fromDate, toDate, saveStatus, limit, previous } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, previous } =
+      this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -206,7 +207,7 @@ class AffiliateDataComponent extends React.Component {
       this.state.username,
       moment().subtract(30, "day").format("YYYY-MM-DD"),
       moment(new Date()).format("YYYY-MM-DD"),
-      'active',
+      "active",
       this.state.limit,
       this.state.page,
       "",
@@ -322,7 +323,6 @@ class AffiliateDataComponent extends React.Component {
       { value: "engagement", label: "ENGAGEMENT" },
       // { value: "revenue", label: "Revenue" },
     ];
-
 
     const statusOptions = [
       { value: "active", label: "ACTIVE" },
