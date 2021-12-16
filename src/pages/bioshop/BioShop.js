@@ -68,21 +68,9 @@ const BioShop = () => {
             }}
           />
         </Col>
-        <Col
-          className={`right-bar bg-white ${showIframe ? "no-padding" : ""} `}
-          md="7"
-          xs="12"
-          xl="9"
-        >
+        <Col className={`right-bar bg-white ${showIframe ? "no-padding" : ""} `} md="7" xs="12" xl="9">
           <div className={`${showIframe ? "show_ift_iframe show" : "hidden"}`}>
-            {username !== "" ? (
-              <iframe
-                key={iframeKey}
-                src={`${url + username}?iframe=yes`}
-                title=""
-                className="myshop-iframe"
-              ></iframe>
-            ) : null}
+            {username !== "" ? (<iframe key={iframeKey} src={`${url + username}?iframe=yes`} title="" className="myshop-iframe"></iframe>) : null}
           </div>
           <Row className="linked_edit_box">
             <Col key={1} xs="12" className="p-5">

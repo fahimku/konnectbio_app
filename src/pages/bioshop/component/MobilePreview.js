@@ -17,6 +17,7 @@ const MobilePreview = ({
   clearBioShop,
   clearSingleBioShop,
 }) => {
+
   useEffect(() => {
     getSingleBioShop("", clearSingleBioShop);
     getBioShop(1, clearBioShop).then(() => {
