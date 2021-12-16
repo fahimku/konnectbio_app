@@ -18,7 +18,6 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 const ShopRightBar = (props) => {
-
   const [redirectedUrl, setRedirectedUrl] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -32,7 +31,6 @@ const ShopRightBar = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [postId, setPostId] = useState("");
 
-
   useEffect(() => {
     setPostId(props.singleBioShop.post_id);
     setStartDate(props.singleBioShop.start_date);
@@ -41,11 +39,11 @@ const ShopRightBar = (props) => {
     if (props.singleBioShop.categories) {
       setCategory(props.singleBioShop.categories[0].category_id);
       setShowIframe(false);
+    } else {
+      setShowIframe(true);
     }
-    else { setShowIframe(true); }
     setRedirectedUrl(props.singleBioShop.redirected_url);
-  }, [props.singleBioShop])
-
+  }, [props.singleBioShop]);
 
   async function updatePost(id) {
     setLoading(true);
@@ -57,22 +55,23 @@ const ShopRightBar = (props) => {
         post_type: postType,
         start_date: startDate,
         end_date: endDate,
-      }).then(() => {
+      })
+      .then(() => {
         toast.success("BioShop Updated Successfully");
         setLoading(false);
-        props.showIframe(true)
+        props.showIframe(true);
         setShowIframe(true);
-      })
-  };
+      });
+  }
 
   async function deletePost(id) {
     props.deleteSingleBioShop(id).then(() => {
-      toast.success('Post Delete Successfully');
+      toast.success("Post Delete Successfully");
       setDeleteModal(false);
-      props.showIframe(true)
+      props.showIframe(true);
       setShowIframe(true);
     });
-  };
+  }
 
   async function testUrl(url) {
     let newUrl;
@@ -84,7 +83,7 @@ const ShopRightBar = (props) => {
       newUrl = "https://" + url;
     }
     window.open(newUrl, "_blank");
-  };
+  }
 
   function dateRangePickerChanger(value, dataString) {
     setStartDate(dataString[0]);
@@ -93,11 +92,16 @@ const ShopRightBar = (props) => {
 
   return (
     <>
-      <Formsy.Form onValidSubmit={() => { updatePost(props.singleBioShop.post_id) }} ref={formRef}>
+      <Formsy.Form
+        onValidSubmit={() => {
+          updatePost(props.singleBioShop.post_id);
+        }}
+        ref={formRef}
+      >
         <div className={`image-edit-box ${showIframe ? "hidden" : "show"}`}>
           <span
             onClick={() => {
-              props.showIframe(true)
+              props.showIframe(true);
               setShowIframe(true);
             }}
             className="fa fa-times ift-cancel"
@@ -117,7 +121,9 @@ const ShopRightBar = (props) => {
                     <span className="dash_icon-top">
                       <i className="fa fa-eye fa-2x" aria-hidden="true"></i>
                     </span>
-                    <div className="imp-t text-right">{props.singleBioShop.post_views}</div>
+                    <div className="imp-t text-right">
+                      {props.singleBioShop.post_views}
+                    </div>
                     <div className="imp-tx text-uppercase text-muted text-right">
                       IMPRESSIONS
                     </div>
@@ -133,7 +139,9 @@ const ShopRightBar = (props) => {
                         aria-hidden="true"
                       ></i>
                     </span>
-                    <div className="imp-t text-right">{props.singleBioShop.post_clicks}</div>
+                    <div className="imp-t text-right">
+                      {props.singleBioShop.post_clicks}
+                    </div>
                     <div className="imp-tx text-uppercase text-muted text-right">
                       CLICKS
                     </div>
@@ -149,7 +157,9 @@ const ShopRightBar = (props) => {
                         aria-hidden="true"
                       ></i>
                     </span>
-                    <div className="imp-t text-right">{props.singleBioShop.ctr}%</div>
+                    <div className="imp-t text-right">
+                      {props.singleBioShop.ctr}%
+                    </div>
                     <div className="imp-tx text-uppercase text-muted text-right">
                       ENGAGEMENT
                     </div>
@@ -200,7 +210,7 @@ const ShopRightBar = (props) => {
                 }}
                 value={redirectedUrl}
                 onChange={(evt) => {
-                  setRedirectedUrl(evt.target.value)
+                  setRedirectedUrl(evt.target.value);
                 }}
               />
 
@@ -217,7 +227,7 @@ const ShopRightBar = (props) => {
                   searchable={false}
                   required
                   onChange={(e) => {
-                    setCategory(e)
+                    setCategory(e);
                   }}
                   // onFocus={onFocus}
                   // onBlur={onBlur}
@@ -289,7 +299,7 @@ const ShopRightBar = (props) => {
                         color="primary"
                         onClick={() => {
                           props.showIframe(true);
-                          setShowIframe(true)
+                          setShowIframe(true);
                           props.showEditModal(false);
                         }}
                       >
@@ -310,9 +320,7 @@ const ShopRightBar = (props) => {
             </div>
           </div>
         </div>
-        <Modal
-          isOpen={deleteModal}
-        >
+        <Modal isOpen={deleteModal}>
           <ModalHeader toggle={() => setDeleteModal(false)}>
             Delete Post
           </ModalHeader>
@@ -327,10 +335,7 @@ const ShopRightBar = (props) => {
             >
               Close
             </Button>
-            <Button
-              color="primary"
-              onClick={() => deletePost(postId)}
-            >
+            <Button color="primary" onClick={() => deletePost(postId)}>
               Delete
             </Button>
           </ModalFooter>

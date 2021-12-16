@@ -68,9 +68,21 @@ const BioShop = () => {
             }}
           />
         </Col>
-        <Col className={`right-bar bg-white ${showIframe ? "no-padding" : ""} `} md="7" xs="12" xl="9">
+        <Col
+          className={`right-bar bg-white ${showIframe ? "no-padding" : ""} `}
+          md="7"
+          xs="12"
+          xl="9"
+        >
           <div className={`${showIframe ? "show_ift_iframe show" : "hidden"}`}>
-            {username !== "" ? (<iframe key={iframeKey} src={`${url + username}?iframe=yes`} title="" className="myshop-iframe"></iframe>) : null}
+            {username !== "" ? (
+              <iframe
+                key={iframeKey}
+                src={`${url + username}?iframe=yes`}
+                title=""
+                className="myshop-iframe"
+              ></iframe>
+            ) : null}
           </div>
           <Row className="linked_edit_box">
             <Col key={1} xs="12" className="p-5">
@@ -80,8 +92,14 @@ const BioShop = () => {
         </Col>
       </Row>
       {window.innerWidth <= 760 && (
-        <Modal className="abcd" size="sm" isOpen={modal} centered>
-          <ModalHeader>Edit Post</ModalHeader>
+        <Modal
+          toggle={() => setModal(false)}
+          className="abcd"
+          size="sm"
+          isOpen={modal}
+          centered
+        >
+          <ModalHeader toggle={() => setModal(false)}>Edit Post</ModalHeader>
           <ModalBody className="bg-white">{shopRightBar()}</ModalBody>
         </Modal>
       )}
