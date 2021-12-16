@@ -1,37 +1,45 @@
+/* eslint-disable */
 import axios from "axios";
 import React from "react";
-import { Row, Col, Modal, ModalHeader, ModalFooter, ModalBody, Button } from "reactstrap";
+import {
+  Row,
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+} from "reactstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../images/placeholder.png";
 import config from "../../config";
 import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
-import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
+import moment from "moment";
 
-class LinkinBio extends React.Component {
+class LinkinBioShop extends React.Component {
   constructor(props) {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const username = userInfo.username;
-    const userId = userInfo.user_id;
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let username = userInfo.username;
+    let userId = userInfo.user_id;
     super(props);
     this.error = this.error.bind(this);
     this.state = {
       postLoading: false,
-      showInstagramButton: false,
-      iframeKey: 0,
-      nextPageCount: 0,
       deleteId: "",
-      userId: userId,
       startDate: moment(),
-      // endDate: moment().add(30, "days"),
-      endDate: moment().add(1, "years"),
-      media_id: "",
-      modal: false,
+      endDate: moment().add(30, "days"),
+      userId: userId,
       confirmModal: false,
+      iframeKey: 0,
       loading: false,
+      modal: false,
+      media_id: "",
       instagramPosts: null,
       postType: "image",
+      page: 1,
+      limit: 20,
       categories: [],
       category: [],
       subCategories: [],
@@ -49,121 +57,69 @@ class LinkinBio extends React.Component {
       dropdownOpen: false,
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
-      autoFocus: false,
       error: "",
+      autoFocus: false,
       updatedAt: "",
-      fetchUserPost: [],
+      fetchUserPost:[],
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
     this.changePostType = this.changePostType.bind(this);
   }
 
-  componentWillMount() {
-    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    let savedAccessToken = userInfo.access_token;
-    this.fetchInstagramPosts(savedAccessToken);
+  componentDidMount() {
+    this.fetchInstagramPosts(
+      this.state.username,
+      this.state.limit,
+      this.state.page
+    );
     this.fetchCategories();
   }
 
-  async fetchInstagramPosts(token) {
+  //Second Request From User
+  async fetchInstagramPosts(username, limit, page) {
     this.setState({ postLoading: true });
     await axios
-      .post(`/social/ig/media/${token}`, {
-        username: this.state.username,
-      })
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
         this.setState({ postLoading: false });
-        this.setState({ instagramPosts: response.data });
-        if (response.data)
-          this.setState({ nextPageUrl: response?.data?.paging?.next });
-      })
-      .catch((err) => {
-        this.setState({ postLoading: false });
-        if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(
-            localStorage.getItem("userInfo")
-          );
-          parseUserInformation.access_token = "";
-          parseUserInformation.username = "";
-          const storeUserInformation = JSON.stringify(parseUserInformation);
-          localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({
-            error: "Connect Your Instagram Account to Continue",
-          });
-          this.setState({ showInstagramButton: true });
-          this.props.history.push("/connect");
-          window.history.go(0);
-        }
-        this.props.history.push("/connect");
-        window.history.go(0);
-      });
-  }
-  //Next Page Instagram Posts Request From User
-  async nextPageInstagramPosts(url, username) {
-    await axios
-      .post(`/social/ig/nextMedia/${username}`, {
-        url: url,
-      })
-      .then((response) => {
-        let instagramPosts = [];
-        let nextPageInstagramPosts = response.data;
-        let PreviousInstagramPosts = this.state.instagramPosts;
-        //Check Instagram has more posts
-        if (nextPageInstagramPosts.paging.hasOwnProperty("next")) {
-          this.setState({ nextPageUrl: nextPageInstagramPosts.paging.next });
+        this.setState({ instagramPosts: response.data.message.result });
+        if (response.data.message.result.hasOwnProperty("next")) {
+          this.setState({ page: response.data?.message?.result?.next.page });
         } else {
-          this.setState({ nextPageUrl: "" });
+          this.setState({ page: 0 });
         }
-        instagramPosts.push(PreviousInstagramPosts);
-        for (let i = 0; i < nextPageInstagramPosts.data.length; i++) {
-          instagramPosts[0].data.push(nextPageInstagramPosts.data[i]);
-        }
-        this.setState({ instagramPost: instagramPosts });
       })
       .catch((err) => {
-        if (err?.response?.data?.code === 190) {
-          const parseUserInformation = JSON.parse(
-            localStorage.getItem("userInfo")
-          );
-          parseUserInformation.access_token = "";
-          parseUserInformation.username = "";
-          const storeUserInformation = JSON.stringify(parseUserInformation);
-          localStorage.setItem("userInfo", storeUserInformation);
-          this.setState({
-            error: "Connect Your Instagram Account to Continue",
-          });
-          this.setState({ showInstagramButton: true });
-          this.props.history.push("/connect");
-        }
+        this.setState({ postLoading: false });
+        console.log(err);
       });
   }
-  // Fetch Single Post
-  fetchSinglePost = async (media_id) => {
+  //nextPageInstagramPosts
+  async nextPageInstagramPosts(username, limit, page) {
     await axios
-      .get(`/posts/retrieve/${media_id}`)
+      .get(`shop/posts?limit=${limit}&page=${page}&post_type=image,campaign`)
       .then((response) => {
-        // let that = this;
-        this.setState({ fetchUserPost: response.data.message });
-        this.setState({ postType: response.data.message.post_type });
-        this.setState({ updatedAt: response.data.message.updated_at });
-        this.setState({ media_id: media_id });
-        let category = response.data.message.categories[0].category_id;
-        this.setState({ category: category });
-        this.changeDateRange(
-          response.data.message.start_date,
-          response.data.message.end_date
-        );
+        // console.log(response.data.message.result);
+        if (response.data?.message?.result?.hasOwnProperty("next")) {
+          this.setState({ page: response.data.message.result.next.page });
+        } else {
+          this.setState({ page: 0 });
+        }
+        let instagramPosts = [];
+        let nextPageInstagramPosts = response.data.message.result.data;
+        let PreviousInstagramPosts = this.state.instagramPosts;
+        instagramPosts.push(PreviousInstagramPosts);
+        for (let i = 0; i < nextPageInstagramPosts.length; i++) {
+          instagramPosts[0].data.push(nextPageInstagramPosts[i]);
+        }
+        this.setState({ instagramPosts: instagramPosts[0] });
       })
       .catch((err) => {
-        this.setState({
-          category: [],
-        });
-        this.setState({ subCategory: [] });
-        this.setState({ postType: "image" });
+        console.log(err);
       });
-  };
-
+  }
+  //Fetch Categories
   //Fetch Categories
   fetchCategories = async () => {
     await axios
@@ -171,26 +127,31 @@ class LinkinBio extends React.Component {
       .then((response) => {
         const selectCategories = [];
         const categories = response.data.message;
-        categories.map(({ parent_id, category_name, category_id }) => {
-          return selectCategories.push({
-            value: category_id,
-            label: category_name,
-            parentId: parent_id,
-          });
+        categories.map(({ category_id, category_name }) => {
+          selectCategories.push({ value: category_id, label: category_name });
         });
         this.setState({ categories: selectCategories });
       });
   };
 
+  //Fetch Sub Categories
+  async fetchSubCategories(category_id) {
+    await axios
+      .post(`/common/receive/subCategories`, { category_id: category_id })
+      .then((response) => {
+        const selectSubCategories = [];
+        const subCategories = response.data.message;
+        subCategories.map(({ sub_category_id, sub_category_name }) => {
+          selectSubCategories.push({
+            value: sub_category_id,
+            label: sub_category_name,
+          });
+        });
+        this.setState({ subCategories: selectSubCategories });
+      });
+  }
+
   savePost = () => {
-    let newRedirectedUrl;
-    if (this.state.redirectedUrl.includes("http://")) {
-      newRedirectedUrl = this.state.redirectedUrl;
-    } else if (this.state.redirectedUrl.includes("https://")) {
-      newRedirectedUrl = this.state.redirectedUrl;
-    } else {
-      newRedirectedUrl = "http://" + this.state.redirectedUrl;
-    }
     if (this.state.redirectedUrl) {
       this.setState(
         (previousState) => ({
@@ -198,7 +159,6 @@ class LinkinBio extends React.Component {
         }),
         async () => {
           this.setState({ loading: true });
-
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
@@ -206,7 +166,7 @@ class LinkinBio extends React.Component {
               media_url: this.state.currentPost.media_url,
               media_type: this.state.currentPost.media_type,
               timestamp: this.state.currentPost.timestamp,
-              redirected_url: newRedirectedUrl,
+              redirected_url: this.state.redirectedUrl,
               username: this.state.currentPost.username,
               categories: this.state.category,
               sub_categories: this.state.subCategory,
@@ -216,22 +176,15 @@ class LinkinBio extends React.Component {
             })
             .then((response) => {
               this.setState({ loading: false });
-              let singlePostIndex = this.state.instagramPosts.data.findIndex(
-                (item) => item.id === this.state.currentPost.id
-              );
+              let singlePostIndex = this.state.instagramPosts.data.findIndex((item) => item.id === this.state.currentPost.id);
               let currentPost = this.state.currentPost;
               currentPost.redirected_url = this.state.redirectedUrl;
               currentPost.linked = true;
-              let instagramPosts = JSON.parse(
-                JSON.stringify(this.state.instagramPosts)
-              );
+              let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => { });
-              toast.success("Your Post is Linked Successfully");
+              this.setState({ instagramPosts: instagramPosts }, () => {});
               this.selectPost(false, "");
-              this.reload();
             })
-
             .catch((err) => {
               this.setState({ loading: false });
               toast.error(err);
@@ -242,18 +195,15 @@ class LinkinBio extends React.Component {
   };
 
   updatePost = async (id, url) => {
-    // console.log(this.state.category, "sdsdsd");
-    let newCategory;
-    let oldCategory = this.state.category;
+    let newCategory = this.state.category;
     if (
       typeof this.state.category === "string" ||
       this.state.category instanceof String
     ) {
-      newCategory = oldCategory.split();
+      newCategory = newCategory.split();
     } else {
-      newCategory = oldCategory;
+      newCategory = newCategory;
     }
-
     this.setState({ loading: true });
     await axios
       .put(`/posts/revise/${id}`, {
@@ -265,7 +215,6 @@ class LinkinBio extends React.Component {
         end_date: this.state.endDate,
       })
       .then((response) => {
-        this.setState({ loading: false });
         let singlePostIndex = this.state.instagramPosts.data.findIndex(
           (item) => item.id === id
         );
@@ -276,16 +225,10 @@ class LinkinBio extends React.Component {
         );
         instagramPosts.data[singlePostIndex] = currentPost;
         this.setState({ instagramPosts: instagramPosts });
-        toast.success("Your Post Link is Updated");
+        toast.success("BioShop Updated Successfully");
+        this.setState({ loading: false });
         this.selectPost(false, "");
       });
-  };
-  reload = () => {
-    const current = this.props.location.pathname;
-    this.props.history.replace(`/reload`);
-    setTimeout(() => {
-      this.props.history.replace(current);
-    });
   };
 
   deletePost = async (id) => {
@@ -301,14 +244,16 @@ class LinkinBio extends React.Component {
       );
       instagramPosts.data[singlePostIndex] = currentPost;
       this.setState({ instagramPosts: instagramPosts });
+
       toast.success("Your Post is Unlinked Successfully");
       this.setState({ loading: false });
-      this.setState({ confirmModal: false });
-      this.selectPost(false, "");
-      // window.location.reload();
-      // history.push("/app/linkinbio/");
-      this.reload();
+      this.setState({ redirectedUrl: "" });
+      this.setState({ startDate: moment() });
+      this.setState({ endDate: moment().add(30, "days") });
+      this.fetchInstagramPosts(this.state.username, this.state.limit, 1);
     });
+    this.setState({ confirmModal: false });
+    this.selectPost(false, "");
   };
 
   paneDidMount = (node) => {
@@ -321,55 +266,60 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-      parseInt(node.clientHeight) ||
+        parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-      parseInt(node.clientHeight);
-
+        parseInt(node.clientHeight);
     if (bottom) {
-      if (this.state.nextPageUrl) {
+      if (this.state.page) {
+        console.log("page");
+        console.log(this.state.page);
         this.nextPageInstagramPosts(
-          this.state.nextPageUrl,
-          this.state.username
+          this.state.username,
+          this.state.limit,
+          this.state.page
         );
       }
     }
   };
 
-  toggle(id) {
-    this.setState((prevState) => ({
-      [id]: !prevState[id],
-    }));
-  }
+  // Fetch Single Post
+  fetchSinglePost = async (media_id) => {
+    await axios
+      .get(`/posts/retrieve/${media_id}`)
+      .then((response) => {
+        this.setState({ fetchUserPost: response.data.message });
+        this.setState({ postType: response.data.message.post_type });
+        this.setState({ updatedAt: response.data.message.updated_at });
+        this.setState({ media_id: media_id });
+        let category = response.data.message.categories[0].category_id;
+        this.setState({ category: category });
+        this.changeDateRange(response.data.message.start_date,response.data.message.end_date);
+      })
+      .catch((err) => {
+        this.setState({category: []});
+        this.setState({ subCategory: [] });
+        this.setState({ postType: "image" });
+      });
+  };
 
   selectPost = (state, postIndex) => {
-    this.setState((prevState) => ({ autoFocus: !prevState.autoFocus }));
     this.fetchCategories();
     if (postIndex !== "") {
+      this.setState((prevState) => ({
+        autoFocus: !prevState.autoFocus,
+      }));
       //make border appear on post image
       let currentPost = this.state.instagramPosts.data[postIndex];
-      // console.log(currentPost, "currentPost");
-      let mediaId = currentPost.post_id;
+      let post_id = currentPost.post_id;
       let lastPost = this.state.singlePost;
 
-      if (currentPost.linked) {
-        this.fetchSinglePost(mediaId);
-      } else {
-        this.setState({
-          category: [],
-          startDate: moment(),
-          endDate: moment().add(1, "years"),
-        });
-      }
-
+      this.fetchSinglePost(post_id);
+      //unlinked last selected post
       if (lastPost) {
         lastPost.select = false;
       }
-
       currentPost.select = true;
-      let instagramPosts = JSON.parse(
-        JSON.stringify(this.state.instagramPosts)
-      );
-
+      let instagramPosts = JSON.parse(JSON.stringify(this.state.instagramPosts));
       instagramPosts.data[postIndex] = currentPost;
       this.setState({ instagramPosts: instagramPosts });
       //link current post
@@ -386,7 +336,7 @@ class LinkinBio extends React.Component {
     }
     this.setState({ selectPost: state });
     this.setState({ modal: true });
-    if (state === false && postIndex === "")
+    if (state == false && postIndex == "")
       this.setState({ iframeKey: this.state.iframeKey + 1 });
   };
 
@@ -397,6 +347,7 @@ class LinkinBio extends React.Component {
   changeCategory = (category) => {
     if (category) {
       this.setState({ category: category.split() });
+      //this.fetchSubCategories(category);
     }
   };
 
@@ -410,11 +361,6 @@ class LinkinBio extends React.Component {
     }
   };
 
-  changeDateRange = (startDate, endDate) => {
-    this.setState({ startDate: startDate });
-    this.setState({ endDate: endDate });
-  };
-
   copyToClipboard = (e) => {
     let textField = document.createElement("textarea");
     textField.innerText = this.state.url + this.state.username;
@@ -424,6 +370,12 @@ class LinkinBio extends React.Component {
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
+
+  toggle(id) {
+    this.setState((prevState) => ({
+      [id]: !prevState[id],
+    }));
+  }
 
   testUrl = (url) => {
     let newUrl;
@@ -437,13 +389,10 @@ class LinkinBio extends React.Component {
     window.open(newUrl, "_blank");
   };
 
-  submitted = (e) => {
-    e.preventDefault();
+  changeDateRange = (startDate, endDate) => {
+    this.setState({ startDate: startDate });
+    this.setState({ endDate: endDate });
   };
-
-  iframe_clicked(event) {
-    alert("test");
-  }
 
   shopRightBar = () => {
     return (
@@ -452,13 +401,13 @@ class LinkinBio extends React.Component {
         closeModel={() => {
           this.setState({ modal: false });
         }}
-        testUrl={this.testUrl}
-        loading={this.state.loading}
-        submitted={this.submitted}
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
+        testUrl={this.testUrl}
+        loading={this.state.loading}
         autoFocus={this.state.autoFocus}
+        submitted={this.submitted}
         isSelectPost={this.state.selectPost}
         selectPost={this.selectPost}
         singlePost={this.state.singlePost}
@@ -466,21 +415,21 @@ class LinkinBio extends React.Component {
         categories={this.state.categories}
         changeCategory={this.changeCategory}
         category={this.state.category}
-        startDate={this.state.startDate}
-        endDate={this.state.endDate}
         subCategory={this.state.subCategory}
         changeSubCategory={this.changeSubCategory}
         subCategories={this.state.subCategories}
         changePostType={this.changePostType}
         postType={this.state.postType}
-        savePost={this.savePost}
+        startDate={this.state.startDate}
+        endDate={this.state.endDate}
+        //  savePost={this.savePost}
         updatePost={(val1, val2) => {
           this.updatePost(val1, val2);
         }}
         media_id={this.state.media_id}
         deletePost={(deleteId) => {
-          this.setState({ deleteId: deleteId });
           this.setState({ confirmModal: true });
+          this.setState({ deleteId: deleteId });
         }}
         callBack={(e) => {
           this.setState({ redirectedUrl: e.target.value });
@@ -502,8 +451,7 @@ class LinkinBio extends React.Component {
             />
             <MobilePreview
               postLoading={this.state.postLoading}
-              showInstagramButton={this.state.showInstagramButton}
-              pageName={`My Post`}
+              pageName="Bio Shop"
               placeholder={placeholder}
               username={this.state.username}
               error={this.state.error}
@@ -513,27 +461,34 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
-              } `}
+            className={`right-bar bg-white ${
+              !this.state.selectPost ? "no-padding" : ""
+            } `}
             md="7"
-            xl="9"
             xs="12"
+            xl="9"
           >
             <div
-              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
-                }`}
+              className={`${
+                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
+              }`}
             >
+              {/* <iframe
+                key={this.state.iframeKey}
+                src={`${this.state.url + this.state.username}?iframe=yes`}
+                title=""
+                className="myshop-iframe"
+              ></iframe> */}
               {this.state.username !== "" ? (
                 <iframe
-                  id="iframe"
                   key={this.state.iframeKey}
-                  src={`${this.state.url + this.state.username
-                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
-                  title="linkin"
+                  src={`${this.state.url + this.state.username}?iframe=yes`}
+                  title=""
                   className="myshop-iframe"
                 ></iframe>
               ) : null}
             </div>
+
             <Row className="linked_edit_box">
               <Col xs="12" className="p-5">
                 {this.shopRightBar()}
@@ -541,9 +496,9 @@ class LinkinBio extends React.Component {
             </Row>
           </Col>
         </Row>
-
         {window.innerWidth <= 760 && (
           <Modal
+            className="abcd"
             size="sm"
             isOpen={this.state.modal}
             toggle={() => this.toggle("modal")}
@@ -555,6 +510,7 @@ class LinkinBio extends React.Component {
             <ModalBody className="bg-white">{this.shopRightBar()}</ModalBody>
           </Modal>
         )}
+
         <Modal
           isOpen={this.state.confirmModal}
           toggle={() => this.toggle("confirmModal")}
@@ -585,4 +541,4 @@ class LinkinBio extends React.Component {
     );
   }
 }
-export default LinkinBio;
+export default LinkinBioShop;

@@ -515,7 +515,7 @@ class PostDataComponent extends React.Component {
               breakLinkClassName="page-link"
               pageCount={this.state.pageCount}
               marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
+              pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }              
               onPageChange={this.handlePageClick}
               containerClassName={
                 "pagination justify-content-center mt-2 custom-paginate"
