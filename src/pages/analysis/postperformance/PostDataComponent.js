@@ -18,7 +18,6 @@ const numberWithCommas = (x) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 class PostDataComponent extends React.Component {
-  
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +80,7 @@ class PostDataComponent extends React.Component {
         username: username,
         from_date: fromDate,
         to_date: toDate,
-        status:status,
+        status: status,
         page: page,
         limit: limit,
         post_type: "image",
@@ -142,7 +141,7 @@ class PostDataComponent extends React.Component {
     // );
   }
   pagination = () => {
-    let { username, fromDate, toDate, saveStatus,limit, page } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, page } = this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -157,7 +156,8 @@ class PostDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let { username, fromDate, toDate,saveStatus, limit, previous } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, previous } =
+      this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -218,7 +218,7 @@ class PostDataComponent extends React.Component {
           this.state.username,
           moment().subtract(30, "day").format("YYYY-MM-DD"),
           moment(new Date()).format("YYYY-MM-DD"),
-          'active',
+          "active",
           this.state.limit,
           this.state.page,
           "",
@@ -282,11 +282,23 @@ class PostDataComponent extends React.Component {
                 <div className="any-post-image">
                   <div className="any-image-box">
                     <div className="any-image-box-iner">
-                      <img
-                        src={record.media_url}
-                        className="img-fluid media-image"
-                        alt={record.media_type}
-                      />
+                      {record.media_type === "IMAGE" ? (
+                        <img
+                          src={record.media_url}
+                          className="img-fluid media-image"
+                          alt={record.media_type}
+                        />
+                      ) : (
+                        <video
+                          className="img-fluid media-image"
+                          controlsList="nodownload"
+                        >
+                          <source
+                            src={record.media_url}
+                            type="video/mp4"
+                          ></source>
+                        </video>
+                      )}
                     </div>
                   </div>
                 </div>
