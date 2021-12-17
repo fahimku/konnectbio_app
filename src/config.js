@@ -6,8 +6,8 @@
 // Kashif Bhai PC
 //const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.157:9000" : "https://api.konnect.bio";
 // const hostApi = process.env.NODE_ENV === "development" ? "https://kbserverdev.herokuapp.com" : "https://api.konnect.bio";
-//const hostApi = "https://kbserverdev.herokuapp.com";
-const hostApi = "https://api.konnect.bio";
+const hostApi = "https://kbserverdev.herokuapp.com";
+// const hostApi = "https://api.konnect.bio";
 const portApi = process.env.NODE_ENV === "development" ? "" : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const baseURLApiToken = `${hostApi}${portApi ? `:${portApi}` : ``}`;
@@ -18,7 +18,7 @@ const redirectURL =
     : "https://app.konnect.bio";
 const visitorURL =
   process.env.NODE_ENV === "development"
-    ? "https://konnect.bio"
+    ? "https://devp.konnect.bio"
     : "https://konnect.bio";
 
 export default {
