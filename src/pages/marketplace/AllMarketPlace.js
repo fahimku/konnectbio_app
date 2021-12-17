@@ -107,6 +107,7 @@ function AllMarketplace({
 
   const searchMarketPlace = (e) => {
     setSearchLoading(true);
+    setLoading(true);
     setCurrentPage(0);
     e.preventDefault();
     getMarketPlace(
@@ -126,6 +127,8 @@ function AllMarketplace({
         setSearchLoading(false);
       },
       function (error) {
+        setLoading(false);
+        setSearchLoading(false);
         toast.error(error?.response?.data?.message);
       }
     );
@@ -140,11 +143,12 @@ function AllMarketplace({
     }
     setCurrentPage(page - 1);
     setClearLoading(true);
+    setLoading(true);
     setCategory({ value: "all", label: "ALL" });
     setBrand({ value: "all", label: "ALL" });
     setSortBy({ value: "commission", label: "COMMISSION" });
     setOrderBy({ value: "desc", label: "DESC" });
-    setCurrentPage();
+    // setCurrentPage();
     setStartDate(fromDate);
     setEndDate(toDate);
     getMarketPlace(
@@ -165,6 +169,9 @@ function AllMarketplace({
         setClearLoading(false);
       },
       function (error) {
+        setLoading(false);
+        setSearchLoading(false);
+        setClearLoading(false);
         toast.error(error?.response?.data?.message);
       }
     );
@@ -217,143 +224,144 @@ function AllMarketplace({
     setEndDate(endDate);
   };
 
-  if (!loading) {
-    return (
-      <>
-        <div className="analytics-page affiliate-page linkin-bio">
-          <div className="container-fluid">
-            <h4 className="page-title">{title}</h4>
-            <Row className="post-analytics-tab mb-4">
-              <Col xs={12} xl={12} md={12}>
-                <form onSubmit={searchMarketPlace}>
-                  <Row>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Select Start Date / End Date</p>
-                      <RangePicker
-                        key={4}
-                        value={
-                          startDate && endDate
-                            ? [moment(startDate), moment(endDate)]
-                            : []
-                        }
-                        allowClear={false}
-                        ranges={{
-                          Today: [moment(), moment()],
-                          Tomorrow: [
-                            moment().add(1, "days"),
-                            moment().add(1, "days"),
-                          ],
-                          Yesterday: [
-                            moment().subtract(1, "days"),
-                            moment().subtract(1, "days"),
-                          ],
-                          "This Month": [
-                            moment().startOf("month"),
-                            moment().endOf("month"),
-                          ],
-                          "Last Month": [
-                            moment().subtract(1, "month").startOf("month"),
-                            moment().subtract(1, "month").endOf("month"),
-                          ],
-                        }}
-                        format={dateFormat}
-                        onChange={dateRangePickerChanger}
-                      />
-                    </Col>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Brands</p>
-                      <Select
-                        value={brand}
-                        name="sort"
-                        className="selectCustomization"
-                        options={brands}
-                        onChange={(e) => {
-                          setBrand(e);
-                        }}
-                        placeholder="Select Brand"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Select Category</p>
-                      <Select
-                        value={category}
-                        name="sort"
-                        className="selectCustomization"
-                        options={categoryOptions}
-                        onChange={(e) => {
-                          setCategory(e);
-                        }}
-                        placeholder="Select Category"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Sort By</p>
-                      <Select
-                        value={sortBy}
-                        name="sort"
-                        className="selectCustomization"
-                        options={sortByOptions}
-                        onChange={(e) => {
-                          setSortBy(e);
-                        }}
-                        placeholder="Sort By"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Order By</p>
-                      <Select
-                        value={orderBy}
-                        name="sort"
-                        className="selectCustomization"
-                        options={sortOrderOptions}
-                        onChange={(e) => {
-                          setOrderBy(e);
-                        }}
-                        placeholder="Order By"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col className="d-flex" xs={12} xl={2} md={6}>
-                      {searchLoading ? (
-                        <Button
-                          type="button"
-                          variant="primary"
-                          className="fltr-hpr"
-                        >
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <Button
-                          type="submit"
-                          variant="primary"
-                          className="fltr-hpr"
-                        >
-                          Search
-                        </Button>
-                      )}
-                      {clearLoading ? (
-                        <Button variant="gray" className="fltr-hpr btn-primary">
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={clearMarketPlace}
-                          variant="gray"
-                          className="fltr-hpr btn-primary"
-                        >
-                          Reset
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                </form>
-              </Col>
-            </Row>
-            <hr />
-            {marketPlace?.message?.length > 0 ? (
+  // if (!loading) {
+  return (
+    <>
+      <div className="analytics-page affiliate-page linkin-bio">
+        <div className="container-fluid">
+          <h4 className="page-title">{title}</h4>
+          <Row className="post-analytics-tab mb-4">
+            <Col xs={12} xl={12} md={12}>
+              <form onSubmit={searchMarketPlace}>
+                <Row>
+                  <Col xs={12} xl={2} md={6}>
+                    <p>Select Start Date / End Date</p>
+                    <RangePicker
+                      key={4}
+                      value={
+                        startDate && endDate
+                          ? [moment(startDate), moment(endDate)]
+                          : []
+                      }
+                      allowClear={false}
+                      ranges={{
+                        Today: [moment(), moment()],
+                        Tomorrow: [
+                          moment().add(1, "days"),
+                          moment().add(1, "days"),
+                        ],
+                        Yesterday: [
+                          moment().subtract(1, "days"),
+                          moment().subtract(1, "days"),
+                        ],
+                        "This Month": [
+                          moment().startOf("month"),
+                          moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                          moment().subtract(1, "month").startOf("month"),
+                          moment().subtract(1, "month").endOf("month"),
+                        ],
+                      }}
+                      format={dateFormat}
+                      onChange={dateRangePickerChanger}
+                    />
+                  </Col>
+                  <Col xs={12} xl={2} md={6}>
+                    <p>Brands</p>
+                    <Select
+                      value={brand}
+                      name="sort"
+                      className="selectCustomization"
+                      options={brands}
+                      onChange={(e) => {
+                        setBrand(e);
+                      }}
+                      placeholder="Select Brand"
+                      styles={style}
+                    />
+                  </Col>
+                  <Col xs={12} xl={2} md={6}>
+                    <p>Select Category</p>
+                    <Select
+                      value={category}
+                      name="sort"
+                      className="selectCustomization"
+                      options={categoryOptions}
+                      onChange={(e) => {
+                        setCategory(e);
+                      }}
+                      placeholder="Select Category"
+                      styles={style}
+                    />
+                  </Col>
+                  <Col xs={12} xl={2} md={6}>
+                    <p>Sort By</p>
+                    <Select
+                      value={sortBy}
+                      name="sort"
+                      className="selectCustomization"
+                      options={sortByOptions}
+                      onChange={(e) => {
+                        setSortBy(e);
+                      }}
+                      placeholder="Sort By"
+                      styles={style}
+                    />
+                  </Col>
+                  <Col xs={12} xl={2} md={6}>
+                    <p>Order By</p>
+                    <Select
+                      value={orderBy}
+                      name="sort"
+                      className="selectCustomization"
+                      options={sortOrderOptions}
+                      onChange={(e) => {
+                        setOrderBy(e);
+                      }}
+                      placeholder="Order By"
+                      styles={style}
+                    />
+                  </Col>
+                  <Col className="d-flex" xs={12} xl={2} md={6}>
+                    {searchLoading ? (
+                      <Button
+                        type="button"
+                        variant="primary"
+                        className="fltr-hpr"
+                      >
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button
+                        type="submit"
+                        variant="primary"
+                        className="fltr-hpr"
+                      >
+                        Search
+                      </Button>
+                    )}
+                    {clearLoading ? (
+                      <Button variant="gray" className="fltr-hpr btn-primary">
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={clearMarketPlace}
+                        variant="gray"
+                        className="fltr-hpr btn-primary"
+                      >
+                        Reset
+                      </Button>
+                    )}
+                  </Col>
+                </Row>
+              </form>
+            </Col>
+          </Row>
+          <hr />
+          {!loading ? (
+            marketPlace?.message?.length > 0 ? (
               <>
                 <Row className="post-analytics-tab-boxes-ift">
                   {marketPlace.message.map((item, index) => (
@@ -381,7 +389,7 @@ function AllMarketplace({
                   forcePage={currentPage}
                   pageCount={Math.ceil(marketPlace.totalCount / limit)}
                   marginPagesDisplayed={2}
-                  pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }
+                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
                   onPageChange={handlePageClick}
                   containerClassName={
                     "pagination justify-content-center mt-2 custom-paginate"
@@ -392,28 +400,31 @@ function AllMarketplace({
               </>
             ) : (
               "No Data Found"
-            )}
-          </div>
-        </div>
-      </>
-    );
-  } else {
-    return (
-      <div className="col-md-12">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            margin: 5,
-            height: 300,
-          }}
-        >
-          <i className="la la-spinner la-spin" style={{ fontSize: 40 }} />
+            )
+          ) : (
+            <Loader size={40} />
+          )}
         </div>
       </div>
-    );
-  }
+    </>
+  );
+  // } else {
+  //   return (
+  //     <div className="col-md-12">
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           margin: 5,
+  //           height: 300,
+  //         }}
+  //       >
+  //         <i className="la la-spinner la-spin" style={{ fontSize: 40 }} />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }
 function mapStateToProps({ marketPlace, brands }) {
   return {

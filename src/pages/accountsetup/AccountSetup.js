@@ -44,10 +44,10 @@ class AccountSetup extends React.Component {
       loadingInsta: false,
       alert: true,
       packages: "",
-      package: userInfo.package.package_name,
-      packageId: userInfo.package.package_id,
-      categoryAllow: userInfo.package.category_count,
-      package_amount: userInfo.package.package_amount,
+      package: userInfo?.package?.package_name,
+      packageId: userInfo?.package?.package_id,
+      categoryAllow: userInfo?.package?.category_count,
+      package_amount: userInfo?.package?.package_amount,
       promo_code: "",
     };
   }
@@ -59,10 +59,10 @@ class AccountSetup extends React.Component {
     if (this.props.resetAccount === false) {
       this.setState({ resetAccount: false });
     }
-    if (userInfo.access_token !== "") {
+    if (userInfo?.access_token !== "") {
       this.setState({ isInstagramConnected: true });
     }
-    this.setState({ userId: userInfo.user_id });
+    this.setState({ userId: userInfo?.user_id });
     this.getPackages();
   }
 
@@ -70,11 +70,14 @@ class AccountSetup extends React.Component {
     await axios
       .get(`/package/receive`)
       .then((response) => {
-
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const singlePackage = packages.filter(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
 
         const maxIndex = packages.length - 1;
 
@@ -113,11 +116,10 @@ class AccountSetup extends React.Component {
 
           //Influencer Plus
           if (index === 2) {
-            if (index1 === 0 || index1 === 1 ) {
+            if (index1 === 0 || index1 === 1) {
               disabledSelect = true;
             }
           }
-
 
           return selectPackages.push({
             value: package_id,
@@ -194,12 +196,11 @@ class AccountSetup extends React.Component {
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(this.state.packages, "packages");
-    // console.log(this.state.singlePackage, "singlePackage");
     return (
       <div
-        className={`profile-page account-setup ${this.props.className ? "container" : ""
-          }`}
+        className={`profile-page account-setup ${
+          this.props.className ? "container" : ""
+        }`}
       >
         <div
           className={
@@ -223,7 +224,7 @@ class AccountSetup extends React.Component {
                         <div className="dp_fields-setup mb-0">
                           <h4 className="package_name">
                             Current Plan:{" "}
-                            {userInfo1.package
+                            {userInfo1?.package
                               ? userInfo1.package.package_name
                               : ""}
                           </h4>
@@ -257,8 +258,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -273,8 +274,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
@@ -305,9 +306,9 @@ class AccountSetup extends React.Component {
               </div>
 
               <DisconnectInstagram
-                userId={userInfo1.user_id}
+                userId={userInfo1?.user_id}
                 username={this.props.username}
-                username1={userInfo1.username}
+                username1={userInfo1?.username}
                 modal={(boolean) => {
                   this.setState({ modal: boolean });
                 }}
@@ -321,7 +322,7 @@ class AccountSetup extends React.Component {
               />
               {this.state.resetAccount && (
                 <ResetAccount
-                  userId={userInfo1.user_id}
+                  userId={userInfo1?.user_id}
                   resetModal={(boolean) => {
                     this.setState({ resetModal: boolean });
                   }}
@@ -408,7 +409,7 @@ class AccountSetup extends React.Component {
                                   <div className="make-canc-pay">
                                     <PaymentButton
                                       plan={this.state.plan}
-                                      userId={userInfo1.user_id}
+                                      userId={userInfo1?.user_id}
                                       packageId={
                                         this.state.singlePackage.package_id
                                       }
@@ -424,9 +425,9 @@ class AccountSetup extends React.Component {
                                       }}
                                       type="button"
 
-                                    // disabled={
-                                    //   !this.state.loading ? false : true
-                                    // }
+                                      // disabled={
+                                      //   !this.state.loading ? false : true
+                                      // }
                                     >
                                       Cancel
                                     </Button>
