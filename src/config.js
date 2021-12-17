@@ -19,7 +19,11 @@ const redirectURL =
 const visitorURL =
   process.env.NODE_ENV === "development"
     ? "https://devp.konnect.bio"
-    : "https://konnect.bio";
+    : "https://devp.konnect.bio";
+// const visitorURL =
+//   process.env.NODE_ENV === "development"
+//     ? "https://devp.konnect.bio"
+//     : "https://konnect.bio";
 
 export default {
   redirectURL,
