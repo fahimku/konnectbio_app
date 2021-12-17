@@ -100,7 +100,7 @@ class Sidebar extends React.Component {
               />
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Manage Posts"
+                header="All Posts"
                 link="/app/linkinbio"
                 isHeader
                 iconElement={
@@ -135,7 +135,7 @@ class Sidebar extends React.Component {
 
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Monitor Hash Tags"
+                header="Monitor Hashtags"
                 link="/app/monitor/hash/tags"
                 isHeader
                 iconElement={<span className="fa fa-hashtag"></span>}

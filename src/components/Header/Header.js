@@ -203,7 +203,7 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Manage Posts"
+                    header="All Posts"
                     link="/app/linkinbio"
                     isHeader
                     iconElement={
@@ -241,7 +241,7 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Monitor Hash Tags"
+                    header="Monitor Hashtags"
                     link="/app/monitor/hash/tags"
                     isHeader
                     iconElement={<span className="fa fa-hashtag"></span>}
