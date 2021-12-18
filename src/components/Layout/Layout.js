@@ -34,6 +34,7 @@ import Affiliate from "../../pages/affiliate/Affiliate";
 import Marketplace from "../../pages/marketplace/Marketplace";
 import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
+import DirectMessaging from "../../pages/directMessaging/Index"
 
 export const history = createBrowserHistory({
   forceRefresh: false,
