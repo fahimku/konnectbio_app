@@ -22,10 +22,13 @@ import bioshop from "./bioshop/bioshop";
 import singleBioShop from "./bioshop/singleBioShop";
 import postSummary from "./post/postSummary";
 
+import chat from "./chat";
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
     links,
+    chat,
     brands,
     addCampaignToShop,
     brandsCategory,
