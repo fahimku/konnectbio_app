@@ -35,6 +35,7 @@ import Marketplace from "../../pages/marketplace/Marketplace";
 import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
 import DirectMessaging from "../../pages/directMessaging/Index"
+import ChatPage from "../../pages/chat";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -194,7 +195,7 @@ class Layout extends React.Component {
                         exact
                         component={ComingSoon}
                       />
-                      
+                      <Route path="/app/chat" exact component={ChatPage} />
                     </Switch>
                   </Router>
                 </CSSTransition>
