@@ -131,6 +131,7 @@ class Package extends React.Component {
   render() {
     const basic = this.state.packages.Basic || {};
     const premium = this.state.packages.Premium || {};
+    console.log(this.state.checkbox, "sds");
     return (
       <>
         <div className="login_header">
@@ -609,7 +610,7 @@ class Package extends React.Component {
                     packageId={premium.package_id}
                     name={"Make Payment"}
                     variant="primary"
-                    paymentMethod={"Influencer"}
+                    paymentMethod={"Premium"}
                     plan={this.state.plan}
                   />
                 ) : null}
