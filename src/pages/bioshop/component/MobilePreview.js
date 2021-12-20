@@ -30,22 +30,17 @@ const MobilePreview = ({
   const instaPosts = [];
   if (bioshop) {
     for (let i = 0; i < bioshop.data.length; i++) {
-      if (
-        bioshop.data[i].media_type === "IMAGE" ||
-        bioshop.data[i].media_type === "CAROUSEL_ALBUM"
-      ) {
+      if (bioshop.data[i].media_type === "IMAGE" || bioshop.data[i].media_type === "CAROUSEL_ALBUM") {
         instaPosts.push(
           <Col key={i} xs="4">
             <div key={i} className="mobile-image-box">
               <div
-                onClick={
-                  bioshop.data[i].post_type === "campaign"
-                    ? null
-                    : () => {
-                        getSingleBioShop(bioshop.data[i].post_id);
-                        showIframe(false);
-                        showEditModal(true);
-                      }
+                onClick={bioshop.data[i].post_type === "campaign" ? null
+                  : () => {
+                    getSingleBioShop(bioshop.data[i].post_id);
+                    showIframe(false);
+                    showEditModal(true);
+                  }
                 }
                 className="mobile_box_inr"
               >
@@ -61,7 +56,7 @@ const MobilePreview = ({
                   alt="bioshop"
                 />
                 {bioshop.data[i].linked &&
-                bioshop.data[i].post_type === "campaign" ? (
+                  bioshop.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : bioshop.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
@@ -72,7 +67,8 @@ const MobilePreview = ({
             </div>
           </Col>
         );
-      } else {
+      }
+      else {
         instaPosts.push(
           <Col
             key={i}
@@ -90,10 +86,8 @@ const MobilePreview = ({
                   // id="myVideo"
                   autoplay
                   controlsList="nodownload"
-                  className={
-                    bioshop.data[i].linked || bioshop.data[i].select
-                      ? "linked"
-                      : ""
+                  className={bioshop.data[i].linked || bioshop.data[i].select ? "linked"
+: ""
                   }
                   key={i}
                   id={"img" + i}
@@ -108,7 +102,7 @@ const MobilePreview = ({
                   aria-hidden="true"
                 ></span>
                 {bioshop.data[i].linked &&
-                bioshop.data[i].post_type === "campaign" ? (
+                  bioshop.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : bioshop.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
