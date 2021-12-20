@@ -212,6 +212,20 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Manage BioShop"
+                    link="/app/linkinbio-shop"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                    }
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -273,20 +287,9 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-                  <LinksGroup
-                    onClick={() => this.toggle(3)}
-                    className="sidebar-nav-links"
-                    header="Manage BioShop"
-                    link="/app/linkinbio-shop"
-                    isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-shopping-cart"></span>
-                    }
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
 
-                  {PermissionHelper.validate(["affiliate_access"]) ? (
+
+                  {/* {PermissionHelper.validate(["affiliate_access"]) ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
@@ -300,8 +303,9 @@ class Header extends React.Component {
                       iconName="flaticon-users"
                       labelColor="info"
                     />
-                  ) : null}
-                  {PermissionHelper.validate(["marketplace_access"]) ? (
+                  ) : null} */}
+
+                  {/* {PermissionHelper.validate(["marketplace_access"]) ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
@@ -313,7 +317,7 @@ class Header extends React.Component {
                       iconName="flaticon-users"
                       labelColor="info"
                     />
-                  ) : null}
+                  ) : null} */}
 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
@@ -401,7 +405,7 @@ class Header extends React.Component {
                 onClick={() => {
                   window.location.href = "/app/dashboard";
                 }}
-                // onClick={() => this.toggle(3)}
+              // onClick={() => this.toggle(3)}
               >
                 {/* <NavLink to="/app/dashboard"> */}
                 <img src={logo} alt="logo" />

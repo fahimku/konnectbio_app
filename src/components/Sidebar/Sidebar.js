@@ -6,16 +6,13 @@ import { withRouter } from "react-router-dom";
 import { dismissAlert } from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
-import {
-  openSidebar,
-  closeSidebar,
-  changeActiveSidebarItem,
-} from "../../actions/navigation";
+import { openSidebar,closeSidebar,changeActiveSidebarItem} from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
 import { logoutUser } from "../../actions/auth";
 import PermissionHelper from "../PermissionHelper";
 
 class Sidebar extends React.Component {
+ 
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -110,12 +107,27 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
+
+
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Manage Links"
                 link="/app/my/links"
                 isHeader
                 iconElement={<span className="glyphicon glyphicon-link"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Manage BioShop"
+                link="/app/linkinbio-shop"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
+                }
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -166,19 +178,8 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
-              <LinksGroup
-                className="sidebar-nav-links"
-                header="Manage BioShop"
-                link="/app/linkinbio-shop"
-                isHeader
-                iconElement={
-                  <span className="glyphicon glyphicon-shopping-cart"></span>
-                }
-                // label="Awesome"
-                iconName="flaticon-users"
-                labelColor="info"
-              />
 
+              {/* 
               {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
@@ -192,8 +193,8 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null}
-              {PermissionHelper.validate(["marketplace_access"]) ? (
+              ) : null} */}
+              {/* {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Manage Affiliate"
@@ -204,7 +205,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null}
+              ) : null} */}
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup
@@ -218,8 +219,24 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
               ) : null}
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br></br>
+              <div
+              // className={`settings-bottom ${s.bottomLinks}`}
 
-              <div className={`settings-bottom ${s.bottomLinks}`}>
+              >
                 <LinksGroup
                   className="sidebar-nav-links "
                   onActiveSidebarItemChange={(activeItem) =>

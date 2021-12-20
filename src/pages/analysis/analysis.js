@@ -64,7 +64,7 @@ class Analysis extends React.Component {
                     </NavItem>
                     {/* {this.state.packageName === "Influencer" ||
                     this.state.packageName === "Micro Influencer" ? ( */}
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -75,7 +75,7 @@ class Analysis extends React.Component {
                       >
                         <span>Campaign Performance</span>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                     {/* ) : null} */}
                     {/* <NavItem>
                       <NavLink
@@ -121,14 +121,14 @@ class Analysis extends React.Component {
                       ) : null}
                     </TabPane>
                     {/* {this.state.packageName === "Influencer" ? ( */}
-                    <TabPane tabId="tab23">
+                    {/* <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <CampaignAnalytics
                           username={this.state.username}
                           packageName={this.state.packageName}
                         />
                       ) : null}
-                    </TabPane>
+                    </TabPane> */}
                     {/* ) : null} */}
                     {/* <TabPane tabId="tab21">
                       <HighCharts username={this.state.username} />
