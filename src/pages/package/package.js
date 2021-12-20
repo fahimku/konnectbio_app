@@ -23,6 +23,7 @@ class Package extends React.Component {
     showSelectPackage: false,
     checkbox: {},
     plan: "",
+    showPromo: false,
   };
   componentDidMount() {
     if (userInfo.hasOwnProperty("package")) {
@@ -56,6 +57,7 @@ class Package extends React.Component {
     this.setState({ showPremium: false });
     this.setState({ showSelectPackage: false });
     this.setState({ plan: "", checkbox: {} });
+    this.setState({ showPromo: false });
   };
 
   updatePackage = async (id, packageId) => {
@@ -86,6 +88,12 @@ class Package extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
+    } else if (
+      !this.state.checkbox.instagram &&
+      !this.state.checkbox.facebook &&
+      !this.state.checkbox.checkbox3
+    ) {
+      this.setState({ showPromo: true });
     } else {
       this.setState({ loading: true });
       await axios
@@ -106,6 +114,7 @@ class Package extends React.Component {
           console.log(err.response.data);
           toast.error(err.response.data.message);
           this.setState({ loading: false, promo_code: "" });
+          this.setState({ checkbox: {}, plan: "" });
         });
     }
   };
@@ -598,11 +607,77 @@ class Package extends React.Component {
                     key="2"
                     userId={userInfo.user_id}
                     packageId={premium.package_id}
-                    name={"Select Plan"}
+                    name={"Make Payment"}
                     variant="primary"
                     paymentMethod={"Influencer"}
                     plan={this.state.plan}
                   />
+                ) : null}
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showPromo}
+          onHide={this.handleClose}
+          centered
+          size="lg"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Premium Package</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div class="funkyradio">
+              <p>Please check for further payment</p>
+              <div class="funkyradio-primary">
+                <input
+                  type="checkbox"
+                  name="instagram"
+                  id="instagram"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="instagram">
+                  Make sure you have instagram account?
+                </label>
+              </div>
+              <div class="funkyradio-primary">
+                <input
+                  type="checkbox"
+                  name="facebook"
+                  id="facebook"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="facebook">
+                  Make sure you have facebook account?
+                </label>
+              </div>
+              <div class="funkyradio-primary">
+                <input
+                  type="checkbox"
+                  name="checkbox3"
+                  id="checkbox3"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="checkbox3">
+                  Facebook connected with instagram and instagram connected with
+                  facebook
+                </label>
+              </div>
+              <div>
+                {this.state.checkbox.instagram &&
+                this.state.checkbox.facebook &&
+                this.state.checkbox.checkbox3 ? (
+                  <Button
+                    onClick={() => {
+                      this.setState({
+                        showPromo: false,
+                      });
+                    }}
+                  >
+                    Continue
+                  </Button>
                 ) : null}
               </div>
             </div>
