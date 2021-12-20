@@ -75,12 +75,9 @@ class AccountSetup extends React.Component {
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
-        const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
 
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
         const maxIndex = packages.length - 1;
-
         singlePackage[0].index = index;
 
         if (index !== maxIndex) {
@@ -233,7 +230,6 @@ class AccountSetup extends React.Component {
                         <div className="dp_fields-setup">
                           <div className="mb-3">
                             <label>Change Plan:</label>
-
                             <Select
                               isSearchable={false}
                               isOptionDisabled={(option) => option.isdisabled} // disable an option
@@ -279,7 +275,7 @@ class AccountSetup extends React.Component {
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !==
-                          "Micro Influencer" &&
+                          "Basic" &&
                           this.state.upgrade && (
                             <div className="dp_fields-setup">
                               <>
