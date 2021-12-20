@@ -9,11 +9,9 @@ import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
 // import CancelSubsciption from "./CancelSubsciption";
 import { toast } from "react-toastify";
-
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class AccountSetup extends React.Component {
   constructor(props) {
@@ -332,7 +330,7 @@ class AccountSetup extends React.Component {
               )}
             </div>
 
-            {this.state.singlePackage.package_name !== "Micro Influencer" &&
+            {this.state.singlePackage.package_name !== "Basic" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
