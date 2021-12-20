@@ -64,7 +64,7 @@ class ChatList extends Component {
         </ul>
       </section>
       <section className={`chat-section mb-0 d-lg-none ${s.allChats}`}>
-        <h5>Group chats</h5>
+        {/* <h5>Group chats</h5>
         <ul className={`${s.chatList} mb-3`}>
           {this.getChats(true).map((chat, i) => (
             <ChatListItem
@@ -72,8 +72,8 @@ class ChatList extends Component {
               isActive={chat.id === activeChatId ? true : false}
               chat={chat} />
           ))}
-        </ul>
-        <h5>Group chats</h5>
+        </ul> */}
+        <h5>Personal Chats</h5>
         <ul className={`${s.chatList}`}>
           {this.getChats(false).map((chat, i) => (
             <ChatListItem

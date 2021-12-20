@@ -3,7 +3,11 @@
 .chatPage {
   flex-grow: 1;
   display: flex;
-  height: calc(100vh - #{$navbar-height} - 2 * #{$content-padding} - 20px);
+  // height: calc(100vh - #{$navbar-height} - 2 * #{$content-padding} - 20px)
+  height: -moz-calc(100vh - 65px - 20px);
+  height: -webkit-calc(100vh - 65px - 20px);
+  height: -o-calc(100vh - 65px - 20px);
+  height: calc(100vh - 65px - 20px);
   position: relative;
   .form-control {
     background-color: $gray-100;
@@ -86,6 +90,13 @@
       }
     }
   }
+  .chat-header{
+    padding-top:21px;
+  }
+  .send-msg{
+    background-color:#010b40;
+    border-color:#010b40;
+  }
 
   @include media-breakpoint-down(md) {
     .chat-info-section,
@@ -108,7 +119,7 @@
     }
 
     .chat-dialog-section {
-      padding: 0;
+      padding-top: 21px;
     }
 
     .chat-section {
@@ -155,6 +166,37 @@
       }
     }
   }
+
+  @media only screen and (max-width: 991px) {
+    .chat-header{
+      padding-top: 0;
+    }
+  }
+
 }
 
 }
+
+@media only screen and (max-width: 991px) {
+  .chatPage {
+    height: -moz-calc(100vh - 120px - 20px);
+    height: -webkit-calc(100vh - 120px - 20px);
+    height: -o-calc(100vh - 120px - 20px);
+    height: calc(100vh - 120px - 20px);
+    position: relative;
+  }
+  .chat-header{
+    padding-top: 0;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  .chatPage {
+    height: -moz-calc(100vh - 80px - 20px);
+    height: -webkit-calc(100vh - 80px - 20px);
+    height: -o-calc(100vh - 80px - 20px);
+    height: calc(100vh - 80px - 20px);
+    position: relative;
+    }
+}
+

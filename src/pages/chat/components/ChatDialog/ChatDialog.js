@@ -126,7 +126,7 @@ class ChatDialog extends PureComponent {
       <i className="la la-angle-left la-lg"></i>
       Chats
     </div>
-      <header className={s.chatDialogHeader}>
+      <header className={s.chatDialogHeader + ' chat-header'}>
         <div>
           <h5 className="fw-normal mb-0">{this.title()}</h5>
           {!this.chat().isGroup ?
@@ -166,9 +166,9 @@ class ChatDialog extends PureComponent {
         })}
       </div>
       <form className={`chat-section ${s.newMessage} mb-0`} onSubmit={this.newMessage}>
-        <Button className={s.attachment} outline><i className="la la-plus"></i></Button>
+        {/* <Button className={s.attachment} outline><i className="la la-plus"></i></Button> */}
         <Input onChange={this.handleChange} value={this.state.newMessage} name="newMessage" placeholder="Type Your Message"></Input>
-        <Button color="danger" className={`px-4 ${s.newMessageBtn}`} type="submit">
+        <Button color="info" className={`px-4 send-msg ${s.newMessageBtn}`} type="submit">
           {sendingMessage ? <Loader /> : <span>Send</span>}
         </Button>
       </form>
