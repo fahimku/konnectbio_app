@@ -215,7 +215,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container  container`}>
             <div className="row">
-              <div className="profile_box_main col-md-4 hidden">
+              <div className="profile_box_main col-md-4">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Manage Plan</h5>
