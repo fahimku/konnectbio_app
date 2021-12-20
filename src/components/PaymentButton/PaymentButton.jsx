@@ -97,7 +97,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else if (props.paymentMethod === "Influencer" && props.plan === "Monthly")
+  else if (props.paymentMethod === "Premium" && props.plan === "Monthly")
     return (
       <>
         <form action="https://checkout.globalgatewaye4.firstdata.com/pay" id="influencer_monthly_form" method="post">
@@ -128,7 +128,7 @@ const PaymentButton = (props) => {
       </>
     );
 
-  else if (props.paymentMethod === "Influencer" && props.plan === "Yearly")
+  else if (props.paymentMethod === "Premium" && props.plan === "Yearly")
     return (
       <>
         <form action="https://checkout.globalgatewaye4.firstdata.com/pay" id="influencer_yearly_form" method="post">
