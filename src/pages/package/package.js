@@ -55,6 +55,7 @@ class Package extends React.Component {
     this.setState({ showBasic: false });
     this.setState({ showPremium: false });
     this.setState({ showSelectPackage: false });
+    this.setState({ plan: "", checkbox: {} });
   };
 
   updatePackage = async (id, packageId) => {
@@ -315,7 +316,7 @@ class Package extends React.Component {
                     ) : (
                       <Button
                         variant="dark"
-                        className="btn_individual"
+                        // className="btn_individual"
                         onClick={() => {
                           this.setState({
                             showSelectPackage: true,
@@ -475,7 +476,7 @@ class Package extends React.Component {
                     ) : (
                       <Button
                         variant="dark"
-                        className="btn_individual"
+                        // className="btn_individual"
                         onClick={() => {
                           this.setState({
                             showSelectPackage: true,
