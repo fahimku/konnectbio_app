@@ -219,22 +219,10 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
               ) : null}
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
-              <br></br>
+      
+<br></br>
               <div
-              // className={`settings-bottom ${s.bottomLinks}`}
+               className={`settings-bottom ${s.bottomLinks}`}
 
               >
                 <LinksGroup
