@@ -1,11 +1,11 @@
 import axios from "axios";
 import React from "react";
-import {Button, Row, Col, FormLabel} from "react-bootstrap";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import { Button, Row, Col, FormLabel } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import logo from "../../../images/logo.svg";
 import AccountSetup from "../../../pages/accountsetup/AccountSetup";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 class Connect extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class Connect extends React.Component {
     await axios
       .post(`/social/ig/url/instagram`)
       .then((response) => {
-        this.setState({url: response.data});
+        this.setState({ url: response.data });
       })
       .catch(function (error) {
         console.log(error);
@@ -42,8 +42,8 @@ class Connect extends React.Component {
 
     if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
-      this.setState({instagramCode: code[1]});
-      this.setState({isInstagramConnected: true});
+      this.setState({ instagramCode: code[1] });
+      this.setState({ isInstagramConnected: true });
       this.fetchInstagramPostsFirstTime(code[1]);
     }
     this.getInstagramUrl();
@@ -53,12 +53,12 @@ class Connect extends React.Component {
     const userInformation = localStorage.getItem("userInfo");
     const parseUserInformation = JSON.parse(userInformation);
     await axios
-      .post(`/social/ig/data/${token}`, {email: parseUserInformation.email})
+      .post(`/social/ig/data/${token}`, { email: parseUserInformation.email })
       .then((response) => {
         localStorage.setItem("access_token", response.data.access_token);
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         parseUserInformation.username = response.data.username;
-        this.setState({username: response.data.username});
+        this.setState({ username: response.data.username });
         parseUserInformation.access_token = response.data.access_token;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
@@ -93,23 +93,25 @@ class Connect extends React.Component {
   render() {
     return (
       <>
-      <div className="login_header">
-        <div className="header_inr group">
-          <div className="header_inr_left">
-            <div className="konnect_logo"><img className="logo" src={logo} alt="logo" /></div>
-          </div>
-          <div className="header_inr_right">
-            <div className="create_account">
-              <Button
-                className="btn-connect"
-                onClick={() => this.props.history.push("/logout")}
-              >
-                Logout
-              </Button>
+        <div className="login_header">
+          <div className="header_inr group">
+            <div className="header_inr_left">
+              <div className="konnect_logo">
+                <img className="logo" src={logo} alt="logo" />
+              </div>
+            </div>
+            <div className="header_inr_right">
+              <div className="create_account">
+                <Button
+                  className="btn-connect"
+                  onClick={() => this.props.history.push("/logout")}
+                >
+                  Logout
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
         <AccountSetup
           resetAccount={this.state.resetAccount}
           cancelSubscription={this.state.cancelSubscription}

@@ -52,8 +52,6 @@ class Register extends React.Component {
       packageType: "",
       zip: "",
       referred_by: "",
-      accountType: "",
-      showRegister: false,
     };
 
     this.doRegister = this.doRegister.bind(this);
@@ -294,278 +292,204 @@ class Register extends React.Component {
               </Widget>
             ) : (
               <>
-                {!this.state.showRegister ? (
-                  <div className="select-type">
-                    <div className="col-md-12 text-center">
-                      <h3 className="mb-5">Choose Account Type</h3>
+                <Widget
+                  className="custome_signup"
+                  title={<h3 className="mt-0">Create an Account</h3>}
+                >
+                  <form
+                    id="registerForm"
+                    className="mt"
+                    onSubmit={this.doRegister}
+                  >
+                    {this.props.errorMessage && (
+                      <Alert className="alert-sm" color="danger">
+                        {this.props.errorMessage}
+                      </Alert>
+                    )}
+
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.name}
+                        onChange={this.changeName}
+                        type="text"
+                        required
+                        name="name"
+                        placeholder="Name"
+                      />
                     </div>
-                    <div className="camp-type-ift col-md-12">
-                      <div class="role-type col-md-6">
-                        <div className="ac_type_block">
-                          <input
-                            type="radio"
-                            name="platform"
-                            id="influencer"
-                            class="d-none infchecked"
-                            value="influencer"
-                            onChange={this.changeType}
-                          />
-                          <label for="influencer">
-                            <span className="imp-inf"></span>
-                            <h4 className="mb-0 mt-4">Influencer</h4>
-                          </label>
-                        </div>
-                      </div>
-                      <div class="role-type col-md-6">
-                        <div className="ac_type_block">
-                          <input
-                            type="radio"
-                            name="platform"
-                            id="brand"
-                            class="d-none infchecked"
-                            value="brand"
-                            onChange={this.changeType}
-                          />
-                          <label for="brand">
-                            <span className="imp-brnd"></span>
-                            <h4 className="mb-0 mt-4">Brand</h4>
-                          </label>
-                        </div>
-                      </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.email}
+                        onChange={this.changeEmail}
+                        type="email"
+                        required
+                        name="email"
+                        placeholder="Email"
+                      />
                     </div>
-                    <div className="col-md-12 text-center">
-                      <Button
-                        color="inverse"
-                        className="btn btn-primary"
-                        disabled={this.state.accountType === "" ? true : false}
-                        onClick={() => this.setState({ showRegister: true })}
-                      >
-                        Next
-                      </Button>
+                    <div className="form-group">
+                      <Select
+                        required
+                        className="form_select_group"
+                        value={
+                          this.state.gender && {
+                            label:
+                              this.state.gender.charAt(0).toUpperCase() +
+                              this.state.gender.slice(1),
+                            value: this.state.gender,
+                          }
+                        }
+                        onChange={this.changeGender}
+                        placeholder="Select Gender"
+                        options={this.state.genderList}
+                      />
                     </div>
-                  </div>
-                ) : null}
-                {this.state.showRegister ? (
-                  <>
-                    <Widget
-                      className="custome_signup"
-                      title={<h3 className="mt-0">Create an Account</h3>}
+
+                    <div className="form-group">
+                      {this.state.country && (
+                        <Select
+                          required
+                          className="form_select_group"
+                          defaultValue={{
+                            label: this.state.country,
+                            value: this.state.country,
+                          }}
+                          value={
+                            this.state.country && {
+                              label: this.state.country,
+                              value: this.state.country,
+                            }
+                          }
+                          onChange={this.changeCountry}
+                          filterOption={createFilter({
+                            ignoreAccents: false,
+                          })}
+                          placeholder="Select Country"
+                          options={this.state.countries}
+                        />
+                      )}
+                    </div>
+
+                    <div className="form-group">
+                      {this.state.stateLoading && <Loader />}
+                      {this.state.country && !this.state.stateLoading && (
+                        <Select
+                          required
+                          className="form_select_group"
+                          onChange={this.changeState}
+                          filterOption={createFilter({
+                            ignoreAccents: false,
+                          })}
+                          placeholder="Select State"
+                          options={this.state.countryStates}
+                          value={
+                            this.state.countryState && {
+                              label: this.state.countryState,
+                              value: this.state.countryState,
+                            }
+                          }
+                        />
+                      )}
+                    </div>
+                    <div className="form-group">
+                      {this.state.cityLoading && <Loader />}
+                      {this.state.countryState && !this.state.cityLoading && (
+                        <Select
+                          required
+                          className="form_select_group"
+                          onChange={this.changeCity}
+                          filterOption={createFilter({
+                            ignoreAccents: false,
+                          })}
+                          placeholder="Select City"
+                          options={this.state.cities}
+                          value={
+                            this.state.city && {
+                              label: this.state.city,
+                              value: this.state.city,
+                            }
+                          }
+                        />
+                      )}
+                    </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.password}
+                        onChange={this.changePassword}
+                        type="password"
+                        required
+                        name="password"
+                        placeholder="Password"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.confirmPassword}
+                        onChange={this.changeConfirmPassword}
+                        onBlur={this.checkPassword}
+                        type="password"
+                        required
+                        name="confirmPassword"
+                        placeholder="Confirm"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.zip}
+                        onChange={this.changeZip}
+                        type="number"
+                        name="zip"
+                        placeholder="Zip Code"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        value={this.state.referred_by}
+                        onChange={this.changeReferred}
+                        type="text"
+                        name="referred_by"
+                        placeholder="Referred By"
+                      />
+                    </div>
+                    <Button
+                      type="submit"
+                      color="inverse"
+                      className="register_button"
+                      size="lg"
                     >
-                      <form
-                        id="registerForm"
-                        className="mt"
-                        onSubmit={this.doRegister}
+                      {this.props.isFetching ? "Loading..." : "Create Account"}
+                    </Button>
+                    <p className="already">
+                      Already have an account?&nbsp;
+                      <span
+                        className="text-center link"
+                        onClick={() => {
+                          this.props.dispatch(authError(""));
+                          this.props.history.push("/login");
+                        }}
                       >
-                        {this.props.errorMessage && (
-                          <Alert className="alert-sm" color="danger">
-                            {this.props.errorMessage}
-                          </Alert>
-                        )}
+                        Sign in
+                      </span>
+                    </p>
+                  </form>
+                </Widget>
 
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.name}
-                            onChange={this.changeName}
-                            type="text"
-                            required
-                            name="name"
-                            placeholder="Name"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.email}
-                            onChange={this.changeEmail}
-                            type="email"
-                            required
-                            name="email"
-                            placeholder="Email"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <Select
-                            required
-                            className="form_select_group"
-                            value={
-                              this.state.gender && {
-                                label:
-                                  this.state.gender.charAt(0).toUpperCase() +
-                                  this.state.gender.slice(1),
-                                value: this.state.gender,
-                              }
-                            }
-                            onChange={this.changeGender}
-                            placeholder="Select Gender"
-                            options={this.state.genderList}
-                          />
-                        </div>
-
-                        <div className="form-group">
-                          {this.state.country && (
-                            <Select
-                              required
-                              className="form_select_group"
-                              defaultValue={{
-                                label: this.state.country,
-                                value: this.state.country,
-                              }}
-                              value={
-                                this.state.country && {
-                                  label: this.state.country,
-                                  value: this.state.country,
-                                }
-                              }
-                              onChange={this.changeCountry}
-                              filterOption={createFilter({
-                                ignoreAccents: false,
-                              })}
-                              placeholder="Select Country"
-                              options={this.state.countries}
-                            />
-                          )}
-                        </div>
-
-                        <div className="form-group">
-                          {this.state.stateLoading && <Loader />}
-                          {this.state.country && !this.state.stateLoading && (
-                            <Select
-                              required
-                              className="form_select_group"
-                              onChange={this.changeState}
-                              filterOption={createFilter({
-                                ignoreAccents: false,
-                              })}
-                              placeholder="Select State"
-                              options={this.state.countryStates}
-                              value={
-                                this.state.countryState && {
-                                  label: this.state.countryState,
-                                  value: this.state.countryState,
-                                }
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className="form-group">
-                          {this.state.cityLoading && <Loader />}
-                          {this.state.countryState && !this.state.cityLoading && (
-                            <Select
-                              required
-                              className="form_select_group"
-                              onChange={this.changeCity}
-                              filterOption={createFilter({
-                                ignoreAccents: false,
-                              })}
-                              placeholder="Select City"
-                              options={this.state.cities}
-                              value={
-                                this.state.city && {
-                                  label: this.state.city,
-                                  value: this.state.city,
-                                }
-                              }
-                            />
-                          )}
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.password}
-                            onChange={this.changePassword}
-                            type="password"
-                            required
-                            name="password"
-                            placeholder="Password"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.confirmPassword}
-                            onChange={this.changeConfirmPassword}
-                            onBlur={this.checkPassword}
-                            type="password"
-                            required
-                            name="confirmPassword"
-                            placeholder="Confirm"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.zip}
-                            onChange={this.changeZip}
-                            type="number"
-                            name="zip"
-                            placeholder="Zip Code"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.referred_by}
-                            onChange={this.changeReferred}
-                            type="text"
-                            name="referred_by"
-                            placeholder="Referred By"
-                          />
-                        </div>
-                        <Button
-                          type="submit"
-                          color="inverse"
-                          className="register_button"
-                          size="lg"
-                        >
-                          {this.props.isFetching
-                            ? "Loading..."
-                            : "Create Account"}
-                        </Button>
-                        <p className="already">
-                          Already have an account?&nbsp;
-                          <span
-                            className="text-center link"
-                            onClick={() => {
-                              this.props.dispatch(authError(""));
-                              this.props.history.push("/login");
-                            }}
-                          >
-                            Sign in
-                          </span>
-                        </p>
-                        <p className="already">
-                          Account type:{" "}
-                          {this.state.accountType.charAt(0).toUpperCase() +
-                            this.state.accountType.slice(1)}
-                          &nbsp;
-                          <span
-                            className="text-center link"
-                            onClick={() =>
-                              this.setState({
-                                showRegister: false,
-                                accountType: "",
-                              })
-                            }
-                          >
-                            Change
-                          </span>
-                        </p>
-                      </form>
-                    </Widget>
-
-                    <div className="signup_right">
-                      <h3>Turn your Followers into Customers</h3>
-                      <p>
-                        Staying just an influencer is not all! Turn your
-                        followers into customers with just a few clicks. Create
-                        a trackable link, find out what is popular, and aim to
-                        monetize on it. Design your social media accordingly and
-                        become an entrepreneur.
-                      </p>
-                    </div>
-                  </>
-                ) : null}
+                <div className="signup_right">
+                  <h3>Turn your Followers into Customers</h3>
+                  <p>
+                    Staying just an influencer is not all! Turn your followers
+                    into customers with just a few clicks. Create a trackable
+                    link, find out what is popular, and aim to monetize on it.
+                    Design your social media accordingly and become an
+                    entrepreneur.
+                  </p>
+                </div>
               </>
             )}
           </div>
