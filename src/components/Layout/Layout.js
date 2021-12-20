@@ -193,7 +193,7 @@ class Layout extends React.Component {
                       <Route
                         path="/app/direct/messaging"
                         exact
-                        component={DirectMessaging}
+                        component={ComingSoon}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
                     </Switch>
