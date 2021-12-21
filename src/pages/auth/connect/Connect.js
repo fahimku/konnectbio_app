@@ -8,6 +8,7 @@ import AccountSetup from "../../../pages/accountsetup/AccountSetup";
 import { toast } from "react-toastify";
 
 class Connect extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -62,11 +63,7 @@ class Connect extends React.Component {
         parseUserInformation.access_token = response.data.access_token;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-        this.updateAccessToken(
-          userInfo.user_id,
-          response.data.username,
-          response.data.access_token
-        );
+        this.updateAccessToken(userInfo.user_id,response.data.username,response.data.access_token);
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
