@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import ResetAccount from "./ResetAccount";
@@ -47,6 +47,9 @@ class AccountSetup extends React.Component {
       categoryAllow: userInfo?.package?.category_count,
       package_amount: userInfo?.package?.package_amount,
       promo_code: "",
+      checkbox: {},
+      showPromo: false,
+      promo_error: false,
     };
   }
 
@@ -74,7 +77,9 @@ class AccountSetup extends React.Component {
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
 
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
 
@@ -153,24 +158,37 @@ class AccountSetup extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ promoLoading: true });
-    await axios
-      .post("/payment/validatepromocode", { promo_code: this.state.promo_code })
-      .then((response) => {
-        this.setState({ promoLoading: false });
-        this.setState({ showPaymentButton: false });
-        toast.success("Promo Code Applied SuccessFully");
-        const userInformation = localStorage.getItem("userInfo");
-        const parseUserInformation = JSON.parse(userInformation);
-        parseUserInformation.package = response.data.message;
-        const storeUserInformation = JSON.stringify(parseUserInformation);
-        localStorage.setItem("userInfo", storeUserInformation);
-        window.location.reload();
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ promoLoading: false, promo_code: "" });
-      });
+    if (this.state.promo_code === "") {
+      this.setState({ promo_error: true });
+    } else if (
+      !this.state.checkbox.instagram &&
+      !this.state.checkbox.facebook &&
+      !this.state.checkbox.checkbox3
+    ) {
+      this.setState({ showPromo: true });
+    } else {
+      this.setState({ promoLoading: true });
+      await axios
+        .post("/payment/validatepromocode", {
+          promo_code: this.state.promo_code,
+        })
+        .then((response) => {
+          this.setState({ promoLoading: false });
+          this.setState({ showPaymentButton: false });
+          toast.success("Promo Code Applied SuccessFully");
+          const userInformation = localStorage.getItem("userInfo");
+          const parseUserInformation = JSON.parse(userInformation);
+          parseUserInformation.package = response.data.message;
+          const storeUserInformation = JSON.stringify(parseUserInformation);
+          localStorage.setItem("userInfo", storeUserInformation);
+          window.location.reload();
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+          this.setState({ promoLoading: false, promo_code: "" });
+          this.setState({ checkbox: {} });
+        });
+    }
   };
 
   toggleModal = () => {
@@ -187,7 +205,24 @@ class AccountSetup extends React.Component {
     });
   };
 
-  promoChange = (e) => this.setState({ promo_code: e.target.value });
+  promoChange = (e) => {
+    this.setState({ promo_code: e.target.value, promo_error: false });
+  };
+
+  handleClose = () => {
+    this.setState({ checkbox: {} });
+    this.setState({ showPromo: false });
+  };
+
+  handleCheckbox = (e) => {
+    const target = e.target;
+    const { checkbox } = this.state;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    checkbox[target.name] = value;
+    this.setState({
+      checkbox,
+    });
+  };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -272,8 +307,7 @@ class AccountSetup extends React.Component {
                             )}
                           </div>
                         </div>
-                        {this.state.singlePackage.package_name !==
-                          "Basic" &&
+                        {this.state.singlePackage.package_name !== "Basic" &&
                           this.state.upgrade && (
                             <div className="dp_fields-setup">
                               <>
@@ -389,7 +423,6 @@ class AccountSetup extends React.Component {
                                       value={this.state.promo_code}
                                       className="form-control"
                                       onInput={this.promoChange}
-                                      required
                                     />
                                     <Button
                                       type="submit"
@@ -400,6 +433,11 @@ class AccountSetup extends React.Component {
                                       Apply
                                     </Button>
                                   </div>
+                                  {this.state.promo_error ? (
+                                    <span class="text-danger mt-2">
+                                      Please enter promo code
+                                    </span>
+                                  ) : null}
                                   <div className="make-canc-pay">
                                     <PaymentButton
                                       plan={this.state.plan}
@@ -425,6 +463,80 @@ class AccountSetup extends React.Component {
                                     >
                                       Cancel
                                     </Button>
+                                    <Modal
+                                      className="pkg_readmore"
+                                      show={this.state.showPromo}
+                                      onHide={this.handleClose}
+                                      centered
+                                      size="lg"
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>
+                                          Premium Package
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <div class="funkyradio">
+                                          <p>
+                                            Please make sure of the following
+                                            before proceeding further:
+                                          </p>
+                                          <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="instagram"
+                                              id="instagram"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="instagram">
+                                              Do you have instagram account?
+                                            </label>
+                                          </div>
+                                          <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="facebook"
+                                              id="facebook"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="facebook">
+                                              Do you have facebook account and
+                                              business page?
+                                            </label>
+                                          </div>
+                                          <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="checkbox3"
+                                              id="checkbox3"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="checkbox3">
+                                              Is your facebook page connnected
+                                              with instagram?
+                                            </label>
+                                          </div>
+                                          <div>
+                                            {this.state.checkbox.instagram &&
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
+                                              <Button
+                                                onClick={() => {
+                                                  this.setState({
+                                                    showPromo: false,
+                                                  });
+                                                }}
+                                              >
+                                                Continue
+                                              </Button>
+                                            ) : null}
+                                          </div>
+                                        </div>
+                                      </Modal.Body>
+                                    </Modal>
                                   </div>
                                 </div>
                               </form>
