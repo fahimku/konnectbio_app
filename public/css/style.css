@@ -1285,6 +1285,9 @@ margin:0 auto !important;
 .coming_iner p{
   font-size: 1.2rem;
 }
+.pkg_fb_connect .modal-dialog{
+  max-width: 600px;
+}
 
 
 

@@ -553,11 +553,10 @@ class Package extends React.Component {
         </Modal>
 
         <Modal
-          className="pkg_readmore"
+          className="pkg_readmore pkg_fb_connect"
           show={this.state.showSelectPackage}
           onHide={this.handleClose}
           centered
-          size="lg"
         >
           <Modal.Header closeButton>
             <Modal.Title>Premium Package</Modal.Title>

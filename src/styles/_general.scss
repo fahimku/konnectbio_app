@@ -611,3 +611,6 @@ h1 small {
 .funkyradio label {
   margin-left: 10px;
 }
+.funkyradio label, .funkyradio input{
+  cursor: pointer;
+}
