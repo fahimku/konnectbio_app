@@ -708,7 +708,7 @@ class Package extends React.Component {
                       });
                     }}
                   >
-                    Continue
+                    Accept
                   </Button>
                 ) : null}
               </div>

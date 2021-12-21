@@ -374,7 +374,7 @@ class AccountSetup extends React.Component {
                           <h5>Manage Plan</h5>
                           <div className="row">
                             <div className="colbx-inr col-md-12">
-                              <div className="checkbox abc-checkbox">
+                              <div className="checkbox abc-checkbox abc-checkbox-primary">
                                 <Input
                                   defaultChecked
                                   name="payment"
@@ -393,7 +393,7 @@ class AccountSetup extends React.Component {
                                     .package_amount_monthly
                                 }
                               </div>
-                              <div className="checkbox abc-checkbox">
+                              <div className="checkbox abc-checkbox abc-checkbox-primary">
                                 <Input
                                   name="payment"
                                   value="Yearly"
@@ -439,16 +439,31 @@ class AccountSetup extends React.Component {
                                     </span>
                                   ) : null}
                                   <div className="make-canc-pay">
-                                    <PaymentButton
-                                      plan={this.state.plan}
-                                      userId={userInfo1?.user_id}
-                                      packageId={
-                                        this.state.singlePackage.package_id
-                                      }
-                                      paymentMethod={
-                                        this.state.singlePackage.package_name
-                                      }
-                                    />
+                                    {!this.state.checkbox.instagram ||
+                                    !this.state.checkbox.facebook ||
+                                    !this.state.checkbox.checkbox3 ? (
+                                      <Button
+                                        onClick={() => {
+                                          this.setState({
+                                            showPromo: true,
+                                          });
+                                        }}
+                                      >
+                                        Make Payment
+                                      </Button>
+                                    ) : (
+                                      <PaymentButton
+                                        plan={this.state.plan}
+                                        userId={userInfo1?.user_id}
+                                        packageId={
+                                          this.state.singlePackage.package_id
+                                        }
+                                        paymentMethod={
+                                          this.state.singlePackage.package_name
+                                        }
+                                      />
+                                    )}
+
                                     <Button
                                       onClick={() => {
                                         this.setState({
@@ -530,7 +545,7 @@ class AccountSetup extends React.Component {
                                                   });
                                                 }}
                                               >
-                                                Continue
+                                                Accept
                                               </Button>
                                             ) : null}
                                           </div>
