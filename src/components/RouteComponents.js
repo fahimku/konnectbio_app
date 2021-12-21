@@ -33,7 +33,6 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     return history.push("/app/linkinbio");
-    window.history.go(0);
   } else {
     return (
       <Route
@@ -43,6 +42,7 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
     );
   }
 };
+
 export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
   const checkPermission = PermissionHelper.validate(permissions);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -71,16 +71,10 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
 
 export const AuthRoute = ({ dispatch, component, ...rest }) => {
   const { from } = rest.location.state || { from: { pathname: "/app" } };
-
   if (Login.isAuthenticated()) {
-    // return (
-    //   <Redirect to={from} />
-
-    // );
-
-    return history.push(from);
-    window.history.go(0);
-    
+    return history.push(from).then(() => {
+      window.history.go(0);
+    })
   } else {
     return (
       <Route
