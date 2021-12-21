@@ -36,6 +36,7 @@ import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
 import DirectMessaging from "../../pages/directMessaging/Index"
 import ChatPage from "../../pages/chat";
+import AllPosts from "../../pages/allposts/BioShop";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -196,6 +197,7 @@ class Layout extends React.Component {
                         component={ComingSoon}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
+                      <Route path="/app/all/posts" exact component={AllPosts} />                      
                     </Switch>
                   </Router>
                 </CSSTransition>
