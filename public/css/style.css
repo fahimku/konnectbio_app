@@ -678,7 +678,7 @@ span.fa.fa-times.ift-cancel{
   gap: 1%;
 }
 .package_parent .custom_pkg {
-  min-height: 620px;
+  min-height: 660px;
   border: solid 1px #ccc;
   flex-basis: 100%;
   padding: 1.25rem 14px 1rem;
@@ -1284,6 +1284,9 @@ margin:0 auto !important;
 }
 .coming_iner p{
   font-size: 1.2rem;
+}
+.pkg_fb_connect .modal-dialog{
+  max-width: 600px;
 }
 
 

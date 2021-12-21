@@ -291,10 +291,6 @@ class Package extends React.Component {
                     <ul className="pkg_detail_list_ift">
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Profile Page
-                      </li>
-                      <li>
-                        <span className="glyphicon glyphicon-menu-right"></span>
                         Up to {premium.link_count} social/external links
                       </li>
                       <li>
@@ -306,13 +302,31 @@ class Package extends React.Component {
                         Up to {premium.category_count} Product and Service
                         Categories
                       </li>
+
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Analytics
+                        Schedule Post
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Marketplace
+                        Monitor Hashtags
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mentions
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Search Profiles
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Direct Messaging
+                      </li>
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
                       </li>
                     </ul>
                     {this.state.promo_code !== "" ? (
@@ -451,10 +465,6 @@ class Package extends React.Component {
                     <ul className="pkg_detail_list_ift">
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Profile Page
-                      </li>
-                      <li>
-                        <span className="glyphicon glyphicon-menu-right"></span>
                         Up to {premium.link_count} social/external links
                       </li>
                       <li>
@@ -466,13 +476,31 @@ class Package extends React.Component {
                         Up to {premium.category_count} Product and Service
                         Categories
                       </li>
+
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Analytics
+                        Schedule Post
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Marketplace
+                        Monitor Hashtags
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mentions
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Search Profiles
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Direct Messaging
+                      </li>
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
                       </li>
                     </ul>
                     {this.state.promo_code !== "" ? (
@@ -554,11 +582,10 @@ class Package extends React.Component {
         </Modal>
 
         <Modal
-          className="pkg_readmore"
+          className="pkg_readmore pkg_fb_connect"
           show={this.state.showSelectPackage}
           onHide={this.handleClose}
           centered
-          size="lg"
         >
           <Modal.Header closeButton>
             <Modal.Title>Premium Package</Modal.Title>

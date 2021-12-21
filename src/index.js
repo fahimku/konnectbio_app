@@ -15,7 +15,6 @@ import { createHashHistory } from 'history';
 const history = createHashHistory();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-
 export function getHistory() {
   return history;
 }
@@ -29,9 +28,7 @@ if (token) {
 
 axios.interceptors.response.use(undefined, function (error) {
   if (error.response?.status === 401) {
-    //    logoutUser();
     window.location.href = '/logout';
-    // alert('test')
   }
   else {
     return Promise.reject(error);

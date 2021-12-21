@@ -33,6 +33,7 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     return history.push("/app/linkinbio");
+    window.history.go(0);
   } else {
     return (
       <Route
@@ -78,6 +79,8 @@ export const AuthRoute = ({ dispatch, component, ...rest }) => {
     // );
 
     return history.push(from);
+    window.history.go(0);
+    
   } else {
     return (
       <Route

@@ -228,10 +228,7 @@ class Register extends React.Component {
           password: this.state.password,
           zip: this.state.zip,
           referred_by: this.state.referred_by,
-          account_type:
-            this.state.accountType === "brand"
-              ? "business"
-              : this.state.accountType,
+          account_type: this.state.accountType === "brand" ? "business": this.state.accountType,
         })
       );
     }
