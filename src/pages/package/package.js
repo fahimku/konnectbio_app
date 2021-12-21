@@ -592,39 +592,41 @@ class Package extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">
-              <p>Please check for further payment</p>
-              <div class="funkyradio-primary">
+              <p>
+                Please make sure of the following before proceeding further:
+              </p>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="instagram"
                   id="instagram"
                   onChange={this.handleCheckbox}
                 />
-                <label for="instagram">
-                  Make sure you have instagram account?
-                </label>
+                <label for="instagram">Do you have instagram account?</label>
               </div>
-              <div class="funkyradio-primary">
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="facebook"
                   id="facebook"
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Make sure you have facebook account?
+                  Do you have facebook account and business page?
                 </label>
               </div>
-              <div class="funkyradio-primary">
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="checkbox3"
                   id="checkbox3"
                   onChange={this.handleCheckbox}
                 />
                 <label for="checkbox3">
-                  Facebook connected with instagram and instagram connected with
-                  facebook
+                  Is your facebook page connnected with instagram?
                 </label>
               </div>
               <div>
@@ -658,39 +660,41 @@ class Package extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">
-              <p>Please check for further payment</p>
-              <div class="funkyradio-primary">
+              <p>
+                Please make sure of the following before proceeding further:
+              </p>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="instagram"
                   id="instagram"
                   onChange={this.handleCheckbox}
                 />
-                <label for="instagram">
-                  Make sure you have instagram account?
-                </label>
+                <label for="instagram">Do you have instagram account?</label>
               </div>
-              <div class="funkyradio-primary">
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="facebook"
                   id="facebook"
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Make sure you have facebook account?
+                  Do you have facebook account and business page?
                 </label>
               </div>
-              <div class="funkyradio-primary">
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
+                  className="form-check-input"
                   type="checkbox"
                   name="checkbox3"
                   id="checkbox3"
                   onChange={this.handleCheckbox}
                 />
                 <label for="checkbox3">
-                  Facebook connected with instagram and instagram connected with
-                  facebook
+                  Is your facebook page connnected with instagram?
                 </label>
               </div>
               <div>
