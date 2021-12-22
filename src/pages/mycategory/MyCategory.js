@@ -343,7 +343,7 @@ class MyCategory extends React.Component {
                         <div className="category-box">
                           <div className="category-count-row col-12">
                             <h4 className="category-count-title">
-                              Change plan to have more categories:
+                              Change plan to have more features:
                             </h4>
                           </div>
                           <div className="category-count-row col-12">

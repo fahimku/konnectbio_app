@@ -3,7 +3,9 @@ import Dashboard from "../pages/dashboard/Dashboard";
 
 const validate = (modulePermission) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userPermissions = userInfo.package.permission ? userInfo.package.permission: [];
+  const userPermissions = userInfo.package.permission
+    ? userInfo.package.permission
+    : [];
   const permit = modulePermission.filter((permission) => {
     return userPermissions.indexOf(permission) !== -1;
   });
