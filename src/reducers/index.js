@@ -21,8 +21,10 @@ import brandsCategory from "./brands/brandsCategory";
 import bioshop from "./bioshop/bioshop";
 import singleBioShop from "./bioshop/singleBioShop";
 import postSummary from "./post/postSummary";
-
 import chat from "./chat";
+import hashtags from './hashtags/hashtags';
+import hashtag from "./hashtags/hashtag"
+import tags from "./mention/tags"
 
 export default (history) =>
   combineReducers({
@@ -49,4 +51,7 @@ export default (history) =>
     campaignSummary,
     campaignAnalytics,
     postSummary,
+    hashtags,
+    hashtag,
+    tags
   });

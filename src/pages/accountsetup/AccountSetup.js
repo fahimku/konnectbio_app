@@ -8,6 +8,7 @@ import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
 // import CancelSubsciption from "./CancelSubsciption";
+import ConnectToFb from "../auth/connect/ConnectToFb";
 import { toast } from "react-toastify";
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -47,6 +48,7 @@ class AccountSetup extends React.Component {
       categoryAllow: userInfo?.package?.category_count,
       package_amount: userInfo?.package?.package_amount,
       promo_code: "",
+      myPackage:""
     };
   }
 
@@ -163,6 +165,8 @@ class AccountSetup extends React.Component {
         const userInformation = localStorage.getItem("userInfo");
         const parseUserInformation = JSON.parse(userInformation);
         parseUserInformation.package = response.data.message;
+        this.setState({myPackage:response.data.message.package_name})
+        this.props.setPackage(response.data.message.package_name)
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
         window.location.reload();
@@ -189,6 +193,19 @@ class AccountSetup extends React.Component {
 
   promoChange = (e) => this.setState({ promo_code: e.target.value });
 
+  renderFbConnection=(userInfo1)=>{
+    const package1=JSON.parse(localStorage.getItem('userInfo')).package?.package_name
+    if(package1=="Premium" || this.state.myPackage=="Premium"){
+      return(
+        <ConnectToFb 
+        userId={userInfo1.user_id}
+        setFbPageLocal={this.props.setFbPageLocal} 
+        username={this.props.username}
+        username1={userInfo1.username}
+        />
+      )
+    }
+  }
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
@@ -314,6 +331,7 @@ class AccountSetup extends React.Component {
                 }}
                 disabled={this.state.loadingInsta ? true : false}
               />
+              {this.renderFbConnection(userInfo1)}
               {this.state.resetAccount && (
                 <ResetAccount
                   userId={userInfo1?.user_id}

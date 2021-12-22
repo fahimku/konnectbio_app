@@ -18,6 +18,8 @@ class Connect extends React.Component {
       errorInsta: "",
       cancelSubscription: false,
       resetAccount: false,
+      fbPageLocal:"",
+      pack:""
     };
   }
 
@@ -36,7 +38,10 @@ class Connect extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let access_token = userInfo.access_token;
     const instagramCodeUrl = window.location.href;
-    if (access_token !== "") {
+    const fbPage=userInfo.page_token
+    const package1=userInfo.package?.package_name
+    const checkCon=(this.state.pack=="Premium" || package1=="Premium")?((access_token!="" && fbPage)?true:false):(access_token!=""?true:false)
+    if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
 
@@ -90,6 +95,18 @@ class Connect extends React.Component {
     });
   }
 
+  completeProcess=()=>{
+    const package1=JSON.parse(localStorage.getItem('userInfo')).package?.package_name
+
+    if(this.state.pack=="Premium" || package1=="Premium"){
+      const fbPage=JSON.parse(localStorage.getItem('userInfo')).page_token
+      return (fbPage || this.state.fbPageLocal)?false:true 
+    }else{
+      const insta=this.state.instagramCode === "" ? true : false;
+      return insta
+    }
+  }
+
   render() {
     return (
       <>
@@ -120,6 +137,8 @@ class Connect extends React.Component {
           isInstagramConnected={this.state.isInstagramConnected}
           url={this.state.url}
           errorInsta={this.state.errorInsta}
+          setFbPageLocal={(fbPage)=>this.setState({fbPageLocal:fbPage})}
+          setPackage={(pack)=>this.setState({pack:pack})}
         />
         <div className="category-page">
           <div className="container">
@@ -128,7 +147,7 @@ class Connect extends React.Component {
                 <Col md={10}></Col>
                 <Col md={2}>
                   <Button
-                    disabled={this.state.instagramCode === "" ? true : false}
+                    disabled={this.completeProcess()}
                     onClick={() => {
                       this.props.history.push(
                         `/app/linkinbio/${this.state.instagramCode}`

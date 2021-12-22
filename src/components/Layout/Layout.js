@@ -35,6 +35,8 @@ import Marketplace from "../../pages/marketplace/Marketplace";
 import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
 import DirectMessaging from "../../pages/directMessaging/Index"
+import MonitorHashTags from "../../pages/monitorhash/index"
+import MonitorMentions from "../../pages/monitortag/index"
 import ChatPage from "../../pages/chat";
 
 export const history = createBrowserHistory({
@@ -181,13 +183,13 @@ class Layout extends React.Component {
                       <Route
                         path="/app/monitor/hash/tags"
                         exact
-                        component={ComingSoon}
+                        component={MonitorHashTags}
                       />
 
                       <Route
                         path="/app/monitor/mentions"
                         exact
-                        component={ComingSoon}
+                        component={MonitorMentions}
                       />
 
                       <Route
