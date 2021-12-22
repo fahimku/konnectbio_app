@@ -3,7 +3,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 
 const validate = (modulePermission) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userPermissions = userInfo.package.permission
+  const userPermissions = userInfo.package?.permission
     ? userInfo.package.permission
     : [];
   const permit = modulePermission.filter((permission) => {
@@ -14,15 +14,15 @@ const validate = (modulePermission) => {
 
 const categoryCheck = () => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const userPermissions = userInfo.package.category_count
-    ? userInfo.package.category_count
+  const userPermissions = userInfo.package?.category_count
+    ? userInfo.package?.category_count
     : 0;
   return userPermissions === 0 ? true : false;
 };
 
 const checkPermissions = (Component, props) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  let permissions = userInfo.package.permission || "";
+  let permissions = userInfo.package?.permission || "";
   let componentPermissions = props.permissions || [];
 
   let permissionFilter = componentPermissions.filter((p) => {
@@ -30,7 +30,7 @@ const checkPermissions = (Component, props) => {
   });
 
   if (permissionFilter.length > 0) return Component;
-  else if (userInfo.package.package_name === "Business Plus") {
+  else if (userInfo.package?.package_name === "Business Plus") {
     return Dashboard;
   } else {
     return AccountUpgrade;
