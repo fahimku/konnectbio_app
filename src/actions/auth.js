@@ -137,13 +137,12 @@ export function loginUser(creds) {
     });
 
     if (creds.email.length > 0 && creds.password.length > 0) {
-    
       axios
         .post("/signin/user", creds)
         .then((res) => {
           const token = res.data.message.token;
           const userInfo = {
-           menu:res.data.message.menu,
+            menu: res.data.message.menu,
             user_id: res.data.message.user_id,
             name: res.data.message.name,
             access_token: res.data.message.access_token,
@@ -158,16 +157,14 @@ export function loginUser(creds) {
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          if (res.data.message.package) 
-          history.push("/app/linkinbio");
-         else history.push("/package");
+          if (res.data.message.package) history.push("/app/linkinbio");
+          else history.push("/package");
         })
         .catch((error) => {
-          
           // if (error.response) {
           //   console.log(error);
           // }
-         dispatch(authError(error.response.data.message));
+          dispatch(authError(error.response.data.message));
         });
     } else {
       dispatch(authError("Something was wrong. Try again"));
