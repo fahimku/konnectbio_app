@@ -8,9 +8,10 @@ export default function LoginModal({ visible, close, call }) {
     <div class="col-lg-6">
     <div class="card ">
             <div class="card-header">
-                Connect your facebook account !
+                This option is available for premium plane
+                {/* Connect your facebook account ! */}
             </div>
-            <div class="card-body">
+            {/* <div class="card-body">
                 <h5 class="card-title">Connect your facebook account !</h5>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 <a
@@ -19,7 +20,7 @@ export default function LoginModal({ visible, close, call }) {
                 >
                     Connect to Facebook
                 </a>
-            </div>
+            </div> */}
         </div>
     </div>
     
