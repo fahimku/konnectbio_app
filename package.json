@@ -63,6 +63,7 @@
     "connected-react-router": "6.9.1",
     "country-state-city": "^3.0.1",
     "create-react-class": "^15.7.0",
+    "cross-env": "^7.0.3",
     "flot": "^0.8.3",
     "font-awesome": "4.7.0",
     "formik": "1.5.8",
