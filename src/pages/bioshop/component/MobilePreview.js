@@ -86,8 +86,7 @@ const MobilePreview = ({
                   // id="myVideo"
                   autoplay
                   controlsList="nodownload"
-                  className={bioshop.data[i].linked || bioshop.data[i].select ? "linked"
-: ""
+                  className={bioshop.data[i].linked || bioshop.data[i].select ? "linked" : ""
                   }
                   key={i}
                   id={"img" + i}
@@ -131,34 +130,38 @@ const MobilePreview = ({
         </div>
         <div>
           <div id="scrollableDiv" className="mobile-gallery">
-            <InfiniteScroll
-              getScrollParent={() => document.getElementById("scrollableDiv")}
-              pageStart={0}
-              className="af-rm-mn row"
-              loadMore={() => getBioShop(bioshop.next?.page)}
-              hasMore={bioshop.next?.page ? true : false}
-              threshold={5}
-              loader={
-                <div className="col-md-12">
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      margin: 5,
-                    }}
-                  >
-                    <i
-                      className="la la-spinner la-spin"
-                      style={{ fontSize: 40 }}
-                    />
+            {bioshop.data.length > 0 ?
+
+              <InfiniteScroll
+                getScrollParent={() => document.getElementById("scrollableDiv")}
+                pageStart={0}
+                className="af-rm-mn row"
+                loadMore={() => getBioShop(bioshop.next?.page)}
+                hasMore={bioshop.next?.page ? true : false}
+                threshold={5}
+                loader={
+                  <div className="col-md-12">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: 5,
+                      }}
+                    >
+                      <i
+                        className="la la-spinner la-spin"
+                        style={{ fontSize: 40 }}
+                      />
+                    </div>
                   </div>
-                </div>
-              }
-              useWindow={false}
-            >
-              <Row>{instaPosts}</Row>
-            </InfiniteScroll>
+                }
+                useWindow={false}
+              >
+                <Row>{instaPosts}</Row>
+              </InfiniteScroll>
+              : <div className="no-data-found-mobile text-center">No Post Added</div>
+            }
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { logoutUser } from "../../../actions/auth";
 
 class Logout extends React.Component {
+
   doLogout() {
     this.props.dispatch(logoutUser());
   }
@@ -29,4 +30,5 @@ function mapStateToProps(state) {
     errorMessage: state.auth.errorMessage,
   };
 }
+
 export default withRouter(connect(mapStateToProps)(Logout));

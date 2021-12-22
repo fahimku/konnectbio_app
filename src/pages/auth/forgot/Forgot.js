@@ -8,6 +8,7 @@ import { sendPasswordResetEmail } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Forgot extends React.Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };

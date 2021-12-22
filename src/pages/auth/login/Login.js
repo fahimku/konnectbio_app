@@ -8,7 +8,6 @@ import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
 import { loginUser, receiveToken } from "../../../actions/auth";
 import jwt from "jsonwebtoken";
-
 import { push } from "connected-react-router";
 import logo from "../../../images/logo.svg";
 import queryString from "query-string";
