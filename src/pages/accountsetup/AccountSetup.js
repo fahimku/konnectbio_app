@@ -51,7 +51,7 @@ class AccountSetup extends React.Component {
       checkbox: {},
       showPromo: false,
       promo_error: false,
-      myPackage:""
+      myPackage: "",
     };
   }
 
@@ -181,8 +181,8 @@ class AccountSetup extends React.Component {
           const userInformation = localStorage.getItem("userInfo");
           const parseUserInformation = JSON.parse(userInformation);
           parseUserInformation.package = response.data.message;
-          this.setState({myPackage:response.data.message.package_name})
-        this.props.setPackage(response.data.message.package_name)
+          this.setState({ myPackage: response.data.message.package_name });
+          this.props.setPackage(response.data.message.package_name);
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
           window.location.reload();
@@ -228,19 +228,20 @@ class AccountSetup extends React.Component {
     });
   };
 
-  renderFbConnection=(userInfo1)=>{
-    const package1=JSON.parse(localStorage.getItem('userInfo')).package?.package_name
-    if(package1=="Premium" || this.state.myPackage=="Premium"){
-      return(
-        <ConnectToFb 
-        userId={userInfo1.user_id}
-        setFbPageLocal={this.props.setFbPageLocal} 
-        username={this.props.username}
-        username1={userInfo1.username}
+  renderFbConnection = (userInfo1) => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo")).package
+      ?.package_name;
+    if (package1 == "Premium" || this.state.myPackage == "Premium") {
+      return (
+        <ConnectToFb
+          userId={userInfo1.user_id}
+          setFbPageLocal={this.props.setFbPageLocal}
+          username={this.props.username}
+          username1={userInfo1.username}
         />
-      )
+      );
     }
-  }
+  };
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
