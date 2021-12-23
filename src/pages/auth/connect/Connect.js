@@ -8,7 +8,6 @@ import AccountSetup from "../../../pages/accountsetup/AccountSetup";
 import { toast } from "react-toastify";
 
 class Connect extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +18,8 @@ class Connect extends React.Component {
       errorInsta: "",
       cancelSubscription: false,
       resetAccount: false,
-      fbPageLocal:"",
-      pack:""
+      fbPageLocal: "",
+      pack: "",
     };
   }
 
@@ -39,9 +38,16 @@ class Connect extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let access_token = userInfo.access_token;
     const instagramCodeUrl = window.location.href;
-    const fbPage=userInfo.page_token
-    const package1=userInfo.package?.package_name
-    const checkCon=(this.state.pack=="Premium" || package1=="Premium")?((access_token!="" && fbPage)?true:false):(access_token!=""?true:false)
+    const fbPage = userInfo.page_token;
+    const package1 = userInfo.package?.package_name;
+    const checkCon =
+      this.state.pack == "Premium" || package1 == "Premium"
+        ? access_token != "" && fbPage
+          ? true
+          : false
+        : access_token != ""
+        ? true
+        : false;
     if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
@@ -68,7 +74,11 @@ class Connect extends React.Component {
         parseUserInformation.access_token = response.data.access_token;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-        this.updateAccessToken(userInfo.user_id,response.data.username,response.data.access_token);
+        this.updateAccessToken(
+          userInfo.user_id,
+          response.data.username,
+          response.data.access_token
+        );
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
@@ -92,17 +102,18 @@ class Connect extends React.Component {
     });
   }
 
-  completeProcess=()=>{
-    const package1=JSON.parse(localStorage.getItem('userInfo')).package?.package_name
+  completeProcess = () => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_name;
 
-    if(this.state.pack=="Premium" || package1=="Premium"){
-      const fbPage=JSON.parse(localStorage.getItem('userInfo')).page_token
-      return (fbPage || this.state.fbPageLocal)?false:true 
-    }else{
-      const insta=this.state.instagramCode === "" ? true : false;
-      return insta
+    if (this.state.pack == "Premium" || package1 == "Premium") {
+      const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
+      return fbPage || this.state.fbPageLocal ? false : true;
+    } else {
+      const insta = this.state.instagramCode === "" ? true : false;
+      return insta;
     }
-  }
+  };
 
   render() {
     return (
@@ -134,8 +145,8 @@ class Connect extends React.Component {
           isInstagramConnected={this.state.isInstagramConnected}
           url={this.state.url}
           errorInsta={this.state.errorInsta}
-          setFbPageLocal={(fbPage)=>this.setState({fbPageLocal:fbPage})}
-          setPackage={(pack)=>this.setState({pack:pack})}
+          setFbPageLocal={(fbPage) => this.setState({ fbPageLocal: fbPage })}
+          setPackage={(pack) => this.setState({ pack: pack })}
         />
         <div className="category-page">
           <div className="container">
