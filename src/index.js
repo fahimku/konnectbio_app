@@ -10,6 +10,7 @@ import App from './components/App';
 import config from './config';
 import createRootReducer from './reducers';
 import { doInit } from './actions/auth';
+import initFacebookSDK from "./fbSDK/initFacebookSDK";
 import { createHashHistory } from 'history';
 
 const history = createHashHistory();
@@ -45,12 +46,19 @@ export const store = createStore(
   )
 );
 store.dispatch(doInit());
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+
+const renderApp = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );
+};
+
+initFacebookSDK().then(() => {
+  renderApp();
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
