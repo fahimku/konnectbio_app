@@ -229,7 +229,7 @@ class AccountSetup extends React.Component {
   };
 
   renderFbConnection = (userInfo1) => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo")).package
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
     if (package1 == "Premium" || this.state.myPackage == "Premium") {
       return (
