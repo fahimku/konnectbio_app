@@ -42,7 +42,7 @@ export default function Box({ data }) {
       return (
         <CardMedia
           component="img"
-          height="300"
+          height="450"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
             item.media_type == "CAROUSEL_ALBUM"
@@ -61,7 +61,7 @@ export default function Box({ data }) {
           autoPlay
           controls
           loop
-          height="300"
+          height="450"
           image={item.media_url}
           alt="Paella dish"
         />
@@ -88,7 +88,7 @@ export default function Box({ data }) {
               <a target="_blank" href={data.permalink}>
                 <CardMedia
                   component="img"
-                  height="300"
+                  height="450"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   image={it2.media_url}
                   alt="Paella dish"
@@ -105,7 +105,7 @@ export default function Box({ data }) {
                   autoPlay
                   controls
                   loop
-                  height="300"
+                  height="450"
                   image={it2.media_url}
                   alt="Paella dish"
                 />
