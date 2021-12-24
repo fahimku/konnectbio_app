@@ -540,3 +540,16 @@ h1 small {
 .abc-checkbox input[type="radio"]:focus + label::before {
   outline: none !important;
 }
+
+.hashtag-box .input-group-text {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.hashtag-box .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 0;
+}
+.hashtag-box .form-control:focus {
+  border-color: #dce4ec;
+}
