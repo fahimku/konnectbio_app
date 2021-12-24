@@ -14,6 +14,7 @@ import {
   arrayMove,
 } from "react-sortable-hoc";
 import { connect } from "react-redux";
+import * as catActions from "../../actions/category";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -32,7 +33,25 @@ function MyCategory(props) {
 
   useEffect(() => {
     fetchMyCategory();
-    fetchSaveCategory();
+    // fetchSaveCategory();
+    props.getUserCategories().then(
+      function (res) {
+        setSaveCategories(
+          res.map((item) => {
+            return {
+              value: item.arent_id,
+              label: item.category_name,
+              image: item.image_url,
+              editable: item.editable,
+              category_id: item.category_id,
+            };
+          })
+        );
+      },
+      function (error) {
+        toast.error(error?.response?.data?.message);
+      }
+    );
   }, []);
   const fetchMyCategory = async () => {
     await axios
@@ -186,6 +205,7 @@ function MyCategory(props) {
       ))}
     </Row>
   ));
+  // console.log(props.getUserCategories(), "props");
   return (
     <>
       <div className="profile-page account-setup">
@@ -315,4 +335,4 @@ function MyCategory(props) {
 function mapStateToProps() {
   return {};
 }
-export default connect(mapStateToProps, {})(MyCategory);
+export default connect(mapStateToProps, { ...catActions })(MyCategory);
