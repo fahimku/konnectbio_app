@@ -34,9 +34,9 @@ import Affiliate from "../../pages/affiliate/Affiliate";
 import Marketplace from "../../pages/marketplace/Marketplace";
 import ComingSoon from "../../pages/comingsoon/comingsoon";
 import { PrivateRoute } from "../RouteComponents";
-import DirectMessaging from "../../pages/directMessaging/Index"
-import MonitorHashTags from "../../pages/monitorhash/index"
-import MonitorMentions from "../../pages/monitortag/index"
+import DirectMessaging from "../../pages/directMessaging/Index";
+import MonitorHashTags from "../../pages/monitorhash/index";
+import MonitorMentions from "../../pages/monitortag/index";
 import ChatPage from "../../pages/chat";
 import AllPosts from "../../pages/allposts/BioShop";
 
@@ -76,13 +76,15 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-            ? "light"
-            : localStorage.getItem("dashboardTheme")
+          `dashboard-${
+            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+              ? "light"
+              : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${localStorage.getItem("navbarColor")
-            ? localStorage.getItem("navbarColor").replace("#", "")
-            : "FFFFFF"
+          `header-${
+            localStorage.getItem("navbarColor")
+              ? localStorage.getItem("navbarColor").replace("#", "")
+              : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -192,6 +194,11 @@ class Layout extends React.Component {
                         exact
                         component={MonitorMentions}
                       />
+                      <Route
+                        path="/app/search/profile"
+                        exact
+                        component={ComingSoon}
+                      />
 
                       <Route
                         path="/app/direct/messaging"
@@ -199,7 +206,7 @@ class Layout extends React.Component {
                         component={ComingSoon}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
-                      <Route path="/app/all/posts" exact component={AllPosts} />                      
+                      <Route path="/app/all/posts" exact component={AllPosts} />
                     </Switch>
                   </Router>
                 </CSSTransition>

@@ -6,13 +6,16 @@ import { withRouter } from "react-router-dom";
 import { dismissAlert } from "../../actions/alerts";
 import s from "./Sidebar.module.scss";
 import LinksGroup from "./LinksGroup/LinksGroup";
-import { openSidebar,closeSidebar,changeActiveSidebarItem} from "../../actions/navigation";
+import {
+  openSidebar,
+  closeSidebar,
+  changeActiveSidebarItem,
+} from "../../actions/navigation";
 import isScreen from "../../core/screenHelper";
 import { logoutUser } from "../../actions/auth";
 import PermissionHelper from "../PermissionHelper";
 
 class Sidebar extends React.Component {
- 
   static propTypes = {
     sidebarStatic: PropTypes.bool,
     sidebarOpened: PropTypes.bool,
@@ -108,7 +111,6 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
-
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Manage Links"
@@ -140,6 +142,16 @@ class Sidebar extends React.Component {
                 iconElement={
                   <span className="glyphicon glyphicon-th-list"></span>
                 }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Search Profile"
+                link="/app/search/profile"
+                isHeader
+                iconElement={<span className="glyphicon glyphicon-user"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -177,7 +189,6 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
 
               {/* 
               {PermissionHelper.validate(["affiliate_access"]) ? (
@@ -219,12 +230,9 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
               ) : null}
-      
-<br></br>
-              <div
-               className={`settings-bottom ${s.bottomLinks}`}
 
-              >
+              <br></br>
+              <div className={`settings-bottom ${s.bottomLinks}`}>
                 <LinksGroup
                   className="sidebar-nav-links "
                   onActiveSidebarItemChange={(activeItem) =>

@@ -251,6 +251,19 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Search Profile"
+                    link="/app/search/profile"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-user"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
@@ -287,7 +300,6 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-
 
                   {/* {PermissionHelper.validate(["affiliate_access"]) ? (
                     <LinksGroup
@@ -405,7 +417,7 @@ class Header extends React.Component {
                 onClick={() => {
                   window.location.href = "/app/dashboard";
                 }}
-              // onClick={() => this.toggle(3)}
+                // onClick={() => this.toggle(3)}
               >
                 {/* <NavLink to="/app/dashboard"> */}
                 <img src={logo} alt="logo" />
