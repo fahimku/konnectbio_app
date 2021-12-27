@@ -1288,8 +1288,8 @@ margin:0 auto !important;
 .pkg_fb_connect .modal-dialog{
   max-width: 600px;
 }
-
-
-
+.cr-album{
+  z-index: 0 !important;
+}
 
 /**Media Queries Iftikhar */
