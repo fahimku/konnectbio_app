@@ -78,6 +78,7 @@ export default function Box({ data }) {
     function renderCarousel(item) {
         return (
             <Carousel
+                className='cr-album'
                 navButtonsAlwaysVisible={true}
                 navButtonsProps={{
                     style: {
@@ -117,79 +118,79 @@ export default function Box({ data }) {
                             </a>
                         )
                     }
-    })
-}
+                })
+                }
             </Carousel >
         )
     }
 
-return (
-    <>
-        <Card elevation={1}>
-            <CardHeader
-                avatar={
-                    <Avatar alt={data.username} src={data.username} />
-                }
-                action={
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
-                        <GroupIcon sx={{ color: "gray", fontSize: 25 }} />
-                        <Typography variant='h6' style={{ color: 'gray', marginTop: 3, marginLeft: 5 }}>{numeral(data.userInfo?.business_discovery?.followers_count).format('0,0')}</Typography>
-                    </div>
-                }
-                title={<Typography variant='body' color="#010b40"><a style={{ color: '#010b40', fontSize: 14, fontWeight: 'bold' }} target="_blank" href={`https://www.instagram.com/${data.username}`}>{data.username}</a></Typography>}
-                subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
-            />
-            <Divider />
-            <div style={{ padding: '15px' }}>
-                {data.media_type == "CAROUSEL_ALBUM" ? renderCarousel(data) : <a target="_blank" href={data.permalink}>{renderMedia(data)}</a>}
-            </div>
-            {/* <Typography variant="h4" textAlign="center">
+    return (
+        <>
+            <Card elevation={1}>
+                <CardHeader
+                    avatar={
+                        <Avatar alt={data.username} src={data.username} />
+                    }
+                    action={
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
+                            <GroupIcon sx={{ color: "gray", fontSize: 25 }} />
+                            <Typography variant='h6' style={{ color: 'gray', marginTop: 3, marginLeft: 5 }}>{numeral(data.userInfo?.business_discovery?.followers_count).format('0,0')}</Typography>
+                        </div>
+                    }
+                    title={<Typography variant='body' color="#010b40"><a style={{ color: '#010b40', fontSize: 14, fontWeight: 'bold' }} target="_blank" href={`https://www.instagram.com/${data.username}`}>{data.username}</a></Typography>}
+                    subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
+                />
+                <Divider />
+                <div style={{ padding: '15px' }}>
+                    {data.media_type == "CAROUSEL_ALBUM" ? renderCarousel(data) : <a target="_blank" href={data.permalink}>{renderMedia(data)}</a>}
+                </div>
+                {/* <Typography variant="h4" textAlign="center">
                     {new Date().toLocaleTimeString()}
                 </Typography> */}
-            <CardActions disableSpacing>
-                {!expanded ? (
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: 10, alignItems: 'center', flexGrow: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
-                            <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                            <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.like_count ? data.like_count : 0).format('0,0')}</Typography>
+                <CardActions disableSpacing>
+                    {!expanded ? (
+                        <div style={{ display: 'flex', justifyContent: 'flex-start', marginLeft: 10, alignItems: 'center', flexGrow: 1 }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
+                                <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                                <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.like_count ? data.like_count : 0).format('0,0')}</Typography>
+                            </div>
+                            <div style={{ width: 2, height: 20, backgroundColor: 'lightgrey' }} />
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 10 }}>
+                                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                                <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.comments_count ? data.comments_count : 0).format('0,0')}</Typography>
+                            </div>
                         </div>
-                        <div style={{ width: 2, height: 20, backgroundColor: 'lightgrey' }} />
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 10 }}>
-                            <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                            <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.comments_count ? data.comments_count : 0).format('0,0')}</Typography>
-                        </div>
-                    </div>
-                ) : null}
-                <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end' }}>
-                    <ExpandMore
-                        expand={expanded}
-                        onClick={handleExpandClick}
-                        aria-expanded={expanded}
-                        aria-label="show more"
-                    >
-                        <ExpandMoreIcon />
-                    </ExpandMore>
-                </div>
-            </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography>{data.caption}</Typography>
-                </CardContent>
-                <CardActions>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
-                            <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                            <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.like_count ? data.like_count : 0).format('0,0')}</Typography>
-                        </div>
-                        <div style={{ width: 2, height: 20, backgroundColor: 'lightgrey' }} />
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 10 }}>
-                            <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                            <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.comments_count ? data.comments_count : 0).format('0,0')}</Typography>
-                        </div>
+                    ) : null}
+                    <div style={{ display: 'flex', flexGrow: 1, justifyContent: 'flex-end' }}>
+                        <ExpandMore
+                            expand={expanded}
+                            onClick={handleExpandClick}
+                            aria-expanded={expanded}
+                            aria-label="show more"
+                        >
+                            <ExpandMoreIcon />
+                        </ExpandMore>
                     </div>
                 </CardActions>
-            </Collapse>
-        </Card>
-    </>
-);
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <Typography>{data.caption}</Typography>
+                    </CardContent>
+                    <CardActions>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
+                                <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                                <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.like_count ? data.like_count : 0).format('0,0')}</Typography>
+                            </div>
+                            <div style={{ width: 2, height: 20, backgroundColor: 'lightgrey' }} />
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: 10 }}>
+                                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                                <Typography variant='h6' style={{ color: '#b3b3b3', marginTop: 3, marginLeft: 5 }}>{numeral(data.comments_count ? data.comments_count : 0).format('0,0')}</Typography>
+                            </div>
+                        </div>
+                    </CardActions>
+                </Collapse>
+            </Card>
+        </>
+    );
 }

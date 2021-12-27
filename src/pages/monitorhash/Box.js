@@ -65,6 +65,7 @@ export default function Box({ data }) {
     function renderCarousel(item){
         return (
             <Carousel
+            className='cr-album'
             navButtonsAlwaysVisible={true}
             navButtonsProps={{
                 style:{
