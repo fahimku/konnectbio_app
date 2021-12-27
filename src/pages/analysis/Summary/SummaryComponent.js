@@ -25,22 +25,20 @@ class SummaryComponent extends React.Component {
                 packageName={this.state.packageName}
               />
             </div>
-            {/* {this.state.packageName === "Influencer" ||
-            this.state.packageName === "Micro Influencer" ||
-            this.state.packageName === "Influencer Plus" ? (
-              <div className="hidden col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                {/* <h4 className="page-title">Campaign Summary</h4> 
-                <CampaignSummaryComponent  username={this.state.username} />
+            {this.state.packageName === "Basic" ? (
+              <div className=" col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                {/* <h4 className="page-title">Campaign Summary</h4> */}
+                <CampaignSummaryComponent username={this.state.username} />
               </div>
             ) : (
-              <div className="hidden col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                {/* <h4 className="page-title">Campaign Summary</h4> 
+              <div className=" col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                {/* <h4 className="page-title">Campaign Summary</h4> */}
                 <AffiliateSummaryComponent
                   username={this.state.username}
                   className="col-md-12"
                 />
               </div>
-            )} */}
+            )}
           </div>
         </div>
       </React.Fragment>

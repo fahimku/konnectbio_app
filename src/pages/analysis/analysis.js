@@ -1,4 +1,4 @@
-  import React from "react";
+import React from "react";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import s from "./analysis.module.scss";
@@ -62,9 +62,8 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
-                  {this.state.packageName === "Influencer" ||
-                    this.state.packageName === "Micro Influencer" ? ( 
-                   <NavItem>
+                    {/* {this.state.packageName === "Basic" ? ( */}
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -75,9 +74,9 @@ class Analysis extends React.Component {
                       >
                         <span>Campaign Performance</span>
                       </NavLink>
-                    </NavItem> 
-                    ) : null} 
-                   <NavItem>
+                    </NavItem>
+                    {/* ) : null} */}
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -100,7 +99,7 @@ class Analysis extends React.Component {
                       >
                         <span>Konnect.bio Analytics</span>
                       </NavLink>
-                    </NavItem> 
+                    </NavItem>  */}
                   </Nav>
 
                   <TabContent
@@ -120,7 +119,7 @@ class Analysis extends React.Component {
                         <PostAnalytic username={this.state.username} />
                       ) : null}
                     </TabPane>
-                    {this.state.packageName === "Influencer" ? ( 
+                    {/* {this.state.packageName === "Basic" ? ( */}
                     <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <CampaignAnalytics
@@ -128,13 +127,12 @@ class Analysis extends React.Component {
                           packageName={this.state.packageName}
                         />
                       ) : null}
-                    </TabPane> 
-                     ) : null} 
-                     
+                    </TabPane>
+                    {/* ) : null} */}
 
-                     <TabPane tabId="tab23">
+                    {/* <TabPane tabId="tab23">
                       <LinkAnalytic username={this.state.username} />
-                    </TabPane> 
+                    </TabPane>  */}
                   </TabContent>
                 </div>
               </Row>
