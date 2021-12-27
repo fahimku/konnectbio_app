@@ -188,9 +188,7 @@ class Sidebar extends React.Component {
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
-              />
-
-              {/* 
+              />              
               {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
@@ -204,8 +202,8 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null} */}
-              {/* {PermissionHelper.validate(["marketplace_access"]) ? (
+              ) : null} 
+              {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
                   header="Manage Affiliate"
@@ -216,7 +214,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null} */}
+              ) : null} 
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup

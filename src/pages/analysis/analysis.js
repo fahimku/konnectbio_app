@@ -1,11 +1,11 @@
-import React from "react";
+  import React from "react";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
-// import LinkAnalytic from "./Linkperformance/linkanalytics";
+import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
-// import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
+import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -62,9 +62,9 @@ class Analysis extends React.Component {
                         <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
-                    {/* {this.state.packageName === "Influencer" ||
-                    this.state.packageName === "Micro Influencer" ? ( */}
-                    {/* <NavItem>
+                  {this.state.packageName === "Influencer" ||
+                    this.state.packageName === "Micro Influencer" ? ( 
+                   <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -75,9 +75,9 @@ class Analysis extends React.Component {
                       >
                         <span>Campaign Performance</span>
                       </NavLink>
-                    </NavItem> */}
-                    {/* ) : null} */}
-                    {/* <NavItem>
+                    </NavItem> 
+                    ) : null} 
+                   <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -96,11 +96,11 @@ class Analysis extends React.Component {
                         })}
                         onClick={() => {
                           this.toggleSecondTabs("tab21");
-                        }}
+                        }}d
                       >
                         <span>Konnect.bio Analytics</span>
                       </NavLink>
-                    </NavItem> */}
+                    </NavItem> 
                   </Nav>
 
                   <TabContent
@@ -120,23 +120,21 @@ class Analysis extends React.Component {
                         <PostAnalytic username={this.state.username} />
                       ) : null}
                     </TabPane>
-                    {/* {this.state.packageName === "Influencer" ? ( */}
-                    {/* <TabPane tabId="tab23">
+                    {this.state.packageName === "Influencer" ? ( 
+                    <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <CampaignAnalytics
                           username={this.state.username}
                           packageName={this.state.packageName}
                         />
                       ) : null}
-                    </TabPane> */}
-                    {/* ) : null} */}
-                    {/* <TabPane tabId="tab21">
-                      <HighCharts username={this.state.username} />
-                    </TabPane> */}
+                    </TabPane> 
+                     ) : null} 
+                     
 
-                    {/* <TabPane tabId="tab23">
+                     <TabPane tabId="tab23">
                       <LinkAnalytic username={this.state.username} />
-                    </TabPane> */}
+                    </TabPane> 
                   </TabContent>
                 </div>
               </Row>
