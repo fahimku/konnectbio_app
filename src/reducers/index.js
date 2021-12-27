@@ -25,6 +25,7 @@ import chat from "./chat";
 import hashtags from './hashtags/hashtags';
 import hashtag from "./hashtags/hashtag"
 import tags from "./mention/tags"
+import profile from "./searchProfile/profile";
 
 export default (history) =>
   combineReducers({
@@ -53,5 +54,6 @@ export default (history) =>
     postSummary,
     hashtags,
     hashtag,
-    tags
+    tags,
+    profile
   });

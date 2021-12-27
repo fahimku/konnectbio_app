@@ -122,7 +122,7 @@ export default function Box({ data }) {
     <>
       <Card elevation={1}>
         <CardHeader
-          avatar={<Avatar alt={data.username} src={data.username} />}
+          avatar={<Avatar alt={data.username} src={data.userInfo?.business_discovery?.profile_picture_url} />}
           action={
             <div
               style={{
@@ -170,7 +170,7 @@ export default function Box({ data }) {
                     {new Date().toLocaleTimeString()}
                 </Typography> */}
         <CardActions disableSpacing>
-          {!expanded ? (
+        {!expanded ? (
             <div
               style={{
                 display: "flex",
@@ -217,6 +217,9 @@ export default function Box({ data }) {
                   ).format("0,0")}
                 </Typography>
               </div>
+              <Typography variant="body" sx={{fontSize:'12px',marginLeft:'15px'}} color="gray" textAlign="center">
+              {new Date(data.timestamp).toDateString()}
+            </Typography>
             </div>
           ) : null}
           <div
@@ -236,7 +239,7 @@ export default function Box({ data }) {
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
-          <CardActions>
+          <CardActions sx={{justifyContent:'space-between'}}>
             <div
               style={{
                 display: "flex",
@@ -282,6 +285,9 @@ export default function Box({ data }) {
                 </Typography>
               </div>
             </div>
+            <Typography variant="body" sx={{fontSize:'14px',marginRight:'15px'}} color="gray" textAlign="right">
+              {new Date(data.timestamp).toDateString()}
+            </Typography>
           </CardActions>
         </Collapse>
       </Card>
