@@ -23,11 +23,11 @@ export const history = createBrowserHistory({
 function MyCategory(props) {
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
   const [myCategory, setMyCategory] = useState("");
-  const [myCustomCategory, setMyCustomCategory] = useState("");
-  const [userid, setUserId] = useState("");
+  // const [myCustomCategory, setMyCustomCategory] = useState("");
+  // const [userid, setUserId] = useState("");
   const [categoryError, setCategoryError] = useState("");
   const [saveCategories, setSaveCategories] = useState("");
-  const [category, setCategory] = useState([]);
+  // const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState(false);
 
