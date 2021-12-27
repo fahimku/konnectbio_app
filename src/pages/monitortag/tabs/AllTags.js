@@ -92,6 +92,8 @@ function ALLTAGS({
     const sortByOptions = [
         { value: "followers", label: "FOLLOWER" },
         { value: "likes", label: "LIKE" },
+        { value: "comments", label: "COMMENT" },
+        { value: "date", label: "DATE" },
     ];
     const sortOrderOptions = [
         { value: "asc", label: "ASC" },

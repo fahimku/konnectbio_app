@@ -71,8 +71,7 @@ export default function Box({ data }) {
         <CardMedia
           component="video"
           sx={{ objectFit: "cover", borderRadius: 2 }}
-          autoPlay
-          controls
+          controls={true}
           loop
           height="450"
           image={item.media_url}
@@ -134,8 +133,8 @@ export default function Box({ data }) {
   return (
     <>
       <Card elevation={1}>
-        <CardHeader
-          avatar={<Avatar alt={data.username} src={data.userInfo?.business_discovery?.profile_picture_url} />}
+        {/* <CardHeader
+          avatar={<Avatar alt={data.username} src={data.username} />}
           action={
             <div
               style={{
@@ -167,9 +166,9 @@ export default function Box({ data }) {
               </a>
             </Typography>
           }
-          // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
+          subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
         />
-        <Divider />
+        <Divider /> */}
         <div style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
@@ -179,8 +178,11 @@ export default function Box({ data }) {
             </a>
           )}
         </div>
+        {/* <Typography variant="h4" textAlign="center">
+                    {new Date().toLocaleTimeString()}
+                </Typography> */}
         <CardActions disableSpacing>
-          {!expanded ? (
+        {!expanded ? (
             <div
               style={{
                 display: "flex",
@@ -233,7 +235,7 @@ export default function Box({ data }) {
             </div>
           ) : null}
           <div
-            style={{ display: "flex", flexGrow: 1, justifyContent: "flex-end",alignItems:'center' }}
+            style={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}
           >
             <ExpandMore
               expand={expanded}
@@ -255,7 +257,6 @@ export default function Box({ data }) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft:5
               }}
             >
               <div
@@ -263,7 +264,7 @@ export default function Box({ data }) {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: 15,
+                  marginRight: 10,
                 }}
               >
                 <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />

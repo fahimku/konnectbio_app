@@ -33,3 +33,6 @@ export const GET_HASHTAG="gethashtag"
 export const HASH_PAGINATION="hashPagination"
 export const GET_TAGS="getTags"
 export const GET_TAGS_PAGINATION="tagPagination"
+export const SEARCH_PROFILE="searchProfile"
+export const FILTER_PROFILE_MEDIA="filterProfileMedia"
+
