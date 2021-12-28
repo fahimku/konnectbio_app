@@ -6,6 +6,7 @@ import PostAnalytic from "./postperformance/postanalytics";
 import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
 import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
+import InstagramAnalytics from "./instagramPerformance/instagramAnalytics";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -48,6 +49,18 @@ class Analysis extends React.Component {
                         }}
                       >
                         <span>Summary</span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "tab24",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab24");
+                        }}
+                      >
+                        <span>Instagram Performance</span>
                       </NavLink>
                     </NavItem>
                     <NavItem>
@@ -112,6 +125,11 @@ class Analysis extends React.Component {
                           username={this.state.username}
                           packageName={this.state.packageName}
                         />
+                      ) : null}
+                    </TabPane>
+                    <TabPane tabId="tab24">
+                      {this.state.activeSecondTab === "tab24" ? (
+                        <InstagramAnalytics username={this.state.username} />
                       ) : null}
                     </TabPane>
                     <TabPane tabId="tab22">

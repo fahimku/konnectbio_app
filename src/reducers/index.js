@@ -22,10 +22,11 @@ import bioshop from "./bioshop/bioshop";
 import singleBioShop from "./bioshop/singleBioShop";
 import postSummary from "./post/postSummary";
 import chat from "./chat";
-import hashtags from './hashtags/hashtags';
-import hashtag from "./hashtags/hashtag"
-import tags from "./mention/tags"
+import hashtags from "./hashtags/hashtags";
+import hashtag from "./hashtags/hashtag";
+import tags from "./mention/tags";
 import profile from "./searchProfile/profile";
+import instagramAnalytic from "./analytics/instagramAnalytic";
 
 export default (history) =>
   combineReducers({
@@ -55,5 +56,6 @@ export default (history) =>
     hashtags,
     hashtag,
     tags,
-    profile
+    profile,
+    instagramAnalytic,
   });
