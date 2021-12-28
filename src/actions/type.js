@@ -36,3 +36,5 @@ export const GET_TAGS_PAGINATION = "tagPagination";
 export const GET_USER_CATEGORIES2 = "getUserCategories2";
 export const SEARCH_PROFILE = "searchProfile";
 export const FILTER_PROFILE_MEDIA = "filterProfileMedia";
+export const GET_INSTAGRAM_ANALYTIC = "getInstagramAnalytic";
+export const GET_INSTAGRAM_PAGINATION = "getInstagramPagination";
