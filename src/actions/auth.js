@@ -155,24 +155,30 @@ export function loginUser(creds) {
             zip: res.data.message.zip,
             page_token: res.data.message.page_token,
             fb_token: res.data.message.fb_token,
-            instagram_id:res.data.message.instagram_id
+            instagram_id: res.data.message.instagram_id
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
-          const fbPage = JSON.parse(
-            localStorage.getItem("userInfo")
-          ).page_token;
+
+          const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
           // const fbPage=localStorage.getItem('fbPage')
           // const fbToken=localStorage.getItem('fbToken')
-          if (res.data.message.access_token && fbPage)
+
+          if (res.data.message.package.package_name === 'Basic' && res.data.message.access_token) {
             history.push("/app/linkinbio");
-          else history.push("/package");
-        })
+          }
+
+          else if (res.data.message.package.package_name === 'Premium' && res.data.message.access_token && fbPage) {
+            history.push("/app/linkinbio");
+          }
+
+          else {
+            history.push("/package");
+          }
+        }
+        )
         .catch((error) => {
-          // if (error.response) {
-          //   console.log(error);
-          // }
           dispatch(authError(error.response.data.message));
         });
     } else {
