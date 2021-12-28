@@ -8,6 +8,7 @@ import MobilePreview from "./component/MobilePreview";
 import ShopRightBar from "./component/ShopRightBar/index";
 
 const BioShop = () => {
+
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const userId = userInfo.user_id;
   const username = userInfo.username;

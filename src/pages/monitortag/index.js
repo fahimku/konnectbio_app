@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect, useMemo } from 'react'
 import Content from './Content'
-import LoginModal from './LoginModal'
+import UpgradeAccount from '../upgradeAccount/UpgradeAccount'
 import SelectPages from './SelectPages';
 
 export default function Index() {
@@ -146,9 +146,8 @@ export default function Index() {
                                 />
                                 )
                             ) : (
-                                <LoginModal
-                                call={fbLogin}
-                                />
+                                <UpgradeAccount/>
+                             
                             )
                         )
                     }

@@ -3,16 +3,14 @@ import * as profileActions from "../../actions/searchProfile"
 import { connect } from 'react-redux'
 import { Row, Button, Col } from "react-bootstrap"
 import Select from "react-select";
-import { Card, CardContent, Paper } from "@mui/material"
+import { Card, CardContent } from "@mui/material"
 import moment from "moment";
-import { DatePicker } from "antd";
 import Loader from '../../components/Loader/Loader'
 import { Typography } from '@mui/material'
+import UpgradeAccount from '../upgradeAccount/UpgradeAccount'
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Box from "./Box"
 
-const { RangePicker } = DatePicker;
-const dateFormat = "YYYY-MM-DD";
 
 function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
 
@@ -30,6 +28,7 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
     const toDate = moment(new Date()).format("YYYY-MM-DD");
     const [startDate, setStartDate] = useState(fromDate);
     const [endDate, setEndDate] = useState(toDate);
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
     const searchProfile = () => {
         setLoading(true)
@@ -129,39 +128,6 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                             <Col xs={12} xl={12} md={12}>
                                 <form onSubmit={onSubmitData}>
                                     <Row>
-                                        {/* <Col xs={12} xl={2} md={6}>
-                                            <p>Select Start Date / End Date</p>
-                                            <RangePicker
-                                                key={4}
-                                                value={
-                                                    startDate && endDate
-                                                        ? [moment(startDate), moment(endDate)]
-                                                        : []
-                                                }
-                                                allowClear={false}
-                                                ranges={{
-                                                    Today: [moment(), moment()],
-                                                    Tomorrow: [
-                                                        moment().add(1, "days"),
-                                                        moment().add(1, "days"),
-                                                    ],
-                                                    Yesterday: [
-                                                        moment().subtract(1, "days"),
-                                                        moment().subtract(1, "days"),
-                                                    ],
-                                                    "This Month": [
-                                                        moment().startOf("month"),
-                                                        moment().endOf("month"),
-                                                    ],
-                                                    "Last Month": [
-                                                        moment().subtract(1, "month").startOf("month"),
-                                                        moment().subtract(1, "month").endOf("month"),
-                                                    ],
-                                                }}
-                                                format={dateFormat}
-                                                onChange={dateRangePickerChanger}
-                                            />
-                                        </Col> */}
                                         <Col xs={12} xl={2} md={6}>
                                             <p>Sort By</p>
                                             <Select
@@ -260,6 +226,13 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
         }
     }
 
+
+    if (userInfo.package.package_name === 'Basic') {
+        return (
+            <UpgradeAccount />
+        );
+    }
+
     return (
         <div className="container-fluid">
             <div className="d-flex flex-row hashtag-box mt-3">
@@ -270,7 +243,9 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                         borderBottomRightRadius: 0,
                         width: "85%",
                     }}
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => {
+                        setUserName(e.target.value);
+                    }}
                     type="text"
                     name="name"
                     placeholder="Enter instagram name"
@@ -300,6 +275,7 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                         variant="primary"
                         type="submit"
                         className="btn-block"
+
                         onClick={searchProfile}
                     >
                         Search
