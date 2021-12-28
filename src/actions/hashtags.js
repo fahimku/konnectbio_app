@@ -2,10 +2,7 @@ import axios from "axios";
 import { GET_HASHTAGS,GET_HASHTAG, HASH_PAGINATION} from "./type";
 import config from "../config";
 
-
-
-
-export const getHashtags=()=>async(dispatch)=>{
+export const getHashtags = () => async (dispatch) => {
     const res=await axios.post(`${config.hostApi}/v1/graph/hash/getall`)
     dispatch({
         type:GET_HASHTAGS,
@@ -45,4 +42,3 @@ export const getHashtag=(data,page,pagination)=>async(dispatch)=>{
             })
         }
 };
-
