@@ -51,18 +51,20 @@ class Analysis extends React.Component {
                         <span>Summary</span>
                       </NavLink>
                     </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeSecondTab === "tab24",
-                        })}
-                        onClick={() => {
-                          this.toggleSecondTabs("tab24");
-                        }}
-                      >
-                        <span>Instagram Performance</span>
-                      </NavLink>
-                    </NavItem>
+                    {this.state.packageName !== "Basic" ? (
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab24",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab24");
+                          }}
+                        >
+                          <span>Instagram Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    ) : null}
                     <NavItem>
                       <NavLink
                         className={classnames({
