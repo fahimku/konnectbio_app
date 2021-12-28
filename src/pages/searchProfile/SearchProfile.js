@@ -1,5 +1,4 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import * as profileActions from "../../actions/searchProfile"
 import { connect } from 'react-redux'
 import { Row, Button, Col } from "react-bootstrap"
@@ -13,10 +12,10 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Box from "./Box"
 
 const { RangePicker } = DatePicker;
-
 const dateFormat = "YYYY-MM-DD";
 
-function SearchProfile({ searchProfileAc, profile,filterProfileMedia }) {
+function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
+
     const [loading, setLoading] = useState(false)
     const [userName, setUserName] = useState("")
     const [error, setError] = useState(false)
@@ -73,7 +72,7 @@ function SearchProfile({ searchProfileAc, profile,filterProfileMedia }) {
         setEndDate(endDate);
     };
 
-    const clearMarketPlace = (e) => {
+    const filterProfileFunc = (e) => {
         filterProfileMedia(false)
     };
 
@@ -195,7 +194,7 @@ function SearchProfile({ searchProfileAc, profile,filterProfileMedia }) {
                                         <Col className="d-flex align-items-end" xs={12} xl={2} md={6}>
                                             {searchLoading ? (
                                                 <Button
-                                                style={{height:44}}
+                                                    style={{ height: 44 }}
                                                     type="button"
                                                     variant="primary"
                                                     className="fltr-hpr"
@@ -204,7 +203,7 @@ function SearchProfile({ searchProfileAc, profile,filterProfileMedia }) {
                                                 </Button>
                                             ) : (
                                                 <Button
-                                                style={{height:44}}
+                                                    style={{ height: 44 }}
                                                     type="submit"
                                                     variant="primary"
                                                     className="fltr-hpr"
@@ -213,13 +212,13 @@ function SearchProfile({ searchProfileAc, profile,filterProfileMedia }) {
                                                 </Button>
                                             )}
                                             {clearLoading ? (
-                                                <Button style={{height:44}} variant="gray" className="fltr-hpr btn-primary">
+                                                <Button style={{ height: 44 }} variant="gray" className="fltr-hpr btn-primary">
                                                     <Loader />
                                                 </Button>
                                             ) : (
                                                 <Button
-                                                style={{height:44}}
-                                                    onClick={clearMarketPlace}
+                                                    style={{ height: 44 }}
+                                                    onClick={filterProfileFunc}
                                                     variant="gray"
                                                     className="fltr-hpr btn-primary"
                                                 >
