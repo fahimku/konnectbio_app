@@ -71,8 +71,9 @@ export default function Box({ data }) {
         <CardMedia
           component="video"
           sx={{ objectFit: "cover", borderRadius: 2 }}
-          controls={true}
-          loop
+          autoPlay={false}
+          // controls={true}
+         // loop
           height="450"
           image={item.media_url}
           alt="Paella dish"
@@ -115,9 +116,9 @@ export default function Box({ data }) {
                 <CardMedia
                   component="video"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
-                  autoPlay
+                  autoPlay={false}
                   controls
-                  loop
+              //    loop
                   height="450"
                   image={it2.media_url}
                   alt="Paella dish"
