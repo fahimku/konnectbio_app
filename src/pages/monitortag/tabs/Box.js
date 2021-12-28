@@ -116,7 +116,7 @@ export default function Box({ data }) {
                 <CardMedia
                   component="video"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
-                  autoPlay
+                  autoPlay={false}
                   controls
                   loop
                   height="450"

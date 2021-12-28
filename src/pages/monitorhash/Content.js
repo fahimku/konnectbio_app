@@ -92,7 +92,7 @@ export default function Content({ insta, accessToken }) {
             return <img src={item.media_url} class="card-img-top" alt="..."/>
         }
         if(item.media_type=="VIDEO"){
-            return <video class="card-img-top"   src={item.media_url}/>
+            return <video class="card-img-top" controls autoPlay  src={item.media_url}/>
         }
         return null
     }
