@@ -4,17 +4,23 @@ import * as instagramActions from "../../../actions/instagramAnalytic";
 import Loader from "../../../components/Loader/Loader";
 import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
-import InfiniteScroll from "react-infinite-scroll-component";
+// import InfiniteScroll from "react-infinite-scroll-component";
+import InfiniteScroll from "react-infinite-scroller";
+
 import Select from "react-select";
 // import { DatePicker } from "antd";
 // const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
 
-function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
+function InstagramDataComponent({
+  getInstagramAnalytic,
+  instagramAnalytic,
+  filterInstagramAnalytic,
+}) {
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
   const [sortBy, setSortBy] = useState({
-    value: "date",
+    value: "timestamp",
     label: "DATE",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
@@ -22,46 +28,51 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
   // const toDate = moment(new Date()).format("YYYY-MM-DD");
   // const [startDate, setStartDate] = useState(fromDate);
   // const [endDate, setEndDate] = useState(toDate);
+  const [showScroll, setShowScroll] = useState(false);
+
+  const checkScrollTop = () => {
+    if (!showScroll && window.pageYOffset > 400) {
+      setShowScroll(true);
+    } else if (showScroll && window.pageYOffset <= 400) {
+      setShowScroll(false);
+    }
+  };
+
+  const scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  window.addEventListener("scroll", checkScrollTop);
 
   useEffect(() => {
     getInstagramAnalytic();
   }, []);
   function onSubmitData(e) {
     e.preventDefault();
-    // setSearchLoading(true);
-    // getTags(
-    //   {
-    //     from_date: startDate.toString(),
-    //     to_date: endDate.toString(),
-    //     sort: sortBy.value,
-    //     order_by: orderBy.value,
-    //   },
-    //   1
-    // ).then(() => {
-    //   setSearchLoading(false);
-    // });
+    setSearchLoading(true);
+    filterInstagramAnalytic({
+      sort: sortBy.value,
+      order_by: orderBy.value,
+    }).then(() => {
+      setSearchLoading(false);
+    });
   }
-  const clearMarketPlace = (e) => {
+  const clearInstagramFilter = (e) => {
     setClearLoading(true);
-    setSortBy({ value: "date", label: "DATE" });
+    setSortBy({ value: "timestamp", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
-    // getTags({
-    //   from_date: fromDate.toString(),
-    //   to_date: toDate.toString(),
-    //   sort: "followers",
-    //   order_by: "desc",
-    // }).then(() => {
-    //   setClearLoading(false);
-    // });
+    filterInstagramAnalytic(false).then(() => {
+      setClearLoading(false);
+    });
   };
 
   const sortByOptions = [
-    { value: "likes", label: "LIKE" },
-    { value: "comments", label: "COMMENT" },
+    { value: "like_count", label: "LIKE" },
+    { value: "comments_count", label: "COMMENT" },
     { value: "engagement", label: "ENGAGEMENT" },
     { value: "impressions", label: "IMPRESSIONS" },
     { value: "reach", label: "REACH" },
-    { value: "date", label: "DATE" },
+    { value: "timestamp", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -85,15 +96,18 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
       },
     }),
   };
-
   return (
     <>
       <div class="instagram-analytics">
-        <Row className="post-analytics-tab mb-4">
-          <Col xs={12} xl={12} md={12}>
-            <form onSubmit={onSubmitData}>
-              <Row>
-                {/* <Col xs={12} xl={2} md={6}>
+        {instagramAnalytic?.loading ? (
+          <Loader size={30} />
+        ) : instagramAnalytic?.insta_data?.length > 0 ? (
+          <>
+            <Row className="post-analytics-tab mb-4">
+              <Col xs={12} xl={12} md={12}>
+                <form onSubmit={onSubmitData}>
+                  <Row>
+                    {/* <Col xs={12} xl={2} md={6}>
                   <p>Select Start Date / End Date</p>
                   <RangePicker
                     key={4}
@@ -126,95 +140,98 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
                     onChange={dateRangePickerChanger}
                   />
                 </Col> */}
-                <Col xs={12} xl={2} md={6}>
-                  <p>Sort By</p>
-                  <Select
-                    value={sortBy}
-                    name="sort"
-                    className="selectCustomization"
-                    options={sortByOptions}
-                    onChange={(e) => {
-                      setSortBy(e);
-                    }}
-                    placeholder="Sort By"
-                    styles={style}
-                  />
-                </Col>
-                <Col xs={12} xl={2} md={6}>
-                  <p>Order By</p>
-                  <Select
-                    value={orderBy}
-                    name="order"
-                    className="selectCustomization"
-                    options={sortOrderOptions}
-                    onChange={(e) => {
-                      setOrderBy(e);
-                    }}
-                    placeholder="Order By"
-                    styles={style}
-                  />
-                </Col>
-                <Col className="d-flex" xs={12} xl={2} md={6}>
-                  {searchLoading ? (
-                    <Button
-                      type="button"
-                      variant="primary"
-                      className="fltr-hpr"
-                    >
-                      <Loader />
-                    </Button>
-                  ) : (
-                    <Button
-                      type="submit"
-                      variant="primary"
-                      className="fltr-hpr"
-                    >
-                      Search
-                    </Button>
-                  )}
-                  {clearLoading ? (
-                    <Button variant="gray" className="fltr-hpr btn-primary">
-                      <Loader />
-                    </Button>
-                  ) : (
-                    <Button
-                      // onClick={clearMarketPlace}
-                      variant="gray"
-                      className="fltr-hpr btn-primary"
-                    >
-                      Reset
-                    </Button>
-                  )}
-                </Col>
-              </Row>
-            </form>
-          </Col>
-        </Row>
-        <hr />
-        {instagramAnalytic?.loading ? (
-          <Loader size={30} />
-        ) : instagramAnalytic?.insta_data?.length > 0 ? (
-          <>
+                    <Col xs={12} xl={2} md={6}>
+                      <p>Sort By</p>
+                      <Select
+                        value={sortBy}
+                        name="sort"
+                        className="selectCustomization"
+                        options={sortByOptions}
+                        onChange={(e) => {
+                          setSortBy(e);
+                        }}
+                        placeholder="Sort By"
+                        styles={style}
+                      />
+                    </Col>
+                    <Col xs={12} xl={2} md={6}>
+                      <p>Order By</p>
+                      <Select
+                        value={orderBy}
+                        name="order"
+                        className="selectCustomization"
+                        options={sortOrderOptions}
+                        onChange={(e) => {
+                          setOrderBy(e);
+                        }}
+                        placeholder="Order By"
+                        styles={style}
+                      />
+                    </Col>
+                    <Col className="d-flex" xs={12} xl={2} md={6}>
+                      {searchLoading ? (
+                        <Button
+                          type="button"
+                          variant="primary"
+                          className="fltr-hpr"
+                        >
+                          <Loader />
+                        </Button>
+                      ) : (
+                        <Button
+                          type="submit"
+                          variant="primary"
+                          className="fltr-hpr"
+                        >
+                          Search
+                        </Button>
+                      )}
+                      {clearLoading ? (
+                        <Button variant="gray" className="fltr-hpr btn-primary">
+                          <Loader />
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={clearInstagramFilter}
+                          variant="gray"
+                          className="fltr-hpr btn-primary"
+                        >
+                          Reset
+                        </Button>
+                      )}
+                    </Col>
+                  </Row>
+                </form>
+              </Col>
+            </Row>
+            <hr />
             <InfiniteScroll
-              dataLength={instagramAnalytic?.insta_data?.length}
-              next={() => {
-                getInstagramAnalytic(instagramAnalytic?.pagination?.next, true);
-              }}
+              // getScrollParent={() => document.getElementById("scrollableDiv")}
+              pageStart={0}
+              className="af-rm-mn row"
+              loadMore={() =>
+                getInstagramAnalytic(instagramAnalytic?.pagination?.next, true)
+              }
               hasMore={instagramAnalytic?.pagination?.next ? true : false}
+              threshold={5}
               loader={
-                <div
-                  style={{
-                    height: 100,
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Loader size={40} />
+                <div className="col-md-12">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: 5,
+                    }}
+                  >
+                    <i
+                      className="la la-spinner la-spin"
+                      style={{ fontSize: 40 }}
+                    />
+                  </div>
                 </div>
               }
-              // pullDownToRefreshThreshold={50}
+              useWindow={false}
             >
               <Row>
                 {" "}
@@ -226,7 +243,8 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
                           <div className="any-post-image">
                             <div className="any-image-box">
                               <div className="any-image-box-iner">
-                                {record.media_type === "IMAGE" ? (
+                                {record.media_type === "IMAGE" ||
+                                record.media_type === "CAROUSEL_ALBUM" ? (
                                   <img
                                     src={record.media_url}
                                     className="img-fluid media-image"
@@ -234,8 +252,9 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
                                   />
                                 ) : (
                                   <video
-                                    className="img-fluid media-image"
-                                    controlsList="nodownload"
+                                    className="media-video media-image"
+                                    // controlsList="nodownload"
+                                    controls
                                   >
                                     <source
                                       src={record.media_url}
@@ -289,6 +308,12 @@ function InstagramDataComponent({ getInstagramAnalytic, instagramAnalytic }) {
                 ))}
               </Row>
             </InfiniteScroll>
+
+            <i
+              class="fa fa fa-angle-up scrollTop"
+              onClick={scrollTop}
+              style={{ height: 40, display: showScroll ? "flex" : "none" }}
+            ></i>
           </>
         ) : (
           <div
