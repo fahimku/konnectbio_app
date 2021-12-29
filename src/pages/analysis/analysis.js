@@ -3,7 +3,7 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
-import LinkAnalytic from "./Linkperformance/linkanalytics";
+// import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
 import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 import InstagramAnalytics from "./instagramPerformance/instagramAnalytics";
