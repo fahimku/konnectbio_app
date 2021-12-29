@@ -576,3 +576,13 @@ h1 small {
   right: 10px;
   bottom: 10px;
 }
+.video-icon {
+  position: absolute;
+  right: 8px;
+  top: 7px;
+  color: white;
+}
+.media-video:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

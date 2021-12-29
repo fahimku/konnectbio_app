@@ -22,7 +22,6 @@ export default function instagramAnalytic(state = initialState, action) {
       };
     case GET_INSTAGRAM_PAGINATION:
       return {
-        ...action.payload,
         insta_data: [...state.insta_data, ...action.payload.message.data],
         insta_data2: [...state.insta_data, ...action.payload.message.data],
         pagination: action.payload.message.paging,

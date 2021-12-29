@@ -45,7 +45,10 @@ function InstagramDataComponent({
   window.addEventListener("scroll", checkScrollTop);
 
   useEffect(() => {
-    getInstagramAnalytic();
+    getInstagramAnalytic().then(() => {
+      setClearLoading(false);
+      console.log();
+    });
   }, []);
   function onSubmitData(e) {
     e.preventDefault();
@@ -263,6 +266,9 @@ function InstagramDataComponent({
                                   </video>
                                 )}
                               </div>
+                              {record.media_type === "VIDEO" ? (
+                                <i class="fa fa-play video-icon"></i>
+                              ) : null}
                             </div>
                           </div>
                         </div>
