@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FILTER_PROFILE_MEDIA, SEARCH_PROFILE, GET_PROFILES} from "./type";
+import { FILTER_PROFILE_MEDIA, SEARCH_PROFILE, GET_PROFILES,DELETE_PROFILES} from "./type";
 import config from "../config";
 /* Add Profile**/
 
@@ -19,8 +19,14 @@ export const createProfile = (profileName) => async (dispatch) => {
 };
 
 export const deleteProfile = (_id) => async (dispatch) => {
-    return axios.post(`${config.hostApi}/v1/graph/monitorProfile/removeProfileFromList`, {
+ 
+     axios.post(`${config.hostApi}/v1/graph/monitorProfile/removeProfileFromList`, {
         _id
+    })
+
+    dispatch({
+        type: DELETE_PROFILES,
+        payload: _id
     })
     
 };

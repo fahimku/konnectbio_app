@@ -51,7 +51,7 @@ function HashtagsList({
             if (result.isConfirmed) {
                 deleteProfile(chipToDelete._id).then((res) => {
                     toast.success('Profile Deleted Successfully');
-                   // getProfiles();
+                   
                 });
             }
         });
@@ -215,7 +215,6 @@ function HashtagsList({
         return <Loader size={30} />;
     }
 }
-
 function mapStateToProps({ profiles }) {
     return { profiles };
 }

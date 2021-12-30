@@ -18,6 +18,7 @@ function SearchProfile({
   getProfiles,
   profiles,
 }) {
+
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(false);
