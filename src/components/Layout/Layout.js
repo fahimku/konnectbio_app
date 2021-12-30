@@ -39,7 +39,7 @@ import MonitorHashTags from "../../pages/monitorhash/index";
 import MonitorMentions from "../../pages/monitortag/index";
 import ChatPage from "../../pages/chat";
 import AllPosts from "../../pages/allposts/BioShop";
-import SearchProfile from "../../pages/searchProfile/SearchProfile";
+import SearchProfile from "../../pages/searchProfile/index";
 
 export const history = createBrowserHistory({
   forceRefresh: false,

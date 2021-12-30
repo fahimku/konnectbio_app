@@ -16,6 +16,7 @@ const portApi = process.env.NODE_ENV === "development" ? "" : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
 const baseURLApiToken = `${hostApi}${portApi ? `:${portApi}` : ``}`;
 
+
 const redirectURL =
   process.env.NODE_ENV === "development"
     ? "https://app.konnect.bio"

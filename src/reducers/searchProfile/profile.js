@@ -1,5 +1,4 @@
 import { FILTER_PROFILE_MEDIA, SEARCH_PROFILE } from "../../actions/type";
-
 const initialState = {
 };
 
