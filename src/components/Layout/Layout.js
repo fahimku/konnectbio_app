@@ -40,6 +40,7 @@ import MonitorMentions from "../../pages/monitortag/index";
 import ChatPage from "../../pages/chat";
 import AllPosts from "../../pages/allposts/BioShop";
 import SearchProfile from "../../pages/searchProfile/SearchProfile";
+import AllPostDataComponent from "../../pages/myposts/MyPosts";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -207,7 +208,12 @@ class Layout extends React.Component {
                         component={ComingSoon}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
-                      <Route path="/app/all/posts" exact component={AllPosts} />
+                      {/* <Route path="/app/all/posts" exact component={AllPosts} /> */}
+                      <Route
+                        path="/app/my/posts"
+                        exact
+                        component={AllPostDataComponent}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>

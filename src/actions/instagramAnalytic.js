@@ -10,7 +10,7 @@ export const getInstagramAnalytic =
   (url, next_media) => async (dispatch, getState) => {
     if (getState().instagramAnalytic.success || url) {
       const res = await axios.post(
-        `${config.baseURLApi}/graph/ig/analytics/getall`,
+        `${config.baseURLApi}/graph/ig/analytics/media`,
         {
           url: url,
           next_media: next_media,
