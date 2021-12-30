@@ -1112,14 +1112,14 @@ margin:0 auto !important;
 .analytic-box.campaign-box .analytic-caption{
   padding-left:20px;
 }
-.campaign-box .camp-row .any-post-img-col .any-post-image:after{
+/* .campaign-box .camp-row .any-post-img-col .any-post-image:after{
   padding-top:60%;
-}
+} */
 .campaign-box .camp-row .any-post-img-col .any-post-image .any-image-box{
   border:none;
 }
 .campaign-box .camp-row .any-post-img-col .any-post-image .any-image-box-iner img{
-  object-position: center center;
+  object-position: center top;
   border-radius: 0.3rem !important;
   border: none;
   padding: 0;
@@ -1290,6 +1290,19 @@ margin:0 auto !important;
 }
 .cr-album{
   z-index: 0 !important;
+}
+
+
+
+.search-profile-container{
+  padding-left:20px !important;
+  padding-right:20px !important;
+}
+
+.inst-prof-header{
+  background-color:#FFF;
+  box-shadow: 0px 0px 2px 1px #e4e7ed;
+  margin-top:24px;
 }
 
 /**Media Queries Iftikhar */

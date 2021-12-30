@@ -124,6 +124,15 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                                 </Row>
                             </CardContent>
                         </Card>
+
+
+                        
+
+
+
+
+
+
                         <Row className="post-analytics-tab mb-4 mt-3">
                             <Col xs={12} xl={12} md={12}>
                                 <form onSubmit={onSubmitData}>
@@ -235,7 +244,13 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
 
     return (
         <div className="container-fluid">
-            <div className="d-flex flex-row hashtag-box mt-3">
+            <Row className='mt-4'>
+                <div class="col-md-12"><h4 class="page-title">Search Profile</h4></div>
+            </Row>
+
+            <div className='search-profile-container container-fluid'>
+                <Row>
+                <div className="d-flex col-md-8 pl-0 pr-0 hashtag-box">
                 <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
                 <input
                     style={{
@@ -282,6 +297,9 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                     </Button>
                 )}
             </div>
+                </Row>
+            </div>
+
             {!loading ? renderData() : (
                 <div className='mt-5'>
                     <Loader size={30} />
