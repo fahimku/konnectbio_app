@@ -16,6 +16,7 @@ function InstagramDataComponent({
   getInstagramAnalytic,
   instagramAnalytic,
   filterInstagramAnalytic,
+  type,
 }) {
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
@@ -47,7 +48,6 @@ function InstagramDataComponent({
   useEffect(() => {
     getInstagramAnalytic().then(() => {
       setClearLoading(false);
-      console.log();
     });
   }, []);
   function onSubmitData(e) {
@@ -106,11 +106,12 @@ function InstagramDataComponent({
           <Loader size={30} />
         ) : instagramAnalytic?.insta_data?.length > 0 ? (
           <>
-            <Row className="post-analytics-tab mb-4">
-              <Col xs={12} xl={12} md={12}>
-                <form onSubmit={onSubmitData}>
-                  <Row>
-                    {/* <Col xs={12} xl={2} md={6}>
+            {!instagramAnalytic?.pagination?.next ? (
+              <Row className="post-analytics-tab mb-4">
+                <Col xs={12} xl={12} md={12}>
+                  <form onSubmit={onSubmitData}>
+                    <Row>
+                      {/* <Col xs={12} xl={2} md={6}>
                   <p>Select Start Date / End Date</p>
                   <RangePicker
                     key={4}
@@ -143,70 +144,76 @@ function InstagramDataComponent({
                     onChange={dateRangePickerChanger}
                   />
                 </Col> */}
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Sort By</p>
-                      <Select
-                        value={sortBy}
-                        name="sort"
-                        className="selectCustomization"
-                        options={sortByOptions}
-                        onChange={(e) => {
-                          setSortBy(e);
-                        }}
-                        placeholder="Sort By"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col xs={12} xl={2} md={6}>
-                      <p>Order By</p>
-                      <Select
-                        value={orderBy}
-                        name="order"
-                        className="selectCustomization"
-                        options={sortOrderOptions}
-                        onChange={(e) => {
-                          setOrderBy(e);
-                        }}
-                        placeholder="Order By"
-                        styles={style}
-                      />
-                    </Col>
-                    <Col className="d-flex" xs={12} xl={2} md={6}>
-                      {searchLoading ? (
-                        <Button
-                          type="button"
-                          variant="primary"
-                          className="fltr-hpr"
-                        >
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <Button
-                          type="submit"
-                          variant="primary"
-                          className="fltr-hpr"
-                        >
-                          Search
-                        </Button>
-                      )}
-                      {clearLoading ? (
-                        <Button variant="gray" className="fltr-hpr btn-primary">
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={clearInstagramFilter}
-                          variant="gray"
-                          className="fltr-hpr btn-primary"
-                        >
-                          Reset
-                        </Button>
-                      )}
-                    </Col>
-                  </Row>
-                </form>
-              </Col>
-            </Row>
+                      <Col xs={12} xl={2} md={6}>
+                        <p>Sort By</p>
+                        <Select
+                          value={sortBy}
+                          name="sort"
+                          className="selectCustomization"
+                          options={sortByOptions}
+                          onChange={(e) => {
+                            setSortBy(e);
+                          }}
+                          placeholder="Sort By"
+                          styles={style}
+                        />
+                      </Col>
+                      <Col xs={12} xl={2} md={6}>
+                        <p>Order By</p>
+                        <Select
+                          value={orderBy}
+                          name="order"
+                          className="selectCustomization"
+                          options={sortOrderOptions}
+                          onChange={(e) => {
+                            setOrderBy(e);
+                          }}
+                          placeholder="Order By"
+                          styles={style}
+                        />
+                      </Col>
+                      <Col className="d-flex" xs={12} xl={2} md={6}>
+                        {searchLoading ? (
+                          <Button
+                            type="button"
+                            variant="primary"
+                            className="fltr-hpr"
+                          >
+                            <Loader />
+                          </Button>
+                        ) : (
+                          <Button
+                            type="submit"
+                            variant="primary"
+                            className="fltr-hpr"
+                          >
+                            Search
+                          </Button>
+                        )}
+                        {clearLoading ? (
+                          <Button
+                            variant="gray"
+                            className="fltr-hpr btn-primary"
+                          >
+                            <Loader />
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={clearInstagramFilter}
+                            variant="gray"
+                            className="fltr-hpr btn-primary"
+                          >
+                            Reset
+                          </Button>
+                        )}
+                      </Col>
+                    </Row>
+                  </form>
+                </Col>
+              </Row>
+            ) : (
+              <Loader size={30} />
+            )}
             <hr />
             <InfiniteScroll
               // getScrollParent={() => document.getElementById("scrollableDiv")}
@@ -236,17 +243,17 @@ function InstagramDataComponent({
               }
               useWindow={false}
             >
-              <Row>
-                {" "}
-                {instagramAnalytic?.insta_data?.map((record) => (
-                  <Col xs={12} xl={4} md={6}>
-                    <div className="card analytic-box">
-                      <div className="card-row row">
-                        <div className="any-post-img-col col-5">
-                          <div className="any-post-image">
-                            <div className="any-image-box">
-                              <div className="any-image-box-iner">
-                                {record.media_type === "IMAGE" ||
+              {" "}
+              {instagramAnalytic?.insta_data?.map((record) => (
+                <Col xs={12} xl={4} md={6}>
+                  <div className="card analytic-box">
+                    <div className="card-row row">
+                      <div className="any-post-img-col col-5">
+                        <div className="any-post-image">
+                          <div className="any-image-box">
+                            <div className="any-image-box-iner">
+                              {type !== "post" ? (
+                                record.media_type === "IMAGE" ||
                                 record.media_type === "CAROUSEL_ALBUM" ? (
                                   <img
                                     src={record.media_url}
@@ -264,55 +271,77 @@ function InstagramDataComponent({
                                       type="video/mp4"
                                     ></source>
                                   </video>
-                                )}
-                              </div>
-                              {record.media_type === "VIDEO" ? (
-                                <i class="fa fa-play video-icon"></i>
-                              ) : null}
+                                )
+                              ) : (
+                                <a href={record.permalink} target="_blank">
+                                  {record.media_type === "IMAGE" ||
+                                  record.media_type === "CAROUSEL_ALBUM" ? (
+                                    <img
+                                      src={record.media_url}
+                                      className="img-fluid media-image"
+                                      alt={record.media_type}
+                                    />
+                                  ) : (
+                                    <video
+                                      className="media-video media-image"
+                                      // controlsList="nodownload"
+                                      controls
+                                    >
+                                      <source
+                                        src={record.media_url}
+                                        type="video/mp4"
+                                      ></source>
+                                    </video>
+                                  )}
+                                </a>
+                              )}
                             </div>
+                            {record.media_type === "VIDEO" ? (
+                              <i class="fa fa-play video-icon"></i>
+                            ) : null}
                           </div>
                         </div>
-                        <div className="col-7 analytic-caption">
-                          <div className="row count-main-box">
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Like Count</h5>
-                              <h3 className="count">{record.like_count}</h3>
-                            </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Comment Count</h5>
-                              <h3 className="count">{record.comments_count}</h3>
-                            </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Engagement</h5>
-                              <h3 className="count">
-                                {record.insights[0].engagement}
-                              </h3>
-                            </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Impressions</h5>
-                              <h3 className="count">
-                                {record.insights[1].impressions}
-                              </h3>
-                            </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Reach</h5>
-                              <h3 className="count">
-                                {record.insights[2].reach}
-                              </h3>
-                            </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Posted Date</h5>
-                              <h3 className="count">
-                                {moment(record.timestamp).format("YYYY-MM-DD")}
-                              </h3>
-                            </div>
+                      </div>
+                      <div className="col-7 analytic-caption">
+                        <div className="row count-main-box">
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Like Count</h5>
+                            <h3 className="count">{record.like_count}</h3>
+                          </div>
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Comment Count</h5>
+                            <h3 className="count">{record.comments_count}</h3>
+                          </div>
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Engagement</h5>
+                            <h3 className="count">
+                              {record.insights[0].engagement}
+                            </h3>
+                          </div>
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Impressions</h5>
+                            <h3 className="count">
+                              {record.insights[1].impressions}
+                            </h3>
+                          </div>
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Reach</h5>
+                            <h3 className="count">
+                              {record.insights[2].reach}
+                            </h3>
+                          </div>
+                          <div className="col-12 count-box">
+                            <h5 className="count-title">Posted Date</h5>
+                            <h3 className="count">
+                              {moment(record.timestamp).format("YYYY-MM-DD")}
+                            </h3>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </Col>
-                ))}
-              </Row>
+                  </div>
+                </Col>
+              ))}
             </InfiniteScroll>
 
             <i

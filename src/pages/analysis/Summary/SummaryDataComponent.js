@@ -96,11 +96,7 @@ class SummaryDataComponent extends React.Component {
             <div className="summary_box_main col-md-12">
               <div
                 className={`summary_block_profile ${
-                  this.props.packageName === "Influencer" ||
-                  this.props.packageName === "Micro Influencer" ||
-                  this.props.packageName === "Influencer Plus"
-                    ? "summary_height"
-                    : ""
+                  this.props.packageName === "Premium" ? "summary_height" : ""
                 }`}
               >
                 <div className="summary_content_profile">

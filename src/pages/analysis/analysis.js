@@ -61,10 +61,11 @@ class Analysis extends React.Component {
                             this.toggleSecondTabs("tab24");
                           }}
                         >
-                          <span>Instagram Performance</span>
+                          <span>Post Performance</span>
                         </NavLink>
                       </NavItem>
                     ) : null}
+
                     <NavItem>
                       <NavLink
                         className={classnames({
@@ -74,9 +75,10 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Post Performance</span>
+                        <span>Bioshop Performance</span>
                       </NavLink>
                     </NavItem>
+
                     {/* {this.state.packageName === "Basic" ? ( */}
                     <NavItem>
                       <NavLink
