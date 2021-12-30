@@ -85,6 +85,14 @@ function SearchProfile({
       order_by: orderBy.value,
     });
   }
+  function intlFormat(num) {
+    return new Intl.NumberFormat().format(Math.round(num * 10) / 10);
+  }
+  function numberFormat(num) {
+    if (num >= 1000000) return intlFormat(num / 1000000) + "M";
+    if (num >= 1000) return intlFormat(num / 1000) + "k";
+    return intlFormat(num);
+  }
 
   function renderData() {
     if (!error) {
@@ -137,7 +145,7 @@ function SearchProfile({
                           marginRight: 2,
                         }}
                       >
-                        {profile.followers_count} Followers
+                        {numberFormat(profile.followers_count)} Followers
                       </Typography>
                       <Typography
                         variant="body"
@@ -148,7 +156,7 @@ function SearchProfile({
                           marginRight: 2,
                         }}
                       >
-                        {profile.follows_count} Following
+                        {numberFormat(profile.follows_count)} Following
                       </Typography>
                       <Typography
                         variant="body"
@@ -159,7 +167,7 @@ function SearchProfile({
                           marginRight: 2,
                         }}
                       >
-                        {profile.media_count} Posts
+                        {numberFormat(profile.media_count)} Posts
                       </Typography>
                     </div>
                     <div className="mt-2">
