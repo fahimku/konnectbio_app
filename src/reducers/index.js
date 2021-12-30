@@ -25,7 +25,8 @@ import chat from "./chat";
 import hashtags from "./hashtags/hashtags";
 import hashtag from "./hashtags/hashtag";
 import tags from "./mention/tags";
-import profile from "./searchProfile/profile";
+import profile from "./searchProfile/profiles";
+import profiles from "./searchProfile/addProfile";
 import instagramAnalytic from "./analytics/instagramAnalytic";
 
 export default (history) =>
@@ -57,5 +58,6 @@ export default (history) =>
     hashtag,
     tags,
     profile,
+    profiles,
     instagramAnalytic,
   });

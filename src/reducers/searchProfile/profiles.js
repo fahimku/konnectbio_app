@@ -2,7 +2,7 @@ import { FILTER_PROFILE_MEDIA, SEARCH_PROFILE } from "../../actions/type";
 const initialState = {
 };
 
-export default function profile(state = initialState, action) {
+export default function profiles(state = initialState, action) {
   switch (action.type) {
     case SEARCH_PROFILE:
       return {

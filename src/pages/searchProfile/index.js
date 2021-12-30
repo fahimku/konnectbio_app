@@ -5,19 +5,17 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import SearchProfile from "./SearchProfile";
 import AddProfile from "./AddProfile"
-
 class MainSearchProfile extends React.Component {
-
     constructor(props) {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
         let username = userInfo.username;
         super(props);
         this.toggleTabs = this.toggleTabs.bind(this);
         this.state = {
-            activeTab: "profiles",
+            activeTab: "addprofile",
             username: username,
-            profilestab: [],
-            profilesLoading: true,
+            addprofiletab: [],
+            addprofileLoading: true,
         };
     }
 
@@ -40,25 +38,25 @@ class MainSearchProfile extends React.Component {
                                     <NavItem>
                                         <NavLink
                                             className={classnames({
-                                                active: this.state.activeTab === "profiles",
+                                                active: this.state.activeTab === "addprofile",
                                             })}
                                             onClick={() => {
-                                                this.toggleTabs("profiles");
+                                                this.toggleTabs("addprofile");
                                             }}
                                         >
-                                            <span>Profiles</span>
+                                            <span>Add Profile</span>
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
                                         <NavLink
                                             className={classnames({
-                                                active: this.state.activeTab === "accounting",
+                                                active: this.state.activeTab === "profile",
                                             })}
                                             onClick={() => {
-                                                this.toggleTabs("accounting");
+                                                this.toggleTabs("profile");
                                             }}
                                         >
-                                            <span>Accounting</span>
+                                            <span>Profile</span>
                                         </NavLink>
                                     </NavItem>
                                 </Nav>
@@ -66,19 +64,18 @@ class MainSearchProfile extends React.Component {
                                     className="affiliate_tab_ift"
                                     activeTab={this.state.activeTab}
                                 >
-                                    <TabPane tabId="profiles">
-                                        {this.state.activeTab === "profiles" ? (
-                                            <SearchProfile
-                                                title="profiles"
-                                                type="profiles"
+                                    <TabPane tabId="addprofile">
+                                        {this.state.activeTab === "addprofile" ? (
+                                            <AddProfile
+
                                             />
                                         ) : null}
                                     </TabPane>
-                                    <TabPane tabId="accounting">
-                                        {this.state.activeTab === "accounting" ? (
+                                    <TabPane tabId="profile">
+                                        {this.state.activeTab === "profile" ? (
                                             <SearchProfile
-                                                title="accounting"
-                                                type="accounting"
+                                                title="profile"
+                                                type="profile"
                                             />
                                         ) : null}
                                     </TabPane>

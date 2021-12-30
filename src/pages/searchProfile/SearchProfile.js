@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as profileActions from "../../actions/searchProfile"
 import { connect } from 'react-redux'
 import { Row, Button, Col } from "react-bootstrap"
@@ -12,7 +12,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Box from "./Box"
 
 
-function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
+function SearchProfile({ searchProfileAc, profile, filterProfileMedia, getProfiles, profiles }) {
 
     const [loading, setLoading] = useState(false)
     const [userName, setUserName] = useState("")
@@ -20,9 +20,7 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
 
     const [searchLoading, setSearchLoading] = useState(false);
     const [clearLoading, setClearLoading] = useState(false);
-    const [sortBy, setSortBy] = useState({
-        value: "timestamp", label: "DATE"
-    });
+    const [sortBy, setSortBy] = useState({ value: "timestamp", label: "DATE" });
     const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
     const fromDate = moment().subtract(4, 'year').format("YYYY-MM-DD");
     const toDate = moment(new Date()).format("YYYY-MM-DD");
@@ -30,9 +28,15 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
     const [endDate, setEndDate] = useState(toDate);
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
+    useEffect(() => {
+        getProfiles().then(() => {
+            setLoading(false);
+        });
+    }, []);
+
     const searchProfile = () => {
         setLoading(true)
-        searchProfileAc(userName)
+        searchProfileAc(userName.label)
             .then(() => {
                 setError(false)
                 setLoading(false)
@@ -63,13 +67,6 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
         { value: "asc", label: "ASC" },
         { value: "desc", label: "DESC" },
     ];
-
-    const dateRangePickerChanger = (value, dataString) => {
-        const startDate = dataString[0];
-        const endDate = dataString[1];
-        setStartDate(startDate);
-        setEndDate(endDate);
-    };
 
     const filterProfileFunc = (e) => {
         filterProfileMedia(false)
@@ -124,14 +121,6 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
                                 </Row>
                             </CardContent>
                         </Card>
-
-
-                        
-
-
-
-
-
 
                         <Row className="post-analytics-tab mb-4 mt-3">
                             <Col xs={12} xl={12} md={12}>
@@ -241,64 +230,69 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
             <UpgradeAccount />
         );
     }
-
     return (
         <div className="container-fluid">
-            <Row className='mt-4'>
-                <div class="col-md-12"><h4 class="page-title">Search Profile</h4></div>
+            <Row className="post-analytics-tab mb-4">
+                <Col xs={12} xl={12} md={12}>
+                    <form onSubmit={onSubmitData}>
+                        <Row>
+                            <Col xs={12} xl={2} md={6}>
+                                <p>Profiles</p>
+                                <Select
+                                    value={userName}
+                                    name="sort"
+                                    className="selectCustomization"
+                                    options={[...profiles.Data].map((item) => {
+                                        return {
+                                            value: item._id,
+                                            label: item.profile_name
+                                        }
+                                    })}
+                                    onChange={(e) => {
+                                        setUserName(e);
+                                    }}
+                                    placeholder="Select Brand"
+                                    styles={style}
+                                />
+                            </Col>
+                            <Col xs={12} xl={2} md={6}>
+                                {loading ? (
+                                    <Button
+                                        style={{
+                                            borderTopLeftRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            width: "15%",
+                                        }}
+                                        variant="primary"
+                                        className="btn-block"
+                                    >
+                                        <Loader />
+                                    </Button>
+                                ) : (
+                                    <Button
+                                        style={{
+                                            borderTopLeftRadius: 0,
+                                            borderBottomLeftRadius: 0,
+                                            width: "15%",
+                                        }}
+                                        variant="primary"
+                                        type="submit"
+                                        className="btn-block"
+
+                                        onClick={searchProfile}
+                                    >
+                                        Search
+                                    </Button>
+                                )}
+                            </Col>
+                        </Row>
+                    </form>
+                </Col>
             </Row>
+            <hr />
 
-            <div className='search-profile-container container-fluid'>
-                <Row>
-                <div className="d-flex col-md-8 pl-0 pr-0 hashtag-box">
-                <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
-                <input
-                    style={{
-                        borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0,
-                        width: "85%",
-                    }}
-                    onChange={(e) => {
-                        setUserName(e.target.value);
-                    }}
-                    type="text"
-                    name="name"
-                    placeholder="Enter instagram name"
-                    class="form-control comment-field"
-                    required=""
-                    value={userName}
-                />
-                {loading ? (
-                    <Button
-                        style={{
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0,
-                            width: "15%",
-                        }}
-                        variant="primary"
-                        className="btn-block"
-                    >
-                        <Loader />
-                    </Button>
-                ) : (
-                    <Button
-                        style={{
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0,
-                            width: "15%",
-                        }}
-                        variant="primary"
-                        type="submit"
-                        className="btn-block"
 
-                        onClick={searchProfile}
-                    >
-                        Search
-                    </Button>
-                )}
-            </div>
-                </Row>
-            </div>
+
 
             {!loading ? renderData() : (
                 <div className='mt-5'>
@@ -308,8 +302,7 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia }) {
         </div>
     )
 }
-
-function mapStateToProps({ profile }) {
-    return { profile }
+function mapStateToProps({ profile, profiles }) {
+    return { profile, profiles }
 }
 export default connect(mapStateToProps, profileActions)(SearchProfile)
