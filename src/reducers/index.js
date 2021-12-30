@@ -29,6 +29,7 @@ import profile from "./searchProfile/profiles";
 import profiles from "./searchProfile/addProfile";
 import instagramAnalytic from "./analytics/instagramAnalytic";
 import instagramUserData from "./instagramUserData";
+import instagramPostData from "./myposts/instagramPostData";
 
 export default (history) =>
   combineReducers({
@@ -62,4 +63,5 @@ export default (history) =>
     profiles,
     instagramAnalytic,
     instagramUserData,
+    instagramPostData,
   });

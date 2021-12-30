@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import InstagramDataComponent from "../analysis/instagramPerformance/instagramDataComponent";
 import { Card, CardContent } from "@mui/material";
 import { Row, Col } from "react-bootstrap";
 import { Typography } from "@mui/material";
 import * as instagramDataActions from "../../actions/instagramUserData";
 import Loader from "../../components/Loader/Loader";
+import InstagramPostDataComponent from "./InstagramPostDataComponent";
 
 function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
   useEffect(() => {
@@ -129,7 +129,7 @@ function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
             )}
           </CardContent>
         </Card>
-        <InstagramDataComponent type="post" />
+        <InstagramPostDataComponent />
       </div>
     </div>
   );
