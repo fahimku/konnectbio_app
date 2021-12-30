@@ -31,12 +31,13 @@ function HashtagsList({
             setLoading(false);
         });
     }, []);
-    
+
     React.useEffect(() => {
         if (profiles.length > 0) {
             next(false);
         }
     }, [profiles]);
+
     const handleDelete = (chipToDelete) => () => {
         Swal.fire({
             title: "Are you sure?",
@@ -49,8 +50,8 @@ function HashtagsList({
         }).then((result) => {
             if (result.isConfirmed) {
                 deleteProfile(chipToDelete._id).then((res) => {
-                    toast.success(res.data.message);
-                    getProfiles();
+                    toast.success('Profile Deleted Successfully');
+                   // getProfiles();
                 });
             }
         });

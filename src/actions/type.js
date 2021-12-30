@@ -41,3 +41,4 @@ export const GET_INSTAGRAM_PAGINATION = "getInstagramPagination";
 export const FILTER_INSTAGRAM_ANALYTIC = "filterInstagramAnalytic";
 export const GET_PROFILES = "getProfiles";
 export const GET_INSTAGRAM_USER_DATA = "getInstagramUserData";
+

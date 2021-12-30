@@ -22,6 +22,7 @@ export const deleteProfile = (_id) => async (dispatch) => {
     return axios.post(`${config.hostApi}/v1/graph/monitorProfile/removeProfileFromList`, {
         _id
     })
+    
 };
 
 export const searchProfileAc = (userName,check) => async (dispatch) => {
