@@ -240,6 +240,7 @@ class Header extends React.Component {
                   />
                   {PermissionHelper.validate(["affiliate_access"]) ? (
                     <LinksGroup
+                      onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
                       header="All Posts"
                       link="/app/my/posts"

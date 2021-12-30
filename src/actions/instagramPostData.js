@@ -1,12 +1,12 @@
 import axios from "axios";
 import {
-  GET_INSTAGRAM_ANALYTIC,
-  GET_INSTAGRAM_PAGINATION,
-  FILTER_INSTAGRAM_ANALYTIC,
+  GET_INSTAGRAM_POST,
+  GET_INSTAGRAM_POST_PAGINATION,
+  FILTER_INSTAGRAM_POST_DATA,
 } from "./type";
 import config from "../config";
 
-export const getInstagramAnalytic =
+export const getInstagramPostData =
   (url, next_media) => async (dispatch, getState) => {
     // if (getState().instagramAnalytic.success || url) {
     const res = await axios.post(
@@ -18,20 +18,20 @@ export const getInstagramAnalytic =
     );
     if (url) {
       dispatch({
-        type: GET_INSTAGRAM_PAGINATION,
+        type: GET_INSTAGRAM_POST_PAGINATION,
         payload: res.data,
       });
     } else {
       dispatch({
-        type: GET_INSTAGRAM_ANALYTIC,
+        type: GET_INSTAGRAM_POST,
         payload: res.data,
       });
     }
     // }
   };
-export const filterInstagramAnalytic = (data) => async (dispatch) => {
+export const filterInstagramPost = (data) => async (dispatch) => {
   dispatch({
-    type: FILTER_INSTAGRAM_ANALYTIC,
+    type: FILTER_INSTAGRAM_POST_DATA,
     payload: data,
   });
 };
