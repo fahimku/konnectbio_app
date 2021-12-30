@@ -5,27 +5,10 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Switch from "@mui/material/Switch";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import numeral from "numeral";
-import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import GroupIcon from "@mui/icons-material/Group";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import Carousel from "react-material-ui-carousel";
@@ -132,42 +115,7 @@ export default function Box({ data }) {
   return (
     <>
       <Card elevation={1}>
-        {/* <CardHeader
-          avatar={<Avatar alt={data.username} src={data.username} />}
-          action={
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 5,
-              }}
-            >
-              <GroupIcon sx={{ color: "gray", fontSize: 25 }} />
-              <Typography
-                variant="h6"
-                style={{ color: "gray", marginTop: 3, marginLeft: 5 }}
-              >
-                {numeral(
-                  data.userInfo?.business_discovery?.followers_count
-                ).format("0,0")}
-              </Typography>
-            </div>
-          }
-          title={
-            <Typography variant="body" color="#010b40">
-              <a
-                style={{ color: "#010b40", fontSize: 14, fontWeight: "bold" }}
-                target="_blank"
-                href={`https://www.instagram.com/${data.username}`}
-              >
-                {data.username}
-              </a>
-            </Typography>
-          }
-          subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
-        />
-        <Divider /> */}
+   
         <div style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
@@ -177,9 +125,7 @@ export default function Box({ data }) {
             </a>
           )}
         </div>
-        {/* <Typography variant="h4" textAlign="center">
-                    {new Date().toLocaleTimeString()}
-                </Typography> */}
+
         <CardActions disableSpacing>
         {!expanded ? (
             <div
