@@ -251,7 +251,7 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia, getProfil
                                     onChange={(e) => {
                                         setUserName(e);
                                     }}
-                                    placeholder="Select Brand"
+                                    placeholder="Select Profile"
                                     styles={style}
                                 />
                             </Col>
@@ -290,10 +290,6 @@ function SearchProfile({ searchProfileAc, profile, filterProfileMedia, getProfil
                 </Col>
             </Row>
             <hr />
-
-
-
-
             {!loading ? renderData() : (
                 <div className='mt-5'>
                     <Loader size={30} />
