@@ -5,7 +5,7 @@ import React from "react";
 import { createBrowserHistory } from "history";
 import PermissionHelper from "./PermissionHelper";
 import AccountUpgrade from "../pages/upgradeAccount/UpgradeAccount";
-import Dashboard from "../pages/dashboard/Dashboard";
+//import Dashboard from "../pages/dashboard/Dashboard";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -46,7 +46,7 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
 
 export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
   const checkPermission = PermissionHelper.validate(permissions);
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+//  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     //    return (<Redirect to="/login" />)
@@ -61,11 +61,11 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
         />
       );
     } else {
-      if (userInfo.package.package_name === "Business Plus") {
-        return <Route component={Dashboard} exact />;
-      } else {
-        return <Route component={AccountUpgrade} exact />;
-      }
+      // if (userInfo.package.package_name === "Premium") {
+      //   return <Route component={Dashboard} exact />;
+      // } else {
+      return <Route component={AccountUpgrade} exact />;
+      // }
     }
   }
 };
@@ -73,9 +73,9 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
 export const AuthRoute = ({ dispatch, component, ...rest }) => {
   const { from } = rest.location.state || { from: { pathname: "/app" } };
   if (Login.isAuthenticated()) {
-    return history.push(from).then(() => {
-      window.history.go(0);
-    })
+    history.push(from)
+    window.history.go(0);
+
   } else {
     return (
       <Route

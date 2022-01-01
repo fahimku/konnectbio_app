@@ -213,10 +213,12 @@ class Layout extends React.Component {
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
                       {/* <Route path="/app/all/posts" exact component={AllPosts} /> */}
-                      <Route
+                      <PrivateRoute
                         path="/app/my/posts"
                         exact
                         component={AllPostDataComponent}
+                        permissions
+                        ={["all_posts_access"]}
                       />
                     </Switch>
                   </Router>
