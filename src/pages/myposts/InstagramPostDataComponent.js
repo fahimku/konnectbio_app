@@ -154,7 +154,7 @@ function InstagramPostDataComponent({
                           styles={style}
                         />
                       </Col>
-                      <Col className="d-flex" xs={12} xl={2} md={6}>
+                      <Col className="d-flex" xs={12} xl={2} md={12}>
                         {searchLoading ? (
                           <Button
                             type="button"
