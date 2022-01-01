@@ -346,6 +346,7 @@ function SearchProfile({
                   <Button
                     style={{
                       width: "15%",
+                      height: "44px",
                     }}
                     variant="primary"
                     className="btn-block"
@@ -356,6 +357,7 @@ function SearchProfile({
                   <Button
                     style={{
                       width: "15%",
+                      height: "44px",
                     }}
                     variant="primary"
                     type="submit"
