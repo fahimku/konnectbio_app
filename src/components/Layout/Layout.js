@@ -78,15 +78,13 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${
-            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-              ? "light"
-              : localStorage.getItem("dashboardTheme")
+          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+            ? "light"
+            : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${
-            localStorage.getItem("navbarColor")
-              ? localStorage.getItem("navbarColor").replace("#", "")
-              : "FFFFFF"
+          `header-${localStorage.getItem("navbarColor")
+            ? localStorage.getItem("navbarColor").replace("#", "")
+            : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -185,21 +183,27 @@ class Layout extends React.Component {
                         component={ComingSoon}
                       />
 
-                      <Route
+                      <PrivateRoute
                         path="/app/monitor/hash/tags"
                         exact
                         component={MonitorHashTags}
+                        permissions
+                        ={["monitor_hashtag_access"]}
                       />
 
-                      <Route
+                      <PrivateRoute
                         path="/app/monitor/mentions"
                         exact
                         component={MonitorMentions}
+                        permissions
+                        ={["monitor_mentions_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/search/profile"
                         exact
                         component={SearchProfile}
+                        permissions
+                        ={["search_profile_access"]}
                       />
 
                       <Route

@@ -7,7 +7,6 @@ import { Card, CardContent } from "@mui/material";
 import moment from "moment";
 import Loader from "../../components/Loader/Loader";
 import { Typography } from "@mui/material";
-import UpgradeAccount from "../upgradeAccount/UpgradeAccount";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Box from "./Box";
 
@@ -316,9 +315,7 @@ function SearchProfile({
     }
   }
 
-  if (userInfo.package.package_name === "Basic") {
-    return <UpgradeAccount />;
-  }
+
   return (
     <div className="container-fluid">
       <Row className="post-analytics-tab mb-4">

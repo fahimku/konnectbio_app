@@ -4,7 +4,7 @@ import { Route } from "react-router";
 import React from "react";
 import { createBrowserHistory } from "history";
 import PermissionHelper from "./PermissionHelper";
-import AccountUpgrade from "../pages/accountupgrade/AccountUpgrade";
+import AccountUpgrade from "../pages/upgradeAccount/UpgradeAccount";
 import Dashboard from "../pages/dashboard/Dashboard";
 
 export const history = createBrowserHistory({

@@ -1,4 +1,4 @@
-import AccountUpgrade from "../pages/accountupgrade/AccountUpgrade";
+import AccountUpgrade from "../pages/upgradeAccount/UpgradeAccount";
 import Dashboard from "../pages/dashboard/Dashboard";
 
 const validate = (modulePermission) => {

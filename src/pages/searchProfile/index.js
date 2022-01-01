@@ -5,6 +5,7 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import SearchProfile from "./SearchProfile";
 import AddProfile from "./AddProfile"
+
 class MainSearchProfile extends React.Component {
     constructor(props) {
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
