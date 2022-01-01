@@ -406,6 +406,9 @@
     .analytics-page.affiliate-page .tab-content > .tab-pane.tab-create-campaign{
         position: static;
     }
+    .all-nw-post .analytics-page{
+        padding: 0;
+    }
     
 }
 
@@ -415,7 +418,7 @@
     }
 }
 @media screen and (max-width: 768px) {
-    .analytics-page .container-fluid {
+    .analytics-page .container-fluid, .all-nw-post.container-fluid {
       padding-left: 20px;
       padding-right: 20px;
     }

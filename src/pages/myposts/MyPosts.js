@@ -21,7 +21,7 @@ function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
     return intlFormat(num);
   }
   return (
-    <div className="container-fluid">
+    <div className="all-nw-post container-fluid">
       <div class="post-instagram analytics-page mt-3">
         <h4 className="page-title">All Posts</h4>
 
