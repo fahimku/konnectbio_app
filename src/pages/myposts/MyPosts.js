@@ -40,7 +40,7 @@ function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
                     sx={{ maxWidth: 200, borderRadius: "50%" }}
                   >
                     <img
-                      style={{ width: 200 }}
+                      style={{ width: "100%" }}
                       src={instagramData.profile_picture_url}
                     />
                   </Card>
