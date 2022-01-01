@@ -278,7 +278,7 @@ class PostDataComponent extends React.Component {
         <Col xs={12} xl={4} md={6}>
           <div className="card analytic-box">
             <div className="card-row row">
-              <div className="any-post-img-col col-4">
+              <div className="any-post-img-col col-6">
                 <div className="any-post-image">
                   <div className="any-image-box">
                     <div className="any-image-box-iner">
@@ -303,7 +303,7 @@ class PostDataComponent extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-8 analytic-caption">
+              <div className="col-6 analytic-caption">
                 <div className="row count-main-box">
                   <div className="col-12 count-box">
                     <h5 className="count-title">Impressions</h5>
@@ -537,24 +537,6 @@ class PostDataComponent extends React.Component {
             />
           </>
         )}
-        {/* {this.state.loading || !this.state.data.length ? null : (
-          <div className="text-right next-button">
-            <Button
-              variant="primary"
-              onClick={this.paginationPrev}
-              disabled={this.state.previous !== 0 ? false : true}
-            >
-              Prev
-            </Button>
-            <Button
-              variant="primary"
-              onClick={this.pagination}
-              disabled={this.state.page !== 0 ? false : true}
-            >
-              Next
-            </Button>
-          </div>
-        )} */}
       </>
     );
   }

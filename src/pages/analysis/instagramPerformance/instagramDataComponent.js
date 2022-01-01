@@ -248,7 +248,7 @@ function InstagramDataComponent({
                 <Col xs={12} xl={4} md={6}>
                   <div className="card analytic-box">
                     <div className="card-row row">
-                      <div className="any-post-img-col col-5">
+                      <div className="any-post-img-col col-6">
                         <div className="any-post-image">
                           <div className="any-image-box">
                             <div className="any-image-box-iner">
@@ -302,7 +302,7 @@ function InstagramDataComponent({
                           </div>
                         </div>
                       </div>
-                      <div className="col-7 analytic-caption">
+                      <div className="col-6 analytic-caption">
                         <div className="row count-main-box">
                           <div className="col-12 count-box">
                             <h5 className="count-title">Like Count</h5>
