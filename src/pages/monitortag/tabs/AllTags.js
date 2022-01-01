@@ -109,7 +109,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
     <>
       <div className="analytics-page affiliate-page linkin-bio">
         <div className="container-fluid">
-          <h4 className="page-title">{title}</h4>
+          <h4 className="page-title">Tags</h4>
           <Row className="post-analytics-tab mb-4">
             <Col xs={12} xl={12} md={12}>
               <form onSubmit={onSubmitData}>

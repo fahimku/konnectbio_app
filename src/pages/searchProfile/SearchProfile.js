@@ -101,6 +101,7 @@ function SearchProfile({
             <Card sx={{ marginTop: 2 }}>
               <CardContent>
                 <Row>
+                  
                   <Col
                     xl={2}
                     lg={3}
@@ -318,10 +319,11 @@ function SearchProfile({
   return (
     <div className="container-fluid">
       <Row className="post-analytics-tab mb-4">
+      <Col md={12}><h4 class="page-title">Profile</h4></Col>
         <Col xs={12} xl={12} md={12}>
           <form onSubmit={onSubmitData}>
             <Row>
-              <Col xs={12} xl={2} md={6}>
+              <Col xs={12} xl={3} md={6}>
                 <p>Profiles</p>
                 <Select
                   value={userName}
@@ -340,7 +342,7 @@ function SearchProfile({
                   styles={style}
                 />
               </Col>
-              <Col xs={12} xl={2} md={6}>
+              <Col xs={12} xl={3} md={6}>
                 {loading ? (
                   <Button
                     style={{

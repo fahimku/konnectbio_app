@@ -105,7 +105,7 @@ function HashtagsList({
         return (
             <React.Fragment>
                 <div className="container-fluid">
-                    <h4 className="page-title">{title}</h4>
+                    <h4 className="page-title">Add Profile</h4>
                     <div className="brand_container_main">
                         <Row>
                             <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
