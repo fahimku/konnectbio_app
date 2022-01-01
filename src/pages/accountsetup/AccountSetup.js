@@ -524,7 +524,14 @@ class AccountSetup extends React.Component {
                                               onChange={this.handleCheckbox}
                                             />
                                             <label for="instagram">
-                                              Do you have instagram account?
+                                              Do you have{" "}
+                                              <a
+                                                target="_blank"
+                                                href="https://business.instagram.com/getting-started"
+                                              >
+                                                instagram professional account
+                                              </a>
+                                              ?
                                             </label>
                                           </div>
                                           <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
@@ -544,6 +551,18 @@ class AccountSetup extends React.Component {
                                             <input
                                               className="form-check-input"
                                               type="checkbox"
+                                              name="facebook2"
+                                              id="facebook2"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="facebook2">
+                                              Are you admin of facebook page?
+                                            </label>
+                                          </div>
+                                          <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
                                               name="checkbox3"
                                               id="checkbox3"
                                               onChange={this.handleCheckbox}
@@ -556,7 +575,8 @@ class AccountSetup extends React.Component {
                                           <div>
                                             {this.state.checkbox.instagram &&
                                             this.state.checkbox.facebook &&
-                                            this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.checkbox3 &&
+                                            this.state.checkbox.facebook2 ? (
                                               <Button
                                                 onClick={() => {
                                                   this.setState({
