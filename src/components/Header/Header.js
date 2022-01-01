@@ -238,21 +238,21 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-                  {PermissionHelper.validate(["affiliate_access"]) ? (
-                    <LinksGroup
-                      onClick={() => this.toggle(3)}
-                      className="sidebar-nav-links"
-                      header="All Posts"
-                      link="/app/my/posts"
-                      isHeader
-                      iconElement={
-                        <span className="glyphicon glyphicon-shopping-cart"></span>
-                      }
-                      // label="Awesome"
-                      iconName="flaticon-users"
-                      labelColor="info"
-                    />
-                  ) : null}
+                  {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="All Posts"
+                    link="/app/my/posts"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-shopping-cart"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  {/* ) : null} */}
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -303,7 +303,7 @@ class Header extends React.Component {
                     labelColor="info"
                   />
 
-                  <LinksGroup
+                  {/* <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
                     header="Direct Messaging"
@@ -313,7 +313,7 @@ class Header extends React.Component {
                     // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
-                  />
+                  /> */}
 
                   {/* {PermissionHelper.validate(["affiliate_access"]) ? (
                     <LinksGroup

@@ -51,20 +51,6 @@ class Analysis extends React.Component {
                         <span>Summary</span>
                       </NavLink>
                     </NavItem>
-
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeSecondTab === "tab22",
-                        })}
-                        onClick={() => {
-                          this.toggleSecondTabs("tab22");
-                        }}
-                      >
-                        <span>Post Performance</span>
-                      </NavLink>
-                    </NavItem>
-
                     {this.state.packageName !== "Basic" ? (
                       <NavItem>
                         <NavLink
@@ -75,13 +61,26 @@ class Analysis extends React.Component {
                             this.toggleSecondTabs("tab24");
                           }}
                         >
-                          <span>Bioshop Performance</span>
+                          <span>Post Performance</span>
                         </NavLink>
                       </NavItem>
                     ) : null}
 
-                    {/* {this.state.packageName === "Basic" ? ( */}
                     <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "tab22",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab22");
+                        }}
+                      >
+                        <span>Bioshop Performance</span>
+                      </NavLink>
+                    </NavItem>
+
+                    {/* {this.state.packageName === "Basic" ? ( */}
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -92,7 +91,7 @@ class Analysis extends React.Component {
                       >
                         <span>Campaign Performance</span>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                     {/* ) : null} */}
                     {/* <NavItem>
                       <NavLink
@@ -144,14 +143,14 @@ class Analysis extends React.Component {
                     </TabPane>
 
                     {/* {this.state.packageName === "Basic" ? ( */}
-                    <TabPane tabId="tab23">
+                    {/* <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <CampaignAnalytics
                           username={this.state.username}
                           packageName={this.state.packageName}
                         />
                       ) : null}
-                    </TabPane>
+                    </TabPane> */}
                     {/* ) : null} */}
 
                     {/* <TabPane tabId="tab23">

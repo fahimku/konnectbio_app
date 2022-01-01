@@ -3,14 +3,14 @@ import { Row, Col, Button } from "react-bootstrap";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
-import Box from "../Box"
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+import Box from "../Box";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
-import InfiniteScroll from 'react-infinite-scroll-component';
-import * as  hashActions from "../../../actions/hashtags"
+import InfiniteScroll from "react-infinite-scroll-component";
+import * as hashActions from "../../../actions/hashtags";
 
 const { RangePicker } = DatePicker;
 
@@ -28,7 +28,7 @@ function TopHashTag({
   brands,
   getHashtag,
   hashtags,
-  hashtag
+  hashtag,
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
@@ -38,94 +38,99 @@ function TopHashTag({
 
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [brand, setBrand] = useState({ value: 'all', label: 'All' });
+  const [brand, setBrand] = useState({ value: "all", label: "All" });
   const [sortBy, setSortBy] = useState({
-    value: "followers",
-    label: "Follower",
+    value: "date",
+    label: "DATE",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
-  const fromDate = moment().subtract(4,'year').format("YYYY-MM-DD");
+  const fromDate = moment().subtract(4, "year").format("YYYY-MM-DD");
   const toDate = moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const limit = 8;
 
-//   useEffect(() => {
-//     setLoading(true);
-//     getMarketPlace(
-//       1,
-//       limit,
-//       "all",
-//       "commission",
-//       "desc",
-//       startDate,
-//       endDate,
-//       type,
-//       brand.value,
-//       "users/marketPlace/getCampaigns"
-//     ).then(function () {
-//       setLoading(false);
-//     });
-//     getBrands();
-//     return () => {};
-//   }, []);
+  //   useEffect(() => {
+  //     setLoading(true);
+  //     getMarketPlace(
+  //       1,
+  //       limit,
+  //       "all",
+  //       "commission",
+  //       "desc",
+  //       startDate,
+  //       endDate,
+  //       type,
+  //       brand.value,
+  //       "users/marketPlace/getCampaigns"
+  //     ).then(function () {
+  //       setLoading(false);
+  //     });
+  //     getBrands();
+  //     return () => {};
+  //   }, []);
 
   useEffect(() => {
-    setSearchLoading(true)
-    getHashtag({
-      hashtag_id:brand.value,
-      from_date:startDate.toString(),
-      to_date:endDate.toString(),
-      sort:sortBy.value,
-      order_by:orderBy.value
-    },1)
-    .then(()=>setSearchLoading(false))
+    setSearchLoading(true);
+    getHashtag(
+      {
+        hashtag_id: brand.value,
+        from_date: startDate.toString(),
+        to_date: endDate.toString(),
+        sort: sortBy.value,
+        order_by: orderBy.value,
+      },
+      1
+    ).then(() => setSearchLoading(false));
   }, []);
 
-  function onSubmitData(e){
-      e.preventDefault()
-    setSearchLoading(true)
-    getHashtag({
-      hashtag_id:brand.value,
-      from_date:startDate.toString(),
-      to_date:endDate.toString(),
-      sort:sortBy.value,
-      order_by:orderBy.value
-    },1).then(()=>{
-        setSearchLoading(false)
-    })
+  function onSubmitData(e) {
+    e.preventDefault();
+    setSearchLoading(true);
+    getHashtag(
+      {
+        hashtag_id: brand.value,
+        from_date: startDate.toString(),
+        to_date: endDate.toString(),
+        sort: sortBy.value,
+        order_by: orderBy.value,
+      },
+      1
+    ).then(() => {
+      setSearchLoading(false);
+    });
   }
 
-//   const searchMarketPlace = (e) => {
-//     setSearchLoading(true);
-//     setLoading(true);
-//     setCurrentPage(0);
-//     e.preventDefault();
-//     getMarketPlace(
-//       1,
-//       limit,
-//       category.value,
-//       sortBy.value,
-//       orderBy.value,
-//       startDate,
-//       endDate,
-//       type,
-//       brand.value,
-//       "users/marketPlace/getCampaigns"
-//     ).then(
-//       function () {
-//         setLoading(false);
-//         setSearchLoading(false);
-//       },
-//       function (error) {
-//         setLoading(false);
-//         setSearchLoading(false);
-//         toast.error(error?.response?.data?.message);
-//       }
-//     );
-//   };
+  //   const searchMarketPlace = (e) => {
+  //     setSearchLoading(true);
+  //     setLoading(true);
+  //     setCurrentPage(0);
+  //     e.preventDefault();
+  //     getMarketPlace(
+  //       1,
+  //       limit,
+  //       category.value,
+  //       sortBy.value,
+  //       orderBy.value,
+  //       startDate,
+  //       endDate,
+  //       type,
+  //       brand.value,
+  //       "users/marketPlace/getCampaigns"
+  //     ).then(
+  //       function () {
+  //         setLoading(false);
+  //         setSearchLoading(false);
+  //       },
+  //       function (error) {
+  //         setLoading(false);
+  //         setSearchLoading(false);
+  //         toast.error(error?.response?.data?.message);
+  //       }
+  //     );
+  //   };
 
   const clearMarketPlace = (e) => {
     setClearLoading(true);
@@ -133,34 +138,34 @@ function TopHashTag({
     setSortBy({ value: "followers", label: "Followers" });
     setOrderBy({ value: "desc", label: "DESC" });
     getHashtag({
-      hashtag_id:'all',
-      from_date:fromDate.toString(),
-      to_date:toDate.toString(),
-      sort:'followers',
-      order_by:'desc'
-    }).then(()=>{
-        setClearLoading(false)
-    })
+      hashtag_id: "all",
+      from_date: fromDate.toString(),
+      to_date: toDate.toString(),
+      sort: "followers",
+      order_by: "desc",
+    }).then(() => {
+      setClearLoading(false);
+    });
   };
 
-//   const handlePageClick = (e) => {
-//     const page = e.selected;
-//     setCurrentPage(page);
-//     getMarketPlace(
-//       page + 1,
-//       limit,
-//       category.value,
-//       sortBy.value,
-//       orderBy.value,
-//       startDate,
-//       endDate,
-//       type,
-//       brand.value,
-//       "users/marketPlace/getCampaigns"
-//     ).then(function () {
-//       setLoading(false);
-//     });
-//   };
+  //   const handlePageClick = (e) => {
+  //     const page = e.selected;
+  //     setCurrentPage(page);
+  //     getMarketPlace(
+  //       page + 1,
+  //       limit,
+  //       category.value,
+  //       sortBy.value,
+  //       orderBy.value,
+  //       startDate,
+  //       endDate,
+  //       type,
+  //       brand.value,
+  //       "users/marketPlace/getCampaigns"
+  //     ).then(function () {
+  //       setLoading(false);
+  //     });
+  //   };
 
   const style = {
     control: (base) => ({
@@ -174,10 +179,10 @@ function TopHashTag({
   };
 
   const sortByOptions = [
-    { value: "followers", label: "FOLLOWER" },
-    { value: "likes", label: "LIKE" },
-    { value: "comments", label: "COMMENT" },
-    { value: "date", label: "DATE" }
+    { value: "followers", label: "FOLLOWERS" },
+    { value: "likes", label: "LIKES" },
+    { value: "comments", label: "COMMENTS" },
+    { value: "date", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -240,11 +245,14 @@ function TopHashTag({
                       value={brand}
                       name="sort"
                       className="selectCustomization"
-                      options={[{hashtag_id:'all',hashtag:'All'},...hashtags.message].map((item)=>{
-                          return {
-                            value:item.hashtag_id,
-                            label:item.hashtag
-                          }
+                      options={[
+                        { hashtag_id: "all", hashtag: "All" },
+                        ...hashtags.message,
+                      ].map((item) => {
+                        return {
+                          value: item.hashtag_id,
+                          label: item.hashtag,
+                        };
                       })}
                       onChange={(e) => {
                         setBrand(e);
@@ -346,55 +354,82 @@ function TopHashTag({
             </Col>
           </Row>
           <hr />
-          <div style={{marginTop:20}}>
-           {searchLoading || clearLoading?(
-            <div style={{height:300,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                <Loader size={30}/>
-            </div>
-        ):(
-            hashtag.message.length>0?(
+          <div style={{ marginTop: 20 }}>
+            {searchLoading || clearLoading ? (
+              <div
+                style={{
+                  height: 300,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Loader size={30} />
+              </div>
+            ) : hashtag.message.length > 0 ? (
               <InfiniteScroll
-          dataLength={hashtag.message.length}
-          next={()=>{
-            getHashtag({
-              hashtag_id:brand.value,
-              from_date:startDate.toString(),
-              to_date:endDate.toString(),
-              sort:sortBy.value,
-              order_by:orderBy.value
-            },hashtag.pagination.next?.page,true)
-          }}
-          hasMore={(hashtag.pagination.next)?true:false}
-          loader={
-            <div style={{height:100,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-            <Loader size={40}/>
-            </div>
-          }
-          // pullDownToRefreshThreshold={50}
-        >
-          <div>
-          <ResponsiveMasonry
-        columnsCountBreakPoints={{350: 1,700:2 ,1100: 3, 1500: 4}}
-        >
-                <Masonry gutter="15px">
-                {
-                    hashtag.message.map((item)=>{
-                        return (
-                            <Box data={item}/>
-                        )
-                    })
+                dataLength={hashtag.message.length}
+                next={() => {
+                  getHashtag(
+                    {
+                      hashtag_id: brand.value,
+                      from_date: startDate.toString(),
+                      to_date: endDate.toString(),
+                      sort: sortBy.value,
+                      order_by: orderBy.value,
+                    },
+                    hashtag.pagination.next?.page,
+                    true
+                  );
+                }}
+                hasMore={hashtag.pagination.next ? true : false}
+                loader={
+                  <div
+                    style={{
+                      height: 100,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Loader size={40} />
+                  </div>
                 }
-            </Masonry>
-        </ResponsiveMasonry>
+                // pullDownToRefreshThreshold={50}
+              >
+                <div>
+                  <ResponsiveMasonry
+                    columnsCountBreakPoints={{
+                      350: 1,
+                      700: 2,
+                      1100: 3,
+                      1500: 4,
+                    }}
+                  >
+                    <Masonry gutter="15px">
+                      {hashtag.message.map((item) => {
+                        return <Box data={item} />;
+                      })}
+                    </Masonry>
+                  </ResponsiveMasonry>
+                </div>
+              </InfiniteScroll>
+            ) : (
+              <div
+                style={{
+                  height: 300,
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <h1 style={{ textAlign: "center" }}>No result Found</h1>
+              </div>
+            )}
           </div>
-         </InfiniteScroll>
-        ):(
-            <div style={{height:300,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                <h1 style={{textAlign:'center'}}>No result Found</h1>
-            </div>
-        )
-        )}
-    </div>
           {/* {!loading ? (
             marketPlace?.message?.length > 0 ? (
               <>
@@ -445,8 +480,8 @@ function TopHashTag({
   );
 }
 
-function mapStateToProps({hashtags,hashtag}){
-    return {hashtags,hashtag}
+function mapStateToProps({ hashtags, hashtag }) {
+  return { hashtags, hashtag };
 }
 
-export default connect(mapStateToProps,hashActions)(TopHashTag);
+export default connect(mapStateToProps, hashActions)(TopHashTag);
