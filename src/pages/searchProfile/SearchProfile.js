@@ -98,7 +98,7 @@ function SearchProfile({
       if (profile.username) {
         return (
           <>
-            <Card sx={{ marginTop: 2 }}>
+            <Card sx={{ marginTop: 2 }} className="card-shadow">
               <CardContent>
                 <Row>
                   <Col
