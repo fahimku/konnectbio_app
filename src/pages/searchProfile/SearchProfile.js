@@ -324,7 +324,6 @@ function SearchProfile({
           <form onSubmit={onSubmitData}>
             <Row>
               <Col xs={12} xl={3} md={6}>
-                <p>Profiles</p>
                 <Select
                   value={userName}
                   name="sort"
@@ -346,8 +345,6 @@ function SearchProfile({
                 {loading ? (
                   <Button
                     style={{
-                      borderTopLeftRadius: 0,
-                      borderBottomLeftRadius: 0,
                       width: "15%",
                     }}
                     variant="primary"
@@ -358,8 +355,6 @@ function SearchProfile({
                 ) : (
                   <Button
                     style={{
-                      borderTopLeftRadius: 0,
-                      borderBottomLeftRadius: 0,
                       width: "15%",
                     }}
                     variant="primary"
