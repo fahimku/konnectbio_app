@@ -168,13 +168,13 @@ export function loginUser(creds) {
           // const fbToken=localStorage.getItem('fbToken')
 
           if (
-            res.data.message.package.package_name === "Basic" &&
-            res.data.message.access_token
+            res?.data?.message?.package?.package_name === "Basic" &&
+            res?.data?.message?.access_token
           ) {
             history.push("/app/linkinbio");
           } else if (
-            res.data.message.package.package_name === "Premium" &&
-            res.data.message.access_token &&
+            res?.data?.message?.package?.package_name === "Premium" &&
+            res?.data?.message?.access_token &&
             fbPage
           ) {
             history.push("/app/linkinbio");
@@ -183,7 +183,7 @@ export function loginUser(creds) {
           }
         })
         .catch((error) => {
-          dispatch(authError(error.response.data.message));
+          dispatch(authError(error?.response?.data?.message));
         });
     } else {
       dispatch(authError("Something was wrong. Try again"));
