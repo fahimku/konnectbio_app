@@ -124,7 +124,7 @@ function HashtagsList({
                                             </p>
                                             <Row>
                                                 <Col md={12}>
-                                                    <div class="mb-3">
+                                                    <div className="mb-3">
                                                         <div
                                                             style={{
                                                                 display: "flex",
@@ -135,7 +135,7 @@ function HashtagsList({
                                                             <p>{`(${profiles.Data.length}/20)`}</p>
                                                         </div>
                                                         <div className="d-flex flex-row hashtag-box">
-                                                            <span class="input-group-text">#</span>
+                                                            <span className="input-group-text">@</span>
                                                             <input
                                                                 style={{
                                                                     borderTopRightRadius: 0,
@@ -146,7 +146,7 @@ function HashtagsList({
                                                                 type="text"
                                                                 name="name"
                                                                 placeholder="Enter Profile"
-                                                                class="form-control comment-field"
+                                                                className="form-control comment-field"
                                                                 required=""
                                                                 value={hash}
                                                             />
@@ -193,7 +193,7 @@ function HashtagsList({
                                                             return (
                                                                 <ListItem key={i}>
                                                                     <Chip
-                                                                        label={`#${data.profile_name}`}
+                                                                        label={`@${data.profile_name}`}
                                                                         onDelete={handleDelete(data)}
                                                                     />
                                                                 </ListItem>

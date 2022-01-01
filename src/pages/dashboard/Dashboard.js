@@ -5,6 +5,8 @@ import * as dashActions from "../../actions/dashboard";
 import numeral from "numeral";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router";
+import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
+
 
 function Dashboard({ getDashboard, dashboard }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -133,7 +135,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/profile");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      // href="javascript:void(0)"
+                    // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Home Screen
                     </Link>
@@ -158,7 +160,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/linkinbio");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      //                      href="javascript:void(0)"
+                    //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage All Posts
                     </Link> */}
@@ -190,7 +192,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/linkinbio-shop");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      // href="javascript:void(0)"
+                    // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Bio Shop
                     </Link>
@@ -221,7 +223,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/my/links");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      //                      href="javascript:void(0)"
+                    //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Links
                     </Link>
@@ -246,7 +248,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/analysis");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      //   href="javascript:void(0)"
+                    //   href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Analytics
                     </Link>
@@ -271,7 +273,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/categories");
                       // }}
                       className="btn btn-rounded btn-primary"
-                      //href="javascript:void(0)"
+                    //href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Category Setup
                     </Link>
