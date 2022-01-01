@@ -359,7 +359,8 @@ function SearchProfile({
                     <Loader />
                   </Button>
                 ) : (
-                  <Button
+                    <Button
+                      disabled={userName ? false:true}
                     style={{
                       width: "15%",
                       height: "44px",
