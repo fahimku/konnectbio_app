@@ -51,20 +51,6 @@ class Analysis extends React.Component {
                         <span>Summary</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName !== "Basic" ? (
-                      <NavItem>
-                        <NavLink
-                          className={classnames({
-                            active: this.state.activeSecondTab === "tab24",
-                          })}
-                          onClick={() => {
-                            this.toggleSecondTabs("tab24");
-                          }}
-                        >
-                          <span>Post Performance</span>
-                        </NavLink>
-                      </NavItem>
-                    ) : null}
 
                     <NavItem>
                       <NavLink
@@ -75,9 +61,24 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>Bioshop Performance</span>
+                        <span>Post Performance</span>
                       </NavLink>
                     </NavItem>
+
+                    {this.state.packageName !== "Basic" ? (
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab24",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab24");
+                          }}
+                        >
+                          <span>Bioshop Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    ) : null}
 
                     {/* {this.state.packageName === "Basic" ? ( */}
                     <NavItem>
@@ -131,16 +132,17 @@ class Analysis extends React.Component {
                         />
                       ) : null}
                     </TabPane>
-                    <TabPane tabId="tab24">
-                      {this.state.activeSecondTab === "tab24" ? (
-                        <InstagramAnalytics username={this.state.username} />
-                      ) : null}
-                    </TabPane>
                     <TabPane tabId="tab22">
                       {this.state.activeSecondTab === "tab22" ? (
                         <PostAnalytic username={this.state.username} />
                       ) : null}
                     </TabPane>
+                    <TabPane tabId="tab24">
+                      {this.state.activeSecondTab === "tab24" ? (
+                        <InstagramAnalytics username={this.state.username} />
+                      ) : null}
+                    </TabPane>
+
                     {/* {this.state.packageName === "Basic" ? ( */}
                     <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (

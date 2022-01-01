@@ -269,12 +269,10 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Monitor Profiles"
-                    link="/app/search/profile"
+                    header="Monitor Mentions"
+                    link="/app/monitor/mentions"
                     isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-user"></span>
-                    }
+                    iconElement={<span className="fa fa-at"></span>}
                     // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
@@ -291,14 +289,15 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Monitor Mentions"
-                    link="/app/monitor/mentions"
+                    header="Monitor Profiles"
+                    link="/app/search/profile"
                     isHeader
-                    iconElement={<span className="fa fa-at"></span>}
+                    iconElement={
+                      <span className="glyphicon glyphicon-user"></span>
+                    }
                     // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"

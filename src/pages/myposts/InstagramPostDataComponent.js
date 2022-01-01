@@ -81,7 +81,6 @@ function InstagramPostDataComponent({
       },
     }),
   };
-  console.log(instagramPostData, "instagramPostData");
   return (
     <>
       <div class="instagram-analytics">

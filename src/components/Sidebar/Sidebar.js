@@ -162,10 +162,10 @@ class Sidebar extends React.Component {
               />
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Monitor Profiles"
-                link="/app/search/profile"
+                header="Monitor Mentions"
+                link="/app/monitor/mentions"
                 isHeader
-                iconElement={<span className="glyphicon glyphicon-user"></span>}
+                iconElement={<span className="fa fa-at"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
@@ -181,13 +181,12 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Monitor Mentions"
-                link="/app/monitor/mentions"
+                header="Monitor Profiles"
+                link="/app/search/profile"
                 isHeader
-                iconElement={<span className="fa fa-at"></span>}
+                iconElement={<span className="glyphicon glyphicon-user"></span>}
                 // label="Awesome"
                 iconName="flaticon-users"
                 labelColor="info"
