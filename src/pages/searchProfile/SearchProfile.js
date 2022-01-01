@@ -101,16 +101,18 @@ function SearchProfile({
             <Card sx={{ marginTop: 2 }}>
               <CardContent>
                 <Row>
-                  
                   <Col
                     xl={2}
                     lg={3}
                     sm={12}
                     className="d-flex flex-column justify-content-center align-items-center"
                   >
-                    <Card elevation={3} sx={{ maxWidth: 200 }}>
+                    <Card
+                      elevation={3}
+                      sx={{ maxWidth: 200, borderRadius: "50%" }}
+                    >
                       <img
-                        style={{ width: 200 }}
+                        style={{ width: "100%" }}
                         src={profile.profile_picture_url}
                       />
                     </Card>
@@ -315,11 +317,12 @@ function SearchProfile({
     }
   }
 
-
   return (
     <div className="container-fluid">
       <Row className="post-analytics-tab mb-4">
-      <Col md={12}><h4 class="page-title">Profile</h4></Col>
+        <Col md={12}>
+          <h4 class="page-title">Profile</h4>
+        </Col>
         <Col xs={12} xl={12} md={12}>
           <form onSubmit={onSubmitData}>
             <Row>

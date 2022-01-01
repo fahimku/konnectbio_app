@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as dashActions from "../../actions/dashboard";
 import numeral from "numeral";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 
 function Dashboard({ getDashboard, dashboard }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -151,7 +152,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   <h4>All Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    <Link
+                    {/* <Link
                       to="/app/my/posts"
                       // onClick={() => {
                       //   props.history.push("/app/linkinbio");
@@ -160,7 +161,11 @@ function Dashboard({ getDashboard, dashboard }) {
                       //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage All Posts
-                    </Link>
+                    </Link> */}
+
+                    {/* <button onClick={() => return<Redirect push to="/app/linkinbio" />} type="button">
+                      Manage All Posts
+                    </button> */}
                   </div>
                 </div>
               </div>
