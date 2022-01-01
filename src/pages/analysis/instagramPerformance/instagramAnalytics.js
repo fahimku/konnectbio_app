@@ -11,7 +11,7 @@ class InstagramAnalytics extends React.Component {
     return (
       <>
         <div className="container-fluid">
-          <h4 className="page-title">Bioshop Performance</h4>
+          <h4 className="page-title">Post Performance</h4>
           <InstagramDataComponent username={this.state.username} />
         </div>
       </>

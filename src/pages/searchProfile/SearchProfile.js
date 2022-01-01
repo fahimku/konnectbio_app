@@ -18,7 +18,6 @@ function SearchProfile({
   getProfiles,
   profiles,
 }) {
-
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(false);
@@ -64,8 +63,8 @@ function SearchProfile({
   };
 
   const sortByOptions = [
-    { value: "like_count", label: "LIKE" },
-    { value: "comments_count", label: "COMMENT" },
+    { value: "like_count", label: "LIKES" },
+    { value: "comments_count", label: "COMMENTS" },
     { value: "timestamp", label: "DATE" },
   ];
   const sortOrderOptions = [

@@ -70,8 +70,8 @@ function InstagramDataComponent({
   };
 
   const sortByOptions = [
-    { value: "like_count", label: "LIKE" },
-    { value: "comments_count", label: "COMMENT" },
+    { value: "like_count", label: "LIKES" },
+    { value: "comments_count", label: "COMMENTS" },
     { value: "engagement", label: "ENGAGEMENT" },
     { value: "impressions", label: "IMPRESSIONS" },
     { value: "reach", label: "REACH" },

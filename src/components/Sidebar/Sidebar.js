@@ -134,20 +134,20 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               /> */}
-              {PermissionHelper.validate(["affiliate_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="All Posts"
-                  link="/app/my/posts"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-shopping-cart"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
+              {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="All Posts"
+                link="/app/my/posts"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+              {/* ) : null} */}
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Schedule Post"
@@ -192,7 +192,7 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
-              <LinksGroup
+              {/* <LinksGroup
                 className="sidebar-nav-links"
                 header="Direct Messaging"
                 link="/app/direct/messaging"
@@ -227,7 +227,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null}
+              ) : null} */}
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup
