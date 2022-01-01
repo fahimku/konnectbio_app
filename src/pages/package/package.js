@@ -233,10 +233,6 @@ class Package extends React.Component {
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Access To Analytics.
                       </li>
-                      <li>
-                        <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Marketplace.
-                      </li>
                     </ul>
 
                     {this.state.promo_code !== "" ? (
@@ -406,10 +402,6 @@ class Package extends React.Component {
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Access To Analytics.
-                      </li>
-                      <li>
-                        <span className="glyphicon glyphicon-menu-right"></span>
-                        Access To Marketplace.
                       </li>
                     </ul>
 
