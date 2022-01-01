@@ -199,69 +199,68 @@ function TopHashTag({
   // if (!loading) {
   return (
     <>
-      <div className="analytics-page affiliate-page linkin-bio">
-        <div className="container-fluid">
-          <h4 className="page-title">Results</h4>
-          <Row className="post-analytics-tab mb-4">
-            <Col xs={12} xl={12} md={12}>
-              <form onSubmit={onSubmitData}>
-                <Row>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Select Start Date / End Date</p>
-                    <RangePicker
-                      key={4}
-                      value={
-                        startDate && endDate
-                          ? [moment(startDate), moment(endDate)]
-                          : []
-                      }
-                      allowClear={false}
-                      ranges={{
-                        Today: [moment(), moment()],
-                        Tomorrow: [
-                          moment().add(1, "days"),
-                          moment().add(1, "days"),
-                        ],
-                        Yesterday: [
-                          moment().subtract(1, "days"),
-                          moment().subtract(1, "days"),
-                        ],
-                        "This Month": [
-                          moment().startOf("month"),
-                          moment().endOf("month"),
-                        ],
-                        "Last Month": [
-                          moment().subtract(1, "month").startOf("month"),
-                          moment().subtract(1, "month").endOf("month"),
-                        ],
-                      }}
-                      format={dateFormat}
-                      onChange={dateRangePickerChanger}
-                    />
-                  </Col>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Hashtags</p>
-                    <Select
-                      value={brand}
-                      name="sort"
-                      className="selectCustomization"
-                      options={[
-                        { hashtag_id: "all", hashtag: "All" },
-                        ...hashtags.message,
-                      ].map((item) => {
-                        return {
-                          value: item.hashtag_id,
-                          label: item.hashtag,
-                        };
-                      })}
-                      onChange={(e) => {
-                        setBrand(e);
-                      }}
-                      placeholder="Select Brand"
-                      styles={style}
-                    />
-                  </Col>
-                  {/* <Col xs={12} xl={2} md={6}>
+      <div className="container-fluid">
+        <h4 className="page-title">Results</h4>
+        <Row className="post-analytics-tab mb-4">
+          <Col xs={12} xl={12} md={12}>
+            <form onSubmit={onSubmitData}>
+              <Row>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Select Start Date / End Date</p>
+                  <RangePicker
+                    key={4}
+                    value={
+                      startDate && endDate
+                        ? [moment(startDate), moment(endDate)]
+                        : []
+                    }
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      Yesterday: [
+                        moment().subtract(1, "days"),
+                        moment().subtract(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                      "Last Month": [
+                        moment().subtract(1, "month").startOf("month"),
+                        moment().subtract(1, "month").endOf("month"),
+                      ],
+                    }}
+                    format={dateFormat}
+                    onChange={dateRangePickerChanger}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Hashtags</p>
+                  <Select
+                    value={brand}
+                    name="sort"
+                    className="selectCustomization"
+                    options={[
+                      { hashtag_id: "all", hashtag: "All" },
+                      ...hashtags.message,
+                    ].map((item) => {
+                      return {
+                        value: item.hashtag_id,
+                        label: item.hashtag,
+                      };
+                    })}
+                    onChange={(e) => {
+                      setBrand(e);
+                    }}
+                    placeholder="Select Brand"
+                    styles={style}
+                  />
+                </Col>
+                {/* <Col xs={12} xl={2} md={6}>
                     <p>Select Category</p>
                     <Select
                       value={category}
@@ -275,35 +274,35 @@ function TopHashTag({
                       styles={style}
                     />
                   </Col> */}
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Sort By</p>
-                    <Select
-                      value={sortBy}
-                      name="sort"
-                      className="selectCustomization"
-                      options={sortByOptions}
-                      onChange={(e) => {
-                        setSortBy(e);
-                      }}
-                      placeholder="Sort By"
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl={2} md={6}>
-                    <p>Order By</p>
-                    <Select
-                      value={orderBy}
-                      name="order"
-                      className="selectCustomization"
-                      options={sortOrderOptions}
-                      onChange={(e) => {
-                        setOrderBy(e);
-                      }}
-                      placeholder="Order By"
-                      styles={style}
-                    />
-                  </Col>
-                  {/* <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Sort By</p>
+                  <Select
+                    value={sortBy}
+                    name="sort"
+                    className="selectCustomization"
+                    options={sortByOptions}
+                    onChange={(e) => {
+                      setSortBy(e);
+                    }}
+                    placeholder="Sort By"
+                    styles={style}
+                  />
+                </Col>
+                <Col xs={12} xl={2} md={6}>
+                  <p>Order By</p>
+                  <Select
+                    value={orderBy}
+                    name="order"
+                    className="selectCustomization"
+                    options={sortOrderOptions}
+                    onChange={(e) => {
+                      setOrderBy(e);
+                    }}
+                    placeholder="Order By"
+                    styles={style}
+                  />
+                </Col>
+                {/* <Col xs={12} xl={2} md={6}>
                     <p>Order By</p>
                     <Select
                       value={orderBy}
@@ -317,120 +316,120 @@ function TopHashTag({
                       styles={style}
                     />
                   </Col> */}
-                  <Col className="d-flex" xs={12} xl={2} md={6}>
-                    {searchLoading ? (
-                      <Button
-                        type="button"
-                        variant="primary"
-                        className="fltr-hpr"
-                      >
-                        <Loader />
-                      </Button>
-                    ) : (
-                      <Button
-                        type="submit"
-                        variant="primary"
-                        className="fltr-hpr"
-                      >
-                        Search
-                      </Button>
-                    )}
-                    {clearLoading ? (
-                      <Button variant="gray" className="fltr-hpr btn-primary">
-                        <Loader />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={clearMarketPlace}
-                        variant="gray"
-                        className="fltr-hpr btn-primary"
-                      >
-                        Reset
-                      </Button>
-                    )}
-                  </Col>
-                </Row>
-              </form>
-            </Col>
-          </Row>
-          <hr />
-          <div style={{ marginTop: 20 }}>
-            {searchLoading || clearLoading ? (
-              <div
-                style={{
-                  height: 300,
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Loader size={30} />
-              </div>
-            ) : hashtag.message.length > 0 ? (
-              <InfiniteScroll
-                dataLength={hashtag.message.length}
-                next={() => {
-                  getHashtag(
-                    {
-                      hashtag_id: brand.value,
-                      from_date: startDate.toString(),
-                      to_date: endDate.toString(),
-                      sort: sortBy.value,
-                      order_by: orderBy.value,
-                    },
-                    hashtag.pagination.next?.page,
-                    true
-                  );
-                }}
-                hasMore={hashtag.pagination.next ? true : false}
-                loader={
-                  <div
-                    style={{
-                      height: 100,
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Loader size={40} />
-                  </div>
-                }
-                // pullDownToRefreshThreshold={50}
-              >
-                <div>
-                  <ResponsiveMasonry
-                    columnsCountBreakPoints={{
-                      350: 1,
-                      700: 2,
-                      1100: 3,
-                      1500: 4,
-                    }}
-                  >
-                    <Masonry gutter="15px">
-                      {hashtag.message.map((item) => {
-                        return <Box data={item} />;
-                      })}
-                    </Masonry>
-                  </ResponsiveMasonry>
+                <Col className="d-flex" xs={12} xl={2} md={6}>
+                  {searchLoading ? (
+                    <Button
+                      type="button"
+                      variant="primary"
+                      className="fltr-hpr"
+                    >
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      className="fltr-hpr"
+                    >
+                      Search
+                    </Button>
+                  )}
+                  {clearLoading ? (
+                    <Button variant="gray" className="fltr-hpr btn-primary">
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={clearMarketPlace}
+                      variant="gray"
+                      className="fltr-hpr btn-primary"
+                    >
+                      Reset
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+            </form>
+          </Col>
+        </Row>
+        <hr />
+        <div style={{ marginTop: 20 }}>
+          {searchLoading || clearLoading ? (
+            <div
+              style={{
+                height: 300,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Loader size={30} />
+            </div>
+          ) : hashtag.message.length > 0 ? (
+            <InfiniteScroll
+              dataLength={hashtag.message.length}
+              next={() => {
+                getHashtag(
+                  {
+                    hashtag_id: brand.value,
+                    from_date: startDate.toString(),
+                    to_date: endDate.toString(),
+                    sort: sortBy.value,
+                    order_by: orderBy.value,
+                  },
+                  hashtag.pagination.next?.page,
+                  true
+                );
+              }}
+              hasMore={hashtag.pagination.next ? true : false}
+              loader={
+                <div
+                  style={{
+                    height: 100,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Loader size={40} />
                 </div>
-              </InfiniteScroll>
-            ) : (
-              <div
-                style={{
-                  height: 300,
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <h1 style={{ textAlign: "center" }}>No result Found</h1>
+              }
+              // pullDownToRefreshThreshold={50}
+            >
+              <div>
+                <ResponsiveMasonry
+                  columnsCountBreakPoints={{
+                    350: 1,
+                    700: 2,
+                    1100: 3,
+                    1500: 4,
+                  }}
+                >
+                  <Masonry gutter="15px">
+                    {hashtag.message.map((item) => {
+                      return <Box data={item} />;
+                    })}
+                  </Masonry>
+                </ResponsiveMasonry>
               </div>
-            )}
-          </div>
-          {/* {!loading ? (
+            </InfiniteScroll>
+          ) : (
+            <div
+              style={{
+                height: 300,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <h1 style={{ textAlign: "center" }}>No result Found</h1>
+            </div>
+          )}
+        </div>
+        {/* {!loading ? (
             marketPlace?.message?.length > 0 ? (
               <>
                 <Row className="post-analytics-tab-boxes-ift">
@@ -474,7 +473,6 @@ function TopHashTag({
           ) : (
             <Loader size={40} />
           )} */}
-        </div>
       </div>
     </>
   );
