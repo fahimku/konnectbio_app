@@ -152,7 +152,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <Link
-                      to="/app/linkinbio"
+                      to="/app/my/posts"
                       // onClick={() => {
                       //   props.history.push("/app/linkinbio");
                       // }}
@@ -180,7 +180,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
                     <Link
-                      to="/app/linkinbio-shop"
+                      to="/app/linkinbio"
                       // onClick={() => {
                       //   props.history.push("/app/linkinbio-shop");
                       // }}
