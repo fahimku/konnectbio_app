@@ -595,7 +595,16 @@ class Package extends React.Component {
                   id="instagram"
                   onChange={this.handleCheckbox}
                 />
-                <label for="instagram">Do you have instagram account?</label>
+                <label for="instagram">
+                  Do you have{" "}
+                  <a
+                    target="_blank"
+                    href="https://business.instagram.com/getting-started"
+                  >
+                    instagram professional account
+                  </a>
+                  ?
+                </label>
               </div>
               <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
@@ -606,8 +615,18 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Do you have facebook account and business page?
+                  Do you have facebook account and facebook page?
                 </label>
+              </div>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="facebook2"
+                  id="facebook2"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="facebook2">Are you admin of facebook page?</label>
               </div>
               <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
@@ -624,7 +643,8 @@ class Package extends React.Component {
               <div>
                 {this.state.checkbox.instagram &&
                 this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.checkbox3 &&
+                this.state.checkbox.facebook2 ? (
                   <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
@@ -663,7 +683,16 @@ class Package extends React.Component {
                   id="instagram"
                   onChange={this.handleCheckbox}
                 />
-                <label for="instagram">Do you have instagram account?</label>
+                <label for="instagram">
+                  Do you have{" "}
+                  <a
+                    target="_blank"
+                    href="https://business.instagram.com/getting-started"
+                  >
+                    instagram professional account
+                  </a>
+                  ?
+                </label>
               </div>
               <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
                 <input
@@ -681,6 +710,16 @@ class Package extends React.Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  name="facebook2"
+                  id="facebook2"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="facebook2">Are you admin of facebook page?</label>
+              </div>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   name="checkbox3"
                   id="checkbox3"
                   onChange={this.handleCheckbox}
@@ -692,7 +731,8 @@ class Package extends React.Component {
               <div>
                 {this.state.checkbox.instagram &&
                 this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.checkbox3 &&
+                this.state.checkbox.facebook2 ? (
                   <Button
                     onClick={() => {
                       this.setState({
