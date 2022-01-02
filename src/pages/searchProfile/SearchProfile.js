@@ -98,7 +98,7 @@ function SearchProfile({
       if (profile.username) {
         return (
           <>
-            <Card sx={{ marginTop: 2 }} className="card-shadow">
+            <Card sx={{ marginTop: 2 }}>
               <CardContent>
                 <Row>
                   <Col
@@ -320,7 +320,6 @@ function SearchProfile({
   return (
     <div className="container-fluid">
       <Row className="post-analytics-tab mb-4">
-
         <Col md={12}>
           <h4 class="page-title">Profile</h4>
         </Col>
