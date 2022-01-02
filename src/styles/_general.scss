@@ -586,7 +586,18 @@ h1 small {
   opacity: 0.6;
   cursor: pointer;
 }
-.card-shadow{
+.card-shadow {
   box-shadow: 0px 0px 2px 1px #e4e7ed !important;
   border-radius: 0 !important;
+}
+.insta-list {
+  margin-left: 20px;
+}
+.insta-list li {
+  list-style: auto;
+}
+.btn-dark:focus,
+.btn-dark.focus {
+  background-color: #010b40;
+  border-color: #010b40;
 }
