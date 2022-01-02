@@ -630,10 +630,7 @@ class Package extends React.Component {
                       <li>Find Switch Account Type.</li>
                       <li>Select Switch to Business Account.</li>
                     </ol>
-                    <p>
-                      Once you're all set, you've got an Instagram Business
-                      Account.
-                    </p>
+                    <p>You will now have an Instagram Business Account.</p>
                   </div>
                 </Collapse>
               </div>
@@ -670,8 +667,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Facebook account is connected to
-                      a business page.
+                      Your Facebook account will be connected to a business
+                      page.
                     </p>
                   </div>
                 </Collapse>
@@ -716,8 +713,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Instagram account is connected
-                      to a Facebook account.
+                      Your Instagram account will be connected to a Facebook
+                      account.
                     </p>
                     <span className="font-weight-bold">From Facebook:</span>
                     <ol type="1" class="insta-list">
@@ -734,8 +731,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Facebook account is connected to
-                      a Instagram account.
+                      Your Facebook account will be connected to an Instagram
+                      account.
                     </p>
                   </div>
                 </Collapse>
@@ -813,10 +810,7 @@ class Package extends React.Component {
                       <li>Find Switch Account Type.</li>
                       <li>Select Switch to Business Account.</li>
                     </ol>
-                    <p>
-                      Once you're all set, you've got an Instagram Business
-                      Account.
-                    </p>
+                    <p>You will now have an Instagram Business Account.</p>
                   </div>
                 </Collapse>
               </div>
@@ -853,8 +847,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Facebook account is connected to
-                      a business page.
+                      Your Facebook account will be connected to a business
+                      page.
                     </p>
                   </div>
                 </Collapse>
@@ -899,8 +893,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Instagram account is connected
-                      to a Facebook account.
+                      Your Instagram account will be connected to a Facebook
+                      account.
                     </p>
                     <span className="font-weight-bold">From Facebook:</span>
                     <ol type="1" class="insta-list">
@@ -917,8 +911,8 @@ class Package extends React.Component {
                       </li>
                     </ol>
                     <p>
-                      Once you're all set, your Facebook account is connected to
-                      a Instagram account.
+                      Your Facebook account will be connected to an Instagram
+                      account.
                     </p>
                   </div>
                 </Collapse>
