@@ -627,9 +627,8 @@ class AccountSetup extends React.Component {
                                               onChange={this.handleCheckbox}
                                             />
                                             <label for="checkbox3">
-                                              Is your Facebook account
-                                              connnected with your Instagram
-                                              account?{" "}
+                                              Is your Facebook account connected
+                                              with your Instagram account?{" "}
                                               <a
                                                 onClick={(e) => {
                                                   e.preventDefault();

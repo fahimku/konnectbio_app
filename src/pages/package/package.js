@@ -685,7 +685,7 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="checkbox3">
-                  Is your Facebook account connnected with your Instagram
+                  Is your Facebook account connected with your Instagram
                   account?{" "}
                   <a
                     onClick={(e) => {
@@ -868,7 +868,7 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="checkbox3">
-                  Is your Facebook account connnected with your Instagram
+                  Is your Facebook account connected with your Instagram
                   account?{" "}
                   <a
                     onClick={(e) => {
