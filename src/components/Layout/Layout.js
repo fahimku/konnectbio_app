@@ -41,6 +41,8 @@ import ChatPage from "../../pages/chat";
 import AllPosts from "../../pages/allposts/BioShop";
 import SearchProfile from "../../pages/searchProfile/index";
 import AllPostDataComponent from "../../pages/myposts/MyPosts";
+import CustomCards from "../../pages/customCards/customCards";
+import customCards from "../../pages/customCards/customCards";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -210,6 +212,11 @@ class Layout extends React.Component {
                         path="/app/direct/messaging"
                         exact
                         component={ComingSoon}
+                      />
+                        <Route
+                        path="/app/custom/cards"
+                        exact
+                        component={customCards}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
                       {/* <Route path="/app/all/posts" exact component={AllPosts} /> */}
