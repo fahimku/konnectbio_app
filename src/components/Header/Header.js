@@ -19,7 +19,8 @@ import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
 // import PermissionHelper from "../PermissionHelper";
 // import { NavLink } from "react-router-dom";
-import { Modal, Button, Row } from "react-bootstrap";
+import { Modal, Button, Row, Col } from "react-bootstrap";
+import Select from "react-select";
 
 class Header extends React.Component {
   static propTypes = {
@@ -80,6 +81,7 @@ class Header extends React.Component {
         },
       ],
       showAddBio: false,
+      showSupport: false,
     };
   }
 
@@ -176,10 +178,25 @@ class Header extends React.Component {
   };
   handleClose = () => {
     this.setState({ showAddBio: false });
+    this.setState({ showSupport: false });
+  };
+  handleSubmit = async (e) => {
+    e.preventDefault();
   };
 
   render() {
     const url = config.visitorURL + "/";
+    const supportOptions = [
+      { value: "date", label: "Subscription" },
+      { value: "followers", label: "Technical" },
+      { value: "likes", label: "Feedback" },
+      { value: "comments", label: "Dashboard" },
+      { value: "comments", label: "Bioshop" },
+      { value: "comments", label: "Links" },
+      { value: "comments", label: "My Posts" },
+      { value: "comments", label: "Schedule Post" },
+      { value: "comments", label: "Monitor Mention" },
+    ];
     return (
       <>
         <div className="mobile-header-responsive">
@@ -478,6 +495,18 @@ class Header extends React.Component {
               Add To Instagram Account
             </button>
           </div>
+          <div className="right-top-bar">
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => {
+                this.setState({
+                  showSupport: true,
+                });
+              }}
+            >
+              Support
+            </button>
+          </div>
         </div>
         <Modal
           className="addbio-modal"
@@ -533,6 +562,36 @@ class Header extends React.Component {
               </div>
             </div>
 
+            <Button className="mt-4 btn-block" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Body>
+        </Modal>
+        <Modal
+          className="addbio-modal"
+          show={this.state.showSupport}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Feedback Form</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.handleSubmit}>
+              <h5>Select Categories</h5>
+              <Row>
+                <Col md={12}>
+                  <Select
+                    isMulti={true}
+                    name="category"
+                    className="selectCustomization"
+                    options={supportOptions}
+                    placeholder="Select Category"
+                    // onChange={(options, e) => handleSelect(e, options)}
+                  />
+                </Col>
+              </Row>
+            </form>
             <Button className="mt-4 btn-block" onClick={this.handleClose}>
               Close
             </Button>

@@ -639,3 +639,16 @@ h1 small {
 .addbio-modal .modal-title {
   font-size: 16px;
 }
+/*****right-top-bar******/
+.header {
+  position: relative;
+}
+.header .right-top-bar {
+  position: absolute;
+  right: 0;
+  margin-top: 14px;
+}
+.header .right-top-bar .btn {
+  padding: 7px 10px !important;
+  min-width: 100px;
+}
