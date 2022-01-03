@@ -23,7 +23,7 @@ function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
   return (
     <div className="all-nw-post container-fluid">
       <div class="post-instagram analytics-page mt-3">
-        <h4 className="page-title">All Posts</h4>
+        <h4 className="page-title">My Posts</h4>
 
         <Card sx={{ marginTop: 2, marginBottom: 2 }} className="card-shadow">
           <CardContent>

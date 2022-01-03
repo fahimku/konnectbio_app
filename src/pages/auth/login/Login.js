@@ -70,8 +70,7 @@ class Login extends React.Component {
       if (instagramCodeUrl.includes("code")) {
         const code = instagramCodeUrl.split("?")[1].split("=");
         this.props.history.push("/connect?code=" + code[1]);
-      }
-      else {
+      } else {
         this.props.history.push("/app");
       }
     }
@@ -109,7 +108,9 @@ class Login extends React.Component {
           <div className="header_inr group">
             <div className="header_inr_left">
               <div className="konnect_logo">
-                <img className="logo" src={logo} alt="logo" />
+                <a href="https://get.konnect.bio/" className="mt-2">
+                  <img className="logo" src={logo} alt="logo" />
+                </a>
               </div>
               <h3 className="kon_pg_title">Sign In</h3>
             </div>

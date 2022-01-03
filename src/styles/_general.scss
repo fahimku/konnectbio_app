@@ -601,3 +601,41 @@ h1 small {
   background-color: #010b40;
   border-color: #010b40;
 }
+/****AddBio top*******/
+.addbio-topbar {
+  margin-top: 14px;
+}
+.addbio-topbar .btn-addbio {
+  box-shadow: inset 0 0 0 1px #dce4ec !important;
+}
+.addbio-topbar .btn-addbio:hover {
+  background-image: linear-gradient(
+    rgba(220, 228, 236, 0.1),
+    rgba(220, 228, 236, 0.2)
+  ) !important;
+}
+.addbio-modal,
+.addbio-modal a,
+.addbio-modal button {
+  font-family: "Nunito Sans", sans-serif !important;
+}
+.addbio-modal .add-bio-input {
+  border: 1px solid #e1e1ee;
+  height: 35px;
+  line-height: 31px;
+  margin-top: 1rem;
+}
+.addbio-modal .modal-body {
+  background: transparent;
+}
+
+.addbio-modal .goto-insta {
+  display: block;
+  text-align: center;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.85);
+}
+.addbio-modal .modal-title {
+  font-size: 16px;
+}

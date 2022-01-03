@@ -228,7 +228,10 @@ class Register extends React.Component {
           password: this.state.password,
           zip: this.state.zip,
           referred_by: this.state.referred_by,
-          account_type: this.state.accountType === "brand" ? "business": this.state.accountType,
+          account_type:
+            this.state.accountType === "brand"
+              ? "business"
+              : this.state.accountType,
         })
       );
     }
@@ -247,7 +250,9 @@ class Register extends React.Component {
           <div className="header_inr group">
             <div className="header_inr_left">
               <div className="konnect_logo">
-                <img className="logo" src={logo} alt="logo" />
+                <a href="https://get.konnect.bio/" className="mt-2">
+                  <img className="logo" src={logo} alt="logo" />
+                </a>
               </div>
               <h3 className="kon_pg_title">Create Account</h3>
             </div>

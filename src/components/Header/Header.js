@@ -17,8 +17,10 @@ import logo from "../../images/logo.svg";
 import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
-import PermissionHelper from "../PermissionHelper";
-import { NavLink } from "react-router-dom";
+// import PermissionHelper from "../PermissionHelper";
+// import { NavLink } from "react-router-dom";
+import { Modal, Button, Row } from "react-bootstrap";
+
 class Header extends React.Component {
   static propTypes = {
     sidebarOpened: PropTypes.bool.isRequired,
@@ -77,6 +79,7 @@ class Header extends React.Component {
           target: ".helper-button",
         },
       ],
+      showAddBio: false,
     };
   }
 
@@ -170,6 +173,9 @@ class Header extends React.Component {
     document.execCommand("copy");
     textField.remove();
     toast.success("Copied to Clipboard!");
+  };
+  handleClose = () => {
+    this.setState({ showAddBio: false });
   };
 
   render() {
@@ -460,7 +466,78 @@ class Header extends React.Component {
               </div>
             </div>
           </div>
+          <div className="addbio-topbar">
+            <button
+              className="btn btn-addbio"
+              onClick={() => {
+                this.setState({
+                  showAddBio: true,
+                });
+              }}
+            >
+              Add to Instagram Account
+            </button>
+          </div>
         </div>
+        <Modal
+          className="addbio-modal"
+          show={this.state.showAddBio}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Add BioLink to Instagram account</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="steps">
+              <h6 className="add-step">Step 1</h6>
+              <div>Copy your BioLink page link.</div>
+              <div className="add-bio-input">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={url + this.props.username}
+                  className="ml-3"
+                >
+                  {url + this.props.username}
+                </a>
+              </div>
+
+              <button
+                onClick={this.copyToClipboard}
+                className="btn btn-block btn-outline-primary mt-3"
+              >
+                Copy Link
+              </button>
+            </div>
+            <div className="mt-4 steps">
+              <h6 className="add-step">Step 2</h6>
+              <div>Log in to Instagram on the web.</div>
+              <div className="add-bio-input">
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href="https://www.instagram.com/accounts/edit/"
+                  className="goto-insta"
+                >
+                  Go to Instagram Profile{" "}
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+            <div className="mt-4 steps">
+              <h6 className="add-step">Step 3</h6>
+              <div>
+                Paste your link into the website field of your profile and
+                submit.
+              </div>
+            </div>
+
+            <Button className="mt-4 btn-block" onClick={this.handleClose}>
+              Close
+            </Button>
+          </Modal.Body>
+        </Modal>
       </>
     );
   }
