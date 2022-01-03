@@ -138,6 +138,7 @@ class Connect extends React.Component {
           </div>
         </div>
         <AccountSetup
+          connectPage={true}
           resetAccount={this.state.resetAccount}
           cancelSubscription={this.state.cancelSubscription}
           className="container"

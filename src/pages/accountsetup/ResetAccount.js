@@ -26,6 +26,7 @@ export default function ResetAccount(props) {
         console.log(err, "err");
       });
   }
+
   return (
     <>
       <div className="profile_box_main col-md-4">

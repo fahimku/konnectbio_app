@@ -366,7 +366,7 @@ class MyProfile extends React.Component {
                       key={2}
                       id={2}
                     />
-                    <ScreenButton
+                    {/* <ScreenButton
                       cancelDefaultImage={this.state.cancelDefaultImage}
                       setDefaultImage={this.state.setDefaultImage}
                       setImageDefault={() => {
@@ -376,7 +376,7 @@ class MyProfile extends React.Component {
                       name="Coupons"
                       key={3}
                       id={3}
-                    />
+                    /> */}
                     <hr></hr>
                     <div className="pr-sv-btn mt-3">
                       <Button
