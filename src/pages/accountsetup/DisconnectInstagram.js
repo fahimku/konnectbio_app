@@ -12,15 +12,13 @@ export default function DisconnectInstagram(props) {
     await axios
       .put(`/users/revise/disconnectinstagram/${props.userId}`)
       .then((response) => {
+        console.log(response)
         props.modal(false);
+ 
         props.loading(false);
         localStorage.removeItem("access_token");
-        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        userInfo.fb_token = '';
-        userInfo.page_token = '';
-        userInfo.instagram_id = '';
-       localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        history.push("/connect");
+        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+         history.push("/connect");
       })
       .catch((err) => {
         props.loading(true);

@@ -127,9 +127,15 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
         localStorage.removeItem("access_token");
         localStorage.removeItem("fbToken");
         localStorage.removeItem("fbPage");
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.page_token =''
+        userInfo.fb_token = '';
+        userInfo.access_token = '';
+        userInfo.instagram_id = '';
+        userInfo.username = '';
         setFacebookUserAccessToken("");
         setComplete("");
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
         history.push("/connect");
         history.go(0);
       });
