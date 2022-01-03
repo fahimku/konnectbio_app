@@ -185,11 +185,15 @@ class AccountSetup extends React.Component {
           const parseUserInformation = JSON.parse(userInformation);
           parseUserInformation.package = response.data.message;
           this.setState({ myPackage: response.data.message.package_name });
-          console.log(response.data.message);
-          this.props.setPackage(response.data.message.package_name);
+
+          if (response?.data?.message?.package_name && this.props.setPackage) {
+            this.props.setPackage(response.data.message.package_name);
+          }
+
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          //          window.location.reload();
+          history.push("/connect");
+          // window.location.reload();
         })
         .catch((err) => {
           toast.error(err.response.data.message);
@@ -740,13 +744,16 @@ class AccountSetup extends React.Component {
                                             this.state.checkbox.facebook &&
                                             this.state.checkbox.checkbox3 ? (
                                               <Button
-                                                onClick={() => {
+                                                type="submit"
+                                                onClick={(e) => {
                                                   this.setState({
                                                     showPromo: false,
                                                     help1: true,
                                                     help2: true,
                                                     help3: true,
                                                   });
+
+                                                  this.handleSubmit(e);
                                                 }}
                                               >
                                                 Accept
