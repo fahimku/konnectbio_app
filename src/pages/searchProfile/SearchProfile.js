@@ -62,9 +62,9 @@ function SearchProfile({
   };
 
   const sortByOptions = [
+    { value: "timestamp", label: "DATE" },
     { value: "like_count", label: "LIKES" },
     { value: "comments_count", label: "COMMENTS" },
-    { value: "timestamp", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -358,8 +358,8 @@ function SearchProfile({
                     <Loader />
                   </Button>
                 ) : (
-                    <Button
-                      disabled={userName ? false:true}
+                  <Button
+                    disabled={userName ? false : true}
                     style={{
                       width: "15%",
                       height: "44px",

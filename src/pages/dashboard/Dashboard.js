@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import * as dashActions from "../../actions/dashboard";
 import numeral from "numeral";
 import { Link } from "react-router-dom";
-import { Redirect } from "react-router";
-import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
-
+// import { Redirect } from "react-router";
+// import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
 
 function Dashboard({ getDashboard, dashboard }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -135,7 +134,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/profile");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    // href="javascript:void(0)"
+                      // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Home Screen
                     </Link>
@@ -151,23 +150,18 @@ function Dashboard({ getDashboard, dashboard }) {
                   <span className="dash_icon">
                     <i className="fa fa-th-list fa-3x" aria-hidden="true"></i>
                   </span>
-                  <h4>All Posts</h4>
+                  <h4>My Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    {/* <Link
-                      to="/app/my/posts"
+                    <Link
+                      to="analysis?type=mypost"
                       // onClick={() => {
                       //   props.history.push("/app/linkinbio");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //                      href="javascript:void(0)"
                     >
-                      <i className="fa fa-cog mr-1"></i> Manage All Posts
-                    </Link> */}
-
-                    {/* <button onClick={() => return<Redirect push to="/app/linkinbio" />} type="button">
-                      Manage All Posts
-                    </button> */}
+                      <i className="fa fa-cog mr-1"></i> My Posts
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -192,7 +186,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/linkinbio-shop");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    // href="javascript:void(0)"
+                      // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Bio Shop
                     </Link>
@@ -223,7 +217,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/my/links");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //                      href="javascript:void(0)"
+                      //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Links
                     </Link>
@@ -248,9 +242,9 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/analysis");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //   href="javascript:void(0)"
+                      //   href="javascript:void(0)"
                     >
-                      <i className="fa fa-cog mr-1"></i> Manage Analytics
+                      <i className="fa fa-cog mr-1"></i> Analytics
                     </Link>
                   </div>
                 </div>
@@ -273,7 +267,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/categories");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //href="javascript:void(0)"
+                      //href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Category Setup
                     </Link>

@@ -70,12 +70,12 @@ function InstagramDataComponent({
   };
 
   const sortByOptions = [
+    { value: "timestamp", label: "DATE" },
     { value: "like_count", label: "LIKES" },
     { value: "comments_count", label: "COMMENTS" },
     { value: "engagement", label: "ENGAGEMENT" },
     { value: "impressions", label: "IMPRESSIONS" },
     { value: "reach", label: "REACH" },
-    { value: "timestamp", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },

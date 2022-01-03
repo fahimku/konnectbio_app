@@ -5,8 +5,9 @@ import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 // import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
-import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
+// import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 import InstagramAnalytics from "./instagramPerformance/instagramAnalytics";
+import queryString from "query-string";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -21,8 +22,18 @@ class Analysis extends React.Component {
       packageName: userInfo.package.package_name,
     };
   }
+  componentDidMount() {
+    const getParam = queryString.parse(window.location.search);
+    if (getParam.type === "mypost") {
+      this.setState({
+        activeSecondTab: "tab24",
+      });
+    }
+  }
 
   toggleSecondTabs(tab) {
+    const url = new URL(window.location.href.split("?")[0]);
+    window.history.replaceState(null, null, url.href);
     if (this.state.activeSecondTab !== tab) {
       this.setState({
         activeSecondTab: tab,

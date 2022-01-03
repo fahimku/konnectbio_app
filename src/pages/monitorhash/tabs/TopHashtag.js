@@ -179,10 +179,10 @@ function TopHashTag({
   };
 
   const sortByOptions = [
+    { value: "date", label: "DATE" },
     { value: "followers", label: "FOLLOWERS" },
     { value: "likes", label: "LIKES" },
     { value: "comments", label: "COMMENTS" },
-    { value: "date", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },

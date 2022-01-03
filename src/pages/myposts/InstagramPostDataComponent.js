@@ -62,9 +62,9 @@ function InstagramPostDataComponent({
   };
 
   const sortByOptions = [
+    { value: "timestamp", label: "DATE" },
     { value: "like_count", label: "LIKES" },
     { value: "comments_count", label: "COMMENTS" },
-    { value: "timestamp", label: "DATE" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },

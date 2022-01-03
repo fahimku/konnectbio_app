@@ -137,7 +137,7 @@ class Sidebar extends React.Component {
               {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
               <LinksGroup
                 className="sidebar-nav-links"
-                header="All Posts"
+                header="My Posts"
                 link="/app/my/posts"
                 isHeader
                 iconElement={

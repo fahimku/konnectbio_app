@@ -643,7 +643,7 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Do you have Facebook account connect to a business page?{" "}
+                  Do you have Facebook account connected to a business page?{" "}
                   <a
                     onClick={(e) => {
                       e.preventDefault();
@@ -823,7 +823,7 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Do you have Facebook account connect to a business page?{" "}
+                  Do you have Facebook account connected to a business page?{" "}
                   <a
                     onClick={(e) => {
                       e.preventDefault();

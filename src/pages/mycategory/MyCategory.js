@@ -217,8 +217,9 @@ function MyCategory(props) {
           </div>
 
           <div className="profile_container_main container">
-            <div className="row-rev row">
-              <div className="profile_box_main col-md-4">
+            <div className="row">
+              {/* <div className="row-rev row"> */}
+              {/* <div className="profile_box_main col-md-4">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Plan Details</h5>
@@ -266,7 +267,7 @@ function MyCategory(props) {
                     ) : null}
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="profile_box_main col-md-8">
                 <div className="dash_block_profile">

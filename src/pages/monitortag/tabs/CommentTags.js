@@ -21,7 +21,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
   const [brand, setBrand] = useState({ value: "all", label: "All" });
   const [sortBy, setSortBy] = useState({
     value: "followers",
-    label: "Follower",
+    label: "FOLLOWERS",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const fromDate = moment().subtract(4, "year").format("YYYY-MM-DD");

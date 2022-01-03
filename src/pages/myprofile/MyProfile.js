@@ -289,6 +289,7 @@ class MyProfile extends React.Component {
 
                     <form onSubmit={this.handleSubmit}>
                       <div className="dp_fields mb-0">
+                        <h5>Profile</h5>
                         <div className="mb-3">
                           <label>Enter Name</label>
                           <input
