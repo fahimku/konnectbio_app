@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import s from "./Affiliate.module.scss";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+// import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useHistory } from "react-router-dom";
 import "./selector.css";
-import Loader from "../../components/Loader/Loader";
-import Box from "./Box";
+// import Loader from "../../components/Loader/Loader";
+// import Box from "./Box";
 import HashtagsList from "./tabs/HashtagsList";
 import TopHashtag from "./tabs/TopHashtag";
 
