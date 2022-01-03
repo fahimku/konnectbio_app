@@ -80,8 +80,12 @@ class AccountSetup extends React.Component {
       .then((response) => {
         const selectPackages = [];
         const packages = response.data.message;
-        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
-        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
+        const singlePackage = packages.filter(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
+        const index = packages.findIndex(
+          (item) => item.package_id === this.state.userInfo.package.package_id
+        );
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
@@ -181,10 +185,11 @@ class AccountSetup extends React.Component {
           const parseUserInformation = JSON.parse(userInformation);
           parseUserInformation.package = response.data.message;
           this.setState({ myPackage: response.data.message.package_name });
+          console.log(response.data.message);
           this.props.setPackage(response.data.message.package_name);
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          window.location.reload();
+          //          window.location.reload();
         })
         .catch((err) => {
           toast.error(err.response.data.message);
@@ -228,12 +233,12 @@ class AccountSetup extends React.Component {
     });
   };
 
-
-
   cancelSubscription = async (e) => {
     this.setState({ disabledCancelPlan: true });
-    await axios.put(`/users/revise/cancelSubscription/${this.state.userId}`).then(() => history.push("/logout"))
-  }
+    await axios
+      .put(`/users/revise/cancelSubscription/${this.state.userId}`)
+      .then(() => history.push("/logout"));
+  };
 
   renderFbConnection = (userInfo1) => {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
@@ -253,8 +258,9 @@ class AccountSetup extends React.Component {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
-        className={`profile-page account-setup ${this.props.className ? "container" : ""
-          }`}
+        className={`profile-page account-setup ${
+          this.props.className ? "container" : ""
+        }`}
       >
         <div
           className={
@@ -277,17 +283,16 @@ class AccountSetup extends React.Component {
                       <div className="col-md-12">
                         <div className="dp_fields-setup mb-0">
                           <div className="row">
-                            <div className='col-md-8'>
+                            <div className="col-md-8">
                               <h6 className="package_name">
                                 Current Plan:{" "}
                                 {userInfo1?.package
                                   ? userInfo1.package.package_name
                                   : ""}
-
                               </h6>
                             </div>
-                            {!this.props.connectPage &&
-                              <div className='col-md-4'>
+                            {!this.props.connectPage && (
+                              <div className="col-md-4">
                                 <button
                                   onClick={() => {
                                     this.setState({ cancelPlan: true });
@@ -297,7 +302,7 @@ class AccountSetup extends React.Component {
                                   Cancel
                                 </button>
                               </div>
-                            }
+                            )}
                           </div>
                         </div>
 
@@ -328,8 +333,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -344,8 +349,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Business Plus" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
@@ -482,8 +487,8 @@ class AccountSetup extends React.Component {
                                   ) : null}
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
-                                      !this.state.checkbox.facebook ||
-                                      !this.state.checkbox.checkbox3 ? (
+                                    !this.state.checkbox.facebook ||
+                                    !this.state.checkbox.checkbox3 ? (
                                       <Button
                                         onClick={() => {
                                           this.setState({
@@ -514,9 +519,9 @@ class AccountSetup extends React.Component {
                                       }}
                                       type="button"
 
-                                    // disabled={
-                                    //   !this.state.loading ? false : true
-                                    // }
+                                      // disabled={
+                                      //   !this.state.loading ? false : true
+                                      // }
                                     >
                                       Cancel
                                     </Button>
@@ -564,7 +569,10 @@ class AccountSetup extends React.Component {
 
                                             <Collapse in={!this.state.help1}>
                                               <div className="card card-body">
-                                                <ol type="1" className="insta-list">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
                                                   <li>
                                                     Login To Your Instagram
                                                     Account.
@@ -618,7 +626,10 @@ class AccountSetup extends React.Component {
                                             </label>
                                             <Collapse in={!this.state.help2}>
                                               <div className="card card-body">
-                                                <ol type="1" className="insta-list">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
                                                   <li>
                                                     Go to facebook.com and
                                                     create an account.
@@ -663,7 +674,10 @@ class AccountSetup extends React.Component {
                                                 <span className="font-weight-bold">
                                                   From Instagram:
                                                 </span>
-                                                <ol type="1" className="insta-list">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
                                                   <li>
                                                     Log in to Instagram and go
                                                     to your profile.
@@ -689,7 +703,10 @@ class AccountSetup extends React.Component {
                                                 <span className="font-weight-bold">
                                                   From Facebook:
                                                 </span>
-                                                <ol type="1" className="insta-list">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
                                                   <li>
                                                     Log in to Facebook and click
                                                     Pages in the left menu.
@@ -719,8 +736,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                              this.state.checkbox.facebook &&
-                                              this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                               <Button
                                                 onClick={() => {
                                                   this.setState({
@@ -753,7 +770,9 @@ class AccountSetup extends React.Component {
         </div>
         <Modal
           show={this.state.cancelPlan}
-          onHide={() => { this.setState({ cancelPlan: false }) }}
+          onHide={() => {
+            this.setState({ cancelPlan: false });
+          }}
           className="change-password"
           centered
         >
@@ -765,12 +784,14 @@ class AccountSetup extends React.Component {
             <p>If yes, your subscription will be cancelled.</p>
             <p>All your data will be deleted.</p>
             <p>Subscription amount paid will not be refunded.</p>
-            <p>New subscription will be required if you choose to register again.</p>
+            <p>
+              New subscription will be required if you choose to register again.
+            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button
               onClick={() => {
-                this.setState({ cancelPlan: false })
+                this.setState({ cancelPlan: false });
               }}
             >
               Close

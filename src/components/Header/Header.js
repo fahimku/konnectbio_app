@@ -21,6 +21,8 @@ import TopBar from "../../components/Topbar";
 // import { NavLink } from "react-router-dom";
 import { Modal, Button, Row, Col } from "react-bootstrap";
 import Select from "react-select";
+import Loader from "../Loader/Loader";
+import axios from "axios";
 
 class Header extends React.Component {
   static propTypes = {
@@ -82,6 +84,11 @@ class Header extends React.Component {
       ],
       showAddBio: false,
       showSupport: false,
+      feedbackLoading: false,
+      feedback_about: "",
+      feedback_text: "",
+      feedbackerror: false,
+      feedbackerror1: false,
     };
   }
 
@@ -179,23 +186,57 @@ class Header extends React.Component {
   handleClose = () => {
     this.setState({ showAddBio: false });
     this.setState({ showSupport: false });
+    this.setState({
+      feedbackerror: false,
+      feedback_about: "",
+      feedback_text: "",
+    });
   };
   handleSubmit = async (e) => {
     e.preventDefault();
+    if (this.state.feedback_about === "" && this.state.feedback_text === "") {
+      this.setState({ feedbackerror: true, feedbackerror1: true });
+    } else {
+      this.setState({ feedbackLoading: true });
+      await axios
+        .post(`/support/feedback/submit`, {
+          feedback_about: this.state.feedback_about,
+          feedback_text: this.state.feedback_text,
+        })
+        .then((response) => {
+          this.setState({ feedbackLoading: false });
+          this.setState({ showSupport: false });
+          let res = response.data;
+          toast.success(res.message);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+          this.setState({ feedbackLoading: false });
+        });
+    }
+  };
+  handleSelect = (e, options) => {
+    this.setState({ feedback_about: options.value, feedbackerror: false });
+  };
+  handleChange = (e) => {
+    this.setState({
+      feedback_text: e.target.value,
+      feedbackerror1: false,
+    });
   };
 
   render() {
     const url = config.visitorURL + "/";
     const supportOptions = [
-      { value: "date", label: "Subscription" },
-      { value: "followers", label: "Technical" },
-      { value: "likes", label: "Feedback" },
-      { value: "comments", label: "Dashboard" },
-      { value: "comments", label: "Bioshop" },
-      { value: "comments", label: "Links" },
-      { value: "comments", label: "My Posts" },
-      { value: "comments", label: "Schedule Post" },
-      { value: "comments", label: "Monitor Mention" },
+      { value: "subscription", label: "Subscription" },
+      { value: "technical", label: "Technical" },
+      { value: "feedback", label: "Feedback" },
+      { value: "dashboard", label: "Dashboard" },
+      { value: "bioshop", label: "Bioshop" },
+      { value: "links", label: "Links" },
+      { value: "my_posts", label: "My Posts" },
+      { value: "schedule_post", label: "Schedule Post" },
+      { value: "monitor_mention", label: "Monitor Mention" },
     ];
     return (
       <>
@@ -574,27 +615,53 @@ class Header extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Feedback Form</Modal.Title>
+            <Modal.Title>Konnect.Bio Feedback Form</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <form onSubmit={this.handleSubmit}>
-              <h5>Select Categories</h5>
               <Row>
                 <Col md={12}>
+                  <label>Feedback About</label>
                   <Select
-                    isMulti={true}
-                    name="category"
-                    className="selectCustomization"
+                    name="feedback_about"
                     options={supportOptions}
-                    placeholder="Select Category"
-                    // onChange={(options, e) => handleSelect(e, options)}
+                    placeholder="Select Feedback About"
+                    onChange={(options, e) => this.handleSelect(e, options)}
                   />
+                  {this.state.feedbackerror ? (
+                    <span className="text-danger">This field is required</span>
+                  ) : null}
+                </Col>
+                <Col md={12} className="mt-2">
+                  <label>Enter Feedback</label>
+                  <textarea
+                    name="feedback_text"
+                    placeholder="Enter Feedback..."
+                    onInput={this.handleChange}
+                    className="form-control pt-2"
+                    rows="4"
+                  />
+                  {this.state.feedbackerror1 ? (
+                    <span className="text-danger">This field is required</span>
+                  ) : null}
+                </Col>
+                <Col md={12} className="mt-3">
+                  {this.state.feedbackLoading ? (
+                    <Button>
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button color="default" type="submit">
+                      Submit
+                    </Button>
+                  )}
+
+                  <Button className="" onClick={this.handleClose}>
+                    Close
+                  </Button>
                 </Col>
               </Row>
             </form>
-            <Button className="mt-4 btn-block" onClick={this.handleClose}>
-              Close
-            </Button>
           </Modal.Body>
         </Modal>
       </>
