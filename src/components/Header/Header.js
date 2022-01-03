@@ -475,7 +475,7 @@ class Header extends React.Component {
                 });
               }}
             >
-              Add to Instagram Account
+              Add To Instagram Account
             </button>
           </div>
         </div>
