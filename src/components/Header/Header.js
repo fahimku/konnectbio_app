@@ -188,6 +188,7 @@ class Header extends React.Component {
     this.setState({ showSupport: false });
     this.setState({
       feedbackerror: false,
+      feedbackerror1: false,
       feedback_about: "",
       feedback_text: "",
     });
@@ -205,7 +206,11 @@ class Header extends React.Component {
         })
         .then((response) => {
           this.setState({ feedbackLoading: false });
-          this.setState({ showSupport: false });
+          this.setState({
+            showSupport: false,
+            feedback_about: "",
+            feedback_text: "",
+          });
           let res = response.data;
           toast.success(res.message);
         })
