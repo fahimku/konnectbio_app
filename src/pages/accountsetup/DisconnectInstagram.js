@@ -15,7 +15,11 @@ export default function DisconnectInstagram(props) {
         props.modal(false);
         props.loading(false);
         localStorage.removeItem("access_token");
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.fb_token = '';
+        userInfo.page_token = '';
+        userInfo.instagram_id = '';
+       localStorage.setItem("userInfo", JSON.stringify(userInfo));
         history.push("/connect");
       })
       .catch((err) => {

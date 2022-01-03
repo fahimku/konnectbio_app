@@ -207,19 +207,17 @@ class Layout extends React.Component {
                         permissions
                         ={["search_profile_access"]}
                       />
-
                       <Route
                         path="/app/direct/messaging"
                         exact
                         component={ComingSoon}
                       />
-                        <Route
+                      <Route
                         path="/app/custom/cards"
                         exact
                         component={customCards}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
-                      {/* <Route path="/app/all/posts" exact component={AllPosts} /> */}
                       <PrivateRoute
                         path="/app/my/posts"
                         exact

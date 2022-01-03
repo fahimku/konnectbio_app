@@ -286,13 +286,13 @@ class AccountSetup extends React.Component {
 
                               </h6>
                             </div>
-                            {!this.props.connectPage &&
+                            {!this.props.connectPage && userInfo1.package.package_name === 'Premium' &&
                               <div className='col-md-4'>
                                 <button
                                   onClick={() => {
                                     this.setState({ cancelPlan: true });
                                   }}
-                                  className="btn-block disconnect-btn"
+                                  className="btn-block btn text-white btn-sm disconnect-btn"
                                 >
                                   Cancel
                                 </button>
