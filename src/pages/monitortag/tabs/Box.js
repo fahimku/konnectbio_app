@@ -305,7 +305,26 @@ export default function Box({ data }) {
         </CardActions>
         <Collapse in={expanded2} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography>{data?.commentInfo?.text}</Typography>
+            <Typography>
+              <span
+                style={{
+                  marginRight: 5,
+                }}
+              >
+                <a
+                  href={`https://www.instagram.com/${data?.commentInfo?.username}`}
+                  target="_blank"
+                  style={{
+                    color: "#222",
+                    fontWeight: 600,
+                  }}
+                  className="btn-link"
+                >
+                  {data?.commentInfo?.username}
+                </a>
+              </span>
+              {data?.commentInfo?.text}
+            </Typography>
           </CardContent>
         </Collapse>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -348,15 +367,42 @@ export default function Box({ data }) {
                   marginLeft: 10,
                 }}
               >
-                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(
-                    data.comments_count ? data.comments_count : 0
-                  ).format("0,0")}
-                </Typography>
+                {data?.commentInfo ? (
+                  <>
+                    <ExpandMore2
+                      expand={expanded2}
+                      onClick={handleExpand2Click}
+                      aria-expanded={expanded2}
+                      aria-label="show more"
+                    >
+                      <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                      <Typography
+                        variant="h6"
+                        style={{
+                          color: "#b3b3b3",
+                          marginTop: 3,
+                          marginLeft: 5,
+                        }}
+                      >
+                        {numeral(
+                          data.comments_count ? data.comments_count : 0
+                        ).format("0,0")}
+                      </Typography>
+                    </ExpandMore2>
+                  </>
+                ) : (
+                  <>
+                    <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                    <Typography
+                      variant="h6"
+                      style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
+                    >
+                      {numeral(
+                        data.comments_count ? data.comments_count : 0
+                      ).format("0,0")}
+                    </Typography>
+                  </>
+                )}
               </div>
             </div>
             <Typography

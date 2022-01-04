@@ -19,7 +19,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
     const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
     if (token) {
       setFacebookUserAccessToken(token);
-      console.log(fbPage);
+      // console.log(fbPage);
       if (fbPage) {
         setSelectedPage(fbPage);
         setComplete(true);
@@ -36,7 +36,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
     const url = "https://get.konnect.bio";
     window.FB.login(
       (response) => {
-        console.log(response.authResponse?.accessToken, "        olddddddd");
+        // console.log(response.authResponse?.accessToken, "        olddddddd");
         if (response.authResponse?.accessToken) {
           fetch(`https://graph.facebook.com/v12.0/oauth/access_token?  
                         grant_type=fb_exchange_token&          
@@ -90,7 +90,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
     // );
   };
   const getFacebookPages = () => {
-    console.log("ffff", facebookUserAccessToken);
+    // console.log("ffff", facebookUserAccessToken);
     axios
       .get(
         `https://graph.facebook.com/v12.0/me/accounts?access_token=${facebookUserAccessToken}`
@@ -115,7 +115,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
 
   const idMemo = useMemo(() => {
     if (selectedPage) {
-      console.log("calling");
+      // console.log("calling");
       getInstagramAccountId(selectedPage);
     }
   }, [selectedPage]);
@@ -128,11 +128,11 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
         localStorage.removeItem("fbToken");
         localStorage.removeItem("fbPage");
         let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        userInfo.page_token =''
-        userInfo.fb_token = '';
-        userInfo.access_token = '';
-        userInfo.instagram_id = '';
-        userInfo.username = '';
+        userInfo.page_token = "";
+        userInfo.fb_token = "";
+        userInfo.access_token = "";
+        userInfo.instagram_id = "";
+        userInfo.username = "";
         setFacebookUserAccessToken("");
         setComplete("");
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
