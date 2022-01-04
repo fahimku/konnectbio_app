@@ -781,6 +781,7 @@ class Package extends React.Component {
                     paymentMethod={"Premium"}
                     plan={this.state.plan}
                     disableButton={this.state.promo_code !== "" ? true : false}
+                    btnClass="btn-block"
                   />
                 </>
               ) : null}

@@ -173,7 +173,7 @@ const PaymentButton = (props) => {
             document.getElementById("influencer_monthly_form").submit();
           }}
           variant={props.variant ? props.variant : "primary"}
-          className="btn-block"
+          className={props.btnClass}
           disabled={props.disableButton}
         >
           {props.name ? props.name : "Make Payment"}

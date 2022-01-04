@@ -57,6 +57,7 @@ class AccountSetup extends React.Component {
       help3: true,
       cancelPlan: false,
       disabledCancelPlan: false,
+      showPaymentModel: false,
     };
   }
 
@@ -223,7 +224,11 @@ class AccountSetup extends React.Component {
 
   handleClose = () => {
     this.setState({ checkbox: {} });
-    this.setState({ showPromo: false });
+    this.setState({
+      showPromo: false,
+      showPaymentModel: false,
+      promo_code: "",
+    });
     this.setState({ help1: true, help2: true, help3: true });
   };
 
@@ -497,7 +502,7 @@ class AccountSetup extends React.Component {
                                       <Button
                                         onClick={() => {
                                           this.setState({
-                                            showPromo: true,
+                                            showPaymentModel: true,
                                           });
                                         }}
                                       >
@@ -758,6 +763,236 @@ class AccountSetup extends React.Component {
                                               >
                                                 Accept
                                               </Button>
+                                            ) : null}
+                                          </div>
+                                        </div>
+                                      </Modal.Body>
+                                    </Modal>
+                                    <Modal
+                                      className="pkg_readmore"
+                                      show={this.state.showPaymentModel}
+                                      onHide={this.handleClose}
+                                      centered
+                                      size="lg"
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title>
+                                          Premium Package
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <div className="funkyradio">
+                                          <p>
+                                            Please make sure of the following
+                                            before proceeding further:
+                                          </p>
+                                          <div className="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="instagram"
+                                              id="instagram"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="instagram">
+                                              Do you have Instagram business
+                                              account?{" "}
+                                              <a
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  this.setState({
+                                                    help1: !this.state.help1,
+                                                  });
+                                                }}
+                                                href="#"
+                                              >
+                                                Click here for help.
+                                              </a>
+                                            </label>
+
+                                            <Collapse in={!this.state.help1}>
+                                              <div className="card card-body">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
+                                                  <li>
+                                                    Login To Your Instagram
+                                                    Account.
+                                                  </li>
+                                                  <li>Go To Profile.</li>
+                                                  <li>
+                                                    Select Settings{" "}
+                                                    <i className="fa fa-cog"></i>
+                                                  </li>
+                                                  <li>
+                                                    Find Account Icon{" "}
+                                                    <i className="fa fa-user-circle-o"></i>
+                                                  </li>
+                                                  <li>
+                                                    Find Switch Account Type.
+                                                  </li>
+                                                  <li>
+                                                    Select Switch to Business
+                                                    Account.
+                                                  </li>
+                                                </ol>
+                                                <p>
+                                                  You will now have an Instagram
+                                                  Business Account.
+                                                </p>
+                                              </div>
+                                            </Collapse>
+                                          </div>
+                                          <div className="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="facebook"
+                                              id="facebook"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="facebook">
+                                              Do you have Facebook account
+                                              connected to a Facebook page?{" "}
+                                              <a
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  this.setState({
+                                                    help2: !this.state.help2,
+                                                  });
+                                                }}
+                                                href="#"
+                                              >
+                                                Click here for help.
+                                              </a>
+                                            </label>
+                                            <Collapse in={!this.state.help2}>
+                                              <div className="card card-body">
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
+                                                  <li>
+                                                    Go to facebook.com and
+                                                    create an account.
+                                                  </li>
+                                                  <li>
+                                                    Once account is created,
+                                                    connect to a business page.
+                                                  </li>
+                                                </ol>
+                                                <p>
+                                                  Your Facebook account will be
+                                                  connected to a business page.
+                                                </p>
+                                              </div>
+                                            </Collapse>
+                                          </div>
+                                          <div className="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                                            <input
+                                              className="form-check-input"
+                                              type="checkbox"
+                                              name="checkbox3"
+                                              id="checkbox3"
+                                              onChange={this.handleCheckbox}
+                                            />
+                                            <label for="checkbox3">
+                                              Is your Facebook account connected
+                                              with your Instagram account?{" "}
+                                              <a
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  this.setState({
+                                                    help3: !this.state.help3,
+                                                  });
+                                                }}
+                                                href="#"
+                                              >
+                                                Click here for help.
+                                              </a>
+                                            </label>
+                                            <Collapse in={!this.state.help3}>
+                                              <div className="card card-body">
+                                                <span className="font-weight-bold">
+                                                  From Instagram:
+                                                </span>
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
+                                                  <li>
+                                                    Log in to Instagram and go
+                                                    to your profile.
+                                                  </li>
+                                                  <li>Tap Edit Profile.</li>
+                                                  <li>
+                                                    Under Public
+                                                    Business/Profile
+                                                    Information, select Page.
+                                                  </li>
+                                                  <li>
+                                                    Choose the Facebook page you
+                                                    wish to connect to. If you
+                                                    don’t have one yet, tap
+                                                    Create a new Facebook page.
+                                                  </li>
+                                                </ol>
+                                                <p>
+                                                  Your Instagram account will be
+                                                  connected to a Facebook
+                                                  account.
+                                                </p>
+                                                <span className="font-weight-bold">
+                                                  From Facebook:
+                                                </span>
+                                                <ol
+                                                  type="1"
+                                                  className="insta-list"
+                                                >
+                                                  <li>
+                                                    Log in to Facebook and click
+                                                    Pages in the left menu.
+                                                  </li>
+                                                  <li>
+                                                    From your Facebook page,
+                                                    click Settings.
+                                                  </li>
+                                                  <li>
+                                                    Scroll down and select
+                                                    Instagram in the left
+                                                    column.
+                                                  </li>
+                                                  <li>
+                                                    Click Connect Account, and
+                                                    fill in your Instagram
+                                                    username and password.
+                                                  </li>
+                                                </ol>
+                                                <p>
+                                                  Your Facebook account will be
+                                                  connected to an Instagram
+                                                  account.
+                                                </p>
+                                              </div>
+                                            </Collapse>
+                                          </div>
+                                          <div>
+                                            {this.state.checkbox.instagram &&
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
+                                              <PaymentButton
+                                                plan={this.state.plan}
+                                                userId={userInfo1?.user_id}
+                                                packageId={
+                                                  this.state.singlePackage
+                                                    .package_id
+                                                }
+                                                paymentMethod={
+                                                  this.state.singlePackage
+                                                    .package_name
+                                                }
+                                              />
                                             ) : null}
                                           </div>
                                         </div>
