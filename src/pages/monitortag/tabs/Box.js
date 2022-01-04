@@ -41,15 +41,30 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+const ExpandMore2 = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  // transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 export default function Box({ data }) {
   const history = useHistory();
   const [expanded, setExpanded] = React.useState(false);
+  const [expanded2, setExpanded2] = React.useState(false);
 
   const handleExpandClick = () => {
+    setExpanded2(false);
     setExpanded(!expanded);
   };
-
+  const handleExpand2Click = () => {
+    setExpanded(false);
+    setExpanded2(!expanded2);
+  };
   function renderMedia(item) {
     if (item.media_type == "IMAGE") {
       return (
@@ -135,7 +150,12 @@ export default function Box({ data }) {
     <>
       <Card elevation={1}>
         <CardHeader
-          avatar={<Avatar alt={data.username} src={data.userInfo?.business_discovery?.profile_picture_url} />}
+          avatar={
+            <Avatar
+              alt={data.username}
+              src={data.userInfo?.business_discovery?.profile_picture_url}
+            />
+          }
           action={
             <div
               style={{
@@ -217,23 +237,61 @@ export default function Box({ data }) {
                   marginLeft: 10,
                 }}
               >
-                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(
-                    data.comments_count ? data.comments_count : 0
-                  ).format("0,0")}
-                </Typography>
+                {data?.commentInfo ? (
+                  <>
+                    <ExpandMore2
+                      expand={expanded2}
+                      onClick={handleExpand2Click}
+                      aria-expanded={expanded2}
+                      aria-label="show more"
+                    >
+                      <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                      <Typography
+                        variant="h6"
+                        style={{
+                          color: "#b3b3b3",
+                          marginTop: 3,
+                          marginLeft: 5,
+                        }}
+                      >
+                        {numeral(
+                          data.comments_count ? data.comments_count : 0
+                        ).format("0,0")}
+                      </Typography>
+                    </ExpandMore2>
+                  </>
+                ) : (
+                  <>
+                    <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
+                    <Typography
+                      variant="h6"
+                      style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
+                    >
+                      {numeral(
+                        data.comments_count ? data.comments_count : 0
+                      ).format("0,0")}
+                    </Typography>
+                  </>
+                )}
               </div>
-              <Typography variant="body" sx={{fontSize:'12px',marginLeft:'15px'}} color="gray" textAlign="center">
-              {new Date(data.timestamp).toDateString()}
-            </Typography>
+
+              <Typography
+                variant="body"
+                sx={{ fontSize: "12px", marginLeft: "15px" }}
+                color="gray"
+                textAlign="center"
+              >
+                {new Date(data.timestamp).toDateString()}
+              </Typography>
             </div>
           ) : null}
           <div
-            style={{ display: "flex", flexGrow: 1, justifyContent: "flex-end",alignItems:'center' }}
+            style={{
+              display: "flex",
+              flexGrow: 1,
+              justifyContent: "flex-end",
+              alignItems: "center",
+            }}
           >
             <ExpandMore
               expand={expanded}
@@ -245,17 +303,22 @@ export default function Box({ data }) {
             </ExpandMore>
           </div>
         </CardActions>
+        <Collapse in={expanded2} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography>{data?.commentInfo?.text}</Typography>
+          </CardContent>
+        </Collapse>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
-          <CardActions sx={{justifyContent:'space-between'}}>
+          <CardActions sx={{ justifyContent: "space-between" }}>
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                marginLeft:5
+                marginLeft: 5,
               }}
             >
               <div
@@ -296,7 +359,12 @@ export default function Box({ data }) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body" sx={{fontSize:'14px',marginRight:'15px'}} color="gray" textAlign="right">
+            <Typography
+              variant="body"
+              sx={{ fontSize: "14px", marginRight: "15px" }}
+              color="gray"
+              textAlign="right"
+            >
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>
