@@ -616,7 +616,7 @@ class AccountSetup extends React.Component {
                                             />
                                             <label for="facebook">
                                               Do you have Facebook account
-                                              connected to a business page?{" "}
+                                              connected to a Facebook page?{" "}
                                               <a
                                                 onClick={(e) => {
                                                   e.preventDefault();

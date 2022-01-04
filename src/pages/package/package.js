@@ -59,7 +59,7 @@ class Package extends React.Component {
     this.setState({ showBasic: false });
     this.setState({ showPremium: false });
     this.setState({ showSelectPackage: false });
-    this.setState({ plan: "", checkbox: {} });
+    this.setState({ plan: "", checkbox: {}, promo_code: "" });
     this.setState({ showPromo: false });
     this.setState({ help1: true, help2: true, help3: true });
   };
@@ -115,10 +115,9 @@ class Package extends React.Component {
           history.push("/connect");
         })
         .catch((err) => {
-          console.log(err.response.data);
           toast.error(err.response.data.message);
           this.setState({ loading: false, promo_code: "" });
-          this.setState({ checkbox: {}, plan: "" });
+          // this.setState({ checkbox: {}, plan: "" });
         });
     }
   };
@@ -159,7 +158,7 @@ class Package extends React.Component {
         </div>
 
         <div className="container-fluid pricing-table-ifti p-0">
-          <form onSubmit={this.handleSubmit}>
+          {/* <form onSubmit={this.handleSubmit}>
             <Row className="promo_code_ift">
               <div className="promo_msg col-md-12">Have Promo Code?</div>
               <div className="promo_iner col-md-12">
@@ -186,7 +185,7 @@ class Package extends React.Component {
                 </span>
               ) : null}
             </Row>
-          </form>
+          </form> */}
           <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
             defaultActiveKey="home"
@@ -319,10 +318,10 @@ class Package extends React.Component {
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Search Profiles
                       </li>
-                      <li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
-                      </li>
+                      </li> */}
 
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -489,10 +488,10 @@ class Package extends React.Component {
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Search Profiles
                       </li>
-                      <li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
-                      </li>
+                      </li> */}
 
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -643,7 +642,7 @@ class Package extends React.Component {
                   onChange={this.handleCheckbox}
                 />
                 <label for="facebook">
-                  Do you have Facebook account connected to a business page?{" "}
+                  Do you have Facebook account connected to a Facebook page?{" "}
                   <a
                     onClick={(e) => {
                       e.preventDefault();
@@ -737,10 +736,42 @@ class Package extends React.Component {
                   </div>
                 </Collapse>
               </div>
-              <div>
-                {this.state.checkbox.instagram &&
-                this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+            </div>
+            <div>
+              {this.state.checkbox.instagram &&
+              this.state.checkbox.facebook &&
+              this.state.checkbox.checkbox3 ? (
+                <>
+                  <form onSubmit={this.handleSubmit}>
+                    <Row className="promo_code_ift promo_code_ift_new">
+                      <div className="promo_msg col-md-12">
+                        Have Promo Code?
+                      </div>
+                      <div className="promo_iner col-md-12">
+                        <input
+                          type="text"
+                          name="promo_code"
+                          // placeholder="Enter Promo Code"
+                          onInput={this.handleChange}
+                          className="form-control"
+                          value={this.state.promo_code}
+                          autoComplete="off"
+                        />
+                        {this.state.loading ? (
+                          <Button>
+                            <Loader />
+                          </Button>
+                        ) : (
+                          <Button type="submit">Apply</Button>
+                        )}
+                      </div>
+                      {this.state.promo_error ? (
+                        <span class="text-danger col-md-12">
+                          Please enter promo code
+                        </span>
+                      ) : null}
+                    </Row>
+                  </form>
                   <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
@@ -749,9 +780,10 @@ class Package extends React.Component {
                     variant="primary"
                     paymentMethod={"Premium"}
                     plan={this.state.plan}
+                    disableButton={this.state.promo_code !== "" ? true : false}
                   />
-                ) : null}
-              </div>
+                </>
+              ) : null}
             </div>
           </Modal.Body>
         </Modal>
