@@ -890,7 +890,7 @@ a.pkg_read:hover {
   margin-bottom: 24px;
   background-color: #fff;
   box-shadow: 0px 0px 2px 1px #e4e7ed;
-  min-height: 610px;
+  min-height: 493px;
 }
 .profile_password.profile_box_main .dash_block_profile {
   min-height: 100px;
@@ -953,7 +953,7 @@ a.pkg_read:hover {
   flex-direction: column;
 }
 .dp_fields textarea.form-control {
-  height: 219px;
+  height: 102px;
 }
 .pr-sv-btn {
   display: flex;
