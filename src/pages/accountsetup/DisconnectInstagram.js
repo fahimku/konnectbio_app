@@ -12,13 +12,20 @@ export default function DisconnectInstagram(props) {
     await axios
       .put(`/users/revise/disconnectinstagram/${props.userId}`)
       .then((response) => {
-        console.log(response)
-        props.modal(false);
- 
-        props.loading(false);
         localStorage.removeItem("access_token");
-        localStorage.setItem("userInfo", JSON.stringify(response.data.data));
-         history.push("/connect");
+        localStorage.removeItem("fbToken");
+        localStorage.removeItem("fbPage");
+        props.modal(false);
+        props.loading(false);
+        let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        userInfo.page_token = "";
+        userInfo.fb_token = "";
+        userInfo.access_token = "";
+        userInfo.instagram_id = "";
+        userInfo.username = "";
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        history.push("/connect");
+        history.go(0);
       })
       .catch((err) => {
         props.loading(true);
@@ -29,44 +36,44 @@ export default function DisconnectInstagram(props) {
       <div className="profile_box_main col-md-4">
         <div className="dash_block_profile">
           <div className="dash_content_profile">
-                <h5>Instagram Connection</h5>
+            <h5>Instagram Connection</h5>
             <Row>
-            <Col md={12}>
-              <div className="dp_fields-setup mb-3">
-                <div className="category_count">Connection Status</div>
-              </div>
-              <div className="dp_fields-setup">
-                {props.username1 !== "" || props.username ? (
-                  <>
-                    <div className="connected-text text-left mb-2">
-                      Connected: @
-                      {props.username1 !== ""
-                        ? props.username1
-                        : props.username}
-                    </div>
+              <Col md={12}>
+                <div className="dp_fields-setup mb-3">
+                  <div className="category_count">Connection Status</div>
+                </div>
+                <div className="dp_fields-setup">
+                  {props.username1 !== "" || props.username ? (
+                    <>
+                      <div className="connected-text text-left mb-2">
+                        Connected: @
+                        {props.username1 !== ""
+                          ? props.username1
+                          : props.username}
+                      </div>
+                      <Button
+                        variant="primary"
+                        className="btn-block cat-right-btn"
+                        onClick={() => {
+                          props.modal(true);
+                        }}
+                      >
+                        Disconnect Instagram
+                      </Button>
+                    </>
+                  ) : (
                     <Button
+                      onClick={() => {
+                        window.location.replace(props.url);
+                      }}
                       variant="primary"
                       className="btn-block cat-right-btn"
-                      onClick={() => {
-                        props.modal(true);
-                      }}
                     >
-                      Disconnect Instagram
+                      <i className="fa fa-instagram" />
+                      &nbsp;&nbsp; Connect Instagram
                     </Button>
-                  </>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      window.location.replace(props.url);
-                    }}
-                    variant="primary"
-                    className="btn-block cat-right-btn"
-                  >
-                    <i className="fa fa-instagram" />
-                    &nbsp;&nbsp; Connect Instagram
-                  </Button>
-                )}
-              </div>
+                  )}
+                </div>
               </Col>
             </Row>
           </div>
