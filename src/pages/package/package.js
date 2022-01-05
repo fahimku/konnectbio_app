@@ -20,6 +20,7 @@ class Package extends React.Component {
     loading: false,
     promo_code: "",
     promo_error: false,
+    promoCodeError:"",
     showSelectPackage: false,
     checkbox: {},
     plan: "",
@@ -56,6 +57,7 @@ class Package extends React.Component {
     }, initialValue);
   };
   handleClose = () => {
+    this.setState({ promo_error: false });
     this.setState({ showBasic: false });
     this.setState({ showPremium: false });
     this.setState({ showSelectPackage: false });
@@ -81,6 +83,7 @@ class Package extends React.Component {
         console.log(error);
       });
   };
+
   handleChange = (e) => {
     this.setState({
       promo_code: e.target.value,
@@ -92,6 +95,7 @@ class Package extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
+      this.setState({promoCodeError:' Please enter promo code'})
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
@@ -115,6 +119,8 @@ class Package extends React.Component {
           history.push("/connect");
         })
         .catch((err) => {
+          this.setState({ promo_error: true });
+          this.setState({promoCodeError:err.response.data.message})
           toast.error(err.response.data.message);
           this.setState({ loading: false, promo_code: "" });
           // this.setState({ checkbox: {}, plan: "" });
@@ -662,11 +668,11 @@ class Package extends React.Component {
                     <ol type="1" class="insta-list">
                       <li>Go to facebook.com and create an account.</li>
                       <li>
-                        Once account is created, connect to a business page.
+                        Once account is created, connect to a facebook page.
                       </li>
                     </ol>
                     <p>
-                      Your Facebook account will be connected to a business
+                      Your Facebook account will be connected to a facebook
                       page.
                     </p>
                   </div>
@@ -739,8 +745,8 @@ class Package extends React.Component {
             </div>
             <div>
               {this.state.checkbox.instagram &&
-              this.state.checkbox.facebook &&
-              this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.facebook &&
+                this.state.checkbox.checkbox3 ? (
                 <>
                   <form onSubmit={this.handleSubmit}>
                     <Row className="promo_code_ift promo_code_ift_new">
@@ -767,7 +773,7 @@ class Package extends React.Component {
                       </div>
                       {this.state.promo_error ? (
                         <span class="text-danger col-md-12">
-                          Please enter promo code
+                         {this.state.promoCodeError}
                         </span>
                       ) : null}
                     </Row>
@@ -952,8 +958,8 @@ class Package extends React.Component {
               </div>
               <div>
                 {this.state.checkbox.instagram &&
-                this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+                  this.state.checkbox.facebook &&
+                  this.state.checkbox.checkbox3 ? (
                   <Button
                     onClick={() => {
                       this.setState({

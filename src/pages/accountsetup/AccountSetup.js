@@ -51,6 +51,7 @@ class AccountSetup extends React.Component {
       checkbox: {},
       showPromo: false,
       promo_error: false,
+      promoCodeError:"",
       myPackage: "",
       help1: true,
       help2: true,
@@ -166,6 +167,7 @@ class AccountSetup extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
+      this.setState({ promoCodeError: ' Please enter promo code' });
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
@@ -197,6 +199,8 @@ class AccountSetup extends React.Component {
           // window.location.reload();
         })
         .catch((err) => {
+          this.setState({ promo_error: true });
+          this.setState({ promoCodeError: err.response.data.message });
           toast.error(err.response.data.message);
           this.setState({ promoLoading: false, promo_code: "" });
           this.setState({ checkbox: {} });
@@ -227,7 +231,7 @@ class AccountSetup extends React.Component {
     this.setState({
       showPromo: false,
       showPaymentModel: false,
-      promo_code: "",
+      promo_code: false,
     });
     this.setState({ help1: true, help2: true, help3: true });
   };
@@ -371,6 +375,7 @@ class AccountSetup extends React.Component {
                                     className="btn-block"
                                     onClick={() => {
                                       this.setState({
+                                        promo_error: false,
                                         showPaymentButton: true,
                                       });
                                     }}
@@ -490,7 +495,7 @@ class AccountSetup extends React.Component {
                                   </div>
                                   {this.state.promo_error ? (
                                     <span className="text-danger mt-2">
-                                      Please enter promo code
+                                      {this.state.promoCodeError}
                                     </span>
                                   ) : null}
                                   <div className="make-canc-pay">
@@ -644,12 +649,12 @@ class AccountSetup extends React.Component {
                                                   </li>
                                                   <li>
                                                     Once account is created,
-                                                    connect to a business page.
+                                                    connect to a facebook page.
                                                   </li>
                                                 </ol>
                                                 <p>
                                                   Your Facebook account will be
-                                                  connected to a business page.
+                                                  connected to a facebook page.
                                                 </p>
                                               </div>
                                             </Collapse>
