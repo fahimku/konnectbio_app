@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { sendPasswordResetEmail } from "../../../actions/auth";
+import { sendPasswordResetEmail,authSuccess,authError } from "../../../actions/auth";
 import logo from "../../../images/logo.svg";
 
 class Forgot extends React.Component {
@@ -97,6 +97,8 @@ class Forgot extends React.Component {
                 <span
                   className="text-center link"
                   onClick={() => {
+                    this.props.dispatch(authError(""));
+                    this.props.dispatch(authSuccess(""));
                     this.props.history.push("/login");
                   }}
                 >

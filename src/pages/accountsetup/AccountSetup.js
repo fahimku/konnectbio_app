@@ -51,7 +51,7 @@ class AccountSetup extends React.Component {
       checkbox: {},
       showPromo: false,
       promo_error: false,
-      promoCodeError:"",
+      promoCodeError: "",
       myPackage: "",
       help1: true,
       help2: true,
@@ -167,7 +167,7 @@ class AccountSetup extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
-      this.setState({ promoCodeError: ' Please enter promo code' });
+      this.setState({ promoCodeError: " Please enter promo code" });
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
@@ -304,7 +304,8 @@ class AccountSetup extends React.Component {
                                   : ""}
                               </h6>
                               {!this.props.connectPage &&
-                              userInfo1.package.package_name === "Premium" && (
+                                userInfo1.package.package_name ===
+                                  "Premium" && (
                                   <button
                                     onClick={() => {
                                       this.setState({ cancelPlan: true });
@@ -313,7 +314,7 @@ class AccountSetup extends React.Component {
                                   >
                                     Cancel
                                   </button>
-                              )}
+                                )}
                             </div>
                           </div>
                         </div>
@@ -344,7 +345,7 @@ class AccountSetup extends React.Component {
                               </strong>
                             </span>
                             {this.state.singlePackage.package_name !==
-                              "Business Plus" && (
+                              "Premium" && (
                               <span>Change Plan to have more categories</span>
                             )}
                           </div>
@@ -360,7 +361,7 @@ class AccountSetup extends React.Component {
                             </span>
 
                             {this.state.singlePackage.package_name !==
-                              "Business Plus" && (
+                              "Premium" && (
                               <span>Change Plan to have more links</span>
                             )}
                           </div>
