@@ -30,11 +30,13 @@ function HashtagsList({
       setLoading(false);
     });
   }, []);
+
   React.useEffect(() => {
     if (hashtags.length > 0) {
       next(false);
     }
   }, [hashtags]);
+
   const handleDelete = (chipToDelete) => () => {
     Swal.fire({
       title: "Are you sure?",
@@ -57,33 +59,34 @@ function HashtagsList({
   const handleAdd = (e) => {
     e.preventDefault();
     var format = /[#\s]/;
-    if (!format.test(hash)) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You want to add this hashtag?",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#010b40",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes!",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          sethashLoading(true);
-          createHashtag(hash)
-            .then(() => {
-              sethashLoading(false);
-              toast.success("Hashtag added successfully");
-              getHashtags();
-            })
-            .catch((err) => {
-              console.log(err.response, "err");
-              sethashLoading(false);
-              toast.error(err.response.data.message);
-            });
-          setHash("");
-        }
-      });
-    }
+    if (hash.length > 0)
+      if (!format.test(hash)) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to add this hashtag?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#010b40",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            sethashLoading(true);
+            createHashtag(hash)
+              .then(() => {
+                sethashLoading(false);
+                toast.success("Hashtag added successfully");
+                getHashtags();
+              })
+              .catch((err) => {
+                console.log(err.response, "err");
+                sethashLoading(false);
+                toast.error(err.response.data.message);
+              });
+            setHash("");
+          }
+        });
+      }
   };
 
   function renderFormatError() {
@@ -195,18 +198,6 @@ function HashtagsList({
                           </Box>
                         </Col>
                       </Row>
-
-                      {/* <Row>
-                                                <Col md={5} xl={3}>
-                                                    <Button
-                                                        variant="primary"
-                                                        type="submit"
-                                                        className="btn-block mt-3"
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                </Col>
-                                            </Row> */}
                     </form>
                   </div>
                 </div>

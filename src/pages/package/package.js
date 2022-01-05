@@ -20,7 +20,7 @@ class Package extends React.Component {
     loading: false,
     promo_code: "",
     promo_error: false,
-    promoCodeError:"",
+    promoCodeError: "",
     showSelectPackage: false,
     checkbox: {},
     plan: "",
@@ -95,7 +95,7 @@ class Package extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
-      this.setState({promoCodeError:' Please enter promo code'})
+      this.setState({ promoCodeError: " Please enter promo code" });
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
@@ -120,7 +120,7 @@ class Package extends React.Component {
         })
         .catch((err) => {
           this.setState({ promo_error: true });
-          this.setState({promoCodeError:err.response.data.message})
+          this.setState({ promoCodeError: err.response.data.message });
           toast.error(err.response.data.message);
           this.setState({ loading: false, promo_code: "" });
           // this.setState({ checkbox: {}, plan: "" });
@@ -554,9 +554,7 @@ class Package extends React.Component {
           <Modal.Body>
             Basic account allows you to create profile, add up to 3 social links
             and access to all the product and service categories offered by
-            businesses/brands on our platform. You are not allowed to link any
-            your posts with any product categories. To link post-upgrade to
-            influencer package you required.
+            businesses/brands on our platform.
           </Modal.Body>
         </Modal>
 
@@ -570,15 +568,14 @@ class Package extends React.Component {
             <Modal.Title>Premium</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Premium account allows you to create profile page, add up to 3
+            Premium account allows you to create profile page, add up to 6
             social/external links and create BIOSHOP on our platform. In this
-            package you are allowed 3 product and service categories you like to
-            promote. You can add hyperlink to any lG post within these 3 product
+            package you are allowed 6 product and service categories you like to
+            promote. You can add hyperlink to any lG post within these 6 product
             and service categories only. You also get access to analytical data
-            like; impressions, clicks and user engagement' You are allowed
-            Market Place access which enables you to search affiliate campaigns
-            being offered by businesses and brands on our platform in your
-            selected 3 categories only.
+            like, impressions, clicks and user engagement. You are allowed
+            Searching of User Generated Content like Schedule Post, Monitor
+            Hashtags, Monitor Mentions and Search Profiles.
           </Modal.Body>
         </Modal>
 
@@ -745,8 +742,8 @@ class Package extends React.Component {
             </div>
             <div>
               {this.state.checkbox.instagram &&
-                this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+              this.state.checkbox.facebook &&
+              this.state.checkbox.checkbox3 ? (
                 <>
                   <form onSubmit={this.handleSubmit}>
                     <Row className="promo_code_ift promo_code_ift_new">
@@ -773,7 +770,7 @@ class Package extends React.Component {
                       </div>
                       {this.state.promo_error ? (
                         <span class="text-danger col-md-12">
-                         {this.state.promoCodeError}
+                          {this.state.promoCodeError}
                         </span>
                       ) : null}
                     </Row>
@@ -958,8 +955,8 @@ class Package extends React.Component {
               </div>
               <div>
                 {this.state.checkbox.instagram &&
-                  this.state.checkbox.facebook &&
-                  this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.facebook &&
+                this.state.checkbox.checkbox3 ? (
                   <Button
                     onClick={() => {
                       this.setState({
