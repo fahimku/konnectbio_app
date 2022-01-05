@@ -296,17 +296,15 @@ class AccountSetup extends React.Component {
                       <div className="col-md-12">
                         <div className="dp_fields-setup mb-0">
                           <div className="row">
-                            <div className="col-md-8">
+                            <div className="pkg-cncl-btn d-flex col-md-12">
                               <h6 className="package_name">
                                 Current Plan:{" "}
                                 {userInfo1?.package
                                   ? userInfo1.package.package_name
                                   : ""}
                               </h6>
-                            </div>
-                            {!this.props.connectPage &&
+                              {!this.props.connectPage &&
                               userInfo1.package.package_name === "Premium" && (
-                                <div className="col-md-4">
                                   <button
                                     onClick={() => {
                                       this.setState({ cancelPlan: true });
@@ -315,8 +313,8 @@ class AccountSetup extends React.Component {
                                   >
                                     Cancel
                                   </button>
-                                </div>
                               )}
+                            </div>
                           </div>
                         </div>
 
