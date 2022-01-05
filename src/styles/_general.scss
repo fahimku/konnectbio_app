@@ -606,7 +606,9 @@ h1 small {
   margin-top: 14px;
 }
 .addbio-topbar .btn-addbio {
-  box-shadow: inset 0 0 0 1px #dce4ec !important;
+      height: 35px;
+      border: solid 1px #e1e1e1;
+      border-radius: 0;
 }
 .addbio-topbar .btn-addbio:hover {
   background-image: linear-gradient(
@@ -652,6 +654,8 @@ h1 small {
 .header .right-top-bar .btn {
   padding: 7px 10px !important;
   min-width: 100px;
+  height: 35px;
+  margin-right: 0 !important;
 }
 .promo_code_ift_new {
   position: relative;

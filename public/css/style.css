@@ -618,9 +618,10 @@ span.fa.fa-times.ift-cancel {
 }
 .yearly_message {
   float: right;
-  width: 30%;
+  width: 100%;
   font-family: "SegoeUIBold";
   margin-bottom: 8px;
+  text-align: center;
 }
 .promo_code_ift {
   flex-direction: column;
@@ -644,7 +645,7 @@ span.fa.fa-times.ift-cancel {
   justify-content: space-between;
   background-color: transparent;
   width: 30%;
-  float: right;
+  margin: 0 auto;
   padding: 5px 5px;
   border-radius: 30px;
   border: solid 1px #ccc;
