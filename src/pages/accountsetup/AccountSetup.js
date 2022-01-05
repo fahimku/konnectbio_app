@@ -231,7 +231,7 @@ class AccountSetup extends React.Component {
     this.setState({
       showPromo: false,
       showPaymentModel: false,
-      promo_code: false,
+      promo_code: "",
     });
     this.setState({ help1: true, help2: true, help3: true });
   };
@@ -476,6 +476,11 @@ class AccountSetup extends React.Component {
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
                                   <h4>Have Promo Code?</h4>
+                                  {this.state.promo_error ? (
+                                    <span className="text-danger mt-2">
+                                      {this.state.promoCodeError}
+                                    </span>
+                                  ) : null}
                                   <div className="acct-promo-sec-inr">
                                     <input
                                       type="text"
@@ -494,11 +499,7 @@ class AccountSetup extends React.Component {
                                       Apply
                                     </Button>
                                   </div>
-                                  {this.state.promo_error ? (
-                                    <span className="text-danger mt-2">
-                                      {this.state.promoCodeError}
-                                    </span>
-                                  ) : null}
+
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
                                     !this.state.checkbox.facebook ||
