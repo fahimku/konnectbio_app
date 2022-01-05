@@ -646,12 +646,12 @@ class AccountSetup extends React.Component {
                                                   </li>
                                                   <li>
                                                     Once account is created,
-                                                    connect to a business page.
+                                                    connect to a facebook page.
                                                   </li>
                                                 </ol>
                                                 <p>
                                                   Your Facebook account will be
-                                                  connected to a business page.
+                                                  connected to a facebook page.
                                                 </p>
                                               </div>
                                             </Collapse>

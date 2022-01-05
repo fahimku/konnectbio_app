@@ -662,11 +662,11 @@ class Package extends React.Component {
                     <ol type="1" class="insta-list">
                       <li>Go to facebook.com and create an account.</li>
                       <li>
-                        Once account is created, connect to a business page.
+                        Once account is created, connect to a facebook page.
                       </li>
                     </ol>
                     <p>
-                      Your Facebook account will be connected to a business
+                      Your Facebook account will be connected to a facebook
                       page.
                     </p>
                   </div>
