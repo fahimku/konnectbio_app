@@ -60,36 +60,38 @@ function HashtagsList({
     const handleAdd = (e) => {
         e.preventDefault();
         var format = /[#\s]/;
-        if (!format.test(hash)) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You want to add this profile?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#010b40",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    searchProfileAc(hash,true).then((res) => {
-                        sethashLoading(true);
-                        createProfile(hash)
-                            .then(() => {
-                                sethashLoading(false);
-                                toast.success("Profile added successfully");
-                                getProfiles();
-                            })
-                            .catch((err) => {
-                                console.log(err.response, "err");
-                                sethashLoading(false);
-                                toast.error(err.response.data.message);
-                            });
-                        setHash("");
-                    }).catch((err) => {
-                        toast.error("This Profile is not exists !");
-                    })
-                }
-            });
+        if(hash.length >0){
+            if (!format.test(hash)) {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You want to add this profile?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#010b40",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        searchProfileAc(hash, true).then((res) => {
+                            sethashLoading(true);
+                            createProfile(hash)
+                                .then(() => {
+                                    sethashLoading(false);
+                                    toast.success("Profile added successfully");
+                                    getProfiles();
+                                })
+                                .catch((err) => {
+                                    console.log(err.response, "err");
+                                    sethashLoading(false);
+                                    toast.error(err.response.data.message);
+                                });
+                            setHash("");
+                        }).catch((err) => {
+                            toast.error("This Profile is not exists !");
+                        })
+                    }
+                });
+            }
         }
     };
 
@@ -147,7 +149,7 @@ function HashtagsList({
                                                                 name="name"
                                                                 placeholder="Enter Profile"
                                                                 className="form-control comment-field"
-                                                                required=""
+                                                                required
                                                                 value={hash}
                                                             />
                                                             {hashLoading ? (
