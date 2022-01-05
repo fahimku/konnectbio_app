@@ -66,13 +66,13 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
   const clearMarketPlace = (e) => {
     setClearLoading(true);
     setBrand({ value: "all", label: "ALL" });
-    setSortBy({ value: "followers", label: "Followers" });
+    setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     getTags({
       type: "comments",
       from_date: fromDate.toString(),
       to_date: toDate.toString(),
-      sort: "followers",
+      sort: "date",
       order_by: "desc",
     }).then(() => {
       setClearLoading(false);
