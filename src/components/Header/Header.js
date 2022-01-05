@@ -510,7 +510,7 @@ class Header extends React.Component {
             <TopBar text={true} username={this.state.username} />
           </div>
         </div>
-        <div className="header bg-white">
+        <div className="header-ipad header bg-white">
           <div className="linkin-text">Konnect.Bio</div>
           <div className="left-top-bar">
             <div className="your-copy-link">
