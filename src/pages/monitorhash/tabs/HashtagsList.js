@@ -30,11 +30,13 @@ function HashtagsList({
       setLoading(false);
     });
   }, []);
+
   React.useEffect(() => {
     if (hashtags.length > 0) {
       next(false);
     }
   }, [hashtags]);
+
   const handleDelete = (chipToDelete) => () => {
     Swal.fire({
       title: "Are you sure?",
@@ -141,7 +143,7 @@ function HashtagsList({
                                 name="name"
                                 placeholder="Enter Hashtag"
                                 class="form-control comment-field"
-                                required
+                                required=""
                                 value={hash}
                               />
                               {hashLoading ? (
