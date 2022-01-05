@@ -25,6 +25,7 @@ function HashtagsList({
     const [hash, setHash] = React.useState("");
     const [loading, setLoading] = React.useState(true);
     const [hashLoading, sethashLoading] = React.useState(false);
+    const [error, setError] = React.useState(false);
 
     React.useEffect(() => {
         getProfiles().then(() => {
@@ -60,44 +61,53 @@ function HashtagsList({
     const handleAdd = (e) => {
         e.preventDefault();
         var format = /[#\s]/;
-        if (!format.test(hash)) {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You want to add this profile?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#010b40",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    searchProfileAc(hash,true).then((res) => {
-                        sethashLoading(true);
-                        createProfile(hash)
-                            .then(() => {
-                                sethashLoading(false);
-                                toast.success("Profile added successfully");
-                                getProfiles();
-                            })
-                            .catch((err) => {
-                                console.log(err.response, "err");
-                                sethashLoading(false);
-                                toast.error(err.response.data.message);
-                            });
-                        setHash("");
-                    }).catch((err) => {
-                        toast.error("This Profile is not exists !");
-                    })
-                }
-            });
+        if (hash.length > 0) {
+            setError(false)
+            if (!format.test(hash)) {
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You want to add this profile?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#010b40",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        searchProfileAc(hash, true).then((res) => {
+                            sethashLoading(true);
+                            createProfile(hash)
+                                .then(() => {
+                                    sethashLoading(false);
+                                    toast.success("Profile added successfully");
+                                    getProfiles();
+                                })
+                                .catch((err) => {
+                                    console.log(err.response, "err");
+                                    sethashLoading(false);
+                                    toast.error(err.response.data.message);
+                                });
+                            setHash("");
+                        }).catch((err) => {
+                            toast.error("This Profile is not exists !");
+                        })
+                    }
+                });
+            }
+        } else {
+            setError(true);
         }
     };
 
     function renderFormatError() {
         var format = /[#\s]/;
         if (format.test(hash)) {
-            return <p style={{ color: "red" }}>you cannot write # or space</p>;
+            return  <span class="help-block text-danger">you cannot write # or space</span>;
         }
+
+        else if (hash.length === 0 && error) {
+            return <span class="help-block text-danger">Please Enter Hashtag.</span>;
+          }
         return null;
     }
 

@@ -24,6 +24,7 @@ function HashtagsList({
   const [hash, setHash] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [hashLoading, sethashLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
     getHashtags().then(() => {
@@ -38,6 +39,7 @@ function HashtagsList({
   }, [hashtags]);
 
   const handleDelete = (chipToDelete) => () => {
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -59,7 +61,8 @@ function HashtagsList({
   const handleAdd = (e) => {
     e.preventDefault();
     var format = /[#\s]/;
-    if (hash.length > 0)
+    if (hash.length > 0) {
+      setError(false)
       if (!format.test(hash)) {
         Swal.fire({
           title: "Are you sure?",
@@ -87,12 +90,18 @@ function HashtagsList({
           }
         });
       }
+    } else {
+      setError(true);
+    }
   };
 
   function renderFormatError() {
-    var format = /[#\s]/;
+    let format = /[#\s]/;
     if (format.test(hash)) {
-      return <p style={{ color: "red" }}>you cannot write # or space</p>;
+      return <span class="help-block text-danger">you cannot write # or space</span>;
+    }
+    else if (hash.length === 0 && error) {
+      return <span class="help-block text-danger">Please Enter Hashtag.</span>;
     }
     return null;
   }
@@ -132,6 +141,7 @@ function HashtagsList({
                             </div>
                             <div className="d-flex flex-row hashtag-box">
                               <span class="input-group-text">#</span>
+
                               <input
                                 style={{
                                   borderTopRightRadius: 0,
@@ -146,6 +156,7 @@ function HashtagsList({
                                 required=""
                                 value={hash}
                               />
+
                               {hashLoading ? (
                                 <Button
                                   style={{
@@ -173,6 +184,7 @@ function HashtagsList({
                                 </Button>
                               )}
                             </div>
+
                             {renderFormatError()}
                           </div>
                           <Box
@@ -211,9 +223,7 @@ function HashtagsList({
     return <Loader size={30} />;
   }
 }
-
 function mapStateToProps({ hashtags }) {
   return { hashtags };
 }
-
 export default connect(mapStateToProps, hashActions)(HashtagsList);
