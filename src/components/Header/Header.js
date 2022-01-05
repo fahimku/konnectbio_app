@@ -632,6 +632,7 @@ class Header extends React.Component {
                     options={supportOptions}
                     placeholder="Select Feedback About"
                     onChange={(options, e) => this.handleSelect(e, options)}
+                    isSearchable={false}
                   />
                   {this.state.feedbackerror ? (
                     <span className="text-danger">This field is required</span>

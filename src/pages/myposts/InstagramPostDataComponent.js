@@ -138,6 +138,7 @@ function InstagramPostDataComponent({
                           }}
                           placeholder="Sort By"
                           styles={style}
+                          isSearchable={false}
                         />
                       </Col>
                       <Col xs={12} xl={2} md={6}>
@@ -152,6 +153,7 @@ function InstagramPostDataComponent({
                           }}
                           placeholder="Order By"
                           styles={style}
+                          isSearchable={false}
                         />
                       </Col>
                       <Col className="d-flex" xs={12} xl={2} md={12}>

@@ -38,7 +38,7 @@ function TopHashTag({
 
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [brand, setBrand] = useState({ value: "all", label: "All" });
+  const [brand, setBrand] = useState({ value: "all", label: "ALL" });
   const [sortBy, setSortBy] = useState({
     value: "date",
     label: "DATE",
@@ -135,13 +135,13 @@ function TopHashTag({
   const clearMarketPlace = (e) => {
     setClearLoading(true);
     setBrand({ value: "all", label: "ALL" });
-    setSortBy({ value: "followers", label: "Followers" });
+    setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     getHashtag({
       hashtag_id: "all",
       from_date: fromDate.toString(),
       to_date: toDate.toString(),
-      sort: "followers",
+      sort: "date",
       order_by: "desc",
     }).then(() => {
       setClearLoading(false);
@@ -245,7 +245,7 @@ function TopHashTag({
                     name="sort"
                     className="selectCustomization"
                     options={[
-                      { hashtag_id: "all", hashtag: "All" },
+                      { hashtag_id: "all", hashtag: "ALL" },
                       ...hashtags.message,
                     ].map((item) => {
                       return {
@@ -258,6 +258,7 @@ function TopHashTag({
                     }}
                     placeholder="Select Brand"
                     styles={style}
+                    isSearchable={false}
                   />
                 </Col>
                 {/* <Col xs={12} xl={2} md={6}>
@@ -286,6 +287,7 @@ function TopHashTag({
                     }}
                     placeholder="Sort By"
                     styles={style}
+                    isSearchable={false}
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
@@ -300,6 +302,7 @@ function TopHashTag({
                     }}
                     placeholder="Order By"
                     styles={style}
+                    isSearchable={false}
                   />
                 </Col>
                 {/* <Col xs={12} xl={2} md={6}>

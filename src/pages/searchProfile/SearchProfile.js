@@ -72,6 +72,7 @@ function SearchProfile({
   ];
 
   const filterProfileFunc = (e) => {
+    setSortBy({ value: "timestamp", label: "DATE" });
     filterProfileMedia(false);
   };
 
@@ -219,6 +220,7 @@ function SearchProfile({
                         }}
                         placeholder="Sort By"
                         styles={style}
+                        isSearchable={false}
                       />
                     </Col>
                     <Col xs={12} xl={2} md={6}>
@@ -233,6 +235,7 @@ function SearchProfile({
                         }}
                         placeholder="Order By"
                         styles={style}
+                        isSearchable={false}
                       />
                     </Col>
 
@@ -343,6 +346,7 @@ function SearchProfile({
                   }}
                   placeholder="Select Profile"
                   styles={style}
+                  isSearchable={false}
                 />
               </Col>
               <Col xs={12} xl={3} md={6}>

@@ -158,6 +158,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     }}
                     placeholder="Sort By"
                     styles={style}
+                    isSearchable={false}
                   />
                 </Col>
                 <Col xs={12} xl={2} md={6}>
@@ -172,6 +173,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     }}
                     placeholder="Order By"
                     styles={style}
+                    isSearchable={false}
                   />
                 </Col>
                 <Col className="d-flex" xs={12} xl={2} md={6}>
