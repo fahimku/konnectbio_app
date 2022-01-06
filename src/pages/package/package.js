@@ -56,6 +56,7 @@ class Package extends React.Component {
       };
     }, initialValue);
   };
+ 
   handleClose = () => {
     this.setState({ promo_error: false });
     this.setState({ showBasic: false });

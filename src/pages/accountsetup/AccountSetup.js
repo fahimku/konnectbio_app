@@ -104,23 +104,15 @@ class AccountSetup extends React.Component {
 
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-          // if (index > index1) {
-          //   disabledSelect = true;
-          // }
+         
 
-          //Micro Influencer Account
-          if (index === 0) {
-            if (index1 === 2 || index1 === 3) {
-              disabledSelect = true;
-            }
-          }
           //Influencer Account
+
           if (index === 1) {
             if (index1 === 0) {
               disabledSelect = true;
             }
           }
-
           //Influencer Plus
           if (index === 2) {
             if (index1 === 0 || index1 === 1) {
