@@ -16,7 +16,7 @@ class AffiliateDashboard extends React.Component {
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
             <AffiliateSummaryComponent username={this.state.username} />
-            </div>
+            </div>  
           </div>
         </div>
       </React.Fragment>

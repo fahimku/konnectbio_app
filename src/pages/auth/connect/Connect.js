@@ -141,7 +141,7 @@ class Connect extends React.Component {
           connectPage={true}
           resetAccount={this.state.resetAccount}
           cancelSubscription={this.state.cancelSubscription}
-          className="container"
+          className="connect-page-inner"
           username={this.state.username}
           isInstagramConnected={this.state.isInstagramConnected}
           url={this.state.url}
@@ -149,12 +149,10 @@ class Connect extends React.Component {
           setFbPageLocal={(fbPage) => this.setState({ fbPageLocal: fbPage })}
           setPackage={(pack) => this.setState({ pack: pack })}
         />
-        <div className="category-page">
-          <div className="container">
+        <div className="connect-page">
             <div className="p-0">
               <Row>
-                <Col md={10}></Col>
-                <Col md={2}>
+                <Col md={12} className="connect-button-cs">
                   <Button
                     disabled={this.completeProcess()}
                     onClick={() => {
@@ -176,7 +174,6 @@ class Connect extends React.Component {
                 )}
               </Row>
             </div>
-          </div>
         </div>
       </>
     );

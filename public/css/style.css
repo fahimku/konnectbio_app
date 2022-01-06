@@ -374,7 +374,6 @@ span.icon {
   .label-insta {
     margin-top: 5px;
     color: crimson;
-    text-align: center;
   }
   /* .connect-page-header {
     background-color: #f1e7e7;
@@ -1339,4 +1338,14 @@ a.pkg_read:hover {
 .card-main-container .accordion .card .card-header {
   background: none;
   border-bottom: none;
+}
+
+.connect-page{
+  max-width: 980px;
+  margin: 0 auto;
+}
+.connect-button-cs button{
+  float:right;
+  margin-right: 0 !important;
+  max-width: 120px;
 }

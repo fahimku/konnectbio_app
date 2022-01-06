@@ -272,7 +272,7 @@ class AccountSetup extends React.Component {
     return (
       <div
         className={`profile-page account-setup ${
-          this.props.className ? "container" : ""
+          this.props.className ? "connect-page" : ""
         }`}
       >
         <div
@@ -286,7 +286,7 @@ class AccountSetup extends React.Component {
             </div>
           </div>
 
-          <div className={`profile_container_main container  container`}>
+          <div className={`profile_container_main container`}>
             <div className="row">
               <div className="profile_box_main col-md-4">
                 <div className="dash_block_profile">
