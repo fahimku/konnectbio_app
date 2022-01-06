@@ -111,6 +111,19 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
+              {PermissionHelper.validate(["marketplace_access"]) ? (
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Affiliate - Publish"
+                  link="/app/marketplace"
+                  isHeader
+                  iconElement={<span className="fa fa-shopping-bag"></span>}
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              ) : null}
+
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Manage Links"
@@ -192,20 +205,10 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
 
-              {/* <LinksGroup
-                className="sidebar-nav-links"
-                header="Direct Messaging"
-                link="/app/direct/messaging"
-                isHeader
-                iconElement={<span className="fa fa-envelope"></span>}
-                // label="Awesome"
-                iconName="flaticon-users"
-                labelColor="info"
-              />
               {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="Manage Affiliate"
+                  header="Affiliate - Advertise"
                   link="/app/campaign"
                   isHeader
                   iconElement={
@@ -215,19 +218,22 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null}
-              {PermissionHelper.validate(["marketplace_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Manage Affiliate"
-                  link="/app/marketplace"
-                  isHeader
-                  iconElement={<span className="fa fa-shopping-bag"></span>}
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null} */}
+              ) : null} 
+
+              {/* <LinksGroup
+                className="sidebar-nav-links"
+                header="Direct Messaging"
+                link="/app/direct/messaging"
+                isHeader
+                iconElement={<span className="fa fa-envelope"></span>}
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              /> */}
+
+
+
+
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup

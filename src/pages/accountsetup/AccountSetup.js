@@ -104,7 +104,7 @@ class AccountSetup extends React.Component {
 
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-         
+
 
           //Influencer Account
 
@@ -159,7 +159,7 @@ class AccountSetup extends React.Component {
     e.preventDefault();
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
-      this.setState({ promoCodeError: " Please enter promo code" });
+      this.setState({ promoCodeError: " Please Enter Valid Promo Code" });
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
@@ -263,9 +263,8 @@ class AccountSetup extends React.Component {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div
-        className={`profile-page account-setup ${
-          this.props.className ? "connect-page" : ""
-        }`}
+        className={`profile-page account-setup ${this.props.className ? "connect-page" : ""
+          }`}
       >
         <div
           className={
@@ -297,7 +296,7 @@ class AccountSetup extends React.Component {
                               </h6>
                               {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
-                                  "Premium" && (
+                                "Premium" && (
                                   <button
                                     onClick={() => {
                                       this.setState({ cancelPlan: true });
@@ -338,8 +337,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                              <span>Change Plan to have more categories</span>
-                            )}
+                                <span>Change Plan to have more categories</span>
+                              )}
                           </div>
                         </div>
 
@@ -354,8 +353,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                              <span>Change Plan to have more links</span>
-                            )}
+                                <span>Change Plan to have more links</span>
+                              )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
@@ -468,6 +467,11 @@ class AccountSetup extends React.Component {
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
                                   <h4>Have Promo Code?</h4>
+                                  {this.state.promo_error ? (
+                                    <span className="text-danger mt-2">
+                                      {this.state.promoCodeError}
+                                    </span>
+                                  ) : null}
                                   <div className="acct-promo-sec-inr">
                                     <input
                                       type="text"
@@ -489,8 +493,8 @@ class AccountSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
-                                    !this.state.checkbox.facebook ||
-                                    !this.state.checkbox.checkbox3 ? (
+                                      !this.state.checkbox.facebook ||
+                                      !this.state.checkbox.checkbox3 ? (
                                       <Button
                                         onClick={() => {
                                           this.setState({
@@ -521,9 +525,9 @@ class AccountSetup extends React.Component {
                                       }}
                                       type="button"
 
-                                      // disabled={
-                                      //   !this.state.loading ? false : true
-                                      // }
+                                    // disabled={
+                                    //   !this.state.loading ? false : true
+                                    // }
                                     >
                                       Cancel
                                     </Button>
@@ -738,8 +742,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                            this.state.checkbox.facebook &&
-                                            this.state.checkbox.checkbox3 ? (
+                                              this.state.checkbox.facebook &&
+                                              this.state.checkbox.checkbox3 ? (
                                               <Button
                                                 type="submit"
                                                 onClick={(e) => {
@@ -971,8 +975,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                            this.state.checkbox.facebook &&
-                                            this.state.checkbox.checkbox3 ? (
+                                              this.state.checkbox.facebook &&
+                                              this.state.checkbox.checkbox3 ? (
                                               <PaymentButton
                                                 plan={this.state.plan}
                                                 userId={userInfo1?.user_id}

@@ -144,7 +144,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
     <div class="profile_box_main col-md-4">
       <div class="dash_block_profile">
         <div class="dash_content_profile">
-          <h5>Step 2: Facebook Connection</h5>
+          <h5>Facebook Connection</h5>
           <div class="row">
             <div class="col-md-12">
               <div class="dp_fields-setup mb-3">
