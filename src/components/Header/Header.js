@@ -12,7 +12,7 @@ import {
   closeSidebar,
   changeActiveSidebarItem,
 } from "../../actions/navigation";
-import logo from "../../images/logo.svg";
+import logo from "../../images/konnectbiologo.svg";
 
 import config from "../../../src/config";
 import { toast } from "react-toastify";

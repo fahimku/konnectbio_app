@@ -4,11 +4,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { sendPasswordResetEmail,authSuccess,authError } from "../../../actions/auth";
-import logo from "../../../images/logo.svg";
+import {
+  sendPasswordResetEmail,
+  authSuccess,
+  authError,
+} from "../../../actions/auth";
+import logo from "../../../images/konnectbiologo.svg";
 
 class Forgot extends React.Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };

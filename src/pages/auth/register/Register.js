@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
 import { registerUser, authError } from "../../../actions/auth";
-import logo from "../../../images/logo.svg";
+import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
 
 const Select = (props) => (

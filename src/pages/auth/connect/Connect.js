@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Row, Col, FormLabel } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import logo from "../../../images/logo.svg";
+import logo from "../../../images/konnectbiologo.svg";
 import AccountSetup from "../../../pages/accountsetup/AccountSetup";
 import { toast } from "react-toastify";
 

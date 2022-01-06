@@ -606,9 +606,9 @@ h1 small {
   margin-top: 14px;
 }
 .addbio-topbar .btn-addbio {
-      height: 35px;
-      border: solid 1px #e1e1e1;
-      border-radius: 0;
+  height: 35px;
+  border: solid 1px #e1e1e1;
+  border-radius: 0;
 }
 .addbio-topbar .btn-addbio:hover {
   background-image: linear-gradient(
@@ -660,12 +660,15 @@ h1 small {
 .promo_code_ift_new {
   position: relative;
   width: auto;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 }
 
-.pkg-cncl-btn h6{
-  width:80%
+.pkg-cncl-btn h6 {
+  width: 80%;
 }
-.pkg-cncl-btn .btn{
+.pkg-cncl-btn .btn {
   max-width: 20%;
+}
+.promo-err-box {
+  min-height: 22px;
 }

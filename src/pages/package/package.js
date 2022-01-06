@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Tabs, Tab, Modal, Row, Collapse } from "react-bootstrap";
-import logo from "../../images/logo.svg";
+import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import { toast } from "react-toastify";
@@ -768,11 +768,13 @@ class Package extends React.Component {
                           <Button type="submit">Apply</Button>
                         )}
                       </div>
-                      {this.state.promo_error ? (
-                        <span class="text-danger col-md-12">
-                          {this.state.promoCodeError}
-                        </span>
-                      ) : null}
+                      <span class="text-danger col-md-12 promo-err-box">
+                        {this.state.promo_error
+                          ? // <span class="text-danger col-md-12">
+                            this.state.promoCodeError
+                          : // </span>
+                            null}
+                      </span>
                     </Row>
                   </form>
                   <PaymentButton

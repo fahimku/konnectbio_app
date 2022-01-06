@@ -10,7 +10,7 @@ import { loginUser, receiveToken } from "../../../actions/auth";
 import jwt from "jsonwebtoken";
 // import microsoft from '../../../images/microsoft.png';
 import { push } from "connected-react-router";
-import logo from "../../../images/logo.svg";
+import logo from "../../../images/konnectbiologo.svg";
 import queryString from "query-string";
 import { toast } from "react-toastify";
 

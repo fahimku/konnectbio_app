@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import logo from "../../images/logo.svg";
+import logo from "../../images/konnectbiologo.svg";
 import queryString from "query-string";
 import axios from "axios";
 // import s from "./payment.module.scss";

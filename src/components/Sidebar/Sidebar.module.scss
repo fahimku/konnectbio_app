@@ -1,4 +1,4 @@
-@import '../../styles/app';
+@import "../../styles/app";
 
 .root {
   width: $sidebar-width-open;
@@ -19,7 +19,6 @@
   text-transform: uppercase;
   font-weight: 400;
   font-size: 16.5px;
-
 }
 
 .sidebarWrapper {
@@ -47,7 +46,6 @@
   }
 }
 
-
 .logo {
   margin: 15px 15px 0px 15px;
   font-size: 36px;
@@ -55,7 +53,7 @@
   font-weight: $font-weight-thin;
   text-align: center;
   transition: width $sidebar-transition-time ease-in-out;
-  background-image: url(../../images/logo.svg);
+  background-image: url(../../images/konnectbiologo.svg);
   background-size: contain;
   background-repeat: no-repeat;
   width: 150px;
@@ -88,7 +86,7 @@
   font-size: $font-size-mini;
   transition: opacity $sidebar-transition-time ease-in-out;
   color: var(--sidebar-section);
-  opacity: .6;
+  opacity: 0.6;
   font-weight: 600;
 }
 
@@ -127,24 +125,22 @@
   font-size: 9px;
 }
 
-
 .sidebarLabels {
   list-style-type: none;
   padding: 11px;
   padding-right: 15px;
 
-  &>li {
-    margin: 25px 0
+  & > li {
+    margin: 25px 0;
   }
 
-  li>a {
+  li > a {
     font-size: $font-size-mini;
     color: var(--sidebar-color);
     text-decoration: none;
-    color:#f00 !important;
+    color: #f00 !important;
 
-
-    >i {
+    > i {
       font-size: 11px;
       vertical-align: 1px;
       transition: margin-left $sidebar-transition-time ease-in-out;
@@ -152,16 +148,15 @@
   }
 }
 
-
 .sidebarClose {
-  .sidebarLabels>li>a>i {
+  .sidebarLabels > li > a > i {
     margin-left: 8px;
     transition: margin-left $sidebar-transition-time ease-in-out;
   }
 }
 
 .staticSidebar {
-  .sidebarLabels>li>a>i {
+  .sidebarLabels > li > a > i {
     transition: none;
     margin-left: 0;
   }
@@ -188,7 +183,7 @@
   padding: 0.5rem 11px;
   padding-right: 15px;
 
-  &>button>span {
+  & > button > span {
     font-size: 32px;
     color: var(--sidebar-icon-bg);
   }
@@ -216,15 +211,14 @@
 
 :global {
   .sidebar-bottom-aler-danger {
-    &>.progress-bar {
+    & > .progress-bar {
       background-color: var(--sidebar-sales);
     }
   }
 
   .sidebar-bottom-aler-primary {
-    &>.progress-bar {
+    & > .progress-bar {
       background-color: var(--sideba-responsibility);
     }
   }
 }
-
