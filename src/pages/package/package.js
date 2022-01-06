@@ -16,6 +16,7 @@ class Package extends React.Component {
   state = {
     showBasic: false,
     showPremium: false,
+    showPremiumPlus: false,
     packages: "",
     loading: false,
     promo_code: "",
@@ -25,6 +26,7 @@ class Package extends React.Component {
     checkbox: {},
     plan: "",
     showPromo: false,
+    showPromoPlus: false,
     help1: true,
     help2: true,
     help3: true,
@@ -61,9 +63,10 @@ class Package extends React.Component {
     this.setState({ promo_error: false });
     this.setState({ showBasic: false });
     this.setState({ showPremium: false });
+    this.setState({ showPremiumPlus: false });
     this.setState({ showSelectPackage: false });
     this.setState({ plan: "", checkbox: {}, promo_code: "" });
-    this.setState({ showPromo: false });
+    this.setState({ showPromo: false, showPromoPlus: false });
     this.setState({ help1: true, help2: true, help3: true });
   };
 
@@ -142,6 +145,7 @@ class Package extends React.Component {
   render() {
     const basic = this.state.packages.Basic || {};
     const premium = this.state.packages.Premium || {};
+    const premiumPlus = this.state.packages.PremiumPlus || {};
     return (
       <>
         <div className="login_header">
@@ -195,7 +199,7 @@ class Package extends React.Component {
           </form> */}
           <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
-            defaultActiveKey="home"
+            defaultActiveKey="profile"
             transition={false}
             id="noanim-tab-example"
             className="pricing_tabs_ifti mb-3"
@@ -350,6 +354,109 @@ class Package extends React.Component {
                         onClick={() => {
                           this.setState({
                             showSelectPackage: true,
+                            plan: "Monthly",
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Monthly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
+                {Object.keys(premiumPlus).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premiumPlus.package_name}</h4>
+                    <p>
+                      Premium Plus account allows creation of profile page, up
+                      to {premiumPlus.link_count} social/external links and
+                      BIOSHOP &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremiumPlus: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premiumPlus.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {premiumPlus.link_count} social/external links
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {premiumPlus.category_count} Product and Service
+                        Categories
+                      </li>
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mentions
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Search Profiles
+                      </li>
+                      {/* <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Direct Messaging
+                      </li> */}
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Affiliate
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showPromoPlus: true,
                             plan: "Monthly",
                           });
                         }}
@@ -538,6 +645,109 @@ class Package extends React.Component {
                     )}
                   </div>
                 ) : null}
+                {Object.keys(premiumPlus).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premiumPlus.package_name}</h4>
+                    <p>
+                      Premium Plus account allows creation of profile page, up
+                      to {premiumPlus.link_count} social/external links and
+                      BIOSHOP &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremiumPlus: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premiumPlus.package_amount_yearly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed yearly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {premiumPlus.link_count} social/external links
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Create BIOSHOP
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Up to {premiumPlus.category_count} Product and Service
+                        Categories
+                      </li>
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mentions
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Search Profiles
+                      </li>
+                      {/* <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Direct Messaging
+                      </li> */}
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Analytics
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Access To Affiliate
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showPromoPlus: true,
+                            plan: "Yearly",
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Yearly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
               </div>
             </Tab>
           </Tabs>
@@ -570,6 +780,27 @@ class Package extends React.Component {
           </Modal.Header>
           <Modal.Body>
             Premium account allows you to create profile page, add up to 6
+            social/external links and create BIOSHOP on our platform. In this
+            package you are allowed 6 product and service categories you like to
+            promote. You can add hyperlink to any lG post within these 6 product
+            and service categories only. You also get access to analytical data
+            like, impressions, clicks and user engagement. You are allowed
+            Searching of User Generated Content like Schedule Post, Monitor
+            Hashtags, Monitor Mentions and Search Profiles.
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          className="pkg_readmore"
+          show={this.state.showPremiumPlus}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Premium Plus</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Premium Plus account allows you to create profile page, add up to 6
             social/external links and create BIOSHOP on our platform. In this
             package you are allowed 6 product and service categories you like to
             promote. You can add hyperlink to any lG post within these 6 product
@@ -974,6 +1205,221 @@ class Package extends React.Component {
                   </Button>
                 ) : null}
               </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          className="pkg_readmore pkg_fb_connect"
+          show={this.state.showPromoPlus}
+          onHide={this.handleClose}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Premium Plus Package</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div class="funkyradio">
+              <p>
+                Please make sure of the following before proceeding further:
+              </p>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="instagram"
+                  id="instagram"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="instagram">
+                  Do you have Instagram business account?{" "}
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.setState({
+                        help1: !this.state.help1,
+                        help2: true,
+                        help3: true,
+                      });
+                    }}
+                    href="#"
+                  >
+                    Click here for help.
+                  </a>
+                </label>
+
+                <Collapse in={!this.state.help1}>
+                  <div className="card card-body">
+                    <ol type="1" class="insta-list">
+                      <li>Login To Your Instagram Account.</li>
+                      <li>Go To Profile.</li>
+                      <li>
+                        Select Settings <i class="fa fa-cog"></i>
+                      </li>
+                      <li>
+                        Find Account Icon <i class="fa fa-user-circle-o"></i>
+                      </li>
+                      <li>Find Switch Account Type.</li>
+                      <li>Select Switch to Business Account.</li>
+                    </ol>
+                    <p>You will now have an Instagram Business Account.</p>
+                  </div>
+                </Collapse>
+              </div>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="facebook"
+                  id="facebook"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="facebook">
+                  Do you have Facebook account connected to a Facebook page?{" "}
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.setState({
+                        help2: !this.state.help2,
+                        help1: true,
+                        help3: true,
+                      });
+                    }}
+                    href="#"
+                  >
+                    Click here for help.
+                  </a>
+                </label>
+                <Collapse in={!this.state.help2}>
+                  <div className="card card-body">
+                    <ol type="1" class="insta-list">
+                      <li>Go to facebook.com and create an account.</li>
+                      <li>
+                        Once account is created, connect to a facebook page.
+                      </li>
+                    </ol>
+                    <p>
+                      Your Facebook account will be connected to a facebook
+                      page.
+                    </p>
+                  </div>
+                </Collapse>
+              </div>
+              <div class="funkyradio-primary form-check abc-checkbox abc-checkbox-primary">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  name="checkbox3"
+                  id="checkbox3"
+                  onChange={this.handleCheckbox}
+                />
+                <label for="checkbox3">
+                  Is your Facebook account connected with your Instagram
+                  account?{" "}
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.setState({
+                        help3: !this.state.help3,
+                        help1: true,
+                        help2: true,
+                      });
+                    }}
+                    href="#"
+                  >
+                    Click here for help.
+                  </a>
+                </label>
+                <Collapse in={!this.state.help3}>
+                  <div className="card card-body">
+                    <span className="font-weight-bold">From Instagram:</span>
+                    <ol type="1" class="insta-list">
+                      <li>Log in to Instagram and go to your profile.</li>
+                      <li>Tap Edit Profile.</li>
+                      <li>
+                        Under Public Business/Profile Information, select Page.
+                      </li>
+                      <li>
+                        Choose the Facebook page you wish to connect to. If you
+                        don’t have one yet, tap Create a new Facebook page.
+                      </li>
+                    </ol>
+                    <p>
+                      Your Instagram account will be connected to a Facebook
+                      account.
+                    </p>
+                    <span className="font-weight-bold">From Facebook:</span>
+                    <ol type="1" class="insta-list">
+                      <li>
+                        Log in to Facebook and click Pages in the left menu.
+                      </li>
+                      <li>From your Facebook page, click Settings.</li>
+                      <li>
+                        Scroll down and select Instagram in the left column.
+                      </li>
+                      <li>
+                        Click Connect Account, and fill in your Instagram
+                        username and password.
+                      </li>
+                    </ol>
+                    <p>
+                      Your Facebook account will be connected to an Instagram
+                      account.
+                    </p>
+                  </div>
+                </Collapse>
+              </div>
+            </div>
+            <div>
+              {this.state.checkbox.instagram &&
+              this.state.checkbox.facebook &&
+              this.state.checkbox.checkbox3 ? (
+                <>
+                  <form onSubmit={this.handleSubmit}>
+                    <Row className="promo_code_ift promo_code_ift_new">
+                      <div className="promo_msg col-md-12">
+                        Have Promo Code?
+                      </div>
+                      <div className="promo_iner col-md-12">
+                        <input
+                          type="text"
+                          name="promo_code"
+                          // placeholder="Enter Promo Code"
+                          onInput={this.handleChange}
+                          className="form-control"
+                          value={this.state.promo_code}
+                          autoComplete="off"
+                        />
+                        {this.state.loading ? (
+                          <Button>
+                            <Loader />
+                          </Button>
+                        ) : (
+                          <Button type="submit">Apply</Button>
+                        )}
+                      </div>
+                      <span class="text-danger col-md-12 promo-err-box">
+                        {this.state.promo_error
+                          ? // <span class="text-danger col-md-12">
+                            this.state.promoCodeError
+                          : // </span>
+                            null}
+                      </span>
+                    </Row>
+                  </form>
+                  <PaymentButton
+                    key="2"
+                    userId={userInfo.user_id}
+                    packageId={premiumPlus.package_id}
+                    name={"Make Payment"}
+                    variant="primary"
+                    paymentMethod={"Premium Plus"}
+                    plan={this.state.plan}
+                    disableButton={this.state.promo_code !== "" ? true : false}
+                    btnClass="btn-block"
+                  />
+                </>
+              ) : null}
             </div>
           </Modal.Body>
         </Modal>
