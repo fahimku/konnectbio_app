@@ -244,6 +244,15 @@ class Register extends React.Component {
   };
 
   render() {
+    const styles = {
+      menuList: (base) => ({
+        ...base,
+
+        "::-webkit-scrollbar": {
+          width: "12px",
+        },
+      }),
+    };
     return (
       <div className="auth-page">
         <div className="login_header">
@@ -346,6 +355,7 @@ class Register extends React.Component {
                         onChange={this.changeGender}
                         placeholder="Select Gender"
                         options={this.state.genderList}
+                        styles={styles}
                       />
                     </div>
 
@@ -370,6 +380,7 @@ class Register extends React.Component {
                           })}
                           placeholder="Select Country"
                           options={this.state.countries}
+                          styles={styles}
                         />
                       )}
                     </div>
@@ -392,6 +403,7 @@ class Register extends React.Component {
                               value: this.state.countryState,
                             }
                           }
+                          styles={styles}
                         />
                       )}
                     </div>
@@ -413,6 +425,7 @@ class Register extends React.Component {
                               value: this.state.city,
                             }
                           }
+                          styles={styles}
                         />
                       )}
                     </div>

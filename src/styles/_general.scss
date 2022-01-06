@@ -672,3 +672,8 @@ h1 small {
 .promo-err-box {
   min-height: 22px;
 }
+
+/* Scroll Bar */
+.select__menu-list::-webkit-scrollbar {
+  width: 10px;
+}
