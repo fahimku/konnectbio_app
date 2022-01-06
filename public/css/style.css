@@ -679,7 +679,7 @@ span.fa.fa-times.ift-cancel {
   gap: 1%;
 }
 .package_parent .custom_pkg {
-  min-height: 660px;
+  min-height: 680px;
   border: solid 1px #ccc;
   flex-basis: 100%;
   padding: 1.25rem 14px 1rem;

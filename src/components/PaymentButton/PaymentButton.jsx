@@ -271,6 +271,107 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
+  else if (props.paymentMethod === "Premium Plus" && props.plan === "Monthly")
+    return (
+      <>
+        <form
+          action="https://checkout.globalgatewaye4.firstdata.com/pay"
+          id="influencer_monthly_form"
+          method="post"
+        >
+          <input type="hidden" name="x_user_id" value={userId} />
+          <input type="hidden" name="x_package_id" value={packageId} />
+          <input type="hidden" name="x_recurring_billing" value="TRUE" />
+          <input name="x_recurring_billing_amount" value="15" type="hidden" />
+          <input
+            name="x_recurring_billing_id"
+            value="MB-KONNE-66-1635196"
+            type="hidden"
+          />
+          <input type="hidden" name="x_login" value="WSP-KONNE-j&AXMgDiJw" />
+          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
+          <input
+            type="hidden"
+            name="x_fp_sequence"
+            value="16410172584126134988"
+          />
+          <input
+            type="hidden"
+            name="x_fp_hash"
+            value="PNB-1.0-b45865cce6e698014da89e407970dfde7db0287c"
+          />
+          <input type="hidden" name="x_amount" value="15" />
+          <input type="hidden" name="x_currency_code" value="USD" />
+          <input type="hidden" name="x_test_request" value="FALSE" />
+          <input type="hidden" name="x_relay_response" value="" />
+          <input type="hidden" name="donation_prompt" value="" />
+          <input type="hidden" name="button_code" value="Pay Now Premium" />
+        </form>
+        <Button
+          onClick={() => {
+            document.getElementById("influencer_monthly_form").submit();
+          }}
+          variant={props.variant ? props.variant : "primary"}
+          className={props.btnClass}
+          disabled={props.disableButton}
+        >
+          {props.name ? props.name : "Make Payment"}
+        </Button>
+      </>
+    );
+  else if (props.paymentMethod === "Premium Plus" && props.plan === "Yearly")
+    return (
+      <>
+        <form
+          action="https://checkout.globalgatewaye4.firstdata.com/pay"
+          id="influencer_yearly_form"
+          method="post"
+        >
+          <input type="hidden" name="x_user_id" value={userId} />
+          <input type="hidden" name="x_package_id" value={packageId} />
+          <input
+            type="hidden"
+            name="x_recurring_payment_type"
+            value={props.plan}
+          />
+          <input type="hidden" name="x_recurring_billing" value="TRUE" />
+          <input name="x_recurring_billing_amount" value="144" type="hidden" />
+          <input
+            name="x_recurring_billing_id"
+            value="MB-KONNE-4-1635197"
+            type="hidden"
+          />
+          <input type="hidden" name="x_login" value="WSP-KONNE-PsjK0gDiRA" />
+          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
+          <input
+            type="hidden"
+            name="x_fp_sequence"
+            value="16410173112221176008"
+          />
+          <input
+            type="hidden"
+            name="x_fp_hash"
+            value="PNB-1.0-1402f6afe86f91a1f126c7be065842f9a9c6a798"
+          />
+          <input type="hidden" name="x_amount" value="144" />
+          <input type="hidden" name="x_currency_code" value="USD" />
+          <input type="hidden" name="x_test_request" value="FALSE" />
+          <input type="hidden" name="x_relay_response" value="" />
+          <input type="hidden" name="donation_prompt" value="" />
+          <input type="hidden" name="button_code" value="Pay Now Premium" />
+        </form>
+        <Button
+          onClick={() => {
+            document.getElementById("influencer_yearly_form").submit();
+          }}
+          variant={props.variant ? props.variant : "primary"}
+          className="btn-block"
+          disabled={props.disableButton}
+        >
+          {props.name ? props.name : "Make Payment"}
+        </Button>
+      </>
+    );
   else if (
     props.paymentMethod === "Influencer Plus" &&
     props.plan === "Monthly"
