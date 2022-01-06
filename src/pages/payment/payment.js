@@ -77,19 +77,20 @@ class Payment extends React.Component {
                   <p>Your payment has been successfully received.</p>
                 </div>
               ) : (
-                <div className="error-msg">
+                <div className="error-msg danger">
                   <h2>Oh no, your payment failed</h2>
                   <p>
-                    Please contact support@konnect.bio for payment inquiries.
-                  </p>
+                    Please check your card detail and try again.</p>
                 </div>
               )}
             </div>
             <div className="mt-5 text-right">
               <Button
-                disabled={this.state.responseSuccess ? false : true}
+                // disabled={this.state.responseSuccess ? false : true}
                 onClick={() => {
                   history.push("/connect/");
+                  window.history.go(0);
+
                 }}
                 variant="primary"
                 type="submit"
