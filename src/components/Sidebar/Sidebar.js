@@ -124,6 +124,21 @@ class Sidebar extends React.Component {
                 />
               ) : null}
 
+              {PermissionHelper.validate(["affiliate_access"]) ? (
+                <LinksGroup
+                  className="sidebar-nav-links"
+                  header="Affiliate - Advertise"
+                  link="/app/campaign"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-bullhorn"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+              ) : null}
+
               <LinksGroup
                 className="sidebar-nav-links"
                 header="Manage Links"
@@ -204,21 +219,6 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-
-              {PermissionHelper.validate(["affiliate_access"]) ? (
-                <LinksGroup
-                  className="sidebar-nav-links"
-                  header="Affiliate - Advertise"
-                  link="/app/campaign"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-bullhorn"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
 
               {/* <LinksGroup
                 className="sidebar-nav-links"
