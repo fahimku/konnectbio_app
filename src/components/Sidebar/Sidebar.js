@@ -218,7 +218,7 @@ class Sidebar extends React.Component {
                   iconName="flaticon-users"
                   labelColor="info"
                 />
-              ) : null} 
+              ) : null}
 
               {/* <LinksGroup
                 className="sidebar-nav-links"
@@ -230,10 +230,6 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               /> */}
-
-
-
-
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup

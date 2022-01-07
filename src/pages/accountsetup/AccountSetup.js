@@ -105,7 +105,6 @@ class AccountSetup extends React.Component {
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
 
-
           //Influencer Account
 
           if (index === 1) {
@@ -261,10 +260,21 @@ class AccountSetup extends React.Component {
   };
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    const style = {
+      control: (base) => ({
+        ...base,
+        height: "44px",
+        boxShadow: "none",
+        "&:hover": {
+          // border: "1px solid black",
+        },
+      }),
+    };
     return (
       <div
-        className={`profile-page account-setup ${this.props.className ? "connect-page" : ""
-          }`}
+        className={`profile-page account-setup ${
+          this.props.className ? "connect-page" : ""
+        }`}
       >
         <div
           className={
@@ -296,7 +306,7 @@ class AccountSetup extends React.Component {
                               </h6>
                               {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
-                                "Premium" && (
+                                  "Premium" && (
                                   <button
                                     onClick={() => {
                                       this.setState({ cancelPlan: true });
@@ -337,8 +347,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -353,8 +363,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
@@ -493,8 +503,8 @@ class AccountSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
-                                      !this.state.checkbox.facebook ||
-                                      !this.state.checkbox.checkbox3 ? (
+                                    !this.state.checkbox.facebook ||
+                                    !this.state.checkbox.checkbox3 ? (
                                       <Button
                                         onClick={() => {
                                           this.setState({
@@ -525,9 +535,9 @@ class AccountSetup extends React.Component {
                                       }}
                                       type="button"
 
-                                    // disabled={
-                                    //   !this.state.loading ? false : true
-                                    // }
+                                      // disabled={
+                                      //   !this.state.loading ? false : true
+                                      // }
                                     >
                                       Cancel
                                     </Button>
@@ -742,8 +752,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                              this.state.checkbox.facebook &&
-                                              this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                               <Button
                                                 type="submit"
                                                 onClick={(e) => {
@@ -975,8 +985,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                              this.state.checkbox.facebook &&
-                                              this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                               <PaymentButton
                                                 plan={this.state.plan}
                                                 userId={userInfo1?.user_id}
