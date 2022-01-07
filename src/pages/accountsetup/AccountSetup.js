@@ -247,7 +247,12 @@ class AccountSetup extends React.Component {
   renderFbConnection = (userInfo1) => {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
-    if (package1 == "Premium" || this.state.myPackage == "Premium") {
+    if (
+      package1 == "Premium" ||
+      this.state.myPackage == "Premium" ||
+      package1 == "Premium Plus" ||
+      this.state.myPackage == "Premium Plus"
+    ) {
       return (
         <ConnectToFb
           userId={userInfo1.user_id}
