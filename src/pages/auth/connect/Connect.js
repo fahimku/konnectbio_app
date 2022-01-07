@@ -20,6 +20,7 @@ class Connect extends React.Component {
       resetAccount: false,
       fbPageLocal: "",
       pack: "",
+      connectionMessage: ""
     };
   }
 
@@ -41,7 +42,7 @@ class Connect extends React.Component {
     const fbPage = userInfo?.page_token;
     const package1 = userInfo?.package?.package_name;
 
-    const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage? true : false: access_token !== ""? true : false;
+    const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true : false;
     if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
@@ -97,10 +98,8 @@ class Connect extends React.Component {
   }
 
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
-
-    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus") {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
+    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium") {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       return fbPage || this.state.fbPageLocal ? false : true;
     } else {
@@ -109,8 +108,24 @@ class Connect extends React.Component {
     }
   };
 
+  connectionMessage = () => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
+    
+    if (package1 === 'Basic' && !this.completeProcess()) {
+      return 'Please connect your Instagram account';
+    }
+
+    else if (package1 === 'Premium' && this.completeProcess()) {
+      return 'Please connect your Instagram and Facebook account';
+    }
+
+    else if (package1 === 'Premium Plus' && this.completeProcess()) {
+      return 'Please connect your Instagram and Facebook account';
+    }
+
+  }
+
   render() {
-   let packageName= JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name
     return (
       <>
         <div className="login_header">
@@ -162,11 +177,14 @@ class Connect extends React.Component {
                   Next
                 </Button>
               </Col>
-              {this.state.instagramCode === "" && (
-                <FormLabel className="label-insta col-md-12">
-                  {packageName === 'Basic' ? 'Please connect your Instagram account' : 'Please connect your Instagram and Facebook account'}
-                </FormLabel>
-              )}
+
+
+
+              <FormLabel className="label-insta col-md-12">
+                {this.connectionMessage()}
+              </FormLabel>
+
+
             </Row>
           </div>
         </div>
