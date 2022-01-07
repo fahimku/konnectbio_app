@@ -172,13 +172,24 @@ export function loginUser(creds) {
             res?.data?.message?.access_token
           ) {
             history.push("/app/linkinbio");
-          } else if (
+          }
+          else if (
             res?.data?.message?.package?.package_name === "Premium" &&
             res?.data?.message?.access_token &&
             fbPage
           ) {
             history.push("/app/linkinbio");
-          } else {
+          }
+
+          else if (
+            res?.data?.message?.package?.package_name === "Premium Plus" &&
+            res?.data?.message?.access_token &&
+            fbPage
+          ) {
+            history.push("/app/linkinbio");
+          }
+
+          else {
             history.push("/package");
           }
         })

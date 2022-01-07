@@ -9,8 +9,8 @@
 //     ? "http://172.16.1.157:9000"
 //     : "https://api.konnect.bio";
 // const hostApi = process.env.NODE_ENV === "development" ? "https://kbserverdev.herokuapp.com" : "https://api.konnect.bio";
-const hostApi = "https://kbserverdev.herokuapp.com";
-// const hostApi = "https://api.konnect.bio";
+//const hostApi = "https://kbserverdev.herokuapp.com";
+ const hostApi = "https://api.konnect.bio";
 // const hostApi = "http://172.16.1.85:9000";
 const portApi = process.env.NODE_ENV === "development" ? "" : "";
 const baseURLApi = `${hostApi}${portApi ? `:${portApi}` : ``}/v1`;
