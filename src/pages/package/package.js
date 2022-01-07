@@ -58,7 +58,7 @@ class Package extends React.Component {
       };
     }, initialValue);
   };
- 
+
   handleClose = () => {
     this.setState({ promo_error: false });
     this.setState({ showBasic: false });
@@ -1407,7 +1407,8 @@ class Package extends React.Component {
                       </span>
                     </Row>
                   </form>
-                  <PaymentButton
+
+                  {/* <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
                     packageId={premiumPlus.package_id}
@@ -1417,7 +1418,7 @@ class Package extends React.Component {
                     plan={this.state.plan}
                     disableButton={this.state.promo_code !== "" ? true : false}
                     btnClass="btn-block"
-                  />
+                  /> */}
                 </>
               ) : null}
             </div>
