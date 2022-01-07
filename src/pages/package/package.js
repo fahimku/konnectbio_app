@@ -483,8 +483,8 @@ class Package extends React.Component {
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
-                      Micro lnfluencer account allows you to create profile
-                      page, add up to {basic.link_count} social/external &nbsp;
+                      Basic account allows you to create profile page, add up to{" "}
+                      {basic.link_count} social/external &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
