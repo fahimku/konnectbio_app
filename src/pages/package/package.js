@@ -30,6 +30,7 @@ class Package extends React.Component {
     help1: true,
     help2: true,
     help3: true,
+    packageId: "",
   };
   componentDidMount() {
     if (userInfo.hasOwnProperty("package")) {
@@ -68,6 +69,7 @@ class Package extends React.Component {
     this.setState({ plan: "", checkbox: {}, promo_code: "" });
     this.setState({ showPromo: false, showPromoPlus: false });
     this.setState({ help1: true, help2: true, help3: true });
+    this.setState({ packageId: "" });
   };
 
   updatePackage = async (id, packageId) => {
@@ -111,6 +113,7 @@ class Package extends React.Component {
       await axios
         .post("/payment/validatepromocode", {
           promo_code: this.state.promo_code,
+          package_id: this.state.packageId,
         })
         .then((response) => {
           this.setState({ loading: false });
@@ -355,6 +358,7 @@ class Package extends React.Component {
                           this.setState({
                             showSelectPackage: true,
                             plan: "Monthly",
+                            packageId: premium.package_id,
                           });
                         }}
                       >
@@ -458,6 +462,7 @@ class Package extends React.Component {
                           this.setState({
                             showPromoPlus: true,
                             plan: "Monthly",
+                            packageId: premiumPlus.package_id,
                           });
                         }}
                       >
@@ -628,6 +633,7 @@ class Package extends React.Component {
                           this.setState({
                             showSelectPackage: true,
                             plan: "Yearly",
+                            packageId: premium.package_id,
                           });
                         }}
                       >
@@ -731,6 +737,7 @@ class Package extends React.Component {
                           this.setState({
                             showPromoPlus: true,
                             plan: "Yearly",
+                            packageId: premiumPlus.package_id,
                           });
                         }}
                       >
@@ -1408,7 +1415,7 @@ class Package extends React.Component {
                     </Row>
                   </form>
 
-                  {/* <PaymentButton
+                  <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
                     packageId={premiumPlus.package_id}
@@ -1418,7 +1425,7 @@ class Package extends React.Component {
                     plan={this.state.plan}
                     disableButton={this.state.promo_code !== "" ? true : false}
                     btnClass="btn-block"
-                  /> */}
+                  />
                 </>
               ) : null}
             </div>

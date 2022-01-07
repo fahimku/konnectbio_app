@@ -117,7 +117,7 @@ class Affiliate extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "accounting",
@@ -128,7 +128,7 @@ class Affiliate extends React.Component {
                     >
                       <span>Accounting</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                 </Nav>
 
                 <TabContent
