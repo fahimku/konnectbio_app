@@ -46,7 +46,7 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
 
 export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
   const checkPermission = PermissionHelper.validate(permissions);
-//  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     //    return (<Redirect to="/login" />)
@@ -73,9 +73,8 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
 export const AuthRoute = ({ dispatch, component, ...rest }) => {
   const { from } = rest.location.state || { from: { pathname: "/app" } };
   if (Login.isAuthenticated()) {
-    history.push(from)
+    history.push(from);
     window.history.go(0);
-
   } else {
     return (
       <Route

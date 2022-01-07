@@ -7,7 +7,10 @@ import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateAccounting from "./AffiliateAccounting/AffiliateAccounting";
-
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 class Affiliate extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -29,7 +32,24 @@ class Affiliate extends React.Component {
   }
 
   render() {
-    return (
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    return userInfo?.package?.package_name !== "Premium Plus" ? (
+      <div className="container-fluid">
+        <div class="coming_iner">
+          <h2>Upgrade Account</h2>
+          <p className="text-muted">
+            This Option is only available for premium plus plan.
+          </p>
+          <button
+            class="btn btn-primary"
+            onClick={() => history.push("/app/account/setup")}
+          >
+            Upgrade Subscription
+          </button>
+        </div>
+      </div>
+    ) : (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
           <div className="affiliate_p_col">
