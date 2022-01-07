@@ -183,44 +183,7 @@ const PaymentButton = (props) => {
   else if (props.paymentMethod === "Premium" && props.plan === "Yearly")
     return (
       <>
-        {/* <form
-          action="https://checkout.globalgatewaye4.firstdata.com/pay"
-          id="influencer_yearly_form"
-          method="post"
-        >
-          <input type="hidden" name="x_user_id" value={userId} />
-          <input type="hidden" name="x_package_id" value={packageId} />
-          <input
-            type="hidden"
-            name="x_recurring_payment_type"
-            value={props.plan}
-          />
-          <input type="hidden" name="x_login" value="WSP-KONNE-PsjK0gDiRA" />
-          <input type="hidden" name="x_recurring_billing" value="TRUE" />
-          <input name="x_recurring_billing_amount" value="96" type="hidden" />
-          <input
-            name="x_recurring_billing_id"
-            value="MB-KONNE-4-1635197"
-            type="hidden"
-          />
-          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
-          <input
-            type="hidden"
-            name="x_fp_sequence"
-            value="1639571720190577964"
-          />
-          <input
-            type="hidden"
-            name="x_fp_hash"
-            value="PNB-1.0-bab7ad07ed246ca4dd692fde89fc8d1607b05d3e"
-          />
-          <input type="hidden" name="x_amount" value="96" />
-          <input type="hidden" name="x_currency_code" value="USD" />
-          <input type="hidden" name="x_test_request" value="FALSE" />
-          <input type="hidden" name="x_relay_response" value="" />
-          <input type="hidden" name="donation_prompt" value="" />
-          <input type="hidden" name="button_code" value="Pay Now Influencer" />
-        </form> */}
+
         <form
           action="https://checkout.globalgatewaye4.firstdata.com/pay"
           id="influencer_yearly_form"
@@ -282,30 +245,39 @@ const PaymentButton = (props) => {
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
           <input type="hidden" name="x_recurring_billing" value="TRUE" />
-          <input name="x_recurring_billing_amount" value="15" type="hidden" />
-          <input
+          <input type="hidden" name="x_recurring_billing" value="TRUE" /><input
+            name="x_recurring_billing_amount"
+            value="100"
+            type="hidden"
+          /><input
             name="x_recurring_billing_id"
             value="MB-KONNE-66-1635196"
             type="hidden"
-          />
-          <input type="hidden" name="x_login" value="WSP-KONNE-j&AXMgDiJw" />
-          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
-          <input
+          /><input type="hidden" name="x_login" value="WSP-KONNE-WfnZXgDjzg" /><input
+            type="hidden"
+            name="x_show_form"
+            value="PAYMENT_FORM"
+          /><input
             type="hidden"
             name="x_fp_sequence"
-            value="16410172584126134988"
-          />
-          <input
+            value="1641563190110405587"
+          /><input
             type="hidden"
             name="x_fp_hash"
-            value="PNB-1.0-b45865cce6e698014da89e407970dfde7db0287c"
+            value="PNB-1.0-ab77531692af0f3452d7e33eae7077cc6c1140c3"
+          /><input type="hidden" name="x_amount" value="100" /><input
+            type="hidden"
+            name="x_currency_code"
+            value="USD"
+          /><input type="hidden" name="x_test_request" value="FALSE" /><input
+            type="hidden"
+            name="x_relay_response"
+            value=""
+          /><input type="hidden" name="donation_prompt" value="" /><input
+            type="hidden"
+            name="button_code"
+            value="Pay Now Premium Plus"
           />
-          <input type="hidden" name="x_amount" value="15" />
-          <input type="hidden" name="x_currency_code" value="USD" />
-          <input type="hidden" name="x_test_request" value="FALSE" />
-          <input type="hidden" name="x_relay_response" value="" />
-          <input type="hidden" name="donation_prompt" value="" />
-          <input type="hidden" name="button_code" value="Pay Now Premium" />
         </form>
         <Button
           onClick={() => {
@@ -329,36 +301,39 @@ const PaymentButton = (props) => {
         >
           <input type="hidden" name="x_user_id" value={userId} />
           <input type="hidden" name="x_package_id" value={packageId} />
-          <input
+          <input type="hidden" name="x_recurring_billing" value="TRUE" /><input
+            name="x_recurring_billing_amount"
+            value="1000"
             type="hidden"
-            name="x_recurring_payment_type"
-            value={props.plan}
-          />
-          <input type="hidden" name="x_recurring_billing" value="TRUE" />
-          <input name="x_recurring_billing_amount" value="144" type="hidden" />
-          <input
+          /><input
             name="x_recurring_billing_id"
             value="MB-KONNE-4-1635197"
             type="hidden"
-          />
-          <input type="hidden" name="x_login" value="WSP-KONNE-PsjK0gDiRA" />
-          <input type="hidden" name="x_show_form" value="PAYMENT_FORM" />
-          <input
+          /><input type="hidden" name="x_login" value="WSP-KONNE-hl3QnQDjzw" /><input
+            type="hidden"
+            name="x_show_form"
+            value="PAYMENT_FORM"
+          /><input
             type="hidden"
             name="x_fp_sequence"
-            value="16410173112221176008"
-          />
-          <input
+            value="16415636274179247125"
+          /><input
             type="hidden"
             name="x_fp_hash"
-            value="PNB-1.0-1402f6afe86f91a1f126c7be065842f9a9c6a798"
+            value="PNB-1.0-3cf0d243ea4df72a2c5f2ec0104f5e0e9475abc4"
+          /><input type="hidden" name="x_amount" value="1000" /><input
+            type="hidden"
+            name="x_currency_code"
+            value="USD"
+          /><input type="hidden" name="x_test_request" value="FALSE" /><input
+            type="hidden"
+            name="x_relay_response"
+            value=""
+          /><input type="hidden" name="donation_prompt" value="" /><input
+            type="hidden"
+            name="button_code"
+            value="Pay Now Premium Plus"
           />
-          <input type="hidden" name="x_amount" value="144" />
-          <input type="hidden" name="x_currency_code" value="USD" />
-          <input type="hidden" name="x_test_request" value="FALSE" />
-          <input type="hidden" name="x_relay_response" value="" />
-          <input type="hidden" name="donation_prompt" value="" />
-          <input type="hidden" name="button_code" value="Pay Now Premium" />
         </form>
         <Button
           onClick={() => {
