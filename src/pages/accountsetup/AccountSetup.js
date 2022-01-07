@@ -59,6 +59,7 @@ class AccountSetup extends React.Component {
       cancelPlan: false,
       disabledCancelPlan: false,
       showPaymentModel: false,
+      package_id: "",
     };
   }
 
@@ -142,6 +143,7 @@ class AccountSetup extends React.Component {
 
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
+    this.setState({ package_id: event.value });
 
     if (this.state.packageIndex < event.index) {
       this.setState({ upgrade: true });
@@ -170,6 +172,7 @@ class AccountSetup extends React.Component {
       await axios
         .post("/payment/validatepromocode", {
           promo_code: this.state.promo_code,
+          package_id: this.state.package_id,
         })
         .then((response) => {
           this.setState({ promoLoading: false });
@@ -536,6 +539,7 @@ class AccountSetup extends React.Component {
                                       onClick={() => {
                                         this.setState({
                                           showPaymentButton: false,
+                                          package_id: "",
                                         });
                                       }}
                                       type="button"

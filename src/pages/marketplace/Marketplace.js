@@ -114,7 +114,7 @@ class MarketPlace extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "accounting",
@@ -125,7 +125,7 @@ class MarketPlace extends React.Component {
                     >
                       <span>Accounting</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                 </Nav>
                 <TabContent
                   className="affiliate_tab_ift"
