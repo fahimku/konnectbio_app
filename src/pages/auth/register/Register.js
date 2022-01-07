@@ -10,6 +10,7 @@ import Widget from "../../../components/Widget";
 import { registerUser, authError } from "../../../actions/auth";
 import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
+import { toast } from "react-toastify";
 
 const Select = (props) => (
   <FixRequiredSelect {...props} SelectComponent={BaseSelect} />
@@ -25,6 +26,7 @@ class Register extends React.Component {
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
+      resendEmail: false,
       name: "",
       email: "",
       countries: "",
@@ -68,12 +70,28 @@ class Register extends React.Component {
     this.isPasswordValid = this.isPasswordValid.bind(this);
     this.changeZip = this.changeZip.bind(this);
     this.changeReferred = this.changeReferred.bind(this);
+    this.resendEmail = this.resendEmail.bind(this);
   }
 
   async componentDidMount() {
     await this.getCountries();
     await this.getStates(this.state.countryCode);
   }
+
+
+  resendEmail = async () => {
+
+    await axios
+      .post(`/signin/resendemail`, {
+        email: this.state.email
+      }).then(() => {
+        this.setState({ resendEmail: true });
+        toast.success('The verification has been sent to your email account.')
+      })
+      .catch(function (error) {
+        this.setState({ resendEmail: false });
+      });
+  };
 
   getCountries = async () => {
     await axios
@@ -288,9 +306,26 @@ class Register extends React.Component {
                   <span className="env-ift">
                     <i className="fa fa-envelope-open-o" aria-hidden="true"></i>
                   </span>
-                  <span className="we_have_ift">
-                    {this.props.successMessage}
-                  </span>{" "}
+                  {this.state.resendEmail ?
+                    (<>
+                      <p className="we_have_ift">
+                        The verification email has been sent to your email account.
+                      </p></>) :
+                    (
+                      <>
+                        <p className="we_have_ift">
+                          {this.props.successMessage}
+                        </p>
+                        <p className="we_have_ift">
+                          If verification is not done within 10 minutes, registration process will be cancelled and you will have to register again. It may take up to 3 minutes to receive verification mail. In case you don,t receive mail, check your spam folder.
+                        </p>
+                        <p className="we_have_ift">
+                          Didn't receive email?  <br />
+                          <a href='#' onClick={this.resendEmail}>Re-send</a>
+                        </p>
+                      </>
+                    )
+                  }
                   <span
                     className="continue_link_ifti"
                     onClick={() => {
@@ -299,6 +334,9 @@ class Register extends React.Component {
                   >
                     Continue
                   </span>
+
+
+
                 </div>
               </Widget>
             ) : (

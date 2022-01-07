@@ -46,8 +46,8 @@ class Connect extends React.Component {
           ? true
           : false
         : access_token != ""
-        ? true
-        : false;
+          ? true
+          : false;
     if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
@@ -116,6 +116,7 @@ class Connect extends React.Component {
   };
 
   render() {
+   let packageName= JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name
     return (
       <>
         <div className="login_header">
@@ -150,30 +151,30 @@ class Connect extends React.Component {
           setPackage={(pack) => this.setState({ pack: pack })}
         />
         <div className="connect-page">
-            <div className="p-0">
-              <Row>
-                <Col md={12} className="connect-button-cs">
-                  <Button
-                    disabled={this.completeProcess()}
-                    onClick={() => {
-                      this.props.history.push(
-                        `/app/linkinbio/${this.state.instagramCode}`
-                      );
-                    }}
-                    variant="primary"
-                    type="submit"
-                    className="category-btn btn-block"
-                  >
-                    Next
-                  </Button>
-                </Col>
-                {this.state.instagramCode === "" && (
-                  <FormLabel className="label-insta col-md-12">
-                    Please Connect your Instagram Account
-                  </FormLabel>
-                )}
-              </Row>
-            </div>
+          <div className="p-0">
+            <Row>
+              <Col md={12} className="connect-button-cs">
+                <Button
+                  disabled={this.completeProcess()}
+                  onClick={() => {
+                    this.props.history.push(
+                      `/app/linkinbio/${this.state.instagramCode}`
+                    );
+                  }}
+                  variant="primary"
+                  type="submit"
+                  className="category-btn btn-block"
+                >
+                  Next
+                </Button>
+              </Col>
+              {this.state.instagramCode === "" && (
+                <FormLabel className="label-insta col-md-12">
+                  {packageName === 'Basic' ? 'Please connect your Instagram account' : 'Please connect your Instagram and Facebook account'}
+                </FormLabel>
+              )}
+            </Row>
+          </div>
         </div>
       </>
     );

@@ -277,7 +277,7 @@ export function registerUser(creds) {
           dispatch({
             type: REGISTER_SUCCESS,
           });
-          dispatch(authSuccess("We have sent an email with a confirmation link to your email address.Please click on Verify Account to complete sign-up."));
+          dispatch(authSuccess("We have sent an email with a confirmation link to your email address. Please click on Verify Account to complete sign-up."));
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
