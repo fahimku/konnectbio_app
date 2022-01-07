@@ -40,6 +40,7 @@ class Connect extends React.Component {
     const instagramCodeUrl = window.location.href;
     const fbPage = userInfo?.page_token;
     const package1 = userInfo?.package?.package_name;
+
     const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage? true : false: access_token !== ""? true : false;
     if (checkCon) {
       this.props.history.push("/app/linkinbio");
@@ -99,7 +100,7 @@ class Connect extends React.Component {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
 
-    if (this.state.pack == "Premium" || package1 == "Premium") {
+    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus") {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       return fbPage || this.state.fbPageLocal ? false : true;
     } else {
