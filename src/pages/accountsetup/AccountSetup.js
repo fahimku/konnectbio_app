@@ -484,12 +484,14 @@ class AccountSetup extends React.Component {
                               </div>
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
-                                  <h4>Have Promo Code?</h4>
-                                  {this.state.promo_error ? (
-                                    <span className="text-danger mt-2">
-                                      {this.state.promoCodeError}
-                                    </span>
-                                  ) : null}
+                                  <h4 className="mb-0">Have Promo Code?</h4>
+                                  <span class="text-danger promo-err-box col-md-12 pl-0">
+                                    {this.state.promo_error
+                                      ? // <span className="text-danger mt-2">
+                                        this.state.promoCodeError
+                                      : // </span>
+                                        null}
+                                  </span>
                                   <div className="acct-promo-sec-inr">
                                     <input
                                       type="text"
