@@ -16,13 +16,20 @@ class Payment extends React.Component {
   };
   componentDidMount() {
     const params = queryString.parse(window.location.search);
-
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (Object.keys(params).length === 0) {
       this.props.history.push("/app/main/");
     }
     if (params.status === "success") {
       this.setState({ success: true });
       this.updatePackage();
+    }
+    if (params.status === "return") {
+      if (!userInfo?.package) {
+        history.push("/package");
+      } else {
+        history.push("/app/account/setup/");
+      }
     }
   }
   updatePackage = async () => {
@@ -41,6 +48,49 @@ class Payment extends React.Component {
         console.log(error);
       });
   };
+
+  returnToBackPage = () => {
+    let redirectURL;
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const params = queryString.parse(window.location.search);
+
+    if (params.status === "success") {
+      if (
+        userInfo?.package?.package_name == "Premium" &&
+        !userInfo?.fb_token &&
+        !userInfo?.page_token
+      ) {
+        redirectURL = "/connect";
+      } else if (
+        userInfo?.package?.package_name == "Premium Plus" &&
+        userInfo?.fb_token &&
+        userInfo?.page_token
+      ) {
+        redirectURL = "/app/account/setup";
+      } else if (
+        userInfo?.package?.package_name == "Premium Plus" &&
+        !userInfo?.fb_token &&
+        !userInfo?.page_token
+      ) {
+        redirectURL = "/connect";
+      }
+    } else if (params.status === "error") {
+      if (!userInfo?.package) {
+        redirectURL = "/package";
+      } else {
+        redirectURL = "/app/account/setup/";
+      }
+    } else if (params.status === "return") {
+      if (!userInfo?.package) {
+        redirectURL = "/package";
+      } else {
+        redirectURL = "/app/account/setup/";
+      }
+    }
+
+    return history.push(redirectURL);
+  };
+
   render() {
     return (
       <>
@@ -79,19 +129,14 @@ class Payment extends React.Component {
               ) : (
                 <div className="error-msg danger">
                   <h2>Oh no, your payment failed</h2>
-                  <p>
-                    Please check your card detail and try again.</p>
+                  <p>Please check your card detail and try again.</p>
                 </div>
               )}
             </div>
             <div className="mt-5 text-right">
               <Button
                 // disabled={this.state.responseSuccess ? false : true}
-                onClick={() => {
-                  history.push("/connect/");
-                  window.history.go(0);
-
-                }}
+                onClick={() => this.returnToBackPage()}
                 variant="primary"
                 type="submit"
                 className="payment-next"

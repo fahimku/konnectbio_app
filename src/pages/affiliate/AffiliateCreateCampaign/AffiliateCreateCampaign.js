@@ -55,7 +55,7 @@ class AffiliateCreateCampaign extends React.Component {
       });
   };
   selectPost = (postId) => {
-    this.setState({aff_modal: true});
+    this.setState({ aff_modal: true });
     this.fetchSinglePost(postId);
     this.getCountries();
   };
