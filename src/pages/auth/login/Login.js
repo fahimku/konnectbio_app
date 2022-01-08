@@ -121,6 +121,7 @@ class Login extends React.Component {
                   className="btn btn-link"
                   onClick={() => {
                     this.props.history.push("/register");
+                    
                   }}
                 >
                   Create an Account

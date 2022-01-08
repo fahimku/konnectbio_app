@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { registerUser, authError } from "../../../actions/auth";
+import { registerUser, authError,authSuccess } from "../../../actions/auth";
 import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
@@ -80,7 +80,6 @@ class Register extends React.Component {
 
 
   resendEmail = async () => {
-
     await axios
       .post(`/signin/resendemail`, {
         email: this.state.email
@@ -221,6 +220,7 @@ class Register extends React.Component {
       this.state.password && this.state.password === this.state.confirmPassword
     );
   }
+
   changeZip(event) {
     this.setState({ zip: event.target.value });
   }
@@ -254,6 +254,7 @@ class Register extends React.Component {
       );
     }
   }
+
   changeType = (e) => {
     const { value } = e.target;
     this.setState({
@@ -330,13 +331,11 @@ class Register extends React.Component {
                     className="continue_link_ifti"
                     onClick={() => {
                       this.props.history.push("/login");
+                      this.props.dispatch(authSuccess(""));
                     }}
                   >
                     Continue
                   </span>
-
-
-
                 </div>
               </Widget>
             ) : (
