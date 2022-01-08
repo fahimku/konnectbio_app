@@ -202,7 +202,7 @@ function InstagramPostDataComponent({
             <InfiniteScroll
               // getScrollParent={() => document.getElementById("scrollableDiv")}
               pageStart={0}
-              className="af-rm-mn"
+              className="af-rm-mn mb-4"
               loadMore={() =>
                 getInstagramPostData(instagramPostData?.pagination?.next, true)
               }
