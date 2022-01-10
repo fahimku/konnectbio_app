@@ -10,21 +10,15 @@ export const history = createBrowserHistory({
   forceRefresh: true,
 });
 class Payment extends React.Component {
-  state = {
-    success: false,
-    responseSuccess: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      success: false,
+      responseSuccess: false,
+    };
 
-  componentDidMount() {
     const params = queryString.parse(window.location.search);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (Object.keys(params).length === 0) {
-      this.props.history.push("/app/main/");
-    }
-    if (params.status === "success") {
-      this.setState({ success: true });
-      this.updatePackage();
-    }
 
     if (params.status === "return") {
       if (userInfo?.package) {
@@ -45,6 +39,18 @@ class Payment extends React.Component {
       } else {
         history.push("/app/account/setup/");
       }
+    }
+  }
+
+  componentDidMount() {
+    const params = queryString.parse(window.location.search);
+    if (Object.keys(params).length === 0) {
+      this.props.history.push("/app/main/");
+    }
+
+    if (params.status === "success") {
+      this.setState({ success: true });
+      this.updatePackage();
     }
   }
   updatePackage = async () => {

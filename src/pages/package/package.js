@@ -41,6 +41,7 @@ class Package extends React.Component {
     help3: true,
     packageId: "",
   };
+
   componentDidMount() {
     if (userInfo.hasOwnProperty("package")) {
       history.push("/app/main");
