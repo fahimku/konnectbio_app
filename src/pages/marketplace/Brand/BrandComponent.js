@@ -47,7 +47,7 @@ class BrandComponent extends React.Component {
 
   handleMultiSelect = (e, options) => {
     this.setState({
-      selectedBrands: options,
+      selectedBrands: options,brands:options,
     });
   };
 
