@@ -6,6 +6,7 @@ import axios from "axios";
 // import s from "./payment.module.scss";
 // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 import { createBrowserHistory } from "history";
+import { load } from "dotenv";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -15,6 +16,7 @@ class Payment extends React.Component {
     this.state = {
       success: false,
       responseSuccess: false,
+      loading: true,
     };
 
     const params = queryString.parse(window.location.search);
@@ -39,13 +41,14 @@ class Payment extends React.Component {
         history.push("/connect");
         alert("return connect");
       } else {
-        // history.push("/app/account/setup");
-        window.location.replace("/app/account/setup");
+        history.push("/app/account/setup");
+        // window.location.replace("/app/account/setup");
       }
     }
   }
 
   componentDidMount() {
+    this.setState({ loading: false });
     const params = queryString.parse(window.location.search);
     if (Object.keys(params).length === 0) {
       this.props.history.push("/app/main/");
@@ -116,62 +119,66 @@ class Payment extends React.Component {
   };
 
   render() {
-    return (
-      <>
-        {/* <div className={s.errorPage}> */}
-        <div className="login_header">
-          <div className="container group">
-            <div className="header_inr_left">
-              <div className="konnect_logo">
-                <img className="logo" src={logo} alt="logo" />
+    if (!this.state.loading) {
+      return (
+        <>
+          {/* <div className={s.errorPage}> */}
+          <div className="login_header">
+            <div className="container group">
+              <div className="header_inr_left">
+                <div className="konnect_logo">
+                  <img className="logo" src={logo} alt="logo" />
+                </div>
+              </div>
+              <div className="header_inr_right">
+                <div className="create_account">
+                  <Button
+                    className="btn-connect"
+                    onClick={() => this.props.history.push("/logout")}
+                  >
+                    Logout
+                  </Button>
+                </div>
               </div>
             </div>
-            <div className="header_inr_right">
-              <div className="create_account">
+          </div>
+
+          <div className="container">
+            <div className="payment-page mt-5">
+              <div className="page-title">
+                <h3>Payment</h3>
+              </div>
+              <div className="white-box mt-5">
+                {this.state.success ? (
+                  <div className="success-msg">
+                    <h2>Thank you!</h2>
+                    <p>Your payment has been successfully received.</p>
+                  </div>
+                ) : (
+                  <div className="error-msg danger">
+                    <h2>Oh no, your payment failed</h2>
+                    <p>Please check your card detail and try again.</p>
+                  </div>
+                )}
+              </div>
+              <div className="mt-5 text-right">
                 <Button
-                  className="btn-connect"
-                  onClick={() => this.props.history.push("/logout")}
+                  // disabled={this.state.responseSuccess ? false : true}
+                  onClick={() => this.returnToBackPage()}
+                  variant="primary"
+                  type="submit"
+                  className="payment-next"
                 >
-                  Logout
+                  Continue
                 </Button>
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="container">
-          <div className="payment-page mt-5">
-            <div className="page-title">
-              <h3>Payment</h3>
-            </div>
-            <div className="white-box mt-5">
-              {this.state.success ? (
-                <div className="success-msg">
-                  <h2>Thank you!</h2>
-                  <p>Your payment has been successfully received.</p>
-                </div>
-              ) : (
-                <div className="error-msg danger">
-                  <h2>Oh no, your payment failed</h2>
-                  <p>Please check your card detail and try again.</p>
-                </div>
-              )}
-            </div>
-            <div className="mt-5 text-right">
-              <Button
-                // disabled={this.state.responseSuccess ? false : true}
-                onClick={() => this.returnToBackPage()}
-                variant="primary"
-                type="submit"
-                className="payment-next"
-              >
-                Continue
-              </Button>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+        </>
+      );
+    } else {
+      return <h1>Loading</h1>;
+    }
   }
 }
 
