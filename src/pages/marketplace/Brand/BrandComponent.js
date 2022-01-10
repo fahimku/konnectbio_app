@@ -4,7 +4,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 //import AsyncSelectField from "./AsyncSelectField";
 import Loader from "../../../components/Loader/Loader";
-import Select from 'react-select';
+import Select from "react-select";
 
 class BrandComponent extends React.Component {
   constructor(props) {
@@ -27,7 +27,8 @@ class BrandComponent extends React.Component {
   }
 
   brandList = async (value) => {
-    await axios.post("users/marketPlace/brands")
+    await axios
+      .post("users/marketPlace/brands")
       .then((response) => {
         const loadBrand = [];
         const brands = response.data.message;
@@ -50,7 +51,6 @@ class BrandComponent extends React.Component {
     });
   };
 
-
   fetchMyBrand = async () => {
     await axios
       .post("/users/marketPlace/getUserBrands")
@@ -64,9 +64,9 @@ class BrandComponent extends React.Component {
           });
         });
         this.setState({ myBrand: selectBrands, brands: selectBrands });
-        this.setState({selectedBrands: selectBrands})
+        this.setState({ selectedBrands: selectBrands });
         this.setState({ brandLoading: false }, () => {
-        //this.props.brandTab(this.state.myBrand, this.state.brandLoading);
+          this.props.brandTab(this.state.myBrand, this.state.brandLoading);
         });
       })
       .catch((error) => {
@@ -123,7 +123,9 @@ class BrandComponent extends React.Component {
                                 options={this.state.brandList}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
-                                onChange={(options, e) => this.handleMultiSelect(e, options)}
+                                onChange={(options, e) =>
+                                  this.handleMultiSelect(e, options)
+                                }
                               />
                               {/* <AsyncSelectField
                                 name="brand"
