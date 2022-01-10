@@ -5,9 +5,10 @@ import s from "./analysis.module.scss";
 import PostAnalytic from "./postperformance/postanalytics";
 // import LinkAnalytic from "./Linkperformance/linkanalytics";
 import SummaryComponent from "./Summary/SummaryComponent";
-// import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
+import CampaignAnalytics from "./CampaignPerformance/CampaignAnalytics";
 import InstagramAnalytics from "./instagramPerformance/instagramAnalytics";
 import queryString from "query-string";
+import CampaignDataComponent from "./CampaignPerformance/CampaignDataComponent";
 
 class Analysis extends React.Component {
   constructor(props) {
@@ -89,6 +90,32 @@ class Analysis extends React.Component {
                         <span>Bioshop Performance</span>
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "tab23",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("tab23");
+                        }}
+                      >
+                        <span>Publish Performance</span>
+                      </NavLink>
+                    </NavItem>
+                    {this.state.packageName === "Premium Plus" ? (
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab25",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab25");
+                          }}
+                        >
+                          <span>Advertise Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    ) : null}
 
                     {/* {this.state.packageName === "Basic" ? ( */}
                     {/* <NavItem>
@@ -144,7 +171,10 @@ class Analysis extends React.Component {
                     </TabPane>
                     <TabPane tabId="tab22">
                       {this.state.activeSecondTab === "tab22" ? (
-                        <PostAnalytic username={this.state.username} />
+                        <PostAnalytic
+                          username={this.state.username}
+                          packageName={this.state.packageName}
+                        />
                       ) : null}
                     </TabPane>
                     <TabPane tabId="tab24">
@@ -154,15 +184,28 @@ class Analysis extends React.Component {
                     </TabPane>
 
                     {/* {this.state.packageName === "Basic" ? ( */}
-                    {/* <TabPane tabId="tab23">
+                    <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <CampaignAnalytics
                           username={this.state.username}
                           packageName={this.state.packageName}
                         />
                       ) : null}
-                    </TabPane> */}
+                    </TabPane>
                     {/* ) : null} */}
+
+                    <TabPane tabId="tab25">
+                      {this.state.activeSecondTab === "tab25" ? (
+                        <div className="container-fluid">
+                          <h4 className="page-title">
+                            Affiliate Advertise Performance
+                          </h4>
+                          <CampaignDataComponent
+                            username={this.state.username}
+                          />
+                        </div>
+                      ) : null}
+                    </TabPane>
 
                     {/* <TabPane tabId="tab23">
                       <LinkAnalytic username={this.state.username} />
