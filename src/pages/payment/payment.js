@@ -21,7 +21,7 @@ class Payment extends React.Component {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     if (params.status === "return") {
-      if (userInfo?.package) {
+      if (!userInfo?.package) {
         history.push("/package");
       } else if (
         params.status === "return" &&
