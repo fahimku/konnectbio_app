@@ -1,5 +1,14 @@
 import React from "react";
-import { Button, Tabs, Tab, Modal, Row, Collapse } from "react-bootstrap";
+import {
+  Button,
+  Tabs,
+  Tab,
+  Modal,
+  Row,
+  Collapse,
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
 import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
@@ -149,6 +158,11 @@ class Package extends React.Component {
     const basic = this.state.packages.Basic || {};
     const premium = this.state.packages.Premium || {};
     const premiumPlus = this.state.packages.PremiumPlus || {};
+    const renderTooltip = (props) => (
+      <Tooltip id="button-tooltip" {...props}>
+        Platform Fee of 5% of earned commission will be charged.
+      </Tooltip>
+    );
     return (
       <>
         <div className="login_header">
@@ -249,7 +263,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -321,7 +342,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
 
                       <li>
@@ -424,7 +452,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
 
                       <li>
@@ -535,7 +570,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -607,7 +649,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
 
                       <li>
@@ -710,7 +759,14 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Affiliate - Publisher
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
                       </li>
 
                       <li>
