@@ -14,6 +14,7 @@ class Payment extends React.Component {
     success: false,
     responseSuccess: false,
   };
+
   componentDidMount() {
     const params = queryString.parse(window.location.search);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -24,9 +25,23 @@ class Payment extends React.Component {
       this.setState({ success: true });
       this.updatePackage();
     }
+
     if (params.status === "return") {
-      if (!userInfo?.package) {
+      if (userInfo?.package) {
         history.push("/package");
+      } else if (
+        params.status === "return" &&
+        !userInfo?.fb_token &&
+        !userInfo?.page_token &&
+        !userInfo?.access_token
+      ) {
+        history.push("/connect");
+      } else if (
+        params.status === "return" &&
+        !userInfo?.fb_token &&
+        !userInfo?.page_token
+      ) {
+        history.push("/connect");
       } else {
         history.push("/app/account/setup/");
       }
