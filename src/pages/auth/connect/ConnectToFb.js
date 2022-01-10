@@ -170,10 +170,11 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
                             instaId: insta,
                           })
                           .then(() => {
-                            var userInfo = JSON.parse(
-                              localStorage.getItem("userInfo")
-                            );
+                            var obj = localStorage.getItem("userInfo");
+                            var userInfo = JSON.parse(obj);
+
                             userInfo.page_token = selectedPage;
+                            userInfo.instagram_id = insta;
                             localStorage.setItem(
                               "userInfo",
                               JSON.stringify(userInfo)
