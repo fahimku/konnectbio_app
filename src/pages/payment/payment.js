@@ -30,14 +30,17 @@ class Payment extends React.Component {
         !userInfo?.access_token
       ) {
         history.push("/connect");
+        alert("return cpnnect pachae");
       } else if (
         params.status === "return" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
         history.push("/connect");
+        alert("return connect");
       } else {
-        history.push("/app/account/setup/");
+        // history.push("/app/account/setup");
+        window.location.replace("/app/account/setup");
       }
     }
   }
