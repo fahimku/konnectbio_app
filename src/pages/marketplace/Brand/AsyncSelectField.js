@@ -8,6 +8,7 @@ class AsyncSelectField extends React.Component {
     default_value: this.props.defaultValue,
     // paste_value: "",
   };
+
   loadOptions = async (input, callback) => {
     await this.smartSearchFilter(input);
     const result = this.state.brand.map((item) => {
@@ -43,12 +44,14 @@ class AsyncSelectField extends React.Component {
         });
     }
   };
+
   handleMultiSelect = (e, options) => {
     this.props.getBrand(options);
     this.setState({
       brand: options,
     });
   };
+
   handleOnPaste = async (e) => {
     const getData = e.clipboardData.getData("text");
     await this.smartSearchFilter(getData);
@@ -65,14 +68,14 @@ class AsyncSelectField extends React.Component {
             className={this.props.className}
             // isMulti={this.props.isMulti === false ? false : true}
             isMulti
-            cacheOptions
+            defaultOptions
             delimiter=","
             loadOptions={this.loadOptions}
             placeholder={this.props.placeholder}
             name={this.props.name}
             defaultValue={this.props.defaultValue}
             onChange={(options, e) => this.handleMultiSelect(e, options)}
-            // value={this.props.defaultValue}
+          // value={this.props.defaultValue}
           />
         </div>
       </React.Fragment>

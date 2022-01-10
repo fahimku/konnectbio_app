@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-import AsyncSelectField from "./AsyncSelectField";
+//import AsyncSelectField from "./AsyncSelectField";
 import Loader from "../../../components/Loader/Loader";
+import Select from 'react-select';
 
 class BrandComponent extends React.Component {
   constructor(props) {
@@ -11,7 +12,9 @@ class BrandComponent extends React.Component {
     this.state = {
       title: this.props.title,
       type: this.props.type,
-      brands: [],
+      selectedBrands: [],
+      brand: [],
+      brandList: [],
       loading: false,
       brandLoading: true,
       myBrand: [],
@@ -20,7 +23,34 @@ class BrandComponent extends React.Component {
 
   componentDidMount() {
     this.fetchMyBrand();
+    this.brandList();
   }
+
+  brandList = async (value) => {
+    await axios.post("users/marketPlace/brands")
+      .then((response) => {
+        const loadBrand = [];
+        const brands = response.data.message;
+        brands.map(({ brand_id, brand_name }) => {
+          return loadBrand.push({
+            value: brand_id,
+            label: brand_name,
+          });
+        });
+        this.setState({ brandList: loadBrand });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  handleMultiSelect = (e, options) => {
+    this.setState({
+      selectedBrands: options,
+    });
+  };
+
+
   fetchMyBrand = async () => {
     await axios
       .post("/users/marketPlace/getUserBrands")
@@ -34,8 +64,9 @@ class BrandComponent extends React.Component {
           });
         });
         this.setState({ myBrand: selectBrands, brands: selectBrands });
+        this.setState({selectedBrands: selectBrands})
         this.setState({ brandLoading: false }, () => {
-          this.props.brandTab(this.state.myBrand, this.state.brandLoading);
+        //this.props.brandTab(this.state.myBrand, this.state.brandLoading);
         });
       })
       .catch((error) => {
@@ -45,7 +76,7 @@ class BrandComponent extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    let brand = this.state.brands.map((brand) => {
+    let brand = this.state.selectedBrands.map((brand) => {
       return brand.value;
     });
 
@@ -66,9 +97,6 @@ class BrandComponent extends React.Component {
         this.setState({ loading: false });
       });
   };
-  getBrand = (options) => {
-    this.setState({ brands: options });
-  };
 
   render() {
     return (
@@ -88,12 +116,22 @@ class BrandComponent extends React.Component {
                             <Loader />
                           ) : (
                             <React.Fragment>
-                              <AsyncSelectField
+                              <Select
+                                defaultValue={this.state.myBrand}
+                                isMulti
+                                name="brands"
+                                options={this.state.brandList}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={(options, e) => this.handleMultiSelect(e, options)}
+                              />
+                              {/* <AsyncSelectField
                                 name="brand"
                                 placeholder="Search By Brand"
                                 getBrand={this.getBrand}
                                 defaultValue={this.state.myBrand}
                               />
+                            */}
                               {this.state.brands.length === 0 ? (
                                 <span className="text-danger mt-2">
                                   Please select brands to unlock marketplace.
