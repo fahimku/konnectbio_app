@@ -96,7 +96,7 @@ class Payment extends React.Component {
       <>
         {/* <div className={s.errorPage}> */}
         <div className="login_header">
-          <div className="header_inr group">
+          <div className="container group">
             <div className="header_inr_left">
               <div className="konnect_logo">
                 <img className="logo" src={logo} alt="logo" />
