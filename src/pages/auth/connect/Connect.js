@@ -109,9 +109,10 @@ class Connect extends React.Component {
   };
 
   connectionMessage = () => {
+
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
-    
-    if (package1 === 'Basic' && !this.completeProcess()) {
+
+    if (package1 === 'Basic' && this.completeProcess()) {
       return 'Please connect your Instagram account';
     }
 
@@ -177,8 +178,6 @@ class Connect extends React.Component {
                   Next
                 </Button>
               </Col>
-
-
 
               <FormLabel className="label-insta col-md-12">
                 {this.connectionMessage()}
