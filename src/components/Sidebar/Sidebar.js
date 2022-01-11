@@ -72,7 +72,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    // let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className={`${s.sidebarWrapper} sidebar`}>
         <nav className={s.root}>
@@ -260,24 +260,49 @@ class Sidebar extends React.Component {
                   link="/admin"
                   index="admin"
                   exact={false}
-                  childrenLinks={[
-                    {
-                      header: "Home Screen",
-                      link: "/app/account/profile",
-                    },
-                    {
-                      header: "Category Setup",
-                      link: "/app/account/categories",
-                    },
-                    {
-                      header: "Account Setup",
-                      link: "/app/account/setup",
-                    },
-                    {
-                      header: "Delete Account",
-                      link: "/app/account/delete",
-                    },
-                  ]}
+                  childrenLinks={
+                    userInfo?.package?.package_name === "Premium Plus"
+                      ? [
+                          {
+                            header: "Home Screen",
+                            link: "/app/account/profile",
+                          },
+                          {
+                            header: "Category Setup",
+                            link: "/app/account/categories",
+                          },
+                          {
+                            header: "Affiliate Setup",
+                            link: "/app/account/affiliate",
+                          },
+                          {
+                            header: "Account Setup",
+                            link: "/app/account/setup",
+                          },
+                          {
+                            header: "Delete Account",
+                            link: "/app/account/delete",
+                          },
+                        ]
+                      : [
+                          {
+                            header: "Home Screen",
+                            link: "/app/account/profile",
+                          },
+                          {
+                            header: "Category Setup",
+                            link: "/app/account/categories",
+                          },
+                          {
+                            header: "Account Setup",
+                            link: "/app/account/setup",
+                          },
+                          {
+                            header: "Delete Account",
+                            link: "/app/account/delete",
+                          },
+                        ]
+                  }
                 />
                 <LinksGroup
                   className="sidebar-nav-links"

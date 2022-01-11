@@ -688,3 +688,20 @@ h1 small {
   font-size: 10px;
   padding-top: 1px;
 }
+.brand-input {
+  padding-right: 0px;
+}
+.brand-input input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
+.brand-button {
+  padding-left: 0px;
+  display: flex;
+}
+.brand-button button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  width: 100%;
+}

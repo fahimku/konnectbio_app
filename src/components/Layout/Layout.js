@@ -43,6 +43,7 @@ import SearchProfile from "../../pages/searchProfile/index";
 import AllPostDataComponent from "../../pages/myposts/MyPosts";
 import CustomCards from "../../pages/customCards/customCards";
 import customCards from "../../pages/customCards/customCards";
+import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -223,6 +224,11 @@ class Layout extends React.Component {
                         component={customCards}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
+                      <Route
+                        path="/app/account/affiliate"
+                        exact
+                        component={AffiliateSetup}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>
