@@ -692,7 +692,7 @@ span.fa.fa-times.ift-cancel {
   display: none;
 }
 .pkg_price_ifti {
-  margin: 1.8rem 0 1rem 0;
+  margin: 1rem 0 1rem 0;
   font-family: "Rubik";
 }
 a.pkg_read {
@@ -731,7 +731,7 @@ a.pkg_read:hover {
 }
 .pkg_detail_list_ift li {
   font-size: 1rem;
-  padding-bottom: 15px;
+  padding-bottom: 12px;
   padding-left: 16px;
   position: relative;
   line-height: 1.5rem;
@@ -1340,12 +1340,12 @@ a.pkg_read:hover {
   border-bottom: none;
 }
 
-.connect-page{
+.connect-page {
   max-width: 980px;
   margin: 0 auto;
 }
-.connect-button-cs button{
-  float:right;
+.connect-button-cs button {
+  float: right;
   margin-right: 0 !important;
   max-width: 120px;
 }
