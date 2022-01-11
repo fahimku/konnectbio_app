@@ -186,24 +186,26 @@ class Analysis extends React.Component {
                     {/* {this.state.packageName === "Basic" ? ( */}
                     <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
-                        <CampaignAnalytics
-                          username={this.state.username}
-                          packageName={this.state.packageName}
-                        />
+                        <>
+                          <div className="container-fluid">
+                            <h4 className="page-title">
+                              Affiliate Publish Performance
+                            </h4>
+                            <CampaignDataComponent
+                              username={this.state.username}
+                            />
+                          </div>
+                        </>
                       ) : null}
                     </TabPane>
                     {/* ) : null} */}
 
                     <TabPane tabId="tab25">
                       {this.state.activeSecondTab === "tab25" ? (
-                        <div className="container-fluid">
-                          <h4 className="page-title">
-                            Affiliate Advertise Performance
-                          </h4>
-                          <CampaignDataComponent
-                            username={this.state.username}
-                          />
-                        </div>
+                        <CampaignAnalytics
+                          username={this.state.username}
+                          packageName={this.state.packageName}
+                        />
                       ) : null}
                     </TabPane>
 

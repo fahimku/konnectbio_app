@@ -172,6 +172,13 @@ function AffiliateCampaign(props) {
 
   const postData = () => {
     const data1 = data;
+    const truncate = (str, max, suffix) =>
+      str.length < max
+        ? str
+        : `${str.substr(
+            0,
+            str.substr(0, max - suffix.length).lastIndexOf(" ")
+          )}${suffix}`;
     const slice = data1.slice(offset, offset + perPage);
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
@@ -183,7 +190,9 @@ function AffiliateCampaign(props) {
           >
             <div className="camp-row row">
               <div className="campaign-header col-12">
-                <h6>{record.campaign_name}</h6>
+                <h6 title={record.campaign_name}>
+                  {truncate(record.campaign_name, 40, "...")}
+                </h6>
                 {props.type !== "expired" ? (
                   <div className="cmp-h-right">
                     {/* {toggleLoading && <Loader />} */}
@@ -519,7 +528,7 @@ function AffiliateCampaign(props) {
                 forcePage={currentPage}
                 pageCount={pageCount}
                 marginPagesDisplayed={2}
-                pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }
+                pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
                 onPageChange={handlePageClick}
                 containerClassName={
                   "pagination justify-content-center mt-2 custom-paginate"
