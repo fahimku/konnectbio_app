@@ -6,7 +6,7 @@ import axios from "axios";
 // import s from "./payment.module.scss";
 // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 import { createBrowserHistory } from "history";
-import { load } from "dotenv";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });

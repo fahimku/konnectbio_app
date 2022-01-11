@@ -253,13 +253,13 @@ class AffiliateDataComponent extends React.Component {
 
   postData = () => {
     const data = this.state.data;
-    // const truncate = (str, max, suffix) =>
-    //   str.length < max
-    //     ? str
-    //     : `${str.substr(
-    //         0,
-    //         str.substr(0, max - suffix.length).lastIndexOf(" ")
-    //       )}${suffix}`;
+    const truncate = (str, max, suffix) =>
+      str.length < max
+        ? str
+        : `${str.substr(
+            0,
+            str.substr(0, max - suffix.length).lastIndexOf(" ")
+          )}${suffix}`;
 
     const slice = data.slice(
       this.state.offset,
@@ -287,11 +287,9 @@ class AffiliateDataComponent extends React.Component {
                 <div className="row count-main-box">
                   <div className="col-12 count-box">
                     <h5 className="count-title">Campaign Name</h5>
-                    {/* <h3 className="count" title={record.campaign_name}>
+                    <h3 className="count" title={record.campaign_name}>
                       {truncate(record.campaign_name, 30, "...")}
-                    </h3> */}
-
-                    <h3 className="count">{record.campaign_name}</h3>
+                    </h3>
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Impressions</h5>
