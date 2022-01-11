@@ -9,9 +9,7 @@ export default function ScreenButtons(props) {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [imageFiles, setImageFiles] = useState([]);
-  const [userImage, setUserImage] = useState(
-    userInfo?.menu[props.id]?.image_url
-  );
+  const [userImage, setUserImage] = useState(userInfo?.menu[props.id]?.image_url);
   let menuId = props.id + 1;
   menuId = menuId + "" + menuId + "" + menuId + "" + menuId;
 
