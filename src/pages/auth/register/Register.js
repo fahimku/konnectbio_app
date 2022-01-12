@@ -7,7 +7,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { registerUser, authError,authSuccess } from "../../../actions/auth";
+import { registerUser, authError, authSuccess } from "../../../actions/auth";
 import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
@@ -17,9 +17,11 @@ const Select = (props) => (
 );
 
 class Register extends React.Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -221,6 +223,16 @@ class Register extends React.Component {
     );
   }
 
+
+  validateEmail(emailAdress) {
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress.match(regexEmail)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   changeZip(event) {
     this.setState({ zip: event.target.value });
   }
@@ -232,7 +244,34 @@ class Register extends React.Component {
   doRegister(e) {
     e.preventDefault();
 
-    if (!this.isPasswordValid()) {
+    if (this.state.name === "") {
+      this.props.dispatch(authError("The name field is required"));
+    }
+
+    else if (this.state.email === "") {
+      this.props.dispatch(authError("The email field is required"));
+    }
+    else if (!this.validateEmail(this.state.email)) {
+      this.props.dispatch(authError("The email address is not valid"));
+    }
+
+    else if (this.state.gender === "") {
+      this.props.dispatch(authError("The gender field is required"));
+    }
+      
+    else if (this.state.countryCode === "") {
+      this.props.dispatch(authError("The country field is required"));
+    }
+      
+    else if (this.state.countryStateCode === "") {
+      this.props.dispatch(authError("The state field is required"));
+    }
+      
+    else if (this.state.city === "") {
+      this.props.dispatch(authError("The city field is required"));
+    }
+      
+    else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
       this.props.dispatch(
@@ -361,7 +400,7 @@ class Register extends React.Component {
                         value={this.state.name}
                         onChange={this.changeName}
                         type="text"
-                        required
+
                         name="name"
                         placeholder="Name"
                       />
@@ -371,15 +410,14 @@ class Register extends React.Component {
                         className="form-control"
                         value={this.state.email}
                         onChange={this.changeEmail}
-                        type="email"
-                        required
+                        type="text"
                         name="email"
                         placeholder="Email"
                       />
                     </div>
                     <div className="form-group">
                       <Select
-                        required
+
                         className="form_select_group"
                         value={
                           this.state.gender && {
@@ -399,7 +437,7 @@ class Register extends React.Component {
                     <div className="form-group">
                       {this.state.country && (
                         <Select
-                          required
+
                           className="form_select_group"
                           defaultValue={{
                             label: this.state.country,
@@ -426,7 +464,7 @@ class Register extends React.Component {
                       {this.state.stateLoading && <Loader />}
                       {this.state.country && !this.state.stateLoading && (
                         <Select
-                          required
+
                           className="form_select_group"
                           onChange={this.changeState}
                           filterOption={createFilter({
@@ -448,7 +486,7 @@ class Register extends React.Component {
                       {this.state.cityLoading && <Loader />}
                       {this.state.countryState && !this.state.cityLoading && (
                         <Select
-                          required
+
                           className="form_select_group"
                           onChange={this.changeCity}
                           filterOption={createFilter({
@@ -472,7 +510,7 @@ class Register extends React.Component {
                         value={this.state.password}
                         onChange={this.changePassword}
                         type="password"
-                        required
+
                         name="password"
                         placeholder="Password"
                       />
@@ -484,7 +522,7 @@ class Register extends React.Component {
                         onChange={this.changeConfirmPassword}
                         onBlur={this.checkPassword}
                         type="password"
-                        required
+
                         name="confirmPassword"
                         placeholder="Confirm"
                       />
