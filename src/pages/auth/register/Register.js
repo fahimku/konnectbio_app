@@ -258,19 +258,19 @@ class Register extends React.Component {
     else if (this.state.gender === "") {
       this.props.dispatch(authError("The gender field is required"));
     }
-      
+
     else if (this.state.countryCode === "") {
       this.props.dispatch(authError("The country field is required"));
     }
-      
+
     else if (this.state.countryStateCode === "") {
       this.props.dispatch(authError("The state field is required"));
     }
-      
+
     else if (this.state.city === "") {
       this.props.dispatch(authError("The city field is required"));
     }
-      
+
     else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
@@ -534,7 +534,7 @@ class Register extends React.Component {
                         onChange={this.changeZip}
                         type="number"
                         name="zip"
-                        placeholder="Zip Code"
+                        placeholder="Zip code - Optional"
                       />
                     </div>
                     <div className="form-group">
@@ -544,7 +544,7 @@ class Register extends React.Component {
                         onChange={this.changeReferred}
                         type="text"
                         name="referred_by"
-                        placeholder="Referred By"
+                        placeholder="Referred by - Optional"
                       />
                     </div>
                     <Button
