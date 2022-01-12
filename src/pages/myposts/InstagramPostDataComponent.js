@@ -21,21 +21,21 @@ function InstagramPostDataComponent({
     label: "DATE",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
-  const [showScroll, setShowScroll] = useState(false);
+  // const [showScroll, setShowScroll] = useState(false);
 
-  const checkScrollTop = () => {
-    if (!showScroll && window.pageYOffset > 400) {
-      setShowScroll(true);
-    } else if (showScroll && window.pageYOffset <= 400) {
-      setShowScroll(false);
-    }
-  };
+  // const checkScrollTop = () => {
+  //   if (!showScroll && window.pageYOffset > 400) {
+  //     setShowScroll(true);
+  //   } else if (showScroll && window.pageYOffset <= 400) {
+  //     setShowScroll(false);
+  //   }
+  // };
 
-  const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  // const scrollTop = () => {
+  //   window.scrollTo({ top: 0, behavior: "smooth" });
+  // };
 
-  window.addEventListener("scroll", checkScrollTop);
+  // window.addEventListener("scroll", checkScrollTop);
 
   useEffect(() => {
     getInstagramPostData().then(() => {
@@ -338,11 +338,11 @@ function InstagramPostDataComponent({
               ))} */}
             </InfiniteScroll>
 
-            <i
+            {/* <i
               class="fa fa fa-angle-up scrollTop"
               onClick={scrollTop}
               style={{ height: 40, display: showScroll ? "flex" : "none" }}
-            ></i>
+            ></i> */}
           </>
         ) : (
           <div
