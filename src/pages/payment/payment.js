@@ -6,7 +6,7 @@ import axios from "axios";
 // import s from "./payment.module.scss";
 // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 import { createBrowserHistory } from "history";
-import { load } from "dotenv";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -32,17 +32,14 @@ class Payment extends React.Component {
         !userInfo?.access_token
       ) {
         history.push("/connect");
-        alert("return cpnnect pachae");
       } else if (
         params.status === "return" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
         history.push("/connect");
-        alert("return connect");
       } else {
         history.push("/app/account/setup");
-        // window.location.replace("/app/account/setup");
       }
     }
   }
@@ -83,19 +80,19 @@ class Payment extends React.Component {
 
     if (params.status === "success") {
       if (
-        userInfo?.package?.package_name == "Premium" &&
+        userInfo?.package?.package_name === "Premium" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
         redirectURL = "/connect";
       } else if (
-        userInfo?.package?.package_name == "Premium Plus" &&
+        userInfo?.package?.package_name === "Premium Plus" &&
         userInfo?.fb_token &&
         userInfo?.page_token
       ) {
         redirectURL = "/app/account/setup";
       } else if (
-        userInfo?.package?.package_name == "Premium Plus" &&
+        userInfo?.package?.package_name === "Premium Plus" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
