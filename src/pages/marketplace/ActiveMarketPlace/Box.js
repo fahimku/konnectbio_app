@@ -56,7 +56,7 @@ export default function Box({ item, toggleCampaigns, index, type }) {
             <div className="row count-main-box">
               <div className="col-12 count-box">
                 <h5 className="count-title">Brand</h5>
-                <h3 className="count">{item.instagram_username}</h3>
+                <h3 className="count">{item.brand_name}</h3>
               </div>
               <div className="col-12 count-box">
                 <h5 className="count-title">Category</h5>
