@@ -351,7 +351,7 @@ class MyProfile extends React.Component {
                         this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
-                      name="All Posts"
+                      name="All"
                       key={1}
                       id={1}
                     />
