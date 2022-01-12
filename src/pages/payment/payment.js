@@ -39,7 +39,6 @@ class Payment extends React.Component {
         history.push("/connect");
       } else {
         history.push("/app/account/setup");
-        // window.location.replace("/app/account/setup");
       }
     }
   }
@@ -80,19 +79,19 @@ class Payment extends React.Component {
 
     if (params.status === "success") {
       if (
-        userInfo?.package?.package_name == "Premium" &&
+        userInfo?.package?.package_name === "Premium" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
         redirectURL = "/connect";
       } else if (
-        userInfo?.package?.package_name == "Premium Plus" &&
+        userInfo?.package?.package_name === "Premium Plus" &&
         userInfo?.fb_token &&
         userInfo?.page_token
       ) {
         redirectURL = "/app/account/setup";
       } else if (
-        userInfo?.package?.package_name == "Premium Plus" &&
+        userInfo?.package?.package_name === "Premium Plus" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
