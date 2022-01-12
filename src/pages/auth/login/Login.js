@@ -173,10 +173,8 @@ class Login extends React.Component {
                   />
                   <span className="password_show" onClick={this.showHide}>
                     {this.state.type === "input" ? (
-                      // <i class="fa fa-eye"></i>
                       <span class="glyphicon glyphicon-eye-open"></span>
                     ) : (
-                      // <i class="fa fa-eye-slash"></i>
                       <span class="glyphicon glyphicon-eye-close"></span>
                     )}
                   </span>
