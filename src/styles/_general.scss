@@ -705,3 +705,12 @@ h1 small {
   border-bottom-left-radius: 0px;
   width: 100%;
 }
+/*******login password show********/
+.password-box {
+  position: relative;
+}
+.password-box .password_show {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+}

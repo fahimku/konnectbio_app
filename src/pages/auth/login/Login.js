@@ -34,6 +34,7 @@ class Login extends React.Component {
     this.state = {
       email: "",
       password: "",
+      type: "password",
     };
 
     this.doLogin = this.doLogin.bind(this);
@@ -100,6 +101,13 @@ class Login extends React.Component {
   signUp() {
     this.props.dispatch(push("/register"));
   }
+  showHide = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      type: this.state.type === "input" ? "password" : "input",
+    });
+  };
 
   render() {
     return (
@@ -121,7 +129,6 @@ class Login extends React.Component {
                   className="btn btn-link"
                   onClick={() => {
                     this.props.history.push("/register");
-                    
                   }}
                 >
                   Create an Account
@@ -154,16 +161,25 @@ class Login extends React.Component {
                     placeholder="Email"
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group password-box">
                   <input
                     className="form-control"
                     value={this.state.password}
                     onChange={this.changePassword}
-                    type="password"
+                    type={this.state.type}
                     required
                     name="password"
                     placeholder="Password"
                   />
+                  <span className="password_show" onClick={this.showHide}>
+                    {this.state.type === "input" ? (
+                      // <i class="fa fa-eye"></i>
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                    ) : (
+                      // <i class="fa fa-eye-slash"></i>
+                      <span class="glyphicon glyphicon-eye-close"></span>
+                    )}
+                  </span>
                 </div>
 
                 <Button
