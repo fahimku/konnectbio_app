@@ -32,10 +32,11 @@ class CarouselComponent extends React.Component {
         items: 4,
       },
     };
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     return (
       <React.Fragment>
-        {this.props.allCategory.length === 0 ? null : (
+        {this.props.allCategory.length === 0 ? (
           <Carousel
             responsive={responsive}
             autoPlay={false}
@@ -56,7 +57,7 @@ class CarouselComponent extends React.Component {
             >
               <button className="btn-link">
                 <img
-                  src={Post}
+                  src={userInfo?.menu[1]?.image_url}
                   width="56px"
                   height="56px"
                   alt=""
@@ -67,7 +68,44 @@ class CarouselComponent extends React.Component {
                     this.state.active === "allPost" ? "aff-active-circle" : null
                   }
                 >
-                  My Posts
+                  All
+                </span>
+              </button>
+            </div>
+          </Carousel>
+        ) : (
+          <Carousel
+            responsive={responsive}
+            autoPlay={false}
+            arrows={true}
+            slidesToSlide={2}
+            customTransition="transform 600ms ease-in-out"
+            transitionDuration="600"
+            partialVisible={true}
+            className="main-carousel py-3 mb-2"
+            itemClass="carousel-item-padding-40-px"
+          >
+            <div
+              className="carousel-items"
+              onClick={() => {
+                this.setState({ active: "allPost" });
+                this.props.categoryFilter("allPost");
+              }}
+            >
+              <button className="btn-link">
+                <img
+                  src={userInfo?.menu[1]?.image_url}
+                  width="56px"
+                  height="56px"
+                  alt=""
+                  className="circles"
+                />
+                <span
+                  className={
+                    this.state.active === "allPost" ? "aff-active-circle" : null
+                  }
+                >
+                  All
                 </span>
               </button>
             </div>

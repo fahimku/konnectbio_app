@@ -47,7 +47,8 @@ class BrandComponent extends React.Component {
 
   handleMultiSelect = (e, options) => {
     this.setState({
-      selectedBrands: options,brands:options,
+      selectedBrands: options,
+      brands: options,
     });
   };
 
@@ -117,7 +118,11 @@ class BrandComponent extends React.Component {
                           ) : (
                             <React.Fragment>
                               <Select
-                                defaultValue={this.state.myBrand}
+                                defaultValue={this.state.myBrand.filter(
+                                  function (element) {
+                                    return element.label !== undefined;
+                                  }
+                                )}
                                 isMulti
                                 name="brands"
                                 options={this.state.brandList}

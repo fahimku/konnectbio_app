@@ -716,3 +716,23 @@ h1 small {
   top: 10px;
   cursor: pointer;
 }
+
+.settings-bottom {
+  background: white;
+}
+.preferences-value {
+  font-family: "SegoeUIBold";
+  padding-top: 5px;
+  text-transform: capitalize;
+}
+.profile_password.profile_box_main .dash_block_preferences {
+  min-height: 392px !important;
+}
+.guess-btn {
+  cursor: pointer;
+  font-size: 12px;
+}
+.preference-btn-box {
+  text-align: right;
+  margin-top: 10px;
+}

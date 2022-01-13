@@ -18,6 +18,7 @@ class AffiliateCreateCampaign extends React.Component {
     countries: "",
     affDataLoading: false,
     id: "",
+    categoryLoading: false,
   };
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -37,6 +38,7 @@ class AffiliateCreateCampaign extends React.Component {
   //     });
   // };
   fetchAllCategory = async () => {
+    this.setState({ categoryLoading: true });
     await axios
       .get("/users/receive/categories")
       .then((response) => {
@@ -48,10 +50,12 @@ class AffiliateCreateCampaign extends React.Component {
         //     image: image_url,
         //   });
         // });
+        this.setState({ categoryLoading: false });
         this.setState({ allCategory: myCategories });
       })
       .catch((error) => {
         console.log(error);
+        this.setState({ categoryLoading: false });
       });
   };
   selectPost = (postId) => {
@@ -180,7 +184,7 @@ class AffiliateCreateCampaign extends React.Component {
             <Row className="app_main_cont_ift main-container">
               <Col className="left-column" md="5" xs="12" xl="3">
                 <div className="">
-                  {this.state.allCategory.length > 0 ? (
+                  {!this.state.categoryLoading ? (
                     <>
                       <CarouselComponent
                         allCategory={this.state.allCategory}
