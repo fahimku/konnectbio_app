@@ -6,6 +6,7 @@ import { Typography } from "@mui/material";
 import * as instagramDataActions from "../../actions/instagramUserData";
 import Loader from "../../components/Loader/Loader";
 import InstagramPostDataComponent from "./InstagramPostDataComponent";
+import Placeholder from "../../images/placeholder.svg";
 
 function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
   useEffect(() => {
@@ -41,7 +42,11 @@ function AllPostDataComponent({ getInstagramUserData, instagramUserData }) {
                   >
                     <img
                       style={{ width: "100%" }}
-                      src={instagramData.profile_picture_url}
+                      src={
+                        instagramData.profile_picture_url
+                          ? instagramData.profile_picture_url
+                          : Placeholder
+                      }
                     />
                   </Card>
                 </Col>

@@ -575,6 +575,7 @@ h1 small {
   position: fixed;
   right: 10px;
   bottom: 10px;
+  z-index: 999;
 }
 .video-icon {
   position: absolute;
@@ -676,4 +677,62 @@ h1 small {
 /* Scroll Bar */
 .select__menu-list::-webkit-scrollbar {
   width: 10px;
+}
+
+.pac-info {
+  border: 1px solid #222;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 10px;
+  padding-top: 1px;
+}
+.brand-input {
+  padding-right: 0px;
+}
+.brand-input input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
+.brand-button {
+  padding-left: 0px;
+  display: flex;
+}
+.brand-button button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  width: 100%;
+}
+/*******login password show********/
+.password-box {
+  position: relative;
+}
+.password-box .password_show {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.settings-bottom {
+  background: white;
+}
+.preferences-value {
+  font-family: "SegoeUIBold";
+  padding-top: 5px;
+  text-transform: capitalize;
+}
+.profile_password.profile_box_main .dash_block_preferences {
+  min-height: 392px !important;
+}
+.guess-btn {
+  cursor: pointer;
+  font-size: 12px;
+}
+.preference-btn-box {
+  text-align: right;
+  margin-top: 10px;
 }

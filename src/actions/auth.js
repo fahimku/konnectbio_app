@@ -172,13 +172,24 @@ export function loginUser(creds) {
             res?.data?.message?.access_token
           ) {
             history.push("/app/linkinbio");
-          } else if (
+          }
+          else if (
             res?.data?.message?.package?.package_name === "Premium" &&
             res?.data?.message?.access_token &&
             fbPage
           ) {
             history.push("/app/linkinbio");
-          } else {
+          }
+
+          else if (
+            res?.data?.message?.package?.package_name === "Premium Plus" &&
+            res?.data?.message?.access_token &&
+            fbPage
+          ) {
+            history.push("/app/linkinbio");
+          }
+
+          else {
             history.push("/package");
           }
         })
@@ -277,7 +288,7 @@ export function registerUser(creds) {
           dispatch({
             type: REGISTER_SUCCESS,
           });
-          dispatch(authSuccess("We have sent an email with a confirmation link to your email address.Please click on Verify Account to complete sign-up."));
+          dispatch(authSuccess("We have sent an email with a confirmation link to your email address. Please click on Verify Account to complete sign-up."));
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));

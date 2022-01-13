@@ -253,9 +253,6 @@ class PostDataComponent extends React.Component {
   handlePageClick = (e) => {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
-    console.log(selectedPage, "selectedPage");
-    console.log(offset, "offset");
-
     this.setState(
       {
         currentPage: selectedPage,
@@ -527,7 +524,7 @@ class PostDataComponent extends React.Component {
               breakLinkClassName="page-link"
               pageCount={this.state.pageCount}
               marginPagesDisplayed={2}
-              pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }              
+              pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
               onPageChange={this.handlePageClick}
               containerClassName={
                 "pagination justify-content-center mt-2 custom-paginate"

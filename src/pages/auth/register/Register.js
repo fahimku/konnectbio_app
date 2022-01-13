@@ -7,24 +7,28 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Alert, Button } from "reactstrap";
 import Widget from "../../../components/Widget";
-import { registerUser, authError } from "../../../actions/auth";
+import { registerUser, authError, authSuccess } from "../../../actions/auth";
 import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
+import { toast } from "react-toastify";
 
 const Select = (props) => (
   <FixRequiredSelect {...props} SelectComponent={BaseSelect} />
 );
 
 class Register extends React.Component {
+
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
+
   constructor(props) {
     super(props);
     this.state = {
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
+      resendEmail: false,
       name: "",
       email: "",
       countries: "",
@@ -68,12 +72,27 @@ class Register extends React.Component {
     this.isPasswordValid = this.isPasswordValid.bind(this);
     this.changeZip = this.changeZip.bind(this);
     this.changeReferred = this.changeReferred.bind(this);
+    this.resendEmail = this.resendEmail.bind(this);
   }
 
   async componentDidMount() {
     await this.getCountries();
     await this.getStates(this.state.countryCode);
   }
+
+
+  resendEmail = async () => {
+    await axios
+      .post(`/signin/resendemail`, {
+        email: this.state.email
+      }).then(() => {
+        this.setState({ resendEmail: true });
+        toast.success('The verification has been sent to your email account.')
+      })
+      .catch(function (error) {
+        this.setState({ resendEmail: false });
+      });
+  };
 
   getCountries = async () => {
     await axios
@@ -203,6 +222,17 @@ class Register extends React.Component {
       this.state.password && this.state.password === this.state.confirmPassword
     );
   }
+
+
+  validateEmail(emailAdress) {
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (emailAdress.match(regexEmail)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   changeZip(event) {
     this.setState({ zip: event.target.value });
   }
@@ -214,7 +244,34 @@ class Register extends React.Component {
   doRegister(e) {
     e.preventDefault();
 
-    if (!this.isPasswordValid()) {
+    if (this.state.name === "") {
+      this.props.dispatch(authError("The name field is required"));
+    }
+
+    else if (this.state.email === "") {
+      this.props.dispatch(authError("The email field is required"));
+    }
+    else if (!this.validateEmail(this.state.email)) {
+      this.props.dispatch(authError("The email address is not valid"));
+    }
+
+    else if (this.state.gender === "") {
+      this.props.dispatch(authError("The gender field is required"));
+    }
+
+    else if (this.state.countryCode === "") {
+      this.props.dispatch(authError("The country field is required"));
+    }
+
+    else if (this.state.countryStateCode === "") {
+      this.props.dispatch(authError("The state field is required"));
+    }
+
+    else if (this.state.city === "") {
+      this.props.dispatch(authError("The city field is required"));
+    }
+
+    else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
       this.props.dispatch(
@@ -236,6 +293,7 @@ class Register extends React.Component {
       );
     }
   }
+
   changeType = (e) => {
     const { value } = e.target;
     this.setState({
@@ -288,13 +346,31 @@ class Register extends React.Component {
                   <span className="env-ift">
                     <i className="fa fa-envelope-open-o" aria-hidden="true"></i>
                   </span>
-                  <span className="we_have_ift">
-                    {this.props.successMessage}
-                  </span>{" "}
+                  {this.state.resendEmail ?
+                    (<>
+                      <p className="we_have_ift">
+                        The verification email has been sent to your email account.
+                      </p></>) :
+                    (
+                      <>
+                        <p className="we_have_ift">
+                          {this.props.successMessage}
+                        </p>
+                        <p className="we_have_ift">
+                          If verification is not done within 10 minutes, registration process will be cancelled and you will have to register again. It may take up to 3 minutes to receive verification mail. In case you don,t receive mail, check your spam folder.
+                        </p>
+                        <p className="we_have_ift">
+                          Didn't receive email?  <br />
+                          <a href='#' onClick={this.resendEmail}>Re-send</a>
+                        </p>
+                      </>
+                    )
+                  }
                   <span
                     className="continue_link_ifti"
                     onClick={() => {
                       this.props.history.push("/login");
+                      this.props.dispatch(authSuccess(""));
                     }}
                   >
                     Continue
@@ -324,7 +400,7 @@ class Register extends React.Component {
                         value={this.state.name}
                         onChange={this.changeName}
                         type="text"
-                        required
+
                         name="name"
                         placeholder="Name"
                       />
@@ -334,15 +410,14 @@ class Register extends React.Component {
                         className="form-control"
                         value={this.state.email}
                         onChange={this.changeEmail}
-                        type="email"
-                        required
+                        type="text"
                         name="email"
                         placeholder="Email"
                       />
                     </div>
                     <div className="form-group">
                       <Select
-                        required
+
                         className="form_select_group"
                         value={
                           this.state.gender && {
@@ -362,7 +437,7 @@ class Register extends React.Component {
                     <div className="form-group">
                       {this.state.country && (
                         <Select
-                          required
+
                           className="form_select_group"
                           defaultValue={{
                             label: this.state.country,
@@ -389,7 +464,7 @@ class Register extends React.Component {
                       {this.state.stateLoading && <Loader />}
                       {this.state.country && !this.state.stateLoading && (
                         <Select
-                          required
+
                           className="form_select_group"
                           onChange={this.changeState}
                           filterOption={createFilter({
@@ -411,7 +486,7 @@ class Register extends React.Component {
                       {this.state.cityLoading && <Loader />}
                       {this.state.countryState && !this.state.cityLoading && (
                         <Select
-                          required
+
                           className="form_select_group"
                           onChange={this.changeCity}
                           filterOption={createFilter({
@@ -435,7 +510,7 @@ class Register extends React.Component {
                         value={this.state.password}
                         onChange={this.changePassword}
                         type="password"
-                        required
+
                         name="password"
                         placeholder="Password"
                       />
@@ -447,7 +522,7 @@ class Register extends React.Component {
                         onChange={this.changeConfirmPassword}
                         onBlur={this.checkPassword}
                         type="password"
-                        required
+
                         name="confirmPassword"
                         placeholder="Confirm"
                       />
@@ -459,7 +534,7 @@ class Register extends React.Component {
                         onChange={this.changeZip}
                         type="number"
                         name="zip"
-                        placeholder="Zip Code"
+                        placeholder="Zip code - Optional"
                       />
                     </div>
                     <div className="form-group">
@@ -469,7 +544,7 @@ class Register extends React.Component {
                         onChange={this.changeReferred}
                         type="text"
                         name="referred_by"
-                        placeholder="Referred By"
+                        placeholder="Referred by - Optional"
                       />
                     </div>
                     <Button

@@ -59,6 +59,7 @@ class AccountSetup extends React.Component {
       cancelPlan: false,
       disabledCancelPlan: false,
       showPaymentModel: false,
+      package_id: "",
     };
   }
 
@@ -105,7 +106,6 @@ class AccountSetup extends React.Component {
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
 
-
           //Influencer Account
 
           if (index === 1) {
@@ -143,6 +143,7 @@ class AccountSetup extends React.Component {
 
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
+    this.setState({ package_id: event.value });
 
     if (this.state.packageIndex < event.index) {
       this.setState({ upgrade: true });
@@ -171,6 +172,7 @@ class AccountSetup extends React.Component {
       await axios
         .post("/payment/validatepromocode", {
           promo_code: this.state.promo_code,
+          package_id: this.state.package_id,
         })
         .then((response) => {
           this.setState({ promoLoading: false });
@@ -248,7 +250,12 @@ class AccountSetup extends React.Component {
   renderFbConnection = (userInfo1) => {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
-    if (package1 == "Premium" || this.state.myPackage == "Premium") {
+    if (
+      package1 == "Premium" ||
+      this.state.myPackage == "Premium" ||
+      package1 == "Premium Plus" ||
+      this.state.myPackage == "Premium Plus"
+    ) {
       return (
         <ConnectToFb
           userId={userInfo1.user_id}
@@ -261,10 +268,21 @@ class AccountSetup extends React.Component {
   };
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+    const style = {
+      control: (base) => ({
+        ...base,
+        height: "44px",
+        boxShadow: "none",
+        "&:hover": {
+          // border: "1px solid black",
+        },
+      }),
+    };
     return (
       <div
-        className={`profile-page account-setup ${this.props.className ? "connect-page" : ""
-          }`}
+        className={`profile-page account-setup ${
+          this.props.className ? "connect-page" : ""
+        }`}
       >
         <div
           className={
@@ -296,7 +314,7 @@ class AccountSetup extends React.Component {
                               </h6>
                               {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
-                                "Premium" && (
+                                  "Premium" && (
                                   <button
                                     onClick={() => {
                                       this.setState({ cancelPlan: true });
@@ -337,8 +355,8 @@ class AccountSetup extends React.Component {
                             </span>
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                                <span>Change Plan to have more categories</span>
-                              )}
+                              <span>Change Plan to have more categories</span>
+                            )}
                           </div>
                         </div>
 
@@ -353,8 +371,8 @@ class AccountSetup extends React.Component {
 
                             {this.state.singlePackage.package_name !==
                               "Premium" && (
-                                <span>Change Plan to have more links</span>
-                              )}
+                              <span>Change Plan to have more links</span>
+                            )}
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
@@ -466,12 +484,14 @@ class AccountSetup extends React.Component {
                               </div>
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
-                                  <h4>Have Promo Code?</h4>
-                                  {this.state.promo_error ? (
-                                    <span className="text-danger mt-2">
-                                      {this.state.promoCodeError}
-                                    </span>
-                                  ) : null}
+                                  <h4 className="mb-0">Have Promo Code?</h4>
+                                  <span class="text-danger promo-err-box col-md-12 pl-0">
+                                    {this.state.promo_error
+                                      ? // <span className="text-danger mt-2">
+                                        this.state.promoCodeError
+                                      : // </span>
+                                        null}
+                                  </span>
                                   <div className="acct-promo-sec-inr">
                                     <input
                                       type="text"
@@ -493,8 +513,8 @@ class AccountSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
-                                      !this.state.checkbox.facebook ||
-                                      !this.state.checkbox.checkbox3 ? (
+                                    !this.state.checkbox.facebook ||
+                                    !this.state.checkbox.checkbox3 ? (
                                       <Button
                                         onClick={() => {
                                           this.setState({
@@ -521,13 +541,14 @@ class AccountSetup extends React.Component {
                                       onClick={() => {
                                         this.setState({
                                           showPaymentButton: false,
+                                          package_id: "",
                                         });
                                       }}
                                       type="button"
 
-                                    // disabled={
-                                    //   !this.state.loading ? false : true
-                                    // }
+                                      // disabled={
+                                      //   !this.state.loading ? false : true
+                                      // }
                                     >
                                       Cancel
                                     </Button>
@@ -742,8 +763,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                              this.state.checkbox.facebook &&
-                                              this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                               <Button
                                                 type="submit"
                                                 onClick={(e) => {
@@ -975,8 +996,8 @@ class AccountSetup extends React.Component {
                                           </div>
                                           <div>
                                             {this.state.checkbox.instagram &&
-                                              this.state.checkbox.facebook &&
-                                              this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                               <PaymentButton
                                                 plan={this.state.plan}
                                                 userId={userInfo1?.user_id}

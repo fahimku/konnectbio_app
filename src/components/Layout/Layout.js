@@ -43,7 +43,8 @@ import SearchProfile from "../../pages/searchProfile/index";
 import AllPostDataComponent from "../../pages/myposts/MyPosts";
 import CustomCards from "../../pages/customCards/customCards";
 import customCards from "../../pages/customCards/customCards";
-import SchedulePost from "../../pages/schedulePost/index"
+import SchedulePost from "../../pages/schedulePost/index";
+import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -81,13 +82,15 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-            ? "light"
-            : localStorage.getItem("dashboardTheme")
+          `dashboard-${
+            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+              ? "light"
+              : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${localStorage.getItem("navbarColor")
-            ? localStorage.getItem("navbarColor").replace("#", "")
-            : "FFFFFF"
+          `header-${
+            localStorage.getItem("navbarColor")
+              ? localStorage.getItem("navbarColor").replace("#", "")
+              : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -190,23 +193,20 @@ class Layout extends React.Component {
                         path="/app/monitor/hash/tags"
                         exact
                         component={MonitorHashTags}
-                        permissions
-                        ={["monitor_hashtag_access"]}
+                        permissions={["monitor_hashtag_access"]}
                       />
 
                       <PrivateRoute
                         path="/app/monitor/mentions"
                         exact
                         component={MonitorMentions}
-                        permissions
-                        ={["monitor_mentions_access"]}
+                        permissions={["monitor_mentions_access"]}
                       />
                       <PrivateRoute
                         path="/app/search/profile"
                         exact
                         component={SearchProfile}
-                        permissions
-                        ={["search_profile_access"]}
+                        permissions={["search_profile_access"]}
                       />
                       <PrivateRoute
                         path="/app/my/posts"
@@ -225,7 +225,11 @@ class Layout extends React.Component {
                         component={customCards}
                       />
                       <Route path="/app/chat" exact component={ChatPage} />
-
+                      <Route
+                        path="/app/account/affiliate"
+                        exact
+                        component={AffiliateSetup}
+                      />
                     </Switch>
                   </Router>
                 </CSSTransition>

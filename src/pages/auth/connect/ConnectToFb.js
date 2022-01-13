@@ -170,10 +170,11 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
                             instaId: insta,
                           })
                           .then(() => {
-                            var userInfo = JSON.parse(
-                              localStorage.getItem("userInfo")
-                            );
+                            var obj = localStorage.getItem("userInfo");
+                            var userInfo = JSON.parse(obj);
+
                             userInfo.page_token = selectedPage;
+                            userInfo.instagram_id = insta;
                             localStorage.setItem(
                               "userInfo",
                               JSON.stringify(userInfo)
@@ -210,15 +211,24 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
                     </div>
                   )
                 ) : (
-                  <Button
-                    disabled={(username1 ? username1 : username) ? false : true}
-                    onClick={fbLogin}
-                    variant="primary"
-                    className="btn-block cat-right-btn"
-                  >
-                    <i className="fa fa-facebook" />
-                    &nbsp;&nbsp; Connect facebook
-                  </Button>
+                  <>
+                    {(username1 ? username1 : username) ? (
+                      <div className="connected-text text-left mb-2 text-danger">
+                        Not Connected
+                      </div>
+                    ) : null}
+                    <Button
+                      disabled={
+                        (username1 ? username1 : username) ? false : true
+                      }
+                      onClick={fbLogin}
+                      variant="primary"
+                      className="btn-block cat-right-btn"
+                    >
+                      <i className="fa fa-facebook" />
+                      &nbsp;&nbsp; Connect facebook
+                    </Button>
+                  </>
                 )}
               </div>
               <Modal

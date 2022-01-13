@@ -7,6 +7,7 @@ import ChangePassword from "./component/ChangePassword";
 import ScreenButton from "./component/screenButtons";
 import Placeholder from "../../images/placeholder.svg";
 import Swal from "sweetalert2";
+import ChangePreferences from "./component/ChangePreferences";
 //import avatar from "../../images/avatar15.jpg";
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -351,7 +352,7 @@ class MyProfile extends React.Component {
                         this.setState({ setDefaultImage: false });
                       }}
                       defaultImage="https://cdn.konnect.bio/menu/all_posts.jpg"
-                      name="All Posts"
+                      name="All"
                       key={1}
                       id={1}
                     />
@@ -404,7 +405,14 @@ class MyProfile extends React.Component {
                 </div>
               </div>
             </div>
-            <ChangePassword userID={userInfo.user_id} />
+            <div className="row">
+              <div className="profile_password profile_box_main col-md-6">
+                <ChangePassword userID={userInfo.user_id} />
+              </div>
+              <div className="profile_password profile_box_main col-md-6">
+                <ChangePreferences userID={userInfo.user_id} />
+              </div>
+            </div>
           </div>
         </div>
       </div>

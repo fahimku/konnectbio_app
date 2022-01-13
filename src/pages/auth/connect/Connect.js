@@ -20,6 +20,7 @@ class Connect extends React.Component {
       resetAccount: false,
       fbPageLocal: "",
       pack: "",
+      connectionMessage: ""
     };
   }
 
@@ -40,14 +41,8 @@ class Connect extends React.Component {
     const instagramCodeUrl = window.location.href;
     const fbPage = userInfo?.page_token;
     const package1 = userInfo?.package?.package_name;
-    const checkCon =
-      this.state.pack == "Premium" || package1 == "Premium"
-        ? access_token != "" && fbPage
-          ? true
-          : false
-        : access_token != ""
-        ? true
-        : false;
+
+    const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true : false;
     if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
@@ -103,10 +98,8 @@ class Connect extends React.Component {
   }
 
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
-
-    if (this.state.pack == "Premium" || package1 == "Premium") {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
+    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium") {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       return fbPage || this.state.fbPageLocal ? false : true;
     } else {
@@ -114,6 +107,24 @@ class Connect extends React.Component {
       return insta;
     }
   };
+
+  connectionMessage = () => {
+
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
+
+    if (package1 === 'Basic' && this.completeProcess()) {
+      return 'Please connect your Instagram account';
+    }
+
+    else if (package1 === 'Premium' && this.completeProcess()) {
+      return 'Please connect your Instagram and Facebook account';
+    }
+
+    else if (package1 === 'Premium Plus' && this.completeProcess()) {
+      return 'Please connect your Instagram and Facebook account';
+    }
+
+  }
 
   render() {
     return (
@@ -150,30 +161,31 @@ class Connect extends React.Component {
           setPackage={(pack) => this.setState({ pack: pack })}
         />
         <div className="connect-page">
-            <div className="p-0">
-              <Row>
-                <Col md={12} className="connect-button-cs">
-                  <Button
-                    disabled={this.completeProcess()}
-                    onClick={() => {
-                      this.props.history.push(
-                        `/app/linkinbio/${this.state.instagramCode}`
-                      );
-                    }}
-                    variant="primary"
-                    type="submit"
-                    className="category-btn btn-block"
-                  >
-                    Next
-                  </Button>
-                </Col>
-                {this.state.instagramCode === "" && (
-                  <FormLabel className="label-insta col-md-12">
-                    Please Connect your Instagram Account
-                  </FormLabel>
-                )}
-              </Row>
-            </div>
+          <div className="p-0">
+            <Row>
+              <Col md={12} className="connect-button-cs">
+                <Button
+                  disabled={this.completeProcess()}
+                  onClick={() => {
+                    this.props.history.push(
+                      `/app/linkinbio/${this.state.instagramCode}`
+                    );
+                  }}
+                  variant="primary"
+                  type="submit"
+                  className="category-btn btn-block"
+                >
+                  Next
+                </Button>
+              </Col>
+
+              <FormLabel className="label-insta col-md-12">
+                {this.connectionMessage()}
+              </FormLabel>
+
+
+            </Row>
+          </div>
         </div>
       </>
     );

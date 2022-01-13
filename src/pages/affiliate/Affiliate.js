@@ -7,6 +7,12 @@ import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateAccounting from "./AffiliateAccounting/AffiliateAccounting";
+import axios from "axios";
+import { createBrowserHistory } from "history";
+import Loader from "../../components/Loader/Loader";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 
 class Affiliate extends React.Component {
   constructor(props) {
@@ -17,8 +23,39 @@ class Affiliate extends React.Component {
     this.state = {
       activeTab: "dashboard",
       username: username,
+      package_name: userInfo?.package?.package_name,
+      myBrand: "",
+      brandLoading: false,
     };
   }
+
+  componentDidMount() {
+    // this.setState({
+    //   activeSecondTab: "tab24",
+    // });
+    if (this.state.package_name !== "Premium") {
+      this.getMyBrands();
+    }
+  }
+  getMyBrands = async () => {
+    this.setState({
+      brandLoading: true,
+    });
+    await axios
+      .get(`/affiliate/getUserBrandName`)
+      .then((response) => {
+        this.setState({
+          myBrand: response.data.data.brand_name,
+          brandLoading: false,
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+        this.setState({
+          brandLoading: true,
+        });
+      });
+  };
 
   toggleTabs(tab) {
     if (this.state.activeTab !== tab) {
@@ -29,7 +66,43 @@ class Affiliate extends React.Component {
   }
 
   render() {
-    return (
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    return userInfo?.package?.package_name !== "Premium Plus" ? (
+      <div className="container-fluid">
+        <div class="coming_iner">
+          <h2>Upgrade Account</h2>
+          <p className="text-muted">
+            This Option is only available for premium plus plan.
+          </p>
+          <button
+            class="btn btn-primary"
+            onClick={() => history.push("/app/account/setup")}
+          >
+            Upgrade Subscription
+          </button>
+        </div>
+      </div>
+    ) : this.state.brandLoading ? (
+      <div className="container-fluid">
+        <div class="coming_iner">
+          <Loader size={40} />
+        </div>
+      </div>
+    ) : this.state.myBrand === "" ? (
+      <div className="container-fluid">
+        <div class="coming_iner">
+          <h2>Add Brand</h2>
+          <p className="text-muted">Please add brand to create campaign.</p>
+          <button
+            class="btn btn-primary"
+            onClick={() => history.push("/app/account/affiliate")}
+          >
+            Add Brand
+          </button>
+        </div>
+      </div>
+    ) : (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
           <div className="affiliate_p_col">
@@ -97,7 +170,7 @@ class Affiliate extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "accounting",
@@ -108,7 +181,7 @@ class Affiliate extends React.Component {
                     >
                       <span>Accounting</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                 </Nav>
 
                 <TabContent

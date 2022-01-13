@@ -45,6 +45,7 @@ class Header extends React.Component {
     this.toggleNotifications = this.toggleNotifications.bind(this);
     this.toggleSidebar = this.toggleSidebar.bind(this);
     this.doLogout = this.doLogout.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.state = {
       navs: [false, false, false, false],
@@ -89,15 +90,30 @@ class Header extends React.Component {
       feedback_text: "",
       feedbackerror: false,
       feedbackerror1: false,
+      showScroll: false,
     };
   }
 
   componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
     this.toggleSidebar();
     if (window.location.href.includes("main")) {
       this.setState({ run: false });
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  handleScroll(e) {
+    if (!this.state.showScroll && window.pageYOffset > 400) {
+      this.setState({ showScroll: true });
+    } else if (this.state.showScroll && window.pageYOffset <= 400) {
+      this.setState({ showScroll: false });
+    }
+  }
+  scrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   handleJoyrideCallback = (CallBackProps) => {
     const { status } = CallBackProps;
@@ -670,6 +686,24 @@ class Header extends React.Component {
             </form>
           </Modal.Body>
         </Modal>
+        {this.state.showScroll ? (
+          <i
+            class="fa fa fa-angle-up scrollTop"
+            onClick={this.scrollTop}
+            style={{
+              height: 40,
+              display: "flex",
+            }}
+          ></i>
+        ) : null}
+        {/* <i
+          class="fa fa fa-angle-up scrollTop"
+          // onClick={scrollTop}
+          style={{
+            height: 40,
+            display: this.state.showScroll ? "flex" : "none",
+          }}
+        ></i> */}
       </>
     );
   }
