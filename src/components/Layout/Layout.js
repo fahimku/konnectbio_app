@@ -183,10 +183,11 @@ class Layout extends React.Component {
                         dispatch={this.props.dispatch}
                         permissions={["marketplace_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/schedule/posts"
                         exact
                         component={SchedulePost}
+                        permissions={["schedule_post_access"]}
                       />
 
                       <PrivateRoute
