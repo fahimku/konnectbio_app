@@ -1245,7 +1245,7 @@ a.pkg_read:hover {
 }
 .aff-img-edit-link.image-edit-links {
   width: 100%;
-  max-width: 100% !important;
+  /* max-width: 100% !important; */
   flex: auto !important;
 }
 .no-data-found-mobile {

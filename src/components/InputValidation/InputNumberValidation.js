@@ -85,6 +85,8 @@ class InputNumberValidation extends React.Component {
             onKeyDown={(evt) =>
               ["e", "E", "+", "-"].includes(evt.key) && evt.preventDefault()
             }
+            min={this.props.min}
+            max={this.props.max}
           />
         </div>
         {required}
