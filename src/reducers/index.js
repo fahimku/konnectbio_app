@@ -30,7 +30,8 @@ import profiles from "./searchProfile/addProfile";
 import instagramAnalytic from "./analytics/instagramAnalytic";
 import instagramUserData from "./instagramUserData";
 import instagramPostData from "./myposts/instagramPostData";
-
+import gallery from "./instagram/gallery";
+import schedulePosts from "./instagram/schedulePosts"
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -64,4 +65,6 @@ export default (history) =>
     instagramAnalytic,
     instagramUserData,
     instagramPostData,
+    gallery,
+    schedulePosts
   });

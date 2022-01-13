@@ -114,6 +114,7 @@
     "react-sortable-tree": "^2.8.0",
     "react-sortablejs": "1.5.1",
     "react-table": "6.11.4",
+    "react-tackle-box": "^2.1.0",
     "react-tagsinput": "^3.19.0",
     "react-toastify": "^5.5.0",
     "react-transition-group": "^2.9.0",
