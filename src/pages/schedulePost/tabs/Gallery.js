@@ -28,7 +28,7 @@ function Gallery({
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [currentData, setCurrentData] = useState({});
-  const [showBio, setShowBio] = useState(true);
+  const [showBio, setShowBio] = useState(false);
   const [showPost, setShowPost] = useState(true);
   const [submit, setSubmit] = useState(false);
   const [fields, setFields] = useState({
@@ -349,7 +349,7 @@ function Gallery({
         size="xl"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Post</Modal.Title>
+          <Modal.Title>Schedule Post</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
           <Row>
@@ -425,7 +425,7 @@ function Gallery({
                         onClick={() => onSubmit()}
                         className="custom_btns_ift btn btn-primary mt-3"
                       >
-                        Publish
+                        Schedule
                       </button>
                     )}
                   </Col>
