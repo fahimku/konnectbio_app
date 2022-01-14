@@ -20,6 +20,7 @@ export const getSchedulePosts = () => async (dispatch) => {
 //     return res
 // };
 
+
 export const deleteSchedulePost = (media_id) => async (dispatch) => {
     const res= axios.post(`${config.hostApi}/v1/graph/ig/publishmedia/delete`,{media_id})
     return res
@@ -27,5 +28,10 @@ export const deleteSchedulePost = (media_id) => async (dispatch) => {
 
 export const updateSchedulePost = (data) => async (dispatch) => {
     const res= axios.post(`${config.hostApi}/v1/graph/ig/publishmedia/update`,data)
+    return res
+};
+
+export const directPublish = (data) => async (dispatch) => {
+    const res= axios.post(`${config.hostApi}/v1/graph/ig/publishmedia/publish`,data)
     return res
 };
