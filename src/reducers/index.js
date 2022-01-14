@@ -14,6 +14,7 @@ import addCampaignToShop from "./marketPlace/addCampaignToShop";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
+import bioShopSummary from "./campaign/bioshopSummary"
 import dashboard from "./dashboard";
 import campaignAnalytics from "./campaign/campaignAnalytics";
 import brands from "./brands/brands";
@@ -55,6 +56,7 @@ export default (history) =>
     marketPlace,
     instagram,
     campaignSummary,
+    bioShopSummary,
     campaignAnalytics,
     postSummary,
     hashtags,
