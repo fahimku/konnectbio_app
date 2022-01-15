@@ -25,6 +25,9 @@ class Register extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      step1: true,
+      step2: false,
+      step3: false,
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
@@ -73,6 +76,7 @@ class Register extends React.Component {
     this.changeZip = this.changeZip.bind(this);
     this.changeReferred = this.changeReferred.bind(this);
     this.resendEmail = this.resendEmail.bind(this);
+    this.goPrevious = this.goPrevious.bind(this);
   }
 
   async componentDidMount() {
@@ -102,11 +106,12 @@ class Register extends React.Component {
         const countries = response.data.message;
         countries.map(({ name, code1, selected }) => {
           if (selected) {
-            // console.log({name, code1, selected});
             this.setState({ country: name, countryCode: code1 });
-          } else {
-            this.setState({ country: "Pakistan", countryCode: "PK" });
           }
+
+          // else {
+          //   this.setState({ country: "United States of America" , countryCode: "US" });
+          // }
           return selectCountries.push({ value: code1, label: name });
         });
         this.setState({ countries: selectCountries });
@@ -223,7 +228,6 @@ class Register extends React.Component {
     );
   }
 
-
   validateEmail(emailAdress) {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (emailAdress.match(regexEmail)) {
@@ -241,34 +245,65 @@ class Register extends React.Component {
     this.setState({ referred_by: event.target.value });
   }
 
+  goPrevious() {
+    if (this.state.step2) {
+      this.setState({ step1: true });
+      this.setState({ step2: false });
+      this.setState({ step3: false });
+    }
+
+    else if (this.state.step3) {
+      this.setState({ step1: false });
+      this.setState({ step2: true });
+      this.setState({ step3: false });
+    }
+  }
+
   doRegister(e) {
     e.preventDefault();
 
-    if (this.state.name === "") {
-      this.props.dispatch(authError("The name field is required"));
+    if (this.state.step1) {
+      if (this.state.name === "") {
+        this.props.dispatch(authError("The name field is required"));
+      }
+
+      else if (this.state.email === "") {
+        this.props.dispatch(authError("The email field is required"));
+      }
+
+      else if (!this.validateEmail(this.state.email)) {
+        this.props.dispatch(authError("The email address is not valid"));
+      }
+
+      else if (this.state.gender === "") {
+        this.props.dispatch(authError("The gender field is required"));
+      }
+      else {
+        this.props.dispatch(authError(""));
+        this.setState({ step1: false });
+        this.setState({ step2: true });
+        this.setState({ step3: false });
+      }
     }
 
-    else if (this.state.email === "") {
-      this.props.dispatch(authError("The email field is required"));
-    }
-    else if (!this.validateEmail(this.state.email)) {
-      this.props.dispatch(authError("The email address is not valid"));
-    }
+    else if (this.state.step2) {
+      if (this.state.countryCode === "") {
+        this.props.dispatch(authError("The country field is required"));
+      }
 
-    else if (this.state.gender === "") {
-      this.props.dispatch(authError("The gender field is required"));
-    }
+      else if (this.state.countryStateCode === "") {
+        this.props.dispatch(authError("The state field is required"));
+      }
 
-    else if (this.state.countryCode === "") {
-      this.props.dispatch(authError("The country field is required"));
-    }
-
-    else if (this.state.countryStateCode === "") {
-      this.props.dispatch(authError("The state field is required"));
-    }
-
-    else if (this.state.city === "") {
-      this.props.dispatch(authError("The city field is required"));
+      else if (this.state.city === "") {
+        this.props.dispatch(authError("The city field is required"));
+      }
+      else {
+        this.props.dispatch(authError(""));
+        this.setState({ step1: false });
+        this.setState({ step2: false });
+        this.setState({ step3: true });
+      }
     }
 
     else if (!this.isPasswordValid()) {
@@ -394,48 +429,51 @@ class Register extends React.Component {
                       </Alert>
                     )}
 
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.name}
-                        onChange={this.changeName}
-                        type="text"
+                    {this.state.step1 && <div className="registration-step-1">
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.name}
+                          onChange={this.changeName}
+                          type="text"
 
-                        name="name"
-                        placeholder="Name"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.email}
-                        onChange={this.changeEmail}
-                        type="text"
-                        name="email"
-                        placeholder="Email"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <Select
+                          name="name"
+                          placeholder="Name"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.email}
+                          onChange={this.changeEmail}
+                          type="text"
+                          name="email"
+                          placeholder="Email"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <Select
 
-                        className="form_select_group"
-                        value={
-                          this.state.gender && {
-                            label:
-                              this.state.gender.charAt(0).toUpperCase() +
-                              this.state.gender.slice(1),
-                            value: this.state.gender,
+                          className="form_select_group"
+                          value={
+                            this.state.gender && {
+                              label:
+                                this.state.gender.charAt(0).toUpperCase() +
+                                this.state.gender.slice(1),
+                              value: this.state.gender,
+                            }
                           }
-                        }
-                        onChange={this.changeGender}
-                        placeholder="Select Gender"
-                        options={this.state.genderList}
-                        styles={styles}
-                      />
+                          onChange={this.changeGender}
+                          placeholder="Select Gender"
+                          options={this.state.genderList}
+                          styles={styles}
+                        />
+                      </div>
                     </div>
+                    }
+                    {this.state.step2 && <div className="registration-step-2">
+                      <div className="form-group">
 
-                    <div className="form-group">
-                      {this.state.country && (
                         <Select
 
                           className="form_select_group"
@@ -446,7 +484,7 @@ class Register extends React.Component {
                           value={
                             this.state.country && {
                               label: this.state.country,
-                              value: this.state.country,
+                              value: this.state.countryCode,
                             }
                           }
                           onChange={this.changeCountry}
@@ -457,104 +495,115 @@ class Register extends React.Component {
                           options={this.state.countries}
                           styles={styles}
                         />
-                      )}
-                    </div>
 
-                    <div className="form-group">
-                      {this.state.stateLoading && <Loader />}
-                      {this.state.country && !this.state.stateLoading && (
-                        <Select
+                      </div>
+                      <div className="form-group">
+                        {this.state.stateLoading && <Loader />}
+                        {this.state.country && !this.state.stateLoading && (
+                          <Select
 
-                          className="form_select_group"
-                          onChange={this.changeState}
-                          filterOption={createFilter({
-                            ignoreAccents: false,
-                          })}
-                          placeholder="Select State"
-                          options={this.state.countryStates}
-                          value={
-                            this.state.countryState && {
-                              label: this.state.countryState,
-                              value: this.state.countryState,
+                            className="form_select_group"
+                            onChange={this.changeState}
+                            filterOption={createFilter({
+                              ignoreAccents: false,
+                            })}
+                            placeholder="Select State"
+                            options={this.state.countryStates}
+                            value={
+                              this.state.countryState && {
+                                label: this.state.countryState,
+                                value: this.state.countryState,
+                              }
                             }
-                          }
-                          styles={styles}
-                        />
-                      )}
-                    </div>
-                    <div className="form-group">
-                      {this.state.cityLoading && <Loader />}
-                      {this.state.countryState && !this.state.cityLoading && (
-                        <Select
+                            styles={styles}
+                          />
+                        )}
+                      </div>
+                      <div className="form-group">
+                        {this.state.cityLoading && <Loader />}
+                        {this.state.countryState && !this.state.cityLoading && (
+                          <Select
 
-                          className="form_select_group"
-                          onChange={this.changeCity}
-                          filterOption={createFilter({
-                            ignoreAccents: false,
-                          })}
-                          placeholder="Select City"
-                          options={this.state.cities}
-                          value={
-                            this.state.city && {
-                              label: this.state.city,
-                              value: this.state.city,
+                            className="form_select_group"
+                            onChange={this.changeCity}
+                            filterOption={createFilter({
+                              ignoreAccents: false,
+                            })}
+                            placeholder="Select City"
+                            options={this.state.cities}
+                            value={
+                              this.state.city && {
+                                label: this.state.city,
+                                value: this.state.city,
+                              }
                             }
-                          }
-                          styles={styles}
+                            styles={styles}
+                          />
+                        )}
+                      </div>
+                    </div>}
+                    {this.state.step3 && <div className="registration-step-3">
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.password}
+                          onChange={this.changePassword}
+                          type="password"
+
+                          name="password"
+                          placeholder="Password"
                         />
-                      )}
-                    </div>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.password}
-                        onChange={this.changePassword}
-                        type="password"
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.confirmPassword}
+                          onChange={this.changeConfirmPassword}
+                          onBlur={this.checkPassword}
+                          type="password"
 
-                        name="password"
-                        placeholder="Password"
-                      />
+                          name="confirmPassword"
+                          placeholder="Confirm"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.zip}
+                          onChange={this.changeZip}
+                          type="number"
+                          name="zip"
+                          placeholder="Zip code - Optional"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input
+                          className="form-control"
+                          value={this.state.referred_by}
+                          onChange={this.changeReferred}
+                          type="text"
+                          name="referred_by"
+                          placeholder="Referred by - Optional"
+                        />
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.confirmPassword}
-                        onChange={this.changeConfirmPassword}
-                        onBlur={this.checkPassword}
-                        type="password"
+                    }
+                    <div className="row">
+                      <div className="col-4">
+                        <Button disabled={this.state.step1}
+                          onClick={this.goPrevious}
+                          type="button" color="inverse" className="register_button" size="lg">
+                          {this.props.isFetching ? "Loading..." : "Previous"}
+                        </Button>
+                      </div>
+                      <div className="col-4"></div>
+                      <div className="col-4">
+                        <Button type="submit" color="inverse" className="register_button" size="lg">
+                          {this.props.isFetching ? "Loading..." : this.state.step3 ? "Finish" : " Next"}
+                        </Button>
+                      </div>
+                    </div>
 
-                        name="confirmPassword"
-                        placeholder="Confirm"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.zip}
-                        onChange={this.changeZip}
-                        type="number"
-                        name="zip"
-                        placeholder="Zip code - Optional"
-                      />
-                    </div>
-                    <div className="form-group">
-                      <input
-                        className="form-control"
-                        value={this.state.referred_by}
-                        onChange={this.changeReferred}
-                        type="text"
-                        name="referred_by"
-                        placeholder="Referred by - Optional"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      color="inverse"
-                      className="register_button"
-                      size="lg"
-                    >
-                      {this.props.isFetching ? "Loading..." : "Create Account"}
-                    </Button>
                     <p className="already">
                       Already have an account?&nbsp;
                       <span
@@ -584,7 +633,7 @@ class Register extends React.Component {
             )}
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
