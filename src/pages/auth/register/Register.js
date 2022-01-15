@@ -17,7 +17,6 @@ const Select = (props) => (
 );
 
 class Register extends React.Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
   };
@@ -80,14 +79,14 @@ class Register extends React.Component {
     await this.getStates(this.state.countryCode);
   }
 
-
   resendEmail = async () => {
     await axios
       .post(`/signin/resendemail`, {
-        email: this.state.email
-      }).then(() => {
+        email: this.state.email,
+      })
+      .then(() => {
         this.setState({ resendEmail: true });
-        toast.success('The verification has been sent to your email account.')
+        toast.success("The verification has been sent to your email account.");
       })
       .catch(function (error) {
         this.setState({ resendEmail: false });
@@ -223,7 +222,6 @@ class Register extends React.Component {
     );
   }
 
-
   validateEmail(emailAdress) {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (emailAdress.match(regexEmail)) {
@@ -246,32 +244,19 @@ class Register extends React.Component {
 
     if (this.state.name === "") {
       this.props.dispatch(authError("The name field is required"));
-    }
-
-    else if (this.state.email === "") {
+    } else if (this.state.email === "") {
       this.props.dispatch(authError("The email field is required"));
-    }
-    else if (!this.validateEmail(this.state.email)) {
+    } else if (!this.validateEmail(this.state.email)) {
       this.props.dispatch(authError("The email address is not valid"));
-    }
-
-    else if (this.state.gender === "") {
+    } else if (this.state.gender === "") {
       this.props.dispatch(authError("The gender field is required"));
-    }
-
-    else if (this.state.countryCode === "") {
+    } else if (this.state.countryCode === "") {
       this.props.dispatch(authError("The country field is required"));
-    }
-
-    else if (this.state.countryStateCode === "") {
+    } else if (this.state.countryStateCode === "") {
       this.props.dispatch(authError("The state field is required"));
-    }
-
-    else if (this.state.city === "") {
+    } else if (this.state.city === "") {
       this.props.dispatch(authError("The city field is required"));
-    }
-
-    else if (!this.isPasswordValid()) {
+    } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
       this.props.dispatch(
@@ -346,26 +331,31 @@ class Register extends React.Component {
                   <span className="env-ift">
                     <i className="fa fa-envelope-open-o" aria-hidden="true"></i>
                   </span>
-                  {this.state.resendEmail ?
-                    (<>
+                  {this.state.resendEmail ? (
+                    <>
                       <p className="we_have_ift">
-                        The verification email has been sent to your email account.
-                      </p></>) :
-                    (
-                      <>
-                        <p className="we_have_ift">
-                          {this.props.successMessage}
-                        </p>
-                        <p className="we_have_ift">
-                          If verification is not done within 10 minutes, registration process will be cancelled and you will have to register again. It may take up to 3 minutes to receive verification mail. In case you don,t receive mail, check your spam folder.
-                        </p>
-                        <p className="we_have_ift">
-                          Didn't receive email?  <br />
-                          <a href='#' onClick={this.resendEmail}>Re-send</a>
-                        </p>
-                      </>
-                    )
-                  }
+                        The verification email has been sent to your email
+                        account.
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="we_have_ift">{this.props.successMessage}</p>
+                      <p className="we_have_ift">
+                        If verification is not done within 10 minutes,
+                        registration process will be cancelled and you will have
+                        to register again. It may take up to 3 minutes to
+                        receive verification mail. In case you don,t receive
+                        mail, check your spam folder.
+                      </p>
+                      <p className="we_have_ift">
+                        Didn't receive email? <br />
+                        <a href="#" onClick={this.resendEmail}>
+                          Re-send
+                        </a>
+                      </p>
+                    </>
+                  )}
                   <span
                     className="continue_link_ifti"
                     onClick={() => {
@@ -400,7 +390,6 @@ class Register extends React.Component {
                         value={this.state.name}
                         onChange={this.changeName}
                         type="text"
-
                         name="name"
                         placeholder="Name"
                       />
@@ -417,7 +406,6 @@ class Register extends React.Component {
                     </div>
                     <div className="form-group">
                       <Select
-
                         className="form_select_group"
                         value={
                           this.state.gender && {
@@ -437,7 +425,6 @@ class Register extends React.Component {
                     <div className="form-group">
                       {this.state.country && (
                         <Select
-
                           className="form_select_group"
                           defaultValue={{
                             label: this.state.country,
@@ -464,7 +451,6 @@ class Register extends React.Component {
                       {this.state.stateLoading && <Loader />}
                       {this.state.country && !this.state.stateLoading && (
                         <Select
-
                           className="form_select_group"
                           onChange={this.changeState}
                           filterOption={createFilter({
@@ -486,7 +472,6 @@ class Register extends React.Component {
                       {this.state.cityLoading && <Loader />}
                       {this.state.countryState && !this.state.cityLoading && (
                         <Select
-
                           className="form_select_group"
                           onChange={this.changeCity}
                           filterOption={createFilter({
@@ -510,7 +495,6 @@ class Register extends React.Component {
                         value={this.state.password}
                         onChange={this.changePassword}
                         type="password"
-
                         name="password"
                         placeholder="Password"
                       />
@@ -522,7 +506,6 @@ class Register extends React.Component {
                         onChange={this.changeConfirmPassword}
                         onBlur={this.checkPassword}
                         type="password"
-
                         name="confirmPassword"
                         placeholder="Confirm"
                       />

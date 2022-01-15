@@ -741,3 +741,16 @@ h1 small {
     max-width: 100% !important;
   }
 }
+.pkg_price_ifti ins {
+  text-decoration: none;
+  // color: #fbb;
+  font-size: 14px;
+  margin-left: 12px;
+  font-weight: 500;
+}
+.pkg_price_ifti del {
+  color: red;
+}
+.plan-premium-block {
+  min-height: auto !important;
+}

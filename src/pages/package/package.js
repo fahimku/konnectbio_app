@@ -229,8 +229,8 @@ class Package extends React.Component {
                     <h4>{basic.package_name}</h4>
                     <p>
                       Basic account is for individuals and influencers, allows
-                      creation of profile, have up to 3 social/external links
-                      &nbsp;
+                      creation of profile, have social links, create link in
+                      Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -308,8 +308,8 @@ class Package extends React.Component {
                     <h4>{premium.package_name}</h4>
                     <p>
                       Premium account is for businesses, brands and influencers,
-                      allows creation of profile, have up to 6 social links
-                      &nbsp;
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -323,9 +323,10 @@ class Package extends React.Component {
                       <span className="pkg_limit">From</span>
                       <sup>$</sup>
                       <span className="monthly display-5">
-                        {premium.package_amount_monthly}
+                        <del>{premium.package_amount_monthly}</del>
                       </span>
                       <small className="monthly">/mo</small>
+                      <ins>(Free For 90 Days)</ins>
                       <span className="pkg_billed">billed monthly</span>
                     </div>
                     <ul className="pkg_detail_list_ift">
@@ -335,11 +336,11 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Social Links - Up to 5
+                        Social Links - Up to {premium.link_count}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        BIOSHOP with 5 Categories
+                        BIOSHOP with {premium.category_count} Categories
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -359,7 +360,7 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Hashtags - Up to 5
+                        Monitor Hashtags - Up to {premium.hashtag_limit}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -367,7 +368,8 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Competition Profiles - Up to 5
+                        Monitor Competition Profiles - Up to{" "}
+                        {premium.profile_limit}
                       </li>
                       {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -417,9 +419,9 @@ class Package extends React.Component {
                   <div className="custom_pkg">
                     <h4>{premiumPlus.package_name}</h4>
                     <p>
-                      Premium Plus account is for large businesses, brands and
-                      influencers, allows creation of profile, have up to 6
-                      social links &nbsp;
+                      Premium Plus account is for large businesses and brands
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -445,11 +447,11 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Social Links - Up to 6
+                        Social Links - Up to {premiumPlus.link_count}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        BIOSHOP with 15 Categories
+                        BIOSHOP with {premiumPlus.category_count} Categories
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -469,7 +471,7 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Hashtags - Up to 15
+                        Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -477,7 +479,8 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Competition Profiles - Up to 15
+                        Monitor Competition Profiles - Up to{" "}
+                        {premiumPlus.profile_limit}
                       </li>
                       {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -536,8 +539,8 @@ class Package extends React.Component {
                     <h4>{basic.package_name}</h4>
                     <p>
                       Basic account is for individuals and influencers, allows
-                      creation of profile, have up to 3 social/external links
-                      &nbsp;
+                      creation of profile, have social links, create link in
+                      Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -615,8 +618,8 @@ class Package extends React.Component {
                     <h4>{premium.package_name}</h4>
                     <p>
                       Premium account is for businesses, brands and influencers,
-                      allows creation of profile, have up to 6 social links
-                      &nbsp;
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -630,9 +633,10 @@ class Package extends React.Component {
                       <span className="pkg_limit">From</span>
                       <sup>$</sup>
                       <span className="monthly display-5">
-                        {premium.package_amount_yearly}
+                        <del>{premium.package_amount_yearly}</del>
                       </span>
                       <small className="monthly">/mo</small>
+                      <ins>(Free For 90 Days)</ins>
                       <span className="pkg_billed">billed yearly</span>
                     </div>
                     <ul className="pkg_detail_list_ift">
@@ -642,11 +646,11 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Social Links - Up to 5
+                        Social Links - Up to {premium.link_count}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        BIOSHOP with 5 Categories
+                        BIOSHOP with {premium.category_count} Categories
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -666,7 +670,7 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Hashtags - Up to 5
+                        Monitor Hashtags - Up to {premium.hashtag_limit}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -674,7 +678,8 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Competition Profiles - Up to 5
+                        Monitor Competition Profiles - Up to{" "}
+                        {premium.profile_limit}
                       </li>
                       {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -724,9 +729,9 @@ class Package extends React.Component {
                   <div className="custom_pkg">
                     <h4>{premiumPlus.package_name}</h4>
                     <p>
-                      Premium Plus account is for large businesses, brands and
-                      influencers, allows creation of profile, have up to 6
-                      social links &nbsp;
+                      Premium Plus account is for large businesses and brands
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
                       <button
                         className="pkg_read btn btn-link"
                         onClick={() => {
@@ -752,11 +757,11 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Social Links - Up to 6
+                        Social Links - Up to {premiumPlus.link_count}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        BIOSHOP with 15 Categories
+                        BIOSHOP with {premiumPlus.category_count} Categories
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -776,7 +781,7 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Hashtags - Up to 15
+                        Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -784,7 +789,8 @@ class Package extends React.Component {
                       </li>
                       <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
-                        Monitor Competition Profiles - Up to 15
+                        Monitor Competition Profiles - Up to{" "}
+                        {premiumPlus.profile_limit}
                       </li>
                       {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
@@ -850,10 +856,10 @@ class Package extends React.Component {
           </Modal.Header>
           <Modal.Body>
             Basic account is for individuals and influencers, allows creation of
-            profile, have up to 3 social/external links, Bioshop with 3
-            categories, access analytics and become affiliate publisher. By
-            becoming a publisher, you are able to publish products and services
-            on your Bioshop and earn commission when your followers buy them.
+            profile, have social links, create link in Bioshop with categories,
+            access analytics and become an affiliate publisher. By becoming a
+            publisher, you are able to publish products and services on your
+            Bioshop and earn commission when your followers buy them.
           </Modal.Body>
         </Modal>
 
@@ -868,13 +874,12 @@ class Package extends React.Component {
           </Modal.Header>
           <Modal.Body>
             Premium account is for businesses, brands and influencers, allows
-            creation of profile, have up to 6 social links, Bioshop with 5
+            creation of profile, have social links, create link in Bioshop with
             categories, access to analytics and become an affiliate publisher.
             By becoming a publisher, you are able to publish products and
             services on your Bioshop and earn commission when your followers buy
             them. You can also search user generated content, schedule post,
-            monitor up to 5 hashtags, monitor mentions and monitor up to 5
-            competition profiles.
+            monitor hashtags, monitor mentions and monitor competition profiles.
           </Modal.Body>
         </Modal>
 
@@ -888,16 +893,16 @@ class Package extends React.Component {
             <Modal.Title>Premium Plus</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Premium Plus account is for large businesses, brands and
-            influencers, allows creation of profile, have up to 6 social links,
-            Bioshop with 15 categories, access to analytics and become an
-            affiliate publisher. By becoming a publisher, you are able to
-            publish products and services on your Bioshop and earn commission
-            when your followers buy them. You can also search user generated
-            content, schedule post, monitor up to 15 hashtags, monitor mentions
-            and monitor up to 15 competition profiles. As a Premium Plus
-            account, you can create Affiliate Advertising campaigns for
-            Followers to participate and earn commission.
+            Premium Plus account is for large businesses and brands allows
+            creation of profile, have social links, create link in Bioshop with
+            categories, access to analytics and become an affiliate publisher.
+            By becoming a publisher, you are able to publish products and
+            services on your Bioshop and earn commission when your followers buy
+            them. You can also search user generated content, schedule post,
+            monitor hashtags, monitor mentions and monitor competition profiles.
+            As a Premium Plus account, you can also create Affiliate Advertising
+            campaigns for followers to participate and earn commission when they
+            promote to their followers.
           </Modal.Body>
         </Modal>
 
@@ -1067,7 +1072,7 @@ class Package extends React.Component {
               this.state.checkbox.facebook &&
               this.state.checkbox.checkbox3 ? (
                 <>
-                  <form onSubmit={this.handleSubmit}>
+                  {/* <form onSubmit={this.handleSubmit}>
                     <Row className="promo_code_ift promo_code_ift_new">
                       <div className="promo_msg col-md-12">
                         Have Promo Code?
@@ -1109,7 +1114,14 @@ class Package extends React.Component {
                     plan={this.state.plan}
                     disableButton={this.state.promo_code !== "" ? true : false}
                     btnClass="btn-block"
-                  />
+                  /> */}
+                  <Button
+                    onClick={() => {
+                      this.updatePackage(userInfo.user_id, premium.package_id);
+                    }}
+                  >
+                    Start Trial
+                  </Button>
                 </>
               ) : null}
             </div>
