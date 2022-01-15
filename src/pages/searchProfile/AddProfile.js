@@ -129,7 +129,7 @@ function HashtagsList({
                                                     paddingBottom: 10,
                                                 }}
                                             >
-                                                Note: You can add a maximum of 20 unique profiles within
+                                                Note: You can add a maximum of 3 unique profiles within
                                                 a 7 day period
                                             </p>
                                             <Row>
@@ -142,7 +142,7 @@ function HashtagsList({
                                                             }}
                                                         >
                                                             <label>Add Profile</label>
-                                                            <p>{`(${profiles.Data.length}/20)`}</p>
+                                                            <p>{`(${profiles.Data.length}/${profiles.profile_limit})`}</p>
                                                         </div>
                                                         <div className="d-flex flex-row hashtag-box">
                                                             <span className="input-group-text">@</span>
