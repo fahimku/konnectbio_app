@@ -427,10 +427,10 @@ class AffiliateForm extends React.Component {
                   >
                     {affData.categories
                       ? affData.categories.map(
-                          ({ category_id, category_name }, i) => (
-                            <Option value={category_id}>{category_name}</Option>
-                          )
+                        ({ category_id, category_name }, i) => (
+                          <Option value={category_id}>{category_name}</Option>
                         )
+                      )
                       : []}
                   </Select>
                 </div>
@@ -586,7 +586,7 @@ class AffiliateForm extends React.Component {
                       }}
                       required
                       min="0"
-                      max="100"
+
                     />
                   </div>
                 </div>
@@ -845,7 +845,7 @@ class AffiliateForm extends React.Component {
                             disabled={
                               // this.state.stateList === ""
                               this.state.inputList[i].country === "" ||
-                              this.state.inputList.length - 1 !== i
+                                this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
@@ -867,10 +867,10 @@ class AffiliateForm extends React.Component {
                             value={
                               x.city
                                 ? {
-                                    value: x.city,
-                                    label:
-                                      x.city === "all" ? "All Cities" : x.city,
-                                  }
+                                  value: x.city,
+                                  label:
+                                    x.city === "all" ? "All Cities" : x.city,
+                                }
                                 : { value: "", label: "All Cities" }
                             }
                             onChange={(options, e) =>
@@ -882,8 +882,8 @@ class AffiliateForm extends React.Component {
                             clearable={false}
                             disabled={
                               this.state.inputList[i].state === "" ||
-                              this.state.inputList.length - 1 !== i ||
-                              this.state.inputList[i].state === "all"
+                                this.state.inputList.length - 1 !== i ||
+                                this.state.inputList[i].state === "all"
                                 ? true
                                 : false
                             }
@@ -938,11 +938,11 @@ class AffiliateForm extends React.Component {
                               onClick={this.handleAddClick}
                               disabled={
                                 this.state.inputList[i].country === "" ||
-                                this.state.inputList[i].state === "" ||
-                                this.state.inputList[i].city === ""
+                                  this.state.inputList[i].state === "" ||
+                                  this.state.inputList[i].city === ""
                                   ? // (this.state.inputList[i].city === "all" &&
-                                    //   this.state.inputList[i].state === "all")
-                                    true
+                                  //   this.state.inputList[i].state === "all")
+                                  true
                                   : false
                               }
                             >
