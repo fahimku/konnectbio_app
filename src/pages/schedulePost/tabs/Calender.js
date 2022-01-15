@@ -82,7 +82,8 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getCategories();
+    const userInfo=JSON.parse(localStorage.getItem('userInfo'))
+    this.props.getUserCategories2(userInfo.user_id);
     // new Draggable(this.externalEvents, {
     //   itemSelector: ".external-event",
     // });
@@ -110,10 +111,10 @@ class Calendar extends React.Component {
       redirected_url: e.event._def?.extendedProps?.redirected_url,
       categories: this.props.categories
         .filter(
-          (item) => item.parent_id == e.event._def?.extendedProps?.categories[0]
+          (item) => item.category_id == e.event._def?.extendedProps?.categories[0]
         )
         .map((item) => ({
-          value: item.parent_id,
+          value: item.category_id,
           label: item.category_name,
         }))[0],
       start_date: e.event._def?.extendedProps?.start_date,
@@ -229,7 +230,7 @@ class Calendar extends React.Component {
                 value={this.state.categories}
                 options={this.props.categories.map((item) => {
                   return {
-                    value: item.parent_id,
+                    value: item.category_id,
                     label: item.category_name,
                   };
                 })}
@@ -310,7 +311,7 @@ class Calendar extends React.Component {
             this.setState({ loading: true });
             this.props
               .updateSchedulePost({
-                caption: this.state.caption,
+                caption: this.state.currentData?.title,
                 publish_date: this.state.publish_date,
                 redirected_url: this.state.redirected_url,
                 start_date: this.state.start_date,
@@ -341,12 +342,12 @@ class Calendar extends React.Component {
             this.setState({ loading: true });
             this.props
               .updateSchedulePost({
-                caption: this.state.caption,
+                caption: this.state.currentData?.title,
                 publish_date: this.state.publish_date,
                 redirected_url: this.state.redirected_url,
                 start_date: this.state.start_date,
                 end_date: this.state.end_date,
-                categories: [this.state.categories.value],
+                categories: [this.state.categories?.value],
                 media_library_id: this.state.media_library_id,
                 media_id: this.state.media_id,
                 is_link_in_bioshop: false,
@@ -527,7 +528,20 @@ class Calendar extends React.Component {
           <ModalBody className="bg-white affiliate-model image-edit-box p-3">
             <Row>
               <Col lg={4}>
-                <p
+              <div class="form-group">
+              <label for="exampleInputEmail1">Caption</label>
+              <input 
+              value={this.state.currentData?.title} 
+              onChange={(e)=>this.setState({currentData:{...this.state.currentData,title:e.target.value}})}
+              type="text" class="form-control" 
+              id="exampleInputEmail1" 
+              aria-describedby="emailHelp" 
+              placeholder="Enter Caption"/>
+              {this.state.submit && !this.state.currentData?.title?(
+                <small style={{color:'red'}}>Please Fill</small>
+              ):null}
+            </div>
+                {/* <p
                   style={{
                     color: "gray",
                     overflow: "scroll",
@@ -536,10 +550,10 @@ class Calendar extends React.Component {
                   }}
                 >
                   {this.state.currentData?.title}
-                </p>
+                </p> */}
                 <img
                   style={{
-                    width: "95%",
+                    width: "100%",
                     height: "75%",
                     objectFit: "cover",
                     borderRadius: "0.4em",

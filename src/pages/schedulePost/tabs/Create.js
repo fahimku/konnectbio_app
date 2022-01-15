@@ -63,6 +63,7 @@ function HashtagsList({ createMedia, title }) {
                           <label for="exampleFormControlFile1">Media</label>
                           <input
                             type="file"
+                            accept="image/*"
                             onChange={(e) =>
                               setFields({ ...fields, image: e.target.files[0] })
                             }
