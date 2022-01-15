@@ -3,12 +3,14 @@ import "antd/dist/antd.css";
 import SummaryDataComponent from "./SummaryDataComponent";
 import CampaignSummaryComponent from "./CampaignSummaryComponent";
 import AffiliateSummaryComponent from "../../affiliate/AffiliateDashboard/AffiliateSummaryComponent";
+import BioShopSummaryComponent from "./BioShopSummaryComponent";
 
 class SummaryComponent extends React.Component {
   state = {
     username: this.props.username,
     packageName: this.props.packageName,
   };
+
 
   render() {
     return (
@@ -17,6 +19,13 @@ class SummaryComponent extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <h4 className="page-title">Analytics</h4>
+            </div>
+            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+              {/* <h4 className="page-title">Post Summary</h4> */}
+              <BioShopSummaryComponent
+                username={this.state.username}
+                packageName={this.state.packageName}
+              />
             </div>
             <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
               {/* <h4 className="page-title">Post Summary</h4> */}

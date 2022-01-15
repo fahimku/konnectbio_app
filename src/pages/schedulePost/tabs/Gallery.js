@@ -22,15 +22,17 @@ function Gallery({
   gallery,
   deleteMedia,
   schedulePost,
-  getCategories,
+  getUserCategories2,
   categories,
+  directPublish
 }) {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [currentData, setCurrentData] = useState({});
-  const [showBio, setShowBio] = useState(true);
+  const [showBio, setShowBio] = useState(false);
   const [showPost, setShowPost] = useState(true);
   const [submit, setSubmit] = useState(false);
+  const [publishLoading, setPublishLoading] = useState(false);
   const [fields, setFields] = useState({
     caption: "",
     publish_date: "",
@@ -41,7 +43,8 @@ function Gallery({
   });
 
   useEffect(() => {
-    getCategories();
+    const userInfo=JSON.parse(localStorage.getItem('userInfo'))
+    getUserCategories2(userInfo.user_id);
     getMedia().then(() => setLoading(false));
   }, []);
 
@@ -106,6 +109,22 @@ function Gallery({
                     </div>
                   </div>
                   <div className="cam-buttons col-12">
+                    {
+                      publishLoading && currentData.media_library_id==item.media_library_id?(
+                        <button
+                        className="btn"
+                      >
+                        <Loader/>
+                      </button>
+                      ):(
+                        <button
+                        className="btn"
+                        onClick={()=>onPublish(item)}
+                      >
+                        <i className="fa fa-check" /> Publish
+                      </button>
+                      )
+                    }
                     <button
                       className="btn"
                       onClick={() => {
@@ -113,7 +132,7 @@ function Gallery({
                         setModal(true);
                       }}
                     >
-                      <i className="fa fa-check" /> Publish
+                      <i class="fa fa-calendar-check-o" /> Schedule
                     </button>
                     <button
                       className="btn"
@@ -222,7 +241,7 @@ function Gallery({
                 value={fields.categories}
                 options={categories.map((item) => {
                   return {
-                    value: item.parent_id,
+                    value: item.category_id,
                     label: item.category_name,
                   };
                 })}
@@ -334,6 +353,34 @@ function Gallery({
     }
   }
 
+  function onPublish(seletedItem){
+    setCurrentData(seletedItem)
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to publish this post on instagram?",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setPublishLoading(true)
+        directPublish({
+          media_url: seletedItem.media_url,
+          media_library_id: seletedItem.media_library_id,
+          media_id: seletedItem.media_id,
+          caption: seletedItem.title,
+        }).then(()=>{
+          setPublishLoading(false)
+          toast.success("Successfully Published")
+        })
+        .catch((err)=>{
+          toast.error(err.response.message)
+        })
+      }
+    });
+  }
   return (
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
@@ -349,24 +396,27 @@ function Gallery({
         size="xl"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Post</Modal.Title>
+          <Modal.Title>Schedule Post</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
           <Row>
             <Col lg={4}>
-              <p
-                style={{
-                  color: "gray",
-                  overflow: "scroll",
-                  overflowX: "hidden",
-                  height: "15%",
-                }}
-              >
-                {currentData.title}
-              </p>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Caption</label>
+              <input 
+              value={currentData.title} 
+              onChange={(e)=>setCurrentData({...currentData,title:e.target.value})}
+              type="text" class="form-control" 
+              id="exampleInputEmail1" 
+              aria-describedby="emailHelp" 
+              placeholder="Enter Caption"/>
+              {submit && !currentData.title?(
+                <small style={{color:'red'}}>Please Fill</small>
+              ):null}
+            </div>
               <img
                 style={{
-                  width: "95%",
+                  width: "100%",
                   height: "75%",
                   objectFit: "cover",
                   borderRadius: "0.4em",
@@ -425,7 +475,7 @@ function Gallery({
                         onClick={() => onSubmit()}
                         className="custom_btns_ift btn btn-primary mt-3"
                       >
-                        Publish
+                        Schedule
                       </button>
                     )}
                   </Col>
