@@ -579,7 +579,7 @@ class Register extends React.Component {
                           className="register_button"
                           size="lg"
                         >
-                          {this.props.isFetching ? "Loading..." : "Previous"}
+                        Previous
                         </Button>
                       </div>
                       <div className="col-4"></div>
