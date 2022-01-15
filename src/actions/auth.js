@@ -161,34 +161,22 @@ export function loginUser(creds) {
           dispatch(receiveToken(token));
           dispatch(doInit());
 
-          const fbPage = JSON.parse(
-            localStorage.getItem("userInfo")
-          ).page_token;
+          const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
           // const fbPage=localStorage.getItem('fbPage')
           // const fbToken=localStorage.getItem('fbToken')
 
-          if (
-            res?.data?.message?.package?.package_name === "Basic" &&
-            res?.data?.message?.access_token
-          ) {
+          if (res?.data?.message?.is_expired) {
+            history.push("/package");
+          }
+          else if (res?.data?.message?.package?.package_name === "Basic" && res?.data?.message?.access_token) {
             history.push("/app/linkinbio");
           }
-          else if (
-            res?.data?.message?.package?.package_name === "Premium" &&
-            res?.data?.message?.access_token &&
-            fbPage
-          ) {
+          else if (res?.data?.message?.package?.package_name === "Premium" && res?.data?.message?.access_token && fbPage) {
             history.push("/app/linkinbio");
           }
-
-          else if (
-            res?.data?.message?.package?.package_name === "Premium Plus" &&
-            res?.data?.message?.access_token &&
-            fbPage
-          ) {
+          else if (res?.data?.message?.package?.package_name === "Premium Plus" && res?.data?.message?.access_token && fbPage) {
             history.push("/app/linkinbio");
           }
-
           else {
             history.push("/package");
           }

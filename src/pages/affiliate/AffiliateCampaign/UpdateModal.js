@@ -602,6 +602,7 @@ class UpdateModal extends React.Component {
                         this.budget(evt.target.value);
                       }}
                       required
+                      min="0"
                     />
                   </div>
                   <div className="col-md-6 mt-3">
@@ -615,6 +616,7 @@ class UpdateModal extends React.Component {
                         this.ppClick(evt.target.value);
                       }}
                       required
+                      min="0"
                     />
                   </div>
                 </div>
