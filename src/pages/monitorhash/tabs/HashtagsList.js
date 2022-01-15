@@ -124,7 +124,7 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Note: You can add a maximum of 20 unique hashtags within
+                        Note: You can add a maximum of 3 unique hashtags within
                         a 7 day period
                       </p>
                       <Row>
@@ -137,7 +137,7 @@ function HashtagsList({
                               }}
                             >
                               <label>Add Hashtag</label>
-                              <p>{`(${hashtags.limit}/20)`}</p>
+                              <p>{`(${hashtags.limit}/${hashtags.hashtag_limit})`}</p>
                             </div>
                             <div className="d-flex flex-row hashtag-box">
                               <span class="input-group-text">#</span>
