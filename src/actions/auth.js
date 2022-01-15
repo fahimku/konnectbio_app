@@ -169,7 +169,7 @@ export function loginUser(creds) {
             history.push("/package");
           }
 
-          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !fbPage) { 
+          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !res.data.message.fb_token) { 
             history.push("/connect");
           }
 
