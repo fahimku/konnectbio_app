@@ -168,18 +168,27 @@ export function loginUser(creds) {
           if (res?.data?.message?.is_expired) {
             history.push("/package");
           }
+
+          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !fbPage) { 
+            history.push("/connect");
+          }
+
           else if (res?.data?.message?.package?.package_name === "Basic" && res?.data?.message?.access_token) {
             history.push("/app/linkinbio");
           }
+
           else if (res?.data?.message?.package?.package_name === "Premium" && res?.data?.message?.access_token && fbPage) {
             history.push("/app/linkinbio");
           }
+
           else if (res?.data?.message?.package?.package_name === "Premium Plus" && res?.data?.message?.access_token && fbPage) {
             history.push("/app/linkinbio");
           }
+
           else {
             history.push("/package");
           }
+
         })
         .catch((error) => {
           dispatch(authError(error?.response?.data?.message));

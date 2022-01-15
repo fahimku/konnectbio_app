@@ -101,6 +101,7 @@ class Login extends React.Component {
   signUp() {
     this.props.dispatch(push("/register"));
   }
+
   showHide = (e) => {
     e.preventDefault();
     e.stopPropagation();
