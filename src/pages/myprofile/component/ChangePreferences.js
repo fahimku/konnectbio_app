@@ -12,6 +12,7 @@ class ChangePreferences extends React.Component {
     edit_modal: false,
     selectedTimezone: {},
     first_day_Of_the_week: "",
+    err_message: false,
   };
   componentDidMount() {
     this.getUserTimeZone();
@@ -37,7 +38,7 @@ class ChangePreferences extends React.Component {
       });
   };
   handleClose = () => {
-    this.setState({ edit_modal: false });
+    this.setState({ edit_modal: false, err_message: false });
   };
   handleSelect = (e, options) => {
     this.setState({
@@ -46,30 +47,35 @@ class ChangePreferences extends React.Component {
   };
   handleSubmit = async (e) => {
     e.preventDefault();
-    this.setState({ editLoading: true });
-    await axios
-      .post(`/users/revise/saveUserTimeZone`, {
-        user_timeZone: this.state.selectedTimezone,
-        first_day_Of_the_week: this.state.first_day_Of_the_week,
-      })
-      .then((response) => {
-        this.setState({
-          edit_modal: false,
-          editLoading: false,
-          selectedTimezone: {},
-          first_day_Of_the_week: "",
-        });
+    if (Object.keys(this.state.selectedTimezone).length === 0) {
+      this.setState({ err_message: true });
+    } else {
+      this.setState({ editLoading: true });
+      await axios
+        .post(`/users/revise/saveUserTimeZone`, {
+          user_timeZone: this.state.selectedTimezone,
+          first_day_Of_the_week: this.state.first_day_Of_the_week,
+        })
+        .then((response) => {
+          this.setState({
+            edit_modal: false,
+            editLoading: false,
+            selectedTimezone: {},
+            first_day_Of_the_week: "",
+            err_message: false,
+          });
 
-        this.getUserTimeZone();
-        toast.success(response.data.message);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ editLoading: false });
-      });
+          this.getUserTimeZone();
+          toast.success(response.data.message);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+          this.setState({ editLoading: false, err_message: false });
+        });
+    }
   };
   selectedTimezone = (e) => {
-    this.setState({ selectedTimezone: e });
+    this.setState({ selectedTimezone: e, err_message: false });
   };
   guessTimezone = () => {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -157,6 +163,11 @@ class ChangePreferences extends React.Component {
                       placeholder="Select Time Zone"
                       // isClearable={true}
                     />
+                    {this.state.err_message ? (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    ) : null}
                   </div>
                 </Col>
                 <Col md={12} className="mt-3">
