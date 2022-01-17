@@ -184,7 +184,7 @@ function AffiliateCampaign(props) {
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div
-            className={`card any_bx analytic-box campaign-box ${
+            className={`card any_bx analytic-box campaign-box test ${
               props.type !== "expired" ? "" : "pb-0"
             }`}
           >

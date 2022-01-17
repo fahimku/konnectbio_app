@@ -164,7 +164,6 @@ class Calendar extends React.Component {
     return (
       <div>
         <h5 className="mt-2">Schedule Post</h5>
-        <hr style={{ margin: 0, marginBottom: 5, borderTopColor: "gray" }} />
         <Row>
           <Col lg={12}>
             <div className="date-range-aff">
@@ -193,9 +192,8 @@ class Calendar extends React.Component {
     return (
       <div>
         <h5 className="mt-4">Add to Bioshop</h5>
-        <hr style={{ margin: 0, marginBottom: 5, borderTopColor: "gray" }} />
         <Row>
-          <Col lg={12}>
+          <Col lg={12} className="mb-2">
             <div>
               <label>URL</label>
               <Input
@@ -222,7 +220,7 @@ class Calendar extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col lg={12}>
+          <Col lg={12} className="mb-2">
             <div className="select-categories">
               <label>Category</label>
               <Select
@@ -249,7 +247,7 @@ class Calendar extends React.Component {
         </Row>
 
         <Row>
-          <Col lg={12}>
+          <Col lg={12} className="mb-2">
             <div className="date-range-aff">
               <label>Select Start Date / End Date</label>
               <RangePicker
@@ -554,9 +552,6 @@ class Calendar extends React.Component {
                 <img
                   style={{
                     width: "100%",
-                    height: "75%",
-                    objectFit: "cover",
-                    borderRadius: "0.4em",
                   }}
                   src={this.state.currentData?.extendedProps?.url}
                 />

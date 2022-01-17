@@ -1349,3 +1349,6 @@ a.pkg_read:hover {
   margin-right: 0 !important;
   max-width: 120px;
 }
+.fc .fc-daygrid-day-number, .fc .fc-col-header-cell-cushion{
+  color:inherit !important;
+}

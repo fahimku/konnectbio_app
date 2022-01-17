@@ -81,7 +81,7 @@ function Gallery({
         <Row className="post-analytics-tab-boxes-ift">
           {gallery.length > 0 ? (
             gallery.map((item, i) => (
-              <Col lg={4} xl={3} md={4} xs={6}>
+              <Col xs={12} xl={3} md={6}>
                 <div className={`card any_bx analytic-box campaign-box pb-0`}>
                   <div className="camp-row row">
                     <div className="campaign-header col-12">
