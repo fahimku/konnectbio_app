@@ -6,7 +6,7 @@ import classnames from "classnames";
 import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
-import AffiliateAccounting from "./AffiliateAccounting/AffiliateAccounting";
+import AffiliateScheduleCampaign from "./AffiliateCampaign/AffiliateScheduleCampaign";
 import axios from "axios";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
@@ -67,7 +67,6 @@ class Affiliate extends React.Component {
 
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
     return userInfo?.package?.package_name !== "Premium Plus" ? (
       <div className="container-fluid">
         <div class="coming_iner">
@@ -170,18 +169,18 @@ class Affiliate extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
-                  {/* <NavItem>
+                  <NavItem>
                     <NavLink
                       className={classnames({
-                        active: this.state.activeTab === "accounting",
+                        active: this.state.activeTab === "schedule-campaign",
                       })}
                       onClick={() => {
-                        this.toggleTabs("accounting");
+                        this.toggleTabs("schedule-campaign");
                       }}
                     >
-                      <span>Accounting</span>
+                      <span>Schedule Campaign</span>
                     </NavLink>
-                  </NavItem> */}
+                  </NavItem>
                 </Nav>
 
                 <TabContent
@@ -235,9 +234,13 @@ class Affiliate extends React.Component {
                     ) : null}
                   </TabPane>
 
-                  <TabPane tabId="accounting">
-                    {this.state.activeTab === "accounting" ? (
-                      <AffiliateAccounting username={this.state.username} />
+                  <TabPane tabId="schedule-campaign">
+                    {this.state.activeTab === "schedule-campaign" ? (
+                      <AffiliateScheduleCampaign
+                        username={this.state.username}
+                        type="active"
+                        title="Schedule Campaign"
+                      />
                     ) : null}
                   </TabPane>
                 </TabContent>
