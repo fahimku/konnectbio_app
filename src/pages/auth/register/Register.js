@@ -571,7 +571,7 @@ class Register extends React.Component {
                     )}
                     <div className="row">
                       <div className="col-4">
-                        {!this.state.step1 &&
+                        {!this.state.step1 && (
                           <Button
                             onClick={this.goPrevious}
                             type="button"
@@ -581,7 +581,7 @@ class Register extends React.Component {
                           >
                             Previous
                           </Button>
-                        }
+                        )}
                       </div>
                       <div className="col-4"></div>
                       <div className="col-4">
@@ -594,8 +594,8 @@ class Register extends React.Component {
                           {this.props.isFetching
                             ? "Loading..."
                             : this.state.step3
-                              ? "Finish"
-                              : " Next"}
+                            ? "Finish"
+                            : " Next"}
                         </Button>
                       </div>
                     </div>
