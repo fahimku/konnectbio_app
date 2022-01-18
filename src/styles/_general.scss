@@ -754,3 +754,22 @@ h1 small {
 .plan-premium-block {
   min-height: auto !important;
 }
+.media-box-post {
+  position: relative;
+}
+.media-box-post .btn-play {
+  position: absolute;
+  right: 16px;
+  z-index: 999;
+  color: white;
+  width: 22px;
+  height: 22px;
+  text-align: center;
+  background-color: #222;
+  border-radius: 6px;
+}
+.media-box-post .btn-play .fa {
+  font-size: 10px;
+  position: relative;
+  top: -1px;
+}

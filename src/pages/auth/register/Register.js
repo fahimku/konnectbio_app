@@ -355,8 +355,6 @@ class Register extends React.Component {
           </div>
         </div>
         <div className="custome_container_auth_ift">
-
-
           <div className="custome_container_auth_inr">
             {this.props.successMessage ? (
               <Widget className="custom_confirmation">
@@ -402,14 +400,10 @@ class Register extends React.Component {
               </Widget>
             ) : (
               <>
-
-
                 <Widget
                   className="custome_signup"
                   title={<h3 className="mt-0">Create an Account</h3>}
                 >
-
-
                   <form
                     id="registerForm"
                     className="mt"
