@@ -371,15 +371,15 @@ class AccountSetup extends React.Component {
                                 {this.state.singlePackage.category_count}
                               </strong>
                             </span>
-                            {this.state.singlePackage.package_name !==
+                            {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more categories</span>
-                            )}
+                            )} */}
                           </div>
                         </div>
 
                         <div className="dp_fields-setup">
-                          <div className="sm-b">
+                          <div className="sm-b mb-2">
                             <span>
                               Links Included:{" "}
                               <strong>
@@ -387,10 +387,30 @@ class AccountSetup extends React.Component {
                               </strong>
                             </span>
 
-                            {this.state.singlePackage.package_name !==
+                            {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more links</span>
-                            )}
+                            )} */}
+                          </div>
+                        </div>
+                        <div className="dp_fields-setup">
+                          <div className="sm-b mb-2">
+                            <span>
+                              Monitor Hashtags:{" "}
+                              <strong>
+                                {this.state.singlePackage.hashtag_limit}
+                              </strong>
+                            </span>
+                          </div>
+                        </div>
+                        <div className="dp_fields-setup">
+                          <div className="sm-b mb-2">
+                            <span>
+                              Monitor Competition Profiles:{" "}
+                              <strong>
+                                {this.state.singlePackage.profile_limit}
+                              </strong>
+                            </span>
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
