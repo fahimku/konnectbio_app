@@ -59,7 +59,7 @@ function HashtagsList({
 
   const handleAdd = (e) => {
     e.preventDefault();
-    var format = /[#\s]/;
+    var format = /[@\s]/;
     if (hash.length > 0) {
       setError(false);
       if (!format.test(hash)) {

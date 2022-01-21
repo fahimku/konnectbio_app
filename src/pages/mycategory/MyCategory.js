@@ -291,7 +291,6 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-    // console.log(this.state.saveCategories, "saveCategories");
 
     return (
       <React.Fragment>
@@ -439,6 +438,10 @@ class MyCategory extends React.Component {
                         <h5>Select Categories</h5>
                         <Row>
                           <Col md={12}>
+                            <div className="text-right mb-1">
+                              ({this.state.saveCategories.length}/
+                              {userInfo1.package.category_count})
+                            </div>
                             {/* <label>Select Category: </label> */}
                             {this.state.saveCategories === "" ? null : (
                               <Select

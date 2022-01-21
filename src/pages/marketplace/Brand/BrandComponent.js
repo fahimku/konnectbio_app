@@ -26,7 +26,7 @@ class BrandComponent extends React.Component {
     this.brandList();
   }
 
-  brandList = async (value) => {
+  brandList = async () => {
     await axios
       .post("users/marketPlace/brands")
       .then((response) => {
@@ -125,7 +125,11 @@ class BrandComponent extends React.Component {
                                 )}
                                 isMulti
                                 name="brands"
-                                options={this.state.brandList}
+                                options={this.state.brandList.filter(function (
+                                  element
+                                ) {
+                                  return element.label !== undefined;
+                                })}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
                                 onChange={(options, e) =>
