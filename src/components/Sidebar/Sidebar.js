@@ -264,7 +264,7 @@ class Sidebar extends React.Component {
                     userInfo?.package?.package_name === "Premium Plus"
                       ? [
                           {
-                            header: "Home Screen",
+                            header: "Basic Setup",
                             link: "/app/account/profile",
                           },
                           {
@@ -276,8 +276,12 @@ class Sidebar extends React.Component {
                             link: "/app/account/affiliate",
                           },
                           {
-                            header: "Account Setup",
+                            header: "Connection Setup",
                             link: "/app/account/setup",
+                          },
+                          {
+                            header: "Subcription Setup",
+                            link: "/app/subcription/setup",
                           },
                           {
                             header: "Delete Account",

@@ -309,7 +309,7 @@ class AccountSetup extends React.Component {
         >
           <div className="mt-4 row">
             <div className="col-md-12">
-              <h4 className="page-title">Account Setup</h4>
+              <h4 className="page-title">Connection Setup</h4>
             </div>
           </div>
 

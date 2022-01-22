@@ -191,7 +191,7 @@ class MyProfile extends React.Component {
         <div className="container-fluid">
           <Row className="mt-4">
             <Col md={12}>
-              <h4 className="page-title">Settings - Home Screen</h4>
+              <h4 className="page-title">Settings - Basic Setup</h4>
             </Col>
           </Row>
           <div className="profile_container_main container">
