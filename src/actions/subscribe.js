@@ -4,7 +4,7 @@ import config from "../config";
 
 export const configSubs = () => async (dispatch) => {
       const res = await axios.post(`${config.hostApi}/v1/subscribe/config`)
-      console.log(res.data)
+      return res.data
 };
 
 
