@@ -5,7 +5,9 @@ import { createBrowserHistory } from "history";
 import { toast } from "react-toastify";
 import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
-
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 class SubcriptionSetup extends React.Component {
   constructor(props) {
     const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -25,6 +27,7 @@ class SubcriptionSetup extends React.Component {
       help1: true,
       help2: true,
       help3: true,
+      promo_code: "",
     };
   }
   componentDidMount() {
@@ -126,6 +129,55 @@ class SubcriptionSetup extends React.Component {
       promo_code: "",
     });
     this.setState({ help1: true, help2: true, help3: true });
+  };
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    if (this.state.promo_code === "") {
+      this.setState({ promo_error: true });
+      this.setState({ promoCodeError: " Please Enter Valid Promo Code" });
+    } else if (
+      !this.state.checkbox.instagram &&
+      !this.state.checkbox.facebook &&
+      !this.state.checkbox.checkbox3
+    ) {
+      this.setState({ showPromo: true });
+    } else {
+      this.setState({ promoLoading: true });
+      await axios
+        .post("/payment/validatepromocode", {
+          promo_code: this.state.promo_code,
+          package_id: this.state.package_id,
+        })
+        .then((response) => {
+          this.setState({ promoLoading: false });
+          this.setState({ showPaymentButton: false });
+          toast.success("Promo Code Applied SuccessFully");
+          const userInformation = localStorage.getItem("userInfo");
+          const parseUserInformation = JSON.parse(userInformation);
+          parseUserInformation.package = response.data.message;
+          this.setState({ myPackage: response.data.message.package_name });
+
+          if (response?.data?.message?.package_name && this.props.setPackage) {
+            this.props.setPackage(response.data.message.package_name);
+          }
+
+          const storeUserInformation = JSON.stringify(parseUserInformation);
+          localStorage.setItem("userInfo", storeUserInformation);
+          history.push("/connect");
+          // window.location.reload();
+        })
+        .catch((err) => {
+          this.setState({ promo_error: true });
+          this.setState({ promoCodeError: err.response.data.message });
+          toast.error(err.response.data.message);
+          this.setState({ promoLoading: false, promo_code: "" });
+          this.setState({ checkbox: {} });
+        });
+    }
+  };
+  promoChange = (e) => {
+    this.setState({ promo_code: e.target.value, promo_error: false });
   };
 
   render() {
@@ -352,7 +404,7 @@ class SubcriptionSetup extends React.Component {
                                           : "Make Payment"}
                                       </Button>
                                     ) : (
-                                      "payment"
+                                      <Button>Make Payment</Button>
                                       // <PaymentButton
                                       //   plan={this.state.plan}
                                       //   userId={userInfo?.user_id}
@@ -383,10 +435,6 @@ class SubcriptionSetup extends React.Component {
                                         });
                                       }}
                                       type="button"
-
-                                      // disabled={
-                                      //   !this.state.loading ? false : true
-                                      // }
                                     >
                                       Cancel
                                     </Button>
@@ -842,7 +890,17 @@ class SubcriptionSetup extends React.Component {
                                                 Continue
                                               </Button>
                                             ) : (
-                                              "sdsd"
+                                              <Button
+                                              // onClick={() => {
+                                              //   this.updatePackage(
+                                              //     userInfo?.user_id,
+                                              //     this.state.singlePackage
+                                              //       .package_id
+                                              //   );
+                                              // }}
+                                              >
+                                                Make Payment
+                                              </Button>
                                             )
                                           ) : null}
                                         </div>
