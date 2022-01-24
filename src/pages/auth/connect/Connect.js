@@ -43,11 +43,16 @@ class Connect extends React.Component {
     const package1 = userInfo?.package?.package_name;
 
     const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true : false;
-    if (checkCon) {
+    
+    if (!package1) {
+      this.props.history.push('/package');
+    }
+
+    else if (checkCon) {
       this.props.history.push("/app/linkinbio");
     }
 
-    if (instagramCodeUrl.includes("code")) {
+    else if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
       this.setState({ instagramCode: code[1] });
       this.setState({ isInstagramConnected: true });
@@ -112,7 +117,8 @@ class Connect extends React.Component {
 
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
 
-    if (package1 === 'Basic' && this.completeProcess()) {
+  
+     if (package1 === 'Basic' && this.completeProcess()) {
       return 'Please connect your Instagram account';
     }
 
