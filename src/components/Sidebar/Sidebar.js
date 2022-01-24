@@ -298,8 +298,12 @@ class Sidebar extends React.Component {
                             link: "/app/account/categories",
                           },
                           {
-                            header: "Account Setup",
+                            header: "Connection Setup",
                             link: "/app/account/setup",
+                          },
+                          {
+                            header: "Subcription Setup",
+                            link: "/app/subcription/setup",
                           },
                           {
                             header: "Delete Account",
