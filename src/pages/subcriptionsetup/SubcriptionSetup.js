@@ -128,19 +128,6 @@ class SubcriptionSetup extends React.Component {
     this.setState({ help1: true, help2: true, help3: true });
   };
 
-  handleCancel = () => {
-    const singlePackage = this.state.allPackages.filter(
-      (item) => item.package_id === this.state.userInfo.package.package_id
-    );
-    this.setState({
-      showPaymentButton: false,
-      package_id: "",
-      package: this.state.userInfo?.package?.package_name,
-      packageId: this.state.userInfo?.package?.package_id,
-      singlePackage: singlePackage[0],
-    });
-  };
-
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
@@ -386,7 +373,14 @@ class SubcriptionSetup extends React.Component {
 
                                     <Button
                                       onClick={() => {
-                                        this.handleCancel();
+                                        this.setState({
+                                          showPaymentButton: false,
+                                          package_id: "",
+                                          package:
+                                            userInfo?.package?.package_name,
+                                          packageId:
+                                            userInfo?.package?.package_id,
+                                        });
                                       }}
                                       type="button"
 

@@ -155,7 +155,7 @@ export function loginUser(creds) {
             zip: res.data.message.zip,
             page_token: res.data.message.page_token,
             fb_token: res.data.message.fb_token,
-            instagram_id: res.data.message.instagram_id,
+            instagram_id: res.data.message.instagram_id, 
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
@@ -169,7 +169,7 @@ export function loginUser(creds) {
             history.push("/package");
           }
 
-          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !res.data.message.fb_token) { 
+          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !res.data.message.fb_token) {
             history.push("/connect");
           }
 

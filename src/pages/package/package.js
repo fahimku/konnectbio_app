@@ -13,7 +13,8 @@ import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import { toast } from "react-toastify";
-
+import {connect} from "react-redux"
+import * as subActions from "../../actions/subscribe"
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
 export const history = createBrowserHistory({
@@ -43,6 +44,7 @@ class Package extends React.Component {
   };
 
   componentDidMount() {
+    this.props.configSubs()
     if (userInfo.hasOwnProperty("package")) {
       history.push("/app/main");
     }
@@ -1116,6 +1118,19 @@ class Package extends React.Component {
                     btnClass="btn-block"
                   /> */}
                   <Button
+                  onClick={()=>{
+                    this.props.makePayment({
+                      price_id:'price_1KKNC3ESMcKchi62FS28iUXr',
+                      package_id: premium.package_id,
+                      recurring_payment_type: 'Monthly',
+                    }).then((res)=>{
+                      window.open(res,"_self")
+                    })
+                  }}
+                  >
+                    Pay Now
+                  </Button>
+                  <Button
                     onClick={() => {
                       this.updatePackage(userInfo.user_id, premium.package_id);
                     }}
@@ -1530,4 +1545,4 @@ class Package extends React.Component {
     );
   }
 }
-export default Package;
+export default connect(null,subActions)(Package);
