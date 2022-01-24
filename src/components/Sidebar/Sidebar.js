@@ -290,7 +290,7 @@ class Sidebar extends React.Component {
                         ]
                       : [
                           {
-                            header: "Home Screen",
+                            header: "Basic Setup",
                             link: "/app/account/profile",
                           },
                           {
