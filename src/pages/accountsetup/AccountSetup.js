@@ -295,7 +295,6 @@ class AccountSetup extends React.Component {
         },
       }),
     };
-    console.log(this.state.singlePackage, "package");
     return (
       <div
         className={`profile-page account-setup ${
@@ -330,7 +329,7 @@ class AccountSetup extends React.Component {
                                   ? userInfo1.package.package_name
                                   : ""}
                               </h6>
-                              {!this.props.connectPage &&
+                              {/* {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
                                   "Premium" && (
                                   <button
@@ -341,12 +340,12 @@ class AccountSetup extends React.Component {
                                   >
                                     Cancel
                                   </button>
-                                )}
+                                )} */}
                             </div>
                           </div>
                         </div>
 
-                        <div className="dp_fields-setup">
+                        {/* <div className="dp_fields-setup">
                           <div className="mb-3">
                             <label>Change Plan:</label>
                             <Select
@@ -361,7 +360,7 @@ class AccountSetup extends React.Component {
                               onChange={(event) => this.handlePackage(event)}
                             />
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="dp_fields-setup">
                           <div className="sm-b mb-2">
@@ -371,15 +370,15 @@ class AccountSetup extends React.Component {
                                 {this.state.singlePackage.category_count}
                               </strong>
                             </span>
-                            {this.state.singlePackage.package_name !==
+                            {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more categories</span>
-                            )}
+                            )} */}
                           </div>
                         </div>
 
                         <div className="dp_fields-setup">
-                          <div className="sm-b">
+                          <div className="sm-b mb-2">
                             <span>
                               Links Included:{" "}
                               <strong>
@@ -387,10 +386,30 @@ class AccountSetup extends React.Component {
                               </strong>
                             </span>
 
-                            {this.state.singlePackage.package_name !==
+                            {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more links</span>
-                            )}
+                            )} */}
+                          </div>
+                        </div>
+                        <div className="dp_fields-setup">
+                          <div className="sm-b mb-2">
+                            <span>
+                              Monitor Hashtags:{" "}
+                              <strong>
+                                {this.state.singlePackage.hashtag_limit}
+                              </strong>
+                            </span>
+                          </div>
+                        </div>
+                        <div className="dp_fields-setup">
+                          <div className="sm-b mb-2">
+                            <span>
+                              Monitor Competition Profiles:{" "}
+                              <strong>
+                                {this.state.singlePackage.profile_limit}
+                              </strong>
+                            </span>
                           </div>
                         </div>
                         {this.state.singlePackage.package_name !== "Basic" &&
