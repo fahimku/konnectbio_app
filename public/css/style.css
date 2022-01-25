@@ -520,6 +520,7 @@ span.fa.fa-times.ift-cancel {
   font-size: 20px;
   right: 10px;
   top: 5px;
+  cursor: pointer;
 }
 .edit_button_main {
   display: flex;
