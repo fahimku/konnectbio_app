@@ -155,9 +155,7 @@ export function loginUser(creds) {
             zip: res.data.message.zip,
             page_token: res.data.message.page_token,
             fb_token: res.data.message.fb_token,
-            instagram_id: res.data.message.instagram_id, 
-            next_payment_date:res.data.message.next_payment_date,
-            recurring_payment_type:res.data.message.recurring_payment_type
+            instagram_id: res.data.message.instagram_id
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));

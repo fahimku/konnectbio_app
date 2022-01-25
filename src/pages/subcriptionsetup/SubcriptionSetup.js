@@ -265,13 +265,13 @@ class SubcriptionSetup extends React.Component {
                         <div className="col-12 count-box">
                           <h5 className="count-title">Payment Type</h5>
                           <h3 className="count">
-                            {userInfo.recurring_payment_type}
+                            {userInfo.package?.recurring_payment_type}
                           </h3>
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Next Payment</h5>
                           <h3 className="count">
-                            {userInfo.next_payment_date}
+                            {userInfo.package?.next_payment_date}
                           </h3>
                         </div>
                         <div className="col-12 count-box align-items-center">
@@ -956,8 +956,16 @@ class SubcriptionSetup extends React.Component {
                                                           this.setState({
                                                             paymentLoading: false,
                                                           });
+                                                          localStorage.setItem(
+                                                            "userInfo",
+                                                            JSON.stringify({
+                                                              ...userInfo,
+                                                              package:
+                                                                res.message,
+                                                            })
+                                                          );
                                                           window.open(
-                                                            res,
+                                                            res.url,
                                                             "_self"
                                                           );
                                                         })
