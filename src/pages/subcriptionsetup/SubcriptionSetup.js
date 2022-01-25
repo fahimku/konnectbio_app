@@ -220,14 +220,14 @@ class SubcriptionSetup extends React.Component {
                         <h5>Subcription Details</h5>
                       </div>
                       <div className="col-4 col-md-3">
-                        <button
+                        {/* <button
                           // onClick={() => {
                           //   this.setState({ cancelPlan: true });
                           // }}
                           className="btn-block btn text-white btn-sm disconnect-btn"
                         >
                           Cancel
-                        </button>
+                        </button> */}
                       </div>
                     </div>
                     <div className="subscription-caption">
@@ -264,7 +264,9 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Payment Type</h5>
-                          <h3 className="count">{userInfo.recurring_payment_type}</h3>
+                          <h3 className="count">
+                            {userInfo.recurring_payment_type}
+                          </h3>
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Next Payment</h5>
