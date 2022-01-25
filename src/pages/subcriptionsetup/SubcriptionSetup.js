@@ -977,8 +977,7 @@ class SubcriptionSetup extends React.Component {
                                                               .singlePackage
                                                               .package_id,
                                                           recurring_payment_type:
-                                                            this.state
-                                                              .selectedtab,
+                                                            this.state.plan,
                                                         })
                                                         .then((res) => {
                                                           this.setState({
