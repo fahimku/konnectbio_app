@@ -902,79 +902,78 @@ class SubcriptionSetup extends React.Component {
                                           {this.state.checkbox.instagram &&
                                           this.state.checkbox.facebook &&
                                           this.state.checkbox.checkbox3 ? (
-                                            this.state.singlePackage
-                                              .package_name === "Premium" ? (
-                                              <Button
-                                                onClick={() => {
-                                                  this.updatePackage(
-                                                    userInfo?.user_id,
-                                                    this.state.singlePackage
-                                                      .package_id
-                                                  );
-                                                }}
-                                              >
-                                                Continue
-                                              </Button>
-                                            ) : (
-                                              <>
-                                                {this.state.paymentLoading ? (
-                                                  <Button>
-                                                    <Loader />
-                                                  </Button>
-                                                ) : (
-                                                  <Button
-                                                    onClick={() => {
-                                                      this.setState({
-                                                        paymentLoading: true,
-                                                      });
-                                                      this.props
-                                                        .updateSubscription({
-                                                          price_id:
-                                                            this.getPriceId(
-                                                              this.state.plan.toLowerCase(),
-                                                              this.state
-                                                                .singlePackage
-                                                                .package_name,
-                                                              this.state.prices
-                                                            ),
-                                                          package_id:
+                                            // this.state.singlePackage
+                                            //   .package_name === "Premium" ? (
+                                            //   <Button
+                                            //     onClick={() => {
+                                            //       this.updatePackage(
+                                            //         userInfo?.user_id,
+                                            //         this.state.singlePackage
+                                            //           .package_id
+                                            //       );
+                                            //     }}
+                                            //   >
+                                            //     Continue
+                                            //   </Button>
+                                            // ) : (
+                                            <>
+                                              {this.state.paymentLoading ? (
+                                                <Button>
+                                                  <Loader />
+                                                </Button>
+                                              ) : (
+                                                <Button
+                                                  onClick={() => {
+                                                    this.setState({
+                                                      paymentLoading: true,
+                                                    });
+                                                    this.props
+                                                      .updateSubscription({
+                                                        price_id:
+                                                          this.getPriceId(
+                                                            this.state.plan.toLowerCase(),
                                                             this.state
                                                               .singlePackage
-                                                              .package_id,
-                                                        })
-                                                        .then((res) => {
-                                                          this.setState({
-                                                            paymentLoading: false,
-                                                          });
-                                                          localStorage.setItem(
-                                                            "userInfo",
-                                                            JSON.stringify({
-                                                              ...userInfo,
-                                                              package:
-                                                                res.message,
-                                                            })
-                                                          );
-                                                          window.open(
-                                                            res.url,
-                                                            "_self"
-                                                          );
-                                                        })
-                                                        .catch((err) => {
-                                                          this.setState({
-                                                            paymentLoading: false,
-                                                          });
-                                                          toast.error(
-                                                            err.response.data
-                                                              .message
-                                                          );
+                                                              .package_name,
+                                                            this.state.prices
+                                                          ),
+                                                        package_id:
+                                                          this.state
+                                                            .singlePackage
+                                                            .package_id,
+                                                      })
+                                                      .then((res) => {
+                                                        this.setState({
+                                                          paymentLoading: false,
                                                         });
-                                                    }}
-                                                  >
-                                                    Make Payment
-                                                  </Button>
-                                                )}
-                                              </>
-                                            )
+                                                        localStorage.setItem(
+                                                          "userInfo",
+                                                          JSON.stringify({
+                                                            ...userInfo,
+                                                            package:
+                                                              res.message,
+                                                          })
+                                                        );
+                                                        window.open(
+                                                          res.url,
+                                                          "_self"
+                                                        );
+                                                      })
+                                                      .catch((err) => {
+                                                        this.setState({
+                                                          paymentLoading: false,
+                                                        });
+                                                        toast.error(
+                                                          err.response.data
+                                                            .message
+                                                        );
+                                                      });
+                                                  }}
+                                                >
+                                                  Make Payment
+                                                </Button>
+                                              )}
+                                            </>
                                           ) : null}
                                         </div>
                                       </div>
