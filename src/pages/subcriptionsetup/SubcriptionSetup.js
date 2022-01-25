@@ -314,85 +314,116 @@ class SubcriptionSetup extends React.Component {
                           <h5>Manage Plan</h5>
                           <div className="row">
                             <div className="colbx-inr col-md-12">
-                              {/* <div className="checkbox abc-checkbox abc-checkbox-primary">
-                                <Input
-                                  name="payment"
-                                  value="Monthly"
-                                  className="mt-0"
-                                  id="checkbox1"
-                                  type="radio"
-                                  onChange={(e) => {
-                                    this.setState({ plan: e.target.value });
-                                  }}
-                                />{" "}
-                                <Label for="checkbox1" />
-                                Pay Monthly: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
-                                  <>
-                                    {
-                                      this.state.singlePackage
-                                        .package_amount_monthly
-                                    }
-                                  </>
-                                ) : (
-                                  <>
-                                    <del>
-                                      {
-                                        this.state.singlePackage
-                                          .package_amount_monthly
-                                      }
-                                    </del>{" "}
-                                    <ins>(Free For 90 Days)</ins>
-                                  </>
-                                )}
-                              </div>
-                              <div className="checkbox abc-checkbox abc-checkbox-primary">
-                                <Input
-                                  defaultChecked
-                                  name="payment"
-                                  value="Yearly"
-                                  className="mt-0"
-                                  id="checkbox2"
-                                  type="radio"
-                                  onChange={(e) => {
-                                    this.setState({ plan: e.target.value });
-                                  }}
-                                />{" "}
-                                <Label for="checkbox2" />
-                                Pay Yearly & Save: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
-                                  <>
-                                    {
-                                      this.state.singlePackage
-                                        .package_amount_yearly
-                                    }{" "}
-                                    &nbsp; (Save{" "}
-                                    {this.state.singlePackage.yearly_discount}
-                                    %)
-                                  </>
-                                ) : (
-                                  <>
-                                    <del>
-                                      {
-                                        this.state.singlePackage
-                                          .package_amount_yearly
-                                      }
-                                    </del>{" "}
-                                    &nbsp; (Save{" "}
-                                    <del>
-                                      {this.state.singlePackage.yearly_discount}
-                                    </del>
-                                    %) <ins>(Free For 90 Days)</ins>
-                                  </>
-                                )} */}
-                              {/* {
+                              {userInfo.package.package_name == "Basic" ? (
+                                <>
+                                  <div className="checkbox abc-checkbox abc-checkbox-primary">
+                                    <Input
+                                      name="payment"
+                                      value="Monthly"
+                                      className="mt-0"
+                                      id="checkbox1"
+                                      type="radio"
+                                      onChange={(e) => {
+                                        this.setState({ plan: e.target.value });
+                                      }}
+                                    />{" "}
+                                    <Label for="checkbox1" />
+                                    Pay Monthly: $
+                                    {this.state.singlePackage.package_name !==
+                                    "Premium" ? (
+                                      <>
+                                        {
+                                          this.state.singlePackage
+                                            .package_amount_monthly
+                                        }
+                                      </>
+                                    ) : (
+                                      <>
+                                        {/* <del> */}
+                                        {
+                                          this.state.singlePackage
+                                            .package_amount_monthly
+                                        }
+                                        {/* </del>{" "}
+                                        <ins>(Free For 90 Days)</ins> */}
+                                      </>
+                                    )}
+                                  </div>
+                                  <div className="checkbox abc-checkbox abc-checkbox-primary">
+                                    <Input
+                                      defaultChecked
+                                      name="payment"
+                                      value="Yearly"
+                                      className="mt-0"
+                                      id="checkbox2"
+                                      type="radio"
+                                      onChange={(e) => {
+                                        this.setState({ plan: e.target.value });
+                                      }}
+                                    />{" "}
+                                    <Label for="checkbox2" />
+                                    Pay Yearly & Save: $
+                                    {this.state.singlePackage.package_name !==
+                                    "Premium" ? (
+                                      <>
+                                        {
+                                          this.state.singlePackage
+                                            .package_amount_yearly
+                                        }{" "}
+                                        &nbsp; (Save{" "}
+                                        {
+                                          this.state.singlePackage
+                                            .yearly_discount
+                                        }
+                                        %)
+                                      </>
+                                    ) : (
+                                      <>
+                                        {/* <del> */}
+                                        {
+                                          this.state.singlePackage
+                                            .package_amount_yearly
+                                        }
+                                        {/* </del>{" "} */}
+                                        &nbsp; (Save {/* <del> */}
+                                        {
+                                          this.state.singlePackage
+                                            .yearly_discount
+                                        }
+                                        {/* </del>
+                                        %) <ins>(Free For 90 Days)</ins> */}
+                                      </>
+                                    )}
+                                    {/* {
                                   this.state.singlePackage.package_amount_yearly
                                 }{" "}
                                 &nbsp; (Save{" "}
                                 {this.state.singlePackage.yearly_discount}%) */}
-                              {/* </div> */}
+                                  </div>
+                                </>
+                              ) : (
+                                <>
+                                  {userInfo.package?.recurring_payment_type ==
+                                  "Monthly" ? (
+                                    <>
+                                      Pay Monthly: $
+                                      {
+                                        this.state.singlePackage
+                                          .package_amount_monthly
+                                      }
+                                    </>
+                                  ) : (
+                                    <>
+                                      Pay Yearly: $
+                                      {
+                                        this.state.singlePackage
+                                          .package_amount_yearly
+                                      }
+                                    </>
+                                  )}
+                                </>
+                              )}
+
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
                                   <>
@@ -927,47 +958,80 @@ class SubcriptionSetup extends React.Component {
                                                     this.setState({
                                                       paymentLoading: true,
                                                     });
-                                                    this.props
-                                                      .updateSubscription({
-                                                        price_id:
-                                                          this.getPriceId(
-                                                            this.state.plan.toLowerCase(),
+                                                    if (
+                                                      userInfo.package
+                                                        .package_name == "Basic"
+                                                    ) {
+                                                      this.props
+                                                        .makePayment({
+                                                          price_id:
+                                                            this.getPriceId(
+                                                              this.state.plan.toLowerCase(),
+                                                              this.state
+                                                                .singlePackage
+                                                                .package_name,
+                                                              this.state.prices
+                                                            ),
+                                                          package_id:
                                                             this.state
                                                               .singlePackage
-                                                              .package_name,
-                                                            this.state.prices
-                                                          ),
-                                                        package_id:
-                                                          this.state
-                                                            .singlePackage
-                                                            .package_id,
-                                                      })
-                                                      .then((res) => {
-                                                        this.setState({
-                                                          paymentLoading: false,
+                                                              .package_id,
+                                                          recurring_payment_type:
+                                                            this.state
+                                                              .selectedtab,
+                                                        })
+                                                        .then((res) => {
+                                                          this.setState({
+                                                            paymentLoading: false,
+                                                          });
+                                                          window.open(
+                                                            res,
+                                                            "_self"
+                                                          );
                                                         });
-                                                        localStorage.setItem(
-                                                          "userInfo",
-                                                          JSON.stringify({
-                                                            ...userInfo,
-                                                            package:
-                                                              res.message,
-                                                          })
-                                                        );
-                                                        window.open(
-                                                          res.url,
-                                                          "_self"
-                                                        );
-                                                      })
-                                                      .catch((err) => {
-                                                        this.setState({
-                                                          paymentLoading: false,
+                                                    } else {
+                                                      this.props
+                                                        .updateSubscription({
+                                                          price_id:
+                                                            this.getPriceId(
+                                                              this.state.plan.toLowerCase(),
+                                                              this.state
+                                                                .singlePackage
+                                                                .package_name,
+                                                              this.state.prices
+                                                            ),
+                                                          package_id:
+                                                            this.state
+                                                              .singlePackage
+                                                              .package_id,
+                                                        })
+                                                        .then((res) => {
+                                                          this.setState({
+                                                            paymentLoading: false,
+                                                          });
+                                                          localStorage.setItem(
+                                                            "userInfo",
+                                                            JSON.stringify({
+                                                              ...userInfo,
+                                                              package:
+                                                                res.message,
+                                                            })
+                                                          );
+                                                          window.open(
+                                                            res.url,
+                                                            "_self"
+                                                          );
+                                                        })
+                                                        .catch((err) => {
+                                                          this.setState({
+                                                            paymentLoading: false,
+                                                          });
+                                                          toast.error(
+                                                            err.response.data
+                                                              .message
+                                                          );
                                                         });
-                                                        toast.error(
-                                                          err.response.data
-                                                            .message
-                                                        );
-                                                      });
+                                                    }
                                                   }}
                                                 >
                                                   Make Payment
