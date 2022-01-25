@@ -112,6 +112,7 @@ class SubcriptionSetup extends React.Component {
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
     this.setState({ package_id: event.value });
+    this.setState({ promo_error: false });
 
     if (this.state.packageIndex < event.index) {
       this.setState({ upgrade: true, showPaymentButton: true });
@@ -389,39 +390,36 @@ class SubcriptionSetup extends React.Component {
                               {/* </div> */}
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
-                                  {this.state.singlePackage.package_name ===
-                                  "Premium" ? null : (
-                                    <>
-                                      <h4 className="mb-0">Have Promo Code?</h4>
-                                      <span class="text-danger promo-err-box col-md-12 pl-0">
-                                        {this.state.promo_error
-                                          ? // <span className="text-danger mt-2">
-                                            this.state.promoCodeError
-                                          : // </span>
-                                            null}
-                                      </span>
-                                      <div className="acct-promo-sec-inr">
-                                        <input
-                                          type="text"
-                                          name="promo_code"
-                                          placeholder="Enter Promo Code"
-                                          value={this.state.promo_code}
-                                          className="form-control"
-                                          onInput={this.promoChange}
-                                        />
-                                        <Button
-                                          type="submit"
-                                          disabled={
-                                            !this.state.promoLoading
-                                              ? false
-                                              : true
-                                          }
-                                        >
-                                          Apply
-                                        </Button>
-                                      </div>
-                                    </>
-                                  )}
+                                  <>
+                                    <h4 className="mb-0">Have Promo Code?</h4>
+                                    <span class="text-danger promo-err-box col-md-12 pl-0">
+                                      {this.state.promo_error
+                                        ? // <span className="text-danger mt-2">
+                                          this.state.promoCodeError
+                                        : // </span>
+                                          null}
+                                    </span>
+                                    <div className="acct-promo-sec-inr">
+                                      <input
+                                        type="text"
+                                        name="promo_code"
+                                        placeholder="Enter Promo Code"
+                                        value={this.state.promo_code}
+                                        className="form-control"
+                                        onInput={this.promoChange}
+                                      />
+                                      <Button
+                                        type="submit"
+                                        disabled={
+                                          !this.state.promoLoading
+                                            ? false
+                                            : true
+                                        }
+                                      >
+                                        Apply
+                                      </Button>
+                                    </div>
+                                  </>
 
                                   <div className="make-canc-pay">
                                     {!this.state.checkbox.instagram ||
@@ -434,29 +432,10 @@ class SubcriptionSetup extends React.Component {
                                           });
                                         }}
                                       >
-                                        {this.state.singlePackage
-                                          .package_name === "Premium"
-                                          ? "Start Trial"
-                                          : "Make Payment"}
+                                        Make Payment
                                       </Button>
                                     ) : (
                                       <Button>Make Payment</Button>
-                                      // <PaymentButton
-                                      //   plan={this.state.plan}
-                                      //   userId={userInfo?.user_id}
-                                      //   packageId={
-                                      //     this.state.singlePackage.package_id
-                                      //   }
-                                      //   paymentMethod={
-                                      //     this.state.singlePackage.package_name
-                                      //   }
-                                      //   name={
-                                      //     this.state.singlePackage
-                                      //       .package_name === "Premium"
-                                      //       ? "Start Trial"
-                                      //       : "Make Payment"
-                                      //   }
-                                      // />
                                     )}
 
                                     <Button
@@ -484,7 +463,10 @@ class SubcriptionSetup extends React.Component {
                                     size="lg"
                                   >
                                     <Modal.Header closeButton>
-                                      <Modal.Title>Premium Package</Modal.Title>
+                                      <Modal.Title>
+                                        {this.state.singlePackage.package_name}{" "}
+                                        Package
+                                      </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                       <div className="funkyradio">
@@ -712,7 +694,10 @@ class SubcriptionSetup extends React.Component {
                                     size="lg"
                                   >
                                     <Modal.Header closeButton>
-                                      <Modal.Title>Premium Package</Modal.Title>
+                                      <Modal.Title>
+                                        {this.state.singlePackage.package_name}{" "}
+                                        Package
+                                      </Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                       <div className="funkyradio">
