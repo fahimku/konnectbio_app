@@ -89,7 +89,7 @@ class Payment extends React.Component {
         userInfo?.fb_token &&
         userInfo?.page_token
       ) {
-        redirectURL = "/app/account/setup";
+        redirectURL = "/app/subcription/setup/";
       } else if (
         userInfo?.package?.package_name === "Premium Plus" &&
         !userInfo?.fb_token &&
@@ -101,13 +101,13 @@ class Payment extends React.Component {
       if (!userInfo?.package) {
         redirectURL = "/package";
       } else {
-        redirectURL = "/app/account/setup/";
+        redirectURL = "/app/subcription/setup/";
       }
     } else if (params.status === "return") {
       if (!userInfo?.package) {
         redirectURL = "/package";
       } else {
-        redirectURL = "/app/account/setup/";
+        redirectURL = "/app/subcription/setup/";
       }
     }
 
