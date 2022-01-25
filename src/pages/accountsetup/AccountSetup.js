@@ -329,7 +329,7 @@ class AccountSetup extends React.Component {
                                   ? userInfo1.package.package_name
                                   : ""}
                               </h6>
-                              {!this.props.connectPage &&
+                              {/* {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
                                   "Premium" && (
                                   <button
@@ -340,7 +340,7 @@ class AccountSetup extends React.Component {
                                   >
                                     Cancel
                                   </button>
-                                )}
+                                )} */}
                             </div>
                           </div>
                         </div>
