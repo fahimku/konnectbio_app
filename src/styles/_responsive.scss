@@ -733,6 +733,17 @@
         height: -o-calc(100% - 80px);
         height: calc(100% - 80px);
       }
+
+      .calendar-controls{
+          text-align: left !important;
+          margin-top:20px;
+      }
+      .fc .fc-toolbar.fc-header-toolbar{
+          margin-top:1.5em;
+      }
+      .fc .fc-toolbar{
+          justify-content: start !important;
+      }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
