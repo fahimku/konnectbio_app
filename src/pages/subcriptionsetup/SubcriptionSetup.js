@@ -7,7 +7,7 @@ import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import * as subActions from "../../actions/subscribe";
 import Loader from "../../components/Loader/Loader";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -32,9 +32,10 @@ class SubcriptionSetup extends React.Component {
       help2: true,
       help3: true,
       promo_code: "",
-      prices:[],
-      paymentLoading:false,
-      plan:"Yearly"
+      prices: [],
+      paymentLoading: false,
+      plan: "Yearly",
+      cancelPlan: false,
     };
   }
   componentDidMount() {
@@ -214,7 +215,21 @@ class SubcriptionSetup extends React.Component {
               <div className="profile_box_main col-md-6">
                 <div className="card analytic-box">
                   <div className="card-row">
-                    <h5>Subcription Details</h5>
+                    <div className="row">
+                      <div className="col-8 col-md-9">
+                        <h5>Subcription Details</h5>
+                      </div>
+                      <div className="col-4 col-md-3">
+                        <button
+                          // onClick={() => {
+                          //   this.setState({ cancelPlan: true });
+                          // }}
+                          className="btn-block btn text-white btn-sm disconnect-btn"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
                     <div className="subscription-caption">
                       <div className="row count-main-box">
                         <div className="col-12 count-box">
@@ -364,7 +379,7 @@ class SubcriptionSetup extends React.Component {
                                     %) <ins>(Free For 90 Days)</ins>
                                   </>
                                 )} */}
-                                {/* {
+                              {/* {
                                   this.state.singlePackage.package_amount_yearly
                                 }{" "}
                                 &nbsp; (Save{" "}
@@ -911,34 +926,53 @@ class SubcriptionSetup extends React.Component {
                                             ) : (
                                               <>
                                                 {this.state.paymentLoading ? (
-                                                    <Button>
-                                                      <Loader />
-                                                    </Button>
-                                                  ) : (
-                                                    <Button
-                                                      onClick={() => {
-                                                        this.setState({ paymentLoading: true });
-                                                        this.props
-                                                          .updateSubscription({
-                                                            price_id: this.getPriceId(
+                                                  <Button>
+                                                    <Loader />
+                                                  </Button>
+                                                ) : (
+                                                  <Button
+                                                    onClick={() => {
+                                                      this.setState({
+                                                        paymentLoading: true,
+                                                      });
+                                                      this.props
+                                                        .updateSubscription({
+                                                          price_id:
+                                                            this.getPriceId(
                                                               this.state.plan.toLowerCase(),
-                                                              this.state.singlePackage.package_name,
+                                                              this.state
+                                                                .singlePackage
+                                                                .package_name,
                                                               this.state.prices
                                                             ),
-                                                            package_id: this.state.singlePackage.package_id
-                                                          })
-                                                          .then((res) => {
-                                                            this.setState({ paymentLoading: false });
-                                                            window.open(res, "_self");
-                                                          }).catch((err)=>{
-                                                            this.setState({paymentLoading:false})
-                                                            toast.error(err.response.data.message)
-                                                          })
-                                                      }}
-                                                    >
-                                                      Make Payment
-                                                    </Button>
-                                                  )}
+                                                          package_id:
+                                                            this.state
+                                                              .singlePackage
+                                                              .package_id,
+                                                        })
+                                                        .then((res) => {
+                                                          this.setState({
+                                                            paymentLoading: false,
+                                                          });
+                                                          window.open(
+                                                            res,
+                                                            "_self"
+                                                          );
+                                                        })
+                                                        .catch((err) => {
+                                                          this.setState({
+                                                            paymentLoading: false,
+                                                          });
+                                                          toast.error(
+                                                            err.response.data
+                                                              .message
+                                                          );
+                                                        });
+                                                    }}
+                                                  >
+                                                    Make Payment
+                                                  </Button>
+                                                )}
                                               </>
                                             )
                                           ) : null}
@@ -962,4 +996,4 @@ class SubcriptionSetup extends React.Component {
     );
   }
 }
-export default connect(null,subActions)(SubcriptionSetup);
+export default connect(null, subActions)(SubcriptionSetup);

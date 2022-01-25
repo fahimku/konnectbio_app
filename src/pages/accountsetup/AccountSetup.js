@@ -314,7 +314,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              <div className="profile_box_main col-md-4">
+              {/* <div className="profile_box_main col-md-4">
                 <div className="dash_block_profile">
                   <div className="dash_content_profile">
                     <h5>Manage Plan</h5>
@@ -329,7 +329,7 @@ class AccountSetup extends React.Component {
                                   ? userInfo1.package.package_name
                                   : ""}
                               </h6>
-                              {/* {!this.props.connectPage &&
+                              {!this.props.connectPage &&
                                 userInfo1.package.package_name ===
                                   "Premium" && (
                                   <button
@@ -340,12 +340,12 @@ class AccountSetup extends React.Component {
                                   >
                                     Cancel
                                   </button>
-                                )} */}
+                                )}
                             </div>
                           </div>
                         </div>
 
-                        {/* <div className="dp_fields-setup">
+                         <div className="dp_fields-setup">
                           <div className="mb-3">
                             <label>Change Plan:</label>
                             <Select
@@ -360,7 +360,7 @@ class AccountSetup extends React.Component {
                               onChange={(event) => this.handlePackage(event)}
                             />
                           </div>
-                        </div> */}
+                        </div> 
 
                         <div className="dp_fields-setup">
                           <div className="sm-b mb-2">
@@ -370,10 +370,10 @@ class AccountSetup extends React.Component {
                                 {this.state.singlePackage.category_count}
                               </strong>
                             </span>
-                            {/* {this.state.singlePackage.package_name !==
+                            {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more categories</span>
-                            )} */}
+                            )} 
                           </div>
                         </div>
 
@@ -386,10 +386,10 @@ class AccountSetup extends React.Component {
                               </strong>
                             </span>
 
-                            {/* {this.state.singlePackage.package_name !==
+                             {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more links</span>
-                            )} */}
+                            )}
                           </div>
                         </div>
                         <div className="dp_fields-setup">
@@ -437,7 +437,7 @@ class AccountSetup extends React.Component {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <DisconnectInstagram
                 userId={userInfo1?.user_id}
