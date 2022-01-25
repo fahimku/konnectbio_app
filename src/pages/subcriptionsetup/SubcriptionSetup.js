@@ -251,6 +251,7 @@ class SubcriptionSetup extends React.Component {
                             {this.state.singlePackage.link_count}
                           </h3>
                         </div>
+
                         <div className="col-12 count-box">
                           <h5 className="count-title">Hashtags</h5>
                           <h3 className="count">
@@ -263,18 +264,22 @@ class SubcriptionSetup extends React.Component {
                             {this.state.singlePackage.profile_limit}
                           </h3>
                         </div>
-                        <div className="col-12 count-box">
-                          <h5 className="count-title">Payment Type</h5>
-                          <h3 className="count">
-                            {userInfo.package?.recurring_payment_type}
-                          </h3>
-                        </div>
-                        <div className="col-12 count-box">
-                          <h5 className="count-title">Next Payment</h5>
-                          <h3 className="count">
-                            {userInfo.package?.next_payment_date}
-                          </h3>
-                        </div>
+                        {userInfo.package.package_name !== "Basic" ? (
+                          <>
+                            <div className="col-12 count-box">
+                              <h5 className="count-title">Payment Type</h5>
+                              <h3 className="count">
+                                {userInfo.package?.recurring_payment_type}
+                              </h3>
+                            </div>
+                            <div className="col-12 count-box">
+                              <h5 className="count-title">Next Payment</h5>
+                              <h3 className="count">
+                                {userInfo.package?.next_payment_date}
+                              </h3>
+                            </div>
+                          </>
+                        ) : null}
                         <div className="col-12 count-box align-items-center">
                           <h5 className="count-title col-md-6 pl-0 ">
                             Upgrade Subscription
