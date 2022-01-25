@@ -38,7 +38,7 @@ class Payment extends React.Component {
       ) {
         history.push("/connect");
       } else {
-        history.push("/app/account/setup");
+        history.push("/app/subcription/setup");
       }
     }
   }
