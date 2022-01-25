@@ -52,7 +52,7 @@ class Payment extends React.Component {
 
     if (params.status === "success") {
       this.setState({ success: true });
-      this.updatePackage();
+      // this.updatePackage();
     }
   }
   updatePackage = async () => {
