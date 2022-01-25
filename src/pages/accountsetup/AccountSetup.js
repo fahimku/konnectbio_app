@@ -295,7 +295,6 @@ class AccountSetup extends React.Component {
         },
       }),
     };
-    console.log(this.state.singlePackage, "package");
     return (
       <div
         className={`profile-page account-setup ${
@@ -346,7 +345,7 @@ class AccountSetup extends React.Component {
                           </div>
                         </div>
 
-                        <div className="dp_fields-setup">
+                        {/* <div className="dp_fields-setup">
                           <div className="mb-3">
                             <label>Change Plan:</label>
                             <Select
@@ -361,7 +360,7 @@ class AccountSetup extends React.Component {
                               onChange={(event) => this.handlePackage(event)}
                             />
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="dp_fields-setup">
                           <div className="sm-b mb-2">
