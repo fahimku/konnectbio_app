@@ -264,12 +264,12 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Payment Type</h5>
-                          <h3 className="count">Monthly</h3>
+                          <h3 className="count">{userInfo.recurring_payment_type}</h3>
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Next Payment</h5>
                           <h3 className="count">
-                            {this.state.singlePackage.created_date}
+                            {userInfo.next_payment_date}
                           </h3>
                         </div>
                         <div className="col-12 count-box align-items-center">
