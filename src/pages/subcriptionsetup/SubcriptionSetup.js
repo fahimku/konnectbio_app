@@ -5,6 +5,10 @@ import { createBrowserHistory } from "history";
 import { toast } from "react-toastify";
 import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
+import * as subActions from "../../actions/subscribe";
+import Loader from "../../components/Loader/Loader";
+import {connect} from "react-redux";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -28,9 +32,15 @@ class SubcriptionSetup extends React.Component {
       help2: true,
       help3: true,
       promo_code: "",
+      prices:[],
+      paymentLoading:false,
+      plan:"Yearly"
     };
   }
   componentDidMount() {
+    this.props.configSubs().then((res) => {
+      this.setState({ prices: res.message });
+    });
     this.getPackages();
   }
 
@@ -180,6 +190,15 @@ class SubcriptionSetup extends React.Component {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
 
+  getPriceId = (value, name, arr) => {
+    const updatedArr = arr.filter(
+      (item) =>
+        item.interval === value.slice(0, value.length - 2) &&
+        item.product_name == name
+    );
+    return updatedArr[0].price_id;
+  };
+
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
@@ -272,9 +291,8 @@ class SubcriptionSetup extends React.Component {
                           <h5>Manage Plan</h5>
                           <div className="row">
                             <div className="colbx-inr col-md-12">
-                              <div className="checkbox abc-checkbox abc-checkbox-primary">
+                              {/* <div className="checkbox abc-checkbox abc-checkbox-primary">
                                 <Input
-                                  defaultChecked
                                   name="payment"
                                   value="Monthly"
                                   className="mt-0"
@@ -308,6 +326,7 @@ class SubcriptionSetup extends React.Component {
                               </div>
                               <div className="checkbox abc-checkbox abc-checkbox-primary">
                                 <Input
+                                  defaultChecked
                                   name="payment"
                                   value="Yearly"
                                   className="mt-0"
@@ -344,13 +363,13 @@ class SubcriptionSetup extends React.Component {
                                     </del>
                                     %) <ins>(Free For 90 Days)</ins>
                                   </>
-                                )}
+                                )} */}
                                 {/* {
                                   this.state.singlePackage.package_amount_yearly
                                 }{" "}
                                 &nbsp; (Save{" "}
                                 {this.state.singlePackage.yearly_discount}%) */}
-                              </div>
+                              {/* </div> */}
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
                                   {this.state.singlePackage.package_name ===
@@ -890,17 +909,37 @@ class SubcriptionSetup extends React.Component {
                                                 Continue
                                               </Button>
                                             ) : (
-                                              <Button
-                                              // onClick={() => {
-                                              //   this.updatePackage(
-                                              //     userInfo?.user_id,
-                                              //     this.state.singlePackage
-                                              //       .package_id
-                                              //   );
-                                              // }}
-                                              >
-                                                Make Payment
-                                              </Button>
+                                              <>
+                                                {this.state.paymentLoading ? (
+                                                    <Button>
+                                                      <Loader />
+                                                    </Button>
+                                                  ) : (
+                                                    <Button
+                                                      onClick={() => {
+                                                        this.setState({ paymentLoading: true });
+                                                        this.props
+                                                          .updateSubscription({
+                                                            price_id: this.getPriceId(
+                                                              this.state.plan.toLowerCase(),
+                                                              this.state.singlePackage.package_name,
+                                                              this.state.prices
+                                                            ),
+                                                            package_id: this.state.singlePackage.package_id
+                                                          })
+                                                          .then((res) => {
+                                                            this.setState({ paymentLoading: false });
+                                                            window.open(res, "_self");
+                                                          }).catch((err)=>{
+                                                            this.setState({paymentLoading:false})
+                                                            toast.error(err.response.data.message)
+                                                          })
+                                                      }}
+                                                    >
+                                                      Make Payment
+                                                    </Button>
+                                                  )}
+                                              </>
                                             )
                                           ) : null}
                                         </div>
@@ -923,4 +962,4 @@ class SubcriptionSetup extends React.Component {
     );
   }
 }
-export default SubcriptionSetup;
+export default connect(null,subActions)(SubcriptionSetup);

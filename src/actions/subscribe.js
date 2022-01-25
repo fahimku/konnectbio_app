@@ -12,3 +12,8 @@ export const makePayment = (data) => async (dispatch) => {
     const res = await axios.post(`${config.hostApi}/v1/subscribe/checkout`,data)
     return res.data.message
 };
+
+export const updateSubscription = (data) => async (dispatch) => {
+    const res = await axios.post(`${config.hostApi}/v1/subscribe/upgrade`,data)
+    return res.data.message
+};
