@@ -45,6 +45,7 @@ import CustomCards from "../../pages/customCards/customCards";
 import customCards from "../../pages/customCards/customCards";
 import SchedulePost from "../../pages/schedulePost/index";
 import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
+import SubcriptionSetup from "../../pages/subcriptionsetup/SubcriptionSetup";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -230,6 +231,11 @@ class Layout extends React.Component {
                         path="/app/account/affiliate"
                         exact
                         component={AffiliateSetup}
+                      />
+                      <Route
+                        path="/app/subcription/setup"
+                        exact
+                        component={SubcriptionSetup}
                       />
                     </Switch>
                   </Router>

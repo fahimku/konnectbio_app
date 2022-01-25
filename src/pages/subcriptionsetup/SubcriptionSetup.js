@@ -1,79 +1,36 @@
 import React from "react";
 import axios from "axios";
 import Select from "react-select";
+import { createBrowserHistory } from "history";
+import { toast } from "react-toastify";
 import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
-import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-import ResetAccount from "./ResetAccount";
-import DisconnectInstagram from "./DisconnectInstagram";
-import { createBrowserHistory } from "history";
-// import CancelSubsciption from "./CancelSubsciption";
-import ConnectToFb from "../auth/connect/ConnectToFb";
-import { toast } from "react-toastify";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-class AccountSetup extends React.Component {
+class SubcriptionSetup extends React.Component {
   constructor(props) {
+    const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+
     super(props);
     this.state = {
-      packageIndex: "",
-      plan: "Monthly",
-      promoLoading: false,
+      packages: "",
+      package: userInfo1?.package?.package_name,
+      packageId: userInfo1?.package?.package_id,
+      userInfo: userInfo1,
       upgrade: false,
-      userInfo: userInfo,
-      cancelSubscription: true,
-      resetAccount: true,
-      resetModal: false,
-      showPaymentButton: false,
       allPackages: "",
       singlePackage: "",
-      myCategory: "",
-      userId: "",
-      category: [],
-      categoryIncluded: 0,
-      linksIncluded: 0,
-      defaultCategory: "",
-      saveCategories: "",
-      categoryError: "",
-      isInstagramConnected: false,
-      loading: false,
-      modal: false,
-      loadingInsta: false,
-      alert: true,
-      packages: "",
-      package: userInfo?.package?.package_name,
-      packageId: userInfo?.package?.package_id,
-      categoryAllow: userInfo?.package?.category_count,
-      package_amount: userInfo?.package?.package_amount,
-      promo_code: "",
+      packageIndex: "",
+      showPaymentButton: false,
       checkbox: {},
-      showPromo: false,
-      promo_error: false,
-      promoCodeError: "",
-      myPackage: "",
       help1: true,
       help2: true,
       help3: true,
-      cancelPlan: false,
-      disabledCancelPlan: false,
-      showPaymentModel: false,
-      package_id: "",
+      promo_code: "",
     };
   }
-
   componentDidMount() {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    this.setState({ userInfo: userInfo });
-    // const params = queryString.parse(window.location.search);
-    if (this.props.resetAccount === false) {
-      this.setState({ resetAccount: false });
-    }
-    if (userInfo?.access_token !== "") {
-      this.setState({ isInstagramConnected: true });
-    }
-    this.setState({ userId: userInfo?.user_id });
     this.getPackages();
   }
 
@@ -146,7 +103,7 @@ class AccountSetup extends React.Component {
     this.setState({ package_id: event.value });
 
     if (this.state.packageIndex < event.index) {
-      this.setState({ upgrade: true });
+      this.setState({ upgrade: true, showPaymentButton: true });
     } else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
       this.setState({ showPaymentButton: false });
@@ -154,6 +111,24 @@ class AccountSetup extends React.Component {
       this.setState({ upgrade: false });
       this.setState({ showPaymentButton: false });
     }
+  };
+  handleCheckbox = (e) => {
+    const target = e.target;
+    const { checkbox } = this.state;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    checkbox[target.name] = value;
+    this.setState({
+      checkbox,
+    });
+  };
+  handleClose = () => {
+    this.setState({ checkbox: {} });
+    this.setState({
+      showPromo: false,
+      showPaymentModel: false,
+      promo_code: "",
+    });
+    this.setState({ help1: true, help2: true, help3: true });
   };
 
   handleSubmit = async (e) => {
@@ -201,289 +176,98 @@ class AccountSetup extends React.Component {
         });
     }
   };
-
-  toggleModal = () => {
-    const { modal } = this.state;
-    this.setState({
-      modal: !modal,
-    });
-  };
-
-  togglerResetModal = () => {
-    const { resetModal } = this.state;
-    this.setState({
-      resetModal: !resetModal,
-    });
-  };
-
   promoChange = (e) => {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
 
-  handleClose = () => {
-    this.setState({ checkbox: {} });
-    this.setState({
-      showPromo: false,
-      showPaymentModel: false,
-      promo_code: "",
-    });
-    this.setState({ help1: true, help2: true, help3: true });
-  };
-
-  handleCheckbox = (e) => {
-    const target = e.target;
-    const { checkbox } = this.state;
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    checkbox[target.name] = value;
-    this.setState({
-      checkbox,
-    });
-  };
-
-  cancelSubscription = async (e) => {
-    this.setState({ disabledCancelPlan: true });
-    await axios
-      .put(`/users/revise/cancelSubscription/${this.state.userId}`)
-      .then(() => history.push("/logout"));
-  };
-
-  renderFbConnection = (userInfo1) => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
-    if (
-      package1 == "Premium" ||
-      this.state.myPackage == "Premium" ||
-      package1 == "Premium Plus" ||
-      this.state.myPackage == "Premium Plus"
-    ) {
-      return (
-        <ConnectToFb
-          userId={userInfo1.user_id}
-          setFbPageLocal={this.props.setFbPageLocal}
-          username={this.props.username}
-          username1={userInfo1.username}
-        />
-      );
-    }
-  };
-  updatePackage = async (id, packageId) => {
-    await axios
-      .put(`users/revise/package/${id}`, {
-        package_id: packageId,
-      })
-      .then((response) => {
-        const userInformation = localStorage.getItem("userInfo");
-        const parseUserInformation = JSON.parse(userInformation);
-        parseUserInformation.package = response.data.message;
-        const storeUserInformation = JSON.stringify(parseUserInformation);
-        localStorage.setItem("userInfo", storeUserInformation);
-        history.push("/connect");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
   render() {
-    let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    const style = {
-      control: (base) => ({
-        ...base,
-        height: "44px",
-        boxShadow: "none",
-        "&:hover": {
-          // border: "1px solid black",
-        },
-      }),
-    };
-    console.log(this.state.singlePackage, "package");
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
-      <div
-        className={`profile-page account-setup ${
-          this.props.className ? "connect-page" : ""
-        }`}
-      >
-        <div
-          className={
-            this.props.className ? this.props.className : "container-fluid"
-          }
-        >
+      <div className="profile-page account-setup">
+        <div className="container-fluid">
           <div className="mt-4 row">
             <div className="col-md-12">
-              <h4 className="page-title">Connection Setup</h4>
+              <h4 className="page-title">Subcription Setup</h4>
             </div>
           </div>
-
-          <div className={`profile_container_main container`}>
+          <div className="profile_container_main container">
             <div className="row">
-              <div className="profile_box_main col-md-4">
-                <div className="dash_block_profile">
-                  <div className="dash_content_profile">
-                    <h5>Manage Plan</h5>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="dp_fields-setup mb-0">
-                          <div className="row">
-                            <div className="pkg-cncl-btn d-flex col-md-12">
-                              <h6 className="package_name">
-                                Current Plan:{" "}
-                                {userInfo1?.package
-                                  ? userInfo1.package.package_name
-                                  : ""}
-                              </h6>
-                              {!this.props.connectPage &&
-                                userInfo1.package.package_name ===
-                                  "Premium" && (
-                                  <button
-                                    onClick={() => {
-                                      this.setState({ cancelPlan: true });
-                                    }}
-                                    className="btn-block btn text-white btn-sm disconnect-btn"
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
-                            </div>
-                          </div>
+              <div className="profile_box_main col-md-6">
+                <div className="card analytic-box">
+                  <div className="card-row">
+                    <h5>Subcription Details</h5>
+                    <div className="subscription-caption">
+                      <div className="row count-main-box">
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Current Subcription</h5>
+                          <h3 className="count">
+                            {userInfo.package.package_name}
+                          </h3>
                         </div>
-
-                        <div className="dp_fields-setup">
-                          <div className="mb-3">
-                            <label>Change Plan:</label>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Categories Included</h5>
+                          <h3 className="count">
+                            {this.state.singlePackage.category_count}
+                          </h3>
+                        </div>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Links Included</h5>
+                          <h3 className="count">
+                            {this.state.singlePackage.link_count}
+                          </h3>
+                        </div>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Hashtags</h5>
+                          <h3 className="count">
+                            {this.state.singlePackage.hashtag_limit}
+                          </h3>
+                        </div>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Profiles</h5>
+                          <h3 className="count">
+                            {this.state.singlePackage.profile_limit}
+                          </h3>
+                        </div>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Payment Type</h5>
+                          <h3 className="count">Monthly</h3>
+                        </div>
+                        <div className="col-12 count-box">
+                          <h5 className="count-title">Next Payment</h5>
+                          <h3 className="count">
+                            {this.state.singlePackage.created_date}
+                          </h3>
+                        </div>
+                        <div className="col-12 count-box align-items-center">
+                          <h5 className="count-title col-md-6 pl-0 ">
+                            Upgrade Subscription
+                          </h5>
+                          <h3 className="count col-md-6 pr-0">
                             <Select
                               isSearchable={false}
                               isOptionDisabled={(option) => option.isdisabled} // disable an option
                               options={this.state.packages}
-                              placeholder="Select package"
+                              placeholder="Select Package"
                               value={{
                                 label: this.state.package,
                                 value: this.state.packageId,
                               }}
                               onChange={(event) => this.handlePackage(event)}
                             />
-                          </div>
+                          </h3>
                         </div>
-
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Categories Included:{" "}
-                              <strong>
-                                {this.state.singlePackage.category_count}
-                              </strong>
-                            </span>
-                            {/* {this.state.singlePackage.package_name !==
-                              "Premium Plus" && (
-                              <span>Change Plan to have more categories</span>
-                            )} */}
-                          </div>
-                        </div>
-
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Links Included:{" "}
-                              <strong>
-                                {this.state.singlePackage.link_count}
-                              </strong>
-                            </span>
-
-                            {/* {this.state.singlePackage.package_name !==
-                              "Premium Plus" && (
-                              <span>Change Plan to have more links</span>
-                            )} */}
-                          </div>
-                        </div>
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Monitor Hashtags:{" "}
-                              <strong>
-                                {this.state.singlePackage.hashtag_limit}
-                              </strong>
-                            </span>
-                          </div>
-                        </div>
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Monitor Competition Profiles:{" "}
-                              <strong>
-                                {this.state.singlePackage.profile_limit}
-                              </strong>
-                            </span>
-                          </div>
-                        </div>
-                        {this.state.singlePackage.package_name !== "Basic" &&
-                          this.state.upgrade && (
-                            <div className="dp_fields-setup">
-                              <>
-                                <div className="mt-3">
-                                  <Button
-                                    variant="primary"
-                                    className="btn-block"
-                                    onClick={() => {
-                                      this.setState({
-                                        promo_error: false,
-                                        showPaymentButton: true,
-                                      });
-                                    }}
-                                  >
-                                    Upgrade Subscription
-                                  </Button>
-                                </div>
-                              </>
-                            </div>
-                          )}
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <DisconnectInstagram
-                userId={userInfo1?.user_id}
-                username={this.props.username}
-                username1={userInfo1?.username}
-                modal={(boolean) => {
-                  this.setState({ modal: boolean });
-                }}
-                url={this.props.url}
-                show={this.state.modal}
-                onHide={this.toggleModal}
-                loading={(boolean) => {
-                  this.setState({ loadingInsta: boolean });
-                }}
-                disabled={this.state.loadingInsta ? true : false}
-              />
-              {this.renderFbConnection(userInfo1)}
-              {this.state.resetAccount && (
-                <ResetAccount
-                  userId={userInfo1?.user_id}
-                  resetModal={(boolean) => {
-                    this.setState({ resetModal: boolean });
-                  }}
-                  show={this.state.resetModal}
-                  onHide={this.togglerResetModal}
-                  disabled={this.state.loadingInsta ? true : false}
-                  loading={(boolean) => {
-                    this.setState({ loadingInsta: boolean });
-                  }}
-                />
-              )}
             </div>
-
             {this.state.singlePackage.package_name !== "Basic" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
-                    <div className="profile_box_payment profile_box_main col-md-8">
-                      <div
-                        className={`dash_block_profile ${
-                          this.state.singlePackage.package_name === "Premium"
-                            ? "plan-premium-block"
-                            : ""
-                        }`}
-                      >
+                    <div className="profile_box_payment profile_box_main col-md-6">
+                      <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
                           <div className="row">
@@ -620,22 +404,23 @@ class AccountSetup extends React.Component {
                                           : "Make Payment"}
                                       </Button>
                                     ) : (
-                                      <PaymentButton
-                                        plan={this.state.plan}
-                                        userId={userInfo1?.user_id}
-                                        packageId={
-                                          this.state.singlePackage.package_id
-                                        }
-                                        paymentMethod={
-                                          this.state.singlePackage.package_name
-                                        }
-                                        name={
-                                          this.state.singlePackage
-                                            .package_name === "Premium"
-                                            ? "Start Trial"
-                                            : "Make Payment"
-                                        }
-                                      />
+                                      <Button>Make Payment</Button>
+                                      // <PaymentButton
+                                      //   plan={this.state.plan}
+                                      //   userId={userInfo?.user_id}
+                                      //   packageId={
+                                      //     this.state.singlePackage.package_id
+                                      //   }
+                                      //   paymentMethod={
+                                      //     this.state.singlePackage.package_name
+                                      //   }
+                                      //   name={
+                                      //     this.state.singlePackage
+                                      //       .package_name === "Premium"
+                                      //       ? "Start Trial"
+                                      //       : "Make Payment"
+                                      //   }
+                                      // />
                                     )}
 
                                     <Button
@@ -643,13 +428,13 @@ class AccountSetup extends React.Component {
                                         this.setState({
                                           showPaymentButton: false,
                                           package_id: "",
+                                          package:
+                                            userInfo?.package?.package_name,
+                                          packageId:
+                                            userInfo?.package?.package_id,
                                         });
                                       }}
                                       type="button"
-
-                                      // disabled={
-                                      //   !this.state.loading ? false : true
-                                      // }
                                     >
                                       Cancel
                                     </Button>
@@ -1096,7 +881,7 @@ class AccountSetup extends React.Component {
                                               <Button
                                                 onClick={() => {
                                                   this.updatePackage(
-                                                    userInfo1?.user_id,
+                                                    userInfo?.user_id,
                                                     this.state.singlePackage
                                                       .package_id
                                                   );
@@ -1105,18 +890,17 @@ class AccountSetup extends React.Component {
                                                 Continue
                                               </Button>
                                             ) : (
-                                              <PaymentButton
-                                                plan={this.state.plan}
-                                                userId={userInfo1?.user_id}
-                                                packageId={
-                                                  this.state.singlePackage
-                                                    .package_id
-                                                }
-                                                paymentMethod={
-                                                  this.state.singlePackage
-                                                    .package_name
-                                                }
-                                              />
+                                              <Button
+                                              // onClick={() => {
+                                              //   this.updatePackage(
+                                              //     userInfo?.user_id,
+                                              //     this.state.singlePackage
+                                              //       .package_id
+                                              //   );
+                                              // }}
+                                              >
+                                                Make Payment
+                                              </Button>
                                             )
                                           ) : null}
                                         </div>
@@ -1135,47 +919,8 @@ class AccountSetup extends React.Component {
               )}
           </div>
         </div>
-        <Modal
-          show={this.state.cancelPlan}
-          onHide={() => {
-            this.setState({ cancelPlan: false });
-          }}
-          className="change-password"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Cancel Subscription</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="bg-white">
-            <p>Do you want to cancel subscription?</p>
-            <p>If yes, your subscription will be cancelled.</p>
-            <p>All your data will be deleted.</p>
-            <p>Subscription amount paid will not be refunded.</p>
-            <p>
-              New subscription will be required if you choose to register again.
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.setState({ cancelPlan: false });
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              disabled={this.state.disabledCancelPlan}
-              className="disconnect-btn"
-              onClick={() => {
-                this.cancelSubscription();
-              }}
-            >
-              Yes
-            </Button>
-          </Modal.Footer>
-        </Modal>
       </div>
     );
   }
 }
-export default AccountSetup;
+export default SubcriptionSetup;

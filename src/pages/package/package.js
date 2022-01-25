@@ -13,7 +13,8 @@ import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import { toast } from "react-toastify";
-
+import { connect } from "react-redux";
+import * as subActions from "../../actions/subscribe";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
 export const history = createBrowserHistory({
@@ -40,9 +41,15 @@ class Package extends React.Component {
     help2: true,
     help3: true,
     packageId: "",
+    prices: [],
+    selectedtab: "Yearly",
+    paymentLoading: false,
   };
 
   componentDidMount() {
+    this.props.configSubs().then((res) => {
+      this.setState({ prices: res.message });
+    });
     if (userInfo.hasOwnProperty("package")) {
       history.push("/app/main");
     }
@@ -155,6 +162,14 @@ class Package extends React.Component {
     });
   };
 
+  getPriceId = (value, name, arr) => {
+    const updatedArr = arr.filter(
+      (item) =>
+        item.interval === value.slice(0, value.length - 2) &&
+        item.product_name == name
+    );
+    return updatedArr[0].price_id;
+  };
   render() {
     const basic = this.state.packages.Basic || {};
     const premium = this.state.packages.Premium || {};
@@ -217,12 +232,15 @@ class Package extends React.Component {
           </form> */}
           <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
-            defaultActiveKey="profile"
+            defaultActiveKey="Yearly"
             transition={false}
             id="noanim-tab-example"
+            onSelect={(v) => {
+              this.setState({ selectedtab: v });
+            }}
             className="pricing_tabs_ifti mb-3"
           >
-            <Tab eventKey="home" title="Monthly">
+            <Tab eventKey="Monthly" title="Monthly">
               <div className="package_parent">
                 {Object.keys(basic).length !== 0 ? (
                   <div className="custom_pkg">
@@ -532,7 +550,7 @@ class Package extends React.Component {
                 ) : null}
               </div>
             </Tab>
-            <Tab eventKey="profile" title="Yearly">
+            <Tab eventKey="Yearly" title="Yearly">
               <div className="package_parent">
                 {Object.keys(basic).length !== 0 ? (
                   <div className="custom_pkg">
@@ -1115,6 +1133,33 @@ class Package extends React.Component {
                     disableButton={this.state.promo_code !== "" ? true : false}
                     btnClass="btn-block"
                   /> */}
+                  {this.state.paymentLoading ? (
+                    <Button>
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        this.setState({ paymentLoading: true });
+                        this.props
+                          .makePayment({
+                            price_id: this.getPriceId(
+                              this.state.selectedtab.toLowerCase(),
+                              premium.package_name,
+                              this.state.prices
+                            ),
+                            package_id: premium.package_id,
+                            recurring_payment_type: this.state.selectedtab,
+                          })
+                          .then((res) => {
+                            this.setState({ paymentLoading: false });
+                            window.open(res, "_self");
+                          });
+                      }}
+                    >
+                      Pay Now
+                    </Button>
+                  )}
                   <Button
                     onClick={() => {
                       this.updatePackage(userInfo.user_id, premium.package_id);
@@ -1510,7 +1555,7 @@ class Package extends React.Component {
                     </Row>
                   </form>
 
-                  <PaymentButton
+                  {/* <PaymentButton
                     key="2"
                     userId={userInfo.user_id}
                     packageId={premiumPlus.package_id}
@@ -1520,7 +1565,34 @@ class Package extends React.Component {
                     plan={this.state.plan}
                     disableButton={this.state.promo_code !== "" ? true : false}
                     btnClass="btn-block"
-                  />
+                  /> */}
+                  {this.state.paymentLoading ? (
+                    <Button>
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => {
+                        this.setState({ paymentLoading: true });
+                        this.props
+                          .makePayment({
+                            price_id: this.getPriceId(
+                              this.state.selectedtab.toLowerCase(),
+                              premiumPlus.package_name,
+                              this.state.prices
+                            ),
+                            package_id: premiumPlus.package_id,
+                            recurring_payment_type: this.state.selectedtab,
+                          })
+                          .then((res) => {
+                            this.setState({ paymentLoading: false });
+                            window.open(res, "_self");
+                          });
+                      }}
+                    >
+                      Make Payment
+                    </Button>
+                  )}
                 </>
               ) : null}
             </div>
@@ -1530,4 +1602,4 @@ class Package extends React.Component {
     );
   }
 }
-export default Package;
+export default connect(null, subActions)(Package);
