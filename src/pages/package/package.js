@@ -1160,13 +1160,13 @@ class Package extends React.Component {
                       Pay Now
                     </Button>
                   )}
-                  <Button
+                  {/* <Button
                     onClick={() => {
                       this.updatePackage(userInfo.user_id, premium.package_id);
                     }}
                   >
                     Start Trial
-                  </Button>
+                  </Button> */}
                 </>
               ) : null}
             </div>
@@ -1590,7 +1590,7 @@ class Package extends React.Component {
                           });
                       }}
                     >
-                      Make Payment
+                      Pay Now
                     </Button>
                   )}
                 </>
