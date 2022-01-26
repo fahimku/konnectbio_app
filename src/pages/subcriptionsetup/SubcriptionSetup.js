@@ -35,7 +35,7 @@ class SubcriptionSetup extends React.Component {
       promo_code: "",
       prices: [],
       paymentLoading: false,
-      plan: "Yearly",
+      plan: userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
     };
   }
@@ -315,10 +315,10 @@ class SubcriptionSetup extends React.Component {
                           <h5>Manage Plan</h5>
                           <div className="row">
                             <div className="colbx-inr col-md-12">
-                              {userInfo.package.package_name == "Basic" ? (
-                                <>
+                            <>
                                   <div className="checkbox abc-checkbox abc-checkbox-primary">
                                     <Input
+                                    defaultChecked={this.state.plan=="Monthly"?true:false}
                                       name="payment"
                                       value="Monthly"
                                       className="mt-0"
@@ -352,7 +352,7 @@ class SubcriptionSetup extends React.Component {
                                   </div>
                                   <div className="checkbox abc-checkbox abc-checkbox-primary">
                                     <Input
-                                      defaultChecked
+                                      defaultChecked={this.state.plan=="Yearly"?true:false}
                                       name="payment"
                                       value="Yearly"
                                       className="mt-0"
@@ -404,39 +404,6 @@ class SubcriptionSetup extends React.Component {
                                 {this.state.singlePackage.yearly_discount}%) */}
                                   </div>
                                 </>
-                              ) : (
-                                <>
-                                  {userInfo.package?.recurring_payment_type ==
-                                  "Monthly" ? (
-                                    <>
-                                      Pay Monthly: $
-                                      {
-                                        this.state.singlePackage
-                                          .package_amount_monthly
-                                      }
-                                    </>
-                                  ) : (
-                                    <>
-                                      {/* Pay Yearly: $
-                                      {
-                                        this.state.singlePackage
-                                          .package_amount_yearly
-                                      }
-                                      &nbsp; (Save{" "}
-                                      {this.state.singlePackage.yearly_discount}
-                                      %) */}
-                                      Pay Yearly & Save{" "}
-                                      {this.state.singlePackage.yearly_discount}
-                                      % (Pay $
-                                      {
-                                        this.state.singlePackage
-                                          .package_amount_yearly
-                                      }
-                                      /month )
-                                    </>
-                                  )}
-                                </>
-                              )}
 
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
