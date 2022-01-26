@@ -390,6 +390,7 @@ class SubcriptionSetup extends React.Component {
                                           this.state.singlePackage
                                             .yearly_discount
                                         }
+                                        %)
                                         {/* </del>
                                         %) <ins>(Free For 90 Days)</ins> */}
                                       </>
