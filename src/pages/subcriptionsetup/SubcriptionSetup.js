@@ -206,7 +206,6 @@ class SubcriptionSetup extends React.Component {
   };
 
   render() {
-    console.log(this.state.plan, "plan");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="profile-page account-setup">
