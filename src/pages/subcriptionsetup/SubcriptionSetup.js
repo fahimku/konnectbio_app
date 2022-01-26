@@ -471,9 +471,50 @@ class SubcriptionSetup extends React.Component {
                                   </>
 
                                   <div className="make-canc-pay">
-                                    {!this.state.checkbox.instagram ||
-                                    !this.state.checkbox.facebook ||
-                                    !this.state.checkbox.checkbox3 ? (
+                                    {userInfo.package.package_name ===
+                                    "Premium" ? (
+                                      <Button
+                                        onClick={() => {
+                                          this.props
+                                            .updateSubscription({
+                                              price_id: this.getPriceId(
+                                                this.state.plan.toLowerCase(),
+                                                this.state.singlePackage
+                                                  .package_name,
+                                                this.state.prices
+                                              ),
+                                              package_id:
+                                                this.state.singlePackage
+                                                  .package_id,
+                                            })
+                                            .then((res) => {
+                                              this.setState({
+                                                paymentLoading: false,
+                                              });
+                                              localStorage.setItem(
+                                                "userInfo",
+                                                JSON.stringify({
+                                                  ...userInfo,
+                                                  package: res.message,
+                                                })
+                                              );
+                                              window.open(res.url, "_self");
+                                            })
+                                            .catch((err) => {
+                                              this.setState({
+                                                paymentLoading: false,
+                                              });
+                                              toast.error(
+                                                err.response.data.message
+                                              );
+                                            });
+                                        }}
+                                      >
+                                        Make Payment
+                                      </Button>
+                                    ) : !this.state.checkbox.instagram ||
+                                      !this.state.checkbox.facebook ||
+                                      !this.state.checkbox.checkbox3 ? (
                                       <Button
                                         onClick={() => {
                                           this.setState({
