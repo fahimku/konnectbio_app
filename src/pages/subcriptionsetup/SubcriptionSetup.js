@@ -480,6 +480,8 @@ class SubcriptionSetup extends React.Component {
                                                     package_id:
                                                       this.state.singlePackage
                                                         .package_id,
+                                                    recurring_payment_type:
+                                                      this.state.plan,
                                                   })
                                                   .then((res) => {
                                                     this.setState({
