@@ -341,10 +341,10 @@ class Package extends React.Component {
                       <span className="pkg_limit">From</span>
                       <sup>$</sup>
                       <span className="monthly display-5">
-                        <del>{premium.package_amount_monthly}</del>
+                        {premium.package_amount_monthly}
                       </span>
                       <small className="monthly">/mo</small>
-                      <ins>(Free For 90 Days)</ins>
+                      {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed monthly</span>
                     </div>
                     <ul className="pkg_detail_list_ift">
@@ -651,10 +651,10 @@ class Package extends React.Component {
                       <span className="pkg_limit">From</span>
                       <sup>$</sup>
                       <span className="monthly display-5">
-                        <del>{premium.package_amount_yearly}</del>
+                        {premium.package_amount_yearly}
                       </span>
                       <small className="monthly">/mo</small>
-                      <ins>(Free For 90 Days)</ins>
+                      {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed yearly</span>
                     </div>
                     <ul className="pkg_detail_list_ift">
