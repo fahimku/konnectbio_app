@@ -362,39 +362,40 @@ class SubcriptionSetup extends React.Component {
                                       }}
                                     />{" "}
                                     <Label for="checkbox2" />
-                                    Pay Yearly & Save: $
-                                    {this.state.singlePackage.package_name !==
+                                    Pay Yearly & Save{" "}
+                                    {this.state.singlePackage.yearly_discount}%
+                                    (Pay $
+                                    {
+                                      this.state.singlePackage
+                                        .package_amount_yearly
+                                    }
+                                    /month )
+                                    {/* {this.state.singlePackage.package_name !==
                                     "Premium" ? (
                                       <>
                                         {
                                           this.state.singlePackage
                                             .package_amount_yearly
-                                        }{" "}
-                                        &nbsp; (Save{" "}
+                                        }
+                                         &nbsp; (Save{" "}
                                         {
                                           this.state.singlePackage
                                             .yearly_discount
                                         }
-                                        %)
+                                        %) 
                                       </>
                                     ) : (
                                       <>
-                                        {/* <del> */}
+                                        
+                                        &nbsp; (Save $
                                         {
                                           this.state.singlePackage
                                             .package_amount_yearly
                                         }
-                                        {/* </del>{" "} */}
-                                        &nbsp; (Save {/* <del> */}
-                                        {
-                                          this.state.singlePackage
-                                            .yearly_discount
-                                        }
-                                        %)
-                                        {/* </del>
-                                        %) <ins>(Free For 90 Days)</ins> */}
+                                        )
+                                        
                                       </>
-                                    )}
+                                    )} */}
                                     {/* {
                                   this.state.singlePackage.package_amount_yearly
                                 }{" "}
@@ -415,11 +416,22 @@ class SubcriptionSetup extends React.Component {
                                     </>
                                   ) : (
                                     <>
-                                      Pay Yearly: $
+                                      {/* Pay Yearly: $
                                       {
                                         this.state.singlePackage
                                           .package_amount_yearly
                                       }
+                                      &nbsp; (Save{" "}
+                                      {this.state.singlePackage.yearly_discount}
+                                      %) */}
+                                      Pay Yearly & Save{" "}
+                                      {this.state.singlePackage.yearly_discount}
+                                      % (Pay $
+                                      {
+                                        this.state.singlePackage
+                                          .package_amount_yearly
+                                      }
+                                      /month )
                                     </>
                                   )}
                                 </>
