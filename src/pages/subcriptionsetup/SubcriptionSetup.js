@@ -8,6 +8,7 @@ import { Label, Input } from "reactstrap";
 import * as subActions from "../../actions/subscribe";
 import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
+import Swal from "sweetalert2";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -473,45 +474,68 @@ class SubcriptionSetup extends React.Component {
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_name ===
                                     "Premium" ? (
-                                      <Button
-                                        onClick={() => {
-                                          this.props
-                                            .updateSubscription({
-                                              price_id: this.getPriceId(
-                                                this.state.plan.toLowerCase(),
-                                                this.state.singlePackage
-                                                  .package_name,
-                                                this.state.prices
-                                              ),
-                                              package_id:
-                                                this.state.singlePackage
-                                                  .package_id,
-                                            })
-                                            .then((res) => {
-                                              this.setState({
-                                                paymentLoading: false,
-                                              });
-                                              localStorage.setItem(
-                                                "userInfo",
-                                                JSON.stringify({
-                                                  ...userInfo,
-                                                  package: res.message,
-                                                })
-                                              );
-                                              window.open(res.url, "_self");
-                                            })
-                                            .catch((err) => {
-                                              this.setState({
-                                                paymentLoading: false,
-                                              });
-                                              toast.error(
-                                                err.response.data.message
-                                              );
+                                      this.state.paymentLoading ? (
+                                        <Button>
+                                          <Loader />
+                                        </Button>
+                                      ) : (
+                                        <Button
+                                          onClick={() => {
+                                            Swal.fire({
+                                              title: `Are you sure, you want to pay ${this.state.singlePackage.package_name.toLowerCase()} ${this.state.plan.toLowerCase()}?`,
+                                              icon: "warning",
+                                              showCancelButton: true,
+                                              confirmButtonColor: "#010b40",
+                                              cancelButtonColor: "#d33",
+                                              confirmButtonText: "Yes",
+                                            }).then((result) => {
+                                              if (result.isConfirmed) {
+                                                this.setState({
+                                                  paymentLoading: true,
+                                                });
+                                                this.props
+                                                  .updateSubscription({
+                                                    price_id: this.getPriceId(
+                                                      this.state.plan.toLowerCase(),
+                                                      this.state.singlePackage
+                                                        .package_name,
+                                                      this.state.prices
+                                                    ),
+                                                    package_id:
+                                                      this.state.singlePackage
+                                                        .package_id,
+                                                  })
+                                                  .then((res) => {
+                                                    this.setState({
+                                                      paymentLoading: false,
+                                                    });
+                                                    localStorage.setItem(
+                                                      "userInfo",
+                                                      JSON.stringify({
+                                                        ...userInfo,
+                                                        package: res.message,
+                                                      })
+                                                    );
+                                                    window.open(
+                                                      res.url,
+                                                      "_self"
+                                                    );
+                                                  })
+                                                  .catch((err) => {
+                                                    this.setState({
+                                                      paymentLoading: false,
+                                                    });
+                                                    toast.error(
+                                                      err.response.data.message
+                                                    );
+                                                  });
+                                              }
                                             });
-                                        }}
-                                      >
-                                        Make Payment
-                                      </Button>
+                                          }}
+                                        >
+                                          Make Payment
+                                        </Button>
+                                      )
                                     ) : !this.state.checkbox.instagram ||
                                       !this.state.checkbox.facebook ||
                                       !this.state.checkbox.checkbox3 ? (
