@@ -35,7 +35,10 @@ class SubcriptionSetup extends React.Component {
       promo_code: "",
       prices: [],
       paymentLoading: false,
-      plan: userInfo1?.package?.recurring_payment_type,
+      plan:
+        userInfo1?.package?.recurring_payment_type === ""
+          ? "Monthly"
+          : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
     };
   }
@@ -203,6 +206,7 @@ class SubcriptionSetup extends React.Component {
   };
 
   render() {
+    console.log(this.state.plan, "plan");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="profile-page account-setup">
@@ -315,63 +319,69 @@ class SubcriptionSetup extends React.Component {
                           <h5>Manage Plan</h5>
                           <div className="row">
                             <div className="colbx-inr col-md-12">
-                            <>
-                                  <div className="checkbox abc-checkbox abc-checkbox-primary">
-                                    <Input
-                                    defaultChecked={this.state.plan=="Monthly"?true:false}
-                                      name="payment"
-                                      value="Monthly"
-                                      className="mt-0"
-                                      id="checkbox1"
-                                      type="radio"
-                                      onChange={(e) => {
-                                        this.setState({ plan: e.target.value });
-                                      }}
-                                    />{" "}
-                                    <Label for="checkbox1" />
-                                    Pay Monthly: $
-                                    {this.state.singlePackage.package_name !==
-                                    "Premium" ? (
-                                      <>
-                                        {
-                                          this.state.singlePackage
-                                            .package_amount_monthly
-                                        }
-                                      </>
-                                    ) : (
-                                      <>
-                                        {/* <del> */}
-                                        {
-                                          this.state.singlePackage
-                                            .package_amount_monthly
-                                        }
-                                        {/* </del>{" "}
-                                        <ins>(Free For 90 Days)</ins> */}
-                                      </>
-                                    )}
-                                  </div>
-                                  <div className="checkbox abc-checkbox abc-checkbox-primary">
-                                    <Input
-                                      defaultChecked={this.state.plan=="Yearly"?true:false}
-                                      name="payment"
-                                      value="Yearly"
-                                      className="mt-0"
-                                      id="checkbox2"
-                                      type="radio"
-                                      onChange={(e) => {
-                                        this.setState({ plan: e.target.value });
-                                      }}
-                                    />{" "}
-                                    <Label for="checkbox2" />
-                                    Pay Yearly & Save{" "}
-                                    {this.state.singlePackage.yearly_discount}%
-                                    (Pay $
-                                    {
-                                      this.state.singlePackage
-                                        .package_amount_yearly
+                              <>
+                                <div className="checkbox abc-checkbox abc-checkbox-primary">
+                                  <Input
+                                    defaultChecked={
+                                      this.state.plan == "Monthly"
+                                        ? true
+                                        : false
                                     }
-                                    /month )
-                                    {/* {this.state.singlePackage.package_name !==
+                                    name="payment"
+                                    value="Monthly"
+                                    className="mt-0"
+                                    id="checkbox1"
+                                    type="radio"
+                                    onChange={(e) => {
+                                      this.setState({ plan: e.target.value });
+                                    }}
+                                  />{" "}
+                                  <Label for="checkbox1" />
+                                  Pay Monthly: $
+                                  {this.state.singlePackage.package_name !==
+                                  "Premium" ? (
+                                    <>
+                                      {
+                                        this.state.singlePackage
+                                          .package_amount_monthly
+                                      }
+                                    </>
+                                  ) : (
+                                    <>
+                                      {/* <del> */}
+                                      {
+                                        this.state.singlePackage
+                                          .package_amount_monthly
+                                      }
+                                      {/* </del>{" "}
+                                        <ins>(Free For 90 Days)</ins> */}
+                                    </>
+                                  )}
+                                </div>
+                                <div className="checkbox abc-checkbox abc-checkbox-primary">
+                                  <Input
+                                    defaultChecked={
+                                      this.state.plan == "Yearly" ? true : false
+                                    }
+                                    name="payment"
+                                    value="Yearly"
+                                    className="mt-0"
+                                    id="checkbox2"
+                                    type="radio"
+                                    onChange={(e) => {
+                                      this.setState({ plan: e.target.value });
+                                    }}
+                                  />{" "}
+                                  <Label for="checkbox2" />
+                                  Pay Yearly & Save{" "}
+                                  {this.state.singlePackage.yearly_discount}%
+                                  (Pay $
+                                  {
+                                    this.state.singlePackage
+                                      .package_amount_yearly
+                                  }
+                                  /month )
+                                  {/* {this.state.singlePackage.package_name !==
                                     "Premium" ? (
                                       <>
                                         {
@@ -397,13 +407,13 @@ class SubcriptionSetup extends React.Component {
                                         
                                       </>
                                     )} */}
-                                    {/* {
+                                  {/* {
                                   this.state.singlePackage.package_amount_yearly
                                 }{" "}
                                 &nbsp; (Save{" "}
                                 {this.state.singlePackage.yearly_discount}%) */}
-                                  </div>
-                                </>
+                                </div>
+                              </>
 
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
