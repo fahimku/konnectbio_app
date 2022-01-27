@@ -324,7 +324,7 @@ function SearchProfile({
     <div className="container-fluid">
       <Row className="post-analytics-tab mb-4">
         <Col md={12}>
-          <h4 class="page-title">Profile</h4>
+          <h4 class="page-title">Monitor</h4>
         </Col>
 
         <Col xs={12} xl={12} md={12}>

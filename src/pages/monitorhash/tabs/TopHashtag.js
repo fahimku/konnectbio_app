@@ -200,7 +200,7 @@ function TopHashTag({
   return (
     <>
       <div className="container-fluid">
-        <h4 className="page-title">Results</h4>
+        <h4 className="page-title">Monitor</h4>
         <Row className="post-analytics-tab mb-4">
           <Col xs={12} xl={12} md={12}>
             <form onSubmit={onSubmitData}>

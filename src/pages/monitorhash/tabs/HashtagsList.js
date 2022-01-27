@@ -25,6 +25,7 @@ function HashtagsList({
   const [loading, setLoading] = React.useState(true);
   const [hashLoading, sethashLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
     getHashtags().then(() => {
@@ -39,7 +40,6 @@ function HashtagsList({
   }, [hashtags]);
 
   const handleDelete = (chipToDelete) => () => {
-
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -62,7 +62,7 @@ function HashtagsList({
     e.preventDefault();
     var format = /[#\s]/;
     if (hash.length > 0) {
-      setError(false)
+      setError(false);
       if (!format.test(hash)) {
         Swal.fire({
           title: "Are you sure?",
@@ -98,9 +98,10 @@ function HashtagsList({
   function renderFormatError() {
     let format = /[#\s]/;
     if (format.test(hash)) {
-      return <span class="help-block text-danger">you cannot write # or space</span>;
-    }
-    else if (hash.length === 0 && error) {
+      return (
+        <span class="help-block text-danger">you cannot write # or space</span>
+      );
+    } else if (hash.length === 0 && error) {
       return <span class="help-block text-danger">Please Enter Hashtag.</span>;
     }
     return null;
@@ -110,7 +111,7 @@ function HashtagsList({
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <h4 className="page-title">{title}</h4>
+          <h4 className="page-title">Hashtag Monitoring</h4>
           <div className="brand_container_main">
             <Row>
               <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
@@ -124,8 +125,9 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Note: You can add a maximum of 3 unique hashtags within
-                        a 7 day period
+                        Number of hashtags in{" "}
+                        {userInfo1.package.package_name.toLowerCase()} plan is{" "}
+                        {hashtags.hashtag_limit}
                       </p>
                       <Row>
                         <Col md={12}>

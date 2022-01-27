@@ -36,6 +36,7 @@ class MyCategory extends React.Component {
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
       sort: false,
+      buySelectedCategory: "",
     };
   }
 
@@ -251,6 +252,15 @@ class MyCategory extends React.Component {
       sort: true,
     });
   };
+  handleBuySelect = (e, options) => {
+    this.setState({
+      buySelectedCategory: options,
+    });
+  };
+  buyCategory = async (e) => {
+    e.preventDefault();
+    alert(this.state.buySelectedCategory.value);
+  };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -291,6 +301,20 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
+    const buyCategory = [
+      {
+        value: "3",
+        label: "3",
+      },
+      {
+        value: "6",
+        label: "6",
+      },
+      {
+        value: "12",
+        label: "12",
+      },
+    ];
 
     return (
       <React.Fragment>
@@ -435,13 +459,36 @@ class MyCategory extends React.Component {
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
                       <form onSubmit={this.handleSubmit}>
-                        <h5>Select Categories</h5>
+                        <p
+                          style={{
+                            color: "gray",
+                            borderBottom: "1px solid lightgray",
+                            paddingBottom: 10,
+                          }}
+                        >
+                          Number of categories in{" "}
+                          {userInfo1.package.package_name.toLowerCase()} plan is{" "}
+                          {userInfo1.package.category_count}
+                        </p>
                         <Row>
                           <Col md={12}>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <label>Add Category</label>
+                              <p>
+                                ({this.state.saveCategories.length}/
+                                {userInfo1.package.category_count})
+                              </p>
+                            </div>
+                            {/* <label>Add Category</label>
                             <div className="text-right mb-1">
                               ({this.state.saveCategories.length}/
                               {userInfo1.package.category_count})
-                            </div>
+                            </div> */}
                             {/* <label>Select Category: </label> */}
                             {this.state.saveCategories === "" ? null : (
                               <Select
@@ -491,6 +538,58 @@ class MyCategory extends React.Component {
                               }
                             >
                               Save
+                            </Button>
+                          </Col>
+                        </Row>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div className="profile_box_main col-md-4">
+                  <div className="dash_block_profile">
+                    <div className="dash_content_profile">
+                      <form onSubmit={this.buyCategory}>
+                        <p
+                          style={{
+                            color: "gray",
+                            borderBottom: "1px solid lightgray",
+                            paddingBottom: 10,
+                          }}
+                        >
+                          Buy Additional Categories
+                        </p>
+                        <Row>
+                          <Col md={12}>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <label>No. of category</label>
+                            </div>
+
+                            <Select
+                              name="category"
+                              className="selectCustomization"
+                              options={buyCategory}
+                              value={this.state.buySelectedCategory}
+                              placeholder="Select No. of Category"
+                              onChange={(options, e) =>
+                                this.handleBuySelect(e, options)
+                              }
+                            />
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col md={12} xl={12}>
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              className="category-btn btn-block mt-2"
+                            >
+                              Upgrade Category
                             </Button>
                           </Col>
                         </Row>

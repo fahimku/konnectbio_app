@@ -139,7 +139,7 @@ export default function Content({ insta, accessToken }) {
                     }}
                     disabled={next}
                   >
-                    <span>Results</span>
+                    <span>Monitor</span>
                   </NavLink>
                 </NavItem>
               </Nav>

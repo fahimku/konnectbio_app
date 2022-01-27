@@ -26,6 +26,7 @@ function HashtagsList({
   const [loading, setLoading] = React.useState(true);
   const [hashLoading, sethashLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
     getProfiles().then(() => {
@@ -116,7 +117,7 @@ function HashtagsList({
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <h4 className="page-title">Add Profile</h4>
+          <h4 className="page-title">Profile Monitoring</h4>
           <div className="brand_container_main">
             <Row>
               <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
@@ -130,8 +131,9 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Note: You can add a maximum of 3 unique profiles within
-                        a 7 day period
+                        Number of profile monitoring in{" "}
+                        {userInfo1.package.package_name.toLowerCase()} plan is{" "}
+                        {profiles.profile_limit}
                       </p>
                       <Row>
                         <Col md={12}>
