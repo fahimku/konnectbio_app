@@ -26,6 +26,7 @@ const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class Package extends React.Component {
   state = {
     showBasic: false,
+    isExpiredModal:userInfo.is_trial_expired,
     showPremium: false,
     showPremiumPlus: false,
     packages: "",
@@ -52,8 +53,8 @@ class Package extends React.Component {
       this.setState({ prices: res.message });
     });
 
-    
-    if (userInfo.hasOwnProperty("package") && !userInfo.is_expired) {
+
+    if (userInfo.hasOwnProperty("package") && !userInfo.is_trial_expired) {
       history.push("/app/main");
     }
     this.getPackages();
@@ -91,6 +92,12 @@ class Package extends React.Component {
     this.setState({ help1: true, help2: true, help3: true });
     this.setState({ packageId: "" });
   };
+
+
+  
+  handleCloseIsExpired = () => {
+  this.setState({isExpiredModal: false})
+  }
 
   updatePackage = async (id, packageId) => {
     await axios
@@ -245,7 +252,7 @@ class Package extends React.Component {
           >
             <Tab eventKey="Monthly" title="Monthly">
               <div className="package_parent">
-                {Object.keys(basic).length !== 0 ? (
+                {Object.keys(basic).length !== 0 && !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
@@ -555,7 +562,7 @@ class Package extends React.Component {
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
               <div className="package_parent">
-                {Object.keys(basic).length !== 0 ? (
+                {Object.keys(basic).length !== 0 && !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
@@ -1090,8 +1097,8 @@ class Package extends React.Component {
             </div>
             <div>
               {this.state.checkbox.instagram &&
-              this.state.checkbox.facebook &&
-              this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.facebook &&
+                this.state.checkbox.checkbox3 ? (
                 <>
                   {/* <form onSubmit={this.handleSubmit}>
                     <Row className="promo_code_ift promo_code_ift_new">
@@ -1163,13 +1170,16 @@ class Package extends React.Component {
                       Pay Now
                     </Button>
                   )}
-                  <Button
-                    onClick={() => {
-                      this.updatePackage(userInfo.user_id, premium.package_id);
-                    }}
-                  >
-                    Start Trial
-                  </Button>
+
+                  {!userInfo.is_trial_expired &&
+                    <Button
+                      onClick={() => {
+                        this.updatePackage(userInfo.user_id, premium.package_id);
+                      }}
+                    >
+                      Start Trial
+                    </Button>
+                  }
                 </>
               ) : null}
             </div>
@@ -1339,8 +1349,8 @@ class Package extends React.Component {
               </div>
               <div>
                 {this.state.checkbox.instagram &&
-                this.state.checkbox.facebook &&
-                this.state.checkbox.checkbox3 ? (
+                  this.state.checkbox.facebook &&
+                  this.state.checkbox.checkbox3 ? (
                   <Button
                     onClick={() => {
                       this.setState({
@@ -1522,8 +1532,8 @@ class Package extends React.Component {
             </div>
             <div>
               {this.state.checkbox.instagram &&
-              this.state.checkbox.facebook &&
-              this.state.checkbox.checkbox3 ? (
+                this.state.checkbox.facebook &&
+                this.state.checkbox.checkbox3 ? (
                 <>
                   <form onSubmit={this.handleSubmit}>
                     <Row className="promo_code_ift promo_code_ift_new">
@@ -1551,9 +1561,9 @@ class Package extends React.Component {
                       <span class="text-danger col-md-12 promo-err-box">
                         {this.state.promo_error
                           ? // <span class="text-danger col-md-12">
-                            this.state.promoCodeError
+                          this.state.promoCodeError
                           : // </span>
-                            null}
+                          null}
                       </span>
                     </Row>
                   </form>
@@ -1598,6 +1608,24 @@ class Package extends React.Component {
                   )}
                 </>
               ) : null}
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          className="pkg_readmore"
+          show={this.state.isExpiredModal }
+          onHide={this.handleCloseIsExpired}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Package Expired</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div class="funkyradio">
+              <p>
+                Your Package is expired please make the payment to proceed.
+              </p>
             </div>
           </Modal.Body>
         </Modal>
