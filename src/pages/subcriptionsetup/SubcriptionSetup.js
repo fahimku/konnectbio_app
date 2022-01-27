@@ -36,7 +36,8 @@ class SubcriptionSetup extends React.Component {
       prices: [],
       paymentLoading: false,
       plan:
-        userInfo1?.package?.recurring_payment_type === ""
+        userInfo1?.package?.recurring_payment_type === "" ||
+        userInfo1?.package?.recurring_payment_type === undefined
           ? "Monthly"
           : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
@@ -203,6 +204,27 @@ class SubcriptionSetup extends React.Component {
         item.product_name == name
     );
     return updatedArr[0].price_id;
+  };
+  updatePackage = async (id, packageId) => {
+    this.setState({ trailLoading: true });
+    await axios
+      .put(`users/revise/package/${id}`, {
+        package_id: packageId,
+      })
+      .then((response) => {
+        this.setState({ trailLoading: false });
+        const userInformation = localStorage.getItem("userInfo");
+        const parseUserInformation = JSON.parse(userInformation);
+        parseUserInformation.package = response.data.message;
+        const storeUserInformation = JSON.stringify(parseUserInformation);
+        localStorage.setItem("userInfo", storeUserInformation);
+        history.push("/connect");
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ trailLoading: false });
+        toast.error(err.response.data.message);
+      });
   };
 
   render() {
@@ -1093,6 +1115,24 @@ class SubcriptionSetup extends React.Component {
                                                   Make Payment
                                                 </Button>
                                               )}
+                                              {!userInfo.is_trial_expired &&
+                                                (this.state.trailLoading ? (
+                                                  <Button>
+                                                    <Loader />
+                                                  </Button>
+                                                ) : (
+                                                  <Button
+                                                    onClick={() => {
+                                                      this.updatePackage(
+                                                        userInfo.user_id,
+                                                        this.state.singlePackage
+                                                          .package_id
+                                                      );
+                                                    }}
+                                                  >
+                                                    Start Trial
+                                                  </Button>
+                                                ))}
                                             </>
                                           ) : null}
                                         </div>
