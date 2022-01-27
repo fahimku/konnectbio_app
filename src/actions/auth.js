@@ -158,6 +158,7 @@ export function loginUser(creds) {
             instagram_id: res.data.message.instagram_id,
             next_payment_date: res.data.message.next_payment_date,
             recurring_payment_type: res.data.message.recurring_payment_type,
+            is_expired: res?.data?.message?.is_expired ? true : false,
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));

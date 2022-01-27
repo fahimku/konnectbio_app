@@ -43,7 +43,7 @@ class Connect extends React.Component {
     const package1 = userInfo?.package?.package_name;
 
     const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true : false;
-    
+
     if (!package1) {
       this.props.history.push('/package');
     }
@@ -117,8 +117,8 @@ class Connect extends React.Component {
 
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
 
-  
-     if (package1 === 'Basic' && this.completeProcess()) {
+
+    if (package1 === 'Basic' && this.completeProcess()) {
       return 'Please connect your Instagram account';
     }
 
@@ -188,8 +188,6 @@ class Connect extends React.Component {
               <FormLabel className="label-insta col-md-12">
                 {this.connectionMessage()}
               </FormLabel>
-
-
             </Row>
           </div>
         </div>
