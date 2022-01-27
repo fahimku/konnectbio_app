@@ -46,7 +46,7 @@ class MyCategory extends React.Component {
     this.fetchSaveCategory();
     // this.getPackages();
     // this.fetchCustomCategory();
-    //Connect Instagram Code
+    // Connect Instagram Code
   }
 
   getPackages = async () => {
