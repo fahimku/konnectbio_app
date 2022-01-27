@@ -121,16 +121,18 @@ class Layout extends React.Component {
                         exact
                         render={() => <Redirect to="/admin/users" />}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/linkinbio"
                         exact
                         component={LinkinBio}
+                        permissions={["dashboard_access"]}
                       />
 
-                      <Route
+                      <PrivateRoute
                         path="/app/linkinbio-shop"
                         exact
                         component={BioShop}
+                        permissions={["dashboard_access"]}
                       />
                       <PrivateRoute
                         exact
@@ -144,31 +146,47 @@ class Layout extends React.Component {
                         exact
                         component={LinkinBio}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/account/delete"
                         exact
                         component={AccountDelete}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/account/profile"
                         exact
                         component={MyProfile}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/account/categories"
                         exact
                         component={MyCategory}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/account/setup"
                         exact
                         component={AccountSetup}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route path="/app/my/links" exact component={MyLinks} />
-                      <Route
+                      <PrivateRoute
+                        path="/app/my/links"
+                        exact
+                        component={MyLinks}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
+                      />
+                      <PrivateRoute
                         path="/app/dashboard"
                         exact
                         component={Dashboard}
+                        dispatch={this.props.dispatch}
+                        permissions={["dashboard_access"]}
                       />
                       <PrivateRoute
                         path="/app/campaign"
@@ -214,28 +232,39 @@ class Layout extends React.Component {
                         path="/app/my/posts"
                         exact
                         component={AllPostDataComponent}
+                        dispatch={this.props.dispatch}
                         permissions={["all_posts_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/direct/messaging"
                         exact
                         component={ComingSoon}
+                        dispatch={this.props.dispatch}
+                        permissions={["all_posts_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/custom/cards"
                         exact
                         component={customCards}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route path="/app/chat" exact component={ChatPage} />
-                      <Route
+                      <PrivateRoute
+                        path="/app/chat"
+                        exact
+                        component={ChatPage}
+                        permissions={["dashboard_access"]}
+                      />
+                      <PrivateRoute
                         path="/app/account/affiliate"
                         exact
                         component={AffiliateSetup}
+                        permissions={["dashboard_access"]}
                       />
-                      <Route
+                      <PrivateRoute
                         path="/app/subcription/setup"
                         exact
                         component={SubcriptionSetup}
+                        permissions={["dashboard_access"]}
                       />
                     </Switch>
                   </Router>

@@ -158,8 +158,9 @@ export function loginUser(creds) {
             instagram_id: res.data.message.instagram_id,
             next_payment_date: res.data.message.next_payment_date,
             recurring_payment_type: res.data.message.recurring_payment_type,
-            is_expired: res?.data?.message?.is_expired ? true : false,
+            is_trial_expired: res.data?.message?.is_trial_expired,
           };
+
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
@@ -170,7 +171,7 @@ export function loginUser(creds) {
           // const fbPage=localStorage.getItem('fbPage')
           // const fbToken=localStorage.getItem('fbToken')
 
-          if (res?.data?.message?.is_expired) {
+          if (res?.data?.message?.is_trial_expired) {
             history.push("/package");
           } else if (
             res?.data?.message?.package &&
