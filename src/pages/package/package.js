@@ -11,15 +11,16 @@ import {
 } from "react-bootstrap";
 import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
-import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import * as subActions from "../../actions/subscribe";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Package extends React.Component {
@@ -50,7 +51,9 @@ class Package extends React.Component {
     this.props.configSubs().then((res) => {
       this.setState({ prices: res.message });
     });
-    if (userInfo.hasOwnProperty("package")) {
+
+    
+    if (userInfo.hasOwnProperty("package") && !userInfo.is_expired) {
       history.push("/app/main");
     }
     this.getPackages();
