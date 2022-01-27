@@ -155,40 +155,48 @@ export function loginUser(creds) {
             zip: res.data.message.zip,
             page_token: res.data.message.page_token,
             fb_token: res.data.message.fb_token,
-            instagram_id: res.data.message.instagram_id
+            instagram_id: res.data.message.instagram_id,
+            next_payment_date: res.data.message.next_payment_date,
+            recurring_payment_type: res.data.message.recurring_payment_type,
           };
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
           dispatch(receiveToken(token));
           dispatch(doInit());
 
-          const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
+          const fbPage = JSON.parse(
+            localStorage.getItem("userInfo")
+          ).page_token;
           // const fbPage=localStorage.getItem('fbPage')
           // const fbToken=localStorage.getItem('fbToken')
 
           if (res?.data?.message?.is_expired) {
             history.push("/package");
-          }
-
-          else if (res?.data?.message?.package && !res?.data?.message?.access_token && !res.data.message.fb_token) {
+          } else if (
+            res?.data?.message?.package &&
+            !res?.data?.message?.access_token &&
+            !res.data.message.fb_token
+          ) {
             history.push("/connect");
-          }
-
-          else if (res?.data?.message?.package?.package_name === "Basic" && res?.data?.message?.access_token) {
+          } else if (
+            res?.data?.message?.package?.package_name === "Basic" &&
+            res?.data?.message?.access_token
+          ) {
             history.push("/app/linkinbio");
-          }
-
-          else if (res?.data?.message?.package?.package_name === "Premium" && res?.data?.message?.access_token && fbPage) {
+          } else if (
+            res?.data?.message?.package?.package_name === "Premium" &&
+            res?.data?.message?.access_token &&
+            fbPage
+          ) {
             history.push("/app/linkinbio");
-          }
-
-          else if (res?.data?.message?.package?.package_name === "Premium Plus" && res?.data?.message?.access_token && fbPage) {
+          } else if (
+            res?.data?.message?.package?.package_name === "Premium Plus" &&
+            res?.data?.message?.access_token &&
+            fbPage
+          ) {
             history.push("/app/linkinbio");
-          }
-
-          else {
+          } else {
             history.push("/package");
           }
-
         })
         .catch((error) => {
           dispatch(authError(error?.response?.data?.message));
@@ -285,7 +293,11 @@ export function registerUser(creds) {
           dispatch({
             type: REGISTER_SUCCESS,
           });
-          dispatch(authSuccess("We have sent an email with a confirmation link to your email address. Please click on Verify Account to complete sign-up."));
+          dispatch(
+            authSuccess(
+              "We have sent an email with a confirmation link to your email address. Please click on Verify Account to complete sign-up."
+            )
+          );
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
