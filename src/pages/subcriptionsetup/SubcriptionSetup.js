@@ -1171,6 +1171,8 @@ class SubcriptionSetup extends React.Component {
                                                 </Button>
                                               )}
                                               {!userInfo.is_trial_expired &&
+                                                this.state.singlePackage
+                                                  .package_name === "Premium" &&
                                                 (this.state.trailLoading ? (
                                                   <Button>
                                                     <Loader />
