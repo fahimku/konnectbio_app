@@ -13,6 +13,7 @@ import Swal from "sweetalert2";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 class SubcriptionSetup extends React.Component {
   constructor(props) {
     const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -27,7 +28,7 @@ class SubcriptionSetup extends React.Component {
       allPackages: "",
       singlePackage: "",
       packageIndex: "",
-      showPaymentButton: false,
+      showPaymentButton: userInfo1.package.subscription_type === 'Trial' ? true : false,
       checkbox: {},
       help1: true,
       help2: true,
@@ -37,7 +38,7 @@ class SubcriptionSetup extends React.Component {
       paymentLoading: false,
       plan:
         userInfo1?.package?.recurring_payment_type === "" ||
-        userInfo1?.package?.recurring_payment_type === undefined
+          userInfo1?.package?.recurring_payment_type === undefined
           ? "Monthly"
           : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
@@ -109,6 +110,7 @@ class SubcriptionSetup extends React.Component {
   };
 
   handlePackage = (event) => {
+    const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const singlePackage = this.state.allPackages.filter(
       (x) => x.package_id === event.value
     );
@@ -121,7 +123,13 @@ class SubcriptionSetup extends React.Component {
 
     if (this.state.packageIndex < event.index) {
       this.setState({ upgrade: true, showPaymentButton: true });
-    } else if (this.state.packageIndex > event.index) {
+    }
+
+    else if (userInfo1.package.subscription_type === 'Trial') {
+      this.setState({ upgrade: true, showPaymentButton: true });
+    }
+
+    else if (this.state.packageIndex > event.index) {
       this.setState({ upgrade: false });
       this.setState({ showPaymentButton: false });
     } else if (event.index === this.state.packageIndex) {
@@ -193,6 +201,7 @@ class SubcriptionSetup extends React.Component {
         });
     }
   };
+
   promoChange = (e) => {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
@@ -228,7 +237,7 @@ class SubcriptionSetup extends React.Component {
   };
 
   render() {
-    console.log(this.state.plan, "plan");
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="profile-page account-setup">
@@ -261,9 +270,9 @@ class SubcriptionSetup extends React.Component {
                     <div className="subscription-caption">
                       <div className="row count-main-box">
                         <div className="col-12 count-box">
-                          <h5 className="count-title">Current Subcription</h5>
+                          <h5 className="count-title">Current Subcription </h5>
                           <h3 className="count">
-                            {userInfo.package.package_name}
+                            {userInfo.package.package_name} {userInfo.package.subscription_type === 'Trial' && ` (${userInfo.package.subscription_type})`}
                           </h3>
                         </div>
                         <div className="col-12 count-box">
@@ -299,12 +308,23 @@ class SubcriptionSetup extends React.Component {
                                 {userInfo.package?.recurring_payment_type}
                               </h3>
                             </div>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Next Payment</h5>
-                              <h3 className="count">
-                                {userInfo.package?.next_payment_date}
-                              </h3>
-                            </div>
+
+                            {userInfo.package.trial_expiry_date ?
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Trial Expiry Date</h5>
+                                <h3 className="count">
+                                  {userInfo.package.trial_expiry_date && `${userInfo.package.trial_expiry_date}`}
+                                </h3>
+                              </div>
+                              :
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Next Payment</h5>
+                                <h3 className="count">
+                                  {userInfo.package?.next_payment_date}
+
+                                </h3>
+                              </div>
+                            }
                           </>
                         ) : null}
                         <div className="col-12 count-box align-items-center">
@@ -361,7 +381,7 @@ class SubcriptionSetup extends React.Component {
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
                                   {this.state.singlePackage.package_name !==
-                                  "Premium" ? (
+                                    "Premium" ? (
                                     <>
                                       {
                                         this.state.singlePackage
@@ -444,9 +464,9 @@ class SubcriptionSetup extends React.Component {
                                     <span class="text-danger promo-err-box col-md-12 pl-0">
                                       {this.state.promo_error
                                         ? // <span className="text-danger mt-2">
-                                          this.state.promoCodeError
+                                        this.state.promoCodeError
                                         : // </span>
-                                          null}
+                                        null}
                                     </span>
                                     <div className="acct-promo-sec-inr">
                                       <input
@@ -472,7 +492,7 @@ class SubcriptionSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_name ===
-                                    "Premium" ? (
+                                      "Premium" ? (
                                       this.state.paymentLoading ? (
                                         <Button>
                                           <Loader />
@@ -779,8 +799,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                          this.state.checkbox.facebook &&
-                                          this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                             <Button
                                               type="submit"
                                               onClick={(e) => {
@@ -1010,8 +1030,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                          this.state.checkbox.facebook &&
-                                          this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                             // this.state.singlePackage
                                             //   .package_name === "Premium" ? (
                                             //   <Button
