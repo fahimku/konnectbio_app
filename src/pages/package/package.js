@@ -374,8 +374,8 @@ class Package extends React.Component {
                       <span className="pkg_billed">billed monthly</span>
                       {!userInfo.is_trial_expired ? (
                         <span className="pkg-trial">
-                          Try 30 days for free, no credit card information
-                          required, cancel anytime.
+                          Try 14 days for free, no credit card information
+                          required.
                         </span>
                       ) : null}
                     </div>
@@ -691,8 +691,8 @@ class Package extends React.Component {
                       <span className="pkg_billed">billed yearly</span>
                       {!userInfo.is_trial_expired ? (
                         <span className="pkg-trial">
-                          Try 30 days for free, no credit card information
-                          required, cancel anytime.
+                          Try 14 days for free, no credit card information
+                          required.
                         </span>
                       ) : null}
                     </div>
@@ -1221,7 +1221,7 @@ class Package extends React.Component {
                           }}
                           className="ml-1"
                         >
-                          Start For Trial
+                          Start 14 Days Trial
                         </Button>
                       </>
                     ))}
