@@ -11,20 +11,22 @@ import {
 } from "react-bootstrap";
 import logo from "../../images/konnectbiologo.svg";
 import axios from "axios";
-import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
 import { toast } from "react-toastify";
 import { connect } from "react-redux";
 import * as subActions from "../../actions/subscribe";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Package extends React.Component {
   state = {
     showBasic: false,
+    isExpiredModal: userInfo.is_trial_expired,
     showPremium: false,
     showPremiumPlus: false,
     packages: "",
@@ -44,13 +46,15 @@ class Package extends React.Component {
     prices: [],
     selectedtab: "Yearly",
     paymentLoading: false,
+    trailLoading: false,
   };
 
   componentDidMount() {
     this.props.configSubs().then((res) => {
       this.setState({ prices: res.message });
     });
-    if (userInfo.hasOwnProperty("package")) {
+
+    if (userInfo.hasOwnProperty("package") && !userInfo.is_trial_expired) {
       history.push("/app/main");
     }
     this.getPackages();
@@ -89,12 +93,18 @@ class Package extends React.Component {
     this.setState({ packageId: "" });
   };
 
+  handleCloseIsExpired = () => {
+    this.setState({ isExpiredModal: false });
+  };
+
   updatePackage = async (id, packageId) => {
+    this.setState({ trailLoading: true });
     await axios
       .put(`users/revise/package/${id}`, {
         package_id: packageId,
       })
       .then((response) => {
+        this.setState({ trailLoading: false });
         const userInformation = localStorage.getItem("userInfo");
         const parseUserInformation = JSON.parse(userInformation);
         parseUserInformation.package = response.data.message;
@@ -104,6 +114,7 @@ class Package extends React.Component {
       })
       .catch((error) => {
         console.log(error);
+        this.setState({ trailLoading: false });
       });
   };
 
@@ -242,7 +253,8 @@ class Package extends React.Component {
           >
             <Tab eventKey="Monthly" title="Monthly">
               <div className="package_parent">
-                {Object.keys(basic).length !== 0 ? (
+                {Object.keys(basic).length !== 0 &&
+                !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
@@ -552,7 +564,8 @@ class Package extends React.Component {
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
               <div className="package_parent">
-                {Object.keys(basic).length !== 0 ? (
+                {Object.keys(basic).length !== 0 &&
+                !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
@@ -1160,13 +1173,23 @@ class Package extends React.Component {
                       Pay Now
                     </Button>
                   )}
-                  {/* <Button
-                    onClick={() => {
-                      this.updatePackage(userInfo.user_id, premium.package_id);
-                    }}
-                  >
-                    Start Trial
-                  </Button> */}
+                  {!userInfo.is_trial_expired &&
+                    (this.state.trailLoading ? (
+                      <Button>
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => {
+                          this.updatePackage(
+                            userInfo.user_id,
+                            premium.package_id
+                          );
+                        }}
+                      >
+                        Start Trial
+                      </Button>
+                    ))}
                 </>
               ) : null}
             </div>
@@ -1595,6 +1618,22 @@ class Package extends React.Component {
                   )}
                 </>
               ) : null}
+            </div>
+          </Modal.Body>
+        </Modal>
+
+        <Modal
+          className="pkg_readmore"
+          show={this.state.isExpiredModal}
+          onHide={this.handleCloseIsExpired}
+          centered
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Package Expired</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div class="funkyradio">
+              <p>Your Package is expired please make the payment to proceed.</p>
             </div>
           </Modal.Body>
         </Modal>

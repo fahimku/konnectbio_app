@@ -46,12 +46,15 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
 
 export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
   const checkPermission = PermissionHelper.validate(permissions);
-  //  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     //    return (<Redirect to="/login" />)
     return history.push("/app/linkinbio");
   } else {
+    if (userInfo?.is_trial_expired) {
+      window.open("/package", "_self");
+    }
     if (checkPermission) {
       return (
         // eslint-disable-line
