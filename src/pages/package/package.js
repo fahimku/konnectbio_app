@@ -372,10 +372,12 @@ class Package extends React.Component {
                       <small className="monthly">/mo</small>
                       {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed monthly</span>
-                      <span className="pkg-trial">
-                        Try 30 days for free, no credit card information
-                        required, cancel anytime.
-                      </span>
+                      {!userInfo.is_trial_expired ? (
+                        <span className="pkg-trial">
+                          Try 30 days for free, no credit card information
+                          required, cancel anytime.
+                        </span>
+                      ) : null}
                     </div>
                     <ul className="pkg_detail_list_ift">
                       <li>
@@ -687,10 +689,12 @@ class Package extends React.Component {
                       <small className="monthly">/mo</small>
                       {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed yearly</span>
-                      <span className="pkg-trial">
-                        Try 30 days for free, no credit card information
-                        required, cancel anytime.
-                      </span>
+                      {!userInfo.is_trial_expired ? (
+                        <span className="pkg-trial">
+                          Try 30 days for free, no credit card information
+                          required, cancel anytime.
+                        </span>
+                      ) : null}
                     </div>
                     <ul className="pkg_detail_list_ift">
                       <li>
