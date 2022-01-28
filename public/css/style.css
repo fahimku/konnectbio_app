@@ -732,7 +732,7 @@ a.pkg_read:hover {
 }
 .pkg_detail_list_ift li {
   font-size: 1rem;
-  padding-bottom: 12px;
+  padding-bottom: 11px;
   padding-left: 16px;
   position: relative;
   line-height: 1.5rem;
@@ -1350,6 +1350,7 @@ a.pkg_read:hover {
   margin-right: 0 !important;
   max-width: 120px;
 }
-.fc .fc-daygrid-day-number, .fc .fc-col-header-cell-cushion{
-  color:inherit !important;
+.fc .fc-daygrid-day-number,
+.fc .fc-col-header-cell-cushion {
+  color: inherit !important;
 }

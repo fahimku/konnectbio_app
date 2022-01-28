@@ -176,16 +176,17 @@ class Package extends React.Component {
 
   getPriceId = (value, name, arr) => {
     const interval = value.slice(0, value.length - 2);
-    const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
+    const priceLists = arr.filter(
+      (item) => item.interval === interval && item.product_name === name
+    );
     return priceLists;
-   
   };
 
   // getPriceId = (value, name, arr) => {
   //   //      console.log('array')
   //         console.log('array',arr)
   //       const updatedArr = arr.filter((item.) =>
-    
+
   //         item.interval === value.slice(0, value.length - 2) &&
   //           item.product_name == name
   //       );
@@ -194,8 +195,6 @@ class Package extends React.Component {
   //         nickname:updatedArr[0].nickname,
   //       };
   //     };
-
-
 
   render() {
     const basic = this.state.packages.Basic || {};
@@ -374,6 +373,10 @@ class Package extends React.Component {
                       <small className="monthly">/mo</small>
                       {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed monthly</span>
+                      <span className="pkg-trial">
+                        Try 30 days for free, no credit card information
+                        required, cancel anytime.
+                      </span>
                     </div>
                     <ul className="pkg_detail_list_ift">
                       <li>
@@ -685,6 +688,10 @@ class Package extends React.Component {
                       <small className="monthly">/mo</small>
                       {/* <ins>(Free For 90 Days)</ins> */}
                       <span className="pkg_billed">billed yearly</span>
+                      <span className="pkg-trial">
+                        Try 30 days for free, no credit card information
+                        required, cancel anytime.
+                      </span>
                     </div>
                     <ul className="pkg_detail_list_ift">
                       <li>
@@ -1191,20 +1198,29 @@ class Package extends React.Component {
                   )}
                   {!userInfo.is_trial_expired &&
                     (this.state.trailLoading ? (
-                      <Button>
-                        <Loader />
-                      </Button>
+                      <>
+                        {" "}
+                        OR{" "}
+                        <Button>
+                          <Loader />
+                        </Button>
+                      </>
                     ) : (
-                      <Button
-                        onClick={() => {
-                          this.updatePackage(
-                            userInfo.user_id,
-                            premium.package_id
-                          );
-                        }}
-                      >
-                        Start Trial
-                      </Button>
+                      <>
+                        {" "}
+                        OR{" "}
+                        <Button
+                          onClick={() => {
+                            this.updatePackage(
+                              userInfo.user_id,
+                              premium.package_id
+                            );
+                          }}
+                          className="ml-1"
+                        >
+                          Start For Trial
+                        </Button>
+                      </>
                     ))}
                 </>
               ) : null}
