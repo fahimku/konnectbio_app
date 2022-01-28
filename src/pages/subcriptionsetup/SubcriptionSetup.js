@@ -1182,8 +1182,10 @@ class SubcriptionSetup extends React.Component {
                                                   <Button>
                                                     <Loader />
                                                   </Button>
-                                                ) : (
-                                                  <Button
+                                              ) : (
+                                                  <>
+                                                  OR &nbsp;
+                                                   <Button
                                                     onClick={() => {
                                                       this.updatePackage(
                                                         userInfo.user_id,
@@ -1192,8 +1194,9 @@ class SubcriptionSetup extends React.Component {
                                                       );
                                                     }}
                                                   >
-                                                    Start Trial
-                                                  </Button>
+                                                    Start 14 Days Trial
+                                                    </Button>
+                                                    </>
                                                 ))}
                                             </>
                                           ) : null}
