@@ -13,7 +13,6 @@ export const makePayment = (data) => async (dispatch) => {
 };
 
 export const updateSubscription = (data) => async (dispatch) => {
-  console.log(data, "data");
   const res = await axios.post(`${config.hostApi}/v1/subscribe/upgrade`, data);
   return res.data;
 };
