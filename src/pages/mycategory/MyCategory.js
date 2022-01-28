@@ -257,10 +257,6 @@ class MyCategory extends React.Component {
       buySelectedCategory: options,
     });
   };
-  buyCategory = async (e) => {
-    e.preventDefault();
-    alert(this.state.buySelectedCategory.value);
-  };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -467,7 +463,7 @@ class MyCategory extends React.Component {
                           }}
                         >
                           Number of categories in{" "}
-                          {userInfo1.package.package_name.toLowerCase()} plan is{" "}
+                          {userInfo1.package.package_name} plan is{" "}
                           {userInfo1.package.category_count}
                         </p>
                         <Row>
@@ -547,54 +543,7 @@ class MyCategory extends React.Component {
                 </div>
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
-                    <div className="dash_content_profile">
-                      <form onSubmit={this.buyCategory}>
-                        <p
-                          style={{
-                            color: "gray",
-                            borderBottom: "1px solid lightgray",
-                            paddingBottom: 10,
-                          }}
-                        >
-                          Buy Additional Categories
-                        </p>
-                        <Row>
-                          <Col md={12}>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <label>No. of category</label>
-                            </div>
-
-                            <Select
-                              name="category"
-                              className="selectCustomization"
-                              options={buyCategory}
-                              value={this.state.buySelectedCategory}
-                              placeholder="Select No. of Category"
-                              onChange={(options, e) =>
-                                this.handleBuySelect(e, options)
-                              }
-                            />
-                          </Col>
-                        </Row>
-
-                        <Row>
-                          <Col md={12} xl={12}>
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              className="category-btn btn-block mt-2"
-                            >
-                              Upgrade Category
-                            </Button>
-                          </Col>
-                        </Row>
-                      </form>
-                    </div>
+                    <div className="dash_content_profile"></div>
                   </div>
                 </div>
               </div>

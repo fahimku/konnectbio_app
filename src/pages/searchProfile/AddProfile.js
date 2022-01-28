@@ -132,7 +132,7 @@ function HashtagsList({
                         }}
                       >
                         Number of profile monitoring in{" "}
-                        {userInfo1.package.package_name.toLowerCase()} plan is{" "}
+                        {userInfo1.package.package_name} plan is{" "}
                         {profiles.profile_limit}
                       </p>
                       <Row>

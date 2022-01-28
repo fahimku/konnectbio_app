@@ -125,9 +125,8 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Number of hashtags in{" "}
-                        {userInfo1.package.package_name.toLowerCase()} plan is{" "}
-                        {hashtags.hashtag_limit}
+                        Number of hashtags in {userInfo1.package.package_name}{" "}
+                        plan is {hashtags.hashtag_limit}
                       </p>
                       <Row>
                         <Col md={12}>
