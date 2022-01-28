@@ -1664,11 +1664,13 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Package Expired</Modal.Title>
+            <Modal.Title>Trial Expired</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">
-              <p>Your Package is expired please make the payment to proceed.</p>
+              <p>
+                Your Trial has been expired please make the payment to proceed.
+              </p>
             </div>
           </Modal.Body>
         </Modal>
