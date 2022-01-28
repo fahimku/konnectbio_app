@@ -112,7 +112,9 @@ class SubcriptionSetup extends React.Component {
 
   handlePackage = (event) => {
     const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
+    const singlePackage = this.state.allPackages.filter(
+      (x) => x.package_id === event.value
+    );
     // const maxIndex = this.state.allPackages.length - 1;
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
@@ -202,20 +204,20 @@ class SubcriptionSetup extends React.Component {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
 
-  // getPriceId = (value, name, arr) => {
-  //   const updatedArr = arr.filter(
-  //     (item) =>
-  //       item.interval === value.slice(0, value.length - 2) &&
-  //       item.product_name == name
-  //   );
-  //   return updatedArr[0].price_id;
-  // };
   getPriceId = (value, name, arr) => {
-    const interval = value.slice(0, value.length - 2);
-    const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
-    return priceLists;
-   
+    const updatedArr = arr.filter(
+      (item) =>
+        item.interval === value.slice(0, value.length - 2) &&
+        item.product_name == name
+    );
+    return updatedArr[0].price_id;
   };
+  // getPriceId = (value, name, arr) => {
+  //   const interval = value.slice(0, value.length - 2);
+  //   const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
+  //   return priceLists;
+
+  // };
   updatePackage = async (id, packageId) => {
     this.setState({ trailLoading: true });
     await axios
@@ -526,7 +528,7 @@ class SubcriptionSetup extends React.Component {
                                                 ) {
                                                   this.props
                                                     .makePayment({
-                                                      prices: this.getPriceId(
+                                                      price_id: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,
@@ -547,7 +549,7 @@ class SubcriptionSetup extends React.Component {
                                                 } else {
                                                   this.props
                                                     .updateSubscription({
-                                                      prices: this.getPriceId(
+                                                      price_id: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,
@@ -1182,21 +1184,22 @@ class SubcriptionSetup extends React.Component {
                                                   <Button>
                                                     <Loader />
                                                   </Button>
-                                              ) : (
+                                                ) : (
                                                   <>
-                                                  OR &nbsp;
-                                                   <Button
-                                                    onClick={() => {
-                                                      this.updatePackage(
-                                                        userInfo.user_id,
-                                                        this.state.singlePackage
-                                                          .package_id
-                                                      );
-                                                    }}
-                                                  >
-                                                    Start 14 Days Trial
+                                                    OR &nbsp;
+                                                    <Button
+                                                      onClick={() => {
+                                                        this.updatePackage(
+                                                          userInfo.user_id,
+                                                          this.state
+                                                            .singlePackage
+                                                            .package_id
+                                                        );
+                                                      }}
+                                                    >
+                                                      Start 14 Days Trial
                                                     </Button>
-                                                    </>
+                                                  </>
                                                 ))}
                                             </>
                                           ) : null}
