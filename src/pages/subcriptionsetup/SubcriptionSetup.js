@@ -112,11 +112,8 @@ class SubcriptionSetup extends React.Component {
 
   handlePackage = (event) => {
     const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
-    const singlePackage = this.state.allPackages.filter(
-      (x) => x.package_id === event.value
-    );
+    const singlePackage = this.state.allPackages.filter((x) => x.package_id === event.value);
     // const maxIndex = this.state.allPackages.length - 1;
-
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
     this.setState({ package_id: event.value });
@@ -134,6 +131,7 @@ class SubcriptionSetup extends React.Component {
       this.setState({ showPaymentButton: false });
     }
   };
+
   handleCheckbox = (e) => {
     const target = e.target;
     const { checkbox } = this.state;
@@ -143,6 +141,7 @@ class SubcriptionSetup extends React.Component {
       checkbox,
     });
   };
+
   handleClose = () => {
     this.setState({ checkbox: {} });
     this.setState({
@@ -203,13 +202,19 @@ class SubcriptionSetup extends React.Component {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
 
+  // getPriceId = (value, name, arr) => {
+  //   const updatedArr = arr.filter(
+  //     (item) =>
+  //       item.interval === value.slice(0, value.length - 2) &&
+  //       item.product_name == name
+  //   );
+  //   return updatedArr[0].price_id;
+  // };
   getPriceId = (value, name, arr) => {
-    const updatedArr = arr.filter(
-      (item) =>
-        item.interval === value.slice(0, value.length - 2) &&
-        item.product_name == name
-    );
-    return updatedArr[0].price_id;
+    const interval = value.slice(0, value.length - 2);
+    const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
+    return priceLists;
+   
   };
   updatePackage = async (id, packageId) => {
     this.setState({ trailLoading: true });
@@ -521,7 +526,7 @@ class SubcriptionSetup extends React.Component {
                                                 ) {
                                                   this.props
                                                     .makePayment({
-                                                      price_id: this.getPriceId(
+                                                      prices: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,
@@ -542,7 +547,7 @@ class SubcriptionSetup extends React.Component {
                                                 } else {
                                                   this.props
                                                     .updateSubscription({
-                                                      price_id: this.getPriceId(
+                                                      prices: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,

@@ -8,6 +8,7 @@ export const configSubs = () => async (dispatch) => {
 };
 
 export const makePayment = (data) => async (dispatch) => {
+  console.log(data)
   const res = await axios.post(`${config.hostApi}/v1/subscribe/checkout`, data);
   return res.data.message;
 };
