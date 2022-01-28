@@ -330,7 +330,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              {!this.completeProcess() && userInfo1?.access_token === "" ? (
+              {this.props.connectPage? (
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
