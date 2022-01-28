@@ -307,12 +307,14 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         {userInfo.package.package_name !== "Basic" ? (
                           <>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Payment Type</h5>
-                              <h3 className="count">
-                                {userInfo.package?.recurring_payment_type}
-                              </h3>
-                            </div>
+                            {userInfo?.package?.subscription_type !== "Trial" &&
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Payment Type</h5>
+                                <h3 className="count">
+                                  {userInfo.package?.recurring_payment_type}
+                                </h3>
+                              </div>
+                            }
 
                             {userInfo.package.trial_expiry_date ? (
                               <div className="col-12 count-box">
@@ -424,7 +426,7 @@ class SubcriptionSetup extends React.Component {
                                   <Label for="checkbox2" />
                                   Pay Yearly & Save{" "}
                                   {this.state.singlePackage.yearly_discount}%
-                                  (Pay $
+                                (                           $
                                   {
                                     this.state.singlePackage
                                       .package_amount_yearly
