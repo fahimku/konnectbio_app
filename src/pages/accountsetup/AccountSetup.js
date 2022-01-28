@@ -283,6 +283,22 @@ class AccountSetup extends React.Component {
         console.log(error);
       });
   };
+  completeProcess = () => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_name;
+    if (
+      this.state.pack === "Premium" ||
+      package1 === "Premium" ||
+      this.state.pack === "Premium Plus" ||
+      package1 === "Premium"
+    ) {
+      const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
+      return fbPage || this.state.fbPageLocal ? false : true;
+    } else {
+      const insta = this.state.instagramCode === "" ? true : false;
+      return insta;
+    }
+  };
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const style = {
@@ -314,38 +330,39 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              {/* <div className="profile_box_main col-md-4">
-                <div className="dash_block_profile">
-                  <div className="dash_content_profile">
-                    <h5>Manage Plan</h5>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="dp_fields-setup mb-0">
-                          <div className="row">
-                            <div className="pkg-cncl-btn d-flex col-md-12">
-                              <h6 className="package_name">
-                                Current Plan:{" "}
-                                {userInfo1?.package
-                                  ? userInfo1.package.package_name
-                                  : ""}
-                              </h6>
-                              {!this.props.connectPage &&
-                                userInfo1.package.package_name ===
-                                  "Premium" && (
-                                  <button
-                                    onClick={() => {
-                                      this.setState({ cancelPlan: true });
-                                    }}
-                                    className="btn-block btn text-white btn-sm disconnect-btn"
-                                  >
-                                    Cancel
-                                  </button>
-                                )}
+              {this.props.connectPage? (
+                <div className="profile_box_main col-md-4">
+                  <div className="dash_block_profile">
+                    <div className="dash_content_profile">
+                      <h5>Manage Plan</h5>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="dp_fields-setup mb-0">
+                            <div className="row">
+                              <div className="pkg-cncl-btn d-flex col-md-12">
+                                <h6 className="package_name">
+                                  Current Plan:{" "}
+                                  {userInfo1?.package
+                                    ? userInfo1.package.package_name
+                                    : ""}
+                                </h6>
+                                {!this.props.connectPage &&
+                                  userInfo1.package.package_name ===
+                                    "Premium" && (
+                                    <button
+                                      onClick={() => {
+                                        this.setState({ cancelPlan: true });
+                                      }}
+                                      className="btn-block btn text-white btn-sm disconnect-btn"
+                                    >
+                                      Cancel
+                                    </button>
+                                  )}
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                         <div className="dp_fields-setup">
+                          {/* <div className="dp_fields-setup">
                           <div className="mb-3">
                             <label>Change Plan:</label>
                             <Select
@@ -360,59 +377,59 @@ class AccountSetup extends React.Component {
                               onChange={(event) => this.handlePackage(event)}
                             />
                           </div>
-                        </div> 
+                        </div> */}
 
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Categories Included:{" "}
-                              <strong>
-                                {this.state.singlePackage.category_count}
-                              </strong>
-                            </span>
-                            {this.state.singlePackage.package_name !==
+                          <div className="dp_fields-setup">
+                            <div className="sm-b mb-2">
+                              <span>
+                                Categories Included:{" "}
+                                <strong>
+                                  {this.state.singlePackage.category_count}
+                                </strong>
+                              </span>
+                              {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more categories</span>
-                            )} 
+                            )} */}
+                            </div>
                           </div>
-                        </div>
 
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Links Included:{" "}
-                              <strong>
-                                {this.state.singlePackage.link_count}
-                              </strong>
-                            </span>
+                          <div className="dp_fields-setup">
+                            <div className="sm-b mb-2">
+                              <span>
+                                Links Included:{" "}
+                                <strong>
+                                  {this.state.singlePackage.link_count}
+                                </strong>
+                              </span>
 
-                             {this.state.singlePackage.package_name !==
+                              {/* {this.state.singlePackage.package_name !==
                               "Premium Plus" && (
                               <span>Change Plan to have more links</span>
-                            )}
+                            )} */}
+                            </div>
                           </div>
-                        </div>
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Monitor Hashtags:{" "}
-                              <strong>
-                                {this.state.singlePackage.hashtag_limit}
-                              </strong>
-                            </span>
+                          <div className="dp_fields-setup">
+                            <div className="sm-b mb-2">
+                              <span>
+                                Monitor Hashtags:{" "}
+                                <strong>
+                                  {this.state.singlePackage.hashtag_limit}
+                                </strong>
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        <div className="dp_fields-setup">
-                          <div className="sm-b mb-2">
-                            <span>
-                              Monitor Competition Profiles:{" "}
-                              <strong>
-                                {this.state.singlePackage.profile_limit}
-                              </strong>
-                            </span>
+                          <div className="dp_fields-setup">
+                            <div className="sm-b mb-2">
+                              <span>
+                                Monitor Competition Profiles:{" "}
+                                <strong>
+                                  {this.state.singlePackage.profile_limit}
+                                </strong>
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        {this.state.singlePackage.package_name !== "Basic" &&
+                          {/* {this.state.singlePackage.package_name -== "Basic" &&
                           this.state.upgrade && (
                             <div className="dp_fields-setup">
                               <>
@@ -432,12 +449,13 @@ class AccountSetup extends React.Component {
                                 </div>
                               </>
                             </div>
-                          )}
+                          )} */}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div> */}
+              ) : null}
 
               <DisconnectInstagram
                 userId={userInfo1?.user_id}

@@ -51,7 +51,6 @@ class Package extends React.Component {
 
   componentDidMount() {
     this.props.configSubs().then((res) => {
-      console.log(res.message);
       this.setState({ prices: res.message });
     });
 
