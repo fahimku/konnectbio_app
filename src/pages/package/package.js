@@ -175,16 +175,9 @@ class Package extends React.Component {
 
   getPriceId = (value, name, arr) => {
     const interval = value.slice(0, value.length - 2);
-    const priceLists =
-      name == "Premium"
-        ? arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium Plus"
-          )
-        : arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium"
-          );
+    const priceLists = arr.filter(
+      (item) => item.interval === interval && item.product_name === name
+    );
 
     return priceLists;
   };

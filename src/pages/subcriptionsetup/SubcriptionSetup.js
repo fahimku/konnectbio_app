@@ -203,22 +203,31 @@ class SubcriptionSetup extends React.Component {
   promoChange = (e) => {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
-
   getPriceId = (value, name, arr) => {
     const interval = value.slice(0, value.length - 2);
-    const priceLists =
-      name == "Premium"
-        ? arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium Plus"
-          )
-        : arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium"
-          );
+    const priceLists = arr.filter(
+      (item) => item.interval === interval && item.product_name === name
+    );
 
     return priceLists;
   };
+
+  // getPriceId = (value, name, arr) => {
+  //   const interval = value.slice(0, value.length - 2);
+  //   const priceLists =
+  //     name == "Premium"
+  //       ? arr.filter(
+  //           (item) =>
+  //             item.interval === interval && item.product_name === "Premium Plus"
+  //         )
+  //       : arr.filter(
+  //           (item) =>
+  //             item.interval === interval && item.product_name === "Premium"
+  //         );
+
+  //   return priceLists;
+  // };
+
   // getPriceId = (value, name, arr) => {
   //   const interval = value.slice(0, value.length - 2);
   //   const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
