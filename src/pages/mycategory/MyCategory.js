@@ -13,6 +13,7 @@ import {
   SortableElement,
   arrayMove,
 } from "react-sortable-hoc";
+import BuyCategory from "./component/BuyCategory";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -36,7 +37,6 @@ class MyCategory extends React.Component {
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
       sort: false,
-      buySelectedCategory: "",
     };
   }
 
@@ -252,11 +252,6 @@ class MyCategory extends React.Component {
       sort: true,
     });
   };
-  handleBuySelect = (e, options) => {
-    this.setState({
-      buySelectedCategory: options,
-    });
-  };
 
   render() {
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
@@ -297,20 +292,6 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-    const buyCategory = [
-      {
-        value: "3",
-        label: "3",
-      },
-      {
-        value: "6",
-        label: "6",
-      },
-      {
-        value: "12",
-        label: "12",
-      },
-    ];
 
     return (
       <React.Fragment>
@@ -543,7 +524,9 @@ class MyCategory extends React.Component {
                 </div>
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
-                    <div className="dash_content_profile"></div>
+                    <div className="dash_content_profile">
+                      <BuyCategory />
+                    </div>
                   </div>
                 </div>
               </div>

@@ -1,8 +1,9 @@
 import React from "react";
-import { Col, Button, Modal } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
+import Select from "react-select";
 
 class BuyCategory extends React.Component {
   state = {
@@ -21,6 +22,20 @@ class BuyCategory extends React.Component {
   };
 
   render() {
+    const buyCategory = [
+      {
+        value: "3",
+        label: "3",
+      },
+      {
+        value: "6",
+        label: "6",
+      },
+      {
+        value: "12",
+        label: "12",
+      },
+    ];
     return (
       <>
         <form onSubmit={this.buyCategory}>
