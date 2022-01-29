@@ -1196,6 +1196,11 @@ class Package extends React.Component {
                           .then((res) => {
                             this.setState({ paymentLoading: false });
                             window.open(res, "_self");
+                          })
+                          .catch((err) => {
+                            console.log(err.response);
+                            // toast.error(err.response.data.message);
+                            this.setState({ paymentLoading: false });
                           });
                       }}
                     >
