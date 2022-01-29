@@ -116,7 +116,6 @@ class SubcriptionSetup extends React.Component {
       (x) => x.package_id === event.value
     );
     // const maxIndex = this.state.allPackages.length - 1;
-
     this.setState({ singlePackage: singlePackage[0] });
     this.setState({ package: event.label });
     this.setState({ package_id: event.value });
@@ -134,6 +133,7 @@ class SubcriptionSetup extends React.Component {
       this.setState({ showPaymentButton: false });
     }
   };
+
   handleCheckbox = (e) => {
     const target = e.target;
     const { checkbox } = this.state;
@@ -143,6 +143,7 @@ class SubcriptionSetup extends React.Component {
       checkbox,
     });
   };
+
   handleClose = () => {
     this.setState({ checkbox: {} });
     this.setState({
@@ -211,6 +212,12 @@ class SubcriptionSetup extends React.Component {
     );
     return updatedArr[0].price_id;
   };
+  // getPriceId = (value, name, arr) => {
+  //   const interval = value.slice(0, value.length - 2);
+  //   const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
+  //   return priceLists;
+
+  // };
   updatePackage = async (id, packageId) => {
     this.setState({ trailLoading: true });
     await axios
@@ -300,12 +307,14 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         {userInfo.package.package_name !== "Basic" ? (
                           <>
-                            <div className="col-12 count-box">
-                              <h5 className="count-title">Payment Type</h5>
-                              <h3 className="count">
-                                {userInfo.package?.recurring_payment_type}
-                              </h3>
-                            </div>
+                            {userInfo?.package?.subscription_type !== "Trial" &&
+                              <div className="col-12 count-box">
+                                <h5 className="count-title">Payment Type</h5>
+                                <h3 className="count">
+                                  {userInfo.package?.recurring_payment_type}
+                                </h3>
+                              </div>
+                            }
 
                             {userInfo.package.trial_expiry_date ? (
                               <div className="col-12 count-box">
@@ -417,7 +426,7 @@ class SubcriptionSetup extends React.Component {
                                   <Label for="checkbox2" />
                                   Pay Yearly & Save{" "}
                                   {this.state.singlePackage.yearly_discount}%
-                                  (Pay $
+                                (                           $
                                   {
                                     this.state.singlePackage
                                       .package_amount_yearly
@@ -1178,17 +1187,21 @@ class SubcriptionSetup extends React.Component {
                                                     <Loader />
                                                   </Button>
                                                 ) : (
-                                                  <Button
-                                                    onClick={() => {
-                                                      this.updatePackage(
-                                                        userInfo.user_id,
-                                                        this.state.singlePackage
-                                                          .package_id
-                                                      );
-                                                    }}
-                                                  >
-                                                    Start Trial
-                                                  </Button>
+                                                  <>
+                                                    OR &nbsp;
+                                                    <Button
+                                                      onClick={() => {
+                                                        this.updatePackage(
+                                                          userInfo.user_id,
+                                                          this.state
+                                                            .singlePackage
+                                                            .package_id
+                                                        );
+                                                      }}
+                                                    >
+                                                      Start 14 Days Trial
+                                                    </Button>
+                                                  </>
                                                 ))}
                                             </>
                                           ) : null}
