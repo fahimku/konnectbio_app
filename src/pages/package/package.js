@@ -113,7 +113,8 @@ class Package extends React.Component {
         history.push("/connect");
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response);
+        toast.error(error.response.data.message);
         this.setState({ trailLoading: false });
       });
   };
