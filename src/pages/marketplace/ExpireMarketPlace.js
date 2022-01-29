@@ -237,7 +237,7 @@ function ExpiredMarketPlace({
                                                 <Button
                                                     type="button"
                                                     variant="primary"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn btn-primary"
                                                 >
                                                     <Loader />
                                                 </Button>
@@ -245,7 +245,7 @@ function ExpiredMarketPlace({
                                                 <Button
                                                     type="submit"
                                                     variant="primary"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn btn-primary"
                                                 >
                                                     Search
                                                 </Button>
@@ -253,7 +253,7 @@ function ExpiredMarketPlace({
                                             {clearLoading ? (
                                                 <Button
                                                     variant="gray"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn btn-primary"
                                                 >
                                                     <Loader />
                                                 </Button>
@@ -261,7 +261,7 @@ function ExpiredMarketPlace({
                                                 <Button
                                                     onClick={clearMarketPlace}
                                                     variant="gray"
-                                                    className="fltr-h btn btn-primary"
+                                                    className="fltr-hpr btn btn-primary"
                                                 >
                                                     Reset
                                                 </Button>

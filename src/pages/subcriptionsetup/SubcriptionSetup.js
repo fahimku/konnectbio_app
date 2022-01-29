@@ -205,12 +205,19 @@ class SubcriptionSetup extends React.Component {
   };
 
   getPriceId = (value, name, arr) => {
-    const updatedArr = arr.filter(
-      (item) =>
-        item.interval === value.slice(0, value.length - 2) &&
-        item.product_name == name
-    );
-    return updatedArr[0].price_id;
+    const interval = value.slice(0, value.length - 2);
+    const priceLists =
+      name == "Premium"
+        ? arr.filter(
+            (item) =>
+              item.interval === interval && item.product_name !== "Premium Plus"
+          )
+        : arr.filter(
+            (item) =>
+              item.interval === interval && item.product_name !== "Premium"
+          );
+
+    return priceLists;
   };
   // getPriceId = (value, name, arr) => {
   //   const interval = value.slice(0, value.length - 2);
@@ -307,14 +314,15 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         {userInfo.package.package_name !== "Basic" ? (
                           <>
-                            {userInfo?.package?.subscription_type !== "Trial" &&
+                            {userInfo?.package?.subscription_type !==
+                              "Trial" && (
                               <div className="col-12 count-box">
                                 <h5 className="count-title">Payment Type</h5>
                                 <h3 className="count">
                                   {userInfo.package?.recurring_payment_type}
                                 </h3>
                               </div>
-                            }
+                            )}
 
                             {userInfo.package.trial_expiry_date ? (
                               <div className="col-12 count-box">
@@ -425,8 +433,8 @@ class SubcriptionSetup extends React.Component {
                                   />{" "}
                                   <Label for="checkbox2" />
                                   Pay Yearly & Save{" "}
-                                  {this.state.singlePackage.yearly_discount}%
-                                (                           $
+                                  {this.state.singlePackage.yearly_discount}% (
+                                  $
                                   {
                                     this.state.singlePackage
                                       .package_amount_yearly
@@ -530,7 +538,7 @@ class SubcriptionSetup extends React.Component {
                                                 ) {
                                                   this.props
                                                     .makePayment({
-                                                      price_id: this.getPriceId(
+                                                      prices: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,
@@ -551,7 +559,7 @@ class SubcriptionSetup extends React.Component {
                                                 } else {
                                                   this.props
                                                     .updateSubscription({
-                                                      price_id: this.getPriceId(
+                                                      prices: this.getPriceId(
                                                         this.state.plan.toLowerCase(),
                                                         this.state.singlePackage
                                                           .package_name,
@@ -1107,7 +1115,7 @@ class SubcriptionSetup extends React.Component {
                                                     ) {
                                                       this.props
                                                         .makePayment({
-                                                          price_id:
+                                                          prices:
                                                             this.getPriceId(
                                                               this.state.plan.toLowerCase(),
                                                               this.state
@@ -1134,7 +1142,7 @@ class SubcriptionSetup extends React.Component {
                                                     } else {
                                                       this.props
                                                         .updateSubscription({
-                                                          price_id:
+                                                          prices:
                                                             this.getPriceId(
                                                               this.state.plan.toLowerCase(),
                                                               this.state

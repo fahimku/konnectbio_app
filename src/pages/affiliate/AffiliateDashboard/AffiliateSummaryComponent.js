@@ -56,7 +56,7 @@ class AffiliateSummaryComponent extends React.Component {
     return (
       <>
         <div className="summary_container_main container">
-          <div className="row">
+          <div className="abc row">
             <div
               className={`summary_box_main ${
                 this.props.className ? this.props.className : "col-md-12"

@@ -472,14 +472,14 @@ class AffiliateDataComponent extends React.Component {
                   <Button
                     type="submit"
                     variant="primary"
-                    className="fltr-h btn btn-primary"
+                    className="fltr-hpr btn btn-primary"
                   >
                     Search
                   </Button>
                   <Button
                     onClick={this.clearFilter}
                     variant="gray"
-                    className="fltr-h btn btn-primary"
+                    className="fltr-hpr btn btn-primary"
                   >
                     Reset
                   </Button>
@@ -496,7 +496,7 @@ class AffiliateDataComponent extends React.Component {
           <div className="row no-data col-md-12">No Data Available</div>
         ) : (
           <>
-            <Row>{this.state.postData}</Row>
+            <Row className="af-rm-mn">{this.state.postData}</Row>
 
             <ReactPaginate
               previousLabel=""
