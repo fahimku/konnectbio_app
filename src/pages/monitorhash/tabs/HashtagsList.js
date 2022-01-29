@@ -216,7 +216,7 @@ function HashtagsList({
                   </div>
                 </div>
               </div>
-              <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
+              {/* <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
                 <div className="brand-section dash_block_profile">
                   <div className="dash_content_profile">
                     <BuySubscription
@@ -225,7 +225,7 @@ function HashtagsList({
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Row>
           </div>
         </div>

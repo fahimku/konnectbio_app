@@ -522,7 +522,7 @@ class MyCategory extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="profile_box_main col-md-4">
+                {/* <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
                       <BuySubscription
@@ -531,7 +531,7 @@ class MyCategory extends React.Component {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
