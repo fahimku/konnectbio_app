@@ -132,7 +132,7 @@ class LinkDataComponent extends React.Component {
           <Loader className="analytics-loading" size={60} />
         ) : (
           <>
-            <Row>
+            <Row className="af-rm-mn">
               {!this.state.data.length ? (
                 <div className="col-md-12 no-data">No Data Available</div>
               ) : (

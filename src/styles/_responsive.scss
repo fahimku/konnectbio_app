@@ -852,3 +852,10 @@
         display: none;
     }
 }
+
+@media only screen and (min-width: 1200px) and (max-width: 1500px)  {
+    .af-rm-mn .col-xl-4{
+        flex: 50%;
+        max-width: 50%;
+    }
+}
