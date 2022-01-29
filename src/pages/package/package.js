@@ -173,22 +173,30 @@ class Package extends React.Component {
     });
   };
 
-  // getPriceId = (value, name, arr) => {
-  //   const interval = value.slice(0, value.length - 2);
-  //   const priceLists = arr.filter(
-  //     (item) => item.interval === interval && item.product_name === name
-  //   );
-  //   return priceLists;
-  // };
-
   getPriceId = (value, name, arr) => {
-    const updatedArr = arr.filter(
-      (item) =>
-        item.interval === value.slice(0, value.length - 2) &&
-        item.product_name == name
-    );
-    return updatedArr[0].price_id;
+    const interval = value.slice(0, value.length - 2);
+    const priceLists =
+      name == "Premium"
+        ? arr.filter(
+            (item) =>
+              item.interval === interval && item.product_name !== "Premium Plus"
+          )
+        : arr.filter(
+            (item) =>
+              item.interval === interval && item.product_name !== "Premium"
+          );
+
+    return priceLists;
   };
+
+  // getPriceId = (value, name, arr) => {
+  //   const updatedArr = arr.filter(
+  //     (item) =>
+  //       item.interval === value.slice(0, value.length - 2) &&
+  //       item.product_name == name
+  //   );
+  //   return updatedArr[0].price_id;
+  // };
 
   render() {
     const basic = this.state.packages.Basic || {};
@@ -1177,7 +1185,7 @@ class Package extends React.Component {
                         this.setState({ paymentLoading: true });
                         this.props
                           .makePayment({
-                            price_id: this.getPriceId(
+                            prices: this.getPriceId(
                               this.state.selectedtab.toLowerCase(),
                               premium.package_name,
                               this.state.prices
@@ -1629,7 +1637,7 @@ class Package extends React.Component {
                         this.setState({ paymentLoading: true });
                         this.props
                           .makePayment({
-                            price_id: this.getPriceId(
+                            prices: this.getPriceId(
                               this.state.selectedtab.toLowerCase(),
                               premiumPlus.package_name,
                               this.state.prices
