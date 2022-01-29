@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import * as hashActions from "../../../actions/hashtags";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
+import BuySubscription from "../../subcriptionsetup/component/BuySubscription";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -212,6 +213,16 @@ function HashtagsList({
                         </Col>
                       </Row>
                     </form>
+                  </div>
+                </div>
+              </div>
+              <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
+                <div className="brand-section dash_block_profile">
+                  <div className="dash_content_profile">
+                    <BuySubscription
+                      heading="Buy Additional Hashtag Monitoring"
+                      name="Hashtag"
+                    />
                   </div>
                 </div>
               </div>

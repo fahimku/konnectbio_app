@@ -13,7 +13,7 @@ import {
   SortableElement,
   arrayMove,
 } from "react-sortable-hoc";
-import BuyCategory from "./component/BuyCategory";
+import BuySubscription from "../subcriptionsetup/component/BuySubscription";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -525,7 +525,10 @@ class MyCategory extends React.Component {
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
-                      <BuyCategory />
+                      <BuySubscription
+                        heading="Buy Additional Categories"
+                        name="Category"
+                      />
                     </div>
                   </div>
                 </div>

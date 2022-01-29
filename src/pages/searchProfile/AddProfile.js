@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import * as profileActions from "../../actions/searchProfile";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
+import BuySubscription from "../subcriptionsetup/component/BuySubscription";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -216,6 +217,16 @@ function HashtagsList({
                         </Col>
                       </Row>
                     </form>
+                  </div>
+                </div>
+              </div>
+              <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                <div className="brand-section dash_block_profile">
+                  <div className="dash_content_profile">
+                    <BuySubscription
+                      heading="Buy Additional Profile Monitoring"
+                      name="Profile"
+                    />
                   </div>
                 </div>
               </div>
