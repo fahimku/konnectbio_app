@@ -37,13 +37,15 @@ function HashtagsList({
     if (userInfo1.package.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
-      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-      configSubs().then((res) => {
-        const getPrice = res.message
-          .filter((item) => item.product_name == "Profile")
-          .filter((subItem) => subItem.interval == subType)[0];
-        setPriceId(getPrice.price_id);
-      });
+      if (subType) {
+        subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+        configSubs().then((res) => {
+          const getPrice = res.message
+            .filter((item) => item.product_name == "Profile")
+            .filter((subItem) => subItem.interval == subType)[0];
+          setPriceId(getPrice.price_id);
+        });
+      }
     }
     getProfiles().then(() => {
       setLoading(false);
