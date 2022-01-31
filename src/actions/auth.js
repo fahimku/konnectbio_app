@@ -180,6 +180,12 @@ export function loginUser(creds) {
           ) {
             history.push("/connect");
           } else if (
+            res?.data?.message?.package &&
+            res?.data?.message?.access_token &&
+            !res.data.message.fb_token
+          ) {
+            history.push("/connect");
+          } else if (
             res?.data?.message?.package?.package_name === "Basic" &&
             res?.data?.message?.access_token
           ) {
@@ -303,7 +309,6 @@ export function registerUser(creds) {
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
-        
         });
     } else {
       dispatch(authError("Something was wrong. Try again"));
