@@ -76,8 +76,17 @@ class Payment extends React.Component {
     let redirectURL;
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const params = queryString.parse(window.location.search);
+    //Add on Redirect
+    if (params.status === "success" && params.addon === "Profile") {
+      redirectURL = "/app/search/profile";
+    } else if (params.status === "success" && params.addon === "Hashtag") {
+      redirectURL = "/app/monitor/hash/tags";
+    } else if (params.status === "success" && params.addon === "Category") {
+      redirectURL = "/app/account/categories";
+    }
 
-    if (params.status === "success") {
+    //Package Update Redirect
+    else if (params.status === "success") {
       if (
         userInfo?.package?.package_name === "Premium" &&
         !userInfo?.fb_token &&
