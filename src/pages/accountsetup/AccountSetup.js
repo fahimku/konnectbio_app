@@ -344,7 +344,9 @@ class AccountSetup extends React.Component {
                                   Current Plan:{" "}
                                   {userInfo1?.package
                                     ? userInfo1.package.package_name
-                                    : ""}
+                                    : ""} 
+                                  
+                                  {userInfo1.package.subscription_type === "Trial" && " (Trial)"}
                                 </h6>
                                 {!this.props.connectPage &&
                                   userInfo1.package.package_name ===
@@ -590,7 +592,7 @@ class AccountSetup extends React.Component {
                                   "Premium" ? null : (
                                     <>
                                       <h4 className="mb-0">Have Promo Code?</h4>
-                                      <span class="text-danger promo-err-box col-md-12 pl-0">
+                                      <span className="text-danger promo-err-box col-md-12 pl-0">
                                         {this.state.promo_error
                                           ? // <span className="text-danger mt-2">
                                             this.state.promoCodeError
