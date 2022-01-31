@@ -330,7 +330,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              {this.props.connectPage? (
+              {this.props.connectPage ? (
                 <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
@@ -473,7 +473,7 @@ class AccountSetup extends React.Component {
                 disabled={this.state.loadingInsta ? true : false}
               />
               {this.renderFbConnection(userInfo1)}
-              {this.state.resetAccount && (
+              {/* {this.state.resetAccount && (
                 <ResetAccount
                   userId={userInfo1?.user_id}
                   resetModal={(boolean) => {
@@ -486,7 +486,7 @@ class AccountSetup extends React.Component {
                     this.setState({ loadingInsta: boolean });
                   }}
                 />
-              )}
+              )} */}
             </div>
 
             {this.state.singlePackage.package_name !== "Basic" &&
