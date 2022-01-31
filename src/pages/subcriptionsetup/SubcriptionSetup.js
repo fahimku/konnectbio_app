@@ -327,15 +327,16 @@ class SubcriptionSetup extends React.Component {
                         </div>
                         {userInfo.package.package_name !== "Basic" ? (
                           <>
-                            {userInfo?.package?.subscription_type !==
-                              "Trial" && (
-                              <div className="col-12 count-box">
-                                <h5 className="count-title">Payment Type</h5>
-                                <h3 className="count">
-                                  {userInfo.package?.recurring_payment_type}
-                                </h3>
-                              </div>
-                            )}
+                            {userInfo.package?.next_payment_date &&
+                              userInfo?.package?.subscription_type !==
+                                "Trial" && (
+                                <div className="col-12 count-box">
+                                  <h5 className="count-title">Payment Type</h5>
+                                  <h3 className="count">
+                                    {userInfo.package?.recurring_payment_type}
+                                  </h3>
+                                </div>
+                              )}
 
                             {userInfo.package.trial_expiry_date ? (
                               <div className="col-12 count-box">
@@ -347,14 +348,14 @@ class SubcriptionSetup extends React.Component {
                                     `${userInfo.package.trial_expiry_date}`}
                                 </h3>
                               </div>
-                            ) : (
+                            ) : userInfo.package?.next_payment_date ? (
                               <div className="col-12 count-box">
                                 <h5 className="count-title">Next Payment</h5>
                                 <h3 className="count">
                                   {userInfo.package?.next_payment_date}
                                 </h3>
                               </div>
-                            )}
+                            ) : null}
                           </>
                         ) : null}
                         <div className="col-12 count-box align-items-center">
