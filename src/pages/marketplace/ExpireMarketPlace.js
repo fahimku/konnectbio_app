@@ -4,6 +4,7 @@ import Box from "./Box";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { connect } from "react-redux";
 import * as markActions from "../../actions/marketPlace";
 import * as catActions from "../../actions/category";
@@ -312,7 +313,7 @@ function ExpiredMarketPlace({
                                 />
                             </>
                         ) : (
-                            "No Data Found"
+                            <NoDataFound/>
                         )}
                     </div>
             </>

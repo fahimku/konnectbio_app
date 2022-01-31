@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Box from "./Box";
 import Select from "react-select";
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
@@ -399,8 +400,8 @@ function AllMarketplace({
                 />
               </>
             ) : (
-              "No Data Found"
-            )
+                <NoDataFound/>
+              )
           ) : (
             <Loader size={40} />
           )}

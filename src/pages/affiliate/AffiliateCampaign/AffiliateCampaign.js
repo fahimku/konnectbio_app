@@ -8,6 +8,7 @@ import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
 import Loader from "../../../components/Loader/Loader";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import * as catActions from "../../../actions/category";
@@ -539,12 +540,7 @@ function AffiliateCampaign(props) {
             </>
           ) : (
             <>
-              <div className="no-result-found">
-                <div class="result-inner">
-                  <h2>No Data Available</h2>
-                  <p className="text-muted">Sorry but the data you are looking for does not exist.</p>
-                </div>
-              </div>
+                <NoDataFound/>
             </>
           )
         ) : (

@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { Row, Col, Modal, Button } from "react-bootstrap";
 //import Dropdown from "react-bootstrap/Dropdown";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import "antd/dist/antd.css";
 import ReactPaginate from "react-paginate";
 import UpdateModal from "./UpdateModal";
@@ -517,7 +518,7 @@ function AffiliateCampaign(props) {
               />
             </>
           ) : (
-            <>No Data Found</>
+            <><NoDataFound/></>
           )
         ) : (
           <div className="container-fluid">

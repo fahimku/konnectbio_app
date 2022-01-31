@@ -5,10 +5,11 @@ import * as schedulePostActions from "../../../actions/schedulePost";
 import * as categoriesActions from "../../../actions/category";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { Button, Paper } from "@mui/material";
+//import { Button, Paper } from "@mui/material";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader";
 import InputValidation from "../../../components/InputValidation";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { Col, Row, Modal } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import Select from "react-select";
@@ -147,18 +148,7 @@ function Gallery({
               </Col>
             ))
           ) : (
-            <div
-              style={{
-                height: 300,
-                width: "100%",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h1 style={{ textAlign: "center" }}>No result Found</h1>
-            </div>
+            <NoDataFound/>
           )}
         </Row>
       );

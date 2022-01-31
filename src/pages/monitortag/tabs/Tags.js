@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import Loader from '../../../components/Loader/Loader'
-
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 export default function Tags({data,loading}) {
 
     function renderMedia(item) {
@@ -35,9 +35,7 @@ export default function Tags({data,loading}) {
                     </Masonry>
                 </ResponsiveMasonry>
                 ):(
-                    <div style={{height:300,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                        <h1 style={{textAlign:'center'}}>No result Found</h1>
-                    </div>
+                    <NoDataFound/>
                 )
             ):(
                 <div style={{height:300,display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>

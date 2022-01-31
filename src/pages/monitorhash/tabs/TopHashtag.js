@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Select from "react-select";
-import { toast } from "react-toastify";
+//import { toast } from "react-toastify";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import Loader from "../../../components/Loader/Loader";
 import Box from "../Box";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import ReactPaginate from "react-paginate";
+//import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -428,7 +429,7 @@ function TopHashTag({
                 justifyContent: "center",
               }}
             >
-              <h1 style={{ textAlign: "center" }}>No result Found</h1>
+                <NoDataFound/>
             </div>
           )}
         </div>
@@ -471,7 +472,7 @@ function TopHashTag({
                 />
               </>
             ) : (
-              "No Data Found"
+              
             )
           ) : (
             <Loader size={40} />
