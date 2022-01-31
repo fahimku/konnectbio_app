@@ -187,8 +187,8 @@ class SubcriptionSetup extends React.Component {
 
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          history.push("/connect");
-          // window.location.reload();
+          //          history.push("/connect");
+          window.location.reload();
         })
         .catch((err) => {
           this.setState({ promo_error: true });
