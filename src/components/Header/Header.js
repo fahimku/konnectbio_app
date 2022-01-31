@@ -17,7 +17,7 @@ import logo from "../../images/konnectbiologo.svg";
 import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
-// import PermissionHelper from "../PermissionHelper";
+import PermissionHelper from "../PermissionHelper";
 // import { NavLink } from "react-router-dom";
 import { Modal, Button, Row, Col } from "react-bootstrap";
 import Select from "react-select";
@@ -247,6 +247,7 @@ class Header extends React.Component {
   };
 
   render() {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const url = config.visitorURL + "/";
     const supportOptions = [
       { value: "subscription", label: "Subscription" },
@@ -297,6 +298,36 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
+
+                  {PermissionHelper.validate(["marketplace_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Affiliate - Publish"
+                      link="/app/marketplace"
+                      isHeader
+                      iconElement={<span className="fa fa-shopping-bag"></span>}
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+
+                  {PermissionHelper.validate(["affiliate_access"]) ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Affiliate - Advertise"
+                      link="/app/campaign"
+                      isHeader
+                      iconElement={
+                        <span className="glyphicon glyphicon-bullhorn"></span>
+                      }
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
 
                   {/* <LinksGroup
                     onClick={() => this.toggle(3)}
@@ -444,7 +475,7 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Home Screen"
+                    header="Basic Setup"
                     link="/app/account/profile"
                     isHeader
                     iconElement={
@@ -467,17 +498,40 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
+                  {userInfo?.package?.package_name === "Premium Plus" ? (
+                    <LinksGroup
+                      onClick={() => this.toggle(3)}
+                      className="sidebar-nav-links"
+                      header="Affiliate Setup"
+                      link="/app/account/affiliate"
+                      isHeader
+                      iconElement={<span className="fa fa-bullhorn"></span>}
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Account Setup"
+                    header="Connection Setup"
                     link="/app/account/setup"
                     isHeader
                     iconElement={
                       <span className="glyphicon glyphicon-cog"></span>
                     }
                     iconName="flaticon-users"
+                    labelColor="info"
+                  />
+
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Subcription Setup"
+                    link="/app/subcription/setup"
+                    isHeader
+                    iconElement={<span className="fa fa-bell"></span>}
+                    iconName="flaticon-bell"
                     labelColor="info"
                   />
 
