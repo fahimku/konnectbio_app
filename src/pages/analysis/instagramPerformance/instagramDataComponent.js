@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as instagramActions from "../../../actions/instagramAnalytic";
 import Loader from "../../../components/Loader/Loader";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
 // import InfiniteScroll from "react-infinite-scroll-component";
@@ -360,7 +361,7 @@ function InstagramDataComponent({
               justifyContent: "center",
             }}
           >
-            <h1 style={{ textAlign: "center" }}>No result Found</h1>
+            <NoDataFound/>
           </div>
         )}
       </div>

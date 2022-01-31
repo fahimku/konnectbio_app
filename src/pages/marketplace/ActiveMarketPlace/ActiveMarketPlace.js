@@ -5,6 +5,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
 import { connect } from "react-redux";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import * as markActions from "../../../actions/marketPlace";
 import * as catActions from "../../../actions/category";
 import * as brandActions from "../../../actions/brands";
@@ -435,7 +436,7 @@ function ActiveMarketPlace({
               />
             </>
           ) : (
-            "No Data Found"
+            <NoDataFound/>
           )
         ) : (
           <Loader size={40} />

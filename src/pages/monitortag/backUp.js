@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry"
 import { useHistory } from 'react-router-dom'
 import Loader from '../../components/Loader/Loader'
@@ -73,9 +74,7 @@ export default function Content({ insta, accessToken }) {
                                 </Masonry>
                             </ResponsiveMasonry>
                         ) : (
-                            <div style={{ height: 300, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <h1 style={{ textAlign: 'center' }}>No result Found</h1>
-                            </div>
+                            <NoDataFound/>
                         )
                     ) : (
                         <div style={{ height: 300, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>

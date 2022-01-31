@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as instagramPostActions from "../../actions/instagramPostData";
 import Loader from "../../components/Loader/Loader";
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
 import { Row, Col, Button } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroller";
 import Select from "react-select";
@@ -345,17 +346,8 @@ function InstagramPostDataComponent({
             ></i> */}
           </>
         ) : (
-          <div
-            style={{
-              height: 300,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <h1 style={{ textAlign: "center" }}>No result Found</h1>
-          </div>
+       
+              <NoDataFound/>
         )}
       </div>
     </>

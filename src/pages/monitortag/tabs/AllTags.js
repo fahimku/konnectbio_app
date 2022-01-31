@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Select from "react-select";
 import Loader from "../../../components/Loader/Loader";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import Box from "./Box";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { DatePicker } from "antd";
@@ -274,17 +275,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
               </div>
             </InfiniteScroll>
           ) : (
-            <div
-              style={{
-                height: 300,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <h1 style={{ textAlign: "center" }}>No result Found</h1>
-            </div>
+            <NoDataFound/>
           )}
         </div>
       </div>

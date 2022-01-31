@@ -6,6 +6,7 @@ import Select from "react-select";
 import { Card, CardContent } from "@mui/material";
 import moment from "moment";
 import Loader from "../../components/Loader/Loader";
+import NoDataFound from "../../components/NoDataFound/NoDataFound";
 import { Typography } from "@mui/material";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import Box from "./Box";
@@ -305,17 +306,7 @@ function SearchProfile({
       return null;
     } else {
       return (
-        <div
-          style={{
-            height: 300,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h1 style={{ textAlign: "center" }}>No result Found</h1>
-        </div>
+        <NoDataFound/>
       );
     }
   }
