@@ -104,7 +104,7 @@ export default function BuySubscription({
                   }}
                 />{" "}
                 <Label for="checkbox1" />
-                Pay Monthly: $
+                Pay Monthly
               </div>
               <div className="checkbox abc-checkbox abc-checkbox-primary">
                 <Input
@@ -119,7 +119,7 @@ export default function BuySubscription({
                   }}
                 />{" "}
                 <Label for="checkbox2" />
-                Pay Yearly & Save
+                Pay Yearly
               </div>
             </Col>
           ) : null}
