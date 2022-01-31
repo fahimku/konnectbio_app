@@ -389,6 +389,14 @@ class SubcriptionSetup extends React.Component {
                       <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
+                          {!userInfo.is_trial_expired &&
+                          this.state.singlePackage.package_name ===
+                            "Premium" ? (
+                            <div class="pkg-trial mb-2">
+                              Try 14 days for free, no credit card information
+                              required.
+                            </div>
+                          ) : null}
                           <div className="row">
                             <div className="colbx-inr col-md-12">
                               <>
