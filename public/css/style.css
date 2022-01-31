@@ -1266,6 +1266,10 @@ a.pkg_read:hover {
 .brand_container_main .row .profile_box_main .dash_block_profile {
   min-height: 300px;
 }
+.brand_container_main.container{
+  padding:0;
+  margin:0;
+}
 
 /* Coming Soon Page Start Here Iftikhar */
 .coming_iner {
@@ -1287,9 +1291,9 @@ a.pkg_read:hover {
   font-size: 2.5rem;
   font-family: "SegoeUIBold" !important;
 }
-.coming_iner p {
+/* .coming_iner p {
   font-size: 1.2rem;
-}
+} */
 .pkg_fb_connect .modal-dialog {
   max-width: 600px;
 }
@@ -1353,4 +1357,11 @@ a.pkg_read:hover {
 .fc .fc-daygrid-day-number,
 .fc .fc-col-header-cell-cushion {
   color: inherit !important;
+}
+
+.result-inner{
+  position:relative;
+  text-align: center;
+  justify-content: center;
+  margin-top:15%;
 }

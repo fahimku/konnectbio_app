@@ -10,14 +10,16 @@ class AffiliateDashboard extends React.Component {
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-12">
-              <h4 className="page-title">Dashboard</h4>
+        <h4 className="page-title">Dashboard</h4>
+          <div className="brand_container_main container">
+            <div className="row">
+              <div className="col-md-12">
+              </div>
+              <div className="col-md-6">
+              <AffiliateSummaryComponent username={this.state.username} />
+              </div>  
             </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
-            <AffiliateSummaryComponent username={this.state.username} />
-            </div>  
-          </div>
+            </div>
         </div>
       </React.Fragment>
     );

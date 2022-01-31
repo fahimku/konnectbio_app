@@ -184,7 +184,7 @@ function AffiliateCampaign(props) {
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div
-            className={`card any_bx analytic-box campaign-box test ${
+            className={`card any_bx analytic-box campaign-box ${
               props.type !== "expired" ? "" : "pb-0"
             }`}
           >
@@ -538,7 +538,14 @@ function AffiliateCampaign(props) {
               />
             </>
           ) : (
-            <>No Data Found</>
+            <>
+              <div className="no-result-found">
+                <div class="result-inner">
+                  <h2>No Data Available</h2>
+                  <p className="text-muted">Sorry but the data you are looking for does not exist.</p>
+                </div>
+              </div>
+            </>
           )
         ) : (
           <div className="container-fluid">
