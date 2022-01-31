@@ -16,3 +16,15 @@ export const updateSubscription = (data) => async (dispatch) => {
   const res = await axios.post(`${config.hostApi}/v1/subscribe/upgrade`, data);
   return res.data;
 };
+
+
+export const subscribeServices = (val,priceId,module,interval,package_id) => async (dispatch) => {
+  const res = await axios.post(`${config.hostApi}/v1/subscribe/addon`, {
+    package_id:package_id,
+    recurring_payment_type:interval,
+    addon:module,
+    quantity:val,
+    price_id:priceId
+  });
+  return res.data;
+};

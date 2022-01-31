@@ -5,6 +5,8 @@ import { Row, Col, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import placeholder from "../../../src/images/placeholder.svg";
 // import CustomCategory from "./component/CustomCategory";
+import * as subActions from "../../actions/subscribe";
+import { connect } from "react-redux";
 import { createBrowserHistory } from "history";
 import EditCustomCategory from "./component/EditCustomCategory";
 import Swal from "sweetalert2";
@@ -37,10 +39,21 @@ class MyCategory extends React.Component {
       categoryAllow: userInfo.package.category_count,
       package_amount: userInfo.package.package_amount,
       sort: false,
+      priceId: "",
+      categoryLimit: "",
     };
   }
 
   componentDidMount() {
+    var subType = JSON.parse(localStorage.getItem("userInfo")).package
+      .recurring_payment_type;
+    subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+    this.props.configSubs().then((res) => {
+      const getPrice = res.message
+        .filter((item) => item.product_name == "Category")
+        .filter((subItem) => subItem.interval == subType)[0];
+      this.setState({ priceId: getPrice.price_id });
+    });
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
@@ -49,6 +62,19 @@ class MyCategory extends React.Component {
     // this.fetchCustomCategory();
     // Connect Instagram Code
   }
+
+  onSubscribe = (val) => {
+    const { recurring_payment_type, package_id } = JSON.parse(
+      localStorage.getItem("userInfo")
+    ).package;
+    return this.props.subscribeServices(
+      val,
+      this.state.priceId,
+      "Category",
+      recurring_payment_type,
+      package_id
+    );
+  };
 
   getPackages = async () => {
     await axios
@@ -82,7 +108,10 @@ class MyCategory extends React.Component {
             image: image_url,
           });
         });
-        this.setState({ myCategory: selectCategories });
+        this.setState({
+          myCategory: selectCategories,
+          categoryLimit: response.data.category_limit,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -162,14 +191,14 @@ class MyCategory extends React.Component {
       });
     } else {
       options = options === null ? [] : options;
-      if (options.length > userInfo.package.category_count) {
+      if (options.length > this.state.categoryLimit) {
         this.setState({
           saveCategories: options,
         });
         options.pop();
         this.setState({
           saveCategories: options,
-          categoryError: `You have only ${userInfo.package.category_count} categories allowed in this plan`,
+          categoryError: `You have only ${this.state.categoryLimit} categories allowed in this plan`,
         });
       } else {
         this.setState({
@@ -333,7 +362,7 @@ class MyCategory extends React.Component {
                           </h4>
                           <h3 className="category-count-right">
                             {userInfo1.package
-                              ? userInfo1.package.category_count
+                              ? this.state.categoryLimit
                               : ""}
                           </h3>
                         </div>
@@ -445,7 +474,7 @@ class MyCategory extends React.Component {
                         >
                           Number of categories in{" "}
                           {userInfo1.package.package_name} plan is{" "}
-                          {userInfo1.package.category_count}
+                          {this.state.categoryLimit}
                         </p>
                         <Row>
                           <Col md={12}>
@@ -458,13 +487,13 @@ class MyCategory extends React.Component {
                               <label>Add Category</label>
                               <p>
                                 ({this.state.saveCategories.length}/
-                                {userInfo1.package.category_count})
+                                {this.state.categoryLimit})
                               </p>
                             </div>
                             {/* <label>Add Category</label>
                             <div className="text-right mb-1">
                               ({this.state.saveCategories.length}/
-                              {userInfo1.package.category_count})
+                              {this.state.categoryLimit})
                             </div> */}
                             {/* <label>Select Category: </label> */}
                             {this.state.saveCategories === "" ? null : (
@@ -522,16 +551,17 @@ class MyCategory extends React.Component {
                     </div>
                   </div>
                 </div>
-                {/* <div className="profile_box_main col-md-4">
+                <div className="profile_box_main col-md-4">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
                       <BuySubscription
+                        subscribeServices={this.onSubscribe}
                         heading="Buy Additional Categories"
                         name="Category"
                       />
                     </div>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
           </div>
@@ -540,4 +570,4 @@ class MyCategory extends React.Component {
     );
   }
 }
-export default MyCategory;
+export default connect(null, subActions)(MyCategory);

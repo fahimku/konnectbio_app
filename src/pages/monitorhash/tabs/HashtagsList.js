@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import * as hashActions from "../../../actions/hashtags";
+import * as subActions from "../../../actions/subscribe";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import BuySubscription from "../../subcriptionsetup/component/BuySubscription";
@@ -21,14 +22,26 @@ function HashtagsList({
   createHashtag,
   deleteHash,
   next,
+  configSubs,
+  subscribeServices,
 }) {
   const [hash, setHash] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [hashLoading, sethashLoading] = React.useState(false);
+  const [priceId, setPriceId] = React.useState("");
   const [error, setError] = React.useState(false);
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
+    var subType = JSON.parse(localStorage.getItem("userInfo")).package
+      .recurring_payment_type;
+    subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+    configSubs().then((res) => {
+      const getPrice = res.message
+        .filter((item) => item.product_name == "Hashtag")
+        .filter((subItem) => subItem.interval == subType)[0];
+      setPriceId(getPrice.price_id);
+    });
     getHashtags().then(() => {
       setLoading(false);
     });
@@ -108,6 +121,18 @@ function HashtagsList({
     return null;
   }
 
+  function onSubscribe(val) {
+    const { recurring_payment_type, package_id } = JSON.parse(
+      localStorage.getItem("userInfo")
+    ).package;
+    return subscribeServices(
+      val,
+      priceId,
+      "Hashtag",
+      recurring_payment_type,
+      package_id
+    );
+  }
   if (!loading) {
     return (
       <React.Fragment>
@@ -216,16 +241,17 @@ function HashtagsList({
                   </div>
                 </div>
               </div>
-              {/* <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
+              <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
                 <div className="brand-section dash_block_profile">
                   <div className="dash_content_profile">
                     <BuySubscription
                       heading="Buy Additional Hashtag Monitoring"
                       name="Hashtag"
+                      subscribeServices={onSubscribe}
                     />
                   </div>
                 </div>
-              </div> */}
+              </div>
             </Row>
           </div>
         </div>
@@ -238,4 +264,6 @@ function HashtagsList({
 function mapStateToProps({ hashtags }) {
   return { hashtags };
 }
-export default connect(mapStateToProps, hashActions)(HashtagsList);
+export default connect(mapStateToProps, { ...hashActions, ...subActions })(
+  HashtagsList
+);
