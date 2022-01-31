@@ -249,7 +249,8 @@ class Register extends React.Component {
       this.setState({ step1: true });
       this.setState({ step2: false });
       this.setState({ step3: false });
-    } else if (this.state.step3) {
+    }
+    else if (this.state.step3) {
       this.setState({ step1: false });
       this.setState({ step2: true });
       this.setState({ step3: false });
@@ -290,7 +291,7 @@ class Register extends React.Component {
     } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      this.props.dispatch(
+      if(!this.props.dispatch(
         registerUser({
           name: this.state.name,
           email: this.state.email,
@@ -302,11 +303,13 @@ class Register extends React.Component {
           zip: this.state.zip,
           referred_by: this.state.referred_by,
           account_type:
-            this.state.accountType === "brand"
-              ? "business"
-              : this.state.accountType,
+            this.state.accountType === "brand" ? "business": this.state.accountType,
         })
-      );
+      )) {
+        this.setState({ step1: true });
+        this.setState({ step2: false });
+        this.setState({ step3: false });
+      }
     }
   }
 
@@ -594,8 +597,8 @@ class Register extends React.Component {
                           {this.props.isFetching
                             ? "Loading..."
                             : this.state.step3
-                            ? "Finish"
-                            : " Next"}
+                              ? "Finish"
+                              : " Next"}
                         </Button>
                       </div>
                     </div>
