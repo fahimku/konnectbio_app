@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import * as profileActions from "../../actions/searchProfile";
+import * as subActions from "../../actions/subscribe";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import BuySubscription from "../subcriptionsetup/component/BuySubscription";
@@ -22,14 +23,25 @@ function HashtagsList({
   deleteProfile,
   searchProfileAc,
   next,
+  configSubs,
+  subscribeServices
 }) {
   const [hash, setHash] = React.useState("");
   const [loading, setLoading] = React.useState(true);
   const [hashLoading, sethashLoading] = React.useState(false);
+  const [priceId, setPriceId] = React.useState("");
   const [error, setError] = React.useState(false);
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
+    var subType=JSON.parse(localStorage.getItem('userInfo')).package.recurring_payment_type
+    subType=subType.slice(0,subType.length-2).toLocaleLowerCase();
+    configSubs().then(res=>{
+      const getPrice=res.message
+      .filter(item=>item.product_name=="Profile")
+      .filter(subItem=>subItem.interval==subType)[0]
+      setPriceId(getPrice.price_id)
+    })
     getProfiles().then(() => {
       setLoading(false);
     });
@@ -106,14 +118,19 @@ function HashtagsList({
     var format = /[@\s]/;
     if (format.test(hash)) {
       return (
-        <span class="help-block text-danger">you cannot write @ or space</span>
+        <small class="help-block text-danger">you cannot write @ or space</small>
       );
     } else if (hash.length === 0 && error) {
-      return <span class="help-block text-danger">Please Enter profile.</span>;
+      return <small class="help-block text-danger">Please Enter profile.</small>;
     }
     return null;
   }
 
+
+  function onSubscribe(val){
+    const {recurring_payment_type,package_id}=JSON.parse(localStorage.getItem('userInfo')).package
+    return subscribeServices(val,priceId,"Profile",recurring_payment_type,package_id)
+  }
   if (!loading) {
     return (
       <React.Fragment>
@@ -224,6 +241,7 @@ function HashtagsList({
                 <div className="brand-section dash_block_profile">
                   <div className="dash_content_profile">
                     <BuySubscription
+                      subscribeServices={onSubscribe}
                       heading="Buy Additional Profile Monitoring"
                       name="Profile"
                     />
@@ -242,4 +260,4 @@ function HashtagsList({
 function mapStateToProps({ profiles }) {
   return { profiles };
 }
-export default connect(mapStateToProps, profileActions)(HashtagsList);
+export default connect(mapStateToProps, {...profileActions,...subActions})(HashtagsList);
