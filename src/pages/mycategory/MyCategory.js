@@ -48,13 +48,15 @@ class MyCategory extends React.Component {
     if (userInfo.package.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
-      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-      this.props.configSubs().then((res) => {
-        const getPrice = res.message
-          .filter((item) => item.product_name == "Category")
-          .filter((subItem) => subItem.interval == subType)[0];
-        this.setState({ priceId: getPrice.price_id });
-      });
+      if (subType) {
+        subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+        this.props.configSubs().then((res) => {
+          const getPrice = res.message
+            .filter((item) => item.product_name == "Category")
+            .filter((subItem) => subItem.interval == subType)[0];
+          this.setState({ priceId: getPrice.price_id });
+        });
+      }
     }
 
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
