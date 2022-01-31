@@ -33,15 +33,17 @@ function HashtagsList({
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
-    var subType = JSON.parse(localStorage.getItem("userInfo")).package
-      .recurring_payment_type;
-    subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-    configSubs().then((res) => {
-      const getPrice = res.message
-        .filter((item) => item.product_name == "Hashtag")
-        .filter((subItem) => subItem.interval == subType)[0];
-      setPriceId(getPrice.price_id);
-    });
+    if (userInfo1.package.subscription_type != "Trial") {
+      var subType = JSON.parse(localStorage.getItem("userInfo")).package
+        .recurring_payment_type;
+      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+      configSubs().then((res) => {
+        const getPrice = res.message
+          .filter((item) => item.product_name == "Hashtag")
+          .filter((subItem) => subItem.interval == subType)[0];
+        setPriceId(getPrice.price_id);
+      });
+    }
     getHashtags().then(() => {
       setLoading(false);
     });
@@ -241,17 +243,19 @@ function HashtagsList({
                   </div>
                 </div>
               </div>
-              <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
-                <div className="brand-section dash_block_profile">
-                  <div className="dash_content_profile">
-                    <BuySubscription
-                      heading="Buy Additional Hashtag Monitoring"
-                      name="Hashtag"
-                      subscribeServices={onSubscribe}
-                    />
+              {userInfo1.package.subscription_type != "Trial" ? (
+                <div className="profile_box_main col-md-4 col-sm-4 col-lg-4 col-xl-3">
+                  <div className="brand-section dash_block_profile">
+                    <div className="dash_content_profile">
+                      <BuySubscription
+                        heading="Buy Additional Hashtag Monitoring"
+                        name="Hashtag"
+                        subscribeServices={onSubscribe}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </Row>
           </div>
         </div>

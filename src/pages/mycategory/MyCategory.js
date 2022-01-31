@@ -45,15 +45,18 @@ class MyCategory extends React.Component {
   }
 
   componentDidMount() {
-    var subType = JSON.parse(localStorage.getItem("userInfo")).package
-      .recurring_payment_type;
-    subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-    this.props.configSubs().then((res) => {
-      const getPrice = res.message
-        .filter((item) => item.product_name == "Category")
-        .filter((subItem) => subItem.interval == subType)[0];
-      this.setState({ priceId: getPrice.price_id });
-    });
+    if (userInfo.package.subscription_type != "Trial") {
+      var subType = JSON.parse(localStorage.getItem("userInfo")).package
+        .recurring_payment_type;
+      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+      this.props.configSubs().then((res) => {
+        const getPrice = res.message
+          .filter((item) => item.product_name == "Category")
+          .filter((subItem) => subItem.interval == subType)[0];
+        this.setState({ priceId: getPrice.price_id });
+      });
+    }
+
     // let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({ user_id: userInfo.user_id });
     this.fetchMyCategory();
@@ -551,17 +554,19 @@ class MyCategory extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="profile_box_main col-md-4">
-                  <div className="dash_block_profile">
-                    <div className="dash_content_profile">
-                      <BuySubscription
-                        subscribeServices={this.onSubscribe}
-                        heading="Buy Additional Categories"
-                        name="Category"
-                      />
+                {userInfo1.package.subscription_type != "Trial" ? (
+                  <div className="profile_box_main col-md-4">
+                    <div className="dash_block_profile">
+                      <div className="dash_content_profile">
+                        <BuySubscription
+                          subscribeServices={this.onSubscribe}
+                          heading="Buy Additional Categories"
+                          name="Category"
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             </div>
           </div>

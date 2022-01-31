@@ -34,15 +34,17 @@ function HashtagsList({
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
 
   React.useEffect(() => {
-    var subType = JSON.parse(localStorage.getItem("userInfo")).package
-      .recurring_payment_type;
-    subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-    configSubs().then((res) => {
-      const getPrice = res.message
-        .filter((item) => item.product_name == "Profile")
-        .filter((subItem) => subItem.interval == subType)[0];
-      setPriceId(getPrice.price_id);
-    });
+    if (userInfo1.package.subscription_type != "Trial") {
+      var subType = JSON.parse(localStorage.getItem("userInfo")).package
+        .recurring_payment_type;
+      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+      configSubs().then((res) => {
+        const getPrice = res.message
+          .filter((item) => item.product_name == "Profile")
+          .filter((subItem) => subItem.interval == subType)[0];
+        setPriceId(getPrice.price_id);
+      });
+    }
     getProfiles().then(() => {
       setLoading(false);
     });
@@ -249,17 +251,19 @@ function HashtagsList({
                   </div>
                 </div>
               </div>
-              <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
-                <div className="brand-section dash_block_profile">
-                  <div className="dash_content_profile">
-                    <BuySubscription
-                      subscribeServices={onSubscribe}
-                      heading="Buy Additional Profile Monitoring"
-                      name="Profile"
-                    />
+              {userInfo1.package.subscription_type != "Trial" ? (
+                <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                  <div className="brand-section dash_block_profile">
+                    <div className="dash_content_profile">
+                      <BuySubscription
+                        subscribeServices={onSubscribe}
+                        heading="Buy Additional Profile Monitoring"
+                        name="Profile"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : null}
             </Row>
           </div>
         </div>
