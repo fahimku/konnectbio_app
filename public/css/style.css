@@ -1020,7 +1020,7 @@ a.pkg_read:hover {
   font-family: "SegoeUIBold";
 }
 .account-setup .profile_container_main .dash_block_profile {
-  min-height: 306px;
+  min-height: 100px;
 }
 
 /* Category Page End Here Iftikhar */

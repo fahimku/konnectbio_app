@@ -141,7 +141,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
       });
   };
   return (
-    <div class="profile_box_main col-md-4">
+    <div class="profile_box_main col-md-6">
       <div class="dash_block_profile">
         <div class="dash_content_profile">
           <h5>Facebook Connection</h5>
