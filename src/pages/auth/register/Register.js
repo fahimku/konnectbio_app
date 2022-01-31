@@ -291,25 +291,27 @@ class Register extends React.Component {
     } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-      if(!this.props.dispatch(
-        registerUser({
-          name: this.state.name,
-          email: this.state.email,
-          gender: this.state.gender,
-          country: this.state.countryCode,
-          state: this.state.countryStateCode,
-          city: this.state.city,
-          password: this.state.password,
-          zip: this.state.zip,
-          referred_by: this.state.referred_by,
-          account_type:
-            this.state.accountType === "brand" ? "business": this.state.accountType,
-        })
-      )) {
-        this.setState({ step1: true });
-        this.setState({ step2: false });
-        this.setState({ step3: false });
-      }
+        if(this.props.dispatch(
+        registerUser(
+          {
+            name: this.state.name,
+            email: this.state.email,
+            gender: this.state.gender,
+            country: this.state.countryCode,
+            state: this.state.countryStateCode,
+            city: this.state.city,
+            password: this.state.password,
+            zip: this.state.zip,
+            referred_by: this.state.referred_by,
+            account_type:
+              this.state.accountType === "brand" ? "business" : this.state.accountType,
+          }
+          ))) {
+            this.setState({ step1: true });
+            this.setState({ step2: false });
+            this.setState({ step3: false });
+     
+        }
     }
   }
 

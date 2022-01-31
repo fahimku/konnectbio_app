@@ -303,6 +303,7 @@ export function registerUser(creds) {
         })
         .catch((err) => {
           dispatch(authError(err.response.data.message));
+        
         });
     } else {
       dispatch(authError("Something was wrong. Try again"));
