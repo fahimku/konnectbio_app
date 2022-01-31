@@ -203,22 +203,31 @@ class SubcriptionSetup extends React.Component {
   promoChange = (e) => {
     this.setState({ promo_code: e.target.value, promo_error: false });
   };
-
   getPriceId = (value, name, arr) => {
     const interval = value.slice(0, value.length - 2);
-    const priceLists =
-      name == "Premium"
-        ? arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium Plus"
-          )
-        : arr.filter(
-            (item) =>
-              item.interval === interval && item.product_name !== "Premium"
-          );
+    const priceLists = arr.filter(
+      (item) => item.interval === interval && item.product_name === name
+    );
 
     return priceLists;
   };
+
+  // getPriceId = (value, name, arr) => {
+  //   const interval = value.slice(0, value.length - 2);
+  //   const priceLists =
+  //     name == "Premium"
+  //       ? arr.filter(
+  //           (item) =>
+  //             item.interval === interval && item.product_name === "Premium Plus"
+  //         )
+  //       : arr.filter(
+  //           (item) =>
+  //             item.interval === interval && item.product_name === "Premium"
+  //         );
+
+  //   return priceLists;
+  // };
+
   // getPriceId = (value, name, arr) => {
   //   const interval = value.slice(0, value.length - 2);
   //   const priceLists = arr.filter(item => item.interval === interval && item.product_name === name);
@@ -290,26 +299,30 @@ class SubcriptionSetup extends React.Component {
                         <div className="col-12 count-box">
                           <h5 className="count-title">Categories Included</h5>
                           <h3 className="count">
-                            {this.state.singlePackage.category_count}
+                            {/* {this.state.singlePackage.category_count} */}
+                            {userInfo.package.category_count}
                           </h3>
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Links Included</h5>
                           <h3 className="count">
-                            {this.state.singlePackage.link_count}
+                            {/* {this.state.singlePackage.link_count} */}
+                            {userInfo.package.link_count}
                           </h3>
                         </div>
 
                         <div className="col-12 count-box">
                           <h5 className="count-title">Hashtags</h5>
                           <h3 className="count">
-                            {this.state.singlePackage.hashtag_limit}
+                            {/* {this.state.singlePackage.hashtag_limit} */}
+                            {userInfo.package.hashtag_limit}
                           </h3>
                         </div>
                         <div className="col-12 count-box">
                           <h5 className="count-title">Profiles</h5>
                           <h3 className="count">
-                            {this.state.singlePackage.profile_limit}
+                            {/* {this.state.singlePackage.profile_limit} */}
+                            {userInfo.package.profile_limit}
                           </h3>
                         </div>
                         {userInfo.package.package_name !== "Basic" ? (
