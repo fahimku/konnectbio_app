@@ -182,7 +182,8 @@ export function loginUser(creds) {
           } else if (
             res?.data?.message?.package &&
             res?.data?.message?.access_token &&
-            !res.data.message.fb_token
+            !res.data.message.fb_token &&
+            res?.data?.message?.package?.package_name !== "Basic"
           ) {
             history.push("/connect");
           } else if (
