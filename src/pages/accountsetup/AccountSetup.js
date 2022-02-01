@@ -330,7 +330,7 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              <div className="col-md-12">
+              <div className="conn-set-main col-md-12">
                 <div className="conn-set-main-ift">
                   {this.props.connectPage ? (
                     <div className="conn-set-inner">

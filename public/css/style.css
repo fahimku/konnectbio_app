@@ -1424,3 +1424,7 @@ a.pkg_read:hover {
   font-weight: 600;
   font-family: 'SegoeUIBold';
 }
+.conn-set-main.col-md-12{
+  padding-left:15px;
+  padding-right:15px;
+}
