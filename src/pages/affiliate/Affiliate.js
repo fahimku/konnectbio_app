@@ -76,7 +76,7 @@ class Affiliate extends React.Component {
           </p>
           <button
             class="btn btn-primary"
-            onClick={() => history.push("/app/account/setup")}
+            onClick={() => history.push("/app/subcription/setup")}
           >
             Upgrade Subscription
           </button>

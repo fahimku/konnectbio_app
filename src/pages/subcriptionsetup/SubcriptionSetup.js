@@ -460,11 +460,9 @@ class SubcriptionSetup extends React.Component {
                                   Pay Yearly & Save{" "}
                                   {this.state.singlePackage.yearly_discount}% (
                                   $
-                                  {
-                                    this.state.singlePackage
-                                      .package_amount_yearly
-                                  }
-                                  /month )
+                                  {this.state.singlePackage
+                                    .package_amount_yearly * 12}
+                                  /year )
                                   {/* {this.state.singlePackage.package_name !==
                                     "Premium" ? (
                                       <>
