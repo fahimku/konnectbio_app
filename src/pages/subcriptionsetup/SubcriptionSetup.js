@@ -38,7 +38,7 @@ class SubcriptionSetup extends React.Component {
       paymentLoading: false,
       plan:
         userInfo1?.package?.recurring_payment_type === "" ||
-          userInfo1?.package?.recurring_payment_type === undefined
+        userInfo1?.package?.recurring_payment_type === undefined
           ? "Monthly"
           : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
@@ -184,14 +184,11 @@ class SubcriptionSetup extends React.Component {
           }
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          if (userInformation.package.package_name === 'Basic') {
+          if (userInformation.package.package_name === "Basic") {
             history.push("/connect");
-          }
-          else {
+          } else {
             window.location.reload();
-
           }
-
         })
         .catch((err) => {
           this.setState({ promo_error: true });
@@ -332,7 +329,7 @@ class SubcriptionSetup extends React.Component {
                           <>
                             {userInfo.package?.next_payment_date &&
                               userInfo?.package?.subscription_type !==
-                              "Trial" && (
+                                "Trial" && (
                                 <div className="col-12 count-box">
                                   <h5 className="count-title">Payment Type</h5>
                                   <h3 className="count">
@@ -393,7 +390,9 @@ class SubcriptionSetup extends React.Component {
                       <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
-                          {!userInfo.is_trial_expired && this.state.singlePackage.package_name ==="Premium" && userInfo?.package?.subscription_type !=="Trial"  ? (
+                          {!userInfo.is_trial_expired &&
+                          this.state.singlePackage.package_name === "Premium" &&
+                          userInfo?.package?.subscription_type !== "Trial" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
                               required.
@@ -421,7 +420,7 @@ class SubcriptionSetup extends React.Component {
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
                                   {this.state.singlePackage.package_name !==
-                                    "Premium" ? (
+                                  "Premium" ? (
                                     <>
                                       {
                                         this.state.singlePackage
@@ -504,9 +503,9 @@ class SubcriptionSetup extends React.Component {
                                     <span class="text-danger promo-err-box col-md-12 pl-0">
                                       {this.state.promo_error
                                         ? // <span className="text-danger mt-2">
-                                        this.state.promoCodeError
+                                          this.state.promoCodeError
                                         : // </span>
-                                        null}
+                                          null}
                                     </span>
                                     <div className="acct-promo-sec-inr">
                                       <input
@@ -532,7 +531,7 @@ class SubcriptionSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_name ===
-                                      "Premium" ? (
+                                    "Premium" ? (
                                       this.state.paymentLoading ? (
                                         <Button>
                                           <Loader />
@@ -557,7 +556,7 @@ class SubcriptionSetup extends React.Component {
                                                     .package_name == "Basic" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
-                                                  "Trial"
+                                                    "Trial"
                                                 ) {
                                                   this.props
                                                     .makePayment({
@@ -637,10 +636,10 @@ class SubcriptionSetup extends React.Component {
                                           });
                                         }}
                                       >
-                                        Make Payment
+                                        Continue
                                       </Button>
                                     ) : (
-                                      <Button>Make Payment</Button>
+                                      <Button>Continue</Button>
                                     )}
 
                                     <Button
@@ -869,8 +868,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                            this.state.checkbox.facebook &&
-                                            this.state.checkbox.checkbox3 ? (
+                                          this.state.checkbox.facebook &&
+                                          this.state.checkbox.checkbox3 ? (
                                             <Button
                                               type="submit"
                                               onClick={(e) => {
@@ -1100,8 +1099,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                            this.state.checkbox.facebook &&
-                                            this.state.checkbox.checkbox3 ? (
+                                          this.state.checkbox.facebook &&
+                                          this.state.checkbox.checkbox3 ? (
                                             // this.state.singlePackage
                                             //   .package_name === "Premium" ? (
                                             //   <Button
@@ -1131,10 +1130,10 @@ class SubcriptionSetup extends React.Component {
                                                     if (
                                                       userInfo.package
                                                         .package_name ==
-                                                      "Basic" ||
+                                                        "Basic" ||
                                                       userInfo?.package
                                                         ?.subscription_type ===
-                                                      "Trial"
+                                                        "Trial"
                                                     ) {
                                                       this.props
                                                         .makePayment({
