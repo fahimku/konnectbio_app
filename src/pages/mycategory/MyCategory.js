@@ -44,11 +44,12 @@ class MyCategory extends React.Component {
       showInterval: false,
       plan: "Yearly",
       config: [],
+      unitAmount: "",
     };
   }
 
   componentDidMount() {
-    if (userInfo.package.subscription_type != "Trial") {
+    if (userInfo.package?.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
       if (subType) {
@@ -58,6 +59,7 @@ class MyCategory extends React.Component {
             .filter((item) => item.product_name == "Category")
             .filter((subItem) => subItem.interval == subType)[0];
           this.setState({ priceId: getPrice.price_id });
+          this.setState({ unitAmount: getPrice.unit_amount / 3 });
         });
       } else {
         this.setState({ showInterval: true });
@@ -70,6 +72,7 @@ class MyCategory extends React.Component {
             .filter((item) => item.product_name == "Category")
             .filter((subItem) => subItem.interval == planCut)[0];
           this.setState({ priceId: getPrice.price_id });
+          this.setState({ unitAmount: getPrice.unit_amount / 3 });
         });
       }
     }
@@ -313,6 +316,7 @@ class MyCategory extends React.Component {
   };
 
   render() {
+    console.log(this.state.unitAmount, "unitAmount");
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const SortableItem = SortableElement(({ value }) => (
       <div key={value.value} className="cat-box col-sm-3 col-4">
@@ -601,8 +605,26 @@ class MyCategory extends React.Component {
                               )[0];
                             this.setState({ priceId: getPrice.price_id });
                             this.setState({ plan: v });
+                            this.setState({
+                              unitAmount: getPrice.unit_amount / 3,
+                            });
                           }}
+                          monthly={
+                            this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == "month"
+                              )[0]?.unit_amount / 3
+                          }
+                          yearly={
+                            this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == "year"
+                              )[0]?.unit_amount / 3
+                          }
                           plan={this.state.plan}
+                          unitAmount={this.state.unitAmount}
                         />
                       </div>
                     </div>

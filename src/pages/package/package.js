@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import * as subActions from "../../actions/subscribe";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
+import Swal from "sweetalert2";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -26,7 +27,16 @@ const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 class Package extends React.Component {
   state = {
     showBasic: false,
-    isExpiredModal: userInfo.is_trial_expired,
+    isExpiredModal: userInfo.is_trial_expired
+      ? Swal.fire({
+          title: "Expired",
+          text: "Your Trial has been expired please make the payment to proceed.",
+          icon: "warning",
+          customClass: {
+            title: "trial-title",
+          },
+        })
+      : null,
     showPremium: false,
     showPremiumPlus: false,
     packages: "",
@@ -1659,7 +1669,7 @@ class Package extends React.Component {
           </Modal.Body>
         </Modal>
 
-        <Modal
+        {/* <Modal
           className="pkg_readmore"
           show={this.state.isExpiredModal}
           onHide={this.handleCloseIsExpired}
@@ -1675,7 +1685,7 @@ class Package extends React.Component {
               </p>
             </div>
           </Modal.Body>
-        </Modal>
+        </Modal> */}
       </>
     );
   }
