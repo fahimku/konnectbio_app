@@ -34,13 +34,18 @@ export default function DisconnectInstagram(props) {
   return (
     <>
       <div
-        className={`conn-set-inner ${userInfo.package.package_name === "Basic" ? "conn-basic" : ""
-          }`}
+        className={`conn-set-inner ${
+          userInfo.package.package_name === "Basic" &&
+          userInfo.access_token !== ""
+            ? "conn-basic"
+            : ""
+        }`}
       >
         {props.username1 !== "" || props.username ? (
           <span className="connection-status-badge-green">Connected</span>
-        ) : (<span className="connection-status-badge-red">Not Connected</span>)
-        }
+        ) : (
+          <span className="connection-status-badge-red">Not Connected</span>
+        )}
         <div className="con-set-inner-1">
           <div className="con-set-inner-2">
             <h5>Instagram Connection</h5>
