@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Chip from "@mui/material/Chip";
 import { styled } from "@mui/material/styles";
@@ -10,6 +10,10 @@ import * as subActions from "../../../actions/subscribe";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import BuySubscription from "../../subcriptionsetup/component/BuySubscription";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -31,18 +35,34 @@ function HashtagsList({
   const [priceId, setPriceId] = React.useState("");
   const [error, setError] = React.useState(false);
   const userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
+  const [showInterval, setShowInterval] = useState(false);
+  const [plan, setPlan] = useState("Yearly");
+  const [config, setConfig] = useState([]);
 
   React.useEffect(() => {
     if (userInfo1.package.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
-      subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
-      configSubs().then((res) => {
-        const getPrice = res.message
-          .filter((item) => item.product_name == "Hashtag")
-          .filter((subItem) => subItem.interval == subType)[0];
-        setPriceId(getPrice.price_id);
-      });
+      if (subType) {
+        subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
+        configSubs().then((res) => {
+          const getPrice = res.message
+            .filter((item) => item.product_name == "Hashtag")
+            .filter((subItem) => subItem.interval == subType)[0];
+          setPriceId(getPrice.price_id);
+        });
+      } else {
+        setShowInterval(true);
+        const planCut = plan.slice(0, plan.length - 2).toLocaleLowerCase();
+
+        configSubs().then((res) => {
+          setConfig(res.message);
+          const getPrice = res.message
+            .filter((item) => item.product_name == "Hashtag")
+            .filter((subItem) => subItem.interval == planCut)[0];
+          setPriceId(getPrice.price_id);
+        });
+      }
     }
     getHashtags().then(() => {
       setLoading(false);
@@ -127,13 +147,17 @@ function HashtagsList({
     const { recurring_payment_type, package_id } = JSON.parse(
       localStorage.getItem("userInfo")
     ).package;
-    return subscribeServices(
-      val,
-      priceId,
-      "Hashtag",
-      recurring_payment_type,
-      package_id
-    );
+    if (recurring_payment_type) {
+      return subscribeServices(
+        val,
+        priceId,
+        "Hashtag",
+        recurring_payment_type,
+        package_id
+      );
+    } else {
+      return subscribeServices(val, priceId, "Hashtag", plan, package_id);
+    }
   }
   if (!loading) {
     return (
@@ -251,11 +275,41 @@ function HashtagsList({
                         heading="Buy Additional Hashtag Monitoring"
                         name="Hashtag"
                         subscribeServices={onSubscribe}
+                        showInterval={showInterval}
+                        changePlan={(v) => {
+                          const planCut = v
+                            .slice(0, v.length - 2)
+                            .toLocaleLowerCase();
+                          const getPrice = config
+                            .filter((item) => item.product_name == "Hashtag")
+                            .filter(
+                              (subItem) => subItem.interval == planCut
+                            )[0];
+                          setPriceId(getPrice.price_id);
+                          setPlan(v);
+                        }}
+                        plan={plan}
                       />
                     </div>
                   </div>
                 </div>
-              ) : null}
+              ) : (
+                <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                  <div className="brand-section dash_block_profile">
+                    <div className="dash_content_profile">
+                      <p>Buy paid subscription to add more Hashtags</p>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="btn-block mt-2"
+                        onClick={() => history.push("/app/subcription/setup")}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </Row>
           </div>
         </div>

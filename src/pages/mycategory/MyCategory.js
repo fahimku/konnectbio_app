@@ -41,19 +41,34 @@ class MyCategory extends React.Component {
       sort: false,
       priceId: "",
       categoryLimit: "",
+      showInterval: false,
+      plan: "Yearly",
+      config: [],
     };
   }
 
   componentDidMount() {
     if (userInfo.package?.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
-        ?.recurring_payment_type;
+        .recurring_payment_type;
       if (subType) {
         subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
         this.props.configSubs().then((res) => {
           const getPrice = res.message
             .filter((item) => item.product_name == "Category")
             .filter((subItem) => subItem.interval == subType)[0];
+          this.setState({ priceId: getPrice.price_id });
+        });
+      } else {
+        this.setState({ showInterval: true });
+        const planCut = this.state.plan
+          .slice(0, this.state.plan.length - 2)
+          .toLocaleLowerCase();
+        this.props.configSubs().then((res) => {
+          this.setState({ config: res.message });
+          const getPrice = res.message
+            .filter((item) => item.product_name == "Category")
+            .filter((subItem) => subItem.interval == planCut)[0];
           this.setState({ priceId: getPrice.price_id });
         });
       }
@@ -68,17 +83,27 @@ class MyCategory extends React.Component {
     // Connect Instagram Code
   }
 
-  onSubscribe = (val) => {
+  onSubscribe = (val, plan) => {
     const { recurring_payment_type, package_id } = JSON.parse(
       localStorage.getItem("userInfo")
     ).package;
-    return this.props.subscribeServices(
-      val,
-      this.state.priceId,
-      "Category",
-      recurring_payment_type,
-      package_id
-    );
+    if (recurring_payment_type) {
+      return this.props.subscribeServices(
+        val,
+        this.state.priceId,
+        "Category",
+        recurring_payment_type,
+        package_id
+      );
+    } else {
+      return this.props.subscribeServices(
+        val,
+        this.state.priceId,
+        "Category",
+        plan,
+        package_id
+      );
+    }
   };
 
   getPackages = async () => {
@@ -556,7 +581,7 @@ class MyCategory extends React.Component {
                     </div>
                   </div>
                 </div>
-                {userInfo1.package.subscription_type != "Trial" ? (
+                {userInfo1.package.subscription_type !== "Trial" ? (
                   <div className="profile_box_main col-md-4">
                     <div className="dash_block_profile">
                       <div className="dash_content_profile">
@@ -564,11 +589,41 @@ class MyCategory extends React.Component {
                           subscribeServices={this.onSubscribe}
                           heading="Buy Additional Categories"
                           name="Category"
+                          showInterval={this.state.showInterval}
+                          changePlan={(v) => {
+                            const planCut = v
+                              .slice(0, v.length - 2)
+                              .toLocaleLowerCase();
+                            const getPrice = this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == planCut
+                              )[0];
+                            this.setState({ priceId: getPrice.price_id });
+                            this.setState({ plan: v });
+                          }}
+                          plan={this.state.plan}
                         />
                       </div>
                     </div>
                   </div>
-                ) : null}
+                ) : (
+                  <div className="profile_box_main col-md-4">
+                    <div className="dash_block_profile">
+                      <div className="dash_content_profile">
+                        <p>Buy paid subscription to add more categories</p>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          className="btn-block mt-2"
+                          onClick={() => history.push("/app/subcription/setup")}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
