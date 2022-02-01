@@ -155,13 +155,16 @@ class SubcriptionSetup extends React.Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
     if (this.state.promo_code === "") {
       this.setState({ promo_error: true });
       this.setState({ promoCodeError: " Please Enter Valid Promo Code" });
     } else if (
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
-      !this.state.checkbox.checkbox3
+      !this.state.checkbox.checkbox3 &&
+      userInfo.package.package_name !== "Premium"
     ) {
       this.setState({ showPromo: true });
     } else {
@@ -184,7 +187,7 @@ class SubcriptionSetup extends React.Component {
           }
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          if (userInformation.package.package_name === "Basic") {
+          if (response.data.message.package_name !== "Basic") {
             history.push("/connect");
           } else {
             window.location.reload();
@@ -391,8 +394,8 @@ class SubcriptionSetup extends React.Component {
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
                           {!userInfo.is_trial_expired &&
-                          this.state.singlePackage.package_name === "Premium" &&
-                          userInfo?.package?.subscription_type !== "Trial" ? (
+                          this.state.singlePackage.package_name ===
+                            "Premium" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
                               required.
@@ -531,7 +534,9 @@ class SubcriptionSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_name ===
-                                    "Premium" ? (
+                                      "Premium" ||
+                                    userInfo?.package?.subscription_type ===
+                                      "Trial" ? (
                                       this.state.paymentLoading ? (
                                         <Button>
                                           <Loader />
@@ -553,7 +558,7 @@ class SubcriptionSetup extends React.Component {
                                                 });
                                                 if (
                                                   userInfo.package
-                                                    .package_name == "Basic" ||
+                                                    .package_name === "Basic" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
                                                     "Trial"
@@ -879,7 +884,6 @@ class SubcriptionSetup extends React.Component {
                                                   help2: true,
                                                   help3: true,
                                                 });
-
                                                 this.handleSubmit(e);
                                               }}
                                             >
