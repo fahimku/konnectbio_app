@@ -3,7 +3,9 @@ import React from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader"; // eslint-disable-line css-modules/no-unused-class
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { DatePicker } from "antd";
+
 import "antd/dist/antd.css";
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
@@ -493,7 +495,7 @@ class AffiliateDataComponent extends React.Component {
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
         ) : !this.state.data.length ? (
-          <div className="row no-data col-md-12">No Data Available</div>
+       <NoDataFound/>
         ) : (
           <>
             <Row className="af-rm-mn">{this.state.postData}</Row>
