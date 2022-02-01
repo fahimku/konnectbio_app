@@ -10,8 +10,8 @@
         margin:0;
 
         .summary_box_main{
-            padding-right: 15px;
-            padding-left: 15px;
+            // padding-right: 15px;
+            // padding-left: 15px;
 
         .summary_block_profile{
             margin-bottom: 24px;
@@ -210,4 +210,12 @@
 
     /*hight Chart */
 
+}
+.analytics-summery-box.col-md-4{
+    padding-left:15px;
+    padding-right:15px;
+}
+.summary_container_main.col-md-6, .summary_container_main.col-md-8{
+    padding-left:15px;
+    padding-right:15px;
 }

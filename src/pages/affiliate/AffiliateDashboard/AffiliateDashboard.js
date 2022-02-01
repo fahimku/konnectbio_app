@@ -13,7 +13,7 @@ class AffiliateDashboard extends React.Component {
         <h4 className="page-title">Dashboard</h4>
           <div className="brand_container_main container">
             <div className="row">
-              <AffiliateSummaryComponent username={this.state.username} /> 
+              <AffiliateSummaryComponent username={this.state.username} className="col-md-8"/> 
             </div>
             </div>
         </div>

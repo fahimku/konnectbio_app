@@ -271,7 +271,7 @@ class SubcriptionSetup extends React.Component {
           </div>
           <div className="profile_container_main container">
             <div className="row">
-              <div className="profile_box_main col-md-6">
+              <div className="profile_box_main col-md-8">
                 <div className="card analytic-box">
                   <div className="card-row">
                     <div className="row">

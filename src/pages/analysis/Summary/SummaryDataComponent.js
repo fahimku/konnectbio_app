@@ -91,9 +91,8 @@ class SummaryDataComponent extends React.Component {
     const data = this.props.postSummary.post_summary;
     return (
       <>
-        <div className="summary_container_main container">
-          <div className="row">
-            <div className="summary_box_main col-md-12">
+        <div className="summary_container_main">
+            <div className="summary_box_main">
               <div
                 className={`summary_block_profile ${
                   this.props.packageName === "Premium Plus"
@@ -178,7 +177,6 @@ class SummaryDataComponent extends React.Component {
                 </div>
               </div>
             </div>
-          </div>
         </div>
       </>
     );

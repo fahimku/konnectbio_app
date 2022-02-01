@@ -74,9 +74,8 @@ class BioShopSummaryComponent extends React.Component {
   
         return (
             <>
-                <div className="summary_container_main container">
-                    <div className="row">
-                        <div className="summary_box_main col-md-12">
+                <div className="summary_container_main">
+                        <div className="summary_box_main">
                             <div
                                 className={`summary_block_profile ${this.props.packageName === "Premium Plus"
                                     ? "summary_height"
@@ -118,11 +117,11 @@ class BioShopSummaryComponent extends React.Component {
                                         onChange={this.dateRangePickerChanger.bind(this)}
                                     />
                                     {/* {this.state.loading ? (
-                    <Loader
-                      className="analytics-loading summary-loading"
-                      size={40}
-                    />
-                  ) : ( */}
+                            <Loader
+                            className="analytics-loading summary-loading"
+                            size={40}
+                            />
+                        ) : ( */}
                                     <div className="card analytic-box">
                                         <div className="col-12 count-box">
                                             <h5 className="count-title">Total Impressions</h5>
@@ -160,7 +159,6 @@ class BioShopSummaryComponent extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </>
         );

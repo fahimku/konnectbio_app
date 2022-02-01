@@ -184,6 +184,10 @@
         flex: 0 0 100%;
         max-width: 100%;
     }
+    .analytics-summery-box.col-md-4{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
 }
 
 @media only screen and (max-width: 1050px) {
@@ -437,6 +441,10 @@
     .header .right-top-bar{
         margin-top:7px;
         margin-left:10px;
+    }
+    .conn-set-main-ift{
+        flex-wrap: wrap;
+        gap:0;
     }
     
 }

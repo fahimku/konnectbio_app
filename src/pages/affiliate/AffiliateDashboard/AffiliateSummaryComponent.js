@@ -55,11 +55,11 @@ class AffiliateSummaryComponent extends React.Component {
     const data = this.props.campaignSummary;
     return (
       <>
-        <div className="summary_container_main col-md-6">
-            <div
-              className={`summary_box_main ${
-                this.props.className ? this.props.className : "col-md-12"
-              }`}
+        <div className={`summary_container_main ${this.props.className ? this.props.className : ""}`}>
+            <div className="summary_box_main"
+              // className={`summary_box_main ${
+              //   this.props.className ? this.props.className : "col-md-12"
+              // }`}
             >
               <div className="summary_block_profile">
                 <div className="summary_content_profile">

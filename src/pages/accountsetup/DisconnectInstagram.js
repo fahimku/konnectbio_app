@@ -33,9 +33,15 @@ export default function DisconnectInstagram(props) {
   }
   return (
     <>
-      <div className="profile_box_main col-md-4">
-        <div className="dash_block_profile">
-          <div className="dash_content_profile">
+
+
+    
+
+
+      <div className="conn-set-inner">
+        <span className="connection-status-badge-red">Not Connected</span>
+        <div className="con-set-inner-1">
+          <div className="con-set-inner-2">
             <h5>Instagram Connection</h5>
             <Row>
               <Col md={12}>
