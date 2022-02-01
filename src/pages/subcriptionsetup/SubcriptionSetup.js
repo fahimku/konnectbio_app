@@ -389,7 +389,7 @@ class SubcriptionSetup extends React.Component {
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
-                    <div className="profile_box_payment profile_box_main col-md-6">
+                    <div className="profile_box_payment profile_box_main col-md-8">
                       <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
