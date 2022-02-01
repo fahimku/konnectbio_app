@@ -20,7 +20,7 @@ class Connect extends React.Component {
       resetAccount: false,
       fbPageLocal: "",
       pack: "",
-      connectionMessage: ""
+      connectionMessage: "",
     };
   }
 
@@ -42,17 +42,23 @@ class Connect extends React.Component {
     const fbPage = userInfo?.page_token;
     const package1 = userInfo?.package?.package_name;
 
-    const checkCon = this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium Plus" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true : false;
+    const checkCon =
+      this.state.pack === "Premium" ||
+      package1 === "Premium" ||
+      this.state.pack === "Premium Plus" ||
+      package1 === "Premium Plus"
+        ? access_token !== "" && fbPage
+          ? true
+          : false
+        : access_token !== ""
+        ? true
+        : false;
 
     if (!package1) {
-      this.props.history.push('/package');
-    }
-
-    else if (checkCon) {
+      this.props.history.push("/package");
+    } else if (checkCon) {
       this.props.history.push("/app/linkinbio");
-    }
-
-    else if (instagramCodeUrl.includes("code")) {
+    } else if (instagramCodeUrl.includes("code")) {
       const code = instagramCodeUrl.split("?")[1].split("=");
       this.setState({ instagramCode: code[1] });
       this.setState({ isInstagramConnected: true });
@@ -103,8 +109,14 @@ class Connect extends React.Component {
   }
 
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
-    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium") {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_name;
+    if (
+      this.state.pack === "Premium" ||
+      package1 === "Premium" ||
+      this.state.pack === "Premium Plus" ||
+      package1 === "Premium"
+    ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       return fbPage || this.state.fbPageLocal ? false : true;
     } else {
@@ -114,23 +126,17 @@ class Connect extends React.Component {
   };
 
   connectionMessage = () => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_name;
 
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
-
-
-    if (package1 === 'Basic' && this.completeProcess()) {
-      return 'Please connect your Instagram account';
+    if (package1 === "Basic" && this.completeProcess()) {
+      return "Please connect your Instagram account";
+    } else if (package1 === "Premium" && this.completeProcess()) {
+      return "Please connect your Instagram and Facebook account";
+    } else if (package1 === "Premium Plus" && this.completeProcess()) {
+      return "Please connect your Instagram and Facebook account";
     }
-
-    else if (package1 === 'Premium' && this.completeProcess()) {
-      return 'Please connect your Instagram and Facebook account';
-    }
-
-    else if (package1 === 'Premium Plus' && this.completeProcess()) {
-      return 'Please connect your Instagram and Facebook account';
-    }
-
-  }
+  };
 
   render() {
     return (
@@ -181,7 +187,7 @@ class Connect extends React.Component {
                   type="submit"
                   className="category-btn btn-block"
                 >
-                  Next
+                  Continue
                 </Button>
               </Col>
 
