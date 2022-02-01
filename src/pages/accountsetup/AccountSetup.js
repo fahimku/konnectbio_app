@@ -1,10 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Select from "react-select";
 import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
 // import CancelSubsciption from "./CancelSubsciption";
@@ -362,47 +360,6 @@ class AccountSetup extends React.Component {
                                   </button>
                                 )}
 
-                              {/* <div className="dp_fields-setup">
-                                <div className="sm-b mb-2">
-                                  <span>
-                                    Categories Included:{" "}
-                                    <strong>
-                                      {this.state.singlePackage.category_count}
-                                    </strong>
-                                  </span>
-                                </div>
-                              </div> */}
-
-                              {/* <div className="dp_fields-setup">
-                                <div className="sm-b mb-2">
-                                  <span>
-                                    Links Included:{" "}
-                                    <strong>
-                                      {this.state.singlePackage.link_count}
-                                    </strong>
-                                  </span>
-                                </div>
-                              </div> */}
-                              {/* <div className="dp_fields-setup">
-                                <div className="sm-b mb-2">
-                                  <span>
-                                    Monitor Hashtags:{" "}
-                                    <strong>
-                                      {this.state.singlePackage.hashtag_limit}
-                                    </strong>
-                                  </span>
-                                </div>
-                              </div> */}
-                              {/* <div className="dp_fields-setup">
-                                <div className="sm-b mb-2">
-                                  <span>
-                                    Monitor Competition Profiles:{" "}
-                                    <strong>
-                                      {this.state.singlePackage.profile_limit}
-                                    </strong>
-                                  </span>
-                                </div>
-                              </div> */}
                             </div>
                             <div className="col-12 con-count-box">
                               <h5 className="con-count-title">
