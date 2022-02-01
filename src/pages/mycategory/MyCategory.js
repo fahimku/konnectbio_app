@@ -581,7 +581,7 @@ class MyCategory extends React.Component {
                     </div>
                   </div>
                 </div>
-                {userInfo1.package.subscription_type != "Trial" ? (
+                {userInfo1.package.subscription_type !== "Trial" ? (
                   <div className="profile_box_main col-md-4">
                     <div className="dash_block_profile">
                       <div className="dash_content_profile">
@@ -607,7 +607,23 @@ class MyCategory extends React.Component {
                       </div>
                     </div>
                   </div>
-                ) : null}
+                ) : (
+                  <div className="profile_box_main col-md-4">
+                    <div className="dash_block_profile">
+                      <div className="dash_content_profile">
+                        <p>Buy paid subscription to add more categories</p>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          className="btn-block mt-2"
+                          onClick={() => history.push("/app/subcription/setup")}
+                        >
+                          Subscribe
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

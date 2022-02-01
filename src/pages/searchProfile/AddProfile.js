@@ -10,7 +10,10 @@ import * as subActions from "../../actions/subscribe";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import BuySubscription from "../subcriptionsetup/component/BuySubscription";
-
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -297,7 +300,23 @@ function HashtagsList({
                     </div>
                   </div>
                 </div>
-              ) : null}
+              ) : (
+                <div className="profile_box_main col-md-6 col-sm-6 col-lg-6 col-xl-4">
+                  <div className="brand-section dash_block_profile">
+                    <div className="dash_content_profile">
+                      <p>Buy paid subscription to add more Profiles</p>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="btn-block mt-2"
+                        onClick={() => history.push("/app/subcription/setup")}
+                      >
+                        Subscribe
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </Row>
           </div>
         </div>
