@@ -20,31 +20,31 @@ class SummaryComponent extends React.Component {
             <div className="col-md-12">
               <h4 className="page-title">Analytics</h4>
             </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+            <div className="analytics-summery-box col-md-4">
               {/* <h4 className="page-title">Post Summary</h4> */}
               <BioShopSummaryComponent
                 username={this.state.username}
                 packageName={this.state.packageName}
               />
             </div>
-            <div className="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+            <div className="analytics-summery-box col-md-4">
               {/* <h4 className="page-title">Post Summary</h4> */}
               <SummaryDataComponent
                 username={this.state.username}
                 packageName={this.state.packageName}
               />
             </div>
-            <div className=" col-md-6 col-sm-6 col-lg-6 col-xl-4">
+            <div className="analytics-summery-box col-md-4">
               <CampaignSummaryComponent
                 username={this.state.username}
                 packageName={this.state.packageName}
               />
             </div>
             {this.state.packageName === "Premium Plus" ? (
-              <div className=" col-md-6 col-sm-6 col-lg-6 col-xl-4">
+              <div className="analytics-summery-box col-md-4">
                 <AffiliateSummaryComponent
                   username={this.state.username}
-                  className="col-md-12"
+                  // className="col-md-12"
                 />
               </div>
             ) : null}

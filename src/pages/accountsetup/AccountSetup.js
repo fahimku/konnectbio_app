@@ -1,10 +1,8 @@
 import React from "react";
 import axios from "axios";
-import Select from "react-select";
 import { Button, Modal, Collapse } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import { PaymentButton } from "../../components/PaymentButton/PaymentButton";
-import ResetAccount from "./ResetAccount";
 import DisconnectInstagram from "./DisconnectInstagram";
 import { createBrowserHistory } from "history";
 // import CancelSubsciption from "./CancelSubsciption";
@@ -330,152 +328,94 @@ class AccountSetup extends React.Component {
 
           <div className={`profile_container_main container`}>
             <div className="row">
-              {this.props.connectPage ? (
-                <div className="profile_box_main col-md-4">
-                  <div className="dash_block_profile">
-                    <div className="dash_content_profile">
-                      <h5>Manage Plan</h5>
-                      <div className="row">
-                        <div className="col-md-12">
-                          <div className="dp_fields-setup mb-0">
-                            <div className="row">
-                              <div className="pkg-cncl-btn d-flex col-md-12">
-                                <h6 className="package_name">
-                                  Current Plan:{" "}
-                                  {userInfo1?.package
-                                    ? userInfo1.package.package_name
-                                    : ""} 
-                                  
-                                  {userInfo1.package.subscription_type === "Trial" && " (Trial)"}
-                                </h6>
-                                {!this.props.connectPage &&
-                                  userInfo1.package.package_name ===
-                                    "Premium" && (
-                                    <button
-                                      onClick={() => {
-                                        this.setState({ cancelPlan: true });
-                                      }}
-                                      className="btn-block btn text-white btn-sm disconnect-btn"
-                                    >
-                                      Cancel
-                                    </button>
-                                  )}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* <div className="dp_fields-setup">
-                          <div className="mb-3">
-                            <label>Change Plan:</label>
-                            <Select
-                              isSearchable={false}
-                              isOptionDisabled={(option) => option.isdisabled} // disable an option
-                              options={this.state.packages}
-                              placeholder="Select package"
-                              value={{
-                                label: this.state.package,
-                                value: this.state.packageId,
-                              }}
-                              onChange={(event) => this.handlePackage(event)}
-                            />
-                          </div>
-                        </div> */}
-
-                          <div className="dp_fields-setup">
-                            <div className="sm-b mb-2">
-                              <span>
-                                Categories Included:{" "}
-                                <strong>
-                                  {this.state.singlePackage.category_count}
-                                </strong>
-                              </span>
-                              {/* {this.state.singlePackage.package_name !==
-                              "Premium Plus" && (
-                              <span>Change Plan to have more categories</span>
-                            )} */}
-                            </div>
-                          </div>
-
-                          <div className="dp_fields-setup">
-                            <div className="sm-b mb-2">
-                              <span>
-                                Links Included:{" "}
-                                <strong>
-                                  {this.state.singlePackage.link_count}
-                                </strong>
-                              </span>
-
-                              {/* {this.state.singlePackage.package_name !==
-                              "Premium Plus" && (
-                              <span>Change Plan to have more links</span>
-                            )} */}
-                            </div>
-                          </div>
-                          <div className="dp_fields-setup">
-                            <div className="sm-b mb-2">
-                              <span>
-                                Monitor Hashtags:{" "}
-                                <strong>
-                                  {this.state.singlePackage.hashtag_limit}
-                                </strong>
-                              </span>
-                            </div>
-                          </div>
-                          <div className="dp_fields-setup">
-                            <div className="sm-b mb-2">
-                              <span>
-                                Monitor Competition Profiles:{" "}
-                                <strong>
-                                  {this.state.singlePackage.profile_limit}
-                                </strong>
-                              </span>
-                            </div>
-                          </div>
-                          {/* {this.state.singlePackage.package_name -== "Basic" &&
-                          this.state.upgrade && (
-                            <div className="dp_fields-setup">
-                              <>
-                                <div className="mt-3">
-                                  <Button
-                                    variant="primary"
-                                    className="btn-block"
+              <div className="conn-set-main col-md-12">
+                <div className="conn-set-main-ift">
+                  {this.props.connectPage ? (
+                    <div className="conn-set-inner">
+                      <div className="con-set-inner-1">
+                        <div className="con-set-inner-2">
+                          <h5>Manage Plan</h5>
+                          <div className="row con-count-main-box">
+                            <div className="col-12 con-count-box">
+                              <h5 className="con-count-title">
+                                Current Plan:{" "}
+                              </h5>
+                              <h3 className="conn-count">
+                                {userInfo1?.package
+                                  ? userInfo1.package.package_name
+                                  : ""}
+                                {userInfo1.package.subscription_type ===
+                                  "Trial" && " (Trial)"}
+                              </h3>
+                              {!this.props.connectPage &&
+                                userInfo1.package.package_name ===
+                                  "Premium" && (
+                                  <button
                                     onClick={() => {
-                                      this.setState({
-                                        promo_error: false,
-                                        showPaymentButton: true,
-                                      });
+                                      this.setState({ cancelPlan: true });
                                     }}
+                                    className="btn-block btn text-white btn-sm disconnect-btn"
                                   >
-                                    Upgrade Subscription
-                                  </Button>
-                                </div>
-                              </>
+                                    Cancel
+                                  </button>
+                                )}
+
                             </div>
-                          )} */}
+                            <div className="col-12 con-count-box">
+                              <h5 className="con-count-title">
+                                Categories Included:{" "}
+                              </h5>
+                              <h3 className="conn-count">
+                                {this.state.singlePackage.category_count}
+                              </h3>
+                            </div>
+                            <div className="col-12 con-count-box">
+                              <h5 className="con-count-title">
+                                Links Included:{" "}
+                              </h5>
+                              <h3 className="conn-count">
+                                {this.state.singlePackage.link_count}
+                              </h3>
+                            </div>
+                            <div className="col-12 con-count-box">
+                              <h5 className="con-count-title">
+                                Monitor Hashtags:{" "}
+                              </h5>
+                              <h3 className="conn-count">
+                                {this.state.singlePackage.hashtag_limit}
+                              </h3>
+                            </div>
+                            <div className="col-12 con-count-box">
+                              <h5 className="con-count-title">
+                              Monitor Competition Profiles:{" "}
+                              </h5>
+                              <h3 className="conn-count">
+                              {this.state.singlePackage.profile_limit}
+                              </h3>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ) : null}
+                  ) : null}
 
-              <DisconnectInstagram
-                userId={userInfo1?.user_id}
-                username={this.props.username}
-                username1={userInfo1?.username}
-                modal={(boolean) => {
-                  this.setState({ modal: boolean });
-                }}
-                url={this.props.url}
-                show={this.state.modal}
-                onHide={this.toggleModal}
-                loading={(boolean) => {
-                  this.setState({ loadingInsta: boolean });
-                }}
-                disabled={this.state.loadingInsta ? true : false}
-              />
-              {this.renderFbConnection(userInfo1)}
-              {/* {this.state.resetAccount && (
+                  <DisconnectInstagram
+                    userId={userInfo1?.user_id}
+                    username={this.props.username}
+                    username1={userInfo1?.username}
+                    modal={(boolean) => {
+                      this.setState({ modal: boolean });
+                    }}
+                    url={this.props.url}
+                    show={this.state.modal}
+                    onHide={this.toggleModal}
+                    loading={(boolean) => {
+                      this.setState({ loadingInsta: boolean });
+                    }}
+                    disabled={this.state.loadingInsta ? true : false}
+                  />
+                  {this.renderFbConnection(userInfo1)}
+                  {/* {this.state.resetAccount && (
                 <ResetAccount
                   userId={userInfo1?.user_id}
                   resetModal={(boolean) => {
@@ -489,6 +429,8 @@ class AccountSetup extends React.Component {
                   }}
                 />
               )} */}
+                </div>
+              </div>
             </div>
 
             {this.state.singlePackage.package_name !== "Basic" &&

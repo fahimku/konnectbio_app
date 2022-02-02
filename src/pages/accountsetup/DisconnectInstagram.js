@@ -5,7 +5,7 @@ import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
-
+let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 export default function DisconnectInstagram(props) {
   async function disconnect() {
     props.loading(true);
@@ -33,9 +33,21 @@ export default function DisconnectInstagram(props) {
   }
   return (
     <>
-      <div className="profile_box_main col-md-4">
-        <div className="dash_block_profile">
-          <div className="dash_content_profile">
+      <div
+        className={`conn-set-inner ${
+          userInfo.package.package_name === "Basic" &&
+          userInfo.access_token !== ""
+            ? "conn-basic"
+            : ""
+        }`}
+      >
+        {props.username1 !== "" || props.username ? (
+          <span className="connection-status-badge-green">Connected</span>
+        ) : (
+          <span className="connection-status-badge-red">Not Connected</span>
+        )}
+        <div className="con-set-inner-1">
+          <div className="con-set-inner-2">
             <h5>Instagram Connection</h5>
             <Row>
               <Col md={12}>

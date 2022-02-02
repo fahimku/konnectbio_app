@@ -38,6 +38,7 @@ function HashtagsList({
   const [showInterval, setShowInterval] = useState(false);
   const [plan, setPlan] = useState("Yearly");
   const [config, setConfig] = useState([]);
+  const [unitAmount, setUnitAmount] = useState("");
 
   React.useEffect(() => {
     if (userInfo1.package.subscription_type != "Trial") {
@@ -50,6 +51,7 @@ function HashtagsList({
             .filter((item) => item.product_name == "Hashtag")
             .filter((subItem) => subItem.interval == subType)[0];
           setPriceId(getPrice.price_id);
+          setUnitAmount(getPrice.unit_amount / 3);
         });
       } else {
         setShowInterval(true);
@@ -61,6 +63,7 @@ function HashtagsList({
             .filter((item) => item.product_name == "Hashtag")
             .filter((subItem) => subItem.interval == planCut)[0];
           setPriceId(getPrice.price_id);
+          setUnitAmount(getPrice.unit_amount / 3);
         });
       }
     }
@@ -166,7 +169,7 @@ function HashtagsList({
           <h4 className="page-title">Hashtag Monitoring</h4>
           <div className="brand_container_main container">
             <Row>
-              <div className="profile_box_main col-md-6">
+              <div className="profile_box_main col-md-8">
                 <div className="brand-section dash_block_profile">
                   <div className="dash_content_profile">
                     <form onSubmit={handleAdd}>
@@ -288,7 +291,21 @@ function HashtagsList({
                           setPriceId(getPrice.price_id);
                           setPlan(v);
                         }}
+                        monthly={
+                          config
+                            .filter((item) => item.product_name == "Category")
+                            .filter((subItem) => subItem.interval == "month")[0]
+                            ?.unit_amount / 3
+                        }
+                        yearly={
+                          config
+                            .filter((item) => item.product_name == "Category")
+                            .filter((subItem) => subItem.interval == "year")[0]
+                            ?.unit_amount / 3
+                        }
                         plan={plan}
+                        unitAmount={unitAmount}
+                        usageLimit={hashtags.hashtag_limit}
                       />
                     </div>
                   </div>

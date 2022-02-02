@@ -106,7 +106,7 @@ class BrandComponent extends React.Component {
           <h4 className="page-title">{this.state.title}</h4>
           <div className="brand_container_main container">
             <Row>
-              <div className="profile_box_main col-md-6">
+              <div className="profile_box_main col-md-8">
                 <div className="brand-section dash_block_profile">
                   <div className="dash_content_profile">
                     <form onSubmit={this.handleSubmit}>

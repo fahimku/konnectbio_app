@@ -141,9 +141,13 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
       });
   };
   return (
-    <div class="profile_box_main col-md-4">
-      <div class="dash_block_profile">
-        <div class="dash_content_profile">
+    <div class="conn-set-inner">
+       {facebookUserAccessToken && complete ? (
+          <span className="connection-status-badge-green">Connected</span>
+        ) : (<span className="connection-status-badge-red">Not Connected</span>)
+        }
+      <div class="con-set-inner-1">
+        <div class="con-set-inner-2">
           <h5>Facebook Connection</h5>
           <div class="row">
             <div class="col-md-12">

@@ -271,7 +271,7 @@ class SubcriptionSetup extends React.Component {
           </div>
           <div className="profile_container_main container">
             <div className="row">
-              <div className="profile_box_main col-md-6">
+              <div className="profile_box_main col-md-8">
                 <div className="card analytic-box">
                   <div className="card-row">
                     <div className="row">
@@ -389,7 +389,7 @@ class SubcriptionSetup extends React.Component {
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
-                    <div className="profile_box_payment profile_box_main col-md-6">
+                    <div className="profile_box_payment profile_box_main col-md-8">
                       <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
@@ -460,11 +460,9 @@ class SubcriptionSetup extends React.Component {
                                   Pay Yearly & Save{" "}
                                   {this.state.singlePackage.yearly_discount}% (
                                   $
-                                  {
-                                    this.state.singlePackage
-                                      .package_amount_yearly
-                                  }
-                                  /month )
+                                  {this.state.singlePackage
+                                    .package_amount_yearly * 12}
+                                  /year )
                                   {/* {this.state.singlePackage.package_name !==
                                     "Premium" ? (
                                       <>

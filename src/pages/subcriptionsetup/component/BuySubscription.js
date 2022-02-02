@@ -13,6 +13,10 @@ export default function BuySubscription({
   showInterval,
   changePlan,
   plan,
+  unitAmount,
+  monthly,
+  yearly,
+  usageLimit
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [buySelected, setBuySelected] = useState("");
@@ -26,17 +30,21 @@ export default function BuySubscription({
   const onsubmitBuy = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    if (buySelected.value) {
-      setLoading(true);
-      subscribeServices(buySelected.value, plan)
-        .then((res) => {
-          window.open(res.message, "_self");
-          setLoading(false);
-        })
-        .catch((err) => {
-          toast.error(err.response.message);
-          setLoading(false);
-        });
+    if(!((Number(usageLimit)+Number(buySelected.value))>21)){
+      if (buySelected.value) {
+        setLoading(true);
+        subscribeServices(buySelected.value, plan)
+          .then((res) => {
+            window.open(res.message, "_self");
+            setLoading(false);
+          })
+          .catch((err) => {
+            toast.error(err.response.message);
+            setLoading(false);
+          });
+      }
+    }else{
+      toast.error("Limit Reached. (Maximum 21 Allowed)")
     }
   };
 
@@ -54,6 +62,8 @@ export default function BuySubscription({
       label: "12",
     },
   ];
+  console.log(unitAmount, "unitAmount");
+  console.log(buySelected.value, "value");
   return (
     <>
       <form onSubmit={onsubmitBuy}>
@@ -89,7 +99,13 @@ export default function BuySubscription({
               <small class="help-block text-danger">Please select</small>
             ) : null}
           </Col>
-          {showInterval ? (
+          {userInfo.package.recurring_payment_type && buySelected.value ? (
+            <Col md={12} className="mt-2 mb-1">
+              Amount: ${unitAmount * buySelected.value} /{" "}
+              {userInfo.package.recurring_payment_type}
+            </Col>
+          ) : null}
+          {showInterval && buySelected.value ? (
             <Col md={12}>
               <div className="checkbox abc-checkbox abc-checkbox-primary mt-3">
                 <Input
@@ -104,7 +120,7 @@ export default function BuySubscription({
                   }}
                 />{" "}
                 <Label for="checkbox1" />
-                Pay Monthly
+                Pay Monthly : ${monthly * buySelected.value} /month
               </div>
               <div className="checkbox abc-checkbox abc-checkbox-primary">
                 <Input
@@ -119,7 +135,7 @@ export default function BuySubscription({
                   }}
                 />{" "}
                 <Label for="checkbox2" />
-                Pay Yearly
+                Pay Yearly : ${yearly * buySelected.value} /year
               </div>
             </Col>
           ) : null}
