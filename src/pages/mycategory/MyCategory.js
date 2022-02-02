@@ -48,7 +48,7 @@ class MyCategory extends React.Component {
   }
 
   componentDidMount() {
-    if (userInfo.package.subscription_type != "Trial") {
+    if (userInfo.package?.subscription_type != "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
       if (subType) {

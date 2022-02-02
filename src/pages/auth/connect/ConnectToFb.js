@@ -162,6 +162,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
                       }}
                       pages={pages}
                       insta={insta}
+                      clear={setFacebookUserAccessToken}
                       next={() => {
                         setComplete(true);
                         axios
