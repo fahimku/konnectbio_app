@@ -114,7 +114,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
           <Col xs={12} xl={12} md={12}>
             <form onSubmit={onSubmitData}>
               <Row>
-                <Col xs={12} xl={2} md={6}>
+                <Col className="col-xl-2dot4" xs={12} md={6}>
                   <p>Select Start Date / End Date</p>
                   <RangePicker
                     key={4}
@@ -147,7 +147,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     onChange={dateRangePickerChanger}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                <Col className="col-xl-2dot4" xs={12} md={6}>
                   <p>Sort By</p>
                   <Select
                     value={sortBy}
@@ -162,7 +162,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     isSearchable={false}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                <Col className="col-xl-2dot4" xs={12} md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -177,7 +177,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     isSearchable={false}
                   />
                 </Col>
-                <Col className="d-flex" xs={12} xl={2} md={6}>
+                <Col className="d-flex col-xl-2dot4" xs={12} md={6}>
                   {searchLoading ? (
                     <Button
                       type="button"
