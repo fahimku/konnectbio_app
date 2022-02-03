@@ -167,7 +167,7 @@ export default function Box({ data }) {
         indicators={false}
         swipe={true}
       >
-        {item.children.data.map((it2, i) => {
+        {item.children.data.slice(0, 1).map((it2, i) => {
           if (it2.media_type == "IMAGE") {
             return (
               <a target="_blank" href={data.permalink}>
@@ -259,7 +259,7 @@ export default function Box({ data }) {
         />
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
-          {data.media_type == "CAROUSEL_ALBUM-" ? (
+          {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
             <a target="_blank" href={data.permalink}>
