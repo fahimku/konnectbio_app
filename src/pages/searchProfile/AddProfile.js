@@ -112,6 +112,7 @@ function HashtagsList({
           confirmButtonText: "Yes!",
         }).then((result) => {
           if (result.isConfirmed) {
+            sethashLoading(true);
             searchProfileAc(hash, true)
               .then((res) => {
                 sethashLoading(true);
@@ -243,6 +244,12 @@ function HashtagsList({
                                   variant="primary"
                                   type="submit"
                                   className="btn-block"
+                                  disabled={
+                                    profiles.Data.length ===
+                                    profiles.profile_limit
+                                      ? true
+                                      : false
+                                  }
                                 >
                                   Add
                                 </Button>

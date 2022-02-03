@@ -235,6 +235,11 @@ function HashtagsList({
                                   variant="primary"
                                   type="submit"
                                   className="btn-block"
+                                  disabled={
+                                    hashtags.hashtag_limit === hashtags.limit
+                                      ? true
+                                      : false
+                                  }
                                 >
                                   Add
                                 </Button>
