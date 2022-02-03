@@ -71,12 +71,12 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                       {item.media_type === "VIDEO" ? (
                         <video
                           id={`post-video-${item.post_id}`}
-                          autoPlay
+                          //autoPlay
                           controls
                           controlsList="nodownload"
                         >
                           <source
-                            src={item.media_url}
+                            src={item.media_url+"#t=0.001"}
                             type="video/mp4"
                           ></source>
                         </video>

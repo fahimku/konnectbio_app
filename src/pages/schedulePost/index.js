@@ -112,7 +112,7 @@ export default function Content({ insta, accessToken }) {
     return null;
   }
   return (
-    <div className="analytics-page affiliate-page linkin-bio">
+    <div className="analytics-page linkin-bio tab-wi-cus">
       <Row className="ml-0 mr-0 tab-section">
         <div className="affiliate_p_col">
           <Row className="ml-0 mr-0">
