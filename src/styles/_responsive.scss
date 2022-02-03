@@ -836,6 +836,11 @@
     flex: 0 0 33.333333%;
     max-width: 33.333333%;
   }
+  .analytics-page.analytics-tabs-ift .tab-section .nav-tabs > .nav-item{
+    flex-wrap: wrap;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
 }
 
 @media only screen and (max-width: 512px) {

@@ -22,7 +22,7 @@ export default function Content() {
   }
 
   return (
-    <div className="analytics-page affiliate-page linkin-bio tab-wi-cus">
+    <div className="analytics-page linkin-bio tab-wi-cus">
       <Row className="ml-0 mr-0 tab-section">
         <div className="affiliate_p_col">
           <Row className="ml-0 mr-0">
