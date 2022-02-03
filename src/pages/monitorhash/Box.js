@@ -259,7 +259,7 @@ export default function Box({ data }) {
         />
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
-          {data.media_type == "CAROUSEL_ALBUM" ? (
+          {data.media_type == "CAROUSEL_ALBUM-" ? (
             renderCarousel(data)
           ) : (
             <a target="_blank" href={data.permalink}>
