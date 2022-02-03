@@ -157,7 +157,7 @@
     max-width: 50%;
   }
   .account-setup .profile_container_main .row .profile_box_main.col-md-4,
-  .profile_box_main.col-md-8 {
+  .profile_box_main.col-md-8, .profile_box_main.col-md-4 {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -449,6 +449,13 @@
   }
   .conn-basic {
     flex-basis: 100%;
+  }
+  .analytics-page.tab-wi-cus .nav-tabs > .nav-item {
+    flex-grow: 0 !important;
+  }
+  .analytics-page.tab-wi-cus .nav-tabs > .nav-item .nav-link {
+    padding: .75rem 1.5rem;
+    text-align: center;
   }
 }
 
