@@ -10,6 +10,7 @@ const MobilePreview = ({
   selectPost,
   pageName,
   postLoading,
+  dropdown
 }) => {
   const instaPosts = [];
   if (instagramPosts) {
@@ -32,7 +33,7 @@ const MobilePreview = ({
                 <img
                   className={
                     instagramPosts.data[i].linked ||
-                    instagramPosts.data[i].select
+                      instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -42,7 +43,7 @@ const MobilePreview = ({
                   alt="instagramPosts"
                 />
                 {instagramPosts.data[i].linked &&
-                instagramPosts.data[i].post_type === "campaign" ? (
+                  instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
@@ -65,7 +66,7 @@ const MobilePreview = ({
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||
-                    instagramPosts.data[i].select
+                      instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -82,7 +83,7 @@ const MobilePreview = ({
                   aria-hidden="true"
                 ></span>
                 {instagramPosts.data[i].linked &&
-                instagramPosts.data[i].post_type === "campaign" ? (
+                  instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
@@ -99,12 +100,18 @@ const MobilePreview = ({
   return (
     <div className="mobile-preview">
       <div className="mobile-header">
-        <img
-          className="place-holder-image"
-          src={placeholder}
-          alt="placeholder"
-        />
-        <span className="place-holder-name">{username}</span>
+        {dropdown == "instagram" ? (
+          <>
+            {/* <img
+              className="place-holder-image"
+              src={placeholder}
+              alt="placeholder"
+            /> */}
+            <span className="place-holder-name">{username}</span>
+          </>
+        ) : (
+          <span className="place-holder-name">Media Gallery</span>
+        )}
         <div className="page-name">{pageName}</div>
       </div>
       <div>

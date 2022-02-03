@@ -33,6 +33,7 @@ import instagramUserData from "./instagramUserData";
 import instagramPostData from "./myposts/instagramPostData";
 import gallery from "./instagram/gallery";
 import schedulePosts from "./instagram/schedulePosts"
+import mobileDropdown from "./mobileDropdrown";
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -68,5 +69,6 @@ export default (history) =>
     instagramUserData,
     instagramPostData,
     gallery,
-    schedulePosts
+    schedulePosts,
+    mobileDropdown
   });

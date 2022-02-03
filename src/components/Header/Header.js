@@ -358,6 +358,19 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
+                    header="Media Gallery"
+                    link="/app/gallery"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-picture"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
                     header="My Posts"
                     link="/app/my/posts"
                     isHeader
@@ -570,7 +583,7 @@ class Header extends React.Component {
                 onClick={() => {
                   window.location.href = "/app/dashboard";
                 }}
-                // onClick={() => this.toggle(3)}
+              // onClick={() => this.toggle(3)}
               >
                 {/* <NavLink to="/app/dashboard"> */}
                 <img src={logo} alt="logo" />

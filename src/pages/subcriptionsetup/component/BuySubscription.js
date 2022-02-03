@@ -52,14 +52,17 @@ export default function BuySubscription({
     {
       value: "3",
       label: "3",
+      isDisabled:(Number(usageLimit)+3)>21?true:false
     },
     {
       value: "6",
       label: "6",
+      isDisabled:(Number(usageLimit)+6)>21?true:false
     },
     {
       value: "12",
       label: "12",
+      isDisabled:(Number(usageLimit)+12)>21?true:false
     },
   ];
   console.log(unitAmount, "unitAmount");

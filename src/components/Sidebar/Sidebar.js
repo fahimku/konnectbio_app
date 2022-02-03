@@ -110,6 +110,7 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
+              
 
               {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
@@ -163,6 +164,18 @@ class Sidebar extends React.Component {
                 labelColor="info"
               /> */}
               {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="Media Gallery"
+                link="/app/gallery"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-picture"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
               <LinksGroup
                 className="sidebar-nav-links"
                 header="My Posts"

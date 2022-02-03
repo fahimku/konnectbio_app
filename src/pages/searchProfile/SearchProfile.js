@@ -41,6 +41,9 @@ function SearchProfile({
 
   const searchProfile = () => {
     setLoading(true);
+    setSortBy({ value: "timestamp", label: "DATE" })
+    setOrderBy({ value: "desc", label: "DESC" })
+    setPosts({ value: "25", label: "25" })
     searchProfileAc(userName.label)
       .then(() => {
         setError(false);

@@ -33,7 +33,7 @@ export const deleteProfile = (_id) => async (dispatch) => {
 
 export const searchProfileAc = (userName,check) => async (dispatch) => {
     const { fb_token, instagram_id } = JSON.parse(localStorage.getItem('userInfo'))
-    const res = await axios.get(`https://graph.facebook.com/${instagram_id}?fields=business_discovery.username(${userName}){followers_count,media_count,profile_picture_url,biography,name,username,website,follows_count,media.limit(200){comments_count,caption,like_count,media_url,permalink,media_type,timestamp,children{id,media_url,media_type}}}&access_token=${fb_token}`)
+    const res = await axios.get(`https://graph.facebook.com/${instagram_id}?fields=business_discovery.username(${userName}){followers_count,media_count,profile_picture_url,biography,name,username,website,follows_count,media.limit(300){comments_count,caption,like_count,media_url,permalink,media_type,timestamp,children{id,media_url,media_type}}}&access_token=${fb_token}`)
     if(!check)
     dispatch({
         type: SEARCH_PROFILE,

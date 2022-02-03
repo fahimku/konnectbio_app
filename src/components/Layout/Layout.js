@@ -46,6 +46,7 @@ import customCards from "../../pages/customCards/customCards";
 import SchedulePost from "../../pages/schedulePost/index";
 import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
 import SubcriptionSetup from "../../pages/subcriptionsetup/SubcriptionSetup";
+import MediaGallery from "../../pages/mediaGallery";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -264,6 +265,12 @@ class Layout extends React.Component {
                         path="/app/subcription/setup"
                         exact
                         component={SubcriptionSetup}
+                        permissions={["dashboard_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/gallery"
+                        exact
+                        component={MediaGallery}
                         permissions={["dashboard_access"]}
                       />
                     </Switch>

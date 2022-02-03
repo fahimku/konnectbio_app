@@ -16,6 +16,8 @@ import TopBar from "../../components/Topbar";
 import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
+import { connect } from "react-redux";
+import * as dropdownAction from "../../actions/mobileDropdown"
 
 class LinkinBio extends React.Component {
   constructor(props) {
@@ -78,7 +80,7 @@ class LinkinBio extends React.Component {
   }
 
   fetchGalleryPosts=()=>{
-    axios.get('/library/receive/source/gallery?limit=10&page=1').then((res)=>{
+    axios.get('/library/receive/source/gallery?limit=20&page=1').then((res)=>{
       this.setState({galleryPosts:res.data.message})
     })
   }
@@ -230,6 +232,7 @@ class LinkinBio extends React.Component {
               post_type: this.state.postType,
               start_date: this.state.startDate,
               end_date: this.state.endDate,
+              gallery_post:this.props.mobileDropdown=="gallery"?true:false
             })
             .then((response) => {
               this.setState({ loading: false });
@@ -363,7 +366,7 @@ class LinkinBio extends React.Component {
     this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
-      let currentPost = this.state.dropdown=="instagram"? this.state.instagramPosts.data[postIndex]:this.state.galleryPosts.data[postIndex];
+      let currentPost = this.props.mobileDropdown=="instagram"? this.state.instagramPosts.data[postIndex]:this.state.galleryPosts.data[postIndex];
       // console.log(currentPost, "currentPost");
       let mediaId = currentPost.post_id;
       let lastPost = this.state.singlePost;
@@ -383,7 +386,7 @@ class LinkinBio extends React.Component {
       }
 
       currentPost.select = true;
-      let instagramPosts = this.state.dropdown=="instagram"?(
+      let instagramPosts = this.props.mobileDropdown=="instagram"?(
         JSON.parse(
           JSON.stringify(this.state.instagramPosts)
         )
@@ -394,7 +397,7 @@ class LinkinBio extends React.Component {
       )
 
       instagramPosts.data[postIndex] = currentPost;
-      if(this.state.dropdown=="instagram"){
+      if(this.props.mobileDropdown=="instagram"){
         this.setState({ instagramPosts: instagramPosts });
       }else{
         this.setState({ galleryPosts: instagramPosts });
@@ -518,7 +521,7 @@ class LinkinBio extends React.Component {
   };
 
   getDropdownData=()=>{
-    if(this.state.dropdown=="instagram"){
+    if(this.props.mobileDropdown=="instagram"){
       return this.state.instagramPosts
     }
     return this.state.galleryPosts
@@ -532,8 +535,8 @@ class LinkinBio extends React.Component {
             <TopBar
               username={this.state.username}
               url={this.state.url}
-              dropdown={this.state.dropdown}
-              changeDropdown={(v)=>this.setState({dropdown:v})}
+              dropdown={this.props.mobileDropdown}
+              changeDropdown={(v)=>this.props.getMobileDropdown(v)}
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
@@ -546,6 +549,7 @@ class LinkinBio extends React.Component {
               paneDidMount={this.paneDidMount}
               instagramPosts={this.getDropdownData()}
               selectPost={this.selectPost}
+              dropdown={this.props.mobileDropdown}
             />
           </Col>
           <Col
@@ -624,4 +628,8 @@ class LinkinBio extends React.Component {
     );
   }
 }
-export default LinkinBio;
+
+function mapStateToProps({mobileDropdown}){
+  return {mobileDropdown}
+}
+export default connect(mapStateToProps,dropdownAction)(LinkinBio);
