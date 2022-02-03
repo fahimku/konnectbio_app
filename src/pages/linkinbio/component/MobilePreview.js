@@ -77,7 +77,7 @@ const MobilePreview = ({
                   // oncontextmenu="return false;"
                   // id="myVideo"
                   // autoplay
-                  controls
+                  // controls
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||

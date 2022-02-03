@@ -26,17 +26,32 @@ const ExpandMore = styled((props) => {
 
 export default function Box({ data }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [videoIcon, setVideoIcon] = React.useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  function Pauseplay(e, id) {
+    e.preventDefault();
+
+    var testvideo = document.getElementById(id);
+
+    if (testvideo.paused) {
+      testvideo.play();
+      setVideoIcon(true);
+    } else {
+      testvideo.pause();
+      setVideoIcon(false);
+    }
+  }
 
   function renderMedia(item) {
     if (item.media_type == "IMAGE") {
       return (
         <CardMedia
           component="img"
-          height="450"
+          height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
             item.media_type == "CAROUSEL_ALBUM"
@@ -49,16 +64,29 @@ export default function Box({ data }) {
     }
     if (item.media_type == "VIDEO") {
       return (
-        <CardMedia
-          component="video"
-          sx={{ objectFit: "cover", borderRadius: 2 }}
-          autoPlay={false}
-          // controls={true}
-         // loop
-          height="450"
-          image={item.media_url}
-          alt="Paella dish"
-        />
+        <>
+          <button
+            onClick={(e) => Pauseplay(e, item.id)}
+            className="btn-link btn-play"
+          >
+            {!videoIcon ? (
+              <i class="fa fa-play" aria-hidden="true"></i>
+            ) : (
+              <i class="fa fa-pause" aria-hidden="true"></i>
+            )}
+          </button>
+          <CardMedia
+            component="video"
+            sx={{ objectFit: "cover", borderRadius: 2 }}
+            autoPlay={false}
+            // controls={true}
+            // loop
+            height="400"
+            image={item.media_url}
+            alt="Paella dish"
+            id={item.id}
+          />
+        </>
       );
     }
     return null;
@@ -83,7 +111,7 @@ export default function Box({ data }) {
               <a target="_blank" href={data.permalink}>
                 <CardMedia
                   component="img"
-                  height="450"
+                  height="400"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   image={it2.media_url}
                   alt="Paella dish"
@@ -99,8 +127,8 @@ export default function Box({ data }) {
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   autoPlay={false}
                   controls
-              //    loop
-                  height="450"
+                  //    loop
+                  height="400"
                   image={it2.media_url}
                   alt="Paella dish"
                 />
@@ -115,8 +143,7 @@ export default function Box({ data }) {
   return (
     <>
       <Card elevation={1}>
-   
-        <div style={{ padding: "15px" }}>
+        <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
@@ -127,7 +154,7 @@ export default function Box({ data }) {
         </div>
 
         <CardActions disableSpacing>
-        {!expanded ? (
+          {!expanded ? (
             <div
               style={{
                 display: "flex",
@@ -174,9 +201,14 @@ export default function Box({ data }) {
                   ).format("0,0")}
                 </Typography>
               </div>
-              <Typography variant="body" sx={{fontSize:'12px',marginLeft:'15px'}} color="gray" textAlign="center">
-              {new Date(data.timestamp).toDateString()}
-            </Typography>
+              <Typography
+                variant="body"
+                sx={{ fontSize: "12px", marginLeft: "15px" }}
+                color="gray"
+                textAlign="center"
+              >
+                {new Date(data.timestamp).toDateString()}
+              </Typography>
             </div>
           ) : null}
           <div
@@ -196,7 +228,7 @@ export default function Box({ data }) {
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
-          <CardActions sx={{justifyContent:'space-between'}}>
+          <CardActions sx={{ justifyContent: "space-between" }}>
             <div
               style={{
                 display: "flex",
@@ -242,7 +274,12 @@ export default function Box({ data }) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body" sx={{fontSize:'14px',marginRight:'15px'}} color="gray" textAlign="right">
+            <Typography
+              variant="body"
+              sx={{ fontSize: "14px", marginRight: "15px" }}
+              color="gray"
+              textAlign="right"
+            >
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>
