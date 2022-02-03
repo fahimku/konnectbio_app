@@ -167,7 +167,7 @@ export default function Box({ data }) {
         indicators={false}
         swipe={true}
       >
-        {item.children.data.map((it2, i) => {
+        {item.children.data.slice(0, 1).map((it2, i) => {
           if (it2.media_type == "IMAGE") {
             return (
               <a target="_blank" href={data.permalink}>
