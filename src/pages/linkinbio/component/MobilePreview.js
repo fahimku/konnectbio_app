@@ -11,6 +11,21 @@ const MobilePreview = ({
   pageName,
   postLoading,
 }) => {
+  const [videoIcon, setVideoIcon] = React.useState(false);
+
+  function Pauseplay(e, id) {
+    e.preventDefault();
+
+    var testvideo = document.getElementById(id);
+
+    if (testvideo.paused) {
+      testvideo.play();
+      setVideoIcon(true);
+    } else {
+      testvideo.pause();
+      setVideoIcon(false);
+    }
+  }
   const instaPosts = [];
   if (instagramPosts) {
     for (let i = 0; i < instagramPosts.data.length; i++) {
@@ -59,9 +74,10 @@ const MobilePreview = ({
             <div className="mobile-image-box">
               <div className="mobile_box_inr">
                 <video
-                  oncontextmenu="return false;"
+                  // oncontextmenu="return false;"
                   // id="myVideo"
-                  autoplay
+                  // autoplay
+                  controls
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||
@@ -78,8 +94,9 @@ const MobilePreview = ({
                   ></source>
                 </video>
                 <span
-                  className="video-label fa fa-play"
+                  className={`video-label fa fa-play`}
                   aria-hidden="true"
+                  onClick={(e) => Pauseplay(e, "img" + i)}
                 ></span>
                 {instagramPosts.data[i].linked &&
                 instagramPosts.data[i].post_type === "campaign" ? (
