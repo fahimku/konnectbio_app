@@ -157,7 +157,7 @@
     max-width: 50%;
   }
   .account-setup .profile_container_main .row .profile_box_main.col-md-4,
-  .profile_box_main.col-md-8 {
+  .profile_box_main.col-md-8, .profile_box_main.col-md-4 {
     flex: 0 0 100%;
     max-width: 100%;
   }
@@ -400,6 +400,9 @@
   .dash_c_pkg h4 {
     font-size: 1.1rem;
   }
+  .dash_c_inr .btn-rounded {
+    font-size: 0.8rem;
+}
   .tab-content.affiliate_tab_ift {
     height: -moz-calc(100% - 70px);
     height: -webkit-calc(100% - 70px);
@@ -449,6 +452,13 @@
   }
   .conn-basic {
     flex-basis: 100%;
+  }
+  .analytics-page.tab-wi-cus .nav-tabs > .nav-item {
+    flex-grow: 0 !important;
+  }
+  .analytics-page.tab-wi-cus .nav-tabs > .nav-item .nav-link {
+    padding: .75rem 1.5rem;
+    text-align: center;
   }
 }
 
@@ -828,6 +838,11 @@
     flex-wrap: wrap;
     flex: 0 0 33.333333%;
     max-width: 33.333333%;
+  }
+  .analytics-page.analytics-tabs-ift .tab-section .nav-tabs > .nav-item{
+    flex-wrap: wrap;
+    flex: 0 0 50%;
+    max-width: 50%;
   }
 }
 

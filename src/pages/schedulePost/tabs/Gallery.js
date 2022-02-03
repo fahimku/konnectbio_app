@@ -25,7 +25,7 @@ function Gallery({
   schedulePost,
   getUserCategories2,
   categories,
-  directPublish
+  directPublish,
 }) {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -44,7 +44,7 @@ function Gallery({
   });
 
   useEffect(() => {
-    const userInfo=JSON.parse(localStorage.getItem('userInfo'))
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     getUserCategories2(userInfo.user_id);
     getMedia().then(() => setLoading(false));
   }, []);
@@ -110,22 +110,16 @@ function Gallery({
                     </div>
                   </div>
                   <div className="cam-buttons col-12">
-                    {
-                      publishLoading && currentData.media_library_id==item.media_library_id?(
-                        <button
-                        className="btn"
-                      >
-                        <Loader/>
+                    {publishLoading &&
+                    currentData.media_library_id == item.media_library_id ? (
+                      <button className="btn">
+                        <Loader />
                       </button>
-                      ):(
-                        <button
-                        className="btn"
-                        onClick={()=>onPublish(item)}
-                      >
+                    ) : (
+                      <button className="btn" onClick={() => onPublish(item)}>
                         <i className="fa fa-check" /> Publish
                       </button>
-                      )
-                    }
+                    )}
                     <button
                       className="btn"
                       onClick={() => {
@@ -148,7 +142,9 @@ function Gallery({
               </Col>
             ))
           ) : (
-            <NoDataFound/>
+            <div className="col-md-12">
+              <NoDataFound />
+            </div>
           )}
         </Row>
       );
@@ -343,8 +339,8 @@ function Gallery({
     }
   }
 
-  function onPublish(seletedItem){
-    setCurrentData(seletedItem)
+  function onPublish(seletedItem) {
+    setCurrentData(seletedItem);
     Swal.fire({
       title: "Are you sure?",
       text: "You want to publish this post on instagram?",
@@ -355,19 +351,20 @@ function Gallery({
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        setPublishLoading(true)
+        setPublishLoading(true);
         directPublish({
           media_url: seletedItem.media_url,
           media_library_id: seletedItem.media_library_id,
           media_id: seletedItem.media_id,
           caption: seletedItem.title,
-        }).then(()=>{
-          setPublishLoading(false)
-          toast.success("Successfully Published")
         })
-        .catch((err)=>{
-          toast.error(err.response.message)
-        })
+          .then(() => {
+            setPublishLoading(false);
+            toast.success("Successfully Published");
+          })
+          .catch((err) => {
+            toast.error(err.response.message);
+          });
       }
     });
   }
@@ -391,19 +388,23 @@ function Gallery({
         <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
           <Row>
             <Col lg={4}>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Caption</label>
-              <input 
-              value={currentData.title} 
-              onChange={(e)=>setCurrentData({...currentData,title:e.target.value})}
-              type="text" class="form-control" 
-              id="exampleInputEmail1" 
-              aria-describedby="emailHelp" 
-              placeholder="Enter Caption"/>
-              {submit && !currentData.title?(
-                <small style={{color:'red'}}>Please Fill</small>
-              ):null}
-            </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Caption</label>
+                <input
+                  value={currentData.title}
+                  onChange={(e) =>
+                    setCurrentData({ ...currentData, title: e.target.value })
+                  }
+                  type="text"
+                  class="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter Caption"
+                />
+                {submit && !currentData.title ? (
+                  <small style={{ color: "red" }}>Please Fill</small>
+                ) : null}
+              </div>
               <img
                 style={{
                   width: "100%",

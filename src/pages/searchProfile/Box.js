@@ -48,6 +48,20 @@ function Pauseplay(e, id) {
     setExpanded(!expanded);
   };
 
+  function Pauseplay(e, id) {
+    e.preventDefault();
+
+    var testvideo = document.getElementById(id);
+
+    if (testvideo.paused) {
+      testvideo.play();
+      setVideoIcon(true);
+    } else {
+      testvideo.pause();
+      setVideoIcon(false);
+    }
+  }
+
   function renderMedia(item) {
     if (item.media_type == "IMAGE") {
       return (
@@ -59,7 +73,7 @@ function Pauseplay(e, id) {
         // src={item.media_url} />
         <CardMedia
           component="img"
-          height="450"
+          height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
             item.media_type == "CAROUSEL_ALBUM"
@@ -89,10 +103,10 @@ function Pauseplay(e, id) {
             autoPlay={false}
             // controls={true}
             // loop
-            height="450"
+            height="400"
             image={item.media_url}
             alt="Paella dish"
-            item={item.id}
+            id={item.id}
           />
         </>
       );
@@ -119,7 +133,7 @@ function Pauseplay(e, id) {
               <a target="_blank" href={data.permalink}>
                 <CardMedia
                   component="img"
-                  height="450"
+                  height="400"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   image={it2.media_url}
                   alt="Paella dish"
@@ -136,7 +150,7 @@ function Pauseplay(e, id) {
                   autoPlay={false}
                   controls
                   //    loop
-                  height="450"
+                  height="400"
                   image={it2.media_url}
                   alt="Paella dish"
                 />
@@ -151,7 +165,6 @@ function Pauseplay(e, id) {
   return (
     <>
       <Card elevation={1}>
-
         <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
@@ -210,7 +223,12 @@ function Pauseplay(e, id) {
                   ).format("0,0")}
                 </Typography>
               </div>
-              <Typography variant="body" sx={{ fontSize: '12px', marginLeft: '15px' }} color="gray" textAlign="center">
+              <Typography
+                variant="body"
+                sx={{ fontSize: "12px", marginLeft: "15px" }}
+                color="gray"
+                textAlign="center"
+              >
                 {new Date(data.timestamp).toDateString()}
               </Typography>
             </div>
@@ -232,7 +250,7 @@ function Pauseplay(e, id) {
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
-          <CardActions sx={{ justifyContent: 'space-between' }}>
+          <CardActions sx={{ justifyContent: "space-between" }}>
             <div
               style={{
                 display: "flex",
@@ -278,7 +296,12 @@ function Pauseplay(e, id) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body" sx={{ fontSize: '14px', marginRight: '15px' }} color="gray" textAlign="right">
+            <Typography
+              variant="body"
+              sx={{ fontSize: "14px", marginRight: "15px" }}
+              color="gray"
+              textAlign="right"
+            >
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>

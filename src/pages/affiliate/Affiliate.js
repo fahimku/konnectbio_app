@@ -211,7 +211,7 @@ class Affiliate extends React.Component {
                       <AffiliateCampaign
                         username={this.state.username}
                         type="active"
-                        title="Active Campaign"
+                        title="Active Campaigns"
                       />
                     ) : null}
                   </TabPane>
@@ -220,7 +220,7 @@ class Affiliate extends React.Component {
                       <AffiliateCampaign
                         username={this.state.username}
                         type="inactive"
-                        title="Paused Campaign"
+                        title="Paused Campaigns"
                       />
                     ) : null}
                   </TabPane>
@@ -229,7 +229,7 @@ class Affiliate extends React.Component {
                       <AffiliateCampaign
                         username={this.state.username}
                         type="expired"
-                        title="Expired Campaign"
+                        title="Expired Campaigns"
                       />
                     ) : null}
                   </TabPane>
@@ -239,7 +239,7 @@ class Affiliate extends React.Component {
                       <AffiliateScheduleCampaign
                         username={this.state.username}
                         type="active"
-                        title="Schedule Campaign"
+                        title="Schedule Campaigns"
                       />
                     ) : null}
                   </TabPane>

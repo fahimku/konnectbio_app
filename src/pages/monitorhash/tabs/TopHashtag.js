@@ -206,7 +206,7 @@ function TopHashTag({
           <Col xs={12} xl={12} md={12}>
             <form onSubmit={onSubmitData}>
               <Row>
-                <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl md={6}>
                   <p>Select Start Date / End Date</p>
                   <RangePicker
                     key={4}
@@ -239,7 +239,7 @@ function TopHashTag({
                     onChange={dateRangePickerChanger}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl md={6}>
                   <p>Hashtags</p>
                   <Select
                     value={brand}
@@ -276,7 +276,7 @@ function TopHashTag({
                       styles={style}
                     />
                   </Col> */}
-                <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl md={6}>
                   <p>Sort By</p>
                   <Select
                     value={sortBy}
@@ -291,7 +291,7 @@ function TopHashTag({
                     isSearchable={false}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                <Col xs={12} xl md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -320,7 +320,7 @@ function TopHashTag({
                       styles={style}
                     />
                   </Col> */}
-                <Col className="d-flex" xs={12} xl={2} md={6}>
+                <Col className="d-flex" xs={12} xl md={6}>
                   {searchLoading ? (
                     <Button
                       type="button"
