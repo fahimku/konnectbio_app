@@ -142,7 +142,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
   };
   return (
     <div class="conn-set-inner">
-       {facebookUserAccessToken ? (
+       {facebookUserAccessToken && complete ? (
           <span className="connection-status-badge-green">Connected</span>
         ) : (<span className="connection-status-badge-red">Not Connected</span>)
         }
@@ -166,6 +166,7 @@ function ConnectToFb({ username, username1, setFbPageLocal, userId }) {
                       }}
                       pages={pages}
                       insta={insta}
+                      clear={setFacebookUserAccessToken}
                       next={() => {
                         setComplete(true);
                         axios

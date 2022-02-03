@@ -625,6 +625,7 @@ class MyCategory extends React.Component {
                           }
                           plan={this.state.plan}
                           unitAmount={this.state.unitAmount}
+                          usageLimit={this.state.categoryLimit}
                         />
                       </div>
                     </div>

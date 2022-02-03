@@ -26,6 +26,7 @@ function SearchProfile({
   const [clearLoading, setClearLoading] = useState(false);
   const [sortBy, setSortBy] = useState({ value: "timestamp", label: "DATE" });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
+  const [posts, setPosts] = useState({ value: "25", label: "25" });
   const fromDate = moment().subtract(4, "year").format("YYYY-MM-DD");
   const toDate = moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
@@ -71,6 +72,13 @@ function SearchProfile({
     { value: "asc", label: "ASC" },
     { value: "desc", label: "DESC" },
   ];
+  const noOfPost = [
+    { value:"25", label: "25" },
+    { value:"50", label: "50" },
+    { value:"100", label: "100" },
+    { value:"300", label: "300" },
+  ];
+
 
   const filterProfileFunc = (e) => {
     setSortBy({ value: "timestamp", label: "DATE" });
@@ -84,6 +92,7 @@ function SearchProfile({
       to_date: endDate.toString(),
       sort: sortBy.value,
       order_by: orderBy.value,
+      noOfPost:posts.value
     });
   }
   function intlFormat(num) {
@@ -239,7 +248,21 @@ function SearchProfile({
                         isSearchable={false}
                       />
                     </Col>
-
+                    <Col xs={12} xl={2} md={6}>
+                      <p>No of Posts</p>
+                      <Select
+                        value={posts}
+                        name="order"
+                        className="selectCustomization"
+                        options={noOfPost}
+                        onChange={(e) => {
+                          setPosts(e);
+                        }}
+                        placeholder="Order By"
+                        styles={style}
+                        isSearchable={false}
+                      />
+                    </Col>
                     <Col
                       className="d-flex align-items-end"
                       xs={12}

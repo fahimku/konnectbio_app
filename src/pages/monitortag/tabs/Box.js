@@ -56,7 +56,21 @@ export default function Box({ data }) {
   const history = useHistory();
   const [expanded, setExpanded] = React.useState(false);
   const [expanded2, setExpanded2] = React.useState(false);
+  const [videoIcon, setVideoIcon] = React.useState(false);
 
+  function Pauseplay(e, id) {
+    e.preventDefault();
+
+    var testvideo = document.getElementById(id);
+
+    if (testvideo.paused) {
+      testvideo.play();
+      setVideoIcon(true);
+    } else {
+      testvideo.pause();
+      setVideoIcon(false);
+    }
+  }
   const handleExpandClick = () => {
     setExpanded2(false);
     setExpanded(!expanded);
@@ -83,6 +97,17 @@ export default function Box({ data }) {
     }
     if (item.media_type == "VIDEO") {
       return (
+        <>
+                <button
+        onClick={(e) => Pauseplay(e, item._id)}
+        className="btn-link btn-play"
+      >
+        {!videoIcon ? (
+          <i class="fa fa-play" aria-hidden="true"></i>
+        ) : (
+          <i class="fa fa-pause" aria-hidden="true"></i>
+        )}
+      </button>
         <CardMedia
           component="video"
           sx={{ objectFit: "cover", borderRadius: 2 }}
@@ -92,7 +117,9 @@ export default function Box({ data }) {
           height="450"
           image={item.media_url}
           alt="Paella dish"
+          id={item._id}
         />
+        </>
       );
     }
     return null;
@@ -190,7 +217,7 @@ export default function Box({ data }) {
           // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
         />
         <Divider />
-        <div style={{ padding: "15px" }}>
+        <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
