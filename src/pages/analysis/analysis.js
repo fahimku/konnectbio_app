@@ -45,7 +45,7 @@ class Analysis extends React.Component {
   render() {
     return (
       <>
-        <div className="analytics-page analytics-tabs-ift">
+        <div className="analytics-page analytics-tabs-ift ">
           <Row className="ml-0 mr-0 tab-section">
             <div className="affiliate_p_col">
               <Row className="ml-0 mr-0">
