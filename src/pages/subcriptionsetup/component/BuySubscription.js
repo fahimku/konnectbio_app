@@ -16,6 +16,7 @@ export default function BuySubscription({
   unitAmount,
   monthly,
   yearly,
+  usageLimit
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [buySelected, setBuySelected] = useState("");
@@ -29,17 +30,21 @@ export default function BuySubscription({
   const onsubmitBuy = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    if (buySelected.value) {
-      setLoading(true);
-      subscribeServices(buySelected.value, plan)
-        .then((res) => {
-          window.open(res.message, "_self");
-          setLoading(false);
-        })
-        .catch((err) => {
-          toast.error(err.response.message);
-          setLoading(false);
-        });
+    if(!((Number(usageLimit)+Number(buySelected.value))>21)){
+      if (buySelected.value) {
+        setLoading(true);
+        subscribeServices(buySelected.value, plan)
+          .then((res) => {
+            window.open(res.message, "_self");
+            setLoading(false);
+          })
+          .catch((err) => {
+            toast.error(err.response.message);
+            setLoading(false);
+          });
+      }
+    }else{
+      toast.error("Limit Reached. (Maximum 21 Allowed)")
     }
   };
 

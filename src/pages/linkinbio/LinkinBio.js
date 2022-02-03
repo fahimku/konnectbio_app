@@ -39,6 +39,7 @@ class LinkinBio extends React.Component {
       confirmModal: false,
       loading: false,
       instagramPosts: null,
+      galleryPosts:null,
       postType: "image",
       categories: [],
       category: [],
@@ -61,6 +62,7 @@ class LinkinBio extends React.Component {
       error: "",
       updatedAt: "",
       fetchUserPost: [],
+      dropdown:"instagram"
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -71,7 +73,14 @@ class LinkinBio extends React.Component {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
     this.fetchInstagramPosts(savedAccessToken);
+    this.fetchGalleryPosts();
     this.fetchCategories();
+  }
+
+  fetchGalleryPosts=()=>{
+    axios.get('/library/receive/source/gallery?limit=10&page=1').then((res)=>{
+      this.setState({galleryPosts:res.data.message})
+    })
   }
 
   async fetchInstagramPosts(token) {
@@ -354,7 +363,7 @@ class LinkinBio extends React.Component {
     this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
-      let currentPost = this.state.instagramPosts.data[postIndex];
+      let currentPost = this.state.dropdown=="instagram"? this.state.instagramPosts.data[postIndex]:this.state.galleryPosts.data[postIndex];
       // console.log(currentPost, "currentPost");
       let mediaId = currentPost.post_id;
       let lastPost = this.state.singlePost;
@@ -374,12 +383,22 @@ class LinkinBio extends React.Component {
       }
 
       currentPost.select = true;
-      let instagramPosts = JSON.parse(
-        JSON.stringify(this.state.instagramPosts)
-      );
+      let instagramPosts = this.state.dropdown=="instagram"?(
+        JSON.parse(
+          JSON.stringify(this.state.instagramPosts)
+        )
+      ):(
+        JSON.parse(
+          JSON.stringify(this.state.galleryPosts)
+        )
+      )
 
       instagramPosts.data[postIndex] = currentPost;
-      this.setState({ instagramPosts: instagramPosts });
+      if(this.state.dropdown=="instagram"){
+        this.setState({ instagramPosts: instagramPosts });
+      }else{
+        this.setState({ galleryPosts: instagramPosts });
+      }
       //link current post
       this.setState(
         {
@@ -498,6 +517,13 @@ class LinkinBio extends React.Component {
     );
   };
 
+  getDropdownData=()=>{
+    if(this.state.dropdown=="instagram"){
+      return this.state.instagramPosts
+    }
+    return this.state.galleryPosts
+  }
+
   render() {
     return (
       <div className="linkin-bio">
@@ -506,6 +532,8 @@ class LinkinBio extends React.Component {
             <TopBar
               username={this.state.username}
               url={this.state.url}
+              dropdown={this.state.dropdown}
+              changeDropdown={(v)=>this.setState({dropdown:v})}
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
@@ -516,7 +544,7 @@ class LinkinBio extends React.Component {
               username={this.state.username}
               error={this.state.error}
               paneDidMount={this.paneDidMount}
-              instagramPosts={this.state.instagramPosts}
+              instagramPosts={this.getDropdownData()}
               selectPost={this.selectPost}
             />
           </Col>

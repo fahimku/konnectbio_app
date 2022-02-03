@@ -305,6 +305,7 @@ function HashtagsList({
                         }
                         plan={plan}
                         unitAmount={unitAmount}
+                        usageLimit={hashtags.hashtag_limit}
                       />
                     </div>
                   </div>

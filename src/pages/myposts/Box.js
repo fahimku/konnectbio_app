@@ -98,7 +98,7 @@ export default function Box({ data }) {
             component="video"
             sx={{ objectFit: "cover", borderRadius: 2 }}
             autoPlay={false}
-            // controls
+            controls
             //loop
             height="400"
             image={item.media_url}

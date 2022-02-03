@@ -163,7 +163,7 @@ function HashtagsList({
       return subscribeServices(
         val,
         priceId,
-        "Hashtag",
+        "Profile",
         recurring_payment_type,
         package_id
       );
@@ -300,18 +300,19 @@ function HashtagsList({
                         }}
                         monthly={
                           config
-                            .filter((item) => item.product_name == "Category")
+                            .filter((item) => item.product_name == "Profile")
                             .filter((subItem) => subItem.interval == "month")[0]
                             ?.unit_amount / 3
                         }
                         yearly={
                           config
-                            .filter((item) => item.product_name == "Category")
+                            .filter((item) => item.product_name == "Profile")
                             .filter((subItem) => subItem.interval == "year")[0]
                             ?.unit_amount / 3
                         }
                         plan={plan}
                         unitAmount={unitAmount}
+                        usageLimit={profiles.profile_limit}
                       />
                     </div>
                   </div>

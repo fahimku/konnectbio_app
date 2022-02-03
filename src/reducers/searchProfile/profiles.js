@@ -7,6 +7,10 @@ export default function profiles(state = initialState, action) {
     case SEARCH_PROFILE:
       return {
         ...action.payload,
+        media:{
+          ...action.payload.media,
+          data:[...action.payload.media.data].slice(0,25)
+        },
         store: [...action.payload.media?.data]
       }
     case FILTER_PROFILE_MEDIA:
@@ -14,7 +18,7 @@ export default function profiles(state = initialState, action) {
         return {
           ...state,
           media: {
-            data: [...state.store].sort((a, b) => {
+            data: [...state.store].slice(0,action.payload.noOfPost).sort((a, b) => {
               if (action.payload?.order_by === "asc")
                 return action.payload.sort === 'timestamp' ? new Date(a[action.payload?.sort]) - new Date(b[action.payload?.sort]) : a[action.payload?.sort] - b[action.payload?.sort];
               else
