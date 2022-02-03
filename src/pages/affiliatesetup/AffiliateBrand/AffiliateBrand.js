@@ -11,7 +11,7 @@ class AffiliateBrand extends React.Component {
       brand_name: "",
       loading: false,
       brandError: "",
-      myBrand: "",
+      // myBrand: "",
     };
   }
 
@@ -23,10 +23,10 @@ class AffiliateBrand extends React.Component {
     await axios
       .get(`/affiliate/getUserBrandName`)
       .then((response) => {
-        this.setState({ myBrand: response.data.data.brand_name });
+        this.setState({ brand_name: response.data.data.brand_name });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
   handleChange = (e) => {
@@ -54,7 +54,10 @@ class AffiliateBrand extends React.Component {
         })
         .catch((err) => {
           toast.error(err.response.data.message);
-          this.setState({ loading: false, brandError: "" });
+          this.setState({
+            loading: false,
+            brandError: err.response.data.message,
+          });
         });
     }
   };
@@ -62,63 +65,53 @@ class AffiliateBrand extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div className="profile-page account-setup">
-          <div
-            className={
-              this.props.className ? this.props.className : "container-fluid"
-            }
-          >
-            <div className="row">
-              <div class="col-md-12">
-                <h4 class="page-title">Brand</h4>
-              </div>
-            </div>
-            <div className="profile_container_main container">
-              <div className="row">
-                <div className="profile_box_main col-md-8">
-                  <div className="dash_block_profile">
-                    <div className="dash_content_profile">
-                      <form onSubmit={this.handleSubmit}>
-                        <div className="dp_fields mb-0">
-                          <h5>Enter Brand Name</h5>
-                          <div className="row">
-                            <div className="col-md-9 brand-input">
-                              <input
-                                type="text"
-                                name="brand_name"
-                                placeholder="Enter Brand"
-                                onInput={this.handleChange}
-                                className="form-control"
-                                defaultValue={this.state.myBrand}
-                              />
-                            </div>
+        <div className="container-fluid">
+          <h4 className="page-title">Brand</h4>
+          <div className="brand_container_main container">
+            <Row>
+              <div className="profile_box_main col-md-8">
+                <div className="brand-section dash_block_profile">
+                  <div className="dash_content_profile">
+                    <form onSubmit={this.handleSubmit}>
+                      <h5>Enter Brand Name</h5>
+                      <Row>
+                        <Col md={12}>
+                          <input
+                            type="text"
+                            name="brand_name"
+                            placeholder="Enter Brand"
+                            onInput={this.handleChange}
+                            className="form-control"
+                            defaultValue={this.state.brand_name}
+                          />
+                          <span className="text-danger col-md-12 pl-0">
+                            {this.state.brandError}
+                          </span>
+                        </Col>
+                      </Row>
 
-                            <div className="col-md-3 brand-button">
-                              {this.state.loading ? (
-                                <Button>
-                                  <Loader />
-                                </Button>
-                              ) : (
-                                <Button
-                                  color="default"
-                                  type="submit"
-                                  className="btn-block"
-                                >
-                                  Save
-                                </Button>
-                              )}
-                            </div>
-                            <span className="text-danger col-md-12">
-                              {this.state.brandError}
-                            </span>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
+                      <Row>
+                        <Col md={5} xl={3}>
+                          {this.state.loading ? (
+                            <Button>
+                              <Loader />
+                            </Button>
+                          ) : (
+                            <Button
+                              color="default"
+                              type="submit"
+                              className="btn-block"
+                            >
+                              Save
+                            </Button>
+                          )}
+                        </Col>
+                      </Row>
+                    </form>
                   </div>
                 </div>
               </div>
-            </div>
+            </Row>
           </div>
         </div>
       </React.Fragment>

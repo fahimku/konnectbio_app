@@ -35,11 +35,11 @@ class AffiliateSetup extends React.Component {
   render() {
     return (
       <>
-        <div className="analytics-page">
+        <div className="analytics-page affiliate-page linkin-bio">
           <Row className="ml-0 mr-0 tab-section">
             <div className="affiliate_p_col">
               <Row className="ml-0 mr-0">
-                <div className="affiliate_in_col">
+                <div className="affiliate_in_col marketing-tabs">
                   <Nav tabs className={`${s.coloredNav}`}>
                     <NavItem>
                       <NavLink
@@ -54,9 +54,8 @@ class AffiliateSetup extends React.Component {
                       </NavLink>
                     </NavItem>
                   </Nav>
-
                   <TabContent
-                    className="tab-content affiliate_tab_ift"
+                    className="affiliate_tab_ift"
                     activeTab={this.state.activeSecondTab}
                   >
                     <TabPane tabId="brandtab">
