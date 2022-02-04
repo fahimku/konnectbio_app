@@ -242,7 +242,14 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                   true
                 );
               }}
-              hasMore={tags.pagination.next ? true : false}
+              // hasMore={tags.pagination.next ? true : false}
+              hasMore={
+                tags.pagination.next
+                  ? tags.pagination.next?.page >= 1
+                    ? false
+                    : true
+                  : false
+              }
               loader={
                 <div
                   style={{
@@ -275,7 +282,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
               </div>
             </InfiniteScroll>
           ) : (
-            <NoDataFound/>
+            <NoDataFound />
           )}
         </div>
       </div>

@@ -17,7 +17,7 @@ import MobilePreview from "./component/MobilePreview";
 import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 import { connect } from "react-redux";
-import * as dropdownAction from "../../actions/mobileDropdown"
+import * as dropdownAction from "../../actions/mobileDropdown";
 
 class LinkinBio extends React.Component {
   constructor(props) {
@@ -41,7 +41,7 @@ class LinkinBio extends React.Component {
       confirmModal: false,
       loading: false,
       instagramPosts: null,
-      galleryPosts:null,
+      galleryPosts: null,
       postType: "image",
       categories: [],
       category: [],
@@ -64,7 +64,7 @@ class LinkinBio extends React.Component {
       error: "",
       updatedAt: "",
       fetchUserPost: [],
-      dropdown:"instagram"
+      dropdown: "instagram",
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -79,11 +79,11 @@ class LinkinBio extends React.Component {
     this.fetchCategories();
   }
 
-  fetchGalleryPosts=()=>{
-    axios.get('/library/receive/source/gallery?limit=20&page=1').then((res)=>{
-      this.setState({galleryPosts:res.data.message})
-    })
-  }
+  fetchGalleryPosts = () => {
+    axios.get("/library/receive/source/gallery?limit=20&page=1").then((res) => {
+      this.setState({ galleryPosts: res.data.message });
+    });
+  };
 
   async fetchInstagramPosts(token) {
     this.setState({ postLoading: true });
@@ -232,7 +232,8 @@ class LinkinBio extends React.Component {
               post_type: this.state.postType,
               start_date: this.state.startDate,
               end_date: this.state.endDate,
-              gallery_post:this.props.mobileDropdown=="gallery"?true:false
+              gallery_post:
+                this.props.mobileDropdown == "gallery" ? true : false,
             })
             .then((response) => {
               this.setState({ loading: false });
@@ -366,7 +367,10 @@ class LinkinBio extends React.Component {
     this.fetchCategories();
     if (postIndex !== "") {
       //make border appear on post image
-      let currentPost = this.props.mobileDropdown=="instagram"? this.state.instagramPosts.data[postIndex]:this.state.galleryPosts.data[postIndex];
+      let currentPost =
+        this.props.mobileDropdown == "instagram"
+          ? this.state.instagramPosts.data[postIndex]
+          : this.state.galleryPosts.data[postIndex];
       // console.log(currentPost, "currentPost");
       let mediaId = currentPost.post_id;
       let lastPost = this.state.singlePost;
@@ -386,20 +390,15 @@ class LinkinBio extends React.Component {
       }
 
       currentPost.select = true;
-      let instagramPosts = this.props.mobileDropdown=="instagram"?(
-        JSON.parse(
-          JSON.stringify(this.state.instagramPosts)
-        )
-      ):(
-        JSON.parse(
-          JSON.stringify(this.state.galleryPosts)
-        )
-      )
+      let instagramPosts =
+        this.props.mobileDropdown == "instagram"
+          ? JSON.parse(JSON.stringify(this.state.instagramPosts))
+          : JSON.parse(JSON.stringify(this.state.galleryPosts));
 
       instagramPosts.data[postIndex] = currentPost;
-      if(this.props.mobileDropdown=="instagram"){
+      if (this.props.mobileDropdown == "instagram") {
         this.setState({ instagramPosts: instagramPosts });
-      }else{
+      } else {
         this.setState({ galleryPosts: instagramPosts });
       }
       //link current post
@@ -520,12 +519,12 @@ class LinkinBio extends React.Component {
     );
   };
 
-  getDropdownData=()=>{
-    if(this.props.mobileDropdown=="instagram"){
-      return this.state.instagramPosts
+  getDropdownData = () => {
+    if (this.props.mobileDropdown == "instagram") {
+      return this.state.instagramPosts;
     }
-    return this.state.galleryPosts
-  }
+    return this.state.galleryPosts;
+  };
 
   render() {
     return (
@@ -536,7 +535,7 @@ class LinkinBio extends React.Component {
               username={this.state.username}
               url={this.state.url}
               dropdown={this.props.mobileDropdown}
-              changeDropdown={(v)=>this.props.getMobileDropdown(v)}
+              changeDropdown={(v) => this.props.getMobileDropdown(v)}
               copyToClipboard={this.copyToClipboard}
             />
             <MobilePreview
@@ -629,7 +628,7 @@ class LinkinBio extends React.Component {
   }
 }
 
-function mapStateToProps({mobileDropdown}){
-  return {mobileDropdown}
+function mapStateToProps({ mobileDropdown }) {
+  return { mobileDropdown };
 }
-export default connect(mapStateToProps,dropdownAction)(LinkinBio);
+export default connect(mapStateToProps, dropdownAction)(LinkinBio);

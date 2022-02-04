@@ -8,7 +8,7 @@ export default function profiles(state = initialState, action) {
         ...action.payload,
         media: {
           ...action.payload.media,
-          data: [...action.payload.media.data].slice(0, 25),
+          data: [...action.payload.media.data].slice(0, 50),
         },
         store: [...action.payload.media?.data],
       };
@@ -30,7 +30,7 @@ export default function profiles(state = initialState, action) {
                         new Date(a[action.payload?.sort])
                     : b[action.payload?.sort] - a[action.payload?.sort];
               })
-              .slice(0, 25),
+              .slice(0, 50),
           },
         };
       } else {
@@ -41,6 +41,8 @@ export default function profiles(state = initialState, action) {
           },
         };
       }
+    case "clearProfile":
+      return { message: [] };
     default:
       return state;
   }

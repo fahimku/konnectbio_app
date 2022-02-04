@@ -30,6 +30,7 @@ function TopHashTag({
   getHashtag,
   hashtags,
   hashtag,
+  clearHashtag,
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,9 @@ function TopHashTag({
 
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [brand, setBrand] = useState({ value: "all", label: "ALL" });
+  // const [brand, setBrand] = useState({ value: "all", label: "ALL" });
+  const [brand, setBrand] = useState("");
+
   const [sortBy, setSortBy] = useState({
     value: "date",
     label: "DATE",
@@ -78,34 +81,37 @@ function TopHashTag({
   //   }, []);
 
   useEffect(() => {
-    setSearchLoading(true);
-    getHashtag(
-      {
-        hashtag_id: brand.value,
-        from_date: startDate.toString(),
-        to_date: endDate.toString(),
-        sort: sortBy.value,
-        order_by: orderBy.value,
-      },
-      1
-    ).then(() => setSearchLoading(false));
+    // setSearchLoading(true);
+    // getHashtag(
+    //   {
+    //     hashtag_id: brand.value,
+    //     from_date: startDate.toString(),
+    //     to_date: endDate.toString(),
+    //     sort: sortBy.value,
+    //     order_by: orderBy.value,
+    //   },
+    //   1
+    // ).then(() => setSearchLoading(false));
+    return () => clearHashtag();
   }, []);
 
   function onSubmitData(e) {
     e.preventDefault();
-    setSearchLoading(true);
-    getHashtag(
-      {
-        hashtag_id: brand.value,
-        from_date: startDate.toString(),
-        to_date: endDate.toString(),
-        sort: sortBy.value,
-        order_by: orderBy.value,
-      },
-      1
-    ).then(() => {
-      setSearchLoading(false);
-    });
+    if (brand.value) {
+      setSearchLoading(true);
+      getHashtag(
+        {
+          hashtag_id: brand.value,
+          from_date: startDate.toString(),
+          to_date: endDate.toString(),
+          sort: sortBy.value,
+          order_by: orderBy.value,
+        },
+        1
+      ).then(() => {
+        setSearchLoading(false);
+      });
+    }
   }
 
   //   const searchMarketPlace = (e) => {
@@ -138,19 +144,21 @@ function TopHashTag({
   //   };
 
   const clearMarketPlace = (e) => {
-    setClearLoading(true);
-    setBrand({ value: "all", label: "ALL" });
+    // setClearLoading(true);
+    // setBrand({ value: "all", label: "ALL" });
+    setBrand("");
     setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
-    getHashtag({
-      hashtag_id: "all",
-      from_date: fromDate.toString(),
-      to_date: toDate.toString(),
-      sort: "date",
-      order_by: "desc",
-    }).then(() => {
-      setClearLoading(false);
-    });
+    clearHashtag();
+    // getHashtag({
+    //   hashtag_id: "all",
+    //   from_date: fromDate.toString(),
+    //   to_date: toDate.toString(),
+    //   sort: "date",
+    //   order_by: "desc",
+    // }).then(() => {
+    //   setClearLoading(false);
+    // });
   };
 
   //   const handlePageClick = (e) => {
@@ -250,7 +258,7 @@ function TopHashTag({
                     name="sort"
                     className="selectCustomization"
                     options={[
-                      { hashtag_id: "all", hashtag: "ALL" },
+                      // { hashtag_id: "all", hashtag: "ALL" },
                       ...hashtags.message,
                     ].map((item) => {
                       return {
@@ -338,6 +346,7 @@ function TopHashTag({
                       type="submit"
                       variant="primary"
                       className="fltr-hpr"
+                      disabled={brand.value ? false : true}
                     >
                       Search
                     </Button>
@@ -390,7 +399,14 @@ function TopHashTag({
                   true
                 );
               }}
-              hasMore={hashtag.pagination.next ? true : false}
+              // hasMore={hashtag.pagination.next ? true : false}
+              hasMore={
+                hashtag.pagination.next
+                  ? hashtag.pagination.next?.page >= 1
+                    ? false
+                    : true
+                  : false
+              }
               loader={
                 <div
                   style={{
@@ -423,7 +439,7 @@ function TopHashTag({
                 </ResponsiveMasonry>
               </div>
             </InfiniteScroll>
-          ) : (
+          ) : hashtag.success ? (
             <div
               style={{
                 height: 300,
@@ -435,7 +451,7 @@ function TopHashTag({
             >
               <NoDataFound />
             </div>
-          )}
+          ) : null}
         </div>
         {/* {!loading ? (
             marketPlace?.message?.length > 0 ? (

@@ -17,6 +17,7 @@ function SearchProfile({
   filterProfileMedia,
   getProfiles,
   profiles,
+  clearProfile,
 }) {
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
@@ -37,6 +38,9 @@ function SearchProfile({
     getProfiles().then(() => {
       setLoading(false);
     });
+    return () => {
+      clearProfile();
+    };
   }, []);
 
   const searchProfile = () => {

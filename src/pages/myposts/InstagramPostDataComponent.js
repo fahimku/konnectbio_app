@@ -233,7 +233,7 @@ function InstagramPostDataComponent({
                   columnsCountBreakPoints={{ 350: 1, 700: 2, 1100: 3, 1500: 4 }}
                 >
                   <Masonry gutter="15px">
-                    {instagramPostData?.insta_data?.map((item) => {
+                    {instagramPostData?.insta_data.slice(0, 50)?.map((item) => {
                       return <Box data={item} />;
                     })}
                   </Masonry>
@@ -346,8 +346,7 @@ function InstagramPostDataComponent({
             ></i> */}
           </>
         ) : (
-       
-              <NoDataFound/>
+          <NoDataFound />
         )}
       </div>
     </>
