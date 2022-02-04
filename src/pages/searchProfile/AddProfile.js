@@ -115,7 +115,7 @@ function HashtagsList({
             sethashLoading(true);
             searchProfileAc(hash, true)
               .then((res) => {
-                sethashLoading(true);
+                sethashLoading(false);
                 createProfile(hash)
                   .then(() => {
                     sethashLoading(false);
@@ -130,6 +130,7 @@ function HashtagsList({
                 setHash("");
               })
               .catch((err) => {
+                sethashLoading(false);
                 toast.error("This Profile is not exists !");
               });
           }
