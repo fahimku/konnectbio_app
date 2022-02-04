@@ -1405,7 +1405,7 @@ a.pkg_read:hover {
 }
 .connection-status-badge-red {
   position: absolute;
-  right: -10px;
+  right: 10px;
   background: red;
   color: #fff;
   padding: 4px 10px;

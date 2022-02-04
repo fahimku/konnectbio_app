@@ -17,8 +17,6 @@ import GroupIcon from "@mui/icons-material/Group";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import Carousel from "react-material-ui-carousel";
-import LazyLoad from "react-lazyload";
-import styled2, { keyframes } from "styled-components";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -34,46 +32,8 @@ const ExpandMore = styled((props) => {
 export default function Box({ data }) {
   const history = useHistory();
   const [expanded, setExpanded] = React.useState(false);
+
   const [videoIcon, setVideoIcon] = React.useState(false);
-
-  const ImageWrapper = styled2.div`
-    position: relative;
-    width: 100%;
-    height: 400px;
-  `;
-
-  const loadingAnimation = keyframes`
-  0% {
-    background-color: #fff;
-  }
-  50% {
-    background-color: #ccc;
-  }
-  100% {
-    background-color: #fff;
-  }
-`;
-
-  const Placeholder = styled2.div`
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    animation: ${loadingAnimation} 1s infinite;
-  `;
-
-  const StyledImage = styled2.img`
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  `;
-  const refPlaceholder = React.useRef();
-  const removePlaceholder = () => {
-    refPlaceholder.current.remove();
-  };
 
   function Pauseplay(e, id) {
     e.preventDefault();
@@ -95,33 +55,17 @@ export default function Box({ data }) {
   function renderMedia(item) {
     if (item.media_type == "IMAGE") {
       return (
-        // <CardMedia
-        //   component="img"
-        //   height="450"
-        //   sx={{ objectFit: "cover", borderRadius: 2 }}
-        //   image={
-        //     item.media_type == "CAROUSEL_ALBUM"
-        //       ? item.children?.data[0].media_url
-        //       : item.media_url
-        //   }
-        //   alt="Paella dish"
-        // />
-        <ImageWrapper>
-          <Placeholder ref={refPlaceholder} />
-          <LazyLoad>
-            <StyledImage
-              onLoad={removePlaceholder}
-              onError={removePlaceholder}
-              src={
-                item.media_type == "CAROUSEL_ALBUM"
-                  ? item.children?.data[0].media_url
-                  : item.media_url
-              }
-              alt={"Paella dish"}
-              height="400"
-            />
-          </LazyLoad>
-        </ImageWrapper>
+        <CardMedia
+          component="img"
+          height="400"
+          sx={{ objectFit: "cover", borderRadius: 2 }}
+          image={
+            item.media_type == "CAROUSEL_ALBUM"
+              ? item.children?.data[0].media_url
+              : item.media_url
+          }
+          alt="Paella dish"
+        />
       );
     }
     if (item.media_type == "VIDEO") {
@@ -171,25 +115,13 @@ export default function Box({ data }) {
           if (it2.media_type == "IMAGE") {
             return (
               <a target="_blank" href={data.permalink}>
-                {/* <CardMedia
+                <CardMedia
                   component="img"
                   height="400"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   image={it2.media_url}
                   alt="Paella dish"
-                /> */}
-                <ImageWrapper>
-                  <Placeholder ref={refPlaceholder} />
-                  <LazyLoad>
-                    <StyledImage
-                      onLoad={removePlaceholder}
-                      onError={removePlaceholder}
-                      src={it2.media_url}
-                      alt={"Paella dish"}
-                      height="400"
-                    />
-                  </LazyLoad>
-                </ImageWrapper>
+                />
               </a>
             );
           }
