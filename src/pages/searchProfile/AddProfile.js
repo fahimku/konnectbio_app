@@ -131,7 +131,11 @@ function HashtagsList({
               })
               .catch((err) => {
                 sethashLoading(false);
-                toast.error("This Profile is not exists !");
+                if (err.response.data.error) {
+                  toast.error("This Profile is not exists !");
+                } else {
+                  toast.error("Connection Timeout");
+                }
               });
           }
         });
