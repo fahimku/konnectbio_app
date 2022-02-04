@@ -47,7 +47,11 @@ function TopHashTag({
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
-  const fromDate = moment().subtract(4, "year").format("YYYY-MM-DD");
+  // const fromDate = moment().subtract(2, "year").format("YYYY-MM-DD");
+  const fromDate = moment()
+    .subtract(2, "year")
+    .startOf("year")
+    .format("YYYY-MM-DD");
   const toDate = moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
@@ -429,7 +433,7 @@ function TopHashTag({
                 justifyContent: "center",
               }}
             >
-                <NoDataFound/>
+              <NoDataFound />
             </div>
           )}
         </div>
