@@ -166,16 +166,12 @@ export default function Content({ insta, accessToken }) {
                     }}
                     disabled={next}
                   >
-                    <span>Pending</span>
+                    <span>In-Active</span>
                   </NavLink>
                 </NavItem>
               </Nav>
               <TabContent className="affiliate_tab_ift" activeTab={activeTab}>
                 <TabPane tabId="dashboard">
-                  {/* {activeTab === "dashboard"
-                    ? "dashboard"
-                    : // <Dashboard title="Dashboard" />
-                      null} */}
                   {activeTab === "dashboard" ? (
                     <GalleryDashboard title="Create Media" />
                   ) : null}

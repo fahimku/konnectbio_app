@@ -95,7 +95,7 @@ function AllGallery({
             media_library_id: mediaId,
           })
           .then((res) => {
-            console.log(res, "res");
+            getMedia(name).then(() => setLoading(false));
             // let data1 = [...data];
             // let objIndex = data1.findIndex(
             //   (obj) => obj.campaign_id === mediaId
@@ -114,7 +114,7 @@ function AllGallery({
             //   setCurrentPage(selectedPage);
             //   setOffset(offset);
             // }, 300);
-            toast.success("Media " + statusName + " Successfully");
+            toast.success(res.data.message);
           })
           .catch((err) => {
             toast.error(err.response?.data.message);
