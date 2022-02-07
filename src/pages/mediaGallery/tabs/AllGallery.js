@@ -81,7 +81,7 @@ function AllGallery({
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this media?`,
-      icon: status ? "warning" : "success",
+      icon: "warning",
       cancelButtonText: "No",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
