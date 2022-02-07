@@ -110,7 +110,6 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-              
 
               {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
@@ -176,18 +175,7 @@ class Sidebar extends React.Component {
                 iconName="flaticon-users"
                 labelColor="info"
               />
-              <LinksGroup
-                className="sidebar-nav-links"
-                header="My Posts"
-                link="/app/my/posts"
-                isHeader
-                iconElement={
-                  <span className="glyphicon glyphicon-shopping-cart"></span>
-                }
-                // label="Awesome"
-                iconName="flaticon-users"
-                labelColor="info"
-              />
+
               {/* ) : null} */}
               <LinksGroup
                 className="sidebar-nav-links"
@@ -196,6 +184,18 @@ class Sidebar extends React.Component {
                 isHeader
                 iconElement={
                   <span className="glyphicon glyphicon-th-list"></span>
+                }
+                // label="Awesome"
+                iconName="flaticon-users"
+                labelColor="info"
+              />
+              <LinksGroup
+                className="sidebar-nav-links"
+                header="My Posts"
+                link="/app/my/posts"
+                isHeader
+                iconElement={
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
                 }
                 // label="Awesome"
                 iconName="flaticon-users"
