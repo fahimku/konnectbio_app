@@ -10,12 +10,13 @@ import moment from "moment";
 import Loader from "../../../components/Loader/Loader";
 import InputValidation from "../../../components/InputValidation";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
-import { Col, Row, Modal } from "react-bootstrap";
+import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import Select from "react-select";
 import { DatePicker } from "antd";
 
 const { RangePicker } = DatePicker;
+const dateFormat = "YYYY-MM-DD";
 
 function PendingGallery({
   title,
@@ -42,6 +43,15 @@ function PendingGallery({
     end_date: "",
     categories: { value: "", label: "Please Select" },
   });
+  const fromDate = moment(new Date()).format("YYYY-MM-DD");
+  const toDate = moment().add(1, "year").format("YYYY-MM-DD");
+  const [startDate, setStartDate] = useState(fromDate);
+  const [endDate, setEndDate] = useState(toDate);
+  const [sortBy, setSortBy] = useState({
+    value: "commission",
+    label: "COMMISSION",
+  });
+  const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -374,9 +384,29 @@ function PendingGallery({
       }
     });
   }
+  const sortByOptions = [
+    { value: "commission", label: "COMMISSION" },
+    { value: "date", label: "DATE" },
+  ];
+
+  const sortOrderOptions = [
+    { value: "asc", label: "ASC" },
+    { value: "desc", label: "DESC" },
+  ];
+  const style = {
+    control: (base) => ({
+      ...base,
+      height: "44px",
+      boxShadow: "none",
+      "&:hover": {
+        // border: "1px solid black",
+      },
+    }),
+  };
   return (
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
+
       {renderContent()}
       <Modal
         show={modal}
