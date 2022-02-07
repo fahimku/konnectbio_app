@@ -232,8 +232,7 @@ class LinkinBio extends React.Component {
               post_type: this.state.postType,
               start_date: this.state.startDate,
               end_date: this.state.endDate,
-              gallery_post:
-                this.props.mobileDropdown == "gallery" ? true : false,
+              source: this.props.mobileDropdown,
             })
             .then((response) => {
               this.setState({ loading: false });
@@ -527,6 +526,7 @@ class LinkinBio extends React.Component {
   };
 
   render() {
+    console.log(this.props.mobileDropdown, "mobile");
     return (
       <div className="linkin-bio">
         <Row className="app_main_cont_ift main-container">
