@@ -8,17 +8,17 @@ import { toast } from "react-toastify";
 //import { Button, Paper } from "@mui/material";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader";
-import InputValidation from "../../../components/InputValidation";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import Select from "react-select";
 import { DatePicker } from "antd";
+import axios from "axios";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function PendingGallery({
+function AllGallery({
   title,
   getMedia,
   gallery,
@@ -27,6 +27,7 @@ function PendingGallery({
   getUserCategories2,
   categories,
   directPublish,
+  name,
 }) {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -43,20 +44,11 @@ function PendingGallery({
     end_date: "",
     categories: { value: "", label: "Please Select" },
   });
-  const fromDate = moment(new Date()).format("YYYY-MM-DD");
-  const toDate = moment().add(1, "year").format("YYYY-MM-DD");
-  const [startDate, setStartDate] = useState(fromDate);
-  const [endDate, setEndDate] = useState(toDate);
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
-  });
-  const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    getUserCategories2(userInfo.user_id);
-    getMedia().then(() => setLoading(false));
+    // getUserCategories2(userInfo.user_id);
+    getMedia(name).then(() => setLoading(false));
   }, []);
 
   const onDelete = async (item) => {
@@ -85,13 +77,58 @@ function PendingGallery({
     // this.setState({ startDate: startDate });
     // this.setState({ endDate: endDate });
   };
+  const toggleMedia = async (status, mediaId) => {
+    let statusName = status ? "disable" : "enable";
+    Swal.fire({
+      title: `Are you sure you want to ${statusName} this media?`,
+      icon: status ? "warning" : "success",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`/library/revise/status`, {
+            is_active: !status,
+            media_library_id: mediaId,
+          })
+          .then((res) => {
+            console.log(res, "res");
+            // let data1 = [...data];
+            // let objIndex = data1.findIndex(
+            //   (obj) => obj.campaign_id === mediaId
+            // );
+            // data1[objIndex].is_active = !status;
+            // setData(data1);
+            // setTimeout(() => {
+            //   let data2 = [...data].filter(function (item) {
+            //     return item.campaign_id !== mediaId;
+            //   });
+            //   setData(data2);
+            //   const page = Math.ceil(data2.length / perPage) - 1;
+            //   const selectedPage = page;
+            //   const offset = selectedPage * perPage;
+            //   setPageCount(page + 1);
+            //   setCurrentPage(selectedPage);
+            //   setOffset(offset);
+            // }, 300);
+            toast.success("Media " + statusName + " Successfully");
+          })
+          .catch((err) => {
+            toast.error(err.response?.data.message);
+          });
+      }
+    });
+  };
 
   function renderContent() {
     if (!loading) {
       return (
         <Row className="post-analytics-tab-boxes-ift">
-          {gallery.length > 0 ? (
-            gallery.map((item, i) => (
+          {gallery.data.length > 0 ? (
+            gallery.data.map((item, i) => (
               <Col xs={12} xl={3} md={6}>
                 <div className={`card any_bx analytic-box campaign-box pb-0`}>
                   <div className="camp-row row">
@@ -101,6 +138,28 @@ function PendingGallery({
                           ? item.title.slice(0, 20) + "..."
                           : item.title}
                       </h6>
+                      <div className="cmp-h-right">
+                        {/* {toggleLoading && <Loader />} */}
+                        <div class="form-check custom-switch custom-switch-md">
+                          <input
+                            type="checkbox"
+                            checked={name === "active" ? true : false}
+                            onClick={() => {
+                              toggleMedia(
+                                item.is_active,
+                                item.media_library_id
+                              );
+                            }}
+                            class="custom-control-input"
+                            id={`customSwitch` + i}
+                            readOnly
+                          />
+                          <label
+                            class="custom-control-label"
+                            htmlFor={`customSwitch` + i}
+                          ></label>
+                        </div>
+                      </div>
                     </div>
                     <div
                       className="any-post-img-col col-12"
@@ -384,29 +443,10 @@ function PendingGallery({
       }
     });
   }
-  const sortByOptions = [
-    { value: "commission", label: "COMMISSION" },
-    { value: "date", label: "DATE" },
-  ];
 
-  const sortOrderOptions = [
-    { value: "asc", label: "ASC" },
-    { value: "desc", label: "DESC" },
-  ];
-  const style = {
-    control: (base) => ({
-      ...base,
-      height: "44px",
-      boxShadow: "none",
-      "&:hover": {
-        // border: "1px solid black",
-      },
-    }),
-  };
   return (
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
-
       {renderContent()}
       <Modal
         show={modal}
@@ -523,4 +563,4 @@ export default connect(mapStateProps, {
   ...instaAction,
   ...schedulePostActions,
   ...categoriesActions,
-})(PendingGallery);
+})(AllGallery);

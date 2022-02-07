@@ -10,7 +10,7 @@ import "./selector.css";
 // import Box from "./Box";
 import Create from "./tabs/Create";
 import Gallery from "./tabs/Gallery";
-import PendingGallery from "./tabs/PendingGallery";
+import AllGallery from "./tabs/AllGallery";
 import GalleryDashboard from "./tabs/GalleryDashboard/GalleryDashboard";
 
 export default function Content({ insta, accessToken }) {
@@ -140,7 +140,7 @@ export default function Content({ insta, accessToken }) {
                       toggleTabs("brand");
                     }}
                   >
-                    <span>Create Gallery</span>
+                    <span>Upload Media</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -182,17 +182,18 @@ export default function Content({ insta, accessToken }) {
                 </TabPane>
                 <TabPane tabId="brand">
                   {activeTab === "brand" ? (
-                    <Create title="Create Media" />
+                    <Create title="Upload Media" />
                   ) : null}
                 </TabPane>
                 <TabPane tabId="active">
                   {activeTab === "active" ? (
-                    <Gallery title="Active Gallery" />
+                    // <Gallery title="Active Gallery" />
+                    <AllGallery title="Active Media" name="active" />
                   ) : null}
                 </TabPane>
                 <TabPane tabId="pending">
                   {activeTab === "pending" ? (
-                    <PendingGallery title="Pending Gallery" />
+                    <AllGallery title="In-Active Media" name="in_active" />
                   ) : null}
                 </TabPane>
               </TabContent>
