@@ -79,7 +79,7 @@ const MobilePreview = ({
                 <video
                   oncontextmenu="return false;"
                   // id="myVideo"
-                  autoplay
+                  // autoplay
                   controlsList="nodownload"
                   className={bioshop.data[i].linked || bioshop.data[i].select ? "linked"
                     : ""
