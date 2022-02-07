@@ -63,7 +63,7 @@ function AllGallery({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMedia(item.media_library_id).then(() => {
-          getMedia();
+          getMedia(name);
           // toast.error("successfully deleted")
         });
       }
