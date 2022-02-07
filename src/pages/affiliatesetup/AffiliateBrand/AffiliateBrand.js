@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button,Row,Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
 
@@ -29,6 +29,7 @@ class AffiliateBrand extends React.Component {
         console.log(error.response);
       });
   };
+
   handleChange = (e) => {
     this.setState({
       brand_name: e.target.value,
