@@ -46,7 +46,7 @@ function Gallery({
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     getUserCategories2(userInfo.user_id);
-    getMedia().then(() => setLoading(false));
+    getMedia("active").then(() => setLoading(false));
   }, []);
 
   const onDelete = async (item) => {
@@ -61,7 +61,7 @@ function Gallery({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMedia(item.media_library_id).then(() => {
-          getMedia();
+          getMedia("active");
           // toast.error("successfully deleted")
         });
       }
@@ -80,8 +80,8 @@ function Gallery({
     if (!loading) {
       return (
         <Row className="post-analytics-tab-boxes-ift">
-          {gallery.length > 0 ? (
-            gallery.map((item, i) => (
+          {gallery.data.length > 0 ? (
+            gallery.data.map((item, i) => (
               <Col xs={12} xl={3} md={6}>
                 <div className={`card any_bx analytic-box campaign-box pb-0`}>
                   <div className="camp-row row">
