@@ -453,6 +453,7 @@ function AllGallery({
   }
 
   const handlePageClick = (e) => {
+    setLoading(true)
     const page = e.selected;
     setCurrentPage(page);
     getMedia(name,page+1,limit).then(() => setLoading(false));
@@ -463,7 +464,7 @@ function AllGallery({
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
-      {gallery?.data?.length > 0 &&
+      {gallery?.data?.length > 0 && !loading &&
         <ReactPaginate
           previousLabel=""
           nextLabel=""
