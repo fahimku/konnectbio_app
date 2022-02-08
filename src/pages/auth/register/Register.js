@@ -375,21 +375,22 @@ class Register extends React.Component {
                       </p>
                     </>
                   ) : (
-                    <>
-                      <p className="we_have_ift">{this.props.successMessage}</p>
-                      <p className="we_have_ift">
+                      <>
+                      <p className="we_have_ift">Account Created Successfully.</p> 
+                      {/* <p className="we_have_ift">{this.props.successMessage}</p> */}
+                      {/* <p className="we_have_ift">
                         If verification is not done within 10 minutes,
                         registration process will be cancelled and you will have
                         to register again. It may take up to 3 minutes to
                         receive verification mail. In case you don,t receive
                         mail, check your spam folder.
-                      </p>
-                      <p className="we_have_ift">
+                      </p> */}
+                      {/* <p className="we_have_ift">
                         Didn't receive email? <br />
                         <a href="#" onClick={this.resendEmail}>
                           Re-send
                         </a>
-                      </p>
+                      </p> */}
                     </>
                   )}
                   <span
