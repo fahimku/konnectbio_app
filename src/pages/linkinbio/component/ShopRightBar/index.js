@@ -181,10 +181,11 @@ const ShopRightBar = (props) => {
                 )}
               </div>
               <div className="image-edit-links">
-                <label>URL</label>
+                <label>Enter URL / Paste Affiliate Link</label>
                 <InputValidation
                   className=""
-                  placeholder="Please Enter Website Address"
+                  placeholder="Enter URL"
+                  // placeholder="Please Enter Website Address"
                   type="text"
                   id="website"
                   required
