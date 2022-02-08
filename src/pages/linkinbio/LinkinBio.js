@@ -246,7 +246,7 @@ class LinkinBio extends React.Component {
                 JSON.stringify(this.state.instagramPosts)
               );
               instagramPosts.data[singlePostIndex] = currentPost;
-              this.setState({ instagramPosts: instagramPosts }, () => {});
+              this.setState({ instagramPosts: instagramPosts }, () => { });
               toast.success("Your Post is Linked Successfully");
               this.selectPost(false, "");
               this.reload();
@@ -341,9 +341,9 @@ class LinkinBio extends React.Component {
     let node = event.target;
     const bottom =
       parseInt(node.scrollHeight + 1 - node.scrollTop) ===
-        parseInt(node.clientHeight) ||
+      parseInt(node.clientHeight) ||
       parseInt(node.scrollHeight - node.scrollTop) ===
-        parseInt(node.clientHeight);
+      parseInt(node.clientHeight);
 
     if (bottom) {
       if (this.state.nextPageUrl) {
@@ -470,12 +470,13 @@ class LinkinBio extends React.Component {
   };
 
   iframe_clicked(event) {
-    alert("test");
+
   }
 
   shopRightBar = () => {
     return (
       <ShopRightBar
+        mobileDropdown={this.props.mobileDropdown}
         fetchUserPost={this.state.fetchUserPost}
         closeModel={() => {
           this.setState({ modal: false });
@@ -519,14 +520,15 @@ class LinkinBio extends React.Component {
   };
 
   getDropdownData = () => {
-    if (this.props.mobileDropdown == "instagram") {
+    if (this.props.mobileDropdown === "instagram") {
       return this.state.instagramPosts;
     }
     return this.state.galleryPosts;
+
   };
 
   render() {
-    console.log(this.props.mobileDropdown, "mobile");
+
     return (
       <div className="linkin-bio">
         <Row className="app_main_cont_ift main-container">
@@ -552,25 +554,22 @@ class LinkinBio extends React.Component {
             />
           </Col>
           <Col
-            className={`right-bar bg-white ${
-              !this.state.selectPost ? "no-padding" : ""
-            } `}
+            className={`right-bar bg-white ${!this.state.selectPost ? "no-padding" : ""
+              } `}
             md="7"
             xl="9"
             xs="12"
           >
             <div
-              className={`${
-                !this.state.selectPost ? "show_ift_iframe show" : "hidden"
-              }`}
+              className={`${!this.state.selectPost ? "show_ift_iframe show" : "hidden"
+                }`}
             >
               {this.state.username !== "" ? (
                 <iframe
                   id="iframe"
                   key={this.state.iframeKey}
-                  src={`${
-                    this.state.url + this.state.username
-                  }?coupon=no&brand=no&iframe=yes&mypost=hide`}
+                  src={`${this.state.url + this.state.username
+                    }?coupon=no&brand=no&iframe=yes&mypost=hide`}
                   title="linkin"
                   className="myshop-iframe"
                 ></iframe>
@@ -623,6 +622,12 @@ class LinkinBio extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
+
+
+       
+        
+        
+
       </div>
     );
   }
