@@ -455,9 +455,7 @@ function AllGallery({
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
-
     getMedia(name,page+1,limit).then(() => setLoading(false));
-
   };
 
   return (
@@ -465,28 +463,30 @@ function AllGallery({
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
-    
-      <ReactPaginate
-        previousLabel=""
-        nextLabel=""
-        pageClassName="page-item "
-        pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-        previousClassName="page-item"
-        previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-        nextClassName="page-item"
-        nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-        breakLabel="..."
-        breakClassName="page-item"
-        breakLinkClassName="page-link"
-        forcePage={currentPage}
-        pageCount={Math.ceil(gallery.total_count / limit)}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
-        // subContainerClassName={"pages pagination"}
-        activeClassName={"active"}
-      />
+      {gallery?.data?.length > 0 &&
+        <ReactPaginate
+          previousLabel=""
+          nextLabel=""
+          pageClassName="page-item "
+          pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+          previousClassName="page-item"
+          previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+          nextClassName="page-item"
+          nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          forcePage={currentPage}
+          pageCount={Math.ceil(gallery.total_count / limit)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+          // subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+
+        />
+      }
       <Modal
         show={modal}
         onHide={() => {
