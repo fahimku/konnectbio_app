@@ -4,12 +4,12 @@ import moment from "moment";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import { connect } from "react-redux";
-import { getCampaignSummary } from "../../../../actions/campaignSummary";
+import { getMediaSummary } from "../../../../actions/mediaSummary";
 
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-class AffiliateSummaryComponent extends React.Component {
+class GallerySummaryComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +24,7 @@ class AffiliateSummaryComponent extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(
-      getCampaignSummary(this.state.fromDate, this.state.toDate)
+      getMediaSummary(this.state.fromDate, this.state.toDate)
     );
   }
 
@@ -32,7 +32,7 @@ class AffiliateSummaryComponent extends React.Component {
     let fromDate = dataString[0];
     let toDate = dataString[1];
     this.setState({ fromDate: fromDate, toDate: toDate });
-    this.props.dispatch(getCampaignSummary(fromDate, toDate));
+    this.props.dispatch(getMediaSummary(fromDate, toDate));
   }
 
   disabledDate(current) {
@@ -40,7 +40,7 @@ class AffiliateSummaryComponent extends React.Component {
   }
 
   render() {
-    const data = this.props.campaignSummary;
+    const data = this.props.mediaSummary;
     return (
       <>
         <div
@@ -97,59 +97,26 @@ class AffiliateSummaryComponent extends React.Component {
                   ) : ( */}
                 <div className="card analytic-box">
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Total Campaigns</h5>
+                    <h5 className="count-title">Total Media</h5>
                     <h3 className="count">
-                      {data.campaign_summary.total_campaigns
-                        ? data.campaign_summary.total_campaigns
+                      {data.media_summary.total
+                        ? data.media_summary.total
                         : "0"}
                     </h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Total Active Campaigns</h5>
+                    <h5 className="count-title">Active Media</h5>
                     <h3 className="count">
-                      {data.campaign_summary.active_campaigns
-                        ? data.campaign_summary.active_campaigns
+                      {data.media_summary.active
+                        ? data.media_summary.active
                         : "0"}
                     </h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Total In-Active Campaigns</h5>
+                    <h5 className="count-title">In-Active Media</h5>
                     <h3 className="count">
-                      {data.campaign_summary.in_active_campaigns
-                        ? data.campaign_summary.in_active_campaigns
-                        : "0"}
-                    </h3>
-                  </div>
-
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Total Budget</h5>
-                    <h3 className="count">
-                      {data.campaign_summary.total_budget
-                        ? data.campaign_summary.total_budget
-                        : "$0"}
-                    </h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Total Clicks</h5>
-                    <h3 className="count">
-                      {data.campaign_summary.total_clicks
-                        ? data.campaign_summary.total_clicks
-                        : "0"}
-                    </h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Total Spent</h5>
-                    <h3 className="count">
-                      {data.campaign_summary.total_spent
-                        ? data.campaign_summary.total_spent
-                        : "$0"}
-                    </h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title"># of Participants</h5>
-                    <h3 className="count">
-                      {data.campaign_summary.total_participant
-                        ? data.campaign_summary.total_participant
+                      {data.media_summary.in_active
+                        ? data.media_summary.in_active
                         : "0"}
                     </h3>
                   </div>
@@ -163,9 +130,9 @@ class AffiliateSummaryComponent extends React.Component {
     );
   }
 }
-function mapStateToProps({ campaignSummary }) {
+function mapStateToProps({ mediaSummary }) {
   return {
-    campaignSummary: campaignSummary,
+    mediaSummary: mediaSummary,
   };
 }
-export default connect(mapStateToProps)(AffiliateSummaryComponent);
+export default connect(mapStateToProps)(GallerySummaryComponent);

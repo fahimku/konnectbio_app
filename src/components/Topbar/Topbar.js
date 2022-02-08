@@ -1,7 +1,14 @@
 import React from "react";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 
-const TopBar = ({ username, copyToClipboard, url, text ,changeDropdown,dropdown}) => {
+const TopBar = ({
+  username,
+  copyToClipboard,
+  url,
+  text,
+  changeDropdown,
+  dropdown,
+}) => {
   return (
     <div className="left-top-bar">
       {/* <div className="profile">
@@ -15,10 +22,28 @@ const TopBar = ({ username, copyToClipboard, url, text ,changeDropdown,dropdown}
       <DropdownButton
         id="dropdown-basic-button"
         className="source-button"
-        title={text ? "Instagram" : `Source: ${dropdown=="instagram"?`Instagram @${username}`:"Media Gallery"}`}
+        title={
+          text
+            ? "Instagram"
+            : `Source: ${
+                dropdown == "instagram"
+                  ? `Instagram @${username}`
+                  : "Media Gallery"
+              }`
+        }
       >
-        <Dropdown.Item active={dropdown=="instagram"?true:false} onClick={()=>changeDropdown("instagram")}>Instagram</Dropdown.Item>
-        <Dropdown.Item active={dropdown=="gallery"?true:false} onClick={()=>changeDropdown("gallery")}>Media Gallery</Dropdown.Item>
+        <Dropdown.Item
+          active={dropdown == "instagram" ? true : false}
+          onClick={() => changeDropdown("instagram")}
+        >
+          Instagram
+        </Dropdown.Item>
+        <Dropdown.Item
+          active={dropdown == "gallery" ? true : false}
+          onClick={() => changeDropdown("gallery")}
+        >
+          Media Gallery
+        </Dropdown.Item>
       </DropdownButton>
 
       {/* <div className="your-copy-link">
