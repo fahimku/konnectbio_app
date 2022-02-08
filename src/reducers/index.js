@@ -14,7 +14,7 @@ import addCampaignToShop from "./marketPlace/addCampaignToShop";
 import instagram from "./instagram/instagram";
 import links from "./links/links";
 import campaignSummary from "./campaign/campaignSummary";
-import bioShopSummary from "./campaign/bioshopSummary"
+import bioShopSummary from "./campaign/bioshopSummary";
 import dashboard from "./dashboard";
 import campaignAnalytics from "./campaign/campaignAnalytics";
 import brands from "./brands/brands";
@@ -32,8 +32,10 @@ import instagramAnalytic from "./analytics/instagramAnalytic";
 import instagramUserData from "./instagramUserData";
 import instagramPostData from "./myposts/instagramPostData";
 import gallery from "./instagram/gallery";
-import schedulePosts from "./instagram/schedulePosts"
+import schedulePosts from "./instagram/schedulePosts";
 import mobileDropdown from "./mobileDropdrown";
+import mediaSummary from "./media/mediaSummary";
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -70,5 +72,6 @@ export default (history) =>
     instagramPostData,
     gallery,
     schedulePosts,
-    mobileDropdown
+    mobileDropdown,
+    mediaSummary,
   });
