@@ -193,7 +193,7 @@ function TopHashTag({
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "followers", label: "FOLLOWERS" },
+    { value: "followers", label: "INFLUENCERS" },
     { value: "likes", label: "LIKES" },
     { value: "comments", label: "COMMENTS" },
   ];
