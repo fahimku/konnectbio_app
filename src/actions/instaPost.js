@@ -11,11 +11,11 @@ export const createMedia = (data) => async (dispatch) => {
   return res;
 };
 
-export const getMedia = (status) => async (dispatch) => {
+export const getMedia = (status,page=1,limit=8) => async (dispatch) => {
   const token = localStorage.getItem("token");
 
   const res = await axios.get(
-    `${config.hostApi}/v1/library/receive?status=${status}`
+    `${config.hostApi}/v1/library/receive?status=${status}&limit=${limit}&page=${page}`
   );
   dispatch({
     type: GET_INSTA_POST,

@@ -6,6 +6,7 @@ import * as categoriesActions from "../../../actions/category";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 //import { Button, Paper } from "@mui/material";
+import ReactPaginate from "react-paginate";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
@@ -45,10 +46,16 @@ function AllGallery({
     categories: { value: "", label: "Please Select" },
   });
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const limit = 8;
+  
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // getUserCategories2(userInfo.user_id);
     getMedia(name).then(() => setLoading(false));
+
+
+    
   }, []);
 
   const onDelete = async (item) => {
@@ -77,6 +84,7 @@ function AllGallery({
     // this.setState({ startDate: startDate });
     // this.setState({ endDate: endDate });
   };
+
   const toggleMedia = async (status, mediaId) => {
     let statusName = status ? "disable" : "enable";
     Swal.fire({
@@ -444,10 +452,41 @@ function AllGallery({
     });
   }
 
+  const handlePageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+
+    getMedia(name,page+1,limit).then(() => setLoading(false));
+
+  };
+
   return (
+    
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
+    
+      <ReactPaginate
+        previousLabel=""
+        nextLabel=""
+        pageClassName="page-item "
+        pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+        previousClassName="page-item"
+        previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+        nextClassName="page-item"
+        nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        forcePage={currentPage}
+        pageCount={Math.ceil(gallery.total_count / limit)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+        // subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
       <Modal
         show={modal}
         onHide={() => {
@@ -555,7 +594,6 @@ function AllGallery({
     </div>
   );
 }
-
 function mapStateProps({ gallery, categories }) {
   return { gallery, categories };
 }
