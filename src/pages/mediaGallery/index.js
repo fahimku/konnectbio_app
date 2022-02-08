@@ -10,6 +10,8 @@ import "./selector.css";
 // import Box from "./Box";
 import Create from "./tabs/Create";
 import Gallery from "./tabs/Gallery";
+import AllGallery from "./tabs/AllGallery";
+import GalleryDashboard from "./tabs/GalleryDashboard/GalleryDashboard";
 
 export default function Content({ insta, accessToken }) {
   const history = useHistory();
@@ -17,7 +19,7 @@ export default function Content({ insta, accessToken }) {
   const [data, setData] = useState(false);
   const [loading, setLoading] = useState(false);
   const [next, setNext] = useState(false);
-  const [activeTab, setActiveTab] = useState("brand");
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [brandCon, setBrandCon] = useState({
     brandTab: "",
     brandLoading: true,
@@ -120,37 +122,75 @@ export default function Content({ insta, accessToken }) {
                 <NavItem>
                   <NavLink
                     className={classnames({
+                      active: activeTab === "dashboard",
+                    })}
+                    onClick={() => {
+                      toggleTabs("dashboard");
+                    }}
+                  >
+                    <span>Dashboard</span>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classnames({
                       active: activeTab === "brand",
                     })}
                     onClick={() => {
                       toggleTabs("brand");
                     }}
                   >
-                    <span>Create</span>
+                    <span>Upload Media</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
                     className={classnames({
-                      active: activeTab === "marketplace",
+                      active: activeTab === "active",
                     })}
                     onClick={() => {
-                      toggleTabs("marketplace");
+                      toggleTabs("active");
                     }}
                     disabled={next}
                   >
-                    <span>Gallery</span>
+                    <span>Active</span>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classnames({
+                      active: activeTab === "pending",
+                    })}
+                    onClick={() => {
+                      toggleTabs("pending");
+                    }}
+                    disabled={next}
+                  >
+                    <span>In-Active</span>
                   </NavLink>
                 </NavItem>
               </Nav>
               <TabContent className="affiliate_tab_ift" activeTab={activeTab}>
-                <TabPane tabId="brand">
-                  {activeTab === "brand" ? (
-                    <Create title="Create Media"/>
+                <TabPane tabId="dashboard">
+                  {activeTab === "dashboard" ? (
+                    <GalleryDashboard title="Create Media" />
                   ) : null}
                 </TabPane>
-                <TabPane tabId="marketplace">
-                  {activeTab === "marketplace" ? <Gallery title="Media Gallery"/> : null}
+                <TabPane tabId="brand">
+                  {activeTab === "brand" ? (
+                    <Create title="Upload Media" />
+                  ) : null}
+                </TabPane>
+                <TabPane tabId="active">
+                  {activeTab === "active" ? (
+                    // <Gallery title="Active Gallery" />
+                    <AllGallery title="Active Media" name="active" />
+                  ) : null}
+                </TabPane>
+                <TabPane tabId="pending">
+                  {activeTab === "pending" ? (
+                    <AllGallery title="In-Active Media" name="in_active" />
+                  ) : null}
                 </TabPane>
               </TabContent>
             </div>

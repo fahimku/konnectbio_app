@@ -400,8 +400,8 @@ function AllMarketplace({
                 />
               </>
             ) : (
-                <NoDataFound/>
-              )
+              <NoDataFound />
+            )
           ) : (
             <Loader size={40} />
           )}

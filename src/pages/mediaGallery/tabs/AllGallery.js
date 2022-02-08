@@ -6,18 +6,20 @@ import * as categoriesActions from "../../../actions/category";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 //import { Button, Paper } from "@mui/material";
+import ReactPaginate from "react-paginate";
 import moment from "moment";
 import Loader from "../../../components/Loader/Loader";
-import InputValidation from "../../../components/InputValidation";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
-import { Col, Row, Modal } from "react-bootstrap";
+import { Col, Row, Modal, Button } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import Select from "react-select";
 import { DatePicker } from "antd";
+import axios from "axios";
 
 const { RangePicker } = DatePicker;
+const dateFormat = "YYYY-MM-DD";
 
-function Gallery({
+function AllGallery({
   title,
   getMedia,
   gallery,
@@ -26,6 +28,7 @@ function Gallery({
   getUserCategories2,
   categories,
   directPublish,
+  name,
 }) {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
@@ -43,10 +46,16 @@ function Gallery({
     categories: { value: "", label: "Please Select" },
   });
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const limit = 8;
+  
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    getUserCategories2(userInfo.user_id);
-    getMedia("active").then(() => setLoading(false));
+    // getUserCategories2(userInfo.user_id);
+    getMedia(name).then(() => setLoading(false));
+
+
+    
   }, []);
 
   const onDelete = async (item) => {
@@ -61,7 +70,7 @@ function Gallery({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMedia(item.media_library_id).then(() => {
-          getMedia("active");
+          getMedia(name);
           // toast.error("successfully deleted")
         });
       }
@@ -74,6 +83,52 @@ function Gallery({
     setFields({ ...fields, start_date: startDate, end_date: endDate });
     // this.setState({ startDate: startDate });
     // this.setState({ endDate: endDate });
+  };
+
+  const toggleMedia = async (status, mediaId) => {
+    let statusName = status ? "disable" : "enable";
+    Swal.fire({
+      title: `Are you sure you want to ${statusName} this media?`,
+      icon: "warning",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`/library/revise/status`, {
+            is_active: !status,
+            media_library_id: mediaId,
+          })
+          .then((res) => {
+            getMedia(name).then(() => setLoading(false));
+            // let data1 = [...data];
+            // let objIndex = data1.findIndex(
+            //   (obj) => obj.campaign_id === mediaId
+            // );
+            // data1[objIndex].is_active = !status;
+            // setData(data1);
+            // setTimeout(() => {
+            //   let data2 = [...data].filter(function (item) {
+            //     return item.campaign_id !== mediaId;
+            //   });
+            //   setData(data2);
+            //   const page = Math.ceil(data2.length / perPage) - 1;
+            //   const selectedPage = page;
+            //   const offset = selectedPage * perPage;
+            //   setPageCount(page + 1);
+            //   setCurrentPage(selectedPage);
+            //   setOffset(offset);
+            // }, 300);
+            toast.success(res.data.message);
+          })
+          .catch((err) => {
+            toast.error(err.response?.data.message);
+          });
+      }
+    });
   };
 
   function renderContent() {
@@ -91,6 +146,28 @@ function Gallery({
                           ? item.title.slice(0, 20) + "..."
                           : item.title}
                       </h6>
+                      <div className="cmp-h-right">
+                        {/* {toggleLoading && <Loader />} */}
+                        <div class="form-check custom-switch custom-switch-md">
+                          <input
+                            type="checkbox"
+                            checked={name === "active" ? true : false}
+                            onClick={() => {
+                              toggleMedia(
+                                item.is_active,
+                                item.media_library_id
+                              );
+                            }}
+                            class="custom-control-input"
+                            id={`customSwitch` + i}
+                            readOnly
+                          />
+                          <label
+                            class="custom-control-label"
+                            htmlFor={`customSwitch` + i}
+                          ></label>
+                        </div>
+                      </div>
                     </div>
                     <div
                       className="any-post-img-col col-12"
@@ -110,17 +187,23 @@ function Gallery({
                     </div>
                   </div>
                   <div className="cam-buttons col-12">
-                    {publishLoading &&
-                    currentData.media_library_id == item.media_library_id ? (
-                      <button className="btn">
-                        <Loader />
-                      </button>
-                    ) : (
-                      <button className="btn" onClick={() => onPublish(item)}>
-                        <i className="fa fa-check" /> Publish
-                      </button>
-                    )}
-                    <button
+                    {
+                      // publishLoading && currentData.media_library_id==item.media_library_id?(
+                      //   <button
+                      //   className="btn"
+                      // >
+                      //   <Loader/>
+                      // </button>
+                      // ):(
+                      //   <button
+                      //   className="btn"
+                      //   onClick={()=>onPublish(item)}
+                      // >
+                      //   <i className="fa fa-check" /> Publish
+                      // </button>
+                      // )
+                    }
+                    {/* <button
                       className="btn"
                       onClick={() => {
                         setCurrentData(item);
@@ -128,7 +211,7 @@ function Gallery({
                       }}
                     >
                       <i class="fa fa-calendar-check-o" /> Schedule
-                    </button>
+                    </button> */}
                     <button
                       className="btn"
                       onClick={() => {
@@ -368,10 +451,42 @@ function Gallery({
       }
     });
   }
+
+  const handlePageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+
+    getMedia(name,page+1,limit).then(() => setLoading(false));
+
+  };
+
   return (
+    
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
+    
+      <ReactPaginate
+        previousLabel=""
+        nextLabel=""
+        pageClassName="page-item "
+        pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+        previousClassName="page-item"
+        previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+        nextClassName="page-item"
+        nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        forcePage={currentPage}
+        pageCount={Math.ceil(gallery.total_count / limit)}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+        // subContainerClassName={"pages pagination"}
+        activeClassName={"active"}
+      />
       <Modal
         show={modal}
         onHide={() => {
@@ -479,7 +594,6 @@ function Gallery({
     </div>
   );
 }
-
 function mapStateProps({ gallery, categories }) {
   return { gallery, categories };
 }
@@ -487,6 +601,4 @@ export default connect(mapStateProps, {
   ...instaAction,
   ...schedulePostActions,
   ...categoriesActions,
-})(Gallery);
-
-// wajidkafridi92@gmail.com Fascom.321
+})(AllGallery);

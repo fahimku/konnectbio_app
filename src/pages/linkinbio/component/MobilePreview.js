@@ -61,7 +61,7 @@ const MobilePreview = ({
                   instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
-                  <span className="linked-label">LINKED</span>
+                  <span className="linked-label">LINKED <span class="glyphicon glyphicon-link"></span></span>
                 ) : (
                   ""
                 )}
