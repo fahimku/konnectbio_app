@@ -199,7 +199,7 @@ const ShopRightBar = (props) => {
                     text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
                     confirmButtonColor: "#010b40",
                   });
-                }} href="#"> Copy/Paste Link</a> </label>
+                }} href="javascript:void(0);"> Copy/Paste Link</a> </label>
                 <InputValidation
                   className=""
                   placeholder="Enter URL"
