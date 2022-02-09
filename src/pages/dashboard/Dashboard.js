@@ -134,7 +134,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/profile");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    // href="javascript:void(0)"
+                      // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Home Screen
                     </Link>
@@ -153,19 +153,21 @@ function Dashboard({ getDashboard, dashboard }) {
                   <h4>My Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-
-                    {userData.package.package_name === 'Basic' ? <Link
-                      to="my/posts"
-                      className="btn btn-rounded btn-primary"
-                    >
-                      <i className="fa fa-cog mr-1"></i> My Posts
-                    </Link> : <Link
-                      to="analysis?type=mypost"
-                      className="btn btn-rounded btn-primary"
-                    >
-                      <i className="fa fa-cog mr-1"></i> My Posts
-                    </Link>}
-
+                    {userData.package.package_name === "Basic" ? (
+                      <Link
+                        to="my/posts"
+                        className="btn btn-rounded btn-primary"
+                      >
+                        <i className="fa fa-cog mr-1"></i> My Posts
+                      </Link>
+                    ) : (
+                      <Link
+                        to="analysis?type=mypost"
+                        className="btn btn-rounded btn-primary"
+                      >
+                        <i className="fa fa-cog mr-1"></i> My Posts
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
@@ -190,7 +192,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/linkinbio-shop");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    // href="javascript:void(0)"
+                      // href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Bio Shop
                     </Link>
@@ -221,7 +223,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/my/links");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //                      href="javascript:void(0)"
+                      //                      href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Links
                     </Link>
@@ -246,7 +248,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/analysis");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //   href="javascript:void(0)"
+                      //   href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Analytics
                     </Link>
@@ -271,7 +273,7 @@ function Dashboard({ getDashboard, dashboard }) {
                       //   props.history.push("/app/account/categories");
                       // }}
                       className="btn btn-rounded btn-primary"
-                    //href="javascript:void(0)"
+                      //href="javascript:void(0)"
                     >
                       <i className="fa fa-cog mr-1"></i> Manage Category Setup
                     </Link>
