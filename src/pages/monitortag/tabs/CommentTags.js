@@ -93,7 +93,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "followers", label: "FOLLOWERS" },
+    { value: "followers", label: "INFLUENCERS" },
     { value: "likes", label: "LIKES" },
   ];
   const sortOrderOptions = [

@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import Video from "../../../../components/Video";
-import { Button } from "reactstrap";
-import moment from "moment";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Button,
+} from "reactstrap"; import moment from "moment";
 import { Select } from "antd";
 import Loader from "../../../../components/Loader";
 import InputValidation from "../../../../components/InputValidation";
@@ -9,6 +13,7 @@ import Formsy from "formsy-react";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
 import PermissionHelper from "../../../../components/PermissionHelper";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -19,6 +24,7 @@ const ShopRightBar = (props) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [redirectedUrl, setRedirectedUrl] = useState("");
+  const [copyModal, setCopyModal] = useState(false);
   const formRef = useRef("LinkForm");
 
   useEffect(() => {
@@ -29,6 +35,13 @@ const ShopRightBar = (props) => {
   useEffect(() => {
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
+
+
+  useEffect(() => {
+    props.selectPost(false, "");
+    props.closeModel(false);
+  }, [props.mobileDropdown]);
+
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -49,9 +62,8 @@ const ShopRightBar = (props) => {
           ref={formRef}
         >
           <div
-            className={`image-edit-box ${
-              props.isSelectPost ? "show" : "hidden"
-            }`}
+            className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"
+              }`}
           >
             <span
               onClick={() => props.selectPost(false, "")}
@@ -68,11 +80,11 @@ const ShopRightBar = (props) => {
                 <p>
                   {props.singlePost.linked || props.updatePage
                     ? "Updated on " +
-                      moment.utc(props.updatedDate).format("MMM Do YYYY")
+                    moment.utc(props.updatedDate).format("MMM Do YYYY")
                     : "Posted on " +
-                      moment
-                        .utc(props.singlePost.timestamp)
-                        .format("MMM Do YYYY")}
+                    moment
+                      .utc(props.singlePost.timestamp)
+                      .format("MMM Do YYYY")}
 
                   {/* {props.media_id ? (
                     props.singlePost.linked || props.updatePage ? (
@@ -181,10 +193,17 @@ const ShopRightBar = (props) => {
                 )}
               </div>
               <div className="image-edit-links">
-                <label>URL</label>
+                <label>URL/AFFILIATE LINK - <a onClick={() => {
+                  Swal.fire({
+                    title: "Note",
+                    text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
+                    confirmButtonColor: "#010b40",
+                  });
+                }} href="javascript:void(0);"> Copy/Paste Link</a> </label>
                 <InputValidation
                   className=""
-                  placeholder="Please Enter Website Address"
+                  placeholder="Enter URL"
+                  // placeholder="Please Enter Website Address"
                   type="text"
                   id="website"
                   required
@@ -357,9 +376,9 @@ const ShopRightBar = (props) => {
                           <Button
                             className="custom_btns_ift"
                             color="primary"
-                            // onClick={(ev) =>
-                            //   props.savePost && props.savePost(this)
-                            // }
+                          // onClick={(ev) =>
+                          //   props.savePost && props.savePost(this)
+                          // }
                           >
                             &nbsp;Save&nbsp;
                           </Button>
@@ -391,7 +410,11 @@ const ShopRightBar = (props) => {
             </div>
           </div>
         </Formsy.Form>
+
+
       )}
+
+
     </>
   );
 };

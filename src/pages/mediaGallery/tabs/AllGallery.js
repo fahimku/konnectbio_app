@@ -48,20 +48,17 @@ function AllGallery({
 
   const [currentPage, setCurrentPage] = useState(0);
   const limit = 8;
-  
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // getUserCategories2(userInfo.user_id);
     getMedia(name).then(() => setLoading(false));
-
-
-    
   }, []);
 
   const onDelete = async (item) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Are you sure you want to delete this media?",
+      text: "This will remove your media from BioShop as well!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -89,6 +86,10 @@ function AllGallery({
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this media?`,
+      text:
+        statusName === "disable"
+          ? "This will remove your media from BioShop as well!"
+          : "",
       icon: "warning",
       cancelButtonText: "No",
       showCancelButton: true,
@@ -453,17 +454,17 @@ function AllGallery({
   }
 
   const handlePageClick = (e) => {
+    setLoading(true);
     const page = e.selected;
     setCurrentPage(page);
-    getMedia(name,page+1,limit).then(() => setLoading(false));
+    getMedia(name, page + 1, limit).then(() => setLoading(false));
   };
 
   return (
-    
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
-      {gallery?.data?.length > 0 &&
+      {gallery?.data?.length > 0 && !loading && (
         <ReactPaginate
           previousLabel=""
           nextLabel=""
@@ -481,12 +482,13 @@ function AllGallery({
           marginPagesDisplayed={2}
           pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
           onPageChange={handlePageClick}
-          containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
+          containerClassName={
+            "pagination justify-content-center mt-2 custom-paginate"
+          }
           // subContainerClassName={"pages pagination"}
           activeClassName={"active"}
-
         />
-      }
+      )}
       <Modal
         show={modal}
         onHide={() => {
