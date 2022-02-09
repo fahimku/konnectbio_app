@@ -9,7 +9,7 @@ import "./selector.css";
 // import Loader from "../../components/Loader/Loader";
 // import Box from "./Box";
 import Create from "./tabs/Create";
-import Gallery from "./tabs/Gallery";
+// import Gallery from "./tabs/Gallery";
 import AllGallery from "./tabs/AllGallery";
 import GalleryDashboard from "./tabs/GalleryDashboard/GalleryDashboard";
 
