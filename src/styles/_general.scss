@@ -835,3 +835,9 @@ h1 small {
     max-width: 20%;
   }
 }
+.dzu-submitButton:disabled {
+  background-color: #010b40 !important;
+  color: #fff !important;
+  cursor: no-drop;
+  opacity: 0.5;
+}
