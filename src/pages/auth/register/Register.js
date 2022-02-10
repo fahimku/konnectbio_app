@@ -415,7 +415,7 @@ class Register extends React.Component {
                   <div className="select-type">
                     <div className="account-type col-md-12 text-center mb-5">
                       <h3>Choose Account Type</h3>
-                      <p>Click on relevant account type to proceed</p>
+                      {/* <p>Click on relevant account type to proceed</p> */}
                     </div>
                     <div className="camp-type-ift col-md-12">
                       <div class="role-type">
@@ -432,10 +432,10 @@ class Register extends React.Component {
                             <span className="imp-inf"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Influencer</h4>
-                              <p>
+                              {/* <p>
                                 Collaborate with brands and earn commissions
                                 when your followers shop
-                              </p>
+                              </p> */}
                             </span>
                           </label>
                         </div>
@@ -454,10 +454,10 @@ class Register extends React.Component {
                             <span className="imp-brnd"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Brand</h4>
-                              <p>
+                              {/* <p>
                                 Grow your online presence and boost sales
                                 through affiliate networks
-                              </p>
+                              </p> */}
                             </span>
                           </label>
                         </div>
