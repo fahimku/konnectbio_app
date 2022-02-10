@@ -342,6 +342,13 @@
         box-shadow: 0px 1px 0px 0 #000;
       }
 
+      @media (hover: none) {
+        &:hover { 
+          border: solid 1px #e4e7ed;
+          box-shadow: 0px 1px 0px 0 #e4e7ed;
+         }
+      }
+
       .imp-inf{
         height: 64px;
         width: 64px;
@@ -404,5 +411,3 @@
   }
 
 }
-
-

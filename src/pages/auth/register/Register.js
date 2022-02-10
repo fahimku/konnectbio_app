@@ -645,7 +645,7 @@ class Register extends React.Component {
                       </div>
                     )}
                     <div className="row">
-                      <div className="col-4">
+                      <div className="col-6">
                         {!this.state.step1 && (
                           <Button
                             onClick={this.goPrevious}
@@ -658,8 +658,8 @@ class Register extends React.Component {
                           </Button>
                         )}
                       </div>
-                      <div className="col-4"></div>
-                      <div className="col-4">
+
+                      <div className={` ${this.state.step1 ? 'col-12':'col-6'}`}>
                         <Button
                           type="submit"
                           color="inverse"
