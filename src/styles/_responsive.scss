@@ -418,9 +418,6 @@
   .brand_container_main .row .profile_box_main .dash_block_profile {
     min-height: 100px;
   }
-  .select-type {
-    width: 700px;
-  }
   .pricing-table-ifti {
     padding: 0 20px !important;
   }
@@ -726,22 +723,50 @@
   .ift-cancel {
     display: none;
   }
+  .custome_container_auth_ift{
+    padding-left:20px;
+    padding-right:20px;
+  }
   .select-type {
     width: 100%;
+    background-color:#FFF;
+    padding: 30px 20px;
+    
+    .larg-button.col-md-12{
+      padding:0;
+    }
+    .larg-button.mt-5{
+      margin-top: 2rem !important;
+    }
 
     .camp-type-ift.col-md-12 {
       flex-direction: column;
       padding: 0;
     }
-    .ac_type_block {
-      min-height: 160px;
+    .account-type.mb-5{
+      margin-bottom: 2rem !important;
     }
-    .ac_type_block label .imp-inf,
-    .ac_type_block label .imp-brnd {
-      width: 70px;
-      height: 70px;
-      background-size: 70px 70px;
+    .account-type h3{
+      font-size: 1.4rem;
     }
+    .account-type p{
+      font-size: 0.9rem;
+    }
+    .ac_type_block label{
+      padding: 15px;
+    }
+    .ac_type_block label h4{
+      font-size: 1.25rem;
+    }
+    .infchecked:checked + label:after{
+      display: none;
+    }
+    @media (hover: none) {
+      .ac_type_block label:hover { 
+        border:solid 1px #f00;
+       }
+  }
+  
   }
 
   .coming_iner {

@@ -81,6 +81,7 @@ class Package extends React.Component {
         console.log(error);
       });
   };
+
   convertArrayToObject = (array) => {
     const initialValue = {};
     return array.reduce((obj, item) => {
@@ -272,10 +273,12 @@ class Package extends React.Component {
             }}
             className="pricing_tabs_ifti mb-3"
           >
-            <Tab eventKey="Monthly" title="Monthly">
-              <div className="package_parent">
-                {Object.keys(basic).length !== 0 &&
-                !userInfo.is_trial_expired ? (
+           
+              <Tab eventKey="Monthly" title="Monthly"> 
+               <div className="package_parent">
+                {userInfo.account_type == 'influencer' ? (
+                  <>
+                 {Object.keys(basic).length !== 0 && !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
                     <h4>{basic.package_name}</h4>
                     <p>
@@ -354,6 +357,7 @@ class Package extends React.Component {
                     )}
                   </div>
                 ) : null}
+               </>) : (<>
                 {Object.keys(premium).length !== 0 ? (
                   <div className="custom_pkg">
                     <h4>{premium.package_name}</h4>
@@ -587,10 +591,16 @@ class Package extends React.Component {
                     )}
                   </div>
                 ) : null}
+                </>)}
               </div>
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
               <div className="package_parent">
+
+              {userInfo.account_type == 'influencer' ? (
+                  <>
+
+
                 {Object.keys(basic).length !== 0 &&
                 !userInfo.is_trial_expired ? (
                   <div className="custom_pkg">
@@ -671,6 +681,8 @@ class Package extends React.Component {
                     )}
                   </div>
                 ) : null}
+                </>):(
+                  <>
                 {Object.keys(premium).length !== 0 ? (
                   <div className="custom_pkg">
                     <h4>{premium.package_name}</h4>
@@ -904,6 +916,7 @@ class Package extends React.Component {
                     )}
                   </div>
                 ) : null}
+                </>)}
               </div>
             </Tab>
           </Tabs>

@@ -1181,7 +1181,6 @@ a.pkg_read:hover {
 }
 .camp-type-ift.col-md-12 {
   align-items: center;
-  display: flex;
 }
 .camp-type-ift .n-camp-type {
   font-family: "SegoeUIBold";
@@ -1538,3 +1537,14 @@ a.pkg_read:hover {
 .dzu-submitButton:hover{
   background-color: #000 !important;
 }
+
+
+
+
+
+
+
+
+margin-bottom: 24px;
+background-color: #FFF;
+box-shadow: 0px 0px 2px 1px #e4e7ed;
