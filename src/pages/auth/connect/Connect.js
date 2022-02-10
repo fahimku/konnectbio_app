@@ -8,8 +8,15 @@ import AccountSetup from "../../../pages/accountsetup/AccountSetup";
 import { toast } from "react-toastify";
 
 class Connect extends React.Component {
+
   constructor(props) {
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+    if (!userInfo.pacakge) {
+      window.location.href = '/package';
+    }
     super(props);
+
     this.state = {
       url: "",
       instagramCode: "",
@@ -53,7 +60,7 @@ class Connect extends React.Component {
         : access_token !== ""
         ? true
         : false;
-
+  
     if (!package1) {
       this.props.history.push("/package");
     } else if (checkCon) {
