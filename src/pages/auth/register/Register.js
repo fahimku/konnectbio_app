@@ -415,7 +415,7 @@ class Register extends React.Component {
                   <div className="select-type">
                     <div className="account-type col-md-12 text-center mb-5">
                       <h3>Choose Account Type</h3>
-                      <p>Click on relevant account type to proceed</p>
+                      {/* <p>Click on relevant account type to proceed</p> */}
                     </div>
                     <div className="camp-type-ift col-md-12">
                       <div class="role-type">
