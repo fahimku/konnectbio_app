@@ -73,6 +73,7 @@ class AccountSetup extends React.Component {
     }
     this.setState({ userId: userInfo?.user_id });
     this.getPackages();
+
   }
 
   getPackages = async () => {
@@ -344,7 +345,7 @@ class AccountSetup extends React.Component {
                                 {userInfo1?.package
                                   ? userInfo1.package.package_name
                                   : ""}
-                                {userInfo1.package.subscription_type ===
+                                {userInfo1?.package?.subscription_type ===
                                   "Trial" && " (Trial)"}
                               </h3>
                               {!this.props.connectPage &&
