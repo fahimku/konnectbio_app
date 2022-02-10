@@ -31,6 +31,8 @@ function AllGallery({
   name,
 }) {
   const [loading, setLoading] = useState(true);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [toggleLoading, setToggleLoading] = useState(false);
   const [modal, setModal] = useState(false);
   const [currentData, setCurrentData] = useState({});
   const [showBio, setShowBio] = useState(false);
@@ -52,14 +54,13 @@ function AllGallery({
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // getUserCategories2(userInfo.user_id);
-    getMedia(name,).then(() => setLoading(false));
+    getMedia(name).then(() => setLoading(false));
   }, []);
 
   const onDelete = async (item) => {
     let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
 
-    if (currentPage === 0)
-    page = 1
+    if (currentPage === 0) page = 1;
     Swal.fire({
       title: "Are you sure you want to delete this media?",
       text: "This will remove your media from BioShop as well!",
@@ -70,11 +71,13 @@ function AllGallery({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        // setDeleteLoading(true);
         deleteMedia(item.media_library_id).then(() => {
           getMedia(name, page);
+          // setDeleteLoading(false);
           if (gallery.data.length === 1) {
-             setCurrentPage(currentPage-1)
-           }
+            setCurrentPage(currentPage - 1);
+          }
         });
       }
     });
@@ -90,9 +93,8 @@ function AllGallery({
 
   const toggleMedia = async (status, mediaId) => {
     let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
-    if (currentPage === 0)
-      page = 1
-    
+    if (currentPage === 0) page = 1;
+
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this media?`,
@@ -108,15 +110,17 @@ function AllGallery({
       confirmButtonText: `Yes`,
     }).then((result) => {
       if (result.isConfirmed) {
+        // setToggleLoading(true);
         axios
           .put(`/library/revise/status`, {
             is_active: !status,
             media_library_id: mediaId,
           })
           .then((res) => {
-            getMedia(name,page).then(() => setLoading(false));
+            getMedia(name, page).then(() => setLoading(false));
+            // setToggleLoading(false);
             if (gallery.data.length === 1) {
-              setCurrentPage(currentPage-1)
+              setCurrentPage(currentPage - 1);
             }
             // let data1 = [...data];
             // let objIndex = data1.findIndex(
@@ -152,7 +156,10 @@ function AllGallery({
           {gallery.data.length > 0 ? (
             gallery.data.map((item, i) => (
               <Col xs={12} xl={3} md={6}>
-                <div className={`card any_bx analytic-box campaign-box pb-0`}>
+                <div
+                  key={i}
+                  className={`card any_bx analytic-box campaign-box pb-0`}
+                >
                   <div className="camp-row row">
                     <div className="campaign-header col-12">
                       <h6>
@@ -162,25 +169,31 @@ function AllGallery({
                       </h6>
                       <div className="cmp-h-right">
                         {/* {toggleLoading && <Loader />} */}
-                        <div class="form-check custom-switch custom-switch-md">
-                          <input
-                            type="checkbox"
-                            checked={name === "active" ? true : false}
-                            onClick={() => {
-                              toggleMedia(
-                                item.is_active,
-                                item.media_library_id
-                              );
-                            }}
-                            class="custom-control-input"
-                            id={`customSwitch` + i}
-                            readOnly
-                          />
-                          <label
-                            class="custom-control-label"
-                            htmlFor={`customSwitch` + i}
-                          ></label>
-                        </div>
+                        {toggleLoading ? (
+                          <div class="form-check custom-switch custom-switch-md">
+                            <Loader />
+                          </div>
+                        ) : (
+                          <div class="form-check custom-switch custom-switch-md">
+                            <input
+                              type="checkbox"
+                              checked={name === "active" ? true : false}
+                              onClick={() => {
+                                toggleMedia(
+                                  item.is_active,
+                                  item.media_library_id
+                                );
+                              }}
+                              class="custom-control-input"
+                              id={`customSwitch` + i}
+                              readOnly
+                            />
+                            <label
+                              class="custom-control-label"
+                              htmlFor={`customSwitch` + i}
+                            ></label>
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div
@@ -226,14 +239,20 @@ function AllGallery({
                     >
                       <i class="fa fa-calendar-check-o" /> Schedule
                     </button> */}
-                    <button
-                      className="btn"
-                      onClick={() => {
-                        onDelete(item);
-                      }}
-                    >
-                      <i className="fa fa-trash" /> Delete
-                    </button>
+                    {deleteLoading ? (
+                      <button className="btn">
+                        <Loader />
+                      </button>
+                    ) : (
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          onDelete(item);
+                        }}
+                      >
+                        <i className="fa fa-trash" /> Delete
+                      </button>
+                    )}{" "}
                   </div>
                 </div>
               </Col>

@@ -1431,22 +1431,22 @@ a.pkg_read:hover {
   max-width: 100%;
   height: auto;
 }
-.drg-drop-main{
+.drg-drop-main {
   display: flex;
   align-items: center;
 }
-.drag-drop-ift{
+.drag-drop-ift {
   border: none !important;
   overflow: auto !important;
   margin: 0 !important;
 }
-.upload_area{
+.upload_area {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: center;
 }
-.upload_area_2{
+.upload_area_2 {
   min-height: 200px;
   background: #f0f3fd;
   border: dashed 2px #9ea4b8;
@@ -1458,15 +1458,15 @@ a.pkg_read:hover {
   padding: 20px;
   flex-direction: column;
 }
-.upload_area_3{
-  width:90%;
+.upload_area_3 {
+  width: 90%;
 }
-.upload_area_2 h4{
+.upload_area_2 h4 {
   font-size: 1.3rem;
   color: #575757;
   margin-bottom: 10px;
 }
-.preview-box{
+.preview-box {
   background: #f0f3fd;
   border: dashed 1px #9ea4b8;
   padding: 10px !important;
@@ -1474,54 +1474,54 @@ a.pkg_read:hover {
   display: flex;
   border-radius: 5px;
 }
-.pre-img-upload{
-  width:66px;
+.pre-img-upload {
+  width: 66px;
   height: 66px;
   position: relative;
 }
-.pre-img-upload img{
-  max-width: 66px;
+.pre-img-upload img {
+  width: 66px;
   height: 66px;
   box-shadow: 0 0 0 3px rgb(126 125 125 / 40%);
   border-radius: 50%;
 }
-.pre-content-upload{
+.pre-content-upload {
   display: flex;
   width: 100%;
   flex-direction: column;
   padding-left: 20px;
 }
-.status{
+.status {
   display: none;
 }
-.pro-brar-ift{
+.pro-brar-ift {
   display: flex;
   width: 100%;
   justify-content: space-between;
   margin-top: 0.5rem;
 }
-.pro-brar-ift .progress{
+.pro-brar-ift .progress {
   width: 95%;
   height: 0.65rem;
   font-size: 0.65rem;
 }
-.pro-brar-ift span.glyphicon{
+.pro-brar-ift span.glyphicon {
   top: -3px;
   cursor: pointer;
 }
-.glry-img-name{
-  font-family: Montserrat,sans-serif;
+.glry-img-name {
+  font-family: Montserrat, sans-serif;
   font-weight: 600;
   font-size: 1rem;
   line-height: 1;
-  margin-top:10px;
+  margin-top: 10px;
 }
-.glry-img-size{
-  font-family: Montserrat,sans-serif;
-  font-size: .9rem;
+.glry-img-size {
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9rem;
 }
-.dzu-submitButton{
-  min-width:120px !important;
+.dzu-submitButton {
+  min-width: 120px !important;
   color: #fff !important;
   background-color: #010b40 !important;
   font-weight: 400 !important;
@@ -1535,6 +1535,6 @@ a.pkg_read:hover {
   vertical-align: middle !important;
   -webkit-user-select: none !important;
 }
-.dzu-submitButton:hover{
+.dzu-submitButton:hover {
   background-color: #000 !important;
 }
