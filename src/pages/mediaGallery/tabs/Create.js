@@ -144,7 +144,7 @@ function HashtagsList({ createMedia, title }) {
             </div>
           </Row>
         </div>
-        <div className="brand_container_main container" style={{display:'none'}}>
+        <div className="brand_container_main container" >
           <Row>
             <div className="profile_box_main col-md-8">
               <div className="drg-drop-main brand-section dash_block_profile">
