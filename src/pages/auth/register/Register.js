@@ -308,8 +308,7 @@ class Register extends React.Component {
             password: this.state.password,
             zip: this.state.zip,
             referred_by: this.state.referred_by,
-            account_type:
-              this.state.accountType,
+            account_type:this.state.accountType,
           }
           ))) {
             this.setState({ step1: true });
@@ -412,7 +411,7 @@ class Register extends React.Component {
             ) : (
               <>
 
-{this.state.showRegister ? (
+  {this.state.showRegister ? (
                   <div className="select-type">
                     <div className="account-type col-md-12 text-center mb-5">
                       <h3>Choose Account Type</h3>
