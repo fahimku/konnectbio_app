@@ -45,28 +45,31 @@ export const UserRoute = ({ dispatch, component, ...rest }) => {
 };
 
 export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
-
   const checkPermission = PermissionHelper.validate(permissions);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  if (userInfo.package.package_name === 'Premium' && userInfo.page_token === '') {
+  if (!userInfo?.package) {
+    history.push("/package");
+    window.history.go(0);
+    return;
+  } else if (
+    userInfo.package.package_name === "Premium" &&
+    userInfo.page_token === ""
+  ) {
     history.push("/connect");
     window.history.go(0);
     return;
-  }
-
-  else if (userInfo.package.package_name === 'Premium Plus' && userInfo.page_token === '') {
+  } else if (
+    userInfo.package.package_name === "Premium Plus" &&
+    userInfo.page_token === ""
+  ) {
     history.push("/connect");
     window.history.go(0);
     return;
-  }
-
-  else if (!Login.isAuthenticated()) {
+  } else if (!Login.isAuthenticated()) {
     dispatch(logoutUser());
     return history.push("/app/linkinbio");
-  }
-
-  else {
+  } else {
     if (userInfo?.is_trial_expired) {
       window.open("/package", "_self");
     }
