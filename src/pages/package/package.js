@@ -275,7 +275,7 @@ class Package extends React.Component {
           >
            
               <Tab eventKey="Monthly" title="Monthly"> 
-               <div className="package_parent">
+               <div className={`package_parent ${userInfo.account_type == 'influencer' ? 'package_parent_influencer':''}`}>
                 {userInfo.account_type == 'influencer' ? (
                   <>
                  {Object.keys(basic).length !== 0 && !userInfo.is_trial_expired ? (

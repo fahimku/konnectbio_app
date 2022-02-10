@@ -27,7 +27,7 @@ class Register extends React.Component {
       step1: true,
       step2: false,
       step3: false,
-      showRegister:true,
+      showRegister: true,
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
@@ -50,7 +50,7 @@ class Register extends React.Component {
         { value: "Influencer", label: "Influencer" },
         { value: "Brand", label: "Brand" },
       ],
-      accountType:"",
+      accountType: "",
       country: "",
       city: "",
       password: "",
@@ -251,8 +251,7 @@ class Register extends React.Component {
       this.setState({ step1: true });
       this.setState({ step2: false });
       this.setState({ step3: false });
-    }
-    else if (this.state.step3) {
+    } else if (this.state.step3) {
       this.setState({ step1: false });
       this.setState({ step2: true });
       this.setState({ step3: false });
@@ -269,12 +268,12 @@ class Register extends React.Component {
         this.props.dispatch(authError("The email field is required"));
       } else if (!this.validateEmail(this.state.email)) {
         this.props.dispatch(authError("The email address is not valid"));
-      } 
-
-      else if (this.state.accountType === "influencer" && this.state.gender ==="") {
+      } else if (
+        this.state.accountType === "influencer" &&
+        this.state.gender === ""
+      ) {
         this.props.dispatch(authError("The gender field is required"));
-      }       
-      else {
+      } else {
         this.props.dispatch(authError(""));
         this.setState({ step1: false });
         this.setState({ step2: true });
@@ -296,9 +295,9 @@ class Register extends React.Component {
     } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-        if(this.props.dispatch(
-        registerUser(
-          {
+      if (
+        this.props.dispatch(
+          registerUser({
             name: this.state.name,
             email: this.state.email,
             gender: this.state.gender,
@@ -308,15 +307,14 @@ class Register extends React.Component {
             password: this.state.password,
             zip: this.state.zip,
             referred_by: this.state.referred_by,
-            account_type:
-              this.state.accountType,
-          }
-          ))) {
-            this.setState({ step1: true });
-            this.setState({ step2: false });
-            this.setState({ step3: false });
-     
-        }
+            account_type: this.state.accountType,
+          })
+        )
+      ) {
+        this.setState({ step1: true });
+        this.setState({ step2: false });
+        this.setState({ step3: false });
+      }
     }
   }
 
@@ -380,8 +378,10 @@ class Register extends React.Component {
                       </p>
                     </>
                   ) : (
-                      <>
-                      <p className="we_have_ift">Account Created Successfully.</p> 
+                    <>
+                      <p className="we_have_ift">
+                        Account Created Successfully.
+                      </p>
                       {/* <p className="we_have_ift">{this.props.successMessage}</p> */}
                       {/* <p className="we_have_ift">
                         If verification is not done within 10 minutes,
@@ -411,8 +411,7 @@ class Register extends React.Component {
               </Widget>
             ) : (
               <>
-
-{this.state.showRegister ? (
+                {this.state.showRegister ? (
                   <div className="select-type">
                     <div className="account-type col-md-12 text-center mb-5">
                       <h3>Choose Account Type</h3>
@@ -433,7 +432,10 @@ class Register extends React.Component {
                             <span className="imp-inf"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Influencer</h4>
-                              <p>Collaborate with brands and earn commissions when your followers shop</p>
+                              <p>
+                                Collaborate with brands and earn commissions
+                                when your followers shop
+                              </p>
                             </span>
                           </label>
                         </div>
@@ -452,7 +454,10 @@ class Register extends React.Component {
                             <span className="imp-brnd"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Brand</h4>
-                              <p>Grow your online presence and boost sales through affiliate networks</p>
+                              <p>
+                                Grow your online presence and boost sales
+                                through affiliate networks
+                              </p>
                             </span>
                           </label>
                         </div>
@@ -462,305 +467,309 @@ class Register extends React.Component {
                       <Button
                         color="inverse"
                         className="btn btn-primary btn-block mr-0"
-                        disabled={this.state.accountType === "" ? true: false}
+                        disabled={this.state.accountType === "" ? true : false}
                         onClick={() => this.setState({ showRegister: false })}
                       >
                         Continue
                       </Button>
                     </div>
                   </div>
-):(
-            <>    
-
-                <Widget
-                  className="custome_signup"
-                  title={<h3 className="mt-0">Create an Account</h3>}
-                >
-                  <form
-                    id="registerForm"
-                    className="mt"
-                    onSubmit={this.doRegister}
-                  >
-                    {this.props.errorMessage && (
-                      <Alert className="alert-sm" color="danger">
-                        {this.props.errorMessage}
-                      </Alert>
-                    )}
-
-                    {this.state.step1 && (
-                      <div className="registration-step-1">
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.name}
-                            onChange={this.changeName}
-                            type="text"
-                            name="name"
-                            placeholder={`${this.state.accountType ==='influencer' ? 'Name':'Brand Name'}`}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.email}
-                            onChange={this.changeEmail}
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                          />
-                        </div>
-                        {this.state.accountType ==='influencer' &&
-                        <div className="form-group">
-                          <Select
-                            className="form_select_group"
-                            value={
-                              this.state.gender && {
-                                label:
-                                  this.state.gender.charAt(0).toUpperCase() +
-                                  this.state.gender.slice(1),
-                                value: this.state.gender,
-                              }
-                            }
-                            onChange={this.changeGender}
-                            placeholder="Select Gender"
-                            options={this.state.genderList}
-                            styles={styles}
-                          />
-                        </div>
-  }
-                        
-                      </div>
-                    )}
-                    {this.state.step2 && (
-                      <div className="registration-step-2">
-                        <div className="form-group">
-                          <Select
-                            className="form_select_group"
-                            defaultValue={{
-                              label: this.state.country,
-                              value: this.state.country,
-                            }}
-                            value={
-                              this.state.country && {
-                                label: this.state.country,
-                                value: this.state.countryCode,
-                              }
-                            }
-                            onChange={this.changeCountry}
-                            filterOption={createFilter({
-                              ignoreAccents: false,
-                            })}
-                            placeholder="Select Country"
-                            options={this.state.countries}
-                            styles={styles}
-                          />
-                        </div>
-                        <div className="form-group">
-                          {this.state.stateLoading && <Loader />}
-                          {this.state.country && !this.state.stateLoading && (
-                            <Select
-                              className="form_select_group"
-                              onChange={this.changeState}
-                              filterOption={createFilter({
-                                ignoreAccents: false,
-                              })}
-                              placeholder="Select State"
-                              options={this.state.countryStates}
-                              value={
-                                this.state.countryState && {
-                                  label: this.state.countryState,
-                                  value: this.state.countryState,
-                                }
-                              }
-                              styles={styles}
-                            />
-                          )}
-                        </div>
-                        <div className="form-group">
-                          {this.state.cityLoading && <Loader />}
-                          {this.state.countryState && !this.state.cityLoading && (
-                            <Select
-                              className="form_select_group"
-                              onChange={this.changeCity}
-                              filterOption={createFilter({
-                                ignoreAccents: false,
-                              })}
-                              placeholder="Select City"
-                              options={this.state.cities}
-                              value={
-                                this.state.city && {
-                                  label: this.state.city,
-                                  value: this.state.city,
-                                }
-                              }
-                              styles={styles}
-                            />
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    {this.state.step3 && (
-                      <div className="registration-step-3">
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.password}
-                            onChange={this.changePassword}
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.confirmPassword}
-                            onChange={this.changeConfirmPassword}
-                            onBlur={this.checkPassword}
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="Confirm"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.zip}
-                            onChange={this.changeZip}
-                            type="number"
-                            name="zip"
-                            placeholder="Zip code - Optional"
-                          />
-                        </div>
-                        <div className="form-group">
-                          <input
-                            className="form-control"
-                            value={this.state.referred_by}
-                            onChange={this.changeReferred}
-                            type="text"
-                            name="referred_by"
-                            placeholder="Referred by - Optional"
-                          />
-                        </div>
-                      </div>
-                    )}
-                    <div className="row">
-                      <div className="col-6">
-                        {!this.state.step1 && (
-                          <Button
-                            onClick={this.goPrevious}
-                            type="button"
-                            color="inverse"
-                            className="register_button"
-                            size="lg"
-                          >
-                            Previous
-                          </Button>
+                ) : (
+                  <>
+                    <Widget
+                      className="custome_signup"
+                      title={<h3 className="mt-0">Create an Account</h3>}
+                    >
+                      <form
+                        id="registerForm"
+                        className="mt"
+                        onSubmit={this.doRegister}
+                      >
+                        {this.props.errorMessage && (
+                          <Alert className="alert-sm" color="danger">
+                            {this.props.errorMessage}
+                          </Alert>
                         )}
-                      </div>
 
-                      <div className={` ${this.state.step1 ? 'col-12':'col-6'}`}>
-                        <Button
-                          type="submit"
-                          color="inverse"
-                          className="register_button"
-                          size="lg"
-                        >
-                          {this.props.isFetching
-                            ? "Loading..."
-                            : this.state.step3
-                              ? "Finish"
-                              : " Next"}
-                        </Button>
-                      </div>
-                    </div>
+                        {this.state.step1 && (
+                          <div className="registration-step-1">
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.name}
+                                onChange={this.changeName}
+                                type="text"
+                                name="name"
+                                placeholder={`${
+                                  this.state.accountType === "influencer"
+                                    ? "Name"
+                                    : "Company Name"
+                                }`}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.email}
+                                onChange={this.changeEmail}
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                              />
+                            </div>
+                            {this.state.accountType === "influencer" && (
+                              <div className="form-group">
+                                <Select
+                                  className="form_select_group"
+                                  value={
+                                    this.state.gender && {
+                                      label:
+                                        this.state.gender
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                        this.state.gender.slice(1),
+                                      value: this.state.gender,
+                                    }
+                                  }
+                                  onChange={this.changeGender}
+                                  placeholder="Select Gender"
+                                  options={this.state.genderList}
+                                  styles={styles}
+                                />
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        {this.state.step2 && (
+                          <div className="registration-step-2">
+                            <div className="form-group">
+                              <Select
+                                className="form_select_group"
+                                defaultValue={{
+                                  label: this.state.country,
+                                  value: this.state.country,
+                                }}
+                                value={
+                                  this.state.country && {
+                                    label: this.state.country,
+                                    value: this.state.countryCode,
+                                  }
+                                }
+                                onChange={this.changeCountry}
+                                filterOption={createFilter({
+                                  ignoreAccents: false,
+                                })}
+                                placeholder="Select Country"
+                                options={this.state.countries}
+                                styles={styles}
+                              />
+                            </div>
+                            <div className="form-group">
+                              {this.state.stateLoading && <Loader />}
+                              {this.state.country && !this.state.stateLoading && (
+                                <Select
+                                  className="form_select_group"
+                                  onChange={this.changeState}
+                                  filterOption={createFilter({
+                                    ignoreAccents: false,
+                                  })}
+                                  placeholder="Select State"
+                                  options={this.state.countryStates}
+                                  value={
+                                    this.state.countryState && {
+                                      label: this.state.countryState,
+                                      value: this.state.countryState,
+                                    }
+                                  }
+                                  styles={styles}
+                                />
+                              )}
+                            </div>
+                            <div className="form-group">
+                              {this.state.cityLoading && <Loader />}
+                              {this.state.countryState &&
+                                !this.state.cityLoading && (
+                                  <Select
+                                    className="form_select_group"
+                                    onChange={this.changeCity}
+                                    filterOption={createFilter({
+                                      ignoreAccents: false,
+                                    })}
+                                    placeholder="Select City"
+                                    options={this.state.cities}
+                                    value={
+                                      this.state.city && {
+                                        label: this.state.city,
+                                        value: this.state.city,
+                                      }
+                                    }
+                                    styles={styles}
+                                  />
+                                )}
+                            </div>
+                          </div>
+                        )}
+                        {this.state.step3 && (
+                          <div className="registration-step-3">
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.password}
+                                onChange={this.changePassword}
+                                type="password"
+                                name="password"
+                                placeholder="Password"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.confirmPassword}
+                                onChange={this.changeConfirmPassword}
+                                onBlur={this.checkPassword}
+                                type="password"
+                                name="confirmPassword"
+                                placeholder="Confirm"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.zip}
+                                onChange={this.changeZip}
+                                type="number"
+                                name="zip"
+                                placeholder="Zip code - Optional"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <input
+                                className="form-control"
+                                value={this.state.referred_by}
+                                onChange={this.changeReferred}
+                                type="text"
+                                name="referred_by"
+                                placeholder="Referred by - Optional"
+                              />
+                            </div>
+                          </div>
+                        )}
+                        <div className="row">
+                          <div className="col-6">
+                            {!this.state.step1 && (
+                              <Button
+                                onClick={this.goPrevious}
+                                type="button"
+                                color="inverse"
+                                className="register_button"
+                                size="lg"
+                              >
+                                Previous
+                              </Button>
+                            )}
+                          </div>
 
-                    <p className="already">
+                          <div
+                            className={` ${
+                              this.state.step1 ? "col-12" : "col-6"
+                            }`}
+                          >
+                            <Button
+                              type="submit"
+                              color="inverse"
+                              className="register_button"
+                              size="lg"
+                            >
+                              {this.props.isFetching
+                                ? "Loading..."
+                                : this.state.step3
+                                ? "Finish"
+                                : " Next"}
+                            </Button>
+                          </div>
+                        </div>
+
+                        <p className="already">
                           {this.state.accountType.charAt(0).toUpperCase() +
                             this.state.accountType.slice(1)}{" "}
                           Account Type?&nbsp;
                           <span
                             className="text-center link"
-                            onClick={() =>{
-                              this.props.dispatch(authError(""))
-                                this.setState({
-                                  step1: true,
-                                  step2: false,
-                                  step3: false,
-                                  showRegister:true,
-                                  countryLoading: false,
-                                  stateLoading: false,
-                                  cityLoading: false,
-                                  resendEmail: false,
-                                  name: "",
-                                  email: "",
+                            onClick={() => {
+                              this.props.dispatch(authError(""));
+                              this.setState({
+                                step1: true,
+                                step2: false,
+                                step3: false,
+                                showRegister: true,
+                                countryLoading: false,
+                                stateLoading: false,
+                                cityLoading: false,
+                                resendEmail: false,
+                                name: "",
+                                email: "",
 
-                                  countryStates: "",
-                                  countryStateCode: "",
-                                  countryState: "",
-                                  cities: "",
-                                  genderList: [
-                                    { value: "male", label: "Male" },
-                                    { value: "female", label: "Female" },
-                                    { value: "other", label: "Other" },
-                                  ],
-                                  gender: "",
-                                  userType: "",
-                                  accountTypes: [
-                                    { value: "Influencer", label: "Influencer" },
-                                    { value: "Brand", label: "Brand" },
-                                  ],
-                                  accountType:"",
-                                  country: "",
-                                  city: "",
-                                  password: "",
-                                  confirmPassword: "",
-                                  countryCode: "",
-                                  packages: "",
-                                  packageType: "",
-                                  zip: "",
-                                  referred_by: ""
-                              })
-                            }
-                            }
+                                countryStates: "",
+                                countryStateCode: "",
+                                countryState: "",
+                                cities: "",
+                                genderList: [
+                                  { value: "male", label: "Male" },
+                                  { value: "female", label: "Female" },
+                                  { value: "other", label: "Other" },
+                                ],
+                                gender: "",
+                                userType: "",
+                                accountTypes: [
+                                  { value: "Influencer", label: "Influencer" },
+                                  { value: "Brand", label: "Brand" },
+                                ],
+                                accountType: "",
+                                country: "",
+                                city: "",
+                                password: "",
+                                confirmPassword: "",
+                                countryCode: "",
+                                packages: "",
+                                packageType: "",
+                                zip: "",
+                                referred_by: "",
+                              });
+                            }}
                           >
                             Change
                           </span>
                         </p>
 
-                    <p className="already">
-                      Already have an account?&nbsp;
-                      <span
-                        className="text-center link"
-                        onClick={() => {
-                          this.props.dispatch(authError(""));
-                          this.props.history.push("/login");
-                        }}
-                      >
-                        Sign in
-                      </span>
-                    </p>
+                        <p className="already">
+                          Already have an account?&nbsp;
+                          <span
+                            className="text-center link"
+                            onClick={() => {
+                              this.props.dispatch(authError(""));
+                              this.props.history.push("/login");
+                            }}
+                          >
+                            Sign in
+                          </span>
+                        </p>
+                      </form>
+                    </Widget>
 
-                 
-                  </form>
-                </Widget>
-
-
-                <div className="signup_right">
-                  <h3>Turn your Followers into Customers</h3>
-                  <p>
-                    Staying just an influencer is not all! Turn your followers
-                    into customers with just a few clicks. Create a trackable
-                    link, find out what is popular, and aim to monetize on it.
-                    Design your social media accordingly and become an
-                    entrepreneur.
-                  </p>
-                </div>
-        </>
-      )}
+                    <div className="signup_right">
+                      <h3>Turn your Followers into Customers</h3>
+                      <p>
+                        Staying just an influencer is not all! Turn your
+                        followers into customers with just a few clicks. Create
+                        a trackable link, find out what is popular, and aim to
+                        monetize on it. Design your social media accordingly and
+                        become an entrepreneur.
+                      </p>
+                    </div>
+                  </>
+                )}
               </>
-              
-)}
+            )}
           </div>
         </div>
       </div>
