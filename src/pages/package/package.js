@@ -595,7 +595,7 @@ class Package extends React.Component {
               </div>
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
-              <div className="package_parent">
+            <div className={`package_parent ${userInfo.account_type == 'influencer' ? 'package_parent_influencer':''}`}>
 
               {userInfo.account_type == 'influencer' ? (
                   <>

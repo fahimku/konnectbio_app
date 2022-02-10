@@ -685,6 +685,12 @@ span.fa.fa-times.ift-cancel {
   padding: 1.25rem 14px 1rem;
   position: relative;
 }
+.package_parent_influencer{
+  justify-content: center;
+}
+.package_parent_influencer .custom_pkg{
+  max-width: 40%;
+}
 .custom_pkg h4 {
   letter-spacing: 0.06rem;
   font-weight: 800;
