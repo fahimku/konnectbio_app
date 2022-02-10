@@ -198,7 +198,7 @@ function HashtagsList({ createMedia, title }) {
                   maxFiles={1}
                   // inputContent="Drop A File"
                   addClassNames={{
-                    dropzone: "drag-drop-ift dash_content_profile",
+                    dropzone: "drag-drop-ift",
                     submitButtonContainer: "upload_btn",
                   }}
                   PreviewComponent={Preview}

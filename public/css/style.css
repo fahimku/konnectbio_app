@@ -1459,6 +1459,7 @@ a.pkg_read:hover {
 }
 .upload_area_3 {
   width: 90%;
+  margin: 0 auto;
 }
 .upload_area_2 h4 {
   font-size: 1.3rem;
