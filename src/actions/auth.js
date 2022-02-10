@@ -159,6 +159,7 @@ export function loginUser(creds) {
             next_payment_date: res.data.message.next_payment_date,
             recurring_payment_type: res.data.message.recurring_payment_type,
             is_trial_expired: res.data?.message?.is_trial_expired,
+            account_type:res.data?.message?.account_type,
           };
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
