@@ -234,7 +234,10 @@
   text-decoration: underline;
 }
 .custome_login .form-group{
-  margin-bottom:2rem;
+  margin-bottom:1.5rem;
+}
+.custome_signup .form-group{
+  margin-bottom:1.5rem;
 }
 .decoration:hover{
   text-decoration:underline;
@@ -295,52 +298,107 @@
 
 /*****select-type****/
 .select-type {
-  width: 800px;
+  width: 600px;
+  box-shadow: 0px 0px 2px 1px #e4e7ed;
+  padding: 40px 30px;
+  border-radius: 20px;
 
+  .larg-button .btn-primary{
+    padding-top:15px !important;
+    padding-bottom:15px !important;
+    border-radius: 10px;
+  }
+
+  .account-type h3{
+    font-family: "SegoeUIBold" !important;
+    margin-bottom: 5px;
+  }
+  .account-type p{
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #7b8994;
+  }
 
   .ac_type_block{
-    margin-bottom: 24px;
+    margin-bottom: 30px;
     background-color: #fff;
-    box-shadow: 0px 0px 2px 1px #e4e7ed;
     position: relative;
-    min-height: 200px;
 
     label{
-      position: absolute;
       width: 100%;
-      height: 100%;
-      text-align: center;
       display: flex;
-      flex-direction: column;
       cursor: pointer;
-      justify-content: center;
+      margin-bottom: 0;
+      padding: 20px;
       align-items: center;
+      border: solid 1px #e4e7ed;
+      border-radius: 20px;
+      box-shadow: 0px 1px 0px 0 #e4e7ed;
+      position: relative;
 
       &:hover{
-        box-shadow: 0px 0px 2px 1px #00051a;
+        border: solid 1px #000;
+        border-radius: 20px;
+        box-shadow: 0px 1px 0px 0 #000;
       }
 
       .imp-inf{
-        height: 80px;
-        width: 80px;
+        height: 64px;
+        width: 64px;
+        flex: 0 0 64px;
+        max-width: 64px;
         background-repeat: no-repeat;
-        background-size: 80px 80px;
+        background-size: 34px 34px;
+        background-color: #f4f5f5;
+        border-radius: 50%;
+        background-position: center center;
         background-image: url(../images/influencer.png);
       }
       .imp-brnd{
-        height: 80px;
-        width: 80px;
+        height: 64px;
+        width: 64px;
+        flex: 0 0 64px;
+        max-width: 64px;
         background-repeat: no-repeat;
-        background-size: 80px 80px;
+        background-size: 34px 34px;
+        background-color: #f4f5f5;
+        border-radius: 50%;
+        background-position: center center;
         background-image: url(../images/brand-icon.png);
       }
+      .brnd-right-content{
+        padding-left: 20px;
+        flex: 0 0 75%;
+        max-width: 75%;
+
+        p{
+          font-size: 0.9rem;
+          font-weight: 400;
+          color: #7b8994;
+          margin-bottom: 0;
+          position: relative;
+        }
+      }
+
       h4{
         font-size: 1.35rem;
         color: #575757;
       }
     }
     .infchecked:checked + label{
-      box-shadow: 0px 0px 2px 1px #00051a;
+      border: solid 1px #000;
+      border-radius: 20px;
+      box-shadow: 0px 1px 0px 0 #000;
+
+      &:after{
+        font-family: "FontAwesome";
+        content: "\f058";
+        position: absolute;
+        right: 35px;
+        top: 35px;
+        font-size: 1.9rem;
+        color: #000;
+      }
     }
 
   }

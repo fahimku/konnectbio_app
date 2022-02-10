@@ -411,11 +411,12 @@ class Register extends React.Component {
 
 {this.state.showRegister ? (
                   <div className="select-type">
-                    <div className="col-md-12 text-center">
-                      <h3 className="mb-5">Choose Account Type</h3>
+                    <div className="account-type col-md-12 text-center mb-5">
+                      <h3>Choose Account Type</h3>
+                      <p>Click on relevant account type to proceed</p>
                     </div>
                     <div className="camp-type-ift col-md-12">
-                      <div class="role-type col-md-6">
+                      <div class="role-type">
                         <div className="ac_type_block">
                           <input
                             type="radio"
@@ -427,11 +428,14 @@ class Register extends React.Component {
                           />
                           <label for="influencer">
                             <span className="imp-inf"></span>
-                            <h4 className="mb-0 mt-4">Influencer</h4>
+                            <span className="brnd-right-content">
+                              <h4 className="mb-1">Influencer</h4>
+                              <p>Collaborate with brands and earn commissions when your followers shop</p>
+                            </span>
                           </label>
                         </div>
                       </div>
-                      <div class="role-type col-md-6">
+                      <div class="role-type">
                         <div className="ac_type_block">
                           <input
                             type="radio"
@@ -443,19 +447,22 @@ class Register extends React.Component {
                           />
                           <label for="brand">
                             <span className="imp-brnd"></span>
-                            <h4 className="mb-0 mt-4">Brand</h4>
+                            <span className="brnd-right-content">
+                              <h4 className="mb-1">Brand</h4>
+                              <p>Grow your online presence and boost sales through affiliate networks</p>
+                            </span>
                           </label>
                         </div>
                       </div>
                     </div>
-                    <div className="col-md-12 text-center">
+                    <div className="larg-button mt-5 col-md-12 text-center">
                       <Button
                         color="inverse"
-                        className="btn btn-primary"
+                        className="btn btn-primary btn-block mr-0"
                         disabled={this.state.accountType === "" ? true: false}
                         onClick={() => this.setState({ showRegister: false })}
                       >
-                        Next
+                        Continue
                       </Button>
                     </div>
                   </div>
