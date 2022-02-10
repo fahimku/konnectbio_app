@@ -269,9 +269,12 @@ class Register extends React.Component {
         this.props.dispatch(authError("The email field is required"));
       } else if (!this.validateEmail(this.state.email)) {
         this.props.dispatch(authError("The email address is not valid"));
-      } else if (this.state.gender === "") {
+      } 
+
+      else if (this.state.accountType === "influencer" && this.state.gender ==="") {
         this.props.dispatch(authError("The gender field is required"));
-      } else {
+      }       
+      else {
         this.props.dispatch(authError(""));
         this.setState({ step1: false });
         this.setState({ step2: true });
@@ -684,7 +687,7 @@ class Register extends React.Component {
                                   resendEmail: false,
                                   name: "",
                                   email: "",
-                                  countries: "",
+
                                   countryStates: "",
                                   countryStateCode: "",
                                   countryState: "",
