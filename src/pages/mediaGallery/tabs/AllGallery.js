@@ -52,10 +52,14 @@ function AllGallery({
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     // getUserCategories2(userInfo.user_id);
-    getMedia(name).then(() => setLoading(false));
+    getMedia(name,).then(() => setLoading(false));
   }, []);
 
   const onDelete = async (item) => {
+    let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
+
+    if (currentPage === 0)
+    page = 1
     Swal.fire({
       title: "Are you sure you want to delete this media?",
       text: "This will remove your media from BioShop as well!",
@@ -67,8 +71,10 @@ function AllGallery({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMedia(item.media_library_id).then(() => {
-          getMedia(name);
-          // toast.error("successfully deleted")
+          getMedia(name, page);
+          if (gallery.data.length === 1) {
+             setCurrentPage(currentPage-1)
+           }
         });
       }
     });
@@ -83,6 +89,10 @@ function AllGallery({
   };
 
   const toggleMedia = async (status, mediaId) => {
+    let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
+    if (currentPage === 0)
+      page = 1
+    
     let statusName = status ? "disable" : "enable";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this media?`,
@@ -104,7 +114,10 @@ function AllGallery({
             media_library_id: mediaId,
           })
           .then((res) => {
-            getMedia(name).then(() => setLoading(false));
+            getMedia(name,page).then(() => setLoading(false));
+            if (gallery.data.length === 1) {
+              setCurrentPage(currentPage-1)
+            }
             // let data1 = [...data];
             // let objIndex = data1.findIndex(
             //   (obj) => obj.campaign_id === mediaId

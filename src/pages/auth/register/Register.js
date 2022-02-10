@@ -27,6 +27,7 @@ class Register extends React.Component {
       step1: true,
       step2: false,
       step3: false,
+      showRegister:true,
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
@@ -49,6 +50,7 @@ class Register extends React.Component {
         { value: "Influencer", label: "Influencer" },
         { value: "Brand", label: "Brand" },
       ],
+      accountType:"",
       country: "",
       city: "",
       password: "",
@@ -304,7 +306,7 @@ class Register extends React.Component {
             zip: this.state.zip,
             referred_by: this.state.referred_by,
             account_type:
-              this.state.accountType === "brand" ? "business" : this.state.accountType,
+              this.state.accountType,
           }
           ))) {
             this.setState({ step1: true });
@@ -406,6 +408,60 @@ class Register extends React.Component {
               </Widget>
             ) : (
               <>
+
+{this.state.showRegister ? (
+                  <div className="select-type">
+                    <div className="col-md-12 text-center">
+                      <h3 className="mb-5">Choose Account Type</h3>
+                    </div>
+                    <div className="camp-type-ift col-md-12">
+                      <div class="role-type col-md-6">
+                        <div className="ac_type_block">
+                          <input
+                            type="radio"
+                            name="platform"
+                            id="influencer"
+                            class="d-none infchecked"
+                            value="influencer"
+                            onChange={this.changeType}
+                          />
+                          <label for="influencer">
+                            <span className="imp-inf"></span>
+                            <h4 className="mb-0 mt-4">Influencer</h4>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="role-type col-md-6">
+                        <div className="ac_type_block">
+                          <input
+                            type="radio"
+                            name="platform"
+                            id="brand"
+                            class="d-none infchecked"
+                            value="brand"
+                            onChange={this.changeType}
+                          />
+                          <label for="brand">
+                            <span className="imp-brnd"></span>
+                            <h4 className="mb-0 mt-4">Brand</h4>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-12 text-center">
+                      <Button
+                        color="inverse"
+                        className="btn btn-primary"
+                        disabled={this.state.accountType === "" ? true: false}
+                        onClick={() => this.setState({ showRegister: false })}
+                      >
+                        Next
+                      </Button>
+                    </div>
+                  </div>
+):(
+            <>    
+
                 <Widget
                   className="custome_signup"
                   title={<h3 className="mt-0">Create an Account</h3>}
@@ -430,7 +486,7 @@ class Register extends React.Component {
                             onChange={this.changeName}
                             type="text"
                             name="name"
-                            placeholder="Name"
+                            placeholder={`${this.state.accountType ==='influencer' ? 'Name':'Brand Name'}`}
                           />
                         </div>
                         <div className="form-group">
@@ -443,6 +499,7 @@ class Register extends React.Component {
                             placeholder="Email"
                           />
                         </div>
+                        {this.state.accountType ==='influencer' &&
                         <div className="form-group">
                           <Select
                             className="form_select_group"
@@ -460,6 +517,8 @@ class Register extends React.Component {
                             styles={styles}
                           />
                         </div>
+  }
+                        
                       </div>
                     )}
                     {this.state.step2 && (
@@ -607,6 +666,59 @@ class Register extends React.Component {
                     </div>
 
                     <p className="already">
+                          {this.state.accountType.charAt(0).toUpperCase() +
+                            this.state.accountType.slice(1)}{" "}
+                          Account Type?&nbsp;
+                          <span
+                            className="text-center link"
+                            onClick={() =>{
+                              this.props.dispatch(authError(""))
+                                this.setState({
+                                  step1: true,
+                                  step2: false,
+                                  step3: false,
+                                  showRegister:true,
+                                  countryLoading: false,
+                                  stateLoading: false,
+                                  cityLoading: false,
+                                  resendEmail: false,
+                                  name: "",
+                                  email: "",
+                                  countries: "",
+                                  countryStates: "",
+                                  countryStateCode: "",
+                                  countryState: "",
+                                  cities: "",
+                                  genderList: [
+                                    { value: "male", label: "Male" },
+                                    { value: "female", label: "Female" },
+                                    { value: "other", label: "Other" },
+                                  ],
+                                  gender: "",
+                                  userType: "",
+                                  accountTypes: [
+                                    { value: "Influencer", label: "Influencer" },
+                                    { value: "Brand", label: "Brand" },
+                                  ],
+                                  accountType:"",
+                                  country: "",
+                                  city: "",
+                                  password: "",
+                                  confirmPassword: "",
+                                  countryCode: "",
+                                  packages: "",
+                                  packageType: "",
+                                  zip: "",
+                                  referred_by: ""
+                              })
+                            }
+                            }
+                          >
+                            Change
+                          </span>
+                        </p>
+
+                    <p className="already">
                       Already have an account?&nbsp;
                       <span
                         className="text-center link"
@@ -618,8 +730,11 @@ class Register extends React.Component {
                         Sign in
                       </span>
                     </p>
+
+                 
                   </form>
                 </Widget>
+
 
                 <div className="signup_right">
                   <h3>Turn your Followers into Customers</h3>
@@ -631,8 +746,11 @@ class Register extends React.Component {
                     entrepreneur.
                   </p>
                 </div>
+        </>
+      )}
               </>
-            )}
+              
+)}
           </div>
         </div>
       </div>
