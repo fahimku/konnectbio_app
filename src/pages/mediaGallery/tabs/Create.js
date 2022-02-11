@@ -142,10 +142,11 @@ function HashtagsList({ createMedia, title }) {
     );
   };
   const removeFile = (allFiles) => () => {
-    setFields({
-      ...fields,
-      image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
-    });
+    // setFields({
+    //   ...fields,
+    //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
+    // });
+    setSubmit(false);
     setLoading(false);
     allFiles.forEach((f) => f.remove());
   };
