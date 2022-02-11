@@ -250,7 +250,7 @@ class Sidebar extends React.Component {
                   this.props.dispatch(changeActiveSidebarItem(activeItem))
                 }
                 activeItem={this.props.activeItem}
-                header="Monitor"
+                header="UGC"
                 isHeader
                 iconElement={<span className="fa fa-at"></span>}
                 iconName="flaticon-network"
