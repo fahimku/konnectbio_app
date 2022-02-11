@@ -761,11 +761,6 @@
     .infchecked:checked + label:after{
       display: none;
     }
-    @media (hover: none) {
-      .ac_type_block label:hover { 
-        border:solid 1px #f00;
-       }
-  }
   
   }
 
