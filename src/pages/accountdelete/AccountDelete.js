@@ -3,15 +3,14 @@ import axios from "axios";
 import {
   Container,
   Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import s from "./ErrorPage.module.scss";
 import { toast } from "react-toastify";
 import { createBrowserHistory } from "history";
+import Loader from '../../components/Loader';
+import Swal from "sweetalert2";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -22,7 +21,7 @@ class AccountDelete extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false,
+      loading: false,
       user_id: "",
     };
   }
@@ -31,26 +30,53 @@ class AccountDelete extends React.Component {
     this.setState({ user_id: userInfo.user_id });
   }
 
-  toggle(id) {
-    this.setState((prevState) => ({
-      [id]: !prevState[id],
-    }));
-  }
 
-  deleteAccount = async () => {
+
+  deleteAccount = async (campaignId) => {
     this.setState({ loading: true });
-    await axios
-      .put(`/users/revise/accountdelete/${this.state.user_id}`)
-      .then(() => {
-        this.setState({ modal: false });
+    Swal.fire({
+      title: `Are you sure you want delete your account?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(`/users/revise/accountdelete/${this.state.user_id}`)
+          .then(() => {
+            this.setState({ loading: false });
+            toast.error("Your account is deleted successfully");
+            history.push("/logout");
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+            this.setState({ loading: false });
+          });
+      }
+      else {
         this.setState({ loading: false });
-        history.push("/logout");
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ loading: false });
-      });
+      }
+    });
   };
+
+
+  // deleteAccount = async () => {
+  //   this.setState({ loading: true });
+  //   await axios
+  //     .put(`/users/revise/accountdelete/${this.state.user_id}`)
+  //     .then(() => {
+  //       this.setState({ modal: false });
+  //       this.setState({ loading: false });
+  //       history.push("/logout");
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.response.data.message);
+  //       this.setState({ loading: false });
+  //     });
+  // };
 
   render() {
     return (
@@ -68,45 +94,29 @@ class AccountDelete extends React.Component {
               <i>For support please contact support@konnect.bio .</i>
             </p>
 
-            <Link to="#">
+            {this.state.loading ?
+              <Button
+                className={s.errorBtn}
+                type="submit"
+                color="warning"
+              >
+                <Loader />
+              </Button>
+              :
               <Button
                 className={s.errorBtn}
                 onClick={() => {
-                  this.setState({ modal: true });
+                  this.deleteAccount();
                 }}
                 type="submit"
                 color="warning"
               >
                 Yes Delete My Account{" "}
-                {/* <i className="fa fa-trash text-white ml-xs" /> */}
               </Button>
-            </Link>
+            }
           </div>
 
-          <Modal
-            size="sm"
-            isOpen={this.state.modal}
-            toggle={() => this.toggle("modal")}
-          >
-            <ModalHeader toggle={() => this.toggle("modal")}>
-              Account Delete
-            </ModalHeader>
-            <ModalBody className="bg-white">
-              Are you sure you want to delete ?
-            </ModalBody>
-            <ModalFooter>
-              <Button color="default" onClick={() => this.toggle("modal")}>
-                Close
-              </Button>
-              <Button
-                color="primary"
-                onClick={this.deleteAccount}
-                disabled={!this.state.loading ? false : true}
-              >
-                Yes
-              </Button>
-            </ModalFooter>
-          </Modal>
+
         </Container>
       </div>
     );
