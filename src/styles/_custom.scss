@@ -25,6 +25,16 @@
        url('../fonts/segoui/FontsFreeNetSegoeUIBold.ttf') format('truetype'),
        url('../fonts/segoui/FontsFreeNetSegoeUIBold.svg#FontsFreeNetSegoeUIBold') format('svg');
 }
+@font-face {
+  font-family: 'SegoeUI_Medium';
+  src: url('../fonts/segoui//SegoeUI_Medium.eot');
+  src: url('../fonts/segoui//SegoeUI_Medium.eot') format('embedded-opentype'),
+       url('../fonts/segoui/SegoeUI_Medium.woff2') format('woff2'),
+       url('../fonts/segoui/SegoeUI_Medium.woff') format('woff'),
+       url('../fonts/segoui/SegoeUI_Medium.ttf') format('truetype'),
+       url('../fonts/segoui/SegoeUI_Medium.svg#SegoeUI_Medium') format('svg');
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800&display=swap');
