@@ -124,8 +124,8 @@ class Connect extends React.Component {
       package1 === "Premium"
     ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
-      const fbToken = JSON.parse(localStorage.getItem("userInfo")).fb_token;
-      return fbPage && fbToken ? false : true;
+      // const fbToken =  JSON.parse(localStorage.getItem("userInfo")).fb_token;
+      return fbPage || this.state.fbPageLocal ? false : true;
     } else {
       const insta = this.state.instagramCode === "" ? true : false;
       return insta;
