@@ -10,7 +10,7 @@ const MobilePreview = ({
   selectPost,
   pageName,
   postLoading,
-  dropdown
+  dropdown,
 }) => {
   const [videoIcon, setVideoIcon] = React.useState(false);
 
@@ -48,7 +48,7 @@ const MobilePreview = ({
                 <img
                   className={
                     instagramPosts.data[i].linked ||
-                      instagramPosts.data[i].select
+                    instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -58,10 +58,12 @@ const MobilePreview = ({
                   alt="instagramPosts"
                 />
                 {instagramPosts.data[i].linked &&
-                  instagramPosts.data[i].post_type === "campaign" ? (
+                instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
-                  <span className="linked-label">LINKED <span class="glyphicon glyphicon-link"></span></span>
+                  <span className="linked-label">
+                    LINKED <span class="glyphicon glyphicon-link"></span>
+                  </span>
                 ) : (
                   ""
                 )}
@@ -82,7 +84,7 @@ const MobilePreview = ({
                   controlsList="nodownload"
                   className={
                     instagramPosts.data[i].linked ||
-                      instagramPosts.data[i].select
+                    instagramPosts.data[i].select
                       ? "linked"
                       : ""
                   }
@@ -100,7 +102,7 @@ const MobilePreview = ({
                   onClick={(e) => Pauseplay(e, "img" + i)}
                 ></span>
                 {instagramPosts.data[i].linked &&
-                  instagramPosts.data[i].post_type === "campaign" ? (
+                instagramPosts.data[i].post_type === "campaign" ? (
                   <span className="linked-label">CAMPAIGN</span>
                 ) : instagramPosts.data[i].linked ? (
                   <span className="linked-label">LINKED</span>
@@ -127,7 +129,7 @@ const MobilePreview = ({
             <span className="place-holder-name">{username}</span>
           </>
         ) : (
-          <span className="place-holder-name">Media Gallery</span>
+          <span className="place-holder-name">Active Media Gallery</span>
         )}
         <div className="page-name">{pageName}</div>
       </div>

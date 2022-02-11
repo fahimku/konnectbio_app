@@ -160,14 +160,18 @@ export default function Content({ insta, accessToken }) {
               <TabContent className="affiliate_tab_ift" activeTab={activeTab}>
                 <TabPane tabId="brand">
                   {activeTab === "brand" ? (
-                    <Create title="Create Media"/>
+                    <Create title="Create Media" />
                   ) : null}
                 </TabPane>
                 <TabPane tabId="marketplace">
-                  {activeTab === "marketplace" ? <Gallery title="Media Gallery"/> : null}
+                  {activeTab === "marketplace" ? (
+                    <Gallery title="Media Gallery" />
+                  ) : null}
                 </TabPane>
                 <TabPane tabId="calender">
-                  {activeTab === "calender" ? <CalenderView title="Calender"/> : null}
+                  {activeTab === "calender" ? (
+                    <CalenderView title="Calender" />
+                  ) : null}
                 </TabPane>
               </TabContent>
             </div>

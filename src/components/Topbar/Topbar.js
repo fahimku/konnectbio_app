@@ -28,7 +28,7 @@ const TopBar = ({
             : `Source: ${
                 dropdown == "instagram"
                   ? `Instagram @${username}`
-                  : "Media Gallery"
+                  : "Active Media Gallery"
               }`
         }
       >
@@ -42,7 +42,7 @@ const TopBar = ({
           active={dropdown == "gallery" ? true : false}
           onClick={() => changeDropdown("gallery")}
         >
-          Media Gallery
+          Active Media Gallery
         </Dropdown.Item>
       </DropdownButton>
 
