@@ -11,7 +11,7 @@ class Connect extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    if (!userInfo.package) {
+    if (!userInfo?.package) {
       window.location.href = "/package";
     }
     super(props);
