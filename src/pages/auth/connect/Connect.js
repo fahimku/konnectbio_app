@@ -50,15 +50,15 @@ class Connect extends React.Component {
 
     const checkCon =
       this.state.pack === "Premium" ||
-        package1 === "Premium" ||
-        this.state.pack === "Premium Plus" ||
-        package1 === "Premium Plus"
+      package1 === "Premium" ||
+      this.state.pack === "Premium Plus" ||
+      package1 === "Premium Plus"
         ? access_token !== "" && fbPage
           ? true
           : false
         : access_token !== ""
-          ? true
-          : false;
+        ? true
+        : false;
 
     if (!package1) {
       this.props.history.push("/package");
@@ -115,11 +115,17 @@ class Connect extends React.Component {
   }
 
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
-    if (this.state.pack === "Premium" || package1 === "Premium" || this.state.pack === "Premium Plus" || package1 === "Premium") {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_name;
+    if (
+      this.state.pack === "Premium" ||
+      package1 === "Premium" ||
+      this.state.pack === "Premium Plus" ||
+      package1 === "Premium"
+    ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
-  //    const fbToken =  JSON.parse(localStorage.getItem("userInfo")).fb_token;
-      return  fbPage  || this.state.fbPageLocal  ? false : true;
+      const fbToken = JSON.parse(localStorage.getItem("userInfo")).fb_token;
+      return (fbPage && fbToken) || this.state.fbPageLocal ? false : true;
     } else {
       const insta = this.state.instagramCode === "" ? true : false;
       return insta;
