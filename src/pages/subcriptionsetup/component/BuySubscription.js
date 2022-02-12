@@ -16,7 +16,7 @@ export default function BuySubscription({
   unitAmount,
   monthly,
   yearly,
-  usageLimit
+  usageLimit,
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [buySelected, setBuySelected] = useState("");
@@ -30,7 +30,7 @@ export default function BuySubscription({
   const onsubmitBuy = async (e) => {
     e.preventDefault();
     setSubmit(true);
-    if(!((Number(usageLimit)+Number(buySelected.value))>21)){
+    if (!(Number(usageLimit) + Number(buySelected.value) > 21)) {
       if (buySelected.value) {
         setLoading(true);
         subscribeServices(buySelected.value, plan)
@@ -43,8 +43,8 @@ export default function BuySubscription({
             setLoading(false);
           });
       }
-    }else{
-      toast.error("Limit Reached. (Maximum 21 Allowed)")
+    } else {
+      toast.error("Limit Reached. (Maximum 21 Allowed)");
     }
   };
 
@@ -52,21 +52,21 @@ export default function BuySubscription({
     {
       value: "3",
       label: "3",
-      isDisabled:(Number(usageLimit)+3)>21?true:false
+      isDisabled: Number(usageLimit) + 3 > 21 ? true : false,
     },
     {
       value: "6",
       label: "6",
-      isDisabled:(Number(usageLimit)+6)>21?true:false
+      isDisabled: Number(usageLimit) + 6 > 21 ? true : false,
     },
     {
       value: "12",
       label: "12",
-      isDisabled:(Number(usageLimit)+12)>21?true:false
+      isDisabled: Number(usageLimit) + 12 > 21 ? true : false,
     },
   ];
-  console.log(unitAmount, "unitAmount");
-  console.log(buySelected.value, "value");
+  // console.log(unitAmount, "unitAmount");
+  // console.log(buySelected.value, "value");
   return (
     <>
       <form onSubmit={onsubmitBuy}>

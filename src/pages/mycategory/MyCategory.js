@@ -32,6 +32,7 @@ class MyCategory extends React.Component {
       category: [],
       defaultCategory: "",
       saveCategories: "",
+      brandCategory: "",
       categoryError: "",
       loading: false,
       packages: "",
@@ -172,6 +173,7 @@ class MyCategory extends React.Component {
         this.setState({
           // defaultCategory: myCategories,
           saveCategories: saveCategories,
+          brandCategory: saveCategories,
         });
       })
       .catch((error) => {
@@ -354,8 +356,9 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
-    // console.log(this.props.page, "page");
-
+    if (this.props.page === "brand") {
+      this.props.getCategory(this.state.brandCategory);
+    }
     return (
       <React.Fragment>
         <div className="profile-page account-setup">
@@ -544,6 +547,13 @@ class MyCategory extends React.Component {
                             <span className="text-danger">
                               {this.state.categoryError}
                             </span>
+                            {this.state.saveCategories === "" ? null : this
+                                .props.page === "brand" &&
+                              this.state.saveCategories.length === 0 ? (
+                              <span className="text-danger">
+                                Please add category to unlock select brand
+                              </span>
+                            ) : null}
 
                             {this.state.saveCategories.length === 0 ? (
                               <Row>

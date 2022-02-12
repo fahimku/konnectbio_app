@@ -19,6 +19,7 @@ class BrandComponent extends React.Component {
       loading: false,
       brandLoading: true,
       myBrand: [],
+      brandCategory: [],
     };
   }
 
@@ -99,20 +100,40 @@ class BrandComponent extends React.Component {
         this.setState({ loading: false });
       });
   };
+  getCategory = (category) => {
+    this.setState({ brandCategory: category });
+  };
 
   render() {
+    console.log(this.state.brandCategory, "category");
     return (
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">{this.state.title}</h4>
-          <MyCategory page="brand" />
+          <MyCategory page="brand" getCategory={this.getCategory} />
           <div className="brand_container_main container">
             <Row>
               <div className="profile_box_main col-md-8">
-                <div className="brand-section dash_block_profile">
+                <div
+                  className={`brand-section dash_block_profile ${
+                    this.state.brandCategory.length === 0
+                      ? "brandcatdisable"
+                      : ""
+                  }`}
+                >
                   <div className="dash_content_profile">
                     <form onSubmit={this.handleSubmit}>
-                      <h5>Select Brands</h5>
+                      <p
+                        style={{
+                          color: "gray",
+                          borderBottom: "1px solid lightgray",
+                          paddingBottom: 10,
+                        }}
+                      >
+                        Select Brands
+                      </p>
+                      {/* <h5>Select Brands</h5> */}
+
                       <Row>
                         <Col md={12}>
                           {this.state.brandLoading ? (
