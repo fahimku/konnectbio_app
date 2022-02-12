@@ -849,8 +849,19 @@ h1 small {
   position: relative;
   pointer-events: none;
 }
-.brandcatdisable:before {
-  content: "Add category to unlock select brand";
+.brandcatdisable:before{
+  content: "\f13e";
+  font-family: 'FontAwesome';
+  color: #FFF;
+  z-index: 2;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 4rem;
+  top: 100px;
+}
+.brandcatdisable:after {
+  content: "Please add category to unlock brands";
   display: flex;
   justify-content: center;
   align-items: center;
@@ -861,20 +872,13 @@ h1 small {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.8);
-  z-index: 2;
+  background-color: rgba(119, 119, 119, 0.5);
+  z-index: 1;
   cursor: pointer;
-  // background-image: url("../images/tiktok.png");
-  // background-position: center;
-  // background-size: auto 70%;
-  // background-repeat: no-repeat;
   pointer-events: none;
-  color: #fd5f00;
-  font-size: 26px;
+  color: #FFF;
+  font-size: 1.1rem;
   text-align: center;
-}
-@media only screen and (max-width: 576px) {
-  .brandcatdisable:before {
-    font-size: 20px;
-  }
+  padding-top: 10%;
+  font-family: 'SegoeUI_Medium';
 }
