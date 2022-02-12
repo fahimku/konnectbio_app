@@ -359,7 +359,6 @@ class MyCategory extends React.Component {
     if (this.props.page === "brand") {
       this.props.getCategory(this.state.brandCategory);
     }
-    console.log(this.state.myCategory, "cat");
     return (
       <React.Fragment>
         <div className="profile-page account-setup">
@@ -537,12 +536,7 @@ class MyCategory extends React.Component {
                                 isMulti={true}
                                 name="category"
                                 className="selectCustomization"
-                                options={this.state?.myCategory.sort(function (
-                                  a,
-                                  b
-                                ) {
-                                  return a.label.localeCompare(b.label);
-                                })}
+                                options={this.state?.myCategory}
                                 value={this.state.saveCategories}
                                 placeholder="Select Category"
                                 onChange={(options, e) =>
