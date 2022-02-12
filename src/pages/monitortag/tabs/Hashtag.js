@@ -7,12 +7,14 @@ import Loader from "../../../components/Loader/Loader";
 import Box from "./Box";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 //import ReactPaginate from "react-paginate";
+import { useDispatch } from "react-redux";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as hashActions from "../../../actions/hashtags";
 import axios from "axios";
+import { GET_HASHTAGS } from "../../../actions/type";
 
 const { RangePicker } = DatePicker;
 
@@ -82,9 +84,11 @@ function TopHashTag({
   //   }, []);
 
   useEffect(() => {
-      axios.post('/graph/hash/own').then(res=>{
+    axios
+      .post("/graph/hash/own")
+      .then((res) => {
         setSearchLoading(true);
-        setBrand(res.data.message.hashtag_id)
+        setBrand(res.data.message.hashtag_id);
         getHashtag(
           {
             hashtag_id: res.data.message.hashtag_id,
@@ -94,8 +98,15 @@ function TopHashTag({
             order_by: orderBy.value,
           },
           1
-        ).then(() => setSearchLoading(false));
+        )
+          .then(() => setSearchLoading(false))
+          .catch(() => {
+            setSearchLoading(false);
+          });
       })
+      .catch(() => {
+        setSearchLoading(false);
+      });
     return () => clearHashtag();
   }, []);
 
@@ -112,9 +123,13 @@ function TopHashTag({
           order_by: orderBy.value,
         },
         1
-      ).then(() => {
-        setSearchLoading(false);
-      });
+      )
+        .then(() => {
+          setSearchLoading(false);
+        })
+        .catch(() => {
+          setSearchLoading(false);
+        });
     }
   }
 
@@ -442,7 +457,7 @@ function TopHashTag({
                 </ResponsiveMasonry>
               </div>
             </InfiniteScroll>
-          ) : hashtag.success ? (
+          ) : (
             <div
               style={{
                 height: 300,
@@ -454,7 +469,7 @@ function TopHashTag({
             >
               <NoDataFound />
             </div>
-          ) : null}
+          )}
         </div>
         {/* {!loading ? (
             marketPlace?.message?.length > 0 ? (

@@ -3,11 +3,20 @@ import { GET_HASHTAGS, GET_HASHTAG, HASH_PAGINATION } from "./type";
 import config from "../config";
 
 export const getHashtags = () => async (dispatch) => {
-  const res = await axios.post(`${config.hostApi}/v1/graph/hash/getall`);
-  dispatch({
-    type: GET_HASHTAGS,
-    payload: res.data,
-  });
+  axios
+    .post(`${config.hostApi}/v1/graph/hash/getall`)
+    .then((res) => {
+      dispatch({
+        type: GET_HASHTAGS,
+        payload: res.data,
+      });
+    })
+    .catch(() => {
+      dispatch({
+        type: GET_HASHTAGS,
+        payload: [],
+      });
+    });
 };
 
 export const createHashtag = (hashtag) => async (dispatch) => {
