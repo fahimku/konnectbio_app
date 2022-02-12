@@ -6,11 +6,12 @@ import { useHistory } from "react-router-dom";
 import "./selector.css";
 import Tags from "./tabs/AllTags";
 import CommentMention from "./tabs/CommentTags";
+import Hashtag from "./tabs/Hashtag";
 import CaptionMention from "./tabs/Caption";
 
 export default function Content() {
   const [next, setNext] = useState(false);
-  const [activeTab, setActiveTab] = useState("brand");
+  const [activeTab, setActiveTab] = useState("caption");
 
   function toggleTabs(tab) {
     if (activeTab !== tab) {
@@ -29,6 +30,32 @@ export default function Content() {
           <Row className="ml-0 mr-0">
             <div className="affiliate_in_col marketing-tabs">
               <Nav tabs className={`${s.coloredNav}`}>
+              <NavItem>
+                  <NavLink
+                    className={classnames({
+                      active: activeTab === "caption",
+                    })}
+                    onClick={() => {
+                      toggleTabs("caption");
+                    }}
+                    disabled={next}
+                  >
+                    <span>Mention Captions</span>
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    className={classnames({
+                      active: activeTab === "hashtag",
+                    })}
+                    onClick={() => {
+                      toggleTabs("hashtag");
+                    }}
+                    disabled={next}
+                  >
+                    <span>Hashtags</span>
+                  </NavLink>
+                </NavItem>
                 <NavItem>
                   <NavLink
                     className={classnames({
@@ -54,19 +81,6 @@ export default function Content() {
                     <span>Mention Comments</span>
                   </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink
-                    className={classnames({
-                      active: activeTab === "caption",
-                    })}
-                    onClick={() => {
-                      toggleTabs("caption");
-                    }}
-                    disabled={next}
-                  >
-                    <span>Mention Caption</span>
-                  </NavLink>
-                </NavItem>
               </Nav>
               <TabContent className="affiliate_tab_ift" activeTab={activeTab}>
                 <TabPane tabId="brand">
@@ -77,6 +91,9 @@ export default function Content() {
                 </TabPane>
                 <TabPane tabId="caption">
                   {activeTab === "caption" ? <CaptionMention /> : null}
+                </TabPane>
+                <TabPane tabId="hashtag">
+                  {activeTab === "hashtag" ? <Hashtag /> : null}
                 </TabPane>
               </TabContent>
             </div>

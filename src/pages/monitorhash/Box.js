@@ -207,13 +207,13 @@ export default function Box({ data }) {
             <div
               style={{
                 display: "flex",
-                justifyContent: "flex-start",
-                marginLeft: 10,
+                justifyContent: "flex-end",
+                // marginLeft: 10,
                 alignItems: "center",
                 flexGrow: 1,
               }}
             >
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -249,7 +249,7 @@ export default function Box({ data }) {
                     data.comments_count ? data.comments_count : 0
                   ).format("0,0")}
                 </Typography>
-              </div>
+              </div> */}
               <Typography
                 variant="body"
                 sx={{ fontSize: "12px", marginLeft: "15px" }}
@@ -260,7 +260,7 @@ export default function Box({ data }) {
               </Typography>
             </div>
           ) : null}
-          <div
+          {/* <div
             style={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}
           >
             <ExpandMore
@@ -271,9 +271,9 @@ export default function Box({ data }) {
             >
               <ExpandMoreIcon />
             </ExpandMore>
-          </div>
+          </div> */}
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
@@ -332,7 +332,7 @@ export default function Box({ data }) {
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>
-        </Collapse>
+        </Collapse> */}
       </Card>
     </>
   );

@@ -93,8 +93,8 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "followers", label: "INFLUENCERS" },
-    { value: "likes", label: "LIKES" },
+    { value: "followers", label: "MOST INFLUENTIAL" },
+    // { value: "likes", label: "LIKES" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -164,7 +164,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
                     isSearchable={false}
                   />
                 </Col>
-                <Col className="col-xl-2dot4" xs={12} md={6}>
+                {/* <Col className="col-xl-2dot4" xs={12} md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -178,7 +178,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
                     styles={style}
                     isSearchable={false}
                   />
-                </Col>
+                </Col> */}
                 <Col className="d-flex col-xl-2dot4" xs={12} md={6}>
                   {searchLoading ? (
                     <Button
