@@ -4,7 +4,7 @@ import Select from "react-select";
 //import { toast } from "react-toastify";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import Loader from "../../../components/Loader/Loader";
-import Box from "../Box";
+import Box from "./Box";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 //import ReactPaginate from "react-paginate";
 import { DatePicker } from "antd";
@@ -12,6 +12,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as hashActions from "../../../actions/hashtags";
+import axios from "axios";
 
 const { RangePicker } = DatePicker;
 
@@ -34,7 +35,7 @@ function TopHashTag({
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
+  const [searchLoading, setSearchLoading] = useState(true);
   const [clearLoading, setClearLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
 
@@ -81,27 +82,30 @@ function TopHashTag({
   //   }, []);
 
   useEffect(() => {
-    // setSearchLoading(true);
-    // getHashtag(
-    //   {
-    //     hashtag_id: brand.value,
-    //     from_date: startDate.toString(),
-    //     to_date: endDate.toString(),
-    //     sort: sortBy.value,
-    //     order_by: orderBy.value,
-    //   },
-    //   1
-    // ).then(() => setSearchLoading(false));
+      axios.post('/graph/hash/own').then(res=>{
+        setSearchLoading(true);
+        setBrand(res.data.message.hashtag_id)
+        getHashtag(
+          {
+            hashtag_id: res.data.message.hashtag_id,
+            from_date: startDate.toString(),
+            to_date: endDate.toString(),
+            sort: sortBy.value,
+            order_by: orderBy.value,
+          },
+          1
+        ).then(() => setSearchLoading(false));
+      })
     return () => clearHashtag();
   }, []);
 
   function onSubmitData(e) {
     e.preventDefault();
-    if (brand.value) {
+    if (brand) {
       setSearchLoading(true);
       getHashtag(
         {
-          hashtag_id: brand.value,
+          hashtag_id: brand,
           from_date: startDate.toString(),
           to_date: endDate.toString(),
           sort: sortBy.value,
@@ -251,7 +255,7 @@ function TopHashTag({
                     onChange={dateRangePickerChanger}
                   />
                 </Col>
-                <Col xs={12} xl md={6}>
+                {/* <Col xs={12} xl md={6}>
                   <p>Hashtags</p>
                   <Select
                     value={brand}
@@ -273,7 +277,7 @@ function TopHashTag({
                     styles={style}
                     isSearchable={false}
                   />
-                </Col>
+                </Col> */}
                 {/* <Col xs={12} xl={2} md={6}>
                     <p>Select Category</p>
                     <Select
@@ -346,7 +350,6 @@ function TopHashTag({
                       type="submit"
                       variant="primary"
                       className="fltr-hpr"
-                      disabled={brand.value ? false : true}
                     >
                       Search
                     </Button>
