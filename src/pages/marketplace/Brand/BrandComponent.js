@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 //import AsyncSelectField from "./AsyncSelectField";
 import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
+import MyCategory from "../../mycategory/MyCategory";
 
 class BrandComponent extends React.Component {
   constructor(props) {
@@ -104,6 +105,7 @@ class BrandComponent extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">{this.state.title}</h4>
+          <MyCategory page="brand" />
           <div className="brand_container_main container">
             <Row>
               <div className="profile_box_main col-md-8">

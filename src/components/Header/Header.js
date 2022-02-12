@@ -316,7 +316,7 @@ class Header extends React.Component {
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
-                      header="Affiliate - Publish"
+                      header="Marketplace"
                       link="/app/marketplace"
                       isHeader
                       iconElement={<span className="fa fa-shopping-bag"></span>}

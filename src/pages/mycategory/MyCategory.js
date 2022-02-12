@@ -316,7 +316,6 @@ class MyCategory extends React.Component {
   };
 
   render() {
-    console.log(this.state.unitAmount, "unitAmount");
     let userInfo1 = JSON.parse(localStorage.getItem("userInfo"));
     const SortableItem = SortableElement(({ value }) => (
       <div key={value.value} className="cat-box col-sm-3 col-4">
@@ -355,20 +354,19 @@ class MyCategory extends React.Component {
         ))}
       </Row>
     ));
+    // console.log(this.props.page, "page");
 
     return (
       <React.Fragment>
         <div className="profile-page account-setup">
-          <div
-            className={
-              this.props.className ? this.props.className : "container-fluid"
-            }
-          >
-            <div className="mt-4 row">
-              <div class="col-md-12">
-                <h4 class="page-title">Category Setup</h4>
+          <div className={this.props.page === "brand" ? "" : "container-fluid"}>
+            {this.props.page === "brand" ? null : (
+              <div className="mt-4 row">
+                <div class="col-md-12">
+                  <h4 class="page-title">Category Setup</h4>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="profile_container_main container">
               <div className="row">

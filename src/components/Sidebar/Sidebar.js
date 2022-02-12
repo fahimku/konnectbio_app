@@ -126,7 +126,7 @@ class Sidebar extends React.Component {
               {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
                   className="sidebar-nav-links"
-                  header="Affiliate - Publish"
+                  header="Marketplace"
                   link="/app/marketplace"
                   isHeader
                   iconElement={<span className="fa fa-shopping-bag"></span>}
