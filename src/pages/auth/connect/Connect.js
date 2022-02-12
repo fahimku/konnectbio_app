@@ -121,7 +121,7 @@ class Connect extends React.Component {
       this.state.pack === "Premium" ||
       package1 === "Premium" ||
       this.state.pack === "Premium Plus" ||
-      package1 === "Premium"
+      package1 === "Premium Plus"
     ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       // const fbToken =  JSON.parse(localStorage.getItem("userInfo")).fb_token;
