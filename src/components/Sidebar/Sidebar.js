@@ -100,11 +100,11 @@ class Sidebar extends React.Component {
               />
               <LinksGroup
                 className="sidebar-nav-links"
-                header="Manage BioShop"
-                link="/app/linkinbio"
+                header="My Posts"
+                link="/app/my/posts"
                 isHeader
                 iconElement={
-                  <span className="glyphicon glyphicon-th-list"></span>
+                  <span className="glyphicon glyphicon-shopping-cart"></span>
                 }
                 // label="Awesome"
                 iconName="flaticon-users"
@@ -112,11 +112,11 @@ class Sidebar extends React.Component {
               />
               <LinksGroup
                 className="sidebar-nav-links"
-                header="My Posts"
-                link="/app/my/posts"
+                header="Manage BioShop"
+                link="/app/linkinbio"
                 isHeader
                 iconElement={
-                  <span className="glyphicon glyphicon-shopping-cart"></span>
+                  <span className="glyphicon glyphicon-th-list"></span>
                 }
                 // label="Awesome"
                 iconName="flaticon-users"

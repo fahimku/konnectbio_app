@@ -105,7 +105,6 @@ class BrandComponent extends React.Component {
   };
 
   render() {
-    console.log(this.state.brandCategory, "category");
     return (
       <React.Fragment>
         <div className="container-fluid">

@@ -289,18 +289,6 @@ class Header extends React.Component {
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
-                    header="Manage BioShop"
-                    link="/app/linkinbio"
-                    isHeader
-                    iconElement={
-                      <span className="glyphicon glyphicon-th-list"></span>
-                    }
-                    iconName="flaticon-users"
-                    labelColor="info"
-                  />
-                  <LinksGroup
-                    onClick={() => this.toggle(3)}
-                    className="sidebar-nav-links"
                     header="My Posts"
                     link="/app/my/posts"
                     isHeader
@@ -308,6 +296,18 @@ class Header extends React.Component {
                       <span className="glyphicon glyphicon-shopping-cart"></span>
                     }
                     // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                  <LinksGroup
+                    onClick={() => this.toggle(3)}
+                    className="sidebar-nav-links"
+                    header="Manage BioShop"
+                    link="/app/linkinbio"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th-list"></span>
+                    }
                     iconName="flaticon-users"
                     labelColor="info"
                   />
