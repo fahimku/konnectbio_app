@@ -12,8 +12,6 @@ import numeral from "numeral";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import Carousel from "react-material-ui-carousel";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,20 +28,6 @@ export default function Box({ data }) {
   const [expanded, setExpanded] = React.useState(false);
   const [videoIcon, setVideoIcon] = React.useState(false);
 
-function Pauseplay(e, id) {
-    e.preventDefault();
-
-    var testvideo = document.getElementById(id);
-
-    if (testvideo.paused) {
-      testvideo.play();
-      setVideoIcon(true);
-    } else {
-      testvideo.pause();
-      setVideoIcon(false);
-    }
-  }
-  
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -65,12 +49,6 @@ function Pauseplay(e, id) {
   function renderMedia(item) {
     if (item.media_type == "IMAGE") {
       return (
-        // <LazyLoadImage
-        // style={{ objectFit: "cover", borderRadius: 16,height:450 }}
-        // effect="blur"
-        // threshold={100}
-        // delayTime={300}
-        // src={item.media_url} />
         <CardMedia
           component="img"
           height="400"

@@ -47,4 +47,4 @@ export const GET_INSTAGRAM_POST = "getInstagramPost";
 export const GET_INSTAGRAM_POST_PAGINATION = "getInstagramPostPagination";
 export const FILTER_INSTAGRAM_POST_DATA = "filterInstagramPostData";
 export const GET_SCHEDULE_POST="getSchedulePost";
-export const GET_MOBILE_DROPDOWN="getMobileDropdown"
+export const GET_MOBILE_DROPDOWN="getMobileDropdown";

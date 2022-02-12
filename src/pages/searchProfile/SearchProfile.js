@@ -17,6 +17,7 @@ function SearchProfile({
   filterProfileMedia,
   getProfiles,
   profiles,
+  clearProfile,
 }) {
   const [loading, setLoading] = useState(false);
   const [userName, setUserName] = useState("");
@@ -37,13 +38,16 @@ function SearchProfile({
     getProfiles().then(() => {
       setLoading(false);
     });
+    return () => {
+      clearProfile();
+    };
   }, []);
 
   const searchProfile = () => {
     setLoading(true);
-    setSortBy({ value: "timestamp", label: "DATE" })
-    setOrderBy({ value: "desc", label: "DESC" })
-    setPosts({ value: "25", label: "25" })
+    setSortBy({ value: "timestamp", label: "DATE" });
+    setOrderBy({ value: "desc", label: "DESC" });
+    setPosts({ value: "25", label: "25" });
     searchProfileAc(userName.label)
       .then(() => {
         setError(false);
@@ -76,12 +80,11 @@ function SearchProfile({
     { value: "desc", label: "DESC" },
   ];
   const noOfPost = [
-    { value:"25", label: "25" },
-    { value:"50", label: "50" },
-    { value:"100", label: "100" },
-    { value:"300", label: "300" },
+    { value: "25", label: "25" },
+    { value: "50", label: "50" },
+    { value: "100", label: "100" },
+    { value: "300", label: "300" },
   ];
-
 
   const filterProfileFunc = (e) => {
     setSortBy({ value: "timestamp", label: "DATE" });
@@ -95,7 +98,7 @@ function SearchProfile({
       to_date: endDate.toString(),
       sort: sortBy.value,
       order_by: orderBy.value,
-      noOfPost:posts.value
+      noOfPost: posts.value,
     });
   }
   function intlFormat(num) {
@@ -251,7 +254,7 @@ function SearchProfile({
                         isSearchable={false}
                       />
                     </Col>
-                    <Col xs={12} xl={2} md={6}>
+                    {/* <Col xs={12} xl={2} md={6}>
                       <p>No of Posts</p>
                       <Select
                         value={posts}
@@ -265,7 +268,7 @@ function SearchProfile({
                         styles={style}
                         isSearchable={false}
                       />
-                    </Col>
+                    </Col> */}
                     <Col
                       className="d-flex align-items-end"
                       xs={12}
@@ -331,9 +334,7 @@ function SearchProfile({
       }
       return null;
     } else {
-      return (
-        <NoDataFound/>
-      );
+      return <NoDataFound />;
     }
   }
 

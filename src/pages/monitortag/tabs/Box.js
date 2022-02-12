@@ -84,7 +84,7 @@ export default function Box({ data }) {
       return (
         <CardMedia
           component="img"
-          height="450"
+          height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
             item.media_type == "CAROUSEL_ALBUM"
@@ -98,27 +98,27 @@ export default function Box({ data }) {
     if (item.media_type == "VIDEO") {
       return (
         <>
-                <button
-        onClick={(e) => Pauseplay(e, item._id)}
-        className="btn-link btn-play"
-      >
-        {!videoIcon ? (
-          <i class="fa fa-play" aria-hidden="true"></i>
-        ) : (
-          <i class="fa fa-pause" aria-hidden="true"></i>
-        )}
-      </button>
-        <CardMedia
-          component="video"
-          sx={{ objectFit: "cover", borderRadius: 2 }}
-          autoPlay={false}
-          controls
-          //loop
-          height="450"
-          image={item.media_url}
-          alt="Paella dish"
-          id={item._id}
-        />
+          <button
+            onClick={(e) => Pauseplay(e, item._id)}
+            className="btn-link btn-play"
+          >
+            {!videoIcon ? (
+              <i class="fa fa-play" aria-hidden="true"></i>
+            ) : (
+              <i class="fa fa-pause" aria-hidden="true"></i>
+            )}
+          </button>
+          <CardMedia
+            component="video"
+            sx={{ objectFit: "cover", borderRadius: 2 }}
+            autoPlay={false}
+            controls
+            //loop
+            height="400"
+            image={item.media_url}
+            alt="Paella dish"
+            id={item._id}
+          />
         </>
       );
     }
@@ -144,7 +144,7 @@ export default function Box({ data }) {
               <a target="_blank" href={data.permalink}>
                 <CardMedia
                   component="img"
-                  height="450"
+                  height="400"
                   sx={{ objectFit: "cover", borderRadius: 2 }}
                   image={it2.media_url}
                   alt="Paella dish"
@@ -161,7 +161,7 @@ export default function Box({ data }) {
                   autoPlay={false}
                   controls
                   loop
-                  height="450"
+                  height="400"
                   image={it2.media_url}
                   alt="Paella dish"
                 />

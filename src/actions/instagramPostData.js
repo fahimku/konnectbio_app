@@ -19,12 +19,44 @@ export const getInstagramPostData =
     if (url) {
       dispatch({
         type: GET_INSTAGRAM_POST_PAGINATION,
-        payload: res.data,
+        payload: {
+          ...res.data,
+          message:{
+            ...res.data.message,
+            data:[
+              ...res.data.message.data,
+
+            ].map((item,i)=>{
+              return {
+                ...item,
+                engagement:item.insights[0].engagement,
+                impressions:item.insights[1].impressions,
+                reach:item.insights[2].reach,
+              }
+            })
+          }
+        },
       });
     } else {
       dispatch({
         type: GET_INSTAGRAM_POST,
-        payload: res.data,
+        payload: {
+          ...res.data,
+          message:{
+            ...res.data.message,
+            data:[
+              ...res.data.message.data,
+
+            ].map((item,i)=>{
+              return {
+                ...item,
+                engagement:item.insights[0].engagement,
+                impressions:item.insights[1].impressions,
+                reach:item.insights[2].reach,
+              }
+            })
+          }
+        },
       });
     }
     // }

@@ -150,7 +150,12 @@ export default function Box({ data }) {
     <>
       <Card elevation={1}>
         <CardHeader
-          avatar={<Avatar alt={data.username} src={data.userInfo?.business_discovery?.profile_picture_url} />}
+          avatar={
+            <Avatar
+              alt={data.username}
+              src={data.userInfo?.business_discovery?.profile_picture_url}
+            />
+          }
           action={
             <div
               style={{
@@ -185,7 +190,7 @@ export default function Box({ data }) {
           subheader={`#${data.hashtag}`}
         />
         <Divider />
-        <div  className="media-box-post" style={{ padding: "15px" }}>
+        <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type == "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
@@ -245,7 +250,12 @@ export default function Box({ data }) {
                   ).format("0,0")}
                 </Typography>
               </div>
-              <Typography variant="body" sx={{ fontSize: '12px', marginLeft: '15px' }} color="gray" textAlign="center">
+              <Typography
+                variant="body"
+                sx={{ fontSize: "12px", marginLeft: "15px" }}
+                color="gray"
+                textAlign="center"
+              >
                 {new Date(data.timestamp).toDateString()}
               </Typography>
             </div>
@@ -267,7 +277,7 @@ export default function Box({ data }) {
           <CardContent>
             <Typography>{data.caption}</Typography>
           </CardContent>
-          <CardActions sx={{ justifyContent: 'space-between' }}>
+          <CardActions sx={{ justifyContent: "space-between" }}>
             <div
               style={{
                 display: "flex",
@@ -313,7 +323,12 @@ export default function Box({ data }) {
                 </Typography>
               </div>
             </div>
-            <Typography variant="body" sx={{ fontSize: '14px', marginRight: '15px' }} color="gray" textAlign="right">
+            <Typography
+              variant="body"
+              sx={{ fontSize: "14px", marginRight: "15px" }}
+              color="gray"
+              textAlign="right"
+            >
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>

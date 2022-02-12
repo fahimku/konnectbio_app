@@ -112,9 +112,10 @@ function HashtagsList({
           confirmButtonText: "Yes!",
         }).then((result) => {
           if (result.isConfirmed) {
+            sethashLoading(true);
             searchProfileAc(hash, true)
               .then((res) => {
-                sethashLoading(true);
+                sethashLoading(false);
                 createProfile(hash)
                   .then(() => {
                     sethashLoading(false);
@@ -129,7 +130,12 @@ function HashtagsList({
                 setHash("");
               })
               .catch((err) => {
-                toast.error("This Profile is not exists !");
+                sethashLoading(false);
+                if (err.response.data.error) {
+                  toast.error("This Profile is not exists !");
+                } else {
+                  toast.error("Connection Timeout");
+                }
               });
           }
         });
@@ -243,6 +249,12 @@ function HashtagsList({
                                   variant="primary"
                                   type="submit"
                                   className="btn-block"
+                                  disabled={
+                                    profiles.Data.length ===
+                                    profiles.profile_limit
+                                      ? true
+                                      : false
+                                  }
                                 >
                                   Add
                                 </Button>

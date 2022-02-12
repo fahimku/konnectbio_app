@@ -15,7 +15,7 @@ const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY-MM-DD";
 
-function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
+function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
 
@@ -35,6 +35,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
     createTags().then(() => {
       getTags(
         {
+          type: "caption",
           from_date: startDate.toString(),
           to_date: endDate.toString(),
           sort: sortBy.value,
@@ -52,6 +53,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
     setSearchLoading(true);
     getTags(
       {
+        type: "caption",
         from_date: startDate.toString(),
         to_date: endDate.toString(),
         sort: sortBy.value,
@@ -68,6 +70,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
     setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     getTags({
+      type: "caption",
       from_date: fromDate.toString(),
       to_date: toDate.toString(),
       sort: "date",
@@ -92,7 +95,6 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
     { value: "date", label: "DATE" },
     { value: "followers", label: "FOLLOWERS" },
     { value: "likes", label: "LIKES" },
-    { value: "comments", label: "COMMENTS" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -109,7 +111,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
   return (
     <>
       <div className="container-fluid">
-        <h4 className="page-title">Tags</h4>
+        <h4 className="page-title">Mention caption</h4>
         <Row className="post-analytics-tab mb-4">
           <Col xs={12} xl={12} md={12}>
             <form onSubmit={onSubmitData}>
@@ -233,6 +235,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
               next={() => {
                 getTags(
                   {
+                    type: "caption",
                     from_date: startDate.toString(),
                     to_date: endDate.toString(),
                     sort: sortBy.value,
@@ -294,4 +297,4 @@ function mapStateToProps({ tags }) {
   return { tags };
 }
 
-export default connect(mapStateToProps, tagActions)(ALLTAGS);
+export default connect(mapStateToProps, tagActions)(CommentTags);
