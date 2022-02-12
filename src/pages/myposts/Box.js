@@ -12,9 +12,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Switch from "@mui/material/Switch";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import {Box as Box1} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -173,6 +171,39 @@ export default function Box({ data }) {
               {renderMedia(data)}
             </a>
           )} */}
+          <Box1 sx={{display:'flex',justifyContent:'space-between',padding:"10px 0px"}}>
+          <Typography color="gray">
+            Impressions
+          </Typography>
+          <Typography color="gray">
+          {numeral(
+                  data.impressions
+                ).format("0,0")}
+          </Typography>
+          </Box1>
+          <Divider/>
+          <Box1 sx={{display:'flex',justifyContent:'space-between',padding:"10px 0px"}}>
+          <Typography color="gray">
+            Reach
+          </Typography>
+          <Typography color="gray">
+          {numeral(
+                  data.reach
+                ).format("0,0")}
+          </Typography>
+          </Box1>
+          <Divider/>
+          <Box1 sx={{display:'flex',justifyContent:'space-between',padding:"10px 0px"}}>
+          <Typography color="gray">
+            Engagement
+          </Typography>
+          <Typography color="gray">
+            {numeral(
+                  data.engagement
+                ).format("0,0")}
+          </Typography>
+          </Box1>
+          <Divider/>
         </div>
         <CardActions disableSpacing>
           {!expanded ? (

@@ -35,32 +35,14 @@ export default function instagramPostData(state = initialState, action) {
           insta_data: [...state.insta_data].sort((a, b) => {
             if (action.payload?.order_by === "asc")
               return action.payload.sort === "timestamp"
-                ? new Date(a[action.payload?.sort]) -
-                    new Date(b[action.payload?.sort])
-                : action.payload.sort === "engagement"
-                ? a.insights[0][action.payload?.sort] -
-                  b.insights[0][action.payload?.sort]
-                : action.payload.sort === "impressions"
-                ? a.insights[1][action.payload?.sort] -
-                  b.insights[1][action.payload?.sort]
-                : action.payload.sort === "reach"
-                ? a.insights[2][action.payload?.sort] -
-                  b.insights[2][action.payload?.sort]
-                : a[action.payload?.sort] - b[action.payload?.sort];
+              ? new Date(a[action.payload?.sort]) -
+              new Date(b[action.payload?.sort])
+          : a[action.payload?.sort] - b[action.payload?.sort];
             else
               return action.payload.sort === "timestamp"
-                ? new Date(b[action.payload?.sort]) -
-                    new Date(a[action.payload?.sort])
-                : action.payload.sort === "engagement"
-                ? b.insights[0][action.payload?.sort] -
-                  a.insights[0][action.payload?.sort]
-                : action.payload.sort === "impressions"
-                ? b.insights[1][action.payload?.sort] -
-                  a.insights[1][action.payload?.sort]
-                : action.payload.sort === "reach"
-                ? b.insights[2][action.payload?.sort] -
-                  a.insights[2][action.payload?.sort]
-                : b[action.payload?.sort] - a[action.payload?.sort];
+              ? new Date(b[action.payload?.sort]) -
+              new Date(a[action.payload?.sort])
+          : b[action.payload?.sort] - a[action.payload?.sort];
           }),
           loading: false,
           success: false,
