@@ -547,13 +547,6 @@ class MyCategory extends React.Component {
                             <span className="text-danger">
                               {this.state.categoryError}
                             </span>
-                            {this.state.saveCategories === "" ? null : this
-                                .props.page === "brand" &&
-                              this.state.saveCategories.length === 0 ? (
-                              <span className="text-danger">
-                                Please add category to unlock select brand
-                              </span>
-                            ) : null}
 
                             {this.state.saveCategories.length === 0 ? (
                               <Row>

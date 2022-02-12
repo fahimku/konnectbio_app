@@ -155,6 +155,7 @@ class BrandComponent extends React.Component {
                                 })}
                                 className="basic-multi-select"
                                 classNamePrefix="select"
+                                placeholder="Select Brand"
                                 onChange={(options, e) =>
                                   this.handleMultiSelect(e, options)
                                 }
