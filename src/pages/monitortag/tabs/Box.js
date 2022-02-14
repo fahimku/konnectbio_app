@@ -227,17 +227,17 @@ export default function Box({ data }) {
           )}
         </div>
         <CardActions disableSpacing>
-          {!expanded ? (
-            <div
-            // style={{
-            //   display: "flex",
-            //   justifyContent: "flex-end",
-            //   // marginLeft: 10,
-            //   alignItems: "center",
-            //   flexGrow: 1,
-            // }}
-            >
-              {/* <div
+          {/* {!expanded ? ( */}
+          <div
+          // style={{
+          //   display: "flex",
+          //   justifyContent: "flex-end",
+          //   // marginLeft: 10,
+          //   alignItems: "center",
+          //   flexGrow: 1,
+          // }}
+          >
+            {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -253,10 +253,10 @@ export default function Box({ data }) {
                   {numeral(data.like_count ? data.like_count : 0).format("0,0")}
                 </Typography>
               </div> */}
-              {/* <div
+            {/* <div
                 style={{ width: 2, height: 20, backgroundColor: "lightgrey" }}
               /> */}
-              {/* <div
+            {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -302,16 +302,16 @@ export default function Box({ data }) {
                 )}
               </div> */}
 
-              <Typography
-                variant="body"
-                sx={{ fontSize: "12px", marginLeft: "15px" }}
-                color="gray"
-                textAlign="center"
-              >
-                {new Date(data.timestamp).toDateString()}
-              </Typography>
-            </div>
-          ) : null}
+            <Typography
+              variant="body"
+              sx={{ fontSize: "12px", marginLeft: "15px" }}
+              color="gray"
+              textAlign="center"
+            >
+              {new Date(data.timestamp).toDateString()}
+            </Typography>
+          </div>
+          {/*  ) : null} */}
           <div
             style={{
               display: "flex",
@@ -435,14 +435,14 @@ export default function Box({ data }) {
               </div> */}
             </div>
 
-            <Typography
+            {/* <Typography
               variant="body"
               sx={{ fontSize: "14px", marginRight: "15px" }}
               color="gray"
               textAlign="right"
             >
               {new Date(data.timestamp).toDateString()}
-            </Typography>
+            </Typography> */}
           </CardActions>
         </Collapse>
       </Card>
