@@ -30,7 +30,7 @@ export default function Content() {
           <Row className="ml-0 mr-0">
             <div className="affiliate_in_col marketing-tabs">
               <Nav tabs className={`${s.coloredNav}`}>
-              <NavItem>
+                <NavItem>
                   <NavLink
                     className={classnames({
                       active: activeTab === "caption",
@@ -40,7 +40,7 @@ export default function Content() {
                     }}
                     disabled={next}
                   >
-                    <span>Mention Captions</span>
+                    <span>Captions</span>
                   </NavLink>
                 </NavItem>
                 <NavItem>
@@ -78,7 +78,7 @@ export default function Content() {
                     }}
                     disabled={next}
                   >
-                    <span>Mention Comments</span>
+                    <span>Comments</span>
                   </NavLink>
                 </NavItem>
               </Nav>

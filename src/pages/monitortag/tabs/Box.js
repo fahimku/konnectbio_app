@@ -187,7 +187,7 @@ export default function Box({ data }) {
             <div
               style={{
                 display: "flex",
-                justifyContent: "center",
+                justifyContent: "flex-start",
                 alignItems: "center",
                 marginTop: 5,
               }}
@@ -229,13 +229,13 @@ export default function Box({ data }) {
         <CardActions disableSpacing>
           {!expanded ? (
             <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                // marginLeft: 10,
-                alignItems: "center",
-                flexGrow: 1,
-              }}
+            // style={{
+            //   display: "flex",
+            //   justifyContent: "flex-end",
+            //   // marginLeft: 10,
+            //   alignItems: "center",
+            //   flexGrow: 1,
+            // }}
             >
               {/* <div
                 style={{
@@ -252,11 +252,11 @@ export default function Box({ data }) {
                 >
                   {numeral(data.like_count ? data.like_count : 0).format("0,0")}
                 </Typography>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 style={{ width: 2, height: 20, backgroundColor: "lightgrey" }}
-              />
-              <div
+              /> */}
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -312,7 +312,7 @@ export default function Box({ data }) {
               </Typography>
             </div>
           ) : null}
-          {/* <div
+          <div
             style={{
               display: "flex",
               flexGrow: 1,
@@ -328,9 +328,9 @@ export default function Box({ data }) {
             >
               <ExpandMoreIcon />
             </ExpandMore>
-          </div> */}
+          </div>
         </CardActions>
-        {/* <Collapse in={expanded2} timeout="auto" unmountOnExit>
+        <Collapse in={expanded2} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography>
               <span
@@ -356,7 +356,9 @@ export default function Box({ data }) {
         </Collapse>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography>{data.caption}</Typography>
+            <Typography>
+              {data?.commentInfo ? data?.commentInfo?.text : data.caption}
+            </Typography>
           </CardContent>
           <CardActions sx={{ justifyContent: "space-between" }}>
             <div
@@ -367,7 +369,7 @@ export default function Box({ data }) {
                 marginLeft: 5,
               }}
             >
-              <div
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -382,11 +384,11 @@ export default function Box({ data }) {
                 >
                   {numeral(data.like_count ? data.like_count : 0).format("0,0")}
                 </Typography>
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 style={{ width: 2, height: 20, backgroundColor: "lightgrey" }}
-              />
-              <div
+              /> */}
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "center",
@@ -430,8 +432,9 @@ export default function Box({ data }) {
                     </Typography>
                   </>
                 )}
-              </div>
+              </div> */}
             </div>
+
             <Typography
               variant="body"
               sx={{ fontSize: "14px", marginRight: "15px" }}
@@ -441,7 +444,7 @@ export default function Box({ data }) {
               {new Date(data.timestamp).toDateString()}
             </Typography>
           </CardActions>
-        </Collapse> */}
+        </Collapse>
       </Card>
     </>
   );
