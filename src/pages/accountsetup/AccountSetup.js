@@ -250,10 +250,10 @@ class AccountSetup extends React.Component {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
     if (
-      package1 == "Premium" ||
-      this.state.myPackage == "Premium" ||
-      package1 == "Premium Plus" ||
-      this.state.myPackage == "Premium Plus"
+      package1 =="61c02e2ff40bec74fac2ca09" ||
+      this.state.myPackage =="61c02e2ff40bec74fac2ca09" ||
+      package1 =="61d695e9bccdaf69f46efc66" ||
+      this.state.myPackage =="61d695e9bccdaf69f46efc66"
     ) {
       return (
         <ConnectToFb
@@ -286,10 +286,10 @@ class AccountSetup extends React.Component {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
     if (
-      this.state.pack === "Premium" ||
-      package1 === "Premium" ||
-      this.state.pack === "Premium Plus" ||
-      package1 === "Premium"
+      this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
+      package1 ==="61c02e2ff40bec74fac2ca09" ||
+      this.state.pack ==="61d695e9bccdaf69f46efc66" ||
+      package1 ==="61c02e2ff40bec74fac2ca09"
     ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       return fbPage || this.state.fbPageLocal ? false : true;
@@ -434,14 +434,14 @@ class AccountSetup extends React.Component {
               </div>
             </div>
 
-            {this.state.singlePackage.package_name !== "Basic" &&
+            {this.state.singlePackage.package_name !=="61c02d43f40bec74fac2c9a0" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
                     <div className="profile_box_payment profile_box_main col-md-8">
                       <div
                         className={`dash_block_profile ${
-                          this.state.singlePackage.package_name === "Premium"
+                          this.state.singlePackage.package_name ==="61c02e2ff40bec74fac2ca09"
                             ? "plan-premium-block"
                             : ""
                         }`}
@@ -577,7 +577,7 @@ class AccountSetup extends React.Component {
                                         }}
                                       >
                                         {this.state.singlePackage
-                                          .package_name === "Premium"
+                                          .package_name ==="61c02e2ff40bec74fac2ca09"
                                           ? "Start Trial"
                                           : "Make Payment"}
                                       </Button>
@@ -593,7 +593,7 @@ class AccountSetup extends React.Component {
                                         }
                                         name={
                                           this.state.singlePackage
-                                            .package_name === "Premium"
+                                            .package_name ==="61c02e2ff40bec74fac2ca09"
                                             ? "Start Trial"
                                             : "Make Payment"
                                         }
@@ -1054,7 +1054,7 @@ class AccountSetup extends React.Component {
                                           this.state.checkbox.facebook &&
                                           this.state.checkbox.checkbox3 ? (
                                             this.state.singlePackage
-                                              .package_name === "Premium" ? (
+                                              .package_name ==="61c02e2ff40bec74fac2ca09" ? (
                                               <Button
                                                 onClick={() => {
                                                   this.updatePackage(

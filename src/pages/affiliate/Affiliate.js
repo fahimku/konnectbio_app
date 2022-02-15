@@ -33,7 +33,7 @@ class Affiliate extends React.Component {
     // this.setState({
     //   activeSecondTab: "tab24",
     // });
-    if (this.state.package_name !== "Premium") {
+    if (this.state.package_name !=="61c02e2ff40bec74fac2ca09") {
       this.getMyBrands();
     }
   }
@@ -67,7 +67,7 @@ class Affiliate extends React.Component {
 
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    return userInfo?.package?.package_name !== "Premium Plus" ? (
+    return userInfo?.package?.package_name !=="61d695e9bccdaf69f46efc66" ? (
       <div className="container-fluid">
         <div class="coming_iner">
           <h2>Upgrade Account</h2>

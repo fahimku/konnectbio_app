@@ -115,7 +115,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else if (props.paymentMethod === "Premium" && props.plan === "Monthly")
+  else if (props.paymentMethod ==="61c02e2ff40bec74fac2ca09" && props.plan === "Monthly")
     return (
       <>
         <form
@@ -163,7 +163,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else if (props.paymentMethod === "Premium" && props.plan === "Yearly")
+  else if (props.paymentMethod ==="61c02e2ff40bec74fac2ca09" && props.plan === "Yearly")
     return (
       <>
         <form
@@ -211,7 +211,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else if (props.paymentMethod === "Premium Plus" && props.plan === "Monthly")
+  else if (props.paymentMethod ==="61d695e9bccdaf69f46efc66" && props.plan === "Monthly")
     return (
       <>
         <form
@@ -263,7 +263,7 @@ const PaymentButton = (props) => {
         </Button>
       </>
     );
-  else if (props.paymentMethod === "Premium Plus" && props.plan === "Yearly")
+  else if (props.paymentMethod ==="61d695e9bccdaf69f46efc66" && props.plan === "Yearly")
     return (
       <>
         <form

@@ -164,7 +164,7 @@ class SubcriptionSetup extends React.Component {
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
       !this.state.checkbox.checkbox3 &&
-      userInfo.package.package_name !== "Premium"
+      userInfo.package.package_name !=="61c02e2ff40bec74fac2ca09"
     ) {
       this.setState({ showPromo: true });
     } else {
@@ -187,7 +187,7 @@ class SubcriptionSetup extends React.Component {
           }
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          if (response.data.message.package_name !== "Basic") {
+          if (response.data.message.package_name !=="61c02d43f40bec74fac2c9a0") {
             history.push("/connect");
           } else {
             window.location.reload();
@@ -218,14 +218,14 @@ class SubcriptionSetup extends React.Component {
   // getPriceId = (value, name, arr) => {
   //   const interval = value.slice(0, value.length - 2);
   //   const priceLists =
-  //     name == "Premium"
+  //     name =="61c02e2ff40bec74fac2ca09"
   //       ? arr.filter(
   //           (item) =>
-  //             item.interval === interval && item.product_name === "Premium Plus"
+  //             item.interval === interval && item.product_name ==="61d695e9bccdaf69f46efc66"
   //         )
   //       : arr.filter(
   //           (item) =>
-  //             item.interval === interval && item.product_name === "Premium"
+  //             item.interval === interval && item.product_name ==="61c02e2ff40bec74fac2ca09"
   //         );
 
   //   return priceLists;
@@ -328,7 +328,7 @@ class SubcriptionSetup extends React.Component {
                             {userInfo.package.profile_limit}
                           </h3>
                         </div>
-                        {userInfo.package.package_name !== "Basic" ? (
+                        {userInfo.package.package_name !=="61c02d43f40bec74fac2c9a0" ? (
                           <>
                             {userInfo.package?.next_payment_date &&
                               userInfo?.package?.subscription_type !==
@@ -385,7 +385,7 @@ class SubcriptionSetup extends React.Component {
                 </div>
               </div>
             </div>
-            {this.state.singlePackage.package_name !== "Basic" &&
+            {this.state.singlePackage.package_name !=="61c02d43f40bec74fac2c9a0" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
@@ -556,7 +556,7 @@ class SubcriptionSetup extends React.Component {
                                                 });
                                                 if (
                                                   userInfo.package
-                                                    .package_name === "Basic" ||
+                                                    .package_name ==="61c02d43f40bec74fac2c9a0" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
                                                     "Trial"
@@ -1104,7 +1104,7 @@ class SubcriptionSetup extends React.Component {
                                           this.state.checkbox.facebook &&
                                           this.state.checkbox.checkbox3 ? (
                                             // this.state.singlePackage
-                                            //   .package_name === "Premium" ? (
+                                            //   .package_name ==="61c02e2ff40bec74fac2ca09" ? (
                                             //   <Button
                                             //     onClick={() => {
                                             //       this.updatePackage(
@@ -1213,7 +1213,7 @@ class SubcriptionSetup extends React.Component {
                                               )}
                                               {!userInfo.is_trial_expired &&
                                                 this.state.singlePackage
-                                                  .package_name === "Premium" &&
+                                                  .package_name ==="61c02e2ff40bec74fac2ca09" &&
                                                 (this.state.trailLoading ? (
                                                   <Button>
                                                     <Loader />

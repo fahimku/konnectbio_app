@@ -40,7 +40,7 @@ class SummaryComponent extends React.Component {
                 packageName={this.state.packageName}
               />
             </div>
-            {this.state.packageName === "Premium Plus" ? (
+            {this.state.packageName ==="61d695e9bccdaf69f46efc66" ? (
               <div className="analytics-summery-box col-md-4">
                 <AffiliateSummaryComponent
                   username={this.state.username}
@@ -48,7 +48,7 @@ class SummaryComponent extends React.Component {
                 />
               </div>
             ) : null}
-            {/* {this.state.packageName === "Basic" ? (
+            {/* {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? (
               <div className=" col-md-6 col-sm-6 col-lg-6 col-xl-4">
                 <CampaignSummaryComponent username={this.state.username} />
               </div>

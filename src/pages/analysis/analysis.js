@@ -63,7 +63,7 @@ class Analysis extends React.Component {
                         <span>Summary</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName !== "Basic" ? (
+                    {this.state.packageName !=="61c02d43f40bec74fac2c9a0" ? (
                       <NavItem>
                         <NavLink
                           className={classnames({
@@ -102,7 +102,7 @@ class Analysis extends React.Component {
                         <span>Publish Performance</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName === "Premium Plus" ? (
+                    {this.state.packageName ==="61d695e9bccdaf69f46efc66" ? (
                       <NavItem>
                         <NavLink
                           className={classnames({
@@ -117,7 +117,7 @@ class Analysis extends React.Component {
                       </NavItem>
                     ) : null}
 
-                    {/* {this.state.packageName === "Basic" ? ( */}
+                    {/* {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? ( */}
                     {/* <NavItem>
                       <NavLink
                         className={classnames({
@@ -183,7 +183,7 @@ class Analysis extends React.Component {
                       ) : null}
                     </TabPane>
 
-                    {/* {this.state.packageName === "Basic" ? ( */}
+                    {/* {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? ( */}
                     <TabPane tabId="tab23">
                       {this.state.activeSecondTab === "tab23" ? (
                         <>
