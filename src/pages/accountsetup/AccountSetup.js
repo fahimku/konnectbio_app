@@ -464,8 +464,7 @@ class AccountSetup extends React.Component {
                                 />{" "}
                                 <Label for="checkbox1" />
                                 Pay Monthly: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
+                                {this.state.singlePackage.package_name !=="61c02e2ff40bec74fac2ca09" ? (
                                   <>
                                     {
                                       this.state.singlePackage
@@ -497,8 +496,7 @@ class AccountSetup extends React.Component {
                                 />{" "}
                                 <Label for="checkbox2" />
                                 Pay Yearly & Save: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
+                                {this.state.singlePackage.package_name !=="61c02e2ff40bec74fac2ca09" ? (
                                   <>
                                     {
                                       this.state.singlePackage
@@ -531,8 +529,7 @@ class AccountSetup extends React.Component {
                               </div>
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
-                                  {this.state.singlePackage.package_name ===
-                                  "Premium" ? null : (
+                                  {this.state.singlePackage.package_name ==="61c02e2ff40bec74fac2ca09" ? null : (
                                     <>
                                       <h4 className="mb-0">Have Promo Code?</h4>
                                       <span className="text-danger promo-err-box col-md-12 pl-0">
