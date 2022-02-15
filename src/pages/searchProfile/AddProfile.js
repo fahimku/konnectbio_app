@@ -14,6 +14,7 @@ import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
+
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
@@ -42,26 +43,22 @@ function HashtagsList({
 
   React.useEffect(() => {
     if (userInfo1.package.subscription_type != "Trial") {
-      var subType = JSON.parse(localStorage.getItem("userInfo")).package
-        .recurring_payment_type;
+      var subType = JSON.parse(localStorage.getItem("userInfo")).package.recurring_payment_type;
       if (subType) {
         subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
         configSubs().then((res) => {
-          const getPrice = res.message
-            .filter((item) => item.product_name == "Profile")
-            .filter((subItem) => subItem.interval == subType)[0];
+          const getPrice = res.message.filter((item) => item.product_name === "Profile").filter((subItem) => subItem.interval === subType)[0];
           setPriceId(getPrice.price_id);
           setUnitAmount(getPrice.unit_amount / 3);
         });
       } else {
         setShowInterval(true);
         const planCut = plan.slice(0, plan.length - 2).toLocaleLowerCase();
-
         configSubs().then((res) => {
           setConfig(res.message);
           const getPrice = res.message
-            .filter((item) => item.product_name == "Profile")
-            .filter((subItem) => subItem.interval == planCut)[0];
+            .filter((item) => item.product_name === "Profile")
+            .filter((subItem) => subItem.interval === planCut)[0];
           setPriceId(getPrice.price_id);
           setUnitAmount(getPrice.unit_amount / 3);
         });

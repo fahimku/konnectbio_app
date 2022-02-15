@@ -41,6 +41,7 @@ import ChatPage from "../../pages/chat";
 import AllPosts from "../../pages/allposts/BioShop";
 import SearchProfile from "../../pages/searchProfile/index";
 import AllPostDataComponent from "../../pages/myposts/MyPosts";
+import InstagramAllPosts from "../../pages/myposts1/MyPosts";
 import CustomCards from "../../pages/customCards/customCards";
 import customCards from "../../pages/customCards/customCards";
 import SchedulePost from "../../pages/schedulePost/index";
@@ -84,15 +85,13 @@ class Layout extends React.Component {
           s.root,
           `${s.sidebarStatic}`,
           "sing-dashboard",
-          `dashboard-${
-            localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
-              ? "light"
-              : localStorage.getItem("dashboardTheme")
+          `dashboard-${localStorage.getItem("sidebarType") === SidebarTypes.TRANSPARENT
+            ? "light"
+            : localStorage.getItem("dashboardTheme")
           }`,
-          `header-${
-            localStorage.getItem("navbarColor")
-              ? localStorage.getItem("navbarColor").replace("#", "")
-              : "FFFFFF"
+          `header-${localStorage.getItem("navbarColor")
+            ? localStorage.getItem("navbarColor").replace("#", "")
+            : "FFFFFF"
           }`,
         ].join(" ")}
       >
@@ -233,6 +232,13 @@ class Layout extends React.Component {
                         path="/app/my/posts"
                         exact
                         component={AllPostDataComponent}
+                        dispatch={this.props.dispatch}
+                        permissions={["all_posts_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/my/posts1"
+                        exact
+                        component={InstagramAllPosts}
                         dispatch={this.props.dispatch}
                         permissions={["all_posts_access"]}
                       />

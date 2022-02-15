@@ -132,10 +132,10 @@ class Connect extends React.Component {
     }
   };
 
-  connectionMessage = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
+  
 
+  connectionMessage = () => {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
     if (package1 === "Basic" && this.completeProcess()) {
       return "Please connect your Instagram account";
     } else if (package1 === "Premium" && this.completeProcess()) {
