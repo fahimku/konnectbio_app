@@ -111,7 +111,7 @@ class BrandComponent extends React.Component {
           <h4 className="page-title">{this.state.title}</h4>
           <MyCategory
           hideUpgradeCategory={window.innerWidth >= 1251 ? false : true}
-          hideCategory={window.innerWidth >= 1251 ?  false: true}
+        //  hideCategory={window.innerWidth >= 1251 ?  false: true}
             page="brand"
             getCategory={this.getCategory}
           />
@@ -201,7 +201,7 @@ class BrandComponent extends React.Component {
           </div>
           <MyCategory
             hideUpgradeCategory={window.innerWidth <= 1251 ? false : true}
-            hideCategory={window.innerWidth <= 1251 ?  false: true}
+            hideCategory={true}
             page="brand"
             getCategory={this.getCategory} />
         </div>
