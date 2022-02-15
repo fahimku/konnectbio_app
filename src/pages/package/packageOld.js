@@ -204,7 +204,6 @@ class Package extends React.Component {
   // };
 
   render() {
-    console.log(this.state.packages);
     const basic = this.state.packages.Influencer || {};
     const premium = this.state.packages.InfluencerPlus || {};
     const premiumPlus = this.state.packages.Brand || {};
@@ -236,6 +235,34 @@ class Package extends React.Component {
         </div>
 
         <div className="container-fluid pricing-table-ifti p-0">
+          {/* <form onSubmit={this.handleSubmit}>
+            <Row className="promo_code_ift">
+              <div className="promo_msg col-md-12">Have Promo Code?</div>
+              <div className="promo_iner col-md-12">
+                <input
+                  type="text"
+                  name="promo_code"
+                  // placeholder="Enter Promo Code"
+                  onInput={this.handleChange}
+                  className="form-control"
+                  value={this.state.promo_code}
+                  autoComplete="off"
+                />
+                {this.state.loading ? (
+                  <Button>
+                    <Loader />
+                  </Button>
+                ) : (
+                  <Button type="submit">Apply</Button>
+                )}
+              </div>
+              {this.state.promo_error ? (
+                <span class="text-danger col-md-12">
+                  Please enter promo code
+                </span>
+              ) : null}
+            </Row>
+          </form> */}
           <div className="yearly_message">Save 20% with yearly billing</div>
           <Tabs
             defaultActiveKey="Yearly"
@@ -246,661 +273,650 @@ class Package extends React.Component {
             }}
             className="pricing_tabs_ifti mb-3"
           >
-            <Tab eventKey="Monthly" title="Monthly">
-              <div
-                className={`package_parent ${
-                  userInfo.account_type == "influencer"
-                    ? "package_parent_influencer"
-                    : ""
-                }`}
-              >
-                {userInfo.account_type == "influencer" ? (
+           
+              <Tab eventKey="Monthly" title="Monthly"> 
+               <div className={`package_parent ${userInfo.account_type == 'influencer' ? 'package_parent_influencer':''}`}>
+                {userInfo.account_type == 'influencer' ? (
                   <>
-                    {Object.keys(basic).length !== 0 &&
-                    !userInfo.is_trial_expired ? (
-                      <div className="custom_pkg">
-                        <h4>{basic.package_name}</h4>
-                        <p>
-                          {basic.package_description.slice(0, 130) + "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showBasic: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {basic.package_amount_monthly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          <span className="pkg_billed">billed monthly</span>
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to 3
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP With 3 Categories
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
+                 {Object.keys(basic).length !== 0 && !userInfo.is_trial_expired ? (
+                  <div className="custom_pkg">
+                    <h4>{basic.package_name}</h4>
+                    <p>
+                      Basic account is for individuals and influencers, allows
+                      creation of profile, have social links, create link in
+                      Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showBasic: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {basic.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to 3
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP With 3 Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
 
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            onClick={() => {
-                              this.updatePackage(
-                                userInfo.user_id,
-                                basic.package_id
-                              );
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                        )}
-                      </div>
-                    ) : null}
-                  </>
-                ) : (
-                  <>
-                    {Object.keys(premium).length !== 0 ? (
-                      <div className="custom_pkg">
-                        <h4>{premium.package_name}</h4>
-                        <p>
-                          {premium.package_description.slice(0, 130) + "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showPremium: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {premium.package_amount_monthly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          {/* <ins>(Free For 90 Days)</ins> */}
-                          <span className="pkg_billed">billed monthly</span>
-                          {!userInfo.is_trial_expired ? (
-                            <span className="pkg-trial">
-                              Try 14 days for free, no credit card information
-                              required.
-                            </span>
-                          ) : null}
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to {premium.link_count}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP with {premium.category_count} Categories
-                          </li>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        onClick={() => {
+                          this.updatePackage(
+                            userInfo.user_id,
+                            basic.package_id
+                          );
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                    )}
+                  </div>
+                ) : null}
+               </>) : (<>
+                {Object.keys(premium).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premium.package_name}</h4>
+                    <p>
+                      Premium account is for businesses, brands and influencers,
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremium: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premium.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      {/* <ins>(Free For 90 Days)</ins> */}
+                      <span className="pkg_billed">billed monthly</span>
+                      {!userInfo.is_trial_expired ? (
+                        <span className="pkg-trial">
+                          Try 14 days for free, no credit card information
+                          required.
+                        </span>
+                      ) : null}
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to {premium.link_count}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP with {premium.category_count} Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
-
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Schedule Post
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Hashtags - Up to {premium.hashtag_limit}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Mention/Comment
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Competition Profiles - Up to{" "}
-                            {premium.profile_limit}
-                          </li>
-                          {/* <li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags - Up to {premium.hashtag_limit}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mention/Comment
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Competition Profiles - Up to{" "}
+                        {premium.profile_limit}
+                      </li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
                       </li> */}
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            // className="btn_individual"
-                            onClick={() => {
-                              this.setState({
-                                showSelectPackage: true,
-                                plan: "Monthly",
-                                packageId: premium.package_id,
-                              });
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                          // <PaymentButton
-                          //   key="2"
-                          //   userId={userInfo.user_id}
-                          //   packageId={premium.package_id}
-                          //   name={"Select Plan"}
-                          //   variant="dark"
-                          //   paymentMethod={"Influencer"}
-                          //   plan="Monthly"
-                          // />
-                        )}
-                      </div>
-                    ) : null}
-                    {Object.keys(premiumPlus).length !== 0 ? (
-                      <div className="custom_pkg">
-                        <h4>{premiumPlus.package_name}</h4>
-                        <p>
-                          {premiumPlus.package_description.slice(0, 130) +
-                            "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showPremiumPlus: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {premiumPlus.package_amount_monthly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          <span className="pkg_billed">billed monthly</span>
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to {premiumPlus.link_count}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP with {premiumPlus.category_count} Categories
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showSelectPackage: true,
+                            plan: "Monthly",
+                            packageId: premium.package_id,
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Monthly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
+                {Object.keys(premiumPlus).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premiumPlus.package_name}</h4>
+                    <p>
+                      Premium Plus account is for large businesses and brands
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremiumPlus: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premiumPlus.package_amount_monthly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed monthly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to {premiumPlus.link_count}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP with {premiumPlus.category_count} Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Schedule Post
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Mention/Comment
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Competition Profiles - Up to{" "}
-                            {premiumPlus.profile_limit}
-                          </li>
-                          {/* <li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mention/Comment
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Competition Profiles - Up to{" "}
+                        {premiumPlus.profile_limit}
+                      </li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
                       </li> */}
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate - Advertiser
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            // className="btn_individual"
-                            onClick={() => {
-                              this.setState({
-                                showPromoPlus: true,
-                                plan: "Monthly",
-                                packageId: premiumPlus.package_id,
-                              });
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                          // <PaymentButton
-                          //   key="2"
-                          //   userId={userInfo.user_id}
-                          //   packageId={premium.package_id}
-                          //   name={"Select Plan"}
-                          //   variant="dark"
-                          //   paymentMethod={"Influencer"}
-                          //   plan="Monthly"
-                          // />
-                        )}
-                      </div>
-                    ) : null}
-                  </>
-                )}
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Advertiser
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showPromoPlus: true,
+                            plan: "Monthly",
+                            packageId: premiumPlus.package_id,
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Monthly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
+                </>)}
               </div>
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
-              <div
-                className={`package_parent ${
-                  userInfo.account_type == "influencer"
-                    ? "package_parent_influencer"
-                    : ""
-                }`}
-              >
-                {userInfo.account_type == "influencer" ? (
-                  <>
-                    {Object.keys(basic).length !== 0 &&
-                    !userInfo.is_trial_expired ? (
-                      <div className="custom_pkg">
-                        <h4>{basic.package_name}</h4>
-                        <p>
-                          {basic.package_description.slice(0, 130) + "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showBasic: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {basic.package_amount_yearly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          <span className="pkg_billed">billed yearly</span>
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to 3
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP With 3 Categories
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
+            <div className={`package_parent ${userInfo.account_type == 'influencer' ? 'package_parent_influencer':''}`}>
 
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            onClick={() => {
-                              this.updatePackage(
-                                userInfo.user_id,
-                                basic.package_id
-                              );
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                        )}
-                      </div>
-                    ) : null}
-                  </>
-                ) : (
+              {userInfo.account_type == 'influencer' ? (
                   <>
-                    {Object.keys(premium).length !== 0 ? (
-                      <div className="custom_pkg">
-                        <h4>{premium.package_name}</h4>
-                        <p>
-                          {premium.package_description.slice(0, 130) + "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showPremium: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {premium.package_amount_yearly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          {/* <ins>(Free For 90 Days)</ins> */}
-                          <span className="pkg_billed">billed yearly</span>
-                          {!userInfo.is_trial_expired ? (
-                            <span className="pkg-trial">
-                              Try 14 days for free, no credit card information
-                              required.
-                            </span>
-                          ) : null}
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to {premium.link_count}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP with {premium.category_count} Categories
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Schedule Post
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Hashtags - Up to {premium.hashtag_limit}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Mention/Comment
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Competition Profiles - Up to{" "}
-                            {premium.profile_limit}
-                          </li>
-                          {/* <li>
+
+                {Object.keys(basic).length !== 0 &&
+                !userInfo.is_trial_expired ? (
+                  <div className="custom_pkg">
+                    <h4>{basic.package_name}</h4>
+                    <p>
+                      Basic account is for individuals and influencers, allows
+                      creation of profile, have social links, create link in
+                      Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showBasic: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {basic.package_amount_yearly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed yearly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to 3
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP With 3 Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
+
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        onClick={() => {
+                          this.updatePackage(
+                            userInfo.user_id,
+                            basic.package_id
+                          );
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                    )}
+                  </div>
+                ) : null}
+                </>):(
+                  <>
+                {Object.keys(premium).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premium.package_name}</h4>
+                    <p>
+                      Premium account is for businesses, brands and influencers,
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremium: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premium.package_amount_yearly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      {/* <ins>(Free For 90 Days)</ins> */}
+                      <span className="pkg_billed">billed yearly</span>
+                      {!userInfo.is_trial_expired ? (
+                        <span className="pkg-trial">
+                          Try 14 days for free, no credit card information
+                          required.
+                        </span>
+                      ) : null}
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to {premium.link_count}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP with {premium.category_count} Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
+
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags - Up to {premium.hashtag_limit}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mention/Comment
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Competition Profiles - Up to{" "}
+                        {premium.profile_limit}
+                      </li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
                       </li> */}
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            // className="btn_individual"
-                            onClick={() => {
-                              this.setState({
-                                showSelectPackage: true,
-                                plan: "Yearly",
-                                packageId: premium.package_id,
-                              });
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                          // <PaymentButton
-                          //   key="2"
-                          //   userId={userInfo.user_id}
-                          //   packageId={premium.package_id}
-                          //   name={"Select Plan"}
-                          //   variant="dark"
-                          //   paymentMethod={"Influencer"}
-                          //   plan="Yearly"
-                          // />
-                        )}
-                      </div>
-                    ) : null}
-                    {Object.keys(premiumPlus).length !== 0 ? (
-                      <div className="custom_pkg">
-                        <h4>{premiumPlus.package_name}</h4>
-                        <p>
-                          {premiumPlus.package_description.slice(0, 130) +
-                            "..."}{" "}
-                          &nbsp;
-                          <button
-                            className="pkg_read btn btn-link"
-                            onClick={() => {
-                              this.setState({ showPremiumPlus: true });
-                            }}
-                          >
-                            Read More
-                          </button>
-                        </p>
-                        <div className="pkg_price_ifti">
-                          <span className="pkg_limit">From</span>
-                          <sup>$</sup>
-                          <span className="monthly display-5">
-                            {premiumPlus.package_amount_yearly}
-                          </span>
-                          <small className="monthly">/mo</small>
-                          <span className="pkg_billed">billed yearly</span>
-                        </div>
-                        <ul className="pkg_detail_list_ift">
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Profile Page
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Social Links - Up to {premiumPlus.link_count}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            BIOSHOP with {premiumPlus.category_count} Categories
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate Campaigns{" "}
-                            <OverlayTrigger
-                              placement="bottom"
-                              delay={{ show: 250, hide: 400 }}
-                              overlay={renderTooltip}
-                            >
-                              <i class="fa fa-info pac-info"></i>
-                            </OverlayTrigger>
-                          </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showSelectPackage: true,
+                            plan: "Yearly",
+                            packageId: premium.package_id,
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Yearly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
+                {Object.keys(premiumPlus).length !== 0 ? (
+                  <div className="custom_pkg">
+                    <h4>{premiumPlus.package_name}</h4>
+                    <p>
+                      Premium Plus account is for large businesses and brands
+                      allows creation of profile, have social links, create link
+                      in Bioshop &nbsp;
+                      <button
+                        className="pkg_read btn btn-link"
+                        onClick={() => {
+                          this.setState({ showPremiumPlus: true });
+                        }}
+                      >
+                        Read More
+                      </button>
+                    </p>
+                    <div className="pkg_price_ifti">
+                      <span className="pkg_limit">From</span>
+                      <sup>$</sup>
+                      <span className="monthly display-5">
+                        {premiumPlus.package_amount_yearly}
+                      </span>
+                      <small className="monthly">/mo</small>
+                      <span className="pkg_billed">billed yearly</span>
+                    </div>
+                    <ul className="pkg_detail_list_ift">
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Profile Page
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Social Links - Up to {premiumPlus.link_count}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        BIOSHOP with {premiumPlus.category_count} Categories
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Publisher{" "}
+                        <OverlayTrigger
+                          placement="bottom"
+                          delay={{ show: 250, hide: 400 }}
+                          overlay={renderTooltip}
+                        >
+                          <i class="fa fa-info pac-info"></i>
+                        </OverlayTrigger>
+                      </li>
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Schedule Post
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Mention/Comment
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Monitor Competition Profiles - Up to{" "}
-                            {premiumPlus.profile_limit}
-                          </li>
-                          {/* <li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Schedule Post
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Hashtags - Up to {premiumPlus.hashtag_limit}
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Mention/Comment
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Monitor Competition Profiles - Up to{" "}
+                        {premiumPlus.profile_limit}
+                      </li>
+                      {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
                       </li> */}
 
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Affiliate - Advertiser
-                          </li>
-                          <li>
-                            <span className="glyphicon glyphicon-menu-right"></span>
-                            Analytics
-                          </li>
-                        </ul>
-                        {this.state.promo_code !== "" ? (
-                          <Button
-                            variant="dark"
-                            className="btn_individual"
-                            disabled
-                          >
-                            Select Plan
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="dark"
-                            // className="btn_individual"
-                            onClick={() => {
-                              this.setState({
-                                showPromoPlus: true,
-                                plan: "Yearly",
-                                packageId: premiumPlus.package_id,
-                              });
-                            }}
-                          >
-                            Select Plan
-                          </Button>
-                          // <PaymentButton
-                          //   key="2"
-                          //   userId={userInfo.user_id}
-                          //   packageId={premium.package_id}
-                          //   name={"Select Plan"}
-                          //   variant="dark"
-                          //   paymentMethod={"Influencer"}
-                          //   plan="Yearly"
-                          // />
-                        )}
-                      </div>
-                    ) : null}
-                  </>
-                )}
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Affiliate - Advertiser
+                      </li>
+                      <li>
+                        <span className="glyphicon glyphicon-menu-right"></span>
+                        Analytics
+                      </li>
+                    </ul>
+                    {this.state.promo_code !== "" ? (
+                      <Button
+                        variant="dark"
+                        className="btn_individual"
+                        disabled
+                      >
+                        Select Plan
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="dark"
+                        // className="btn_individual"
+                        onClick={() => {
+                          this.setState({
+                            showPromoPlus: true,
+                            plan: "Yearly",
+                            packageId: premiumPlus.package_id,
+                          });
+                        }}
+                      >
+                        Select Plan
+                      </Button>
+                      // <PaymentButton
+                      //   key="2"
+                      //   userId={userInfo.user_id}
+                      //   packageId={premium.package_id}
+                      //   name={"Select Plan"}
+                      //   variant="dark"
+                      //   paymentMethod={"Influencer"}
+                      //   plan="Yearly"
+                      // />
+                    )}
+                  </div>
+                ) : null}
+                </>)}
               </div>
             </Tab>
           </Tabs>
@@ -913,9 +929,15 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>{basic.package_name}</Modal.Title>
+            <Modal.Title>Basic</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{basic.package_description}</Modal.Body>
+          <Modal.Body>
+            Basic account is for individuals and influencers, allows creation of
+            profile, have social links, create link in Bioshop with categories,
+            access analytics and become an affiliate publisher. By becoming a
+            publisher, you are able to publish products and services on your
+            Bioshop and earn commission when your followers buy them.
+          </Modal.Body>
         </Modal>
 
         <Modal
@@ -925,9 +947,17 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>{premium.package_name}</Modal.Title>
+            <Modal.Title>Premium</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{premium.package_description}</Modal.Body>
+          <Modal.Body>
+            Premium account is for businesses, brands and influencers, allows
+            creation of profile, have social links, create link in Bioshop with
+            categories, access to analytics and become an affiliate publisher.
+            By becoming a publisher, you are able to publish products and
+            services on your Bioshop and earn commission when your followers buy
+            them. You can also search user generated content, schedule post,
+            monitor hashtags, monitor mentions and monitor competition profiles.
+          </Modal.Body>
         </Modal>
 
         <Modal
@@ -937,9 +967,20 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>{premiumPlus.package_name}</Modal.Title>
+            <Modal.Title>Premium Plus</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{premiumPlus.package_description}</Modal.Body>
+          <Modal.Body>
+            Premium Plus account is for large businesses and brands allows
+            creation of profile, have social links, create link in Bioshop with
+            categories, access to analytics and become an affiliate publisher.
+            By becoming a publisher, you are able to publish products and
+            services on your Bioshop and earn commission when your followers buy
+            them. You can also search user generated content, schedule post,
+            monitor hashtags, monitor mentions and monitor competition profiles.
+            As a Premium Plus account, you can also create Affiliate Advertising
+            campaigns for followers to participate and earn commission when they
+            promote to their followers.
+          </Modal.Body>
         </Modal>
 
         <Modal
@@ -949,7 +990,7 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>{premium.package_name}</Modal.Title>
+            <Modal.Title>Premium Package</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">
@@ -1405,7 +1446,7 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>{premiumPlus.package_name}</Modal.Title>
+            <Modal.Title>Premium Plus Package</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">
