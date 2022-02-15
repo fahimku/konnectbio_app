@@ -456,7 +456,7 @@ class Register extends React.Component {
                               <h4 className="mb-1">Brands & Agencies</h4>
                               <p>
                                 Grow your online presence and boost sales
-                                through affiliate networks
+                                through affiliate campaigns
                               </p>
                             </span>
                           </label>
