@@ -408,7 +408,7 @@ function Gallery({
               <img
                 style={{
                   width: "100%",
-                  height: "75%",
+                  // height: "75%",
                   objectFit: "cover",
                   borderRadius: "0.4em",
                 }}

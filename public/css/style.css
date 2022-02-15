@@ -1187,7 +1187,6 @@ a.pkg_read:hover {
 }
 .camp-type-ift.col-md-12 {
   align-items: center;
-  display: flex;
 }
 .camp-type-ift .n-camp-type {
   font-family: "SegoeUIBold";

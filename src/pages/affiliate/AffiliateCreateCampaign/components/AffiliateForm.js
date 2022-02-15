@@ -472,7 +472,7 @@ class AffiliateForm extends React.Component {
               </div>
 
               <div className="row mt-4">
-                <div className="camp-type-ift col-md-12">
+                <div className="camp-type-ift col-md-12 d-flex">
                   <label className="n-camp-type pr-4">
                     <strong>Type of campaign:</strong>
                   </label>
