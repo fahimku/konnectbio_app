@@ -27,8 +27,7 @@ class SubcriptionSetup extends React.Component {
       allPackages: "",
       singlePackage: "",
       packageIndex: "",
-      showPaymentButton:
-        userInfo1.package.subscription_type === "Trial" ? true : false,
+      showPaymentButton:userInfo1.package.subscription_type === "Trial" ? true : false,
       checkbox: {},
       help1: true,
       help2: true,
@@ -36,11 +35,7 @@ class SubcriptionSetup extends React.Component {
       promo_code: "",
       prices: [],
       paymentLoading: false,
-      plan:
-        userInfo1?.package?.recurring_payment_type === "" ||
-        userInfo1?.package?.recurring_payment_type === undefined
-          ? "Monthly"
-          : userInfo1?.package?.recurring_payment_type,
+      plan:userInfo1?.package?.recurring_payment_type === "" || userInfo1?.package?.recurring_payment_type === undefined ? "Monthly" : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
     };
   }
@@ -531,8 +526,7 @@ class SubcriptionSetup extends React.Component {
                                   </>
 
                                   <div className="make-canc-pay">
-                                    {userInfo.package.package_id ===
-                                      "Premium" ||
+                                    {userInfo.package.package_id === "61c02e2ff40bec74fac2ca09" ||
                                     userInfo?.package?.subscription_type ===
                                       "Trial" ? (
                                       this.state.paymentLoading ? (
@@ -555,8 +549,7 @@ class SubcriptionSetup extends React.Component {
                                                   paymentLoading: true,
                                                 });
                                                 if (
-                                                  userInfo.package
-                                                    .package_id ==="61c02d43f40bec74fac2c9a0" ||
+                                                  userInfo.package.package_id ==="61c02d43f40bec74fac2c9a0" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
                                                     "Trial"
@@ -1212,8 +1205,7 @@ class SubcriptionSetup extends React.Component {
                                                 </Button>
                                               )}
                                               {!userInfo.is_trial_expired &&
-                                                this.state.singlePackage
-                                                  .package_id ==="61c02e2ff40bec74fac2ca09" &&
+                                                this.state.singlePackage.package_id ==="61c02e2ff40bec74fac2ca09" &&
                                                 (this.state.trailLoading ? (
                                                   <Button>
                                                     <Loader />
