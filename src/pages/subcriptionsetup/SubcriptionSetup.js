@@ -164,7 +164,7 @@ class SubcriptionSetup extends React.Component {
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
       !this.state.checkbox.checkbox3 &&
-      userInfo.package.package_name !=="61c02e2ff40bec74fac2ca09"
+      userInfo.package.package_id !=="61c02e2ff40bec74fac2ca09"
     ) {
       this.setState({ showPromo: true });
     } else {
@@ -187,7 +187,7 @@ class SubcriptionSetup extends React.Component {
           }
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          if (response.data.message.package_name !=="61c02d43f40bec74fac2c9a0") {
+          if (response.data.message.package_id !=="61c02d43f40bec74fac2c9a0") {
             history.push("/connect");
           } else {
             window.location.reload();
@@ -328,7 +328,7 @@ class SubcriptionSetup extends React.Component {
                             {userInfo.package.profile_limit}
                           </h3>
                         </div>
-                        {userInfo.package.package_name !=="61c02d43f40bec74fac2c9a0" ? (
+                        {userInfo.package.package_id !=="61c02d43f40bec74fac2c9a0" ? (
                           <>
                             {userInfo.package?.next_payment_date &&
                               userInfo?.package?.subscription_type !==
@@ -385,7 +385,7 @@ class SubcriptionSetup extends React.Component {
                 </div>
               </div>
             </div>
-            {this.state.singlePackage.package_name !=="61c02d43f40bec74fac2c9a0" &&
+            {this.state.singlePackage.package_id !=="61c02d43f40bec74fac2c9a0" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
@@ -394,7 +394,7 @@ class SubcriptionSetup extends React.Component {
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
                           {!userInfo.is_trial_expired &&
-                          this.state.singlePackage.package_name ===
+                          this.state.singlePackage.package_id ===
                             "Premium" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
@@ -422,7 +422,7 @@ class SubcriptionSetup extends React.Component {
                                   />{" "}
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
-                                  {this.state.singlePackage.package_name !==
+                                  {this.state.singlePackage.package_id !==
                                   "Premium" ? (
                                     <>
                                       {
@@ -463,7 +463,7 @@ class SubcriptionSetup extends React.Component {
                                   {this.state.singlePackage
                                     .package_amount_yearly * 12}
                                   /year )
-                                  {/* {this.state.singlePackage.package_name !==
+                                  {/* {this.state.singlePackage.package_id !==
                                     "Premium" ? (
                                       <>
                                         {
@@ -531,7 +531,7 @@ class SubcriptionSetup extends React.Component {
                                   </>
 
                                   <div className="make-canc-pay">
-                                    {userInfo.package.package_name ===
+                                    {userInfo.package.package_id ===
                                       "Premium" ||
                                     userInfo?.package?.subscription_type ===
                                       "Trial" ? (
@@ -556,7 +556,7 @@ class SubcriptionSetup extends React.Component {
                                                 });
                                                 if (
                                                   userInfo.package
-                                                    .package_name ==="61c02d43f40bec74fac2c9a0" ||
+                                                    .package_id ==="61c02d43f40bec74fac2c9a0" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
                                                     "Trial"
@@ -1104,7 +1104,7 @@ class SubcriptionSetup extends React.Component {
                                           this.state.checkbox.facebook &&
                                           this.state.checkbox.checkbox3 ? (
                                             // this.state.singlePackage
-                                            //   .package_name ==="61c02e2ff40bec74fac2ca09" ? (
+                                            //   .package_id ==="61c02e2ff40bec74fac2ca09" ? (
                                             //   <Button
                                             //     onClick={() => {
                                             //       this.updatePackage(
@@ -1131,7 +1131,7 @@ class SubcriptionSetup extends React.Component {
 
                                                     if (
                                                       userInfo.package
-                                                        .package_name ==
+                                                        .package_id ==
                                                         "Basic" ||
                                                       userInfo?.package
                                                         ?.subscription_type ===
@@ -1213,7 +1213,7 @@ class SubcriptionSetup extends React.Component {
                                               )}
                                               {!userInfo.is_trial_expired &&
                                                 this.state.singlePackage
-                                                  .package_name ==="61c02e2ff40bec74fac2ca09" &&
+                                                  .package_id ==="61c02e2ff40bec74fac2ca09" &&
                                                 (this.state.trailLoading ? (
                                                   <Button>
                                                     <Loader />

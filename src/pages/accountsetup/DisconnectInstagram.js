@@ -35,7 +35,7 @@ export default function DisconnectInstagram(props) {
     <>
       <div
         className={`conn-set-inner ${
-          userInfo.package.package_name ==="61c02d43f40bec74fac2c9a0" &&
+          userInfo.package.package_id ==="61c02d43f40bec74fac2c9a0" &&
           userInfo.access_token !== ""
             ? "conn-basic"
             : ""

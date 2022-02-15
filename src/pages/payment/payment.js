@@ -88,19 +88,19 @@ class Payment extends React.Component {
     //Package Update Redirect
     else if (params.status === "success") {
       if (
-        userInfo?.package?.package_name ==="61c02e2ff40bec74fac2ca09" &&
+        userInfo?.package?.package_id ==="61c02e2ff40bec74fac2ca09" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {
         redirectURL = "/connect";
       } else if (
-        userInfo?.package?.package_name ==="61d695e9bccdaf69f46efc66" &&
+        userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66" &&
         userInfo?.fb_token &&
         userInfo?.page_token
       ) {
         redirectURL = "/app/subcription/setup/";
       } else if (
-        userInfo?.package?.package_name ==="61d695e9bccdaf69f46efc66" &&
+        userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66" &&
         !userInfo?.fb_token &&
         !userInfo?.page_token
       ) {

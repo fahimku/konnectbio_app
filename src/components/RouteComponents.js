@@ -52,14 +52,14 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
     window.history.go(0);
     return;
   } else if (
-    userInfo.package.package_name ==="61c02e2ff40bec74fac2ca09" &&
+    userInfo.package.package_id ==="61c02e2ff40bec74fac2ca09" &&
     userInfo.page_token === ""
   ) {
     history.push("/connect");
     window.history.go(0);
     return;
   } else if (
-    userInfo.package.package_name ==="61d695e9bccdaf69f46efc66" &&
+    userInfo.package.package_id ==="61d695e9bccdaf69f46efc66" &&
     userInfo.page_token === ""
   ) {
     history.push("/connect");
@@ -81,7 +81,7 @@ export const PrivateRoute = ({ dispatch, component, permissions, ...rest }) => {
         />
       );
     } else {
-      // if (userInfo.package.package_name ==="61c02e2ff40bec74fac2ca09") {
+      // if (userInfo.package.package_id ==="61c02e2ff40bec74fac2ca09") {
       //   return <Route component={Dashboard} exact />;
       // } else {
       return <Route component={AccountUpgrade} exact />;
