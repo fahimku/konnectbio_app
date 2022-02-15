@@ -49,10 +49,10 @@ class Connect extends React.Component {
     const package1 = userInfo?.package?.package_name;
 
     const checkCon =
-      this.state.pack === "Premium" ||
-      package1 === "Premium" ||
-      this.state.pack === "Premium Plus" ||
-      package1 === "Premium Plus"
+      this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
+      package1 ==="61c02e2ff40bec74fac2ca09" ||
+      this.state.pack ==="61d695e9bccdaf69f46efc66" ||
+      package1 ==="61d695e9bccdaf69f46efc66"
         ? access_token !== "" && fbPage
           ? true
           : false
@@ -118,10 +118,10 @@ class Connect extends React.Component {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
       ?.package_name;
     if (
-      this.state.pack === "Premium" ||
-      package1 === "Premium" ||
-      this.state.pack === "Premium Plus" ||
-      package1 === "Premium Plus"
+      this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
+      package1 ==="61c02e2ff40bec74fac2ca09" ||
+      this.state.pack ==="61d695e9bccdaf69f46efc66" ||
+      package1 ==="61d695e9bccdaf69f46efc66"
     ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       // const fbToken =  JSON.parse(localStorage.getItem("userInfo")).fb_token;
@@ -136,11 +136,11 @@ class Connect extends React.Component {
 
   connectionMessage = () => {
     const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_name;
-    if (package1 === "Basic" && this.completeProcess()) {
+    if (package1 ==="61c02d43f40bec74fac2c9a0" && this.completeProcess()) {
       return "Please connect your Instagram account";
-    } else if (package1 === "Premium" && this.completeProcess()) {
+    } else if (package1 ==="61c02e2ff40bec74fac2ca09" && this.completeProcess()) {
       return "Please connect your Instagram and Facebook account";
-    } else if (package1 === "Premium Plus" && this.completeProcess()) {
+    } else if (package1 ==="61d695e9bccdaf69f46efc66" && this.completeProcess()) {
       return "Please connect your Instagram and Facebook account";
     }
   };
