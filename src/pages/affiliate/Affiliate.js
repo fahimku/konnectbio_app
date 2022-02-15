@@ -72,7 +72,7 @@ class Affiliate extends React.Component {
         <div class="coming_iner">
           <h2>Upgrade Account</h2>
           <p className="text-muted">
-            This Option is only available for premium plus plan.
+            This Option is only available for Brand.
           </p>
           <button
             class="btn btn-primary"

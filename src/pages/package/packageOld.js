@@ -480,7 +480,7 @@ class Package extends React.Component {
                   <div className="custom_pkg">
                     <h4>{premiumPlus.package_name}</h4>
                     <p>
-                      Premium Plus account is for large businesses and brands
+                      Brand account is for large businesses and brands
                       allows creation of profile, have social links, create link
                       in Bioshop &nbsp;
                       <button
@@ -967,7 +967,7 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Premium Plus</Modal.Title>
+            <Modal.Title>Brand</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             Premium Plus account is for large businesses and brands allows
@@ -977,7 +977,7 @@ class Package extends React.Component {
             services on your Bioshop and earn commission when your followers buy
             them. You can also search user generated content, schedule post,
             monitor hashtags, monitor mentions and monitor competition profiles.
-            As a Premium Plus account, you can also create Affiliate Advertising
+            As a Brand account, you can also create Affiliate Advertising
             campaigns for followers to participate and earn commission when they
             promote to their followers.
           </Modal.Body>
@@ -1446,7 +1446,7 @@ class Package extends React.Component {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Premium Plus Package</Modal.Title>
+            <Modal.Title>Brand Package</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div class="funkyradio">

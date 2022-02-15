@@ -329,7 +329,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   <span className="dash_icon">
                     <i className="fa fa-check fa-3x" aria-hidden="true"></i>
                   </span>
-                  <h4>{userData.package.package_description}</h4>
+                  <h4>{userData.package.package_name}</h4>
                   <div className="text-muted">
                     This is your current active plan
                   </div>
