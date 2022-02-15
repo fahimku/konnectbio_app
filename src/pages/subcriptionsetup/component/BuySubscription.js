@@ -145,7 +145,7 @@ export default function BuySubscription({
         </Row>
 
         <Row>
-          <Col md={12} xl={12}>
+          <Col md={5} xl={12}>
             {loading ? (
               <Button variant="primary" className="category-btn btn-block mt-2">
                 <Loader />
