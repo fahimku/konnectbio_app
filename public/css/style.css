@@ -427,9 +427,9 @@ span.icon {
   .top-logo .logo img {
     width: auto !important;
   }
-  .ant-picker-range {
+  /* .ant-picker-range {
     width: auto !important;
-  }
+  } */
   .header .left-top-bar {
     justify-content: flex-start !important;
   }
@@ -1187,6 +1187,7 @@ a.pkg_read:hover {
 }
 .camp-type-ift.col-md-12 {
   align-items: center;
+  display: flex;
 }
 .camp-type-ift .n-camp-type {
   font-family: "SegoeUIBold";
@@ -1249,11 +1250,11 @@ a.pkg_read:hover {
 .swal2-title {
   font-size: 1.1rem !important;
 }
-.aff-img-edit-link.image-edit-links {
+/* .aff-img-edit-link.image-edit-links {
   width: 100%;
-  /* max-width: 100% !important; */
+  max-width: 100% !important;
   flex: auto !important;
-}
+} */
 .no-data-found-mobile {
   font-size: 1rem;
   align-items: center;

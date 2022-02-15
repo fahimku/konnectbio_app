@@ -63,6 +63,13 @@
   }
   .affiliate-model .image-wrapper .image-box {
     margin-bottom: 2rem;
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .linkin-bio .image-edit-box .image-wrapper .image-edit-links{
+    flex: 0 0 100%;
+    max-width: 100%;
+    padding: 0;
   }
   .affiliate-model .image-wrapper .image-edit-links .row .col-md-6 {
     flex: 0 0 100%;
@@ -459,6 +466,10 @@
   }
   .brandcatdisable:before{
     top: 50px;
+  }
+  .affiliate-model .image-wrapper .image-box{
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
