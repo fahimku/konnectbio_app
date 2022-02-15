@@ -204,9 +204,9 @@ class Package extends React.Component {
   // };
 
   render() {
-    const basic = this.state.packages.Basic || {};
-    const premium = this.state.packages.Premium || {};
-    const premiumPlus = this.state.packages.PremiumPlus || {};
+    const basic = this.state.packages.Influencer || {};
+    const premium = this.state.packages.InfluencerPlus || {};
+    const premiumPlus = this.state.packages.Brand || {};
     const renderTooltip = (props) => (
       <Tooltip id="button-tooltip" {...props}>
         Platform Fee of 5% of earned commission will be charged.
