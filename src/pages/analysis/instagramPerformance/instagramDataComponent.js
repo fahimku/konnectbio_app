@@ -67,7 +67,12 @@ function InstagramDataComponent({
     setClearLoading(true);
     setSortBy({ value: "timestamp", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
-    filterInstagramAnalytic(false).then(() => {
+    setLimitBy({ value: 50, label: "50" });
+    filterInstagramAnalytic({
+      sort: "timestamp",
+      order_by: "desc",
+      limit_by: 50,
+    }).then(() => {
       setClearLoading(false);
     });
   };
