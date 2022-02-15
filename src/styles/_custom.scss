@@ -107,12 +107,12 @@ h6,
 
 /**Scroll Css */
 body::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
   /* width of the entire scrollbar */
 }
 
 body::-webkit-scrollbar-track {
-  background: black;
+  background: rgb(130, 130, 130)
   /* color of the tracking area */
 }
 

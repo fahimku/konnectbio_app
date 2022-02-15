@@ -7,6 +7,7 @@ import AllMarketPlace from "./AllMarketPlace";
 import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
 import BrandComponent from "./Brand/BrandComponent";
 
+
 class MarketPlace extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -28,13 +29,13 @@ class MarketPlace extends React.Component {
       });
     }
   }
+
   brandTab = (brand, brandLoading) => {
     this.setState({ brandtab: brand, brandLoading: brandLoading });
   };
 
   render() {
     const { brandtab, brandLoading } = this.state;
-
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">

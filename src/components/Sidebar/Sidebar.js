@@ -302,7 +302,7 @@ class Sidebar extends React.Component {
                   index="admin"
                   exact={false}
                   childrenLinks={
-                    userInfo?.package?.package_name === "Premium Plus"
+                    userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66"
                       ? [
                           {
                             header: "Basic Setup",

@@ -95,7 +95,7 @@ class SummaryDataComponent extends React.Component {
             <div className="summary_box_main">
               <div
                 className={`summary_block_profile ${
-                  this.props.packageName === "Premium Plus"
+                  this.props.packageName ==="61d695e9bccdaf69f46efc66"
                     ? "summary_height"
                     : ""
                 }`}

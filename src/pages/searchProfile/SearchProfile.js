@@ -353,7 +353,7 @@ function SearchProfile({
                   value={userName}
                   name="sort"
                   className="selectCustomization"
-                  options={[...profiles.Data].map((item) => {
+                  options={[...profiles?.Data].map((item) => {
                     return {
                       value: item._id,
                       label: item.profile_name,

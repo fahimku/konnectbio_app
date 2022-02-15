@@ -109,7 +109,12 @@ class BrandComponent extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">{this.state.title}</h4>
-          <MyCategory page="brand" getCategory={this.getCategory} />
+          <MyCategory
+          hideUpgradeCategory={window.innerWidth >= 1251 ? false : true}
+        //  hideCategory={window.innerWidth >= 1251 ?  false: true}
+            page="brand"
+            getCategory={this.getCategory}
+          />
           <div className="brand_container_main container">
             <Row>
               <div className="profile_box_main col-md-8">
@@ -194,6 +199,11 @@ class BrandComponent extends React.Component {
               </div>
             </Row>
           </div>
+          <MyCategory
+            hideUpgradeCategory={window.innerWidth <= 1251 ? false : true}
+            hideCategory={true}
+            page="brand"
+            getCategory={this.getCategory} />
         </div>
       </React.Fragment>
     );

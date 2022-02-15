@@ -513,7 +513,7 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-                  {userInfo?.package?.package_name === "Premium Plus" ? (
+                  {userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66" ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"

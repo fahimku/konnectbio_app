@@ -153,7 +153,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   <h4>My Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    {userData.package.package_name === "Basic" ? (
+                    {userData.package.package_id ==="61c02d43f40bec74fac2c9a0" ? (
                       <Link
                         to="my/posts"
                         className="btn btn-rounded btn-primary"

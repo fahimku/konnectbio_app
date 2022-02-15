@@ -30,7 +30,7 @@ const checkPermissions = (Component, props) => {
   });
 
   if (permissionFilter.length > 0) return Component;
-  else if (userInfo.package?.package_name === "Business Plus") {
+  else if (userInfo.package?.package_id === "Business Plus") {
     return Dashboard;
   } else {
     return AccountUpgrade;
