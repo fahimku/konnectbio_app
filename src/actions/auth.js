@@ -184,22 +184,22 @@ export function loginUser(creds) {
             res?.data?.message?.package &&
             res?.data?.message?.access_token &&
             !res.data.message.fb_token &&
-            res?.data?.message?.package?.package_name !=="61c02d43f40bec74fac2c9a0"
+            res?.data?.message?.package?.package_id !=="61c02d43f40bec74fac2c9a0"
           ) {
             history.push("/connect");
           } else if (
-            res?.data?.message?.package?.package_name ==="61c02d43f40bec74fac2c9a0" &&
+            res?.data?.message?.package?.package_id ==="61c02d43f40bec74fac2c9a0" &&
             res?.data?.message?.access_token
           ) {
             history.push("/app/linkinbio");
           } else if (
-            res?.data?.message?.package?.package_name ==="61c02e2ff40bec74fac2ca09" &&
+            res?.data?.message?.package?.package_id ==="61c02e2ff40bec74fac2ca09" &&
             res?.data?.message?.access_token &&
             fbPage
           ) {
             history.push("/app/linkinbio");
           } else if (
-            res?.data?.message?.package?.package_name ==="61d695e9bccdaf69f46efc66" &&
+            res?.data?.message?.package?.package_id ==="61d695e9bccdaf69f46efc66" &&
             res?.data?.message?.access_token &&
             fbPage
           ) {

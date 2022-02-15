@@ -247,8 +247,7 @@ class AccountSetup extends React.Component {
   };
 
   renderFbConnection = (userInfo1) => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
     if (
       package1 =="61c02e2ff40bec74fac2ca09" ||
       this.state.myPackage =="61c02e2ff40bec74fac2ca09" ||
@@ -283,8 +282,7 @@ class AccountSetup extends React.Component {
       });
   };
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
     if (
       this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
       package1 ==="61c02e2ff40bec74fac2ca09" ||
@@ -349,7 +347,7 @@ class AccountSetup extends React.Component {
                                   "Trial" && " (Trial)"}
                               </h3>
                               {!this.props.connectPage &&
-                                userInfo1.package.package_name ===
+                                userInfo1.package.package_id ===
                                   "Premium" && (
                                   <button
                                     onClick={() => {
@@ -434,14 +432,14 @@ class AccountSetup extends React.Component {
               </div>
             </div>
 
-            {this.state.singlePackage.package_name !=="61c02d43f40bec74fac2c9a0" &&
+            {this.state.singlePackage.package_id !=="61c02d43f40bec74fac2c9a0" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
                     <div className="profile_box_payment profile_box_main col-md-8">
                       <div
                         className={`dash_block_profile ${
-                          this.state.singlePackage.package_name ==="61c02e2ff40bec74fac2ca09"
+                          this.state.singlePackage.package_id ==="61c02e2ff40bec74fac2ca09"
                             ? "plan-premium-block"
                             : ""
                         }`}
@@ -464,8 +462,7 @@ class AccountSetup extends React.Component {
                                 />{" "}
                                 <Label for="checkbox1" />
                                 Pay Monthly: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
+                                {this.state.singlePackage.package_id !=="61c02e2ff40bec74fac2ca09" ? (
                                   <>
                                     {
                                       this.state.singlePackage
@@ -497,8 +494,7 @@ class AccountSetup extends React.Component {
                                 />{" "}
                                 <Label for="checkbox2" />
                                 Pay Yearly & Save: $
-                                {this.state.singlePackage.package_name !==
-                                "Premium" ? (
+                                {this.state.singlePackage.package_id !=="61c02e2ff40bec74fac2ca09" ? (
                                   <>
                                     {
                                       this.state.singlePackage
@@ -531,8 +527,7 @@ class AccountSetup extends React.Component {
                               </div>
                               <form onSubmit={this.handleSubmit}>
                                 <div className="acct-promo-sec">
-                                  {this.state.singlePackage.package_name ===
-                                  "Premium" ? null : (
+                                  {this.state.singlePackage.package_id ==="61c02e2ff40bec74fac2ca09" ? null : (
                                     <>
                                       <h4 className="mb-0">Have Promo Code?</h4>
                                       <span className="text-danger promo-err-box col-md-12 pl-0">
@@ -577,7 +572,7 @@ class AccountSetup extends React.Component {
                                         }}
                                       >
                                         {this.state.singlePackage
-                                          .package_name ==="61c02e2ff40bec74fac2ca09"
+                                          .package_id ==="61c02e2ff40bec74fac2ca09"
                                           ? "Start Trial"
                                           : "Make Payment"}
                                       </Button>
@@ -593,7 +588,7 @@ class AccountSetup extends React.Component {
                                         }
                                         name={
                                           this.state.singlePackage
-                                            .package_name ==="61c02e2ff40bec74fac2ca09"
+                                            .package_id ==="61c02e2ff40bec74fac2ca09"
                                             ? "Start Trial"
                                             : "Make Payment"
                                         }
@@ -1054,7 +1049,7 @@ class AccountSetup extends React.Component {
                                           this.state.checkbox.facebook &&
                                           this.state.checkbox.checkbox3 ? (
                                             this.state.singlePackage
-                                              .package_name ==="61c02e2ff40bec74fac2ca09" ? (
+                                              .package_id ==="61c02e2ff40bec74fac2ca09" ? (
                                               <Button
                                                 onClick={() => {
                                                   this.updatePackage(

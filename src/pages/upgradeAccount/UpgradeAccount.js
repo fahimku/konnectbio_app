@@ -11,7 +11,7 @@ export default function upgradeAccount() {
       <div class="coming_iner">
         <h2>Upgrade Account</h2>
         <p className="text-muted">
-          {userInfo?.package?.package_name ==="61c02d43f40bec74fac2c9a0"
+          {userInfo?.package?.package_id ==="61c02d43f40bec74fac2c9a0"
             ? "This option is only available for premium and premium plus plan."
             : "This option is only available for premium plus plan."}
         </p>

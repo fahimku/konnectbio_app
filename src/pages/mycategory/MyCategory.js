@@ -403,7 +403,7 @@ class MyCategory extends React.Component {
                         </div>
                       </div>
 
-                      {userInfo1.package.package_name !== "Business Plus" ? (
+                      {userInfo1.package.package_id !== "Business Plus" ? (
                         <div className="category-box">
                           <div className="category-count-row col-12">
                             <h4 className="category-count-title">
