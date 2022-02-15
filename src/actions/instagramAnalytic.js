@@ -7,13 +7,14 @@ import {
 import config from "../config";
 
 export const getInstagramAnalytic =
-  (url, next_media) => async (dispatch, getState) => {
+  (url, next_media, limit) => async (dispatch, getState) => {
     // if (getState().instagramAnalytic.success || url) {
     const res = await axios.post(
       `${config.baseURLApi}/graph/ig/analytics/media`,
       {
         url: url,
         next_media: next_media,
+        limit: limit ? limit : undefined,
       }
     );
     if (url) {

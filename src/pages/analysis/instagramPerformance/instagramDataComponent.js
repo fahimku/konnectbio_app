@@ -26,6 +26,7 @@ function InstagramDataComponent({
     label: "DATE",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
+  const [limitBy, setLimitBy] = useState({ value: 50, label: "50" });
   // const fromDate = moment().subtract(4, "year").format("YYYY-MM-DD");
   // const toDate = moment(new Date()).format("YYYY-MM-DD");
   // const [startDate, setStartDate] = useState(fromDate);
@@ -47,7 +48,7 @@ function InstagramDataComponent({
   window.addEventListener("scroll", checkScrollTop);
 
   useEffect(() => {
-    getInstagramAnalytic().then(() => {
+    getInstagramAnalytic(null, null, 1000).then(() => {
       setClearLoading(false);
     });
   }, []);
@@ -57,6 +58,7 @@ function InstagramDataComponent({
     filterInstagramAnalytic({
       sort: sortBy.value,
       order_by: orderBy.value,
+      limit_by: limitBy.value,
     }).then(() => {
       setSearchLoading(false);
     });
@@ -81,6 +83,13 @@ function InstagramDataComponent({
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
     { value: "desc", label: "DESC" },
+  ];
+  const limitOptions = [
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
+    { value: 300, label: "300" },
+    { value: 500, label: "500" },
+    { value: 1000, label: "1000" },
   ];
 
   // const dateRangePickerChanger = (value, dataString) => {
@@ -173,6 +182,20 @@ function InstagramDataComponent({
                           styles={style}
                         />
                       </Col>
+                      <Col xs={12} xl={2} md={6}>
+                        <p>Limit By</p>
+                        <Select
+                          value={limitBy}
+                          name="order"
+                          className="selectCustomization"
+                          options={limitOptions}
+                          onChange={(e) => {
+                            setLimitBy(e);
+                          }}
+                          placeholder="Limit By"
+                          styles={style}
+                        />
+                      </Col>
                       <Col className="d-flex" xs={12} xl={2} md={6}>
                         {searchLoading ? (
                           <Button
@@ -220,10 +243,11 @@ function InstagramDataComponent({
               // getScrollParent={() => document.getElementById("scrollableDiv")}
               pageStart={0}
               className="af-rm-mn row"
-              loadMore={() =>
-                getInstagramAnalytic(instagramAnalytic?.pagination?.next, true)
-              }
-              hasMore={instagramAnalytic?.pagination?.next ? true : false}
+              // loadMore={() =>
+              //   getInstagramAnalytic(instagramAnalytic?.pagination?.next, true)
+              // }
+              // hasMore={instagramAnalytic?.pagination?.next ? true : false}
+              hasMore={false}
               threshold={5}
               loader={
                 <div className="col-md-12">
@@ -361,7 +385,7 @@ function InstagramDataComponent({
               justifyContent: "center",
             }}
           >
-            <NoDataFound/>
+            <NoDataFound />
           </div>
         )}
       </div>
