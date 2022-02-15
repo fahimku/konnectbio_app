@@ -247,8 +247,7 @@ class AccountSetup extends React.Component {
   };
 
   renderFbConnection = (userInfo1) => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
     if (
       package1 =="61c02e2ff40bec74fac2ca09" ||
       this.state.myPackage =="61c02e2ff40bec74fac2ca09" ||
@@ -283,8 +282,7 @@ class AccountSetup extends React.Component {
       });
   };
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
-      ?.package_name;
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
     if (
       this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
       package1 ==="61c02e2ff40bec74fac2ca09" ||
