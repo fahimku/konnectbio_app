@@ -849,10 +849,10 @@ h1 small {
   position: relative;
   pointer-events: none;
 }
-.brandcatdisable:before{
+.brandcatdisable:before {
   content: "\f13e";
-  font-family: 'FontAwesome';
-  color: #FFF;
+  font-family: "FontAwesome";
+  color: #fff;
   z-index: 2;
   position: absolute;
   width: 100%;
@@ -876,9 +876,13 @@ h1 small {
   z-index: 1;
   cursor: pointer;
   pointer-events: none;
-  color: #FFF;
+  color: #fff;
   font-size: 1.1rem;
   text-align: center;
   padding-top: 10%;
-  font-family: 'SegoeUI_Medium';
+  font-family: "SegoeUI_Medium";
+}
+.credit-info {
+  display: inline-grid;
+  text-align: center;
 }
