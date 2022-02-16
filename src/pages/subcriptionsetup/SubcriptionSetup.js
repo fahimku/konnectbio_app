@@ -9,6 +9,7 @@ import * as subActions from "../../actions/subscribe";
 import Loader from "../../components/Loader/Loader";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
+import PackageDetail from "./component/PackageDetail";
 
 export const history = createBrowserHistory({
   forceRefresh: true,
@@ -42,6 +43,7 @@ class SubcriptionSetup extends React.Component {
           ? "Monthly"
           : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
+      pack_modal: false,
     };
   }
   componentDidMount() {
@@ -126,6 +128,7 @@ class SubcriptionSetup extends React.Component {
     this.setState({ package: event.label });
     this.setState({ package_id: event.value });
     this.setState({ promo_error: false });
+    this.setState({ pack_modal: true });
 
     if (this.state.packageIndex < event.index) {
       this.setState({ upgrade: true, showPaymentButton: true });
@@ -265,6 +268,12 @@ class SubcriptionSetup extends React.Component {
         toast.error(err.response.data.message);
       });
   };
+  packageToggleModal = () => {
+    const { pack_modal } = this.state;
+    this.setState({
+      pack_modal: !pack_modal,
+    });
+  };
 
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -392,6 +401,14 @@ class SubcriptionSetup extends React.Component {
                   </div>
                 </div>
               </div>
+              {this.state.pack_modal &&
+                this.state.singlePackage.package_name !==
+                  userInfo.package.package_name && (
+                  <PackageDetail
+                    // packageToggleModal={this.packageToggleModal}
+                    singlePackage={this.state.singlePackage}
+                  />
+                )}
             </div>
             {this.state.singlePackage.package_id !==
               "61c02d43f40bec74fac2c9a0" &&
@@ -402,14 +419,14 @@ class SubcriptionSetup extends React.Component {
                       <div className={"dash_block_profile"}>
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
-                          {!userInfo.is_trial_expired &&
+                          {/* {!userInfo.is_trial_expired &&
                           this.state.singlePackage.package_id ===
                             "61c02e2ff40bec74fac2ca09" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
                               required.
                             </div>
-                          ) : null}
+                          ) : null} */}
                           <div className="row">
                             <div className="colbx-inr col-md-12">
                               <>
