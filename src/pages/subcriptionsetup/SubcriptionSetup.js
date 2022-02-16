@@ -449,8 +449,7 @@ class SubcriptionSetup extends React.Component {
                                   />{" "}
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
-                                  {this.state.singlePackage.package_id !==
-                                  "Premium" ? (
+                                  {this.state.singlePackage.package_id !== "61c02e2ff40bec74fac2ca09" ? (
                                     <>
                                       {
                                         this.state.singlePackage

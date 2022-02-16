@@ -248,11 +248,7 @@ class Package extends React.Component {
           >
             <Tab eventKey="Monthly" title="Monthly">
               <div
-                className={`package_parent ${
-                  userInfo.account_type == "influencer"
-                    ? "package_parent_influencer"
-                    : ""
-                }`}
+                className={`package_parent  package_parent_influencer`}
               >
                 {userInfo.account_type == "influencer" ? (
                   <>
@@ -338,7 +334,7 @@ class Package extends React.Component {
                   </>
                 ) : (
                   <>
-                    {Object.keys(premium).length !== 0 ? (
+                    {/* {Object.keys(premium).length !== 0 ? (
                       <div className="custom_pkg">
                         <h4>{premium.package_name}</h4>
                         <p>
@@ -360,7 +356,7 @@ class Package extends React.Component {
                             {premium.package_amount_monthly}
                           </span>
                           <small className="monthly">/mo</small>
-                          {/* <ins>(Free For 90 Days)</ins> */}
+                          {/* <ins>(Free For 90 Days)</ins> 
                           <span className="pkg_billed">billed monthly</span>
                           {!userInfo.is_trial_expired ? (
                             <span className="pkg-trial">
@@ -415,7 +411,7 @@ class Package extends React.Component {
                           {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
-                      </li> */}
+                      </li> 
 
                           <li>
                             <span className="glyphicon glyphicon-menu-right"></span>
@@ -455,7 +451,7 @@ class Package extends React.Component {
                           // />
                         )}
                       </div>
-                    ) : null}
+                    ) : null} */}
                     {Object.keys(premiumPlus).length !== 0 ? (
                       <div className="custom_pkg">
                         <h4>{premiumPlus.package_name}</h4>
@@ -576,12 +572,9 @@ class Package extends React.Component {
               </div>
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
+
               <div
-                className={`package_parent ${
-                  userInfo.account_type == "influencer"
-                    ? "package_parent_influencer"
-                    : ""
-                }`}
+                className={`package_parent  package_parent_influencer`}
               >
                 {userInfo.account_type == "influencer" ? (
                   <>
@@ -667,7 +660,7 @@ class Package extends React.Component {
                   </>
                 ) : (
                   <>
-                    {Object.keys(premium).length !== 0 ? (
+                    {/* {Object.keys(premium).length !== 0 ? (
                       <div className="custom_pkg">
                         <h4>{premium.package_name}</h4>
                         <p>
@@ -689,7 +682,7 @@ class Package extends React.Component {
                             {premium.package_amount_yearly}
                           </span>
                           <small className="monthly">/mo</small>
-                          {/* <ins>(Free For 90 Days)</ins> */}
+                          {/* <ins>(Free For 90 Days)</ins> 
                           <span className="pkg_billed">billed yearly</span>
                           {!userInfo.is_trial_expired ? (
                             <span className="pkg-trial">
@@ -743,7 +736,7 @@ class Package extends React.Component {
                           {/* <li>
                         <span className="glyphicon glyphicon-menu-right"></span>
                         Direct Messaging
-                      </li> */}
+                      </li> 
 
                           <li>
                             <span className="glyphicon glyphicon-menu-right"></span>
@@ -783,7 +776,7 @@ class Package extends React.Component {
                           // />
                         )}
                       </div>
-                    ) : null}
+                    ) : null} */}
                     {Object.keys(premiumPlus).length !== 0 ? (
                       <div className="custom_pkg">
                         <h4>{premiumPlus.package_name}</h4>
