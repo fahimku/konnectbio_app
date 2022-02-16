@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Row, Col, Button } from "react-bootstrap";
-import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
@@ -99,7 +98,7 @@ export default function BuySubscription({
               onChange={(options, e) => handleBuySelect(e, options)}
             />
             {submit && !buySelected.value ? (
-              <small class="help-block text-danger">Please select</small>
+              <small className="help-block text-danger">Please select</small>
             ) : null}
           </Col>
           {userInfo.package.recurring_payment_type && buySelected.value ? (

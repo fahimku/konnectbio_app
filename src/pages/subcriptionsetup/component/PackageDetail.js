@@ -1,13 +1,8 @@
 import React from "react";
-import {
-
-  Tooltip,
-  OverlayTrigger,
-} from "react-bootstrap";
+import { Tooltip, OverlayTrigger} from "react-bootstrap";
 
 
 export default function PackageDetail({ packageToggleModal, singlePackage }) {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const renderTooltip = (props) => (
     <Tooltip id="button-tooltip" {...props}>
       Platform Fee of 5% of earned commission will be charged.
@@ -16,16 +11,10 @@ export default function PackageDetail({ packageToggleModal, singlePackage }) {
   return (
     <>
       <div className="profile_box_main col-md-4 pkg_app_inner">
-        
-
-        
-
         <div className="custom_pkg">
-          <h5>Package Detail</h5>
+          <h5>{singlePackage.package_name }</h5>
           <p>
-            This package is for influencers, allows profiles, social links,
-            BioShop, runs affiliate campaigns by brands, and access to User
-            Generated Content.
+           {singlePackage.package_description}
           </p>
           <div className="pkg_price_ifti">
             <span className="pkg-trial">
@@ -54,7 +43,7 @@ export default function PackageDetail({ packageToggleModal, singlePackage }) {
                 delay={{ show: 250, hide: 400 }}
                 overlay={renderTooltip}
               >
-                <i class="fa fa-info pac-info"></i>
+                <i className="fa fa-info pac-info"></i>
               </OverlayTrigger>
             </li> 
 
