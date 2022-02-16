@@ -1142,7 +1142,7 @@ class SubcriptionSetup extends React.Component {
                                                     if (
                                                       userInfo.package
                                                         .package_id ==
-                                                        "Basic" ||
+                                                        "61c02d43f40bec74fac2c9a0" ||
                                                       userInfo?.package
                                                         ?.subscription_type ===
                                                         "Trial"
@@ -1193,16 +1193,16 @@ class SubcriptionSetup extends React.Component {
                                                           this.setState({
                                                             paymentLoading: false,
                                                           });
-                                                          localStorage.setItem(
-                                                            "userInfo",
-                                                            JSON.stringify({
-                                                              ...userInfo,
-                                                              package:
-                                                                res.message,
-                                                            })
-                                                          );
+                                                          // localStorage.setItem(
+                                                          //   "userInfo",
+                                                          //   JSON.stringify({
+                                                          //     ...userInfo,
+                                                          //     package:
+                                                          //       res.message,
+                                                          //   })
+                                                          // );
                                                           window.open(
-                                                            res.url,
+                                                            res.message,
                                                             "_self"
                                                           );
                                                         })
