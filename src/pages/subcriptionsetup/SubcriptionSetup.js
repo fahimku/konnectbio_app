@@ -44,6 +44,7 @@ class SubcriptionSetup extends React.Component {
           : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
       pack_modal: false,
+      showTrial: false,
     };
   }
   componentDidMount() {
@@ -659,17 +660,39 @@ class SubcriptionSetup extends React.Component {
                                     ) : !this.state.checkbox.instagram ||
                                       !this.state.checkbox.facebook ||
                                       !this.state.checkbox.checkbox3 ? (
-                                      <Button
-                                        onClick={() => {
-                                          this.setState({
-                                            showPaymentModel: true,
-                                          });
-                                        }}
-                                      >
-                                        Continue
-                                      </Button>
+                                      <>
+                                        <span className="credit-info">
+                                          <Button
+                                            onClick={() => {
+                                              this.setState({
+                                                showPaymentModel: true,
+                                                showTrial: true,
+                                              });
+                                            }}
+                                          >
+                                            Start 14 Days Trial
+                                          </Button>
+                                          <small>No credit card required</small>
+                                        </span>
+                                        <Button
+                                          onClick={() => {
+                                            this.setState({
+                                              showPaymentModel: true,
+                                              showTrial: false,
+                                            });
+                                          }}
+                                        >
+                                          Make Payment
+                                        </Button>
+                                      </>
                                     ) : (
-                                      <Button>Continue</Button>
+                                      <>
+                                        <span className="credit-info">
+                                          <Button>Start 14 Days Trial</Button>
+                                          <small>No credit card required</small>
+                                        </span>
+                                        <Button>Make Payment</Button>
+                                      </>
                                     )}
 
                                     <Button
@@ -929,6 +952,7 @@ class SubcriptionSetup extends React.Component {
                                     <Modal.Header closeButton>
                                       <Modal.Title>
                                         {this.state.singlePackage.package_name}{" "}
+                                        {this.state.showTrial ? "(Trial) " : ""}
                                         Package
                                       </Modal.Title>
                                     </Modal.Header>
@@ -1145,100 +1169,104 @@ class SubcriptionSetup extends React.Component {
                                             //   </Button>
                                             // ) : (
                                             <>
-                                              {this.state.paymentLoading ? (
-                                                <Button>
-                                                  <Loader />
-                                                </Button>
-                                              ) : (
-                                                <Button
-                                                  onClick={() => {
-                                                    this.setState({
-                                                      paymentLoading: true,
-                                                    });
+                                              {!this.state.showTrial ? (
+                                                this.state.paymentLoading ? (
+                                                  <Button>
+                                                    <Loader />
+                                                  </Button>
+                                                ) : (
+                                                  <Button
+                                                    onClick={() => {
+                                                      this.setState({
+                                                        paymentLoading: true,
+                                                      });
 
-                                                    if (
-                                                      userInfo.package
-                                                        .package_id ==
-                                                        "61c02d43f40bec74fac2c9a0" ||
-                                                      userInfo?.package
-                                                        ?.subscription_type ===
-                                                        "Trial"
-                                                    ) {
-                                                      this.props
-                                                        .makePayment({
-                                                          prices:
-                                                            this.getPriceId(
-                                                              this.state.plan.toLowerCase(),
+                                                      if (
+                                                        userInfo.package
+                                                          .package_id ==
+                                                          "61c02d43f40bec74fac2c9a0" ||
+                                                        userInfo?.package
+                                                          ?.subscription_type ===
+                                                          "Trial"
+                                                      ) {
+                                                        this.props
+                                                          .makePayment({
+                                                            prices:
+                                                              this.getPriceId(
+                                                                this.state.plan.toLowerCase(),
+                                                                this.state
+                                                                  .singlePackage
+                                                                  .package_name,
+                                                                this.state
+                                                                  .prices
+                                                              ),
+                                                            package_id:
                                                               this.state
                                                                 .singlePackage
-                                                                .package_name,
-                                                              this.state.prices
-                                                            ),
-                                                          package_id:
-                                                            this.state
-                                                              .singlePackage
-                                                              .package_id,
-                                                          recurring_payment_type:
-                                                            this.state.plan,
-                                                        })
-                                                        .then((res) => {
-                                                          this.setState({
-                                                            paymentLoading: false,
+                                                                .package_id,
+                                                            recurring_payment_type:
+                                                              this.state.plan,
+                                                          })
+                                                          .then((res) => {
+                                                            this.setState({
+                                                              paymentLoading: false,
+                                                            });
+                                                            window.open(
+                                                              res,
+                                                              "_self"
+                                                            );
                                                           });
-                                                          window.open(
-                                                            res,
-                                                            "_self"
-                                                          );
-                                                        });
-                                                    } else {
-                                                      this.props
-                                                        .updateSubscription({
-                                                          prices:
-                                                            this.getPriceId(
-                                                              this.state.plan.toLowerCase(),
+                                                      } else {
+                                                        this.props
+                                                          .updateSubscription({
+                                                            prices:
+                                                              this.getPriceId(
+                                                                this.state.plan.toLowerCase(),
+                                                                this.state
+                                                                  .singlePackage
+                                                                  .package_name,
+                                                                this.state
+                                                                  .prices
+                                                              ),
+                                                            package_id:
                                                               this.state
                                                                 .singlePackage
-                                                                .package_name,
-                                                              this.state.prices
-                                                            ),
-                                                          package_id:
-                                                            this.state
-                                                              .singlePackage
-                                                              .package_id,
-                                                        })
-                                                        .then((res) => {
-                                                          this.setState({
-                                                            paymentLoading: false,
+                                                                .package_id,
+                                                          })
+                                                          .then((res) => {
+                                                            this.setState({
+                                                              paymentLoading: false,
+                                                            });
+                                                            // localStorage.setItem(
+                                                            //   "userInfo",
+                                                            //   JSON.stringify({
+                                                            //     ...userInfo,
+                                                            //     package:
+                                                            //       res.message,
+                                                            //   })
+                                                            // );
+                                                            window.open(
+                                                              res.message,
+                                                              "_self"
+                                                            );
+                                                          })
+                                                          .catch((err) => {
+                                                            this.setState({
+                                                              paymentLoading: false,
+                                                            });
+                                                            toast.error(
+                                                              err.response.data
+                                                                .message
+                                                            );
                                                           });
-                                                          // localStorage.setItem(
-                                                          //   "userInfo",
-                                                          //   JSON.stringify({
-                                                          //     ...userInfo,
-                                                          //     package:
-                                                          //       res.message,
-                                                          //   })
-                                                          // );
-                                                          window.open(
-                                                            res.message,
-                                                            "_self"
-                                                          );
-                                                        })
-                                                        .catch((err) => {
-                                                          this.setState({
-                                                            paymentLoading: false,
-                                                          });
-                                                          toast.error(
-                                                            err.response.data
-                                                              .message
-                                                          );
-                                                        });
-                                                    }
-                                                  }}
-                                                >
-                                                  Make Payment
-                                                </Button>
-                                              )}
-                                              {!userInfo.is_trial_expired &&
+                                                      }
+                                                    }}
+                                                  >
+                                                    Make Payment
+                                                  </Button>
+                                                )
+                                              ) : (
+                                                !userInfo.is_trial_expired &&
                                                 this.state.singlePackage
                                                   .package_id ===
                                                   "61c02e2ff40bec74fac2ca09" &&
@@ -1248,7 +1276,6 @@ class SubcriptionSetup extends React.Component {
                                                   </Button>
                                                 ) : (
                                                   <>
-                                                    OR &nbsp;
                                                     <Button
                                                       onClick={() => {
                                                         this.updatePackage(
@@ -1262,7 +1289,8 @@ class SubcriptionSetup extends React.Component {
                                                       Start 14 Days Trial
                                                     </Button>
                                                   </>
-                                                ))}
+                                                ))
+                                              )}
                                             </>
                                           ) : null}
                                         </div>
