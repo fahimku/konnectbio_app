@@ -56,7 +56,13 @@ class SubcriptionSetup extends React.Component {
       .get(`/package/receive`)
       .then((response) => {
         const selectPackages = [];
-        const packages = response.data.message;
+        let packages = response.data.message;
+        if (this.state.userInfo.package.package_name === "Brand") {
+          packages = packages.filter((item) => item.package_name === "Brand");
+        } else {
+          packages = packages.filter((item) => item.package_name !== "Brand");
+        }
+
         const singlePackage = packages.filter(
           (item) => item.package_id === this.state.userInfo.package.package_id
         );
@@ -79,7 +85,6 @@ class SubcriptionSetup extends React.Component {
 
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-
           //Influencer Account
 
           if (index === 1) {
@@ -87,7 +92,9 @@ class SubcriptionSetup extends React.Component {
               disabledSelect = true;
             }
           }
+
           //Influencer Plus
+
           if (index === 2) {
             if (index1 === 0 || index1 === 1) {
               disabledSelect = true;
@@ -266,7 +273,7 @@ class SubcriptionSetup extends React.Component {
         <div className="container-fluid">
           <div className="mt-4 row">
             <div className="col-md-12">
-              <h4 className="page-title">Subcription Setup</h4>
+              <h4 className="page-title">Subscription Setup</h4>
             </div>
           </div>
           <div className="profile_container_main container">
@@ -276,7 +283,7 @@ class SubcriptionSetup extends React.Component {
                   <div className="card-row">
                     <div className="row">
                       <div className="col-8 col-md-9">
-                        <h5>Subcription Details</h5>
+                        <h5>Subscription Details</h5>
                       </div>
                       <div className="col-4 col-md-3">
                         {/* <button
@@ -292,7 +299,7 @@ class SubcriptionSetup extends React.Component {
                     <div className="subscription-caption">
                       <div className="row count-main-box">
                         <div className="col-12 count-box">
-                          <h5 className="count-title">Current Subcription </h5>
+                          <h5 className="count-title">Current Subscription </h5>
                           <h3 className="count">
                             {userInfo.package.package_name}{" "}
                             {userInfo.package.subscription_type === "Trial" &&
@@ -396,7 +403,8 @@ class SubcriptionSetup extends React.Component {
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
                           {!userInfo.is_trial_expired &&
-                          this.state.singlePackage.package_id === "Premium" ? (
+                          this.state.singlePackage.package_id ===
+                            "61c02e2ff40bec74fac2ca09" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
                               required.

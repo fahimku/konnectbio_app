@@ -321,7 +321,7 @@ class Sidebar extends React.Component {
                             link: "/app/account/setup",
                           },
                           {
-                            header: "Subcription Setup",
+                            header: "Subscription Setup",
                             link: "/app/subcription/setup",
                           },
                           {
@@ -343,7 +343,7 @@ class Sidebar extends React.Component {
                             link: "/app/account/setup",
                           },
                           {
-                            header: "Subcription Setup",
+                            header: "Subscription Setup",
                             link: "/app/subcription/setup",
                           },
                           {
