@@ -394,6 +394,9 @@ class SubcriptionSetup extends React.Component {
                                 value: this.state.packageId,
                               }}
                               onChange={(event) => this.handlePackage(event)}
+                              isDisabled={
+                                this.state.packages === "" ? true : false
+                              }
                             />
                           </h3>
                         </div>

@@ -11,8 +11,8 @@ export default function upgradeAccount() {
       <div class="coming_iner">
         <h2>Upgrade Account</h2>
         <p className="text-muted">
-          {userInfo?.package?.package_id ==="61c02d43f40bec74fac2c9a0"
-            ? "This option is only available for Influencer Plus and Brand."
+          {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
+            ? "This option is only available for Influencer Plus."
             : "This option is only available for Brand."}
         </p>
         <button

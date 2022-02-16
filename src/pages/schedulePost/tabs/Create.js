@@ -5,10 +5,15 @@ import { connect } from "react-redux";
 import Loader from "../../../components/Loader/Loader";
 import * as instaPostActions from "../../../actions/instaPost";
 import { toast } from "react-toastify";
-
+import Dropzone from "react-dropzone-uploader";
+import "react-dropzone-uploader/dist/styles.css";
+import { getDroppedOrSelectedFiles } from "html5-file-selector";
+import { ProgressBar } from "react-bootstrap";
 function HashtagsList({ createMedia, title }) {
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
+
   const [fields, setFields] = useState({
     title: "",
     image: "",
@@ -30,10 +35,180 @@ function HashtagsList({ createMedia, title }) {
       });
     }
   }
+  function bytesToSize(bytes) {
+    var sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
+    for (var i = 0; i < sizes.length; i++) {
+      if (bytes <= 1024) {
+        return bytes + " " + sizes[i];
+      } else {
+        bytes = parseFloat(bytes / 1024).toFixed(2);
+      }
+    }
+    return bytes + " P";
+  }
+  const onSubmit = (files, allFiles) => {
+    setSubmit(true);
+    if (fields.title && fields.image) {
+      setLoading(true);
+      createMedia(fields).then(() => {
+        toast.success("Successfully Created");
+        setLoading(false);
+        files.forEach((f) => f.remove());
+        setFields({
+          title: "",
+          image: "",
+        });
+        setSubmit(false);
+      });
+    }
+  };
+  const fileParams = ({ meta }) => {
+    return { url: "https://httpbin.org/post" };
+  };
+  const onFileChange = ({ file }) => {
+    setFields({
+      ...fields,
+      image: file,
+    });
+  };
+  const getFilesFromEvent = (e) => {
+    return new Promise((resolve) => {
+      getDroppedOrSelectedFiles(e).then((chosenFiles) => {
+        resolve(chosenFiles.map((f) => f.fileObject));
+      });
+    });
+  };
+  const Preview = ({ meta, files }) => {
+    const { name, percent, status, previewUrl, size } = meta;
+    setPreviewLoading(status === "done" ? false : true);
+    return (
+      <>
+        <div className="preview-box">
+          <div className="pre-img-upload">
+            <img src={previewUrl} />{" "}
+          </div>
+
+          <div className="pre-content-upload">
+            <div className="glry-img-name">{name}</div>{" "}
+            <div className="glry-img-size">{bytesToSize(size)}</div>
+            {status !== "done" ? <span>Uploading</span> : "Done"}
+            <div className="status">{status}</div>
+            <div className="pro-brar-ift">
+              <ProgressBar
+                animated
+                now={percent}
+                label={`${percent.toFixed(0)}%`}
+              />
+              <span
+                className="glyphicon glyphicon-remove"
+                onClick={removeFile(files)}
+              ></span>
+              {/* {status !== "done" && (
+              <div className="percent"> ({Math.round(percent)}%)</div>
+            )} */}
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  };
+  const removeFile = (allFiles) => () => {
+    // setFields({
+    //   ...fields,
+    //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
+    // });
+    setSubmit(false);
+    setLoading(false);
+    allFiles.forEach((f) => f.remove());
+  };
+  const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
+    const textMsg = files.length > 0 ? "Upload Again" : "Browse Image";
+    return (
+      <>
+        <div className="upload_area_2">
+          <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
+          <h4>Drag & Drop your image here</h4>
+          <h4>OR</h4>
+          <label className="btn btn-primary mr-0 mb-0">
+            {textMsg}
+            <input
+              style={{ display: "none" }}
+              type="file"
+              accept={accept}
+              multiple
+              onChange={(e) => {
+                getFilesFromEvent(e).then((chosenFiles) => {
+                  onFiles(chosenFiles);
+                });
+              }}
+            />
+          </label>
+        </div>
+      </>
+    );
+  };
 
   return (
     <React.Fragment>
       <div className="container-fluid">
+        <h4 className="page-title">{title}</h4>
+
+        <div className="brand_container_main container">
+          <Row>
+            <div className="profile_box_main col-md-8">
+              <div className=" brand-section dash_block_profile dash_content_profile">
+                <div className="upload_area">
+                  <h4>Upload your image</h4>
+                  <p className="text-muted">
+                    PNG, JPG and GIF files are allowed
+                  </p>
+                </div>
+                <div class="upload_area_3 form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="exampleFormControlInput1"
+                    placeholder="Add Media Title"
+                    onChange={(e) =>
+                      setFields({ ...fields, title: e.target.value })
+                    }
+                    value={fields.title}
+                  />
+                  {submit && !fields.title ? (
+                    <small style={{ color: "red" }}>
+                      Please Fill Media Title
+                    </small>
+                  ) : null}
+                </div>
+                <Dropzone
+                  onSubmit={onSubmit}
+                  onChangeStatus={onFileChange}
+                  InputComponent={selectFileInput}
+                  getUploadParams={fileParams}
+                  getFilesFromEvent={getFilesFromEvent}
+                  accept="image/*"
+                  maxFiles={1}
+                  // inputContent="Drop A File"
+                  addClassNames={{
+                    dropzone: "drag-drop-ift",
+                    submitButtonContainer: "upload_btn",
+                  }}
+                  PreviewComponent={Preview}
+                  submitButtonContent={() => (loading ? <Loader /> : "Upload")}
+                  submitButtonDisabled={loading}
+                  styles={{
+                    dropzoneActive: { borderColor: "green" },
+                  }}
+                />
+                {submit && !fields.image ? (
+                  <small style={{ color: "red" }}>Please Select Image</small>
+                ) : null}
+              </div>
+            </div>
+          </Row>
+        </div>
+      </div>
+      {/* <div className="container-fluid">
         <h4 className="page-title">{title}</h4>
         <div className="brand_container_main container">
           <Row>
@@ -108,7 +283,7 @@ function HashtagsList({ createMedia, title }) {
             </div>
           </Row>
         </div>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }
