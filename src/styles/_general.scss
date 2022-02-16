@@ -506,6 +506,8 @@ h1 small {
 
   .make-canc-pay {
     margin-top: 20px;
+    display: flex;
+    align-items: flex-start;
   }
 }
 .date-loader {
@@ -883,6 +885,12 @@ h1 small {
   font-family: "SegoeUI_Medium";
 }
 .credit-info {
-  display: inline-grid;
+  display: flex;
   text-align: center;
+  flex-direction: column;
+}
+code.sm-color {
+  font-size: 80%;
+  margin-right: 5px;
+  margin-top: 5px;
 }

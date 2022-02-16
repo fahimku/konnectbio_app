@@ -670,9 +670,9 @@ class SubcriptionSetup extends React.Component {
                                               });
                                             }}
                                           >
-                                            Start 14 Days Trial
+                                            Start 14 Days Free Trial
                                           </Button>
-                                          <small>No credit card required</small>
+                                          <code class="sm-color highlighter-rouge">No credit card required</code>
                                         </span>
                                         <Button
                                           onClick={() => {
@@ -688,8 +688,8 @@ class SubcriptionSetup extends React.Component {
                                     ) : (
                                       <>
                                         <span className="credit-info">
-                                          <Button>Start 14 Days Trial</Button>
-                                          <small>No credit card required</small>
+                                          <Button>Start 14 Days Free Trial</Button>
+                                          <code class="sm-color highlighter-rouge">No credit card required</code>
                                         </span>
                                         <Button>Make Payment</Button>
                                       </>
