@@ -121,7 +121,7 @@ function InstagramDataComponent({
           <Loader size={30} />
         ) : instagramAnalytic?.insta_data?.length > 0 ? (
           <>
-            {!instagramAnalytic?.pagination?.next ? (
+            {true ? (
               <Row className="post-analytics-tab mb-4">
                 <Col xs={12} xl={12} md={12}>
                   <form onSubmit={onSubmitData}>

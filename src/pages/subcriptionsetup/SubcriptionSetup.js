@@ -27,7 +27,7 @@ class SubcriptionSetup extends React.Component {
       allPackages: "",
       singlePackage: "",
       packageIndex: "",
-      showPaymentButton:userInfo1.package.subscription_type === "Trial" ? true : false,
+      showPaymentButton: userInfo1.package.subscription_type === "Trial" ? true : false,
       checkbox: {},
       help1: true,
       help2: true,
@@ -35,7 +35,7 @@ class SubcriptionSetup extends React.Component {
       promo_code: "",
       prices: [],
       paymentLoading: false,
-      plan:userInfo1?.package?.recurring_payment_type === "" || userInfo1?.package?.recurring_payment_type === undefined ? "Monthly" : userInfo1?.package?.recurring_payment_type,
+      plan: userInfo1?.package?.recurring_payment_type === "" || userInfo1?.package?.recurring_payment_type === undefined ? "Monthly" : userInfo1?.package?.recurring_payment_type,
       cancelPlan: false,
     };
   }
@@ -51,13 +51,15 @@ class SubcriptionSetup extends React.Component {
       .get(`/package/receive`)
       .then((response) => {
         const selectPackages = [];
-        const packages = response.data.message;
-        const singlePackage = packages.filter(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
-        const index = packages.findIndex(
-          (item) => item.package_id === this.state.userInfo.package.package_id
-        );
+        let packages = response.data.message;
+        if (this.state.userInfo.package.package_name === 'Brand') {
+          packages = packages.filter((item) => item.package_name === 'Brand');
+        } else {
+          packages = packages.filter((item) => item.package_name !== 'Brand')
+        }
+
+        const singlePackage = packages.filter((item) => item.package_id === this.state.userInfo.package.package_id);
+        const index = packages.findIndex((item) => item.package_id === this.state.userInfo.package.package_id);
         const maxIndex = packages.length - 1;
         singlePackage[0].index = index;
         if (index !== maxIndex) {
@@ -74,7 +76,6 @@ class SubcriptionSetup extends React.Component {
 
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
-
           //Influencer Account
 
           if (index === 1) {
@@ -82,7 +83,9 @@ class SubcriptionSetup extends React.Component {
               disabledSelect = true;
             }
           }
+
           //Influencer Plus
+
           if (index === 2) {
             if (index1 === 0 || index1 === 1) {
               disabledSelect = true;
@@ -159,7 +162,7 @@ class SubcriptionSetup extends React.Component {
       !this.state.checkbox.instagram &&
       !this.state.checkbox.facebook &&
       !this.state.checkbox.checkbox3 &&
-      userInfo.package.package_id !=="61c02e2ff40bec74fac2ca09"
+      userInfo.package.package_id !== "61c02e2ff40bec74fac2ca09"
     ) {
       this.setState({ showPromo: true });
     } else {
@@ -182,7 +185,7 @@ class SubcriptionSetup extends React.Component {
           }
           const storeUserInformation = JSON.stringify(parseUserInformation);
           localStorage.setItem("userInfo", storeUserInformation);
-          if (response.data.message.package_id !=="61c02d43f40bec74fac2c9a0") {
+          if (response.data.message.package_id !== "61c02d43f40bec74fac2c9a0") {
             history.push("/connect");
           } else {
             window.location.reload();
@@ -261,7 +264,7 @@ class SubcriptionSetup extends React.Component {
         <div className="container-fluid">
           <div className="mt-4 row">
             <div className="col-md-12">
-              <h4 className="page-title">Subcription Setup</h4>
+              <h4 className="page-title">Subscription Setup</h4>
             </div>
           </div>
           <div className="profile_container_main container">
@@ -271,7 +274,7 @@ class SubcriptionSetup extends React.Component {
                   <div className="card-row">
                     <div className="row">
                       <div className="col-8 col-md-9">
-                        <h5>Subcription Details</h5>
+                        <h5>Subscription Details</h5>
                       </div>
                       <div className="col-4 col-md-3">
                         {/* <button
@@ -287,7 +290,7 @@ class SubcriptionSetup extends React.Component {
                     <div className="subscription-caption">
                       <div className="row count-main-box">
                         <div className="col-12 count-box">
-                          <h5 className="count-title">Current Subcription </h5>
+                          <h5 className="count-title">Current Subscription </h5>
                           <h3 className="count">
                             {userInfo.package.package_name}{" "}
                             {userInfo.package.subscription_type === "Trial" &&
@@ -323,11 +326,11 @@ class SubcriptionSetup extends React.Component {
                             {userInfo.package.profile_limit}
                           </h3>
                         </div>
-                        {userInfo.package.package_id !=="61c02d43f40bec74fac2c9a0" ? (
+                        {userInfo.package.package_id !== "61c02d43f40bec74fac2c9a0" ? (
                           <>
                             {userInfo.package?.next_payment_date &&
                               userInfo?.package?.subscription_type !==
-                                "Trial" && (
+                              "Trial" && (
                                 <div className="col-12 count-box">
                                   <h5 className="count-title">Payment Type</h5>
                                   <h3 className="count">
@@ -380,7 +383,7 @@ class SubcriptionSetup extends React.Component {
                 </div>
               </div>
             </div>
-            {this.state.singlePackage.package_id !=="61c02d43f40bec74fac2c9a0" &&
+            {this.state.singlePackage.package_id !== "61c02d43f40bec74fac2c9a0" &&
               this.state.showPaymentButton && (
                 <>
                   <div className="row">
@@ -389,8 +392,7 @@ class SubcriptionSetup extends React.Component {
                         <div className="dash_content_profile">
                           <h5>Manage Plan</h5>
                           {!userInfo.is_trial_expired &&
-                          this.state.singlePackage.package_id ===
-                            "Premium" ? (
+                            this.state.singlePackage.package_id ==="61c02e2ff40bec74fac2ca09" ? (
                             <div class="pkg-trial mb-2">
                               Try 14 days for free, no credit card information
                               required.
@@ -418,7 +420,7 @@ class SubcriptionSetup extends React.Component {
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
                                   {this.state.singlePackage.package_id !==
-                                  "Premium" ? (
+                                    "Premium" ? (
                                     <>
                                       {
                                         this.state.singlePackage
@@ -499,9 +501,9 @@ class SubcriptionSetup extends React.Component {
                                     <span class="text-danger promo-err-box col-md-12 pl-0">
                                       {this.state.promo_error
                                         ? // <span className="text-danger mt-2">
-                                          this.state.promoCodeError
+                                        this.state.promoCodeError
                                         : // </span>
-                                          null}
+                                        null}
                                     </span>
                                     <div className="acct-promo-sec-inr">
                                       <input
@@ -527,7 +529,7 @@ class SubcriptionSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_id === "61c02e2ff40bec74fac2ca09" ||
-                                    userInfo?.package?.subscription_type ===
+                                      userInfo?.package?.subscription_type ===
                                       "Trial" ? (
                                       this.state.paymentLoading ? (
                                         <Button>
@@ -549,10 +551,10 @@ class SubcriptionSetup extends React.Component {
                                                   paymentLoading: true,
                                                 });
                                                 if (
-                                                  userInfo.package.package_id ==="61c02d43f40bec74fac2c9a0" ||
+                                                  userInfo.package.package_id === "61c02d43f40bec74fac2c9a0" ||
                                                   userInfo?.package
                                                     ?.subscription_type ===
-                                                    "Trial"
+                                                  "Trial"
                                                 ) {
                                                   this.props
                                                     .makePayment({
@@ -864,8 +866,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                          this.state.checkbox.facebook &&
-                                          this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                             <Button
                                               type="submit"
                                               onClick={(e) => {
@@ -1094,8 +1096,8 @@ class SubcriptionSetup extends React.Component {
                                         </div>
                                         <div>
                                           {this.state.checkbox.instagram &&
-                                          this.state.checkbox.facebook &&
-                                          this.state.checkbox.checkbox3 ? (
+                                            this.state.checkbox.facebook &&
+                                            this.state.checkbox.checkbox3 ? (
                                             // this.state.singlePackage
                                             //   .package_id ==="61c02e2ff40bec74fac2ca09" ? (
                                             //   <Button
@@ -1125,10 +1127,10 @@ class SubcriptionSetup extends React.Component {
                                                     if (
                                                       userInfo.package
                                                         .package_id ==
-                                                        "Basic" ||
+                                                      "Basic" ||
                                                       userInfo?.package
                                                         ?.subscription_type ===
-                                                        "Trial"
+                                                      "Trial"
                                                     ) {
                                                       this.props
                                                         .makePayment({
@@ -1205,7 +1207,7 @@ class SubcriptionSetup extends React.Component {
                                                 </Button>
                                               )}
                                               {!userInfo.is_trial_expired &&
-                                                this.state.singlePackage.package_id ==="61c02e2ff40bec74fac2ca09" &&
+                                                this.state.singlePackage.package_id === "61c02e2ff40bec74fac2ca09" &&
                                                 (this.state.trailLoading ? (
                                                   <Button>
                                                     <Loader />
