@@ -1,24 +1,84 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Row, Col, Button } from "react-bootstrap";
-import axios from "axios";
-import { toast } from "react-toastify";
-import Loader from "../../../components/Loader/Loader";
-import Select from "react-select";
-import { Label, Input } from "reactstrap";
+import React from "react";
+import {
+
+  Tooltip,
+  OverlayTrigger,
+} from "react-bootstrap";
+
 
 export default function PackageDetail({ packageToggleModal, singlePackage }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Platform Fee of 5% of earned commission will be charged.
+    </Tooltip>
+  );
   return (
     <>
-      <div className="profile_box_main col-md-4">
-        <div className="card analytic-box">
-          <h4 className="page-title">Package Detail</h4>
-          {/* <span onClick={packageToggleModal} className="fa fa-times"></span> */}
-          <h3 className="count">{singlePackage.category_count}</h3>
-          <h3 className="count">{singlePackage.link_count}</h3>
-          <h3 className="count">{singlePackage.hashtag_limit}</h3>
-          <h3 className="count">{singlePackage.profile_limit}</h3>
+      <div className="profile_box_main col-md-4 pkg_app_inner">
+        
+
+        
+
+        <div className="custom_pkg">
+          <h5>Package Detail</h5>
+          <p>
+            This package is for influencers, allows profiles, social links,
+            BioShop, runs affiliate campaigns by brands, and access to User
+            Generated Content.
+          </p>
+          <div className="pkg_price_ifti">
+            <span className="pkg-trial">
+              Try 14 days for free, no credit card information required.
+            </span>
+          </div>
+          <ul className="pkg_detail_list_ift">
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Profile Page
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Social Links - Up to {singlePackage.link_count}
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              BIOSHOP with {singlePackage.category_count} Categories
+            </li>
+
+             <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Affiliate Campaigns{" "}
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+              >
+                <i class="fa fa-info pac-info"></i>
+              </OverlayTrigger>
+            </li> 
+
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Schedule Post
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Monitor Hashtags - Up to {singlePackage.hashtag_limit}
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Monitor Mention/Comment
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Monitor Competition Profiles - Up to {singlePackage.profile_limit}
+            </li>
+            <li>
+              <span className="glyphicon glyphicon-menu-right"></span>
+              Analytics
+            </li>
+          </ul>
         </div>
       </div>
     </>
