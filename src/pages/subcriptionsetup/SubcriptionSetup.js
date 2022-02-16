@@ -449,7 +449,8 @@ class SubcriptionSetup extends React.Component {
                                   />{" "}
                                   <Label for="checkbox1" />
                                   Pay Monthly: $
-                                  {this.state.singlePackage.package_id !== "61c02e2ff40bec74fac2ca09" ? (
+                                  {this.state.singlePackage.package_id !==
+                                  "61c02e2ff40bec74fac2ca09" ? (
                                     <>
                                       {
                                         this.state.singlePackage
@@ -671,7 +672,9 @@ class SubcriptionSetup extends React.Component {
                                           >
                                             Start 14 Days Free Trial
                                           </Button>
-                                          <code class="sm-color highlighter-rouge">No credit card required</code>
+                                          <code class="sm-color highlighter-rouge">
+                                            No credit card required
+                                          </code>
                                         </span>
                                         <Button
                                           onClick={() => {
@@ -687,8 +690,12 @@ class SubcriptionSetup extends React.Component {
                                     ) : (
                                       <>
                                         <span className="credit-info">
-                                          <Button>Start 14 Days Free Trial</Button>
-                                          <code class="sm-color highlighter-rouge">No credit card required</code>
+                                          <Button>
+                                            Start 14 Days Free Trial
+                                          </Button>
+                                          <code class="sm-color highlighter-rouge">
+                                            No credit card required
+                                          </code>
                                         </span>
                                         <Button>Make Payment</Button>
                                       </>
@@ -698,6 +705,7 @@ class SubcriptionSetup extends React.Component {
                                       onClick={() => {
                                         this.setState({
                                           showPaymentButton: false,
+                                          pack_modal: false,
                                           package_id: "",
                                           package:
                                             userInfo?.package?.package_name,
@@ -1275,18 +1283,23 @@ class SubcriptionSetup extends React.Component {
                                                   </Button>
                                                 ) : (
                                                   <>
-                                                    <Button
-                                                      onClick={() => {
-                                                        this.updatePackage(
-                                                          userInfo.user_id,
-                                                          this.state
-                                                            .singlePackage
-                                                            .package_id
-                                                        );
-                                                      }}
-                                                    >
-                                                      Start 14 Days Trial
-                                                    </Button>
+                                                    <span className="credit-info">
+                                                      <Button
+                                                        onClick={() => {
+                                                          this.updatePackage(
+                                                            userInfo.user_id,
+                                                            this.state
+                                                              .singlePackage
+                                                              .package_id
+                                                          );
+                                                        }}
+                                                      >
+                                                        Start 14 Days Free Trial
+                                                      </Button>
+                                                      <code class="sm-color highlighter-rouge">
+                                                        No credit card required
+                                                      </code>
+                                                    </span>
                                                   </>
                                                 ))
                                               )}
