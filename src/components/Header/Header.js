@@ -511,6 +511,7 @@ class Header extends React.Component {
                     link="/admin"
                     index="admin"
                     exact={false}
+                    mobileScreen
                     childrenLinks={
                       userInfo?.package?.package_id ===
                       "61d695e9bccdaf69f46efc66"
