@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
-import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
+// import { Navbar, Nav, NavbarToggler, Collapse } from "reactstrap";
 import { logoutUser } from "../../actions/auth";
 import { STATUS } from "react-joyride";
 import LinksGroup from "../../components/Sidebar/LinksGroup/LinksGroup";
@@ -13,13 +13,22 @@ import {
   changeActiveSidebarItem,
 } from "../../actions/navigation";
 import logo from "../../images/konnectbiologo.svg";
+import s from "../Sidebar/Sidebar.module.scss";
 
 import config from "../../../src/config";
 import { toast } from "react-toastify";
 import TopBar from "../../components/Topbar";
 import PermissionHelper from "../PermissionHelper";
 // import { NavLink } from "react-router-dom";
-import { Modal, Button, Row, Col } from "react-bootstrap";
+import {
+  Modal,
+  Button,
+  Row,
+  Col,
+  Nav,
+  Navbar,
+  NavDropdown,
+} from "react-bootstrap";
 import Select from "react-select";
 import Loader from "../Loader/Loader";
 import axios from "axios";
@@ -246,6 +255,19 @@ class Header extends React.Component {
     });
   };
 
+  openNav = () => {
+    // document.getElementById("mySidenav").classList.remove("closeNav");
+    document.getElementById("mySidenav").classList.add("openNav");
+    document.getElementById("main1").classList.add("mainOpenNav");
+    document.body.classList.add("openNavShow");
+  };
+
+  closeNav = () => {
+    document.getElementById("mySidenav").classList.remove("openNav");
+    document.getElementById("main1").classList.remove("mainOpenNav");
+    // document.getElementById("mySidenav").classList.add("closeNav");
+    document.body.classList.remove("openNavShow");
+  };
   render() {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const url = config.visitorURL + "/";
@@ -267,7 +289,306 @@ class Header extends React.Component {
             className="top-mobile-header"
             style={{ borderBottom: "1px solid #c8c8c8" }}
           >
-            <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
+            <div id="mySidenav" class="sidenav">
+              <div className="sidebarTopLogo">
+                <header
+                  className={s.logo}
+                  onClick={() => {
+                    this.closeNav();
+                    this.props.history.push("/app/dashboard");
+                  }}
+                >
+                  <span className={s.logoStyle}>&nbsp;</span> {/* </a> */}
+                </header>
+                <a
+                  href="javascript:void(0)"
+                  class="closebtn"
+                  onClick={this.closeNav}
+                >
+                  &times;
+                </a>
+              </div>
+
+              <ul className={"mobile-sidebar"}>
+                <LinksGroup
+                  onClick={this.closeNav}
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  className="sidebar-nav-links"
+                  header="Dashboard"
+                  link="/app/dashboard"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-dashboard"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  onClick={this.closeNav}
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  className="sidebar-nav-links"
+                  header="My Posts"
+                  link="/app/my/posts"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-shopping-cart"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+                <LinksGroup
+                  onClick={this.closeNav}
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  className="sidebar-nav-links"
+                  header="Manage BioShop"
+                  link="/app/linkinbio"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-th-list"></span>
+                  }
+                  // label="Awesome"
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                {PermissionHelper.validate(["marketplace_access"]) ? (
+                  <LinksGroup
+                    onClick={this.closeNav}
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    className="sidebar-nav-links"
+                    header="Marketplace"
+                    link="/app/marketplace"
+                    isHeader
+                    iconElement={<span className="fa fa-shopping-bag"></span>}
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                ) : null}
+
+                {PermissionHelper.validate(["affiliate_access"]) ? (
+                  <LinksGroup
+                    onClick={this.closeNav}
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    className="sidebar-nav-links"
+                    header="Affiliate - Advertise"
+                    link="/app/campaign"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-bullhorn"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                ) : null}
+
+                <LinksGroup
+                  onClick={this.closeNav}
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  className="sidebar-nav-links"
+                  header="Manage Links"
+                  link="/app/my/links"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-link"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  onClick={this.closeNav}
+                  className="sidebar-nav-links"
+                  header="Media Gallery"
+                  link="/app/gallery"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-picture"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  onClick={this.closeNav}
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  className="sidebar-nav-links"
+                  header="Schedule Post"
+                  link="/app/schedule/posts"
+                  isHeader
+                  iconElement={
+                    <span className="glyphicon glyphicon-th-list"></span>
+                  }
+                  iconName="flaticon-users"
+                  labelColor="info"
+                />
+
+                <LinksGroup
+                  onClick={this.closeNav}
+                  className="sidebar-nav-links "
+                  onActiveSidebarItemChange={(activeItem) =>
+                    this.props.dispatch(changeActiveSidebarItem(activeItem))
+                  }
+                  activeItem={this.props.activeItem}
+                  header="UGC"
+                  isHeader
+                  iconElement={<span className="fa fa-at"></span>}
+                  iconName="flaticon-network"
+                  link="/app/core"
+                  index="core"
+                  mobileScreen
+                  childrenLinks={[
+                    {
+                      header: "Monitor Mentions",
+                      link: "/app/monitor/mentions",
+                    },
+                    {
+                      header: "Monitor Hashtags",
+                      link: "/app/monitor/hash/tags",
+                    },
+                    {
+                      header: "Monitor Profiles",
+                      link: "/app/search/profile",
+                    },
+                  ]}
+                />
+
+                {PermissionHelper.validate(["analytics_access"]) ? (
+                  <LinksGroup
+                    onClick={this.closeNav}
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    className="sidebar-nav-links"
+                    header="Analytics"
+                    link="/app/analysis"
+                    isHeader
+                    iconElement={<span className="fa fa-bar-chart-o"></span>}
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                ) : null}
+
+                <br></br>
+                <div className={`settings-bottom ${s.bottomLinks}`}>
+                  <LinksGroup
+                    onClick={this.closeNav}
+                    className="sidebar-nav-links "
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    header="Settings"
+                    isHeader
+                    labelColor="danger"
+                    iconElement={<span className="fa fa-cogs"></span>}
+                    iconName="flaticon-user"
+                    link="/admin"
+                    index="admin"
+                    exact={false}
+                    childrenLinks={
+                      userInfo?.package?.package_id ===
+                      "61d695e9bccdaf69f46efc66"
+                        ? [
+                            {
+                              header: "Basic Setup",
+                              link: "/app/account/profile",
+                            },
+                            {
+                              header: "Category Setup",
+                              link: "/app/account/categories",
+                            },
+                            {
+                              header: "Affiliate Setup",
+                              link: "/app/account/affiliate",
+                            },
+                            {
+                              header: "Connection Setup",
+                              link: "/app/account/setup",
+                            },
+                            {
+                              header: "Subscription Setup",
+                              link: "/app/subcription/setup",
+                            },
+                            {
+                              header: "Delete Account",
+                              link: "/app/account/delete",
+                            },
+                          ]
+                        : [
+                            {
+                              header: "Basic Setup",
+                              link: "/app/account/profile",
+                            },
+                            {
+                              header: "Category Setup",
+                              link: "/app/account/categories",
+                            },
+                            {
+                              header: "Connection Setup",
+                              link: "/app/account/setup",
+                            },
+                            {
+                              header: "Subscription Setup",
+                              link: "/app/subcription/setup",
+                            },
+                            {
+                              header: "Delete Account",
+                              link: "/app/account/delete",
+                            },
+                          ]
+                    }
+                  />
+                  <LinksGroup
+                    onClick={this.closeNav}
+                    onActiveSidebarItemChange={(activeItem) =>
+                      this.props.dispatch(changeActiveSidebarItem(activeItem))
+                    }
+                    activeItem={this.props.activeItem}
+                    className="sidebar-nav-links"
+                    header="Logout"
+                    link="/logout"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-log-out"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                </div>
+              </ul>
+            </div>
+
+            <div id="main1">
+              <span onClick={this.openNav}>&#9776;</span>
+            </div>
+            {/* <Navbar className="mobile-menu px-4 mt-4 mb-2" color="light" light>
               <NavbarToggler
                 className="ml-auto"
                 onClick={() => this.toggle(3)}
@@ -342,7 +663,7 @@ class Header extends React.Component {
                     />
                   ) : null}
 
-                  {/* <LinksGroup
+                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
                     header="Manage BioShop"
@@ -353,7 +674,7 @@ class Header extends React.Component {
                     }
                     iconName="flaticon-users"
                     labelColor="info"
-                  /> */}
+                  /> 
 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
@@ -367,7 +688,7 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-                  {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
+                   {PermissionHelper.validate(["affiliate_access"]) ? ( 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -382,7 +703,7 @@ class Header extends React.Component {
                     labelColor="info"
                   />
 
-                  {/* ) : null} */}
+                   ) : null} 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
@@ -434,7 +755,7 @@ class Header extends React.Component {
                     labelColor="info"
                   />
 
-                  {/* <LinksGroup
+                  <LinksGroup
                     onClick={() => this.toggle(3)}
                     className="sidebar-nav-links"
                     header="Direct Messaging"
@@ -444,9 +765,9 @@ class Header extends React.Component {
                     // label="Awesome"
                     iconName="flaticon-users"
                     labelColor="info"
-                  /> */}
+                  /> 
 
-                  {/* {PermissionHelper.validate(["affiliate_access"]) ? (
+                  {PermissionHelper.validate(["affiliate_access"]) ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
@@ -460,9 +781,9 @@ class Header extends React.Component {
                       iconName="flaticon-users"
                       labelColor="info"
                     />
-                  ) : null} */}
+                  ) : null} 
 
-                  {/* {PermissionHelper.validate(["marketplace_access"]) ? (
+                 {PermissionHelper.validate(["marketplace_access"]) ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
@@ -474,7 +795,7 @@ class Header extends React.Component {
                       iconName="flaticon-users"
                       labelColor="info"
                     />
-                  ) : null} */}
+                  ) : null} 
 
                   <LinksGroup
                     onClick={() => this.toggle(3)}
@@ -513,7 +834,8 @@ class Header extends React.Component {
                     iconName="flaticon-users"
                     labelColor="info"
                   />
-                  {userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66" ? (
+                  {userInfo?.package?.package_id ===
+                  "61d695e9bccdaf69f46efc66" ? (
                     <LinksGroup
                       onClick={() => this.toggle(3)}
                       className="sidebar-nav-links"
@@ -577,7 +899,7 @@ class Header extends React.Component {
                   />
                 </Nav>
               </Collapse>
-            </Navbar>
+            </Navbar> */}
 
             <div className="top-logo">
               <div
@@ -785,6 +1107,7 @@ function mapStateToProps(store) {
     navbarType: store.layout.navbarType,
     navbarColor: store.layout.navbarColor,
     currentUser: store.auth.currentUser,
+    activeItem: store.navigation.activeItem,
   };
 }
 export default withRouter(connect(mapStateToProps)(Header));

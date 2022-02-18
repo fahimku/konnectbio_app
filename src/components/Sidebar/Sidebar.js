@@ -300,9 +300,9 @@ class Sidebar extends React.Component {
                   iconName="flaticon-user"
                   link="/admin"
                   index="admin"
-                  exact={false}
+                  // exact={false}
                   childrenLinks={
-                    userInfo?.package?.package_id ==="61d695e9bccdaf69f46efc66"
+                    userInfo?.package?.package_id === "61d695e9bccdaf69f46efc66"
                       ? [
                           {
                             header: "Basic Setup",

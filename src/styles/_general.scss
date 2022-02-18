@@ -894,3 +894,84 @@ code.sm-color {
   margin-right: 5px;
   margin-top: 5px;
 }
+/*********sidebar************/
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+  padding-top: 10px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  line-height: 30px !important;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 30px;
+  line-height: 30px;
+  padding: 0px;
+}
+.sidenav .icon {
+  top: 5px !important;
+}
+#main1 {
+  // transition: width 1s;
+  // padding: 16px;
+}
+#main1 span {
+  padding: 6px 8px;
+  display: block;
+  font-size: 22px;
+  font-family: "Nunito Sans", sans-serif !important;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+.openNav {
+  width: 80%;
+  margin-left: 0px;
+}
+.closeNav {
+  // width: 0px;
+  // margin-left: 0px;
+}
+.mainOpenNav {
+  opacity: 0.9;
+  background: rgba(119, 119, 119, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 1000;
+}
+.mainCloseNav {
+}
+.openNavShow {
+  overflow: hidden;
+}
+.sidebarTopLogo {
+  position: relative;
+}
+// .closeNav {
+//   transition: all 0.35s ease;
+// }

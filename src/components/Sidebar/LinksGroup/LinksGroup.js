@@ -181,21 +181,31 @@ class LinksGroup extends Component {
               <Collapse className={s.panel} isOpen={isOpen}>
                 <ul>
                   {this.props.childrenLinks &&
-                    this.props.childrenLinks.map((child, ind) => (
-                      <LinksGroup
-                        onActiveSidebarItemChange={
-                          this.props.onActiveSidebarItemChange
-                        }
-                        activeItem={this.props.activeItem}
-                        header={child.header}
-                        link={child.link}
-                        index={child.index}
-                        childrenLinks={child.childrenLinks}
-                        deep={this.props.deep + 1}
-                        key={ind} // eslint-disable-line
-                        onClick={this.props.onClick && this.props.onClick}
-                      />
-                    ))}
+                    this.props.childrenLinks.map((child, ind) =>
+                      !this.props.mobileScreen ? (
+                        <LinksGroup
+                          onActiveSidebarItemChange={
+                            this.props.onActiveSidebarItemChange
+                          }
+                          activeItem={this.props.activeItem}
+                          header={child.header}
+                          link={child.link}
+                          index={child.index}
+                          childrenLinks={child.childrenLinks}
+                          deep={this.props.deep + 1}
+                          key={ind} // eslint-disable-line
+                          onClick={this.props.onClick && this.props.onClick}
+                        />
+                      ) : (
+                        <NavLink
+                          to={child.link}
+                          activeClassName={s.headerLinkActive}
+                          onClick={this.props.onClick && this.props.onClick}
+                        >
+                          {child.header}
+                        </NavLink>
+                      )
+                    )}
                 </ul>
               </Collapse>
             </li>
