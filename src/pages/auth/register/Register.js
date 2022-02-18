@@ -500,11 +500,10 @@ class Register extends React.Component {
                                 onChange={this.changeName}
                                 type="text"
                                 name="name"
-                                placeholder={`${
-                                  this.state.accountType === "influencer"
-                                    ? "Name"
-                                    : "Company Name"
-                                }`}
+                                placeholder={`${this.state.accountType === "influencer"
+                                  ? "Name"
+                                  : "Company Name"
+                                  }`}
                               />
                             </div>
                             <div className="form-group">
@@ -663,29 +662,39 @@ class Register extends React.Component {
                                 color="inverse"
                                 className="register_button"
                                 size="lg"
+                                disabled={this.props.isFetching ? true : false}
                               >
                                 Previous
                               </Button>
                             )}
                           </div>
-
                           <div
-                            className={` ${
-                              this.state.step1 ? "col-12" : "col-6"
-                            }`}
+                            className={` ${this.state.step1 ? "col-12" : "col-6"
+                              }`}
                           >
-                            <Button
-                              type="submit"
-                              color="inverse"
-                              className="register_button"
-                              size="lg"
-                            >
-                              {this.props.isFetching
-                                ? "Loading..."
-                                : this.state.step3
-                                ? "Finish"
-                                : " Next"}
-                            </Button>
+                            {this.props.isFetching ?
+                              <Button
+                                type="button"
+                                color="inverse"
+                                className="register_button"
+                                size="lg"
+
+                              >
+                                Loading
+                              </Button>
+                              :
+                              <Button
+                                type="submit"
+                                color="inverse"
+                                className="register_button"
+                                size="lg"
+                              >
+                                {this.state.step3
+                                  ? "Finish"
+                                  : " Next"
+                                }
+                              </Button>
+                            }
                           </div>
                         </div>
 
