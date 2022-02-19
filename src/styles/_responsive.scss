@@ -818,15 +818,15 @@
     display: none !important;
   }
 
-  .main-container .left-top-bar {
-    display: none;
-  }
+  // .main-container .left-top-bar {
+  //   display: none;
+  // }
 
   .left-top-bar {
     border-bottom: none;
-    justify-content: flex-end !important;
+    justify-content: start;
     padding: 0;
-    display: none;
+    margin-top:5px;
   }
 
   .top-mobile-header :nth-child(3) {

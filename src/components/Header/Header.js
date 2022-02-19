@@ -915,7 +915,7 @@ class Header extends React.Component {
                 {/* </NavLink> */}
               </div>
             </div>
-            <TopBar text={true} username={this.state.username} />
+            {/* <TopBar text={true} username={this.state.username} /> */}
           </div>
         </div>
         <div className="header-ipad header bg-white">
