@@ -95,7 +95,7 @@ function HashtagsList({ createMedia, title }) {
               style={{ display: "none" }}
               type="file"
               accept={accept}
-              multiple
+              multiple={false}
               onChange={(e) => {
                 getFilesFromEvent(e).then((chosenFiles) => {
                   onFiles(chosenFiles);

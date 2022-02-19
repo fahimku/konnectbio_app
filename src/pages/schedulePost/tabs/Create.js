@@ -135,7 +135,7 @@ function HashtagsList({ createMedia, title }) {
               style={{ display: "none" }}
               type="file"
               accept={accept}
-              multiple
+              multiple={false}
               onChange={(e) => {
                 getFilesFromEvent(e).then((chosenFiles) => {
                   onFiles(chosenFiles);
@@ -188,6 +188,7 @@ function HashtagsList({ createMedia, title }) {
                   getFilesFromEvent={getFilesFromEvent}
                   accept="image/*"
                   maxFiles={1}
+                  multiple={false}
                   // inputContent="Drop A File"
                   addClassNames={{
                     dropzone: "drag-drop-ift",

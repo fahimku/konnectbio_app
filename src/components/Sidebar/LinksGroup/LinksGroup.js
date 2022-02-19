@@ -178,7 +178,7 @@ class LinksGroup extends Component {
                 <b className={["fa fa-angle-left", s.caret].join(" ")} />
               </a>
               {/* eslint-enable */}
-              <Collapse className={s.panel} isOpen={isOpen}>
+              <Collapse className={`mobile-submenu ${s.panel}`} isOpen={isOpen}>
                 <ul>
                   {this.props.childrenLinks &&
                     this.props.childrenLinks.map((child, ind) =>

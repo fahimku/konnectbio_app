@@ -946,6 +946,14 @@ code.sm-color {
     font-size: 18px;
   }
 }
+@media screen and (max-width: 668px) {
+  .mobile-submenu ul a {
+    padding: 4px 20px 4px 36px !important;
+  }
+  .mobile-submenu ul {
+    padding-top: 6px !important;
+  }
+}
 .openNav {
   width: 80%;
   margin-left: 0px;
