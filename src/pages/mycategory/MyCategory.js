@@ -46,6 +46,7 @@ class MyCategory extends React.Component {
       plan: "Yearly",
       config: [],
       unitAmount: "",
+      catLoading: true,
     };
   }
 
@@ -159,6 +160,7 @@ class MyCategory extends React.Component {
         const saveCategories = [];
         //const myCategories = response.data.message;
         const optionCategories = response.data.message;
+
         optionCategories.map(
           ({ parent_id, category_name, image_url, editable, category_id }) => {
             return saveCategories.push({
@@ -170,11 +172,22 @@ class MyCategory extends React.Component {
             });
           }
         );
+
         this.setState({
           // defaultCategory: myCategories,
           saveCategories: saveCategories,
           brandCategory: saveCategories,
         });
+
+        {
+          this.props.catTab &&
+            this.setState({ catLoading: false }, () => {
+              this.props.catTab(
+                this.state.brandCategory,
+                this.state.catLoading
+              );
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -364,9 +377,17 @@ class MyCategory extends React.Component {
         <div className="profile-page account-setup">
           <div className={this.props.page === "brand" ? "" : "container-fluid"}>
             {this.props.page === "brand" ? null : (
-              <div className="mt-4 row">
+              <div
+                className={`row ${
+                  this.props.type === "marketcategory" ? "" : "mt-4"
+                }`}
+              >
                 <div class="col-md-12">
-                  <h4 class="page-title">Category Setup</h4>
+                  <h4 class="page-title">
+                    {this.props.type === "marketcategory"
+                      ? "Category"
+                      : "Category Setup"}
+                  </h4>
                 </div>
               </div>
             )}
@@ -496,162 +517,159 @@ class MyCategory extends React.Component {
                   </Row>
                 </div> */}
 
-                {!this.props.hideCategory &&
-                  <div className="profile_box_main col-md-8">
-                    <div className="dash_block_profile">
-                      <div className="dash_content_profile">
-                        <form onSubmit={this.handleSubmit}>
-                          <p
-                            style={{
-                              color: "gray",
-                              borderBottom: "1px solid lightgray",
-                              paddingBottom: 10,
-                            }}
-                          >
-                            Number of categories in{" "}
-                            {userInfo1.package.package_name} plan is{" "}
-                            {this.state.categoryLimit}
-                          </p>
-                          <Row>
-                            <Col md={12}>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                }}
-                              >
-                                <label>Add Category</label>
-                                <p>
-                                  ({this.state.saveCategories.length}/
-                                  {this.state.categoryLimit})
-                                </p>
-                              </div>
-                              {/* <label>Add Category</label>
+                <div className="profile_box_main col-md-8">
+                  <div className="dash_block_profile">
+                    <div className="dash_content_profile">
+                      <form onSubmit={this.handleSubmit}>
+                        <p
+                          style={{
+                            color: "gray",
+                            borderBottom: "1px solid lightgray",
+                            paddingBottom: 10,
+                          }}
+                        >
+                          Number of categories in{" "}
+                          {userInfo1.package.package_name} plan is{" "}
+                          {this.state.categoryLimit}
+                        </p>
+                        <Row>
+                          <Col md={12}>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                              }}
+                            >
+                              <label>Add Category</label>
+                              <p>
+                                ({this.state.saveCategories.length}/
+                                {this.state.categoryLimit})
+                              </p>
+                            </div>
+                            {/* <label>Add Category</label>
                             <div className="text-right mb-1">
                               ({this.state.saveCategories.length}/
                               {this.state.categoryLimit})
                             </div> */}
-                              {/* <label>Select Category: </label> */}
-                              {this.state.saveCategories === "" ? null : (
-                                <Select
-                                  isMulti={true}
-                                  name="category"
-                                  className="selectCustomization"
-                                  options={this.state?.myCategory}
-                                  value={this.state.saveCategories}
-                                  placeholder="Select Category"
-                                  onChange={(options, e) =>
-                                    this.handleSelect(e, options)
-                                  }
-                                />
-                              )}
-                              <span className="text-danger">
-                                {this.state.categoryError}
-                              </span>
-
-                              {this.state.saveCategories.length === 0 ? (
-                                <Row>
-                                  <span className="ml-4 mt-2 mb-2">
-                                    No Category Selected
-                                  </span>
-                                </Row>
-                              ) : (
-                                <SortableList
-                                  items={this.state.saveCategories}
-                                  onSortEnd={this.onSortEnd}
-                                  axis="xy"
-                                  lockToContainerEdges={true}
-                                  lockOffset="0%"
-                                  distance={1}
-                                />
-                              )}
-                            </Col>
-                          </Row>
-
-                          <Row>
-                            <Col md={5} xl={3}>
-                              <Button
-                                variant="primary"
-                                type="submit"
-                                className="category-btn btn-block"
-                                disabled={
-                                  // this.state.saveCategories.length &&
-                                  !this.state.loading ? false : true
+                            {/* <label>Select Category: </label> */}
+                            {this.state.saveCategories === "" ? null : (
+                              <Select
+                                isMulti={true}
+                                name="category"
+                                className="selectCustomization"
+                                options={this.state?.myCategory}
+                                value={this.state.saveCategories}
+                                placeholder="Select Category"
+                                onChange={(options, e) =>
+                                  this.handleSelect(e, options)
                                 }
-                              >
-                                Save
-                              </Button>
-                            </Col>
-                          </Row>
-                        </form>
+                              />
+                            )}
+                            <span className="text-danger">
+                              {this.state.categoryError}
+                            </span>
+
+                            {this.state.saveCategories.length === 0 ? (
+                              <Row>
+                                <span className="ml-4 mt-2 mb-2">
+                                  No Category Selected
+                                </span>
+                              </Row>
+                            ) : (
+                              <SortableList
+                                items={this.state.saveCategories}
+                                onSortEnd={this.onSortEnd}
+                                axis="xy"
+                                lockToContainerEdges={true}
+                                lockOffset="0%"
+                                distance={1}
+                              />
+                            )}
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col md={5} xl={3}>
+                            <Button
+                              variant="primary"
+                              type="submit"
+                              className="category-btn btn-block"
+                              disabled={
+                                // this.state.saveCategories.length &&
+                                !this.state.loading ? false : true
+                              }
+                            >
+                              Save
+                            </Button>
+                          </Col>
+                        </Row>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                {userInfo1.package.subscription_type !== "Trial" ? (
+                  <div className="profile_box_main col-md-4">
+                    <div className="dash_block_profile">
+                      <div className="dash_content_profile">
+                        <BuySubscription
+                          subscribeServices={this.onSubscribe}
+                          heading="Buy Additional Categories"
+                          name="Category"
+                          showInterval={this.state.showInterval}
+                          changePlan={(v) => {
+                            const planCut = v
+                              .slice(0, v.length - 2)
+                              .toLocaleLowerCase();
+                            const getPrice = this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == planCut
+                              )[0];
+                            this.setState({ priceId: getPrice.price_id });
+                            this.setState({ plan: v });
+                            this.setState({
+                              unitAmount: getPrice.unit_amount / 3,
+                            });
+                          }}
+                          monthly={
+                            this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == "month"
+                              )[0]?.unit_amount / 3
+                          }
+                          yearly={
+                            this.state.config
+                              .filter((item) => item.product_name == "Category")
+                              .filter(
+                                (subItem) => subItem.interval == "year"
+                              )[0]?.unit_amount / 3
+                          }
+                          plan={this.state.plan}
+                          unitAmount={this.state.unitAmount}
+                          usageLimit={this.state.categoryLimit}
+                        />
                       </div>
                     </div>
                   </div>
-                }
-                {!this.props.hideUpgradeCategory && <>
-                  {userInfo1.package.subscription_type !== "Trial" ? (
-                    <div className="profile_box_main col-md-4">
-                      <div className="dash_block_profile">
-                        <div className="dash_content_profile">
-                          <BuySubscription
-                            subscribeServices={this.onSubscribe}
-                            heading="Buy Additional Categories"
-                            name="Category"
-                            showInterval={this.state.showInterval}
-                            changePlan={(v) => {
-                              const planCut = v
-                                .slice(0, v.length - 2)
-                                .toLocaleLowerCase();
-                              const getPrice = this.state.config
-                                .filter((item) => item.product_name == "Category")
-                                .filter(
-                                  (subItem) => subItem.interval == planCut
-                                )[0];
-                              this.setState({ priceId: getPrice.price_id });
-                              this.setState({ plan: v });
-                              this.setState({
-                                unitAmount: getPrice.unit_amount / 3,
-                              });
-                            }}
-                            monthly={
-                              this.state.config
-                                .filter((item) => item.product_name == "Category")
-                                .filter(
-                                  (subItem) => subItem.interval == "month"
-                                )[0]?.unit_amount / 3
-                            }
-                            yearly={
-                              this.state.config
-                                .filter((item) => item.product_name == "Category")
-                                .filter(
-                                  (subItem) => subItem.interval == "year"
-                                )[0]?.unit_amount / 3
-                            }
-                            plan={this.state.plan}
-                            unitAmount={this.state.unitAmount}
-                            usageLimit={this.state.categoryLimit}
-                          />
-                        </div>
-                      </div>
-                    </div>) : (
-                    <div className="profile_box_main col-md-4">
-                      <div className="dash_block_profile">
-                        <div className="dash_content_profile">
-                          <p>Buy paid subscription to add more categories</p>
-                          <Button
-                            variant="primary"
-                            type="submit"
-                            className="btn-block mt-2"
-                            onClick={() => history.push("/app/subcription/setup")}
-                          >
-                            Subscribe
-                          </Button>
-                        </div>
+                ) : (
+                  <div className="profile_box_main col-md-4">
+                    <div className="dash_block_profile">
+                      <div className="dash_content_profile">
+                        <p>Buy paid subscription to add more categories</p>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          className="btn-block mt-2"
+                          onClick={() => history.push("/app/subcription/setup")}
+                        >
+                          Subscribe
+                        </Button>
                       </div>
                     </div>
-                  )}
-                </>
-                }
+                  </div>
+                )}
               </div>
             </div>
           </div>

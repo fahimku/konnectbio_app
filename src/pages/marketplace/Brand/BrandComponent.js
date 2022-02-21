@@ -109,21 +109,22 @@ class BrandComponent extends React.Component {
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">{this.state.title}</h4>
-          <MyCategory
+          {/* <MyCategory
           hideUpgradeCategory={window.innerWidth >= 1251 ? false : true}
         //  hideCategory={window.innerWidth >= 1251 ?  false: true}
             page="brand"
             getCategory={this.getCategory}
-          />
+          /> */}
           <div className="brand_container_main container">
             <Row>
               <div className="profile_box_main col-md-8">
                 <div
-                  className={`brand-section dash_block_profile ${
-                    this.state.brandCategory.length === 0
-                      ? "brandcatdisable"
-                      : ""
-                  }`}
+                  // className={`brand-section dash_block_profile ${
+                  //   this.state.brandCategory.length === 0
+                  //     ? "brandcatdisable"
+                  //     : ""
+                  // }`}
+                  className={"brand-section dash_block_profile"}
                 >
                   <div className="dash_content_profile">
                     <form onSubmit={this.handleSubmit}>
@@ -199,11 +200,11 @@ class BrandComponent extends React.Component {
               </div>
             </Row>
           </div>
-          <MyCategory
+          {/* <MyCategory
             hideUpgradeCategory={window.innerWidth <= 1251 ? false : true}
             hideCategory={true}
             page="brand"
-            getCategory={this.getCategory} />
+            getCategory={this.getCategory} /> */}
         </div>
       </React.Fragment>
     );
