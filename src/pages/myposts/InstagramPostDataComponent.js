@@ -68,7 +68,7 @@ function InstagramPostDataComponent({
     { value: "comments_count", label: "COMMENTS" },
     { value: "engagement", label: "ENGAGEMENT" },
     { value: "impressions", label: "IMPRESSIONS" },
-    { value: "reach", label: "REACH" }
+    { value: "reach", label: "REACH" },
   ];
   const sortOrderOptions = [
     { value: "asc", label: "ASC" },
@@ -92,7 +92,7 @@ function InstagramPostDataComponent({
           <Loader size={30} />
         ) : instagramPostData?.insta_data?.length > 0 ? (
           <>
-            {!instagramPostData?.pagination?.next ? (
+            {true ? (
               <Row className="post-analytics-tab mb-4">
                 <Col xs={12} xl={12} md={12}>
                   <form onSubmit={onSubmitData}>
@@ -210,7 +210,7 @@ function InstagramPostDataComponent({
               loadMore={() =>
                 getInstagramPostData(instagramPostData?.pagination?.next, true)
               }
-              hasMore={instagramPostData?.pagination?.next ? true : false}
+              // hasMore={instagramPostData?.pagination?.next ? true : false}
               threshold={5}
               loader={
                 <div className="col-md-12">

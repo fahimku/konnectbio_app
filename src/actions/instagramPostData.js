@@ -13,6 +13,7 @@ export const getInstagramPostData =
       `${config.baseURLApi}/graph/ig/analytics/media`,
       {
         url: url,
+        limit: 300,
         next_media: next_media,
       }
     );
@@ -21,20 +22,17 @@ export const getInstagramPostData =
         type: GET_INSTAGRAM_POST_PAGINATION,
         payload: {
           ...res.data,
-          message:{
+          message: {
             ...res.data.message,
-            data:[
-              ...res.data.message.data,
-
-            ].map((item,i)=>{
+            data: [...res.data.message.data].map((item, i) => {
               return {
                 ...item,
-                engagement:item.insights[0].engagement,
-                impressions:item.insights[1].impressions,
-                reach:item.insights[2].reach,
-              }
-            })
-          }
+                engagement: item.insights[0].engagement,
+                impressions: item.insights[1].impressions,
+                reach: item.insights[2].reach,
+              };
+            }),
+          },
         },
       });
     } else {
@@ -42,20 +40,17 @@ export const getInstagramPostData =
         type: GET_INSTAGRAM_POST,
         payload: {
           ...res.data,
-          message:{
+          message: {
             ...res.data.message,
-            data:[
-              ...res.data.message.data,
-
-            ].map((item,i)=>{
+            data: [...res.data.message.data].map((item, i) => {
               return {
                 ...item,
-                engagement:item.insights[0].engagement,
-                impressions:item.insights[1].impressions,
-                reach:item.insights[2].reach,
-              }
-            })
-          }
+                engagement: item.insights[0].engagement,
+                impressions: item.insights[1].impressions,
+                reach: item.insights[2].reach,
+              };
+            }),
+          },
         },
       });
     }

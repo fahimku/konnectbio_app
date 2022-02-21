@@ -48,7 +48,7 @@ function InstagramDataComponent({
   window.addEventListener("scroll", checkScrollTop);
 
   useEffect(() => {
-    getInstagramAnalytic(null, null, 1000).then(() => {
+    getInstagramAnalytic(null, null, 300).then(() => {
       setClearLoading(false);
     });
   }, []);
@@ -93,8 +93,8 @@ function InstagramDataComponent({
     { value: 50, label: "50" },
     { value: 100, label: "100" },
     { value: 300, label: "300" },
-    { value: 500, label: "500" },
-    { value: 1000, label: "1000" },
+    // { value: 500, label: "500" },
+    // { value: 1000, label: "1000" },
   ];
 
   // const dateRangePickerChanger = (value, dataString) => {
