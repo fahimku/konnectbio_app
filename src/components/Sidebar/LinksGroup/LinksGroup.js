@@ -70,6 +70,7 @@ class LinksGroup extends Component {
       if (this.props.isHeader) {
         return (
           <li
+            id={this.props.id}
             className={classnames(
               "link-wrapper",
               s.headerLink,
@@ -108,7 +109,8 @@ class LinksGroup extends Component {
         );
       }
       return (
-        <li>
+        <li
+            id={this.props.id}>
           <NavLink
             to={this.props.link}
             activeClassName={s.headerLinkActive}
@@ -138,6 +140,7 @@ class LinksGroup extends Component {
           const { match } = params;
           return (
             <li
+            id={this.props.id}
               className={classnames(
                 "link-wrapper",
                 { [s.headerLink]: this.props.isHeader },
@@ -151,9 +154,8 @@ class LinksGroup extends Component {
                   "d-flex"
                 )}
                 style={{
-                  paddingLeft: `${
-                    this.props.deep == 0 ? 50 : 26 + 10 * (this.props.deep - 1)
-                  }px`,
+                  paddingLeft: `${this.props.deep == 0 ? 50 : 26 + 10 * (this.props.deep - 1)
+                    }px`,
                 }}
                 onClick={() => {
                   this.togglePanelCollapse(this.props.link);
@@ -187,6 +189,7 @@ class LinksGroup extends Component {
                           onActiveSidebarItemChange={
                             this.props.onActiveSidebarItemChange
                           }
+                          id={this.props.id + '-'+ ind}
                           activeItem={this.props.activeItem}
                           header={child.header}
                           link={child.link}
@@ -198,6 +201,8 @@ class LinksGroup extends Component {
                         />
                       ) : (
                         <NavLink
+                          id={ind}
+                          key={ind}
                           to={child.link}
                           activeClassName={s.headerLinkActive}
                           onClick={this.props.onClick && this.props.onClick}
