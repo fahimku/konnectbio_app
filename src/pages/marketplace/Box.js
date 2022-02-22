@@ -7,7 +7,6 @@ import Loader from "../../components/Loader/Loader";
 export default function Box({ item, addCampaignToShop, index }) {
   const [addCampaign, setAddCampaign] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const confirmAddToCampaign = (campaignId, categoryId, userId) => {
     Swal.fire({
       title: `Are you sure you want to add this campaign?`,
