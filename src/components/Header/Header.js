@@ -951,6 +951,7 @@ class Header extends React.Component {
           </div>
           <div className="right-top-bar">
             <button
+              id='support-button'
               className="btn btn-primary btn-sm"
               onClick={() => {
                 this.setState({

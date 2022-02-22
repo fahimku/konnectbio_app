@@ -37,10 +37,7 @@ function AllMarketplace({
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brand, setBrand] = useState({ value: "all", label: "ALL" });
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
-  });
+  const [sortBy, setSortBy] = useState({ value: "commission",label: "COMMISSION"});
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -67,7 +64,7 @@ function AllMarketplace({
       setLoading(false);
     });
     getBrands();
-    return () => {};
+    return () => { };
   }, []);
 
   useEffect(() => {
@@ -103,7 +100,7 @@ function AllMarketplace({
         }
       );
     }
-    return () => {};
+    return () => { };
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -399,9 +396,7 @@ function AllMarketplace({
                   activeClassName={"active"}
                 />
               </>
-            ) : (
-              <NoDataFound />
-            )
+            ) : (<NoDataFound />)
           ) : (
             <Loader size={40} />
           )}
@@ -409,23 +404,6 @@ function AllMarketplace({
       </div>
     </>
   );
-  // } else {
-  //   return (
-  //     <div className="col-md-12">
-  //       <div
-  //         style={{
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           margin: 5,
-  //           height: 300,
-  //         }}
-  //       >
-  //         <i className="la la-spinner la-spin" style={{ fontSize: 40 }} />
-  //       </div>
-  //     </div>
-  //   );
-  // }
 }
 function mapStateToProps({ marketPlace, brands }) {
   return {
