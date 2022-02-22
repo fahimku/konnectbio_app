@@ -983,3 +983,26 @@ code.sm-color {
 // .closeNav {
 //   transition: all 0.35s ease;
 // }
+
+.brandrow {
+  align-items: center;
+  min-height: 45px;
+}
+.brandrow .form-check-input {
+  top: -10px;
+}
+.brandInput {
+  align-items: baseline;
+}
+.brandInput .form-control {
+  min-height: 30px;
+}
+.edit-icon {
+  cursor: pointer;
+  left: -20px;
+  position: relative;
+}
+.error-brand {
+  position: absolute;
+  font-size: 13px;
+}
