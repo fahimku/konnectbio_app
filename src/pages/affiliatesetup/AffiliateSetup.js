@@ -3,6 +3,8 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import s from "./analysis.module.scss";
 import AffiliateBrand from "./AffiliateBrand/AffiliateBrand";
+import AffiliatePayment from "./AffiliatePayment/AffiliatePayment";
+import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
 
 class AffiliateSetup extends React.Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class AffiliateSetup extends React.Component {
     this.state = {
       activeSecondTab: "brandtab",
       username: userInfo.username,
-      packageName: userInfo.package.package_name,
+      packageId: userInfo.package.package_id,
     };
   }
   componentDidMount() {
@@ -53,6 +55,30 @@ class AffiliateSetup extends React.Component {
                         <span>Brand</span>
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "balance",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("balance");
+                        }}
+                      >
+                        <span>Balance</span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "transaction",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("transaction");
+                        }}
+                      >
+                        <span>Transactions</span>
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"
@@ -61,6 +87,16 @@ class AffiliateSetup extends React.Component {
                     <TabPane tabId="brandtab">
                       {this.state.activeSecondTab === "brandtab" ? (
                         <AffiliateBrand />
+                      ) : null}
+                    </TabPane>
+                    <TabPane tabId="balance">
+                      {this.state.activeSecondTab === "balance" ? (
+                        <AffiliatePayment />
+                      ) : null}
+                    </TabPane>
+                    <TabPane tabId="transaction">
+                      {this.state.activeSecondTab === "transaction" ? (
+                        <AffiliateTransaction />
                       ) : null}
                     </TabPane>
                   </TabContent>

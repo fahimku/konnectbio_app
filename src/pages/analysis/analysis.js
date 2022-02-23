@@ -20,7 +20,7 @@ class Analysis extends React.Component {
     this.state = {
       activeSecondTab: "tab20",
       username: username,
-      packageName: userInfo.package.package_name,
+      packageName: userInfo.package.package_id,
     };
   }
   componentDidMount() {
@@ -63,7 +63,7 @@ class Analysis extends React.Component {
                         <span>Summary</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName !=="61c02d43f40bec74fac2c9a0" ? (
+                    {this.state.packageName !== "61c02d43f40bec74fac2c9a0" ? (
                       <NavItem>
                         <NavLink
                           className={classnames({
@@ -102,7 +102,7 @@ class Analysis extends React.Component {
                         <span>Publish Performance</span>
                       </NavLink>
                     </NavItem>
-                    {this.state.packageName ==="61d695e9bccdaf69f46efc66" ? (
+                    {this.state.packageName === "61d695e9bccdaf69f46efc66" ? (
                       <NavItem>
                         <NavLink
                           className={classnames({

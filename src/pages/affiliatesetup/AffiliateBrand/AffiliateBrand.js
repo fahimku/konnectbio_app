@@ -78,7 +78,6 @@ class AffiliateBrand extends React.Component {
   };
 
   render() {
-    console.log(this.state.is_affiliate_enabled, "checkDisabled");
     return (
       <React.Fragment>
         <div className="container-fluid">
