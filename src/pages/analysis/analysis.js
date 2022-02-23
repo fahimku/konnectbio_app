@@ -11,7 +11,6 @@ import queryString from "query-string";
 import CampaignDataComponent from "./CampaignPerformance/CampaignDataComponent";
 
 class Analysis extends React.Component {
-
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -93,7 +92,7 @@ class Analysis extends React.Component {
                       </NavLink>
                     </NavItem>
 
-                    {this.state.packageName !== "61d695e9bccdaf69f46efc66" &&
+                    {this.state.packageName !== "61d695e9bccdaf69f46efc66" && (
                       <NavItem>
                         <NavLink
                           className={classnames({
@@ -106,7 +105,7 @@ class Analysis extends React.Component {
                           <span>Campaign Performance</span>
                         </NavLink>
                       </NavItem>
-                    }
+                    )}
 
                     {this.state.packageName === "61d695e9bccdaf69f46efc66" ? (
                       <NavItem>
@@ -118,7 +117,7 @@ class Analysis extends React.Component {
                             this.toggleSecondTabs("tab25");
                           }}
                         >
-                          <span>Advertise Performance</span>
+                          <span>Campaign Performance</span>
                         </NavLink>
                       </NavItem>
                     ) : null}
@@ -194,9 +193,7 @@ class Analysis extends React.Component {
                       {this.state.activeSecondTab === "tab23" ? (
                         <>
                           <div className="container-fluid">
-                            <h4 className="page-title">
-                              Campaign Performance
-                            </h4>
+                            <h4 className="page-title">Campaign Performance</h4>
                             <CampaignDataComponent
                               username={this.state.username}
                             />

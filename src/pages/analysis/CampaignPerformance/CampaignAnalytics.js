@@ -13,7 +13,7 @@ class CampaignAnalytics extends React.Component {
     return (
       <>
         <div className="container-fluid">
-          <h4 className="page-title">Affiliate Advertise Performance</h4>
+          <h4 className="page-title">Campaign Performance</h4>
           <AffiliateDataComponent username={this.state.username} />
           {/* {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? (
             <CampaignDataComponent username={this.state.username} />
