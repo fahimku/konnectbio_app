@@ -80,14 +80,14 @@ export default function Box({ data }) {
     setExpanded2(!expanded2);
   };
   function renderMedia(item) {
-    if (item.media_type == "IMAGE") {
+    if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
       return (
         <CardMedia
           component="img"
           height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
-            item.media_type == "CAROUSEL_ALBUM"
+            item.media_type === "CAROUSEL_ALBUM"
               ? item.children?.data[0].media_url
               : item.media_url
           }
@@ -95,7 +95,7 @@ export default function Box({ data }) {
         />
       );
     }
-    if (item.media_type == "VIDEO") {
+    if (item.media_type === "VIDEO") {
       return (
         <>
           <button
@@ -214,12 +214,15 @@ export default function Box({ data }) {
               </a>
             </Typography>
           }
-          // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
+        // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
         />
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
-          {data.media_type == "CAROUSEL_ALBUM" ? (
-            renderCarousel(data)
+          {data.media_type === "CAROUSEL_ALBUM" ? (
+            <a target="_blank" href={data.permalink}>
+              {renderMedia(data)}
+            </a>
+            //renderCarousel(data)
           ) : (
             <a target="_blank" href={data.permalink}>
               {renderMedia(data)}

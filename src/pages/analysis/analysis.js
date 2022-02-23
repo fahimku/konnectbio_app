@@ -11,6 +11,7 @@ import queryString from "query-string";
 import CampaignDataComponent from "./CampaignPerformance/CampaignDataComponent";
 
 class Analysis extends React.Component {
+
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let username = userInfo.username;
@@ -23,6 +24,7 @@ class Analysis extends React.Component {
       packageName: userInfo.package.package_id,
     };
   }
+
   componentDidMount() {
     const getParam = queryString.parse(window.location.search);
     if (getParam.type === "mypost") {
@@ -90,18 +92,22 @@ class Analysis extends React.Component {
                         <span>Bioshop Performance</span>
                       </NavLink>
                     </NavItem>
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeSecondTab === "tab23",
-                        })}
-                        onClick={() => {
-                          this.toggleSecondTabs("tab23");
-                        }}
-                      >
-                        <span>Publish Performance</span>
-                      </NavLink>
-                    </NavItem>
+
+                    {this.state.packageName !== "61d695e9bccdaf69f46efc66" &&
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab23",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab23");
+                          }}
+                        >
+                          <span>Campaign Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    }
+
                     {this.state.packageName === "61d695e9bccdaf69f46efc66" ? (
                       <NavItem>
                         <NavLink
@@ -189,7 +195,7 @@ class Analysis extends React.Component {
                         <>
                           <div className="container-fluid">
                             <h4 className="page-title">
-                              Affiliate Publish Performance
+                              Campaign Performance
                             </h4>
                             <CampaignDataComponent
                               username={this.state.username}

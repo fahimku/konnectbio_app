@@ -33,7 +33,7 @@ class Affiliate extends React.Component {
     // this.setState({
     //   activeSecondTab: "tab24",
     // });
-    if (this.state.package_id !=="61c02e2ff40bec74fac2ca09") {
+    if (this.state.package_name !=="61c02e2ff40bec74fac2ca09") {
       this.getMyBrands();
     }
   }
@@ -233,7 +233,6 @@ class Affiliate extends React.Component {
                       />
                     ) : null}
                   </TabPane>
-
                   <TabPane tabId="schedule-campaign">
                     {this.state.activeTab === "schedule-campaign" ? (
                       <AffiliateScheduleCampaign

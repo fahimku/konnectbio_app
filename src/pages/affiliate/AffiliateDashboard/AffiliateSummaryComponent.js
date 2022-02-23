@@ -56,115 +56,110 @@ class AffiliateSummaryComponent extends React.Component {
     return (
       <>
         <div className={`summary_container_main ${this.props.className ? this.props.className : ""}`}>
-            <div className="summary_box_main"
-              // className={`summary_box_main ${
-              //   this.props.className ? this.props.className : "col-md-12"
-              // }`}
-            >
-              <div className="summary_block_profile">
-                <div className="summary_content_profile">
-                  <h4 className="page-title">Affiliate Advertise Summary</h4>
-                  <label>Select Start Date / End Date</label>
-                  <RangePicker
-                    disabledDate={this.disabledDate}
-                    key={4}
-                    defaultValue={[
-                      moment(this.state.fromDate),
-                      moment(this.state.toDate),
-                    ]}
-                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                    allowClear={false}
-                    ranges={{
-                      Today: [moment(), moment()],
-                      Tomorrow: [
-                        moment().add(1, "days"),
-                        moment().add(1, "days"),
-                      ],
-                      Yesterday: [
-                        moment().subtract(1, "days"),
-                        moment().subtract(1, "days"),
-                      ],
-                      "This Month": [
-                        moment().startOf("month"),
-                        moment().endOf("month"),
-                      ],
-                      "Last Month": [
-                        moment().subtract(1, "month").startOf("month"),
-                        moment().subtract(1, "month").endOf("month"),
-                      ],
-                    }}
-                    format={dateFormat}
-                    onChange={this.dateRangePickerChanger.bind(this)}
-                  />
-                  {/* {data.loading ? (
-                    <Loader
-                      className="analytics-loading campaign-sum-loading"
-                      size={60}
-                    />
-                  ) : ( */}
-                  <div className="card analytic-box">
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total Campaigns</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.total_campaigns
-                          ? data.campaign_summary.total_campaigns
-                          : "0"}
-                      </h3>
-                    </div>
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total Active Campaigns</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.active_campaigns
-                          ? data.campaign_summary.active_campaigns
-                          : "0"}
-                      </h3>
-                    </div>
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total In-Active Campaigns</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.in_active_campaigns
-                          ? data.campaign_summary.in_active_campaigns
-                          : "0"}
-                      </h3>
-                    </div>
+          <div className="summary_box_main"
+          // className={`summary_box_main ${
+          //   this.props.className ? this.props.className : "col-md-12"
+          // }`}
+          >
+            <div className="summary_block_profile">
+              <div className="summary_content_profile">
+                <h4 className="page-title">Affiliate Advertise Summary</h4>
+                <label>Select Start Date / End Date</label>
+                <RangePicker
+                  disabledDate={this.disabledDate}
+                  key={4}
+                  defaultValue={[
+                    moment(this.state.fromDate),
+                    moment(this.state.toDate),
+                  ]}
+                  defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                  allowClear={false}
+                  ranges={{
+                    Today: [moment(), moment()],
+                    Tomorrow: [
+                      moment().add(1, "days"),
+                      moment().add(1, "days"),
+                    ],
+                    Yesterday: [
+                      moment().subtract(1, "days"),
+                      moment().subtract(1, "days"),
+                    ],
+                    "This Month": [
+                      moment().startOf("month"),
+                      moment().endOf("month"),
+                    ],
+                    "Last Month": [
+                      moment().subtract(1, "month").startOf("month"),
+                      moment().subtract(1, "month").endOf("month"),
+                    ],
+                  }}
+                  format={dateFormat}
+                  onChange={this.dateRangePickerChanger.bind(this)}
+                />
 
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total Budget</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.total_budget
-                          ? data.campaign_summary.total_budget
-                          : "$0"}
-                      </h3>
-                    </div>
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total Clicks</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.total_clicks
-                          ? data.campaign_summary.total_clicks
-                          : "0"}
-                      </h3>
-                    </div>
-                    <div className="col-12 count-box">
-                      <h5 className="count-title">Total Spent</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.total_spent
-                          ? data.campaign_summary.total_spent
-                          : "$0"}
-                      </h3>
-                    </div>
-                    <div className="col-12 count-box">
-                      <h5 className="count-title"># of Participants</h5>
-                      <h3 className="count">
-                        {data.campaign_summary.total_participant
-                          ? data.campaign_summary.total_participant
-                          : "0"}
-                      </h3>
-                    </div>
+                <div className="card analytic-box">
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Campaigns</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.total_campaigns
+                        ? data.campaign_summary.total_campaigns
+                        : "0"}
+                    </h3>
                   </div>
-                  {/* )} */}
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Active Campaigns</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.active_campaigns
+                        ? data.campaign_summary.active_campaigns
+                        : "0"}
+                    </h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total In-Active Campaigns</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.in_active_campaigns
+                        ? data.campaign_summary.in_active_campaigns
+                        : "0"}
+                    </h3>
+                  </div>
+
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Budget</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.total_budget
+                        ? data.campaign_summary.total_budget
+                        : "$0"}
+                    </h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Clicks</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.total_clicks
+                        ? data.campaign_summary.total_clicks
+                        : "0"}
+                    </h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Spent</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.total_spent
+                        ? data.campaign_summary.total_spent
+                        : "$0"}
+                    </h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title"># of Participants</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.total_participant
+                        ? data.campaign_summary.total_participant
+                        : "0"}
+                    </h3>
+                  </div>
                 </div>
+                {/* )} */}
               </div>
             </div>
+          </div>
         </div>
       </>
     );

@@ -96,21 +96,21 @@ export default function Content({ insta, accessToken }) {
     }
   }
 
-  function disableTab(con) {
-    setNext(con);
-  }
-  function renderMedia(item) {
-    // || item.media_type=="CAROUSEL_ALBUM"
-    if (item.media_type == "IMAGE") {
-      return <img src={item.media_url} class="card-img-top" alt="..." />;
-    }
-    if (item.media_type == "VIDEO") {
-      return (
-        <video class="card-img-top" controls autoPlay src={item.media_url} />
-      );
-    }
-    return null;
-  }
+  // function disableTab(con) {
+  //   setNext(con);
+  // }
+  // function renderMedia(item) {
+  //   // || item.media_type=="CAROUSEL_ALBUM"
+  //   if (item.media_type == "IMAGE") {
+  //     return <img src={item.media_url} class="card-img-top" alt="..." />;
+  //   }
+  //   if (item.media_type == "VIDEO") {
+  //     return (
+  //       <video class="card-img-top" controls autoPlay src={item.media_url} />
+  //     );
+  //   }
+  //   return null;
+  // }
   return (
     <div className="analytics-page linkin-bio tab-wi-cus">
       <Row className="ml-0 mr-0 tab-section">

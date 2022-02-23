@@ -3,19 +3,15 @@ import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Divider from "@mui/material/Divider";
 import numeral from "numeral";
 import { useHistory } from "react-router-dom";
 import GroupIcon from "@mui/icons-material/Group";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import CommentIcon from "@mui/icons-material/Comment";
+
 import Carousel from "react-material-ui-carousel";
 
 const ExpandMore = styled((props) => {
@@ -53,22 +49,20 @@ export default function Box({ data }) {
   };
 
   function renderMedia(item) {
-    if (item.media_type == "IMAGE") {
+    if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
       return (
         <CardMedia
           component="img"
           height="450"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
-            item.media_type == "CAROUSEL_ALBUM"
-              ? item.children?.data[0].media_url
-              : item.media_url
+            item.media_type === "CAROUSEL_ALBUM" ? item.children?.data[0].media_url : item.media_url
           }
           alt="Paella dish"
         />
       );
     }
-    if (item.media_type == "VIDEO") {
+    if (item.media_type === "VIDEO") {
       return (
         <>
           <button
@@ -112,7 +106,7 @@ export default function Box({ data }) {
         swipe={true}
       >
         {item.children.data.map((it2, i) => {
-          if (it2.media_type == "IMAGE") {
+          if (it2.media_type === "IMAGE") {
             return (
               <a target="_blank" href={data.permalink}>
                 <CardMedia
@@ -125,7 +119,7 @@ export default function Box({ data }) {
               </a>
             );
           }
-          if (it2.media_type == "VIDEO") {
+          if (it2.media_type === "VIDEO") {
             return (
               <a target="_blank" href={data.permalink}>
                 <CardMedia
@@ -191,17 +185,17 @@ export default function Box({ data }) {
         />
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
-          {data.media_type == "CAROUSEL_ALBUM" ? (
-            renderCarousel(data)
+          {data.media_type === "CAROUSEL_ALBUM" ? (
+              <a target="_blank" href={data.permalink}>
+              {renderMedia(data)}
+            </a>
           ) : (
             <a target="_blank" href={data.permalink}>
               {renderMedia(data)}
             </a>
           )}
         </div>
-        {/* <Typography variant="h4" textAlign="center">
-                    {new Date().toLocaleTimeString()}
-                </Typography> */}
+
         <CardActions disableSpacing>
           {!expanded ? (
             <div
@@ -213,43 +207,6 @@ export default function Box({ data }) {
                 flexGrow: 1,
               }}
             >
-              {/* <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: 10,
-                }}
-              >
-                <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(data.like_count ? data.like_count : 0).format("0,0")}
-                </Typography>
-              </div>
-              <div
-                style={{ width: 2, height: 20, backgroundColor: "lightgrey" }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginLeft: 10,
-                }}
-              >
-                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(
-                    data.comments_count ? data.comments_count : 0
-                  ).format("0,0")}
-                </Typography>
-              </div> */}
               <Typography
                 variant="body"
                 sx={{ fontSize: "12px", marginLeft: "15px" }}
@@ -260,79 +217,7 @@ export default function Box({ data }) {
               </Typography>
             </div>
           ) : null}
-          {/* <div
-            style={{ display: "flex", flexGrow: 1, justifyContent: "flex-end" }}
-          >
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </div> */}
         </CardActions>
-        {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography>{data.caption}</Typography>
-          </CardContent>
-          <CardActions sx={{ justifyContent: "space-between" }}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: 10,
-                }}
-              >
-                <ThumbUpIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(data.like_count ? data.like_count : 0).format("0,0")}
-                </Typography>
-              </div>
-              <div
-                style={{ width: 2, height: 20, backgroundColor: "lightgrey" }}
-              />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginLeft: 10,
-                }}
-              >
-                <CommentIcon sx={{ color: "#b3b3b3", fontSize: 16 }} />
-                <Typography
-                  variant="h6"
-                  style={{ color: "#b3b3b3", marginTop: 3, marginLeft: 5 }}
-                >
-                  {numeral(
-                    data.comments_count ? data.comments_count : 0
-                  ).format("0,0")}
-                </Typography>
-              </div>
-            </div>
-            <Typography
-              variant="body"
-              sx={{ fontSize: "14px", marginRight: "15px" }}
-              color="gray"
-              textAlign="right"
-            >
-              {new Date(data.timestamp).toDateString()}
-            </Typography>
-          </CardActions>
-        </Collapse> */}
       </Card>
     </>
   );
