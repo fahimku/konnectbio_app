@@ -48,6 +48,33 @@ function AffiliateTransaction() {
                       <i class="fa fa-eye"></i>
                     </td>
                   </tr>
+                  <tr>
+                    <td>334344</td>
+                    <td>$100</td>
+                    <td>Pending</td>
+                    <td>26th Feb 2022</td>
+                    <td className="text-center">
+                      <i class="fa fa-eye"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>334344</td>
+                    <td>$100</td>
+                    <td>Pending</td>
+                    <td>26th Feb 2022</td>
+                    <td className="text-center">
+                      <i class="fa fa-eye"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>334344</td>
+                    <td>$100</td>
+                    <td>Pending</td>
+                    <td>26th Feb 2022</td>
+                    <td className="text-center">
+                      <i class="fa fa-eye"></i>
+                    </td>
+                  </tr>
                 </tbody>
               </Table>
             </div>
