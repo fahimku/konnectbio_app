@@ -55,7 +55,7 @@ class AffiliateSetup extends React.Component {
                         <span>Brand</span>
                       </NavLink>
                     </NavItem>
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "balance",
@@ -78,7 +78,7 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Transactions</span>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"
