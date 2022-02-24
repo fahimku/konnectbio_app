@@ -49,7 +49,7 @@ export default function Box({ data }) {
   };
 
   function renderMedia(item) {
-    if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
+    if (item.media_type === "IMAGE") {
       return (
         <CardMedia
           component="img"
@@ -62,6 +62,7 @@ export default function Box({ data }) {
         />
       );
     }
+   
     if (item.media_type === "VIDEO") {
       return (
         <>
@@ -94,7 +95,8 @@ export default function Box({ data }) {
 
   function renderCarousel(item) {
     return (
-      <Carousel
+    <>
+      {/*<Carousel
         className="cr-album"
         navButtonsAlwaysVisible={true}
         navButtonsProps={{
@@ -105,38 +107,43 @@ export default function Box({ data }) {
         indicators={false}
         swipe={true}
       >
+      */}
         {item.children.data.map((it2, i) => {
-          if (it2.media_type === "IMAGE") {
-            return (
-              <a target="_blank" href={data.permalink}>
-                <CardMedia
-                  component="img"
-                  height="450"
-                  sx={{ objectFit: "cover", borderRadius: 2 }}
-                  image={it2.media_url}
-                  alt="Paella dish"
-                />
-              </a>
-            );
-          }
-          if (it2.media_type === "VIDEO") {
-            return (
-              <a target="_blank" href={data.permalink}>
-                <CardMedia
-                  component="video"
-                  sx={{ objectFit: "cover", borderRadius: 2 }}
-                  autoPlay={false}
-                  controls
-                  //  loop
-                  height="450"
-                  image={it2.media_url}
-                  alt="Paella dish"
-                />
-              </a>
-            );
+          if (i === 0) {
+            if (it2.media_type === "IMAGE") {
+              return (
+                <a target="_blank" href={data.permalink}>
+                  <CardMedia
+                    component="img"
+                    height="450"
+                    sx={{ objectFit: "cover", borderRadius: 2 }}
+                    image={it2.media_url}
+                    alt="Paella dish"
+                  />
+                </a>
+              );
+            }
+            if (it2.media_type === "VIDEO") {
+              return (
+                <a target="_blank" href={data.permalink}>
+                  <CardMedia
+                    component="video"
+                    sx={{ objectFit: "cover", borderRadius: 2 }}
+                    autoPlay={false}
+                    controls
+                    //  loop
+                    height="450"
+                    image={it2.media_url}
+                    alt="Paella dish"
+                  />
+                </a>
+              );
+            }
           }
         })}
-      </Carousel>
+      {/*</Carousel>*/ }
+      </>
+
     );
   }
 
@@ -187,7 +194,7 @@ export default function Box({ data }) {
         <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type === "CAROUSEL_ALBUM" ? (
               <a target="_blank" href={data.permalink}>
-              {renderMedia(data)}
+              {renderCarousel(data)}
             </a>
           ) : (
             <a target="_blank" href={data.permalink}>

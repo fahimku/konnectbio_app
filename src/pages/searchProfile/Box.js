@@ -47,7 +47,7 @@ export default function Box({ data }) {
   }
 
   function renderMedia(item) {
-    if (item.media_type == "IMAGE") {
+    if (item.media_type === "IMAGE") {
       return (
         <CardMedia
           component="img"
@@ -62,7 +62,7 @@ export default function Box({ data }) {
         />
       );
     }
-    if (item.media_type == "VIDEO") {
+    if (item.media_type === "VIDEO") {
       return (
         <>
           <button
@@ -94,49 +94,44 @@ export default function Box({ data }) {
 
   function renderCarousel(item) {
     return (
-      <Carousel
-        className="cr-album"
-        navButtonsAlwaysVisible={true}
-        navButtonsProps={{
-          style: {
-            backgroundColor: "rgba(87, 87, 87, 0.4)",
-          },
-        }}
-        indicators={false}
-        swipe={true}
-      >
+    <>
+      {/* <Carousel className="cr-album" navButtonsAlwaysVisible={true}  navButtonsProps={{style: {backgroundColor: "rgba(87, 87, 87, 0.4)",},}} indicators={false} swipe={true}> */}
         {item.children.data.map((it2, i) => {
-          if (it2.media_type == "IMAGE") {
-            return (
-              <a target="_blank" href={data.permalink}>
-                <CardMedia
-                  component="img"
-                  height="400"
-                  sx={{ objectFit: "cover", borderRadius: 2 }}
-                  image={it2.media_url}
-                  alt="Paella dish"
-                />
-              </a>
-            );
-          }
-          if (it2.media_type == "VIDEO") {
-            return (
-              <a target="_blank" href={data.permalink}>
-                <CardMedia
-                  component="video"
-                  sx={{ objectFit: "cover", borderRadius: 2 }}
-                  autoPlay={false}
-                  controls
-                  //    loop
-                  height="400"
-                  image={it2.media_url}
-                  alt="Paella dish"
-                />
-              </a>
-            );
+          if (i === 0) {
+            if (it2.media_type === "IMAGE") {
+              return (
+                <a target="_blank" href={data.permalink}>
+                  <CardMedia
+                    component="img"
+                    height="400"
+                    sx={{ objectFit: "cover", borderRadius: 2 }}
+                    image={it2.media_url}
+                    alt="Paella dish"
+                  />
+                </a>
+              );
+            }
+            if (it2.media_type === "VIDEO") {
+              return (
+                <a target="_blank" href={data.permalink}>
+                  <CardMedia
+                    component="video"
+                    sx={{ objectFit: "cover", borderRadius: 2 }}
+                    autoPlay={false}
+                    controls
+                    //    loop
+                    height="400"
+                    image={it2.media_url}
+                    alt="Paella dish"
+                  />
+                </a>
+              );
+            }
           }
         })}
-      </Carousel>
+
+      {/* </Carousel> */}
+      </>
     );
   }
 
@@ -144,7 +139,7 @@ export default function Box({ data }) {
     <>
       <Card elevation={1}>
         <div className="media-box-post" style={{ padding: "15px" }}>
-          {data.media_type == "CAROUSEL_ALBUM" ? (
+          {data.media_type === "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
             <a target="_blank" href={data.permalink}>

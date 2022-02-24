@@ -32,6 +32,7 @@ class Register extends React.Component {
       stateLoading: false,
       cityLoading: false,
       resendEmail: false,
+      brandExist: false,
       name: "",
       email: "",
       countries: "",
@@ -77,6 +78,7 @@ class Register extends React.Component {
     this.changeZip = this.changeZip.bind(this);
     this.changeReferred = this.changeReferred.bind(this);
     this.resendEmail = this.resendEmail.bind(this);
+    this.checkBrandExist = this.checkBrandExist.bind(this);
     this.goPrevious = this.goPrevious.bind(this);
   }
 
@@ -84,6 +86,18 @@ class Register extends React.Component {
     await this.getCountries();
     await this.getStates(this.state.countryCode);
   }
+
+  checkBrandExist = async (event) => {
+    if (this.state.accountType === 'brand') {
+      return await axios.post(`/signup/checkbrand`, { brand_name: event.target.value })
+        .then(() => {
+          this.setState({ brandExist: false });
+        })
+        .catch(() => {
+          this.setState({ brandExist: true });   
+        });
+    }
+  };
 
   resendEmail = async () => {
     await axios
@@ -168,7 +182,9 @@ class Register extends React.Component {
   };
 
   changeName(event) {
-    this.setState({ name: event.target.value });
+    let name = event.target.value;
+    this.setState({ name: name });
+  //  this.checkBrandExist(name);
   }
 
   changeEmail(event) {
@@ -262,16 +278,20 @@ class Register extends React.Component {
     e.preventDefault();
 
     if (this.state.step1) {
+
       if (this.state.name === "") {
         this.props.dispatch(authError("The name field is required"));
-      } else if (this.state.email === "") {
-        this.props.dispatch(authError("The email field is required"));
-      } else if (!this.validateEmail(this.state.email)) {
+      }
+
+      else if (this.state.brandExist && this.state.accountType === 'brand') {
+        this.props.dispatch(authError("Brand name is unavailable!"));
+      }
+        
+      else if (!this.validateEmail(this.state.email)) {
         this.props.dispatch(authError("The email address is not valid"));
-      } else if (
-        this.state.accountType === "influencer" &&
-        this.state.gender === ""
-      ) {
+      }
+
+      else if (this.state.accountType === "influencer" && this.state.gender === "") {
         this.props.dispatch(authError("The gender field is required"));
       } else {
         this.props.dispatch(authError(""));
@@ -279,7 +299,9 @@ class Register extends React.Component {
         this.setState({ step2: true });
         this.setState({ step3: false });
       }
-    } else if (this.state.step2) {
+    }
+
+    else if (this.state.step2) {
       if (this.state.countryCode === "") {
         this.props.dispatch(authError("The country field is required"));
       } else if (this.state.countryStateCode === "") {
@@ -326,6 +348,9 @@ class Register extends React.Component {
   };
 
   render() {
+
+
+
     const styles = {
       menuList: (base) => ({
         ...base,
@@ -497,13 +522,12 @@ class Register extends React.Component {
                               <input
                                 className="form-control"
                                 value={this.state.name}
+                                onBlur={this.checkBrandExist}
                                 onChange={this.changeName}
                                 type="text"
                                 name="name"
-                                placeholder={`${this.state.accountType === "influencer"
-                                  ? "Name"
-                                  : "Company Name"
-                                  }`}
+                                placeholder={`${this.state.accountType === "influencer" ? "Name" : "Company Name"}`}
+
                               />
                             </div>
                             <div className="form-group">
@@ -672,29 +696,25 @@ class Register extends React.Component {
                             className={` ${this.state.step1 ? "col-12" : "col-6"
                               }`}
                           >
-                            {this.props.isFetching ?
+                            {this.props.isFetching ? (
                               <Button
                                 type="button"
                                 color="inverse"
                                 className="register_button"
                                 size="lg"
-
                               >
                                 Loading
                               </Button>
-                              :
+                            ) : (
                               <Button
                                 type="submit"
                                 color="inverse"
                                 className="register_button"
                                 size="lg"
                               >
-                                {this.state.step3
-                                  ? "Finish"
-                                  : " Next"
-                                }
+                                {this.state.step3 ? "Finish" : " Next"}
                               </Button>
-                            }
+                            )}
                           </div>
                         </div>
 

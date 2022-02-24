@@ -48,8 +48,8 @@ function HashtagsList({
         subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
         configSubs().then((res) => {
           const getPrice = res.message
-            .filter((item) => item.product_name == "Hashtag")
-            .filter((subItem) => subItem.interval == subType)[0];
+            .filter((item) => item.product_name === "Hashtag")
+            .filter((subItem) => subItem.interval === subType)[0];
           setPriceId(getPrice.price_id);
           setUnitAmount(getPrice.unit_amount / 3);
         });

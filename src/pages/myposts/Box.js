@@ -1,30 +1,18 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
+
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Switch from "@mui/material/Switch";
 import {Box as Box1} from "@mui/material";
 import Divider from "@mui/material/Divider";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import numeral from "numeral";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import GroupIcon from "@mui/icons-material/Group";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import Carousel from "react-material-ui-carousel";
@@ -64,14 +52,15 @@ export default function Box({ data }) {
   }
 
   function renderMedia(item) {
-    if (item.media_type == "IMAGE" || item.media_type == "CAROUSEL_ALBUM") {
+
+    if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
       return (
         <CardMedia
           component="img"
           height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
-            item.media_type == "CAROUSEL_ALBUM"
+            item.media_type === "CAROUSEL_ALBUM"
               ? item.media_url
               : item.media_url
           }
@@ -79,7 +68,8 @@ export default function Box({ data }) {
         />
       );
     }
-    if (item.media_type == "VIDEO") {
+
+    if (item.media_type === "VIDEO") {
       return (
         <>
           <button
