@@ -389,7 +389,7 @@ class SubcriptionSetup extends React.Component {
                               isOptionDisabled={(option) => option.isdisabled} // disable an option
                               options={this.state.packages}
                               placeholder="Select Package"
-                              value={{
+                              defaultValue={{
                                 label: this.state.package,
                                 value: this.state.packageId,
                               }}
