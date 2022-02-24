@@ -239,7 +239,7 @@ function SearchProfile({
                         isSearchable={false}
                       />
                     </Col>
-                    <Col xs={12} xl={2} md={6}>
+                    {/* <Col xs={12} xl={2} md={6}>
                       <p>Order By</p>
                       <Select
                         value={orderBy}
@@ -253,7 +253,7 @@ function SearchProfile({
                         styles={style}
                         isSearchable={false}
                       />
-                    </Col>
+                    </Col> */}
                     {/* <Col xs={12} xl={2} md={6}>
                       <p>No of Posts</p>
                       <Select

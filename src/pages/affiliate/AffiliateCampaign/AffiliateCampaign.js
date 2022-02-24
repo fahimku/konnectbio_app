@@ -459,7 +459,7 @@ function AffiliateCampaign(props) {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl md={6}>
+                {/* <Col xs={12} xl md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -472,7 +472,7 @@ function AffiliateCampaign(props) {
                     placeholder="Order By"
                     styles={style}
                   />
-                </Col>
+                </Col> */}
                 <Col className="d-flex" xs={12} xl md={6}>
                   {searchLoading ? (
                     <Button
@@ -540,7 +540,7 @@ function AffiliateCampaign(props) {
             </>
           ) : (
             <>
-                <NoDataFound/>
+              <NoDataFound />
             </>
           )
         ) : (

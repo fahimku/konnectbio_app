@@ -95,7 +95,7 @@ class CampaignSummaryComponent extends React.Component {
                 }`}
               >
                 <div className="summary_content_profile">
-                  <h4 className="page-title">Affiliate Publish Summary</h4>
+                  <h4 className="page-title">Campaign Summary</h4>
                   <label>Select Start Date / End Date</label>
                   <RangePicker
                     disabledDate={this.disabledDate}

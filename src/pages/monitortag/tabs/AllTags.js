@@ -162,21 +162,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     isSearchable={false}
                   />
                 </Col>
-                {/* <Col className="col-xl-2dot4" xs={12} md={6}>
-                  <p>Order By</p>
-                  <Select
-                    value={orderBy}
-                    name="order"
-                    className="selectCustomization"
-                    options={sortOrderOptions}
-                    onChange={(e) => {
-                      setOrderBy(e);
-                    }}
-                    placeholder="Order By"
-                    styles={style}
-                    isSearchable={false}
-                  />
-                </Col> */}
+             
                 <Col className="d-flex col-xl-2dot4" xs={12} md={6}>
                   {searchLoading ? (
                     <Button

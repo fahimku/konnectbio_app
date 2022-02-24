@@ -18,35 +18,23 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 function TopHashTag({
-  getMarketPlace,
-  marketPlace,
-  addCampaignToShop,
-  getUserCategories,
-  getBrandsCategory,
-  type,
-  title,
-  getBrands,
-  brands,
   getHashtag,
   hashtags,
   hashtag,
   clearHashtag,
 }) {
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  const [loading, setLoading] = useState(false);
+
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
   const [categoryLoading, setCategoryLoading] = useState(false);
 
-  const [category, setCategory] = useState({ value: "all", label: "ALL" });
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  // const [brand, setBrand] = useState({ value: "all", label: "ALL" });
   const [brand, setBrand] = useState("");
 
   const [sortBy, setSortBy] = useState({
     value: "date",
     label: "DATE",
   });
+
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -60,38 +48,9 @@ function TopHashTag({
   const [endDate, setEndDate] = useState(toDate);
   const limit = 8;
 
-  //   useEffect(() => {
-  //     setLoading(true);
-  //     getMarketPlace(
-  //       1,
-  //       limit,
-  //       "all",
-  //       "commission",
-  //       "desc",
-  //       startDate,
-  //       endDate,
-  //       type,
-  //       brand.value,
-  //       "users/marketPlace/getCampaigns"
-  //     ).then(function () {
-  //       setLoading(false);
-  //     });
-  //     getBrands();
-  //     return () => {};
-  //   }, []);
 
   useEffect(() => {
-    // setSearchLoading(true);
-    // getHashtag(
-    //   {
-    //     hashtag_id: brand.value,
-    //     from_date: startDate.toString(),
-    //     to_date: endDate.toString(),
-    //     sort: sortBy.value,
-    //     order_by: orderBy.value,
-    //   },
-    //   1
-    // ).then(() => setSearchLoading(false));
+
     return () => clearHashtag();
   }, []);
 
@@ -114,34 +73,6 @@ function TopHashTag({
     }
   }
 
-  //   const searchMarketPlace = (e) => {
-  //     setSearchLoading(true);
-  //     setLoading(true);
-  //     setCurrentPage(0);
-  //     e.preventDefault();
-  //     getMarketPlace(
-  //       1,
-  //       limit,
-  //       category.value,
-  //       sortBy.value,
-  //       orderBy.value,
-  //       startDate,
-  //       endDate,
-  //       type,
-  //       brand.value,
-  //       "users/marketPlace/getCampaigns"
-  //     ).then(
-  //       function () {
-  //         setLoading(false);
-  //         setSearchLoading(false);
-  //       },
-  //       function (error) {
-  //         setLoading(false);
-  //         setSearchLoading(false);
-  //         toast.error(error?.response?.data?.message);
-  //       }
-  //     );
-  //   };
 
   const clearMarketPlace = (e) => {
     // setClearLoading(true);
@@ -150,35 +81,10 @@ function TopHashTag({
     setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     clearHashtag();
-    // getHashtag({
-    //   hashtag_id: "all",
-    //   from_date: fromDate.toString(),
-    //   to_date: toDate.toString(),
-    //   sort: "date",
-    //   order_by: "desc",
-    // }).then(() => {
-    //   setClearLoading(false);
-    // });
+
   };
 
-  //   const handlePageClick = (e) => {
-  //     const page = e.selected;
-  //     setCurrentPage(page);
-  //     getMarketPlace(
-  //       page + 1,
-  //       limit,
-  //       category.value,
-  //       sortBy.value,
-  //       orderBy.value,
-  //       startDate,
-  //       endDate,
-  //       type,
-  //       brand.value,
-  //       "users/marketPlace/getCampaigns"
-  //     ).then(function () {
-  //       setLoading(false);
-  //     });
-  //   };
+
 
   const style = {
     control: (base) => ({
@@ -194,13 +100,8 @@ function TopHashTag({
   const sortByOptions = [
     { value: "date", label: "DATE" },
     { value: "followers", label: "MOST INFLUENTIAL" },
-    // { value: "likes", label: "LIKES" },
-    // { value: "comments", label: "COMMENTS" },
   ];
-  const sortOrderOptions = [
-    { value: "asc", label: "ASC" },
-    { value: "desc", label: "DESC" },
-  ];
+ 
 
   const dateRangePickerChanger = (value, dataString) => {
     const startDate = dataString[0];
@@ -274,20 +175,7 @@ function TopHashTag({
                     isSearchable={false}
                   />
                 </Col>
-                {/* <Col xs={12} xl={2} md={6}>
-                    <p>Select Category</p>
-                    <Select
-                      value={category}
-                      name="sort"
-                      className="selectCustomization"
-                      options={categoryOptions}
-                      onChange={(e) => {
-                        setCategory(e);
-                      }}
-                      placeholder="Select Category"
-                      styles={style}
-                    />
-                  </Col> */}
+               
                 <Col xs={12} className="col-xl-2dot4" md={6}>
                   <p>Sort By</p>
                   <Select
@@ -303,35 +191,7 @@ function TopHashTag({
                     isSearchable={false}
                   />
                 </Col>
-                {/* <Col xs={12} xl md={6}>
-                  <p>Order By</p>
-                  <Select
-                    value={orderBy}
-                    name="order"
-                    className="selectCustomization"
-                    options={sortOrderOptions}
-                    onChange={(e) => {
-                      setOrderBy(e);
-                    }}
-                    placeholder="Order By"
-                    styles={style}
-                    isSearchable={false}
-                  />
-                </Col> */}
-                {/* <Col xs={12} xl={2} md={6}>
-                    <p>Order By</p>
-                    <Select
-                      value={orderBy}
-                      name="sort"
-                      className="selectCustomization"
-                      options={sortOrderOptions}
-                      onChange={(e) => {
-                        setOrderBy(e);
-                      }}
-                      placeholder="Order By"
-                      styles={style}
-                    />
-                  </Col> */}
+             
                 <Col className="d-flex col-xl-2dot4" xs={12} md={6}>
                   {searchLoading ? (
                     <Button
@@ -420,7 +280,7 @@ function TopHashTag({
                   <Loader size={40} />
                 </div>
               }
-              // pullDownToRefreshThreshold={50}
+            // pullDownToRefreshThreshold={50}
             >
               <div>
                 <ResponsiveMasonry
@@ -453,50 +313,6 @@ function TopHashTag({
             </div>
           ) : null}
         </div>
-        {/* {!loading ? (
-            marketPlace?.message?.length > 0 ? (
-              <>
-                <Row className="post-analytics-tab-boxes-ift">
-                  {marketPlace.message.map((item, index) => (
-                    <Box
-                      key={index}
-                      userInfo={userInfo}
-                      addCampaignToShop={addCampaignToShop}
-                      item={item}
-                      index={index}
-                    />
-                  ))}
-                </Row>
-                <ReactPaginate
-                  previousLabel=""
-                  nextLabel=""
-                  pageClassName="page-item "
-                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-                  previousClassName="page-item"
-                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-                  nextClassName="page-item"
-                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-                  breakLabel="..."
-                  breakClassName="page-item"
-                  breakLinkClassName="page-link"
-                  forcePage={currentPage}
-                  pageCount={Math.ceil(marketPlace.totalCount / limit)}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                  onPageChange={handlePageClick}
-                  containerClassName={
-                    "pagination justify-content-center mt-2 custom-paginate"
-                  }
-                  // subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              </>
-            ) : (
-              
-            )
-          ) : (
-            <Loader size={40} />
-          )} */}
       </div>
     </>
   );

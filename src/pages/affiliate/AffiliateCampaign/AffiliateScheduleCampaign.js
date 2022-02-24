@@ -177,23 +177,23 @@ function AffiliateCampaign(props) {
       str.length < max
         ? str
         : `${str.substr(
-          0,
-          str.substr(0, max - suffix.length).lastIndexOf(" ")
-        )}${suffix}`;
+            0,
+            str.substr(0, max - suffix.length).lastIndexOf(" ")
+          )}${suffix}`;
     const slice = data1.slice(offset, offset + perPage);
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div
-            className={`card any_bx analytic-box campaign-box ${props.type !== "expired" ? "" : "pb-0"
-              }`}
+            className={`card any_bx analytic-box campaign-box ${
+              props.type !== "expired" ? "" : "pb-0"
+            }`}
           >
             <div className="camp-row row">
               <div className="campaign-header col-12">
                 <h6 title={record.campaign_name}>
                   {truncate(record.campaign_name, 40, "...")}
                 </h6>
-      
               </div>
               <div className="any-post-img-col col-12">
                 <div className="any-post-image">
@@ -438,7 +438,7 @@ function AffiliateCampaign(props) {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl md={6}>
+                {/* <Col xs={12} xl md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -451,7 +451,7 @@ function AffiliateCampaign(props) {
                     placeholder="Order By"
                     styles={style}
                   />
-                </Col>
+                </Col> */}
                 <Col className="d-flex" xs={12} xl md={6}>
                   {searchLoading ? (
                     <Button
@@ -518,7 +518,9 @@ function AffiliateCampaign(props) {
               />
             </>
           ) : (
-            <><NoDataFound/></>
+            <>
+              <NoDataFound />
+            </>
           )
         ) : (
           <div className="container-fluid">

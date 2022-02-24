@@ -37,7 +37,10 @@ function AllMarketplace({
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brand, setBrand] = useState({ value: "all", label: "ALL" });
-  const [sortBy, setSortBy] = useState({ value: "commission",label: "COMMISSION"});
+  const [sortBy, setSortBy] = useState({
+    value: "commission",
+    label: "COMMISSION",
+  });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -64,7 +67,7 @@ function AllMarketplace({
       setLoading(false);
     });
     getBrands();
-    return () => { };
+    return () => {};
   }, []);
 
   useEffect(() => {
@@ -100,7 +103,7 @@ function AllMarketplace({
         }
       );
     }
-    return () => { };
+    return () => {};
   }, [brand]);
 
   const searchMarketPlace = (e) => {
@@ -307,7 +310,7 @@ function AllMarketplace({
                       styles={style}
                     />
                   </Col>
-                  <Col xs={12} xl={2} md={6}>
+                  {/* <Col xs={12} xl={2} md={6}>
                     <p>Order By</p>
                     <Select
                       value={orderBy}
@@ -320,7 +323,7 @@ function AllMarketplace({
                       placeholder="Order By"
                       styles={style}
                     />
-                  </Col>
+                  </Col> */}
                   <Col className="d-flex" xs={12} xl={2} md={6}>
                     {searchLoading ? (
                       <Button
@@ -396,7 +399,9 @@ function AllMarketplace({
                   activeClassName={"active"}
                 />
               </>
-            ) : (<NoDataFound />)
+            ) : (
+              <NoDataFound />
+            )
           ) : (
             <Loader size={40} />
           )}

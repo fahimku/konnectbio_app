@@ -145,7 +145,7 @@ function InstagramPostDataComponent({
                           isSearchable={false}
                         />
                       </Col>
-                      <Col xs={12} xl={2} md={6}>
+                      {/* <Col xs={12} xl={2} md={6}>
                         <p>Order By</p>
                         <Select
                           value={orderBy}
@@ -159,7 +159,7 @@ function InstagramPostDataComponent({
                           styles={style}
                           isSearchable={false}
                         />
-                      </Col>
+                      </Col> */}
                       <Col className="d-flex" xs={12} xl={2} md={12}>
                         {searchLoading ? (
                           <Button

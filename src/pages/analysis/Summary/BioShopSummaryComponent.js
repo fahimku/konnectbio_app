@@ -69,96 +69,81 @@ class BioShopSummaryComponent extends React.Component {
         return current && current > moment().endOf("day");
     }
 
-    render() {      
+    render() {
         const data = this.props.bioShopSummary.bioshop_summary;
-  
         return (
             <>
                 <div className="summary_container_main">
-                        <div className="summary_box_main">
-                            <div
-                                className={`summary_block_profile ${this.props.packageName ==="61d695e9bccdaf69f46efc66"
-                                    ? "summary_height"
-                                    : ""
-                                    }`}
-                            >
-                                <div className="summary_content_profile">
-                                    <h4 className="page-title">BioShop Summary</h4>
-                                    <label>Select Start Date / End Date</label>
-                                    <RangePicker
-                                        disabledDate={this.disabledDate}
-                                        key={4}
-                                        defaultValue={[
-                                            moment(this.state.fromDate),
-                                            moment(this.state.today),
-                                        ]}
-                                        defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                                        allowClear={false}
-                                        ranges={{
-                                            Today: [moment(), moment()],
-                                            Tomorrow: [
-                                                moment().add(1, "days"),
-                                                moment().add(1, "days"),
-                                            ],
-                                            Yesterday: [
-                                                moment().subtract(1, "days"),
-                                                moment().subtract(1, "days"),
-                                            ],
-                                            "This Month": [
-                                                moment().startOf("month"),
-                                                moment().endOf("month"),
-                                            ],
-                                            "Last Month": [
-                                                moment().subtract(1, "month").startOf("month"),
-                                                moment().subtract(1, "month").endOf("month"),
-                                            ],
-                                        }}
-                                        format={dateFormat}
-                                        onChange={this.dateRangePickerChanger.bind(this)}
-                                    />
-                                    {/* {this.state.loading ? (
-                            <Loader
-                            className="analytics-loading summary-loading"
-                            size={40}
-                            />
-                        ) : ( */}
-                                    <div className="card analytic-box">
-                                        <div className="col-12 count-box">
-                                            <h5 className="count-title">Total Impressions</h5>
-                                            <h3 className="count">
-                                                {data.post_views === 0 || data.post_views === undefined
-                                                    ? "0"
-                                                    : numberWithCommas(data.post_views)}
-                                            </h3>
-                                        </div>
-                                        <div className="col-12 count-box">
-                                            <h5 className="count-title">Total Clicks</h5>
-                                            <h3 className="count">
-                                                {data.post_clicks === 0 ||
-                                                    data.post_clicks === undefined
-                                                    ? "0"
-                                                    : numberWithCommas(data.post_clicks)}
-                                            </h3>
-                                        </div>
-                                        <div className="col-12 count-box">
-                                            <h5 className="count-title">Engagement</h5>
-                                            <h3 className="count">
-                                                {data.ctr === null ||
-                                                    data.ctr === 0 ||
-                                                    data.ctr === undefined
-                                                    ? "0%"
-                                                    : twodecimalplace(data.ctr) + "%"}
-                                            </h3>
-                                        </div>
-                                        {/* <div className="col-12 count-box mb-0">
-                        <h5 className="count-title">Revenue</h5>
-                        <h3 className="count">{data.revenue}</h3>
-                      </div> */}
+                    <div className="summary_box_main">
+                        <div
+                            className={`summary_block_profile ${this.props.packageName === "61d695e9bccdaf69f46efc66" ? "summary_height": ""}`}>
+                            <div className="summary_content_profile">
+                                <h4 className="page-title">BioShop Summary</h4>
+                                <label>Select Start Date / End Date</label>
+                                <RangePicker
+                                    disabledDate={this.disabledDate}
+                                    key={4}
+                                    defaultValue={[
+                                        moment(this.state.fromDate),
+                                        moment(this.state.today),
+                                    ]}
+                                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                                    allowClear={false}
+                                    ranges={{
+                                        Today: [moment(), moment()],
+                                        Tomorrow: [
+                                            moment().add(1, "days"),
+                                            moment().add(1, "days"),
+                                        ],
+                                        Yesterday: [
+                                            moment().subtract(1, "days"),
+                                            moment().subtract(1, "days"),
+                                        ],
+                                        "This Month": [
+                                            moment().startOf("month"),
+                                            moment().endOf("month"),
+                                        ],
+                                        "Last Month": [
+                                            moment().subtract(1, "month").startOf("month"),
+                                            moment().subtract(1, "month").endOf("month"),
+                                        ],
+                                    }}
+                                    format={dateFormat}
+                                    onChange={this.dateRangePickerChanger.bind(this)}
+                                />
+
+                                <div className="card analytic-box">
+                                    <div className="col-12 count-box">
+                                        <h5 className="count-title">Total Impressions</h5>
+                                        <h3 className="count">
+                                            {data.post_views === 0 || data.post_views === undefined
+                                                ? "0"
+                                                : numberWithCommas(data.post_views)}
+                                        </h3>
                                     </div>
-                                    {/* )} */}
+                                    <div className="col-12 count-box">
+                                        <h5 className="count-title">Total Clicks</h5>
+                                        <h3 className="count">
+                                            {data.post_clicks === 0 ||
+                                                data.post_clicks === undefined
+                                                ? "0"
+                                                : numberWithCommas(data.post_clicks)}
+                                        </h3>
+                                    </div>
+                                    <div className="col-12 count-box">
+                                        <h5 className="count-title">Engagement</h5>
+                                        <h3 className="count">
+                                            {data.ctr === null ||
+                                                data.ctr === 0 ||
+                                                data.ctr === undefined
+                                                ? "0%"
+                                                : twodecimalplace(data.ctr) + "%"}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             </>
         );
