@@ -562,9 +562,7 @@ class SubcriptionSetup extends React.Component {
 
                                   <div className="make-canc-pay">
                                     {userInfo.package.package_id ===
-                                      "61c02e2ff40bec74fac2ca09" ||
-                                    userInfo?.package?.subscription_type ===
-                                      "Trial" ? (
+                                    "61c02e2ff40bec74fac2ca09" ? (
                                       this.state.paymentLoading ? (
                                         <Button>
                                           <Loader />
@@ -664,7 +662,7 @@ class SubcriptionSetup extends React.Component {
                                       !this.state.checkbox.facebook ||
                                       !this.state.checkbox.checkbox3 ? (
                                       <>
-                                        <span className="credit-info">
+                                        {/* <span className="credit-info">
                                           <Button
                                             onClick={() => {
                                               this.setState({
@@ -678,7 +676,7 @@ class SubcriptionSetup extends React.Component {
                                           <code class="sm-color highlighter-rouge">
                                             No credit card required
                                           </code>
-                                        </span>
+                                        </span> */}
                                         <Button
                                           onClick={() => {
                                             this.setState({
@@ -692,14 +690,14 @@ class SubcriptionSetup extends React.Component {
                                       </>
                                     ) : (
                                       <>
-                                        <span className="credit-info">
+                                        {/* <span className="credit-info">
                                           <Button>
                                             Start 14 Days Free Trial
                                           </Button>
                                           <code class="sm-color highlighter-rouge">
                                             No credit card required
                                           </code>
-                                        </span>
+                                        </span> */}
                                         <Button>Make Payment</Button>
                                       </>
                                     )}
