@@ -1,6 +1,5 @@
 import React from "react";
-import { Tooltip, OverlayTrigger} from "react-bootstrap";
-
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 export default function PackageDetail({ packageToggleModal, singlePackage }) {
   const renderTooltip = (props) => (
@@ -12,15 +11,13 @@ export default function PackageDetail({ packageToggleModal, singlePackage }) {
     <>
       <div className="profile_box_main col-md-4 pkg_app_inner">
         <div className="custom_pkg">
-          <h5>{singlePackage.package_name }</h5>
-          <p>
-           {singlePackage.package_description}
-          </p>
-          <div className="pkg_price_ifti">
+          <h5>{singlePackage.package_name}</h5>
+          <p>{singlePackage.package_description}</p>
+          {/* <div className="pkg_price_ifti">
             <span className="pkg-trial">
               Try 14 days for free, no credit card information required.
             </span>
-          </div>
+          </div> */}
           <ul className="pkg_detail_list_ift">
             <li>
               <span className="glyphicon glyphicon-menu-right"></span>
@@ -35,7 +32,7 @@ export default function PackageDetail({ packageToggleModal, singlePackage }) {
               BIOSHOP with {singlePackage.category_count} Categories
             </li>
 
-             <li>
+            <li>
               <span className="glyphicon glyphicon-menu-right"></span>
               Affiliate Campaigns{" "}
               <OverlayTrigger
@@ -45,7 +42,7 @@ export default function PackageDetail({ packageToggleModal, singlePackage }) {
               >
                 <i className="fa fa-info pac-info"></i>
               </OverlayTrigger>
-            </li> 
+            </li>
 
             <li>
               <span className="glyphicon glyphicon-menu-right"></span>
