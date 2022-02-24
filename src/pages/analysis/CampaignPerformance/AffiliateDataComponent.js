@@ -453,7 +453,7 @@ class AffiliateDataComponent extends React.Component {
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                {/* <Col xs={12} xl={2} md={6}>
                   <p>Order By</p>
                   <Select
                     name="sort"
@@ -469,7 +469,7 @@ class AffiliateDataComponent extends React.Component {
                     // isDisabled={this.state.optionSort === "" ? true : false}
                     styles={style}
                   />
-                </Col>
+                </Col> */}
                 <Col className="d-flex" xs={12} xl={2} md={6}>
                   <Button
                     type="submit"
@@ -495,7 +495,7 @@ class AffiliateDataComponent extends React.Component {
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
         ) : !this.state.data.length ? (
-       <NoDataFound/>
+          <NoDataFound />
         ) : (
           <>
             <Row className="af-rm-mn">{this.state.postData}</Row>

@@ -343,7 +343,7 @@ function ActiveMarketPlace({
                     styles={style}
                   />
                 </Col>
-                <Col xs={12} xl={2} md={6}>
+                {/* <Col xs={12} xl={2} md={6}>
                   <p>Order By</p>
                   <Select
                     value={orderBy}
@@ -356,7 +356,7 @@ function ActiveMarketPlace({
                     placeholder="Order By"
                     styles={style}
                   />
-                </Col>
+                </Col> */}
                 <Col className="d-flex" xs={12} xl={2} md={6}>
                   {searchLoading ? (
                     <Button
@@ -426,7 +426,7 @@ function ActiveMarketPlace({
                 forcePage={currentPage}
                 pageCount={Math.ceil(marketPlace.totalCount / limit)}
                 marginPagesDisplayed={2}
-                pageRangeDisplayed={ window.innerWidth <= 760 ? 1:7 }
+                pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
                 onPageChange={handlePageClick}
                 containerClassName={
                   "pagination justify-content-center mt-2 custom-paginate"
@@ -436,7 +436,7 @@ function ActiveMarketPlace({
               />
             </>
           ) : (
-            <NoDataFound/>
+            <NoDataFound />
           )
         ) : (
           <Loader size={40} />

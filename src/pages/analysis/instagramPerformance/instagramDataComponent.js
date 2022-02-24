@@ -173,7 +173,7 @@ function InstagramDataComponent({
                           styles={style}
                         />
                       </Col>
-                      <Col xs={12} xl={2} md={6}>
+                      {/* <Col xs={12} xl={2} md={6}>
                         <p>Order By</p>
                         <Select
                           value={orderBy}
@@ -186,7 +186,7 @@ function InstagramDataComponent({
                           placeholder="Order By"
                           styles={style}
                         />
-                      </Col>
+                      </Col> */}
                       <Col xs={12} xl={2} md={6}>
                         <p>Limit By</p>
                         <Select
