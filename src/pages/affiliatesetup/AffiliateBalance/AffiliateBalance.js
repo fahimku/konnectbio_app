@@ -26,6 +26,19 @@ function AffiliateBalance() {
               </div>
             </div>
           </Row>
+          <Row>
+            <div className="col-md-4">
+              <div className="conn-set-inner">
+                <div className="affiliate-wallet">
+                  <h5>Deposit Amount</h5>
+                  <p>Make a deposit amount</p>
+                  <button className="btn btn-primary btn-block">
+                    Make Deposit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Row>
         </div>
       </div>
     </React.Fragment>
