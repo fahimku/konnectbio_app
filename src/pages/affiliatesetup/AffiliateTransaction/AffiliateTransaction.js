@@ -34,6 +34,7 @@ function AffiliateTransaction({
   };
 
   useEffect(() => {
+    setLoading(true);
     getAffiliateActiveCampaign();
     getActiveInfluencer('');
     getAffiliateTransactions('', '', 1, limit).then(() => {
@@ -67,6 +68,7 @@ function AffiliateTransaction({
   }
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let page = currentPage === 0 ? 1 : currentPage;
     getAffiliateTransactions(campaignId, influencerId, page, limit).then(() => {
@@ -74,9 +76,19 @@ function AffiliateTransaction({
     });
   }
 
+  const refreshPage = (e) => {
+    setLoading(true);
+    getAffiliateActiveCampaign();
+    getActiveInfluencer('');
+    getAffiliateTransactions('', '', 1, limit).then(() => {
+      setLoading(false);
+    });
+  }
+
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
+    setLoading(true);
     getAffiliateTransactions('', '', page + 1, limit).then(() => {
       setLoading(false);
     });
@@ -125,14 +137,22 @@ function AffiliateTransaction({
                         styles={style}
                       />
                     </Col>
-                    <Col className="transaction-search" xs={12} xl={4} md={4}>
+                    <Col className="transaction-search d-flex" xs={12} xl={4} md={4}>
                       <Button
                         type="submit"
                         variant="primary"
+                        className='fltr-hpr'
                       >
                         Search
                       </Button>
-
+                      <Button
+                        className='fltr-hpr btn-gray'
+                        onClick={refreshPage}
+                        type="button"
+                        variant="primary"
+                      >
+                        Refresh
+                      </Button>
                     </Col>
                   </Row>
                 </form>
