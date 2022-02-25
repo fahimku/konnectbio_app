@@ -493,7 +493,7 @@ class CampaignDataComponent extends React.Component {
         {this.state.loading ? (
           <Loader className="analytics-loading" size={60} />
         ) : !this.state.data.length ? (
-         <NoDataFound/>
+          <NoDataFound />
         ) : (
           <>
             <Row className="af-rm-mn">{this.state.postData}</Row>

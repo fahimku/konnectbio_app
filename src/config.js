@@ -28,6 +28,7 @@ const visitorURL =
     ? "https://konnect.bio"
     : "https://konnect.bio";
 
+    
 export default {
   redirectURL,
   hostApi,

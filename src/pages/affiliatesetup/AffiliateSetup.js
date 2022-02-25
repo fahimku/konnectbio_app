@@ -77,7 +77,7 @@ class AffiliateSetup extends React.Component {
                           this.toggleSecondTabs("transaction");
                         }}
                       >
-                        <span>Transactions</span>
+                        <span>Analytics</span>
                       </NavLink>
                     </NavItem>
                     <NavItem>

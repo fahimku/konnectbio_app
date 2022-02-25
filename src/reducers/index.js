@@ -35,7 +35,9 @@ import gallery from "./instagram/gallery";
 import schedulePosts from "./instagram/schedulePosts";
 import mobileDropdown from "./mobileDropdrown";
 import mediaSummary from "./media/mediaSummary";
-
+import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
+import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
+import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -74,4 +76,7 @@ export default (history) =>
     schedulePosts,
     mobileDropdown,
     mediaSummary,
+    affiliateTransactions,
+    affiliateCampaigns,
+    affiliateInfluencers,
   });
