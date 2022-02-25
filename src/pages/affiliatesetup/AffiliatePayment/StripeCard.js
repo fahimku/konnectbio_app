@@ -11,7 +11,7 @@ import {
   CardCvcElement,
   CardExpiryElement,
 } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import "./payment.scss";
 
 function StripeCard({ showEdit, setShowEdit }) {
@@ -20,9 +20,9 @@ function StripeCard({ showEdit, setShowEdit }) {
   const [error, setError] = useState("");
   // const [showEdit, setShowEdit] = useState(false);
 
-  const stripePromise = loadStripe(
-    "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
-  );
+  // const stripePromise = loadStripe(
+  //   "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
+  // );
 
   const CheckoutForm = () => {
     const stripe = useStripe();
@@ -212,9 +212,9 @@ function StripeCard({ showEdit, setShowEdit }) {
         <Modal.Body>
           {/* <div className="stripe-card conn-set-inner"> */}
           <div className="stripe-card">
-            <Elements stripe={stripePromise}>
+            {/* <Elements stripe={stripePromise}>
               <CheckoutForm />
-            </Elements>
+            </Elements> */}
           </div>
         </Modal.Body>
       </Modal>
