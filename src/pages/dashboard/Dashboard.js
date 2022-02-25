@@ -153,7 +153,8 @@ function Dashboard({ getDashboard, dashboard }) {
                   <h4>My Posts</h4>
                   <div className="text-muted">kbiouser3</div>
                   <div className="pt-20">
-                    {userData.package.package_id ==="61c02d43f40bec74fac2c9a0" ? (
+                    {userData.package.package_id ===
+                    "61c02d43f40bec74fac2c9a0" ? (
                       <Link
                         to="my/posts"
                         className="btn btn-rounded btn-primary"
@@ -287,7 +288,10 @@ function Dashboard({ getDashboard, dashboard }) {
           <div className="dashboard_col col-md-6">
             <div className="dash_block">
               <div className="dash_content">
-                <i className="fa fa-list-alt fa-2x text-body-bg-dark"></i>
+                <i className="fa fa-list-alt fa-2x text-body-bg-dark"></i>{" "}
+                <span className="text-muted" style={{ verticalAlign: "super" }}>
+                  Instagram
+                </span>
                 <div className="row pb-3 pt-3">
                   <div className="col-6 text-right border-r">
                     <div className="imp-t text-right">
