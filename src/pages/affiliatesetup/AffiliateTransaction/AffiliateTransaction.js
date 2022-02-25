@@ -34,6 +34,7 @@ function AffiliateTransaction({
   };
 
   useEffect(() => {
+    setLoading(true);
     getAffiliateActiveCampaign();
     getActiveInfluencer('');
     getAffiliateTransactions('', '', 1, limit).then(() => {
@@ -67,30 +68,43 @@ function AffiliateTransaction({
   }
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     let page = currentPage === 0 ? 1 : currentPage;
-    getAffiliateTransactions(campaignId, influencerId, page, limit).then(() => {
+    getAffiliateTransactions(campaignId.value, influencerId.value, page, limit).then(() => {
       setLoading(false);
     });
+  }
+
+  const refreshPage = (e) => {
+    setLoading(true);
+    getAffiliateActiveCampaign();
+    getActiveInfluencer('');
+    getAffiliateTransactions('', '', 1, limit).then(() => {
+      setLoading(false);
+    });
+    setCampaignId('');
+    setInfluencerId('');
   }
 
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
+    setLoading(true);
     getAffiliateTransactions('', '', page + 1, limit).then(() => {
       setLoading(false);
     });
   };
 
   const changeCampaign = (e) => {
-    const campaignId = e.value;
-    getActiveInfluencer(campaignId);
-    setCampaignId(campaignId);
+    setInfluencerId('');
+    getActiveInfluencer(e.value);
+    setCampaignId(e);
+   
   }
 
   const changeInfluencer = (e) => {
-    const influencerId = e.value;
-    setInfluencerId(influencerId);
+    setInfluencerId(e);
   }
 
   if (!loading) {
@@ -106,6 +120,7 @@ function AffiliateTransaction({
                     <Col xs={12} xl={4} md={4}>
                       <p>Select Campaign</p>
                       <Select
+                        value={campaignId}
                         name="category"
                         className="selectCustomization"
                         options={affiliateCampaigns}
@@ -117,6 +132,7 @@ function AffiliateTransaction({
                     <Col xs={12} xl={4} md={4}>
                       <p>Select Influencer</p>
                       <Select
+                        value={influencerId}
                         name="category"
                         className="selectCustomization"
                         options={affiliateInfluencers}
@@ -125,14 +141,22 @@ function AffiliateTransaction({
                         styles={style}
                       />
                     </Col>
-                    <Col className="transaction-search" xs={12} xl={4} md={4}>
+                    <Col className="transaction-search d-flex" xs={12} xl={4} md={4}>
                       <Button
                         type="submit"
                         variant="primary"
+                        className='fltr-hpr'
                       >
                         Search
                       </Button>
-
+                      <Button
+                        className='fltr-hpr btn-gray'
+                        onClick={refreshPage}
+                        type="button"
+                        variant="primary"
+                      >
+                        Refresh
+                      </Button>
                     </Col>
                   </Row>
                 </form>
