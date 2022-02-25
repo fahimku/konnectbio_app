@@ -3,9 +3,9 @@ const initialState = { message: [], pagination: {} };
 export default function affiliateInfluencers(state = initialState, action) {
     switch (action.type) {
         case GET_AFFILIATE_INFLUENCER:
-            return [{ value: "", label: "ALL" }, ...action.payload.message.map(({ influencer_id, influencer_name }) => {
+            return [{ value: "", label: "ALL" }, ...action.payload.message.map(({ influencer_id, instagram_username }) => {
                 return {
-                    value: influencer_id, label: influencer_name
+                    value: influencer_id, label: instagram_username
                 };
             })]
         default:

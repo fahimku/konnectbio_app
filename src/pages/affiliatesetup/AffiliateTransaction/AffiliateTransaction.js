@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
+
 function AffiliateTransaction({
   getAffiliateActiveCampaign,
   affiliateCampaigns,
