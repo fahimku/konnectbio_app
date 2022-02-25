@@ -87,6 +87,9 @@
     font-size: 12px;
     cursor: pointer;
   }
+  &__number span {
+    vertical-align: sub;
+  }
 }
 
 .stripe-card .StripeElement {

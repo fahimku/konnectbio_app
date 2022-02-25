@@ -14,7 +14,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import "./payment.scss";
 
-function StripeCard({ showEdit }) {
+function StripeCard({ showEdit, setShowEdit }) {
   const [token, setToken] = useState(null);
   const [submit, setSubmit] = useState(false);
   const [error, setError] = useState("");
@@ -108,6 +108,7 @@ function StripeCard({ showEdit }) {
         // console.log("[PaymentMethod]", result.token.id);
         console.log("[PaymentMethod]", payload);
         toast.success("Successfully");
+        setShowEdit(false);
       }
     };
 
@@ -202,7 +203,7 @@ function StripeCard({ showEdit }) {
       <Modal
         className="addbio-modal"
         show={showEdit}
-        // onHide={() => setShowEdit(false)}
+        onHide={() => setShowEdit(false)}
         centered
       >
         <Modal.Header closeButton>
