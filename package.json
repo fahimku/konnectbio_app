@@ -67,6 +67,8 @@
     "@mui/icons-material": "^5.2.5",
     "@mui/material": "^5.2.5",
     "@mui/styles": "^5.2.3",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.23.0",
     "animate.css": "4.1.1",
     "antd": "^4.16.13",
     "awesome-bootstrap-checkbox": "1.0.1",
