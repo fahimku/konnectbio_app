@@ -1,20 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Row } from "react-bootstrap";
+import { Row, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-
 import {
   CardElement,
   Elements,
   useStripe,
   useElements,
+  CardNumberElement,
+  CardCvcElement,
+  CardExpiryElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import "./payment.scss";
+import StripeCard from "./StripeCard";
 
 function AffiliatePayment() {
   const [token, setToken] = useState(null);
   const [submit, setSubmit] = useState(false);
+  const [error, setError] = useState("");
+  const [showEdit, setShowEdit] = useState(false);
 
   const stripePromise = loadStripe(
     "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
@@ -83,10 +88,33 @@ function AffiliatePayment() {
         },
       },
     };
+    const handleSubmit2 = async (event) => {
+      event.preventDefault();
+
+      if (!stripe || !elements) {
+        // Stripe.js has not loaded yet. Make sure to disable
+        // form submission until Stripe.js has loaded.
+        return;
+      }
+
+      const payload = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardNumberElement),
+      });
+      if (payload.error) {
+        console.log("[error]", payload.error);
+        // setError(payload.error.message);
+        toast.error(payload.error.message);
+      } else {
+        // console.log("[PaymentMethod]", result.token.id);
+        console.log("[PaymentMethod]", payload);
+        toast.success("Successfully");
+      }
+    };
 
     return (
       <>
-        <div className="stripe-form-field">
+        {/* <div className="stripe-form-field">
           <CardElement options={options} />
         </div>
         <button
@@ -95,7 +123,77 @@ function AffiliatePayment() {
           className="btn btn-primary btn-block"
         >
           Make Payment
-        </button>
+        </button> */}
+        <form onSubmit={handleSubmit2} className="row">
+          <label className="col-md-12">
+            Card number
+            <CardNumberElement
+              options={options}
+              // onReady={() => {
+              //   console.log("CardNumberElement [ready]");
+              // }}
+              // onChange={(event) => {
+              //   console.log("CardNumberElement [change]", event);
+              //   setError(event.complete ? true : false);
+              // }}
+              // onBlur={() => {
+              //   console.log("CardNumberElement [blur]");
+              // }}
+              // onFocus={() => {
+              //   console.log("CardNumberElement [focus]");
+              // }}
+              // className="form-control"
+            />
+          </label>
+          <label className="col-md-12">
+            Expiration date
+            <CardExpiryElement
+              options={options}
+              // onReady={() => {
+              //   console.log("CardNumberElement [ready]");
+              // }}
+              // onChange={(event) => {
+              //   console.log("CardNumberElement [change]", event);
+              // }}
+              // onBlur={() => {
+              //   console.log("CardNumberElement [blur]");
+              // }}
+              // onFocus={() => {
+              //   console.log("CardNumberElement [focus]");
+              // }}
+              // className="form-control"
+            />
+          </label>
+          <label className="col-md-12">
+            CVC
+            <CardCvcElement
+              options={options}
+              // onReady={() => {
+              //   console.log("CardNumberElement [ready]");
+              // }}
+              // onChange={(event) => {
+              //   console.log("CardNumberElement [change]", event);
+              // }}
+              // onBlur={() => {
+              //   console.log("CardNumberElement [blur]");
+              // }}
+              // onFocus={() => {
+              //   console.log("CardNumberElement [focus]");
+              // }}
+              // className="form-control"
+            />
+          </label>
+          {/* <label className="col-md-12 text-danger">{error}</label> */}
+          <label className="col-md-12">
+            <button
+              type="submit"
+              disabled={!stripe}
+              className="btn btn-block btn-primary mt-2"
+            >
+              Save
+            </button>
+          </label>
+        </form>
       </>
     );
   };
@@ -106,14 +204,11 @@ function AffiliatePayment() {
         <h4 className="page-title">Payment Method</h4>
         <div className="brand_container_main container aff-payment">
           <Row>
-            {/* <div className="col-md-4">
-              <div className="stripe-card conn-set-inner">
-                <Elements stripe={stripePromise}>
-                  <CheckoutForm />
-                </Elements>
-              </div>
-            </div> */}
-
+            <div className="col-md-4">
+              <StripeCard showEdit={showEdit} />
+            </div>
+          </Row>
+          <Row>
             <div className="col-md-6">
               <div className="row count-main-box card analytic-box">
                 <h5 className="mb-4">Payment Details</h5>
@@ -147,7 +242,10 @@ function AffiliatePayment() {
             <div className="col-md-4">
               <div class="credit-panel">
                 <div class="card card--front">
-                  <div class="card__number">*** **** **** 1234</div>
+                  <div class="card__edit" onClick={() => setShowEdit(true)}>
+                    Edit Card
+                  </div>
+                  <div class="card__number">**** **** **** 1234</div>
                   {/* <div class="card__expiry-date">10 / 23</div> */}
                   <div class="card__owner">Jane Doe</div>
                   <div class="card__logo">
@@ -171,98 +269,3 @@ function AffiliatePayment() {
 }
 
 export default AffiliatePayment;
-
-// import React, { useState } from "react";
-// import { Row } from "react-bootstrap";
-// import { toast } from "react-toastify";
-// import {
-//   Elements,
-//   CardElement,
-//   useElements,
-//   useStripe,
-// } from "@stripe/react-stripe-js";
-// import { loadStripe } from "@stripe/stripe-js";
-
-// const stripePromise = loadStripe(
-//   "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
-// );
-
-// function AffiliatePayment() {
-//   const [key, setKey] = useState("");
-
-//   const handleSubmit = (stripe, elements) => async () => {
-//     const cardElement = elements.getElement(CardElement);
-
-//     const { error, paymentMethod } = await stripe.createPaymentMethod({
-//       type: "card",
-//       card: cardElement,
-//     });
-
-//     if (error) {
-//       console.log("[error]", error);
-//       toast.error(error.message);
-//     } else {
-//       console.log("[PaymentMethod]", paymentMethod);
-//       toast.success("Success Payment");
-//       // ... SEND to your API server to process payment intent
-//     }
-//   };
-//   const options = {
-//     iconStyle: "solid",
-//     hidePostalCode: true,
-//     style: {
-//       base: {
-//         color: "#424770",
-//         letterSpacing: "0.025em",
-//         fontFamily: "Source Code Pro, monospace",
-//         "::placeholder": {
-//           color: "#aab7c4",
-//         },
-//       },
-//       invalid: {
-//         color: "#9e2146",
-//       },
-//     },
-//   };
-
-//   const PaymentForm = () => {
-//     const stripe = useStripe();
-//     const elements = useElements();
-//     return (
-//       <>
-//         <h4>Card Details</h4>
-//         <CardElement
-//           hidePostalCode={false}
-//           className="sr-input sr-card-element"
-//           options={options}
-//         />
-//         <button
-//           onClick={handleSubmit(stripe, elements)}
-//           className="btn btn-primary btn-block mt-3"
-//         >
-//           Make Payment
-//         </button>
-//       </>
-//     );
-//   };
-
-//   return (
-//     <React.Fragment>
-//       <div className="container-fluid">
-//         <h4 className="page-title">Payment Method</h4>
-//         <div className="brand_container_main container aff-payment">
-//           <Row>
-//             <div className="col-md-4">
-//               <div className="stripe-card conn-set-inner">
-//                 <Elements stripe={stripePromise}>
-//                   <PaymentForm />
-//                 </Elements>
-//               </div>
-//             </div>
-//           </Row>
-//         </div>
-//       </div>
-//     </React.Fragment>
-//   );
-// }
-// export default AffiliatePayment;

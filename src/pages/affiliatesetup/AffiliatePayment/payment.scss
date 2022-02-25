@@ -80,4 +80,21 @@
     padding-right: 0;
     text-align: left;
   }
+  &__edit {
+    top: 10px;
+    right: 20px;
+    position: absolute;
+    font-size: 12px;
+    cursor: pointer;
+  }
+}
+
+.stripe-card .StripeElement {
+  transition: border-color ease-in-out 0.15s, background-color ease-in-out 0.15s;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #323b43;
+  background: #fff;
+  border: solid 1px #dce4ec;
 }
