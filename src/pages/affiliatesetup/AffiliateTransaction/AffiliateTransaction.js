@@ -71,7 +71,7 @@ function AffiliateTransaction({
     setLoading(true);
     e.preventDefault();
     let page = currentPage === 0 ? 1 : currentPage;
-    getAffiliateTransactions(campaignId, influencerId, page, limit).then(() => {
+    getAffiliateTransactions(campaignId.value, influencerId.value, page, limit).then(() => {
       setLoading(false);
     });
   }
@@ -83,6 +83,8 @@ function AffiliateTransaction({
     getAffiliateTransactions('', '', 1, limit).then(() => {
       setLoading(false);
     });
+    setCampaignId('');
+    setInfluencerId('');
   }
 
   const handlePageClick = (e) => {
@@ -95,14 +97,14 @@ function AffiliateTransaction({
   };
 
   const changeCampaign = (e) => {
-    const campaignId = e.value;
-    getActiveInfluencer(campaignId);
-    setCampaignId(campaignId);
+    setInfluencerId('');
+    getActiveInfluencer(e.value);
+    setCampaignId(e);
+   
   }
 
   const changeInfluencer = (e) => {
-    const influencerId = e.value;
-    setInfluencerId(influencerId);
+    setInfluencerId(e);
   }
 
   if (!loading) {
@@ -118,6 +120,7 @@ function AffiliateTransaction({
                     <Col xs={12} xl={4} md={4}>
                       <p>Select Campaign</p>
                       <Select
+                        value={campaignId}
                         name="category"
                         className="selectCustomization"
                         options={affiliateCampaigns}
@@ -129,6 +132,7 @@ function AffiliateTransaction({
                     <Col xs={12} xl={4} md={4}>
                       <p>Select Influencer</p>
                       <Select
+                        value={influencerId}
                         name="category"
                         className="selectCustomization"
                         options={affiliateInfluencers}
