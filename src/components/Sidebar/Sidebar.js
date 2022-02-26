@@ -144,7 +144,7 @@ class Sidebar extends React.Component {
                 <LinksGroup
                   id='affiliate'
                   className="sidebar-nav-links"
-                  header="Affiliate - Advertise"
+                  header="Campaigns"
                   link="/app/campaign"
                   isHeader
                   iconElement={
@@ -324,7 +324,7 @@ class Sidebar extends React.Component {
                           link: "/app/account/categories",
                         },
                         {
-                          header: "Affiliate Setup",
+                          header: "Campaign Setup",
                           link: "/app/account/affiliate",
                         },
                         {
