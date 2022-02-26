@@ -170,7 +170,8 @@ function Gallery({
                 disabledDate={startDateLimit}
                 style={{ width: "100%" }}
                 size={"medium"}
-                showTime={{ format: "HH:mm" }}
+                showTime={{ format: "HH:mm A" }}
+                format="YYYY-MM-DD HH:mm A"
                 onChange={(e) => {
                   setFields({ ...fields, publish_date: e._d });
                 }}
