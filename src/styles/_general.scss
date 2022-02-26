@@ -1041,3 +1041,8 @@ code.sm-color {
 .transaction-search {
   margin-top: 35px;
 }
+@media screen and (max-width: 668px) {
+  .transaction-search {
+    margin-top: 20px;
+  }
+}
