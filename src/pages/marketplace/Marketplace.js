@@ -53,6 +53,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "category",
                       })}
+                      id="mark-category"
                       onClick={() => {
                         this.toggleTabs("category");
                       }}
@@ -65,6 +66,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "brand",
                       })}
+                      id="mark-brand"
                       onClick={() => {
                         this.toggleTabs("brand");
                       }}
@@ -80,6 +82,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "marketplace",
                       })}
+                      id="mark-new"
                       onClick={() => {
                         this.toggleTabs("marketplace");
                       }}
@@ -95,6 +98,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "active",
                       })}
+                      id="mark-active"
                       onClick={() => {
                         this.toggleTabs("active");
                       }}
@@ -110,6 +114,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "in-active",
                       })}
+                      id="mark-paused"
                       onClick={() => {
                         this.toggleTabs("in-active");
                       }}
@@ -125,6 +130,7 @@ class MarketPlace extends React.Component {
                       className={classnames({
                         active: this.state.activeTab === "expired",
                       })}
+                      id="mark-expired"
                       onClick={() => {
                         this.toggleTabs("expired");
                       }}

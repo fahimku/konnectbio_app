@@ -70,7 +70,14 @@ export default function Box({ item, addCampaignToShop, index }) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Campaign Type</h5>
-                    <h3 className="count">{item.campaign_type}</h3>
+                    <h3
+                      className="count"
+                      style={{
+                        "text-transform": "capitalize",
+                      }}
+                    >
+                      {item.campaign_type}
+                    </h3>
                   </div>
 
                   <div className="col-12 count-box">
@@ -114,6 +121,7 @@ export default function Box({ item, addCampaignToShop, index }) {
                       );
                     }}
                     className="btn"
+                    id="select-campaign"
                   >
                     Select Campaign
                   </button>

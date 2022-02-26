@@ -371,6 +371,7 @@ function ActiveMarketPlace({
                       type="submit"
                       variant="primary"
                       className="fltr-hpr"
+                      id="fltr-camp"
                     >
                       Search
                     </Button>
@@ -384,6 +385,7 @@ function ActiveMarketPlace({
                       onClick={clearMarketPlace}
                       variant="gray"
                       className="fltr-hpr btn-primary"
+                      id="fltr-reset"
                     >
                       Reset
                     </Button>

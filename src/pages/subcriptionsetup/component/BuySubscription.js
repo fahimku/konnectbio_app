@@ -154,6 +154,7 @@ export default function BuySubscription({
                 variant="primary"
                 type="submit"
                 className="category-btn btn-block mt-4"
+                id="mark-upgrade"
               >
                 Upgrade {name}
               </Button>

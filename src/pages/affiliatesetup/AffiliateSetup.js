@@ -80,7 +80,7 @@ class AffiliateSetup extends React.Component {
                         <span>Analytics</span>
                       </NavLink>
                     </NavItem>
-                    {/* <NavItem>
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active:
@@ -92,7 +92,7 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Payment Method</span>
                       </NavLink>
-                    </NavItem> */}
+                    </NavItem>
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"

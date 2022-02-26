@@ -594,6 +594,7 @@ class MyCategory extends React.Component {
                               variant="primary"
                               type="submit"
                               className="category-btn btn-block"
+                              id="cat-save"
                               disabled={
                                 // this.state.saveCategories.length &&
                                 !this.state.loading ? false : true
