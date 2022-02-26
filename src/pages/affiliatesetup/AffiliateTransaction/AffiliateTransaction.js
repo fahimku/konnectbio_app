@@ -50,12 +50,19 @@ function AffiliateTransaction({
           {data.map((item, i) => {
             return (
               <tr key={i}>
+                <td>PID</td>
+                <td>Date/Time</td>
+                <td>Source Name</td>
+                <td>Destination Name</td>
                 <td>{item?.campaign?.campaign_name}</td>
+                <td>Start Date</td>
+                <td>End Date</td>
+                <td>Category</td>
                 <td>{item?.campaign?.campaign_type}</td>
-                <td>{item?.instagram_username}</td>
-                <td>{item?.country}</td>
-                <td>{item?.city}</td>
-                <td>{item?.created_date}</td>
+                <td>Click Rate</td>
+                <td>Commission Percentage</td>
+                <td>Fix Commission Amount</td>
+                <td>IP</td>
                 <td className="text-center">
                   <i class="fa fa-eye"></i>
                 </td>
@@ -100,7 +107,7 @@ function AffiliateTransaction({
     setInfluencerId('');
     getActiveInfluencer(e.value);
     setCampaignId(e);
-   
+
   }
 
   const changeInfluencer = (e) => {
@@ -112,7 +119,7 @@ function AffiliateTransaction({
       <React.Fragment>
         <div className="container-fluid">
           <h4 className="page-title">Analytics</h4>
-          <div className="brand_container_main container aff-payment">
+          <div className="brand_container_main aff-payment">
             <Row>
               <div className="col-md-12">
                 <form className="mb-3" onSubmit={handleSubmit}>
@@ -163,12 +170,19 @@ function AffiliateTransaction({
                 <Table responsive="sm" className="transactions-box">
                   <thead>
                     <tr>
+                      <th>PID</th>
+                      <th>Date/Time</th>
+                      <th>Source Name</th>
+                      <th>Destination Name</th>
                       <th>Campaign Name</th>
-                      <th>Campaign Type</th>
-                      <th>Influencer</th>
-                      <th>Country</th>
-                      <th>City</th>
-                      <th>Date</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Category</th>
+                      <th>Campaign Type Click/Sales</th>
+                      <th>Click Rate</th>
+                      <th>Commission Percentage</th>
+                      <th>Fix Commission Amount</th>
+                      <th>IP</th>
                       <th className="text-center">Action</th>
                     </tr>
                   </thead>
@@ -202,7 +216,7 @@ function AffiliateTransaction({
                       />
                     </Row>
                   </>
-                  :(<NoDataFound/>)
+                  : (<NoDataFound />)
                 }
               </div>
             </Row>
