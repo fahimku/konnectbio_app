@@ -188,6 +188,7 @@ class BrandComponent extends React.Component {
                             variant="primary"
                             type="submit"
                             className="btn-block mt-3"
+                            id="brand-save"
                             disabled={!this.state.loading ? false : true}
                           >
                             Save

@@ -3,8 +3,8 @@ import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
 import s from "./analysis.module.scss";
 import AffiliateBrand from "./AffiliateBrand/AffiliateBrand";
-import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
-import AffiliateBalance from "./AffiliateBalance/AffiliateBalance";
+// import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
+// import AffiliateBalance from "../affiliate/AffiliateBalance/AffiliateBalance";
 import AffiliatePayment from "./AffiliatePayment/AffiliatePayment";
 
 class AffiliateSetup extends React.Component {
@@ -68,7 +68,7 @@ class AffiliateSetup extends React.Component {
                         <span>Balance</span>
                       </NavLink>
                     </NavItem> */}
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "transaction",
@@ -79,8 +79,8 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Analytics</span>
                       </NavLink>
-                    </NavItem>
-                    {/* <NavItem>
+                    </NavItem> */}
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active:
@@ -92,7 +92,7 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Payment Method</span>
                       </NavLink>
-                    </NavItem> */}
+                    </NavItem>
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"
@@ -103,16 +103,16 @@ class AffiliateSetup extends React.Component {
                         <AffiliateBrand />
                       ) : null}
                     </TabPane>
-                    <TabPane tabId="balance">
+                    {/* <TabPane tabId="balance">
                       {this.state.activeSecondTab === "balance" ? (
                         <AffiliateBalance />
                       ) : null}
-                    </TabPane>
-                    <TabPane tabId="transaction">
+                    </TabPane> */}
+                    {/* <TabPane tabId="transaction">
                       {this.state.activeSecondTab === "transaction" ? (
                         <AffiliateTransaction />
                       ) : null}
-                    </TabPane>
+                    </TabPane> */}
                     <TabPane tabId="paymentmethod">
                       {this.state.activeSecondTab === "paymentmethod" ? (
                         <AffiliatePayment />

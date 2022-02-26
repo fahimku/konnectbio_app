@@ -88,13 +88,14 @@ class Register extends React.Component {
   }
 
   checkBrandExist = async (event) => {
-    if (this.state.accountType === 'brand') {
-      return await axios.post(`/signup/checkbrand`, { brand_name: event.target.value })
+    if (this.state.accountType === "brand") {
+      return await axios
+        .post(`/signup/checkbrand`, { brand_name: event.target.value })
         .then(() => {
           this.setState({ brandExist: false });
         })
         .catch(() => {
-          this.setState({ brandExist: true });   
+          this.setState({ brandExist: true });
         });
     }
   };
@@ -184,7 +185,7 @@ class Register extends React.Component {
   changeName(event) {
     let name = event.target.value;
     this.setState({ name: name });
-  //  this.checkBrandExist(name);
+    //  this.checkBrandExist(name);
   }
 
   changeEmail(event) {
@@ -278,20 +279,16 @@ class Register extends React.Component {
     e.preventDefault();
 
     if (this.state.step1) {
-
       if (this.state.name === "") {
         this.props.dispatch(authError("The name field is required"));
-      }
-
-      else if (this.state.brandExist && this.state.accountType === 'brand') {
+      } else if (this.state.brandExist && this.state.accountType === "brand") {
         this.props.dispatch(authError("Brand name is unavailable!"));
-      }
-        
-      else if (!this.validateEmail(this.state.email)) {
+      } else if (!this.validateEmail(this.state.email)) {
         this.props.dispatch(authError("The email address is not valid"));
-      }
-
-      else if (this.state.accountType === "influencer" && this.state.gender === "") {
+      } else if (
+        this.state.accountType === "influencer" &&
+        this.state.gender === ""
+      ) {
         this.props.dispatch(authError("The gender field is required"));
       } else {
         this.props.dispatch(authError(""));
@@ -299,9 +296,7 @@ class Register extends React.Component {
         this.setState({ step2: true });
         this.setState({ step3: false });
       }
-    }
-
-    else if (this.state.step2) {
+    } else if (this.state.step2) {
       if (this.state.countryCode === "") {
         this.props.dispatch(authError("The country field is required"));
       } else if (this.state.countryStateCode === "") {
@@ -348,9 +343,6 @@ class Register extends React.Component {
   };
 
   render() {
-
-
-
     const styles = {
       menuList: (base) => ({
         ...base,
@@ -526,8 +518,11 @@ class Register extends React.Component {
                                 onChange={this.changeName}
                                 type="text"
                                 name="name"
-                                placeholder={`${this.state.accountType === "influencer" ? "Name" : "Company Name"}`}
-
+                                placeholder={`${
+                                  this.state.accountType === "influencer"
+                                    ? "Name"
+                                    : "Company Name"
+                                }`}
                               />
                             </div>
                             <div className="form-group">
@@ -652,7 +647,7 @@ class Register extends React.Component {
                                 onBlur={this.checkPassword}
                                 type="password"
                                 name="confirmPassword"
-                                placeholder="Confirm"
+                                placeholder="Confirm Password"
                               />
                             </div>
                             <div className="form-group">
@@ -673,6 +668,8 @@ class Register extends React.Component {
                                 type="text"
                                 name="referred_by"
                                 placeholder="Referred by - Optional"
+                                pattern="[a-zA-Z]*"
+                                title="Please enter alphabets only"
                               />
                             </div>
                           </div>
@@ -693,8 +690,9 @@ class Register extends React.Component {
                             )}
                           </div>
                           <div
-                            className={` ${this.state.step1 ? "col-12" : "col-6"
-                              }`}
+                            className={` ${
+                              this.state.step1 ? "col-12" : "col-6"
+                            }`}
                           >
                             {this.props.isFetching ? (
                               <Button

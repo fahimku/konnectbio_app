@@ -338,6 +338,7 @@ function AllMarketplace({
                         type="submit"
                         variant="primary"
                         className="fltr-hpr"
+                        id="fltr-camp"
                       >
                         Search
                       </Button>
@@ -351,6 +352,7 @@ function AllMarketplace({
                         onClick={clearMarketPlace}
                         variant="gray"
                         className="fltr-hpr btn-primary"
+                        id="fltr-reset"
                       >
                         Reset
                       </Button>
