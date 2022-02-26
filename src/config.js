@@ -1,8 +1,5 @@
 // Araj PC
-// const hostApi =
-//   process.env.NODE_ENV === "development"
-//     ? "http://172.16.1.85:9000"
-//     : "https://api.konnect.bio";
+// const hostApi = process.env.NODE_ENV === "development" ? "http://172.16.1.85:9000": "https://api.konnect.bio";
 
 //Kashif Bhai PC
 // const hostApi =

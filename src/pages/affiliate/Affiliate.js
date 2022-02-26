@@ -7,6 +7,8 @@ import AffiliateDashboard from "./AffiliateDashboard/AffiliateDashboard";
 import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateScheduleCampaign from "./AffiliateCampaign/AffiliateScheduleCampaign";
+import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
+import AffiliateBalance from "./AffiliateBalance/AffiliateBalance";
 import axios from "axios";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
@@ -33,7 +35,7 @@ class Affiliate extends React.Component {
     // this.setState({
     //   activeSecondTab: "tab24",
     // });
-    if (this.state.package_name !=="61c02e2ff40bec74fac2ca09") {
+    if (this.state.package_name !== "61c02e2ff40bec74fac2ca09") {
       this.getMyBrands();
     }
   }
@@ -67,7 +69,7 @@ class Affiliate extends React.Component {
 
   render() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    return userInfo?.package?.package_id !=="61d695e9bccdaf69f46efc66" ? (
+    return userInfo?.package?.package_id !== "61d695e9bccdaf69f46efc66" ? (
       <div className="container-fluid">
         <div class="coming_iner">
           <h2>Upgrade Account</h2>
@@ -180,6 +182,34 @@ class Affiliate extends React.Component {
                     >
                       <span>Schedule Campaign</span>
                     </NavLink>
+                        </NavItem>
+                        
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeTab === "balance",
+                        })}
+                        onClick={() => {
+                          this.toggleTabs("balance");
+                        }}
+                      >
+                        <span>Balance</span>
+                      </NavLink>
+                    </NavItem>
+                        
+                        
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "transaction",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("transaction");
+                      }}
+                    >
+                      <span>Transactions</span>
+                    </NavLink>
                   </NavItem>
                 </Nav>
 
@@ -240,6 +270,16 @@ class Affiliate extends React.Component {
                         type="active"
                         title="Schedule Campaigns"
                       />
+                    ) : null}
+                        </TabPane>
+                   <TabPane tabId="balance">
+                    {this.state.activeTab === "balance" ? (
+                      <AffiliateBalance/>
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="transaction">
+                    {this.state.activeTab === "transaction" ? (
+                      <AffiliateTransaction/>
                     ) : null}
                   </TabPane>
                 </TabContent>
