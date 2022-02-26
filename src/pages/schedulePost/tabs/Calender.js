@@ -82,7 +82,7 @@ class Calendar extends React.Component {
   }
 
   componentDidMount() {
-    const userInfo=JSON.parse(localStorage.getItem('userInfo'))
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.props.getUserCategories2(userInfo.user_id);
     // new Draggable(this.externalEvents, {
     //   itemSelector: ".external-event",
@@ -111,7 +111,8 @@ class Calendar extends React.Component {
       redirected_url: e.event._def?.extendedProps?.redirected_url,
       categories: this.props.categories
         .filter(
-          (item) => item.category_id == e.event._def?.extendedProps?.categories[0]
+          (item) =>
+            item.category_id == e.event._def?.extendedProps?.categories[0]
         )
         .map((item) => ({
           value: item.category_id,
@@ -173,7 +174,9 @@ class Calendar extends React.Component {
                 value={moment(new Date(this.state.publish_date), "YYYY-MM-DD")}
                 style={{ width: "100%" }}
                 size={"medium"}
-                showTime
+                // showTime
+                showTime={{ format: "HH:mm A" }}
+                format="YYYY-MM-DD HH:mm A"
                 onChange={(e) => {
                   this.setState({ publish_date: e._d });
                 }}
@@ -526,19 +529,28 @@ class Calendar extends React.Component {
           <ModalBody className="bg-white affiliate-model image-edit-box p-3">
             <Row>
               <Col lg={4}>
-              <div class="form-group">
-              <label for="exampleInputEmail1">Caption</label>
-              <input 
-              value={this.state.currentData?.title} 
-              onChange={(e)=>this.setState({currentData:{...this.state.currentData,title:e.target.value}})}
-              type="text" class="form-control" 
-              id="exampleInputEmail1" 
-              aria-describedby="emailHelp" 
-              placeholder="Enter Caption"/>
-              {this.state.submit && !this.state.currentData?.title?(
-                <small style={{color:'red'}}>Please Fill</small>
-              ):null}
-            </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Caption</label>
+                  <input
+                    value={this.state.currentData?.title}
+                    onChange={(e) =>
+                      this.setState({
+                        currentData: {
+                          ...this.state.currentData,
+                          title: e.target.value,
+                        },
+                      })
+                    }
+                    type="text"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter Caption"
+                  />
+                  {this.state.submit && !this.state.currentData?.title ? (
+                    <small style={{ color: "red" }}>Please Fill</small>
+                  ) : null}
+                </div>
                 {/* <p
                   style={{
                     color: "gray",
