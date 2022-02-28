@@ -143,7 +143,11 @@ function AffiliateTransaction({
                 <td>${item.campaign?.pay_per_hundred}</td>
                 <td>{item?.transaction_type}</td>
                 <td className="text-center">
-                  <i role="button" onClick={() => setTransactionModal(true)} className="fa fa-eye"></i>
+                  <i
+                    role="button"
+                    onClick={() => setTransactionModal(true)}
+                    className="fa fa-eye"
+                  ></i>
                 </td>
               </tr>
             );
@@ -223,7 +227,7 @@ function AffiliateTransaction({
                 </Row>
               </form>
               {loading ? (
-                <Loader size='30' />
+                <Loader size="30" />
               ) : affiliateTransactions?.message?.data?.length === 0 ? (
                 <>
                   <NoDataFound />
@@ -285,17 +289,118 @@ function AffiliateTransaction({
       <Modal
         show={trnsactionModal}
         onHide={() => {
-          setTransactionModal(false)
+          setTransactionModal(false);
         }}
         className="change-password"
         centered
-        size='lg'
+        size="xl"
       >
         <Modal.Header closeButton>
           <Modal.Title>Transaction Detail</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-white">
-          A
+        <Modal.Body className="bg-white ">
+          <Row>
+            <Col xs={12} xl={6} md={6}>
+              <div class="card analytic-box analytics-page">
+                <h5 className="mb-4">User Detail</h5>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Pixel ID</h5>
+                  <h3 class="count">900000063</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Username</h5>
+                  <h3 class="count">kbiouser4</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Email</h5>
+                  <h3 class="count">kbiouser4@konnect.bio</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Country</h5>
+                  <h3 class="count">US</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">State</h5>
+                  <h3 class="count">NY</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">City</h5>
+                  <h3 class="count">New York City</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Gender</h5>
+                  <h3 class="count">male</h3>
+                </div>
+              </div>
+            </Col>
+            <Col xs={12} xl={6} md={6}>
+              <div class="card analytic-box analytics-page">
+                <h5 className="mb-4">Campaign Detail</h5>
+                <div class="card-row row">
+                  <div class="any-post-img-col col-5">
+                    <div class="any-post-image">
+                      <div class="any-image-box">
+                        <div class="any-image-box-iner">
+                          <img
+                            src="https://cdn.konnect.bio/hangerbywajid/posts/f4fc17c1-d265-4c29-8abe-9754279b8042.jpg"
+                            class="img-fluid media-image"
+                            alt="IMAGE"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-7 analytic-caption">
+                    <div class="row count-main-box">
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Campaign Name</h5>
+                        <h3 class="count" title="Test 3">
+                          Test 3
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Campaign Type</h5>
+                        <h3 class="count">clicks</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Category</h5>
+                        <h3 class="count">ARTS</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Budget</h5>
+                        <h3 class="count">$100</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Click Rate</h5>
+                        <h3 class="count">$10</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Start Date</h5>
+                        <h3 class="count">2022-02-28</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">End Date</h5>
+                        <h3 class="count">2023-01-12</h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col xs={12} xl={6} md={6}>
+              <div class="card analytic-box analytics-page">
+                <h5 className="mb-4">System Information</h5>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">IP Address</h5>
+                  <h3 class="count">110.93.200.131</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">User Agent</h5>
+                  <h3 class="count">Mozilla/5.0</h3>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
           <Button

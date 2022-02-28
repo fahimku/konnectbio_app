@@ -52,7 +52,7 @@ class Affiliate extends React.Component {
         });
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
         this.setState({
           brandLoading: true,
         });
@@ -73,9 +73,7 @@ class Affiliate extends React.Component {
       <div className="container-fluid">
         <div class="coming_iner">
           <h2>Upgrade Account</h2>
-          <p className="text-muted">
-            This Option is only available for Brand.
-          </p>
+          <p className="text-muted">This Option is only available for Brand.</p>
           <button
             class="btn btn-primary"
             onClick={() => history.push("/app/subcription/setup")}
@@ -182,22 +180,20 @@ class Affiliate extends React.Component {
                     >
                       <span>Schedule Campaign</span>
                     </NavLink>
-                        </NavItem>
-                        
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeTab === "balance",
-                        })}
-                        onClick={() => {
-                          this.toggleTabs("balance");
-                        }}
-                      >
-                        <span>Balance</span>
-                      </NavLink>
-                    </NavItem>
-                        
-                        
+                  </NavItem>
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "balance",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("balance");
+                      }}
+                    >
+                      <span>Balance</span>
+                    </NavLink>
+                  </NavItem>
 
                   <NavItem>
                     <NavLink
@@ -271,15 +267,15 @@ class Affiliate extends React.Component {
                         title="Schedule Campaigns"
                       />
                     ) : null}
-                        </TabPane>
-                   <TabPane tabId="balance">
+                  </TabPane>
+                  <TabPane tabId="balance">
                     {this.state.activeTab === "balance" ? (
-                      <AffiliateBalance/>
+                      <AffiliateBalance />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="transaction">
                     {this.state.activeTab === "transaction" ? (
-                      <AffiliateTransaction/>
+                      <AffiliateTransaction />
                     ) : null}
                   </TabPane>
                 </TabContent>
