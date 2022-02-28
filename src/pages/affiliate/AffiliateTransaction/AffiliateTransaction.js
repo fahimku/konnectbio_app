@@ -104,7 +104,7 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign('active');
     getActiveInfluencer("");
-    getAffiliateTransactions(status.value, "", "", "", 1, limit).then(() => {
+    getAffiliateTransactions('active'.value, "", "", "", 1, limit).then(() => {
       setLoading(false);
     });
     setStatus({ value: 'active', label: 'Active' })
