@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Table } from "react-bootstrap";
+import { Row, Col, Button, Table, Modal } from "react-bootstrap";
 import * as affiliateTransactionsActions from "../../../actions/affiliateTransactions";
 import { connect } from "react-redux";
 import ReactPaginate from "react-paginate";
@@ -17,6 +17,7 @@ function AffiliateTransaction({
   affiliateTransactions,
 }) {
   const [loading, setLoading] = useState(true);
+  const [trnsactionModal, setTransactionModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [campaignId, setCampaignId] = useState("");
   const [influencerId, setInfluencerId] = useState("");
@@ -142,7 +143,7 @@ function AffiliateTransaction({
                 <td>${item.campaign?.pay_per_hundred}</td>
                 <td>{item?.transaction_type}</td>
                 <td className="text-center">
-                  <i class="fa fa-eye"></i>
+                  <i role="button" onClick={() => setTransactionModal(true)} className="fa fa-eye"></i>
                 </td>
               </tr>
             );
@@ -233,8 +234,8 @@ function AffiliateTransaction({
                     <tr>
                       <th>PID</th>
                       <th>Date/Time</th>
-                      <th>Influencer Name</th>
-                      <th>Campaign Name</th>
+                      <th>Influencer </th>
+                      <th>Campaign </th>
                       <th>Start Date</th>
                       <th>End Date</th>
                       <th>Category</th>
@@ -242,7 +243,7 @@ function AffiliateTransaction({
                       <th>Budget</th>
                       <th>Click Rate</th>
                       <th>Transaction Type</th>
-                      <th className="text-center">Action</th>
+                      <th className="text-center">View</th>
                     </tr>
                   </thead>
                   <tbody>{dataTable()}</tbody>
@@ -281,6 +282,31 @@ function AffiliateTransaction({
           </Row>
         </div>
       </div>
+      <Modal
+        show={trnsactionModal}
+        onHide={() => {
+          setTransactionModal(false)
+        }}
+        className="change-password"
+        centered
+        size='lg'
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Transaction Detail</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-white">
+          A
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            onClick={() => {
+              setTransactionModal(false);
+            }}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </React.Fragment>
   );
 }
