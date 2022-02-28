@@ -51,15 +51,15 @@ class MyCategory extends React.Component {
   }
 
   componentDidMount() {
-    if (userInfo.package?.subscription_type != "Trial") {
+    if (userInfo.package?.subscription_type !== "Trial") {
       var subType = JSON.parse(localStorage.getItem("userInfo")).package
         .recurring_payment_type;
       if (subType) {
         subType = subType.slice(0, subType.length - 2).toLocaleLowerCase();
         this.props.configSubs().then((res) => {
           const getPrice = res.message
-            .filter((item) => item.product_name == "Category")
-            .filter((subItem) => subItem.interval == subType)[0];
+            .filter((item) => item.product_name === "Category")
+            .filter((subItem) => subItem.interval === subType)[0];
           this.setState({ priceId: getPrice.price_id });
           this.setState({ unitAmount: getPrice.unit_amount / 3 });
         });
@@ -71,8 +71,8 @@ class MyCategory extends React.Component {
         this.props.configSubs().then((res) => {
           this.setState({ config: res.message });
           const getPrice = res.message
-            .filter((item) => item.product_name == "Category")
-            .filter((subItem) => subItem.interval == planCut)[0];
+            .filter((item) => item.product_name === "Category")
+            .filter((subItem) => subItem.interval === planCut)[0];
           this.setState({ priceId: getPrice.price_id });
           this.setState({ unitAmount: getPrice.unit_amount / 3 });
         });
@@ -623,9 +623,11 @@ class MyCategory extends React.Component {
                               .slice(0, v.length - 2)
                               .toLocaleLowerCase();
                             const getPrice = this.state.config
-                              .filter((item) => item.product_name == "Category")
                               .filter(
-                                (subItem) => subItem.interval == planCut
+                                (item) => item.product_name === "Category"
+                              )
+                              .filter(
+                                (subItem) => subItem.interval === planCut
                               )[0];
                             this.setState({ priceId: getPrice.price_id });
                             this.setState({ plan: v });
@@ -635,16 +637,20 @@ class MyCategory extends React.Component {
                           }}
                           monthly={
                             this.state.config
-                              .filter((item) => item.product_name == "Category")
                               .filter(
-                                (subItem) => subItem.interval == "month"
+                                (item) => item.product_name === "Category"
+                              )
+                              .filter(
+                                (subItem) => subItem.interval === "month"
                               )[0]?.unit_amount / 3
                           }
                           yearly={
                             this.state.config
-                              .filter((item) => item.product_name == "Category")
                               .filter(
-                                (subItem) => subItem.interval == "year"
+                                (item) => item.product_name === "Category"
+                              )
+                              .filter(
+                                (subItem) => subItem.interval === "year"
                               )[0]?.unit_amount / 3
                           }
                           plan={this.state.plan}

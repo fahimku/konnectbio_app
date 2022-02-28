@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import s from "./Affiliate.module.scss";
 import { Row, TabContent, TabPane, Nav, NavItem, NavLink } from "reactstrap";
 import classnames from "classnames";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import "./selector.css";
 import Tags from "./tabs/AllTags";
 import CommentMention from "./tabs/CommentTags";
