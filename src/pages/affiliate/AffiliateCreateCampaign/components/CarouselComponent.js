@@ -2,7 +2,7 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 // import { NavLink } from "react-router-dom";
-import Post from "../../../../images/Post2.jpg";
+// import Post from "../../../../images/Post2.jpg";
 
 class CarouselComponent extends React.Component {
   constructor(props) {

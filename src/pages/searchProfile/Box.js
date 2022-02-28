@@ -11,7 +11,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import numeral from "numeral";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
-import Carousel from "react-material-ui-carousel";
+// import Carousel from "react-material-ui-carousel";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -54,7 +54,7 @@ export default function Box({ data }) {
           height="400"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
-            item.media_type == "CAROUSEL_ALBUM"
+            item.media_type === "CAROUSEL_ALBUM"
               ? item.children?.data[0].media_url
               : item.media_url
           }
@@ -94,13 +94,13 @@ export default function Box({ data }) {
 
   function renderCarousel(item) {
     return (
-    <>
-      {/* <Carousel className="cr-album" navButtonsAlwaysVisible={true}  navButtonsProps={{style: {backgroundColor: "rgba(87, 87, 87, 0.4)",},}} indicators={false} swipe={true}> */}
+      <>
+        {/* <Carousel className="cr-album" navButtonsAlwaysVisible={true}  navButtonsProps={{style: {backgroundColor: "rgba(87, 87, 87, 0.4)",},}} indicators={false} swipe={true}> */}
         {item.children.data.map((it2, i) => {
           if (i === 0) {
             if (it2.media_type === "IMAGE") {
               return (
-                <a target="_blank" href={data.permalink}>
+                <a target="_blank" rel="noreferrer" href={data.permalink}>
                   <CardMedia
                     component="img"
                     height="400"
@@ -113,7 +113,7 @@ export default function Box({ data }) {
             }
             if (it2.media_type === "VIDEO") {
               return (
-                <a target="_blank" href={data.permalink}>
+                <a target="_blank" rel="noreferrer" href={data.permalink}>
                   <CardMedia
                     component="video"
                     sx={{ objectFit: "cover", borderRadius: 2 }}
@@ -130,7 +130,7 @@ export default function Box({ data }) {
           }
         })}
 
-      {/* </Carousel> */}
+        {/* </Carousel> */}
       </>
     );
   }
@@ -142,7 +142,7 @@ export default function Box({ data }) {
           {data.media_type === "CAROUSEL_ALBUM" ? (
             renderCarousel(data)
           ) : (
-            <a target="_blank" href={data.permalink}>
+            <a target="_blank" rel="noreferrer" href={data.permalink}>
               {renderMedia(data)}
             </a>
           )}

@@ -75,7 +75,7 @@ function AffiliateCampaign(props) {
   }, []);
 
   const toggleCampaigns = async (status, campaignId) => {
-    let statusName = status ? "disable" : "enable";
+    let statusName = status ? "paused" : "active";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this campaign?`,
       icon: status ? "warning" : "success",
@@ -378,10 +378,10 @@ function AffiliateCampaign(props) {
     { value: "date", label: "DATE" },
   ];
 
-  const sortOrderOptions = [
-    { value: "asc", label: "ASC" },
-    { value: "desc", label: "DESC" },
-  ];
+  // const sortOrderOptions = [
+  //   { value: "asc", label: "ASC" },
+  //   { value: "desc", label: "DESC" },
+  // ];
 
   const dateRangePickerChanger = (value, dataString) => {
     const startDate = dataString[0];

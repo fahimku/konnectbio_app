@@ -3,8 +3,8 @@ import axios from "axios";
 import { Button, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
-import { Input } from "reactstrap";
-import { ClassNames } from "@emotion/react";
+// import { Input } from "reactstrap";
+// import { ClassNames } from "@emotion/react";
 
 class AffiliateBrand extends React.Component {
   constructor(props) {

@@ -74,49 +74,49 @@ function AffiliateCampaign(props) {
     );
   }, []);
 
-  const toggleCampaigns = async (status, campaignId) => {
-    let statusName = status ? "disable" : "enable";
-    Swal.fire({
-      title: `Are you sure you want to ${statusName} this campaign?`,
-      icon: status ? "warning" : "success",
-      cancelButtonText: "No",
-      showCancelButton: true,
-      confirmButtonColor: "#010b40",
-      cancelButtonColor: "#d33",
-      confirmButtonText: `Yes`,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`campaigns/revise/campaignstatus/${campaignId}`, {
-            is_active: !status,
-          })
-          .then(() => {
-            let data1 = [...data];
-            let objIndex = data1.findIndex(
-              (obj) => obj.campaign_id === campaignId
-            );
-            data1[objIndex].is_active = !status;
-            setData(data1);
-            setTimeout(() => {
-              let data2 = [...data].filter(function (item) {
-                return item.campaign_id !== campaignId;
-              });
-              setData(data2);
-              const page = Math.ceil(data2.length / perPage) - 1;
-              const selectedPage = page;
-              const offset = selectedPage * perPage;
-              setPageCount(page + 1);
-              setCurrentPage(selectedPage);
-              setOffset(offset);
-            }, 300);
-            toast.success("Campaign " + statusName + " Successfully");
-          })
-          .catch((err) => {
-            toast.error(err.response?.data.message);
-          });
-      }
-    });
-  };
+  // const toggleCampaigns = async (status, campaignId) => {
+  //   let statusName = status ? "disable" : "enable";
+  //   Swal.fire({
+  //     title: `Are you sure you want to ${statusName} this campaign?`,
+  //     icon: status ? "warning" : "success",
+  //     cancelButtonText: "No",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#010b40",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: `Yes`,
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios
+  //         .put(`campaigns/revise/campaignstatus/${campaignId}`, {
+  //           is_active: !status,
+  //         })
+  //         .then(() => {
+  //           let data1 = [...data];
+  //           let objIndex = data1.findIndex(
+  //             (obj) => obj.campaign_id === campaignId
+  //           );
+  //           data1[objIndex].is_active = !status;
+  //           setData(data1);
+  //           setTimeout(() => {
+  //             let data2 = [...data].filter(function (item) {
+  //               return item.campaign_id !== campaignId;
+  //             });
+  //             setData(data2);
+  //             const page = Math.ceil(data2.length / perPage) - 1;
+  //             const selectedPage = page;
+  //             const offset = selectedPage * perPage;
+  //             setPageCount(page + 1);
+  //             setCurrentPage(selectedPage);
+  //             setOffset(offset);
+  //           }, 300);
+  //           toast.success("Campaign " + statusName + " Successfully");
+  //         })
+  //         .catch((err) => {
+  //           toast.error(err.response?.data.message);
+  //         });
+  //     }
+  //   });
+  // };
 
   const deleteCampaign = async (campaignId) => {
     Swal.fire({
@@ -357,10 +357,10 @@ function AffiliateCampaign(props) {
     { value: "date", label: "DATE" },
   ];
 
-  const sortOrderOptions = [
-    { value: "asc", label: "ASC" },
-    { value: "desc", label: "DESC" },
-  ];
+  // const sortOrderOptions = [
+  //   { value: "asc", label: "ASC" },
+  //   { value: "desc", label: "DESC" },
+  // ];
 
   const dateRangePickerChanger = (value, dataString) => {
     const startDate = dataString[0];

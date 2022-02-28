@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 //import AsyncSelectField from "./AsyncSelectField";
 import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
-import MyCategory from "../../mycategory/MyCategory";
+// import MyCategory from "../../mycategory/MyCategory";
 
 class BrandComponent extends React.Component {
   constructor(props) {
