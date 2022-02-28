@@ -40,7 +40,6 @@ function AffiliateTransaction({
     },
   ];
 
-
   const statusList = [
     {
       label: "Active",
@@ -56,8 +55,6 @@ function AffiliateTransaction({
     },
   ];
 
-
-
   const limit = 12;
   const style = {
     control: (base, state) => ({
@@ -71,9 +68,9 @@ function AffiliateTransaction({
   };
 
   useEffect(() => {
-    setStatus({ value: 'active', label: 'Active' })
+    setStatus({ value: "active", label: "Active" });
     setLoading(true);
-    getAffiliateActiveCampaign('active');
+    getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
     getAffiliateTransactions("active", "", "", "", 1, limit).then(() => {
       setLoading(false);
@@ -96,22 +93,20 @@ function AffiliateTransaction({
     ).then((data) => {
       setLoading(false);
     });
-
   };
 
   const refreshPage = (e) => {
     setCurrentPage(0);
     setLoading(true);
-    getAffiliateActiveCampaign('active');
+    getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
-    getAffiliateTransactions('active'.value, "", "", "", 1, limit).then(() => {
+    getAffiliateTransactions("active".value, "", "", "", 1, limit).then(() => {
       setLoading(false);
     });
-    setStatus({ value: 'active', label: 'Active' })
+    setStatus({ value: "active", label: "Active" });
     setCampaignId("");
     setInfluencerId("");
     setTransactionType("");
-
   };
 
   const handlePageClick = (e) => {
@@ -147,9 +142,9 @@ function AffiliateTransaction({
   };
 
   const changeStatus = (e) => {
-    setStatus(e)
+    setStatus(e);
     getAffiliateActiveCampaign(e.value);
-  }
+  };
 
   function dataTable() {
     let data = affiliateTransactions?.message?.data;
@@ -181,7 +176,7 @@ function AffiliateTransaction({
                     role="button"
                     onClick={() => {
                       setSingleData(item);
-                      setTransactionModal(true)
+                      setTransactionModal(true);
                     }}
                     className="fa fa-eye"
                   ></i>
@@ -264,30 +259,31 @@ function AffiliateTransaction({
                     >
                       Search
                     </Button>
-                    {
-                      loading ?
-                        <Button
-                          className="fltr-hpr btn-gray"
-                          type="button"
-                          variant="primary"
-                        >
-                          <Loader size="30" />
-                        </Button>
-                        : <Button
-                          className="fltr-hpr btn-gray"
-                          onClick={refreshPage}
-                          type="button"
-                          variant="primary"
-                        >
-                          Refresh
-                        </Button>
-                    }
-
+                    {loading ? (
+                      <Button
+                        className="fltr-hpr btn-gray"
+                        type="button"
+                        variant="primary"
+                      >
+                        <Loader size="30" />
+                      </Button>
+                    ) : (
+                      <Button
+                        className="fltr-hpr btn-gray"
+                        onClick={refreshPage}
+                        type="button"
+                        variant="primary"
+                      >
+                        Refresh
+                      </Button>
+                    )}
                   </Col>
                 </Row>
               </form>
 
-              {loading ? <Loader size="30" /> :
+              {loading ? (
+                <Loader size="30" />
+              ) : (
                 <>
                   {affiliateTransactions?.message?.data?.length === 0 ? (
                     <>
@@ -311,40 +307,41 @@ function AffiliateTransaction({
                           <th className="text-center">View</th>
                         </tr>
                       </thead>
-                      <tbody>
-                        {dataTable()}
-                      </tbody>
+                      <tbody>{dataTable()}</tbody>
                     </Table>
                   )}
-              </>
-              }
-                  {affiliateTransactions?.message?.data?.length > 0 && !loading && (
-                    <Row>
-                      <ReactPaginate
-                        previousLabel=""
-                        nextLabel=""
-                        pageClassName="page-item "
-                        pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-                        previousClassName="page-item"
-                        previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-                        nextClassName="page-item"
-                        nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-                        breakLabel="..."
-                        breakClassName="page-item"
-                        breakLinkClassName="page-link"
-                        forcePage={currentPage}
-                        pageCount={Math.ceil(affiliateTransactions?.message?.total_records / limit)}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination justify-content-center mt-2 custom-paginate"
-                        }
-                        // subContainerClassName={"pages pagination"}
-                        activeClassName={"active"}
-                      />
-                    </Row>
-                  )}
-                </div>
+                </>
+              )}
+              {affiliateTransactions?.message?.data?.length > 0 && !loading && (
+                <Row>
+                  <ReactPaginate
+                    previousLabel=""
+                    nextLabel=""
+                    pageClassName="page-item "
+                    pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    forcePage={currentPage}
+                    pageCount={Math.ceil(
+                      affiliateTransactions?.message?.total_records / limit
+                    )}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                    onPageChange={handlePageClick}
+                    containerClassName={
+                      "pagination justify-content-center mt-2 custom-paginate"
+                    }
+                    // subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
+                </Row>
+              )}
+            </div>
           </Row>
         </div>
       </div>
@@ -360,7 +357,7 @@ function AffiliateTransaction({
         <Modal.Header closeButton>
           <Modal.Title>Transaction Information</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-white ">
+        <Modal.Body className="bg-white transection-detail">
           <Row>
             <Col xs={12} xl={6} md={6}>
               <div class="card analytic-box analytics-page">
@@ -422,11 +419,15 @@ function AffiliateTransaction({
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Campaign Type</h5>
-                        <h3 class="count">{singleData?.campaign?.campaign_type}</h3>
+                        <h3 class="count">
+                          {singleData?.campaign?.campaign_type}
+                        </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Category</h5>
-                        <h3 class="count">{singleData?.parent_category?.category_name}</h3>
+                        <h3 class="count">
+                          {singleData?.parent_category?.category_name}
+                        </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Budget</h5>
@@ -434,17 +435,25 @@ function AffiliateTransaction({
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Click Rate</h5>
-                        <h3 class="count">${singleData?.campaign?.pay_per_hundred}</h3>
+                        <h3 class="count">
+                          ${singleData?.campaign?.pay_per_hundred}
+                        </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Start Date</h5>
                         <h3 class="count">
-                          {moment(singleData?.campaign?.start_date).format("YYYY-MM-DD")}
+                          {moment(singleData?.campaign?.start_date).format(
+                            "YYYY-MM-DD"
+                          )}
                         </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">End Date</h5>
-                        <h3 class="count">{moment(singleData?.campaign?.end_date).format("YYYY-MM-DD")}</h3>
+                        <h3 class="count">
+                          {moment(singleData?.campaign?.end_date).format(
+                            "YYYY-MM-DD"
+                          )}
+                        </h3>
                       </div>
                     </div>
                   </div>
