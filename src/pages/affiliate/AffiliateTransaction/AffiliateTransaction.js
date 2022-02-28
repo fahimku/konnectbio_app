@@ -93,12 +93,10 @@ function AffiliateTransaction({
       transactionType.value,
       1,
       limit
-    ).then(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000)
-
+    ).then((data) => {
+      setLoading(false);
     });
+
   };
 
   const refreshPage = (e) => {
@@ -128,7 +126,9 @@ function AffiliateTransaction({
       page + 1,
       limit
     ).then(() => {
-      setLoading(false);
+      if (affiliateTransactions?.message?.data?.length > 0) {
+        setLoading(false);
+      }
     });
   };
 
@@ -204,7 +204,7 @@ function AffiliateTransaction({
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
                   <Col xs={12} xl md={6}>
-                    <p>Select Campaign</p>
+                    <p>Select Status</p>
                     <Select
                       value={status}
                       name="status"
@@ -286,64 +286,65 @@ function AffiliateTransaction({
                   </Col>
                 </Row>
               </form>
-              {loading ? (
-                <Loader size="30" />
-              ) : affiliateTransactions?.message?.data?.length === 0 ? (
-                <>
-                  <NoDataFound />
-                </>
-              ) : (
-                <Table responsive="sm" className="transactions-box">
-                  <thead>
-                    <tr>
-                      <th>PID</th>
-                      <th>Date/Time</th>
-                      <th>Influencer </th>
-                      <th>Campaign </th>
-                      <th>Start Date</th>
-                      <th>End Date</th>
-                      <th>Category</th>
-                      <th>Campaign Type</th>
-                      <th>Budget</th>
-                      <th>Click Rate</th>
-                      <th>Transaction Type</th>
-                      <th className="text-center">View</th>
-                    </tr>
-                  </thead>
 
-                  <tbody>
-                    {loading && (
-                      <Loader size="30" />)}
-                    {dataTable()}</tbody>
-                </Table>
-              )}
-              {affiliateTransactions?.message?.data?.length > 0  && (
-                <Row>
-                  <ReactPaginate
-                    previousLabel=""
-                    nextLabel=""
-                    pageClassName="page-item "
-                    pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-                    previousClassName="page-item"
-                    previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-                    nextClassName="page-item"
-                    nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-                    breakLabel="..."
-                    breakClassName="page-item"
-                    breakLinkClassName="page-link"
-                    forcePage={currentPage}
-                    pageCount={Math.ceil(affiliateTransactions?.message?.total_records / limit)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination justify-content-center mt-2 custom-paginate"
-                    }
-                    // subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                  />
-                </Row>
-              )}
-            </div>
+              {loading ? <Loader size="30" /> :
+                <>
+                  {affiliateTransactions?.message?.data?.length === 0 ? (
+                    <>
+                      <NoDataFound />
+                    </>
+                  ) : (
+                    <Table responsive="sm" className="transactions-box">
+                      <thead>
+                        <tr>
+                          <th>PID</th>
+                          <th>Date/Time</th>
+                          <th>Influencer </th>
+                          <th>Campaign </th>
+                          <th>Start Date</th>
+                          <th>End Date</th>
+                          <th>Category</th>
+                          <th>Campaign Type</th>
+                          <th>Budget</th>
+                          <th>Click Rate</th>
+                          <th>Transaction Type</th>
+                          <th className="text-center">View</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dataTable()}
+                      </tbody>
+                    </Table>
+                  )}
+              </>
+              }
+                  {affiliateTransactions?.message?.data?.length > 0 && !loading && (
+                    <Row>
+                      <ReactPaginate
+                        previousLabel=""
+                        nextLabel=""
+                        pageClassName="page-item "
+                        pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                        previousClassName="page-item"
+                        previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                        nextClassName="page-item"
+                        nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                        breakLabel="..."
+                        breakClassName="page-item"
+                        breakLinkClassName="page-link"
+                        forcePage={currentPage}
+                        pageCount={Math.ceil(affiliateTransactions?.message?.total_records / limit)}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination justify-content-center mt-2 custom-paginate"
+                        }
+                        // subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}
+                      />
+                    </Row>
+                  )}
+                </div>
           </Row>
         </div>
       </div>
@@ -357,13 +358,13 @@ function AffiliateTransaction({
         size="xl"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Transaction Detail</Modal.Title>
+          <Modal.Title>Transaction Information</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-white ">
           <Row>
             <Col xs={12} xl={6} md={6}>
               <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">User Detail</h5>
+                <h5 className="mb-4">User Information</h5>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Pixel ID</h5>
                   <h3 class="count">{singleData?.user?.pixel_id}</h3>
@@ -396,7 +397,7 @@ function AffiliateTransaction({
             </Col>
             <Col xs={12} xl={6} md={6}>
               <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">Campaign Detail</h5>
+                <h5 className="mb-4">Campaign Information</h5>
                 <div class="card-row row">
                   <div class="any-post-img-col col-5">
                     <div class="any-post-image">

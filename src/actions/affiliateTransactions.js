@@ -3,9 +3,12 @@ import { GET_AFFILIATE_TRANSACTIONS, GET_AFFILIATE_CAMPAIGNS, GET_AFFILIATE_INFL
 import config from "../config";
 
 export const getAffiliateTransactions = (status='active',campaignId = '', influencerId = '', transactionType = '', page = 1, limit = 25) => async (dispatch) => {
+  
+  let promise = new Promise((resolve, reject) => {
   axios
     .get(`${config.hostApi}/v1/affiliate/getlogs?status=${status}&campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`)
     .then((res) => {
+      resolve('success');
       dispatch({
         type: GET_AFFILIATE_TRANSACTIONS,
         payload: res.data,
@@ -16,7 +19,10 @@ export const getAffiliateTransactions = (status='active',campaignId = '', influe
         type: GET_AFFILIATE_TRANSACTIONS,
         payload: [],
       });
+      reject('error');
     });
+  });
+  return promise;
 };
 
 
