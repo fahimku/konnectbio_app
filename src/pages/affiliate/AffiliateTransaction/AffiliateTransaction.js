@@ -52,7 +52,7 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign();
     getActiveInfluencer("");
-    getAffiliateTransactions("", "", "", 1, limit).then((data) => {
+    getAffiliateTransactions("", "", "", 1, limit).then(() => {
       setLoading(false);
     });
   }, []);
@@ -60,7 +60,9 @@ function AffiliateTransaction({
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    let page = currentPage === 0 ? 1 : currentPage;
+    // let page = currentPage === 0 ? 1 : currentPage;
+    // console.log('pages',page)
+    setCurrentPage(0);
     getAffiliateTransactions(
       campaignId.value,
       influencerId.value,
@@ -73,6 +75,7 @@ function AffiliateTransaction({
   };
 
   const refreshPage = (e) => {
+    setCurrentPage(0);
     setLoading(true);
     getAffiliateActiveCampaign();
     getActiveInfluencer("");
@@ -81,6 +84,7 @@ function AffiliateTransaction({
     });
     setCampaignId("");
     setInfluencerId("");
+    setTransactionType("");
   };
 
   const handlePageClick = (e) => {
@@ -127,7 +131,6 @@ function AffiliateTransaction({
                   )}
                 </td>
                 <td>{item?.instagram_username}</td>
-                <td>{item?.campaign?.instagram_username}</td>
                 <td>{item?.campaign?.campaign_name}</td>
                 <td>
                   {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
@@ -137,11 +140,10 @@ function AffiliateTransaction({
                 <td>{item?.campaign?.campaign_type}</td>
                 <td>${item.campaign?.budget}</td>
                 <td>${item.campaign?.pay_per_hundred}</td>
-                <td>{item?.ip_address}</td>
                 <td>{item?.transaction_type}</td>
-                {/* <td className="text-center">
+                <td className="text-center">
                   <i class="fa fa-eye"></i>
-                </td> */}
+                </td>
               </tr>
             );
           })}
@@ -187,10 +189,10 @@ function AffiliateTransaction({
                     <p>Transaction Type</p>
                     <Select
                       value={transactionType}
-                      name="category"
+                      name="transactionType"
                       className="selectCustomization"
                       options={transactionTypeList}
-                      placeholder="Select Influencer"
+                      placeholder="Select Transaction Type"
                       onChange={changeTransactionType}
                       styles={style}
                     />
@@ -220,33 +222,31 @@ function AffiliateTransaction({
                 </Row>
               </form>
               {loading ? (
-                <Loader size="30" />
-              ) : affiliateTransactions?.message?.data?.length > 0 ? (
+                <Loader size='30' />
+              ) : affiliateTransactions?.message?.data?.length === 0 ? (
                 <>
-                  <Table responsive="sm" className="transactions-box">
-                    <thead>
-                      <tr>
-                        <th>PID</th>
-                        <th>Date/Time</th>
-                        <th>Source Name</th>
-                        <th>Destination Name</th>
-                        <th>Campaign Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Category</th>
-                        <th>Campaign Type</th>
-                        <th>Budget</th>
-                        <th>Click Rate</th>
-                        <th>IP</th>
-                        <th>Transaction Type</th>
-                        {/* <th className="text-center">Action</th> */}
-                      </tr>
-                    </thead>
-                    <tbody>{dataTable()}</tbody>
-                  </Table>
+                  <NoDataFound />
                 </>
               ) : (
-                <NoDataFound />
+                <Table responsive="sm" className="transactions-box">
+                  <thead>
+                    <tr>
+                      <th>PID</th>
+                      <th>Date/Time</th>
+                      <th>Influencer Name</th>
+                      <th>Campaign Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Category</th>
+                      <th>Campaign Type</th>
+                      <th>Budget</th>
+                      <th>Click Rate</th>
+                      <th>Transaction Type</th>
+                      <th className="text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>{dataTable()}</tbody>
+                </Table>
               )}
               {affiliateTransactions?.message?.data?.length > 0 && (
                 <Row>
