@@ -17,11 +17,14 @@ function AffiliateTransaction({
   affiliateTransactions,
 }) {
   const [loading, setLoading] = useState(true);
-  const [trnsactionModal, setTransactionModal] = useState(false);
+  const [transactionModal, setTransactionModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [campaignId, setCampaignId] = useState("");
   const [influencerId, setInfluencerId] = useState("");
   const [transactionType, setTransactionType] = useState("");
+  const [status, setStatus] = useState("");
+  const [singleData, setSingleData] = useState([]);
+
   const transactionTypeList = [
     {
       label: "ALL",
@@ -37,6 +40,24 @@ function AffiliateTransaction({
     },
   ];
 
+
+  const statusList = [
+    {
+      label: "Active",
+      value: "active",
+    },
+    {
+      label: "Paused",
+      value: "paused",
+    },
+    {
+      label: "Expired",
+      value: "expired",
+    },
+  ];
+
+
+
   const limit = 12;
   const style = {
     control: (base, state) => ({
@@ -50,10 +71,11 @@ function AffiliateTransaction({
   };
 
   useEffect(() => {
+    setStatus({ value: 'active', label: 'Active' })
     setLoading(true);
-    getAffiliateActiveCampaign();
+    getAffiliateActiveCampaign('active');
     getActiveInfluencer("");
-    getAffiliateTransactions("", "", "", 1, limit).then(() => {
+    getAffiliateTransactions("active", "", "", "", 1, limit).then(() => {
       setLoading(false);
     });
   }, []);
@@ -65,27 +87,33 @@ function AffiliateTransaction({
     // console.log('pages',page)
     setCurrentPage(0);
     getAffiliateTransactions(
+      status.value,
       campaignId.value,
       influencerId.value,
       transactionType.value,
       1,
       limit
     ).then(() => {
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000)
+
     });
   };
 
   const refreshPage = (e) => {
     setCurrentPage(0);
     setLoading(true);
-    getAffiliateActiveCampaign();
+    getAffiliateActiveCampaign('active');
     getActiveInfluencer("");
-    getAffiliateTransactions("", "", "", 1, limit).then(() => {
+    getAffiliateTransactions(status.value, "", "", "", 1, limit).then(() => {
       setLoading(false);
     });
+    setStatus({ value: 'active', label: 'Active' })
     setCampaignId("");
     setInfluencerId("");
     setTransactionType("");
+
   };
 
   const handlePageClick = (e) => {
@@ -93,6 +121,7 @@ function AffiliateTransaction({
     setCurrentPage(page);
     setLoading(true);
     getAffiliateTransactions(
+      status.value,
       campaignId.value,
       influencerId.value,
       transactionType.value,
@@ -116,6 +145,11 @@ function AffiliateTransaction({
   const changeTransactionType = (e) => {
     setTransactionType(e);
   };
+
+  const changeStatus = (e) => {
+    setStatus(e)
+    getAffiliateActiveCampaign(e.value);
+  }
 
   function dataTable() {
     let data = affiliateTransactions?.message?.data;
@@ -145,7 +179,10 @@ function AffiliateTransaction({
                 <td className="text-center">
                   <i
                     role="button"
-                    onClick={() => setTransactionModal(true)}
+                    onClick={() => {
+                      setSingleData(item);
+                      setTransactionModal(true)
+                    }}
                     className="fa fa-eye"
                   ></i>
                 </td>
@@ -166,7 +203,19 @@ function AffiliateTransaction({
             <div className="col-md-12">
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
-                  <Col xs={12} xl={3} md={3}>
+                  <Col xs={12} xl md={6}>
+                    <p>Select Campaign</p>
+                    <Select
+                      value={status}
+                      name="status"
+                      className="selectCustomization"
+                      options={statusList}
+                      placeholder="Select Status"
+                      onChange={changeStatus}
+                      styles={style}
+                    />
+                  </Col>
+                  <Col xs={12} xl md={6}>
                     <p>Select Campaign</p>
                     <Select
                       value={campaignId}
@@ -178,7 +227,7 @@ function AffiliateTransaction({
                       styles={style}
                     />
                   </Col>
-                  <Col xs={12} xl={3} md={3}>
+                  <Col xs={12} xl md={6}>
                     <p>Select Influencer</p>
                     <Select
                       value={influencerId}
@@ -190,7 +239,7 @@ function AffiliateTransaction({
                       styles={style}
                     />
                   </Col>
-                  <Col xs={12} xl={3} md={3}>
+                  <Col xs={12} xl md={6}>
                     <p>Transaction Type</p>
                     <Select
                       value={transactionType}
@@ -215,14 +264,25 @@ function AffiliateTransaction({
                     >
                       Search
                     </Button>
-                    <Button
-                      className="fltr-hpr btn-gray"
-                      onClick={refreshPage}
-                      type="button"
-                      variant="primary"
-                    >
-                      Refresh
-                    </Button>
+                    {
+                      loading ?
+                        <Button
+                          className="fltr-hpr btn-gray"
+                          type="button"
+                          variant="primary"
+                        >
+                          <Loader size="30" />
+                        </Button>
+                        : <Button
+                          className="fltr-hpr btn-gray"
+                          onClick={refreshPage}
+                          type="button"
+                          variant="primary"
+                        >
+                          Refresh
+                        </Button>
+                    }
+
                   </Col>
                 </Row>
               </form>
@@ -250,10 +310,14 @@ function AffiliateTransaction({
                       <th className="text-center">View</th>
                     </tr>
                   </thead>
-                  <tbody>{dataTable()}</tbody>
+
+                  <tbody>
+                    {loading && (
+                      <Loader size="30" />)}
+                    {dataTable()}</tbody>
                 </Table>
               )}
-              {affiliateTransactions?.message?.data?.length > 0 && (
+              {affiliateTransactions?.message?.data?.length > 0  && (
                 <Row>
                   <ReactPaginate
                     previousLabel=""
@@ -268,14 +332,11 @@ function AffiliateTransaction({
                     breakClassName="page-item"
                     breakLinkClassName="page-link"
                     forcePage={currentPage}
-                    pageCount={Math.ceil(
-                      affiliateTransactions?.message?.total_records / limit
-                    )}
+                    pageCount={Math.ceil(affiliateTransactions?.message?.total_records / limit)}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
                     onPageChange={handlePageClick}
-                    containerClassName={
-                      "pagination justify-content-center mt-2 custom-paginate"
+                    containerClassName={"pagination justify-content-center mt-2 custom-paginate"
                     }
                     // subContainerClassName={"pages pagination"}
                     activeClassName={"active"}
@@ -287,7 +348,7 @@ function AffiliateTransaction({
         </div>
       </div>
       <Modal
-        show={trnsactionModal}
+        show={transactionModal}
         onHide={() => {
           setTransactionModal(false);
         }}
@@ -305,31 +366,31 @@ function AffiliateTransaction({
                 <h5 className="mb-4">User Detail</h5>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Pixel ID</h5>
-                  <h3 class="count">900000063</h3>
+                  <h3 class="count">{singleData?.user?.pixel_id}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Username</h5>
-                  <h3 class="count">kbiouser4</h3>
+                  <h3 class="count">{singleData?.instagram_username}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Email</h5>
-                  <h3 class="count">kbiouser4@konnect.bio</h3>
+                  <h3 class="count">{singleData?.user?.email}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Country</h5>
-                  <h3 class="count">US</h3>
+                  <h3 class="count">{singleData?.user?.country}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">State</h5>
-                  <h3 class="count">NY</h3>
+                  <h3 class="count">{singleData?.user?.state}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">City</h5>
-                  <h3 class="count">New York City</h3>
+                  <h3 class="count">{singleData?.user?.city}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Gender</h5>
-                  <h3 class="count">male</h3>
+                  <h3 class="count">{singleData?.user?.gender}</h3>
                 </div>
               </div>
             </Col>
@@ -342,7 +403,7 @@ function AffiliateTransaction({
                       <div class="any-image-box">
                         <div class="any-image-box-iner">
                           <img
-                            src="https://cdn.konnect.bio/hangerbywajid/posts/f4fc17c1-d265-4c29-8abe-9754279b8042.jpg"
+                            src={singleData?.campaign?.media_url}
                             class="img-fluid media-image"
                             alt="IMAGE"
                           />
@@ -355,32 +416,34 @@ function AffiliateTransaction({
                       <div class="col-12 count-box">
                         <h5 class="count-title">Campaign Name</h5>
                         <h3 class="count" title="Test 3">
-                          Test 3
+                          {singleData?.campaign?.campaign_name}
                         </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Campaign Type</h5>
-                        <h3 class="count">clicks</h3>
+                        <h3 class="count">{singleData?.campaign?.campaign_type}</h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Category</h5>
-                        <h3 class="count">ARTS</h3>
+                        <h3 class="count">{singleData?.parent_category?.category_name}</h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Budget</h5>
-                        <h3 class="count">$100</h3>
+                        <h3 class="count">${singleData?.campaign?.budget}</h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Click Rate</h5>
-                        <h3 class="count">$10</h3>
+                        <h3 class="count">${singleData?.campaign?.pay_per_hundred}</h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Start Date</h5>
-                        <h3 class="count">2022-02-28</h3>
+                        <h3 class="count">
+                          {moment(singleData?.campaign?.start_date).format("YYYY-MM-DD")}
+                        </h3>
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">End Date</h5>
-                        <h3 class="count">2023-01-12</h3>
+                        <h3 class="count">{moment(singleData?.campaign?.end_date).format("YYYY-MM-DD")}</h3>
                       </div>
                     </div>
                   </div>
@@ -392,11 +455,11 @@ function AffiliateTransaction({
                 <h5 className="mb-4">System Information</h5>
                 <div class="col-12 count-box">
                   <h5 class="count-title">IP Address</h5>
-                  <h3 class="count">110.93.200.131</h3>
+                  <h3 class="count">{singleData?.ip_address}</h3>
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">User Agent</h5>
-                  <h3 class="count">Mozilla/5.0</h3>
+                  <h3 class="count">{singleData?.user_agent?.substr(0, 50)}</h3>
                 </div>
               </div>
             </Col>

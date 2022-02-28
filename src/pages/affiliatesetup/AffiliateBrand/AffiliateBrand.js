@@ -29,9 +29,9 @@ class AffiliateBrand extends React.Component {
       .get(`/affiliate/getUserBrandName`)
       .then((response) => {
         this.setState({
-          oldBrand: response.data.data.brand_name,
-          brand_name: response.data.data.brand_name,
-          is_affiliate_enabled: response.data.data.is_affiliate_enabled,
+          oldBrand: response?.data?.data?.brand_name,
+          brand_name: response?.data?.data?.brand_name,
+          is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
         });
       })
       .catch(function (error) {

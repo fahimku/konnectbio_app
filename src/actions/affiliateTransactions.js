@@ -1,10 +1,10 @@
 import axios from "axios";
-import { GET_AFFILIATE_TRANSACTIONS, GET_AFFILIATE_CAMPAIGNS,GET_AFFILIATE_INFLUENCER } from "./type";
+import { GET_AFFILIATE_TRANSACTIONS, GET_AFFILIATE_CAMPAIGNS, GET_AFFILIATE_INFLUENCER } from "./type";
 import config from "../config";
 
-export const getAffiliateTransactions = (campaignId = '', influencerId = '',transactionType='', page = 1, limit = 25) => async (dispatch) => {
+export const getAffiliateTransactions = (status='active',campaignId = '', influencerId = '', transactionType = '', page = 1, limit = 25) => async (dispatch) => {
   axios
-    .get(`${config.hostApi}/v1/affiliate/getlogs?campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`)
+    .get(`${config.hostApi}/v1/affiliate/getlogs?status=${status}&campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`)
     .then((res) => {
       dispatch({
         type: GET_AFFILIATE_TRANSACTIONS,
@@ -20,9 +20,9 @@ export const getAffiliateTransactions = (campaignId = '', influencerId = '',tran
 };
 
 
-export const getAffiliateActiveCampaign = () => async (dispatch) => {
+export const getAffiliateActiveCampaign = (status) => async (dispatch) => {
   axios
-    .get(`${config.hostApi}/v1/affiliate/getactivecampaigns`)
+    .get(`${config.hostApi}/v1/affiliate/getactivecampaigns?status=${status}`)
     .then((res) => {
       dispatch({
         type: GET_AFFILIATE_CAMPAIGNS,
