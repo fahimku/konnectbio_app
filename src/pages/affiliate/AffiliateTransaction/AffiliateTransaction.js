@@ -155,11 +155,7 @@ function AffiliateTransaction({
             return (
               <tr key={i}>
                 <td>{item?.user?.pixel_id}</td>
-                <td>
-                  {moment(item?.campaign?.created_at).format(
-                    "YYYY-MM-DD HH:MM:SS A"
-                  )}
-                </td>
+                <td>{moment(item?.created_at).format("YYYY-MM-DD h:mm A")}</td>
                 <td>{item?.instagram_username}</td>
                 <td>{item?.campaign?.campaign_name}</td>
                 <td>
