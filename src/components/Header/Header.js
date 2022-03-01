@@ -387,7 +387,7 @@ class Header extends React.Component {
                     }
                     activeItem={this.props.activeItem}
                     className="sidebar-nav-links"
-                    header="Affiliate - Advertise"
+                    header="Campaigns"
                     link="/app/campaign"
                     isHeader
                     iconElement={
@@ -525,7 +525,7 @@ class Header extends React.Component {
                               link: "/app/account/categories",
                             },
                             {
-                              header: "Affiliate Setup",
+                              header: "Campaign Setup",
                               link: "/app/account/affiliate",
                             },
                             {
@@ -951,7 +951,7 @@ class Header extends React.Component {
           </div>
           <div className="right-top-bar">
             <button
-              id='support-button'
+              id="support-button"
               className="btn btn-primary btn-sm"
               onClick={() => {
                 this.setState({
