@@ -7,6 +7,8 @@ import AllMarketPlace from "./AllMarketPlace";
 import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
 import BrandComponent from "./Brand/BrandComponent";
 import MyCategory from "../mycategory/MyCategory";
+import MarketplaceEarning from "./MarketplaceEarning/MarketplaceEarning";
+import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
 
 class MarketPlace extends React.Component {
   constructor(props) {
@@ -141,6 +143,32 @@ class MarketPlace extends React.Component {
                       <span>Expired</span>
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "earning",
+                      })}
+                      id="mark-earning"
+                      onClick={() => {
+                        this.toggleTabs("earning");
+                      }}
+                    >
+                      <span>Earning</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "transaction",
+                      })}
+                      id="mark-transaction"
+                      onClick={() => {
+                        this.toggleTabs("transaction");
+                      }}
+                    >
+                      <span>Transactions</span>
+                    </NavLink>
+                  </NavItem>
                   {/* <NavItem>
                     <NavLink
                       className={classnames({
@@ -202,6 +230,16 @@ class MarketPlace extends React.Component {
                         type="expired"
                         endPoint="users/marketPlace/getExpiredCampaigns"
                       />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="earning">
+                    {this.state.activeTab === "earning" ? (
+                      <MarketplaceEarning />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="transaction">
+                    {this.state.activeTab === "transaction" ? (
+                      <MarketplaceTransaction />
                     ) : null}
                   </TabPane>
 

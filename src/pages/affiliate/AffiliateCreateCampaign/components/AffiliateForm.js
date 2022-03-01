@@ -575,7 +575,9 @@ class AffiliateForm extends React.Component {
                     />
                   </div>
                   <div className="col-md-6 mt-3">
-                    <label>Pay per 100 {this.state.campaign_type}</label>
+                    <label>
+                      Cost per 1000 {this.state.campaign_type} (CPC)
+                    </label>
                     <InputNumberValidation
                       type="number"
                       id="pay_per_hundred"
@@ -961,9 +963,14 @@ class AffiliateForm extends React.Component {
                   {this.state.reach === "" ? (
                     ""
                   ) : (
-                    <h5 className="mt-4">
-                      Total Reach: {this.state.reach.toString()}
-                    </h5>
+                    <>
+                      <h5 className="mt-4">
+                        Total Influencer: {this.state.reach.toString()}
+                      </h5>
+                      <h5 className="mt-2">
+                        Total Reach: {this.state.reach.toString()}
+                      </h5>
+                    </>
                   )}
                 </div>
               </div>

@@ -49,7 +49,16 @@ export const FILTER_INSTAGRAM_POST_DATA = "filterInstagramPostData";
 export const GET_SCHEDULE_POST = "getSchedulePost";
 export const GET_MOBILE_DROPDOWN = "getMobileDropdown";
 export const GET_MEDIA_SUMMARY = "getMediaSummary";
-export const GET_AFFILIATE_TRANSACTIONS = 'getAffiliateTransactions';
+
+/**********Campaign Action Types******************* */
+
+export const GET_AFFILIATE_TRANSACTIONS = "getAffiliateTransactions";
 export const AFFILIATE_PAGINATION = "affiliatePagination";
 export const GET_AFFILIATE_CAMPAIGNS = "getAffiliateCampaigns";
-export const GET_AFFILIATE_INFLUENCER = 'getAffiliateInfluencer';
+export const GET_AFFILIATE_INFLUENCER = "getAffiliateInfluencer";
+
+/**********Marketplace Action Types******************* */
+export const GET_MARKETPLACE_TRANSACTIONS = "getMarketplaceTransactions";
+export const MARKETPLACE_PAGINATION = "marketplacePagination";
+export const GET_MARKETPLACE_CAMPAIGNS = "getMarketplaceCampaigns";
+export const GET_MARKETPLACE_BRAND = "getMarketplaceBrand";

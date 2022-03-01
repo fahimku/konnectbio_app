@@ -38,6 +38,10 @@ import mediaSummary from "./media/mediaSummary";
 import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
+import marketplaceTransactions from "./marketplaceTransactions/marketplaceTransactions";
+import marketplaceBrands from "./marketplaceTransactions/marketplaceBrands";
+import marketplaceCampaigns from "./marketplaceTransactions/marketplaceCampaigns";
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -79,4 +83,7 @@ export default (history) =>
     affiliateTransactions,
     affiliateCampaigns,
     affiliateInfluencers,
+    marketplaceTransactions,
+    marketplaceBrands,
+    marketplaceCampaigns,
   });
