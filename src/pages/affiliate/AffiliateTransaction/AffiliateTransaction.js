@@ -25,6 +25,7 @@ function AffiliateTransaction({
   const [status, setStatus] = useState("");
   const [singleData, setSingleData] = useState([]);
   const [groupBy, setGroupBy] = useState("");
+  const [submit, setSubmit] = useState("");
 
   const transactionTypeList = [
     {
@@ -91,8 +92,6 @@ function AffiliateTransaction({
   const handleSubmit = (e) => {
     setLoading(true);
     e.preventDefault();
-    // let page = currentPage === 0 ? 1 : currentPage;
-    // console.log('pages',page)
     setCurrentPage(0);
     getAffiliateTransactions(
       status.value,
@@ -104,6 +103,7 @@ function AffiliateTransaction({
       limit
     ).then((data) => {
       setLoading(false);
+      setSubmit(groupBy.value);
     });
   };
 
@@ -122,6 +122,7 @@ function AffiliateTransaction({
     setInfluencerId("");
     setTransactionType("");
     setGroupBy("");
+    setSubmit("");
   };
 
   const handlePageClick = (e) => {
@@ -171,35 +172,130 @@ function AffiliateTransaction({
     if (data) {
       return (
         <>
-          {data.map((item, i) => {
-            return (
-              <tr key={i}>
-                <td>{item?.user?.pixel_id}</td>
-                <td>{moment(item?.created_at).format("YYYY-MM-DD h:mm A")}</td>
-                <td>{item?.instagram_username}</td>
-                <td>{item?.campaign?.campaign_name}</td>
-                <td>
-                  {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
-                </td>
-                <td>{moment(item?.campaign?.end_date).format("YYYY-MM-DD")}</td>
-                <td>{item?.parent_category?.category_name}</td>
-                <td>{item?.campaign?.campaign_type}</td>
-                <td>${item.campaign?.budget}</td>
-                <td>${item.campaign?.pay_per_hundred}</td>
-                <td>{item?.transaction_type}</td>
-                <td className="text-center">
-                  <i
-                    role="button"
-                    onClick={() => {
-                      setSingleData(item);
-                      setTransactionModal(true);
-                    }}
-                    className="fa fa-eye"
-                  ></i>
-                </td>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Date/Time</th>
+                <th>Influencer </th>
+                <th>Campaign </th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Category</th>
+                <th>Campaign Type</th>
+                <th>Budget</th>
+                <th>Click Rate</th>
+                <th>Transaction Type</th>
+                <th className="text-center">View</th>
               </tr>
-            );
-          })}
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.user?.pixel_id}</td>
+                    <td>
+                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
+                    </td>
+                    <td>{item?.instagram_username}</td>
+                    <td>{item?.campaign?.campaign_name}</td>
+                    <td>
+                      {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
+                    </td>
+                    <td>
+                      {moment(item?.campaign?.end_date).format("YYYY-MM-DD")}
+                    </td>
+                    <td>{item?.parent_category?.category_name}</td>
+                    <td>{item?.campaign?.campaign_type}</td>
+                    <td>${item.campaign?.budget}</td>
+                    <td>${item.campaign?.pay_per_hundred}</td>
+                    <td>{item?.transaction_type}</td>
+                    <td className="text-center">
+                      <i
+                        role="button"
+                        onClick={() => {
+                          setSingleData(item);
+                          setTransactionModal(true);
+                        }}
+                        className="fa fa-eye"
+                      ></i>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
+
+  function dataTable1() {
+    let data = affiliateTransactions?.message?.data;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Date/Time</th>
+                <th>Influencer </th>
+                <th>Campaign </th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Category</th>
+                <th>Campaign Type</th>
+                <th>Budget</th>
+                <th>Click Rate</th>
+                <th>Transaction Type</th>
+                <th>Count</th>
+                {/* <th className="text-center">View</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.doc?.user?.pixel_id}</td>
+                    <td>
+                      {moment(item?.doc?.created_at).format(
+                        "YYYY-MM-DD h:mm A"
+                      )}
+                    </td>
+                    <td>{item?.doc?.instagram_username}</td>
+                    <td>{item?.doc?.campaign?.campaign_name}</td>
+                    <td>
+                      {moment(item?.doc?.campaign?.start_date).format(
+                        "YYYY-MM-DD"
+                      )}
+                    </td>
+                    <td>
+                      {moment(item?.doc?.campaign?.end_date).format(
+                        "YYYY-MM-DD"
+                      )}
+                    </td>
+                    <td>{item?.doc?.parent_category?.category_name}</td>
+                    <td>{item?.doc?.campaign?.campaign_type}</td>
+                    <td>${item?.doc?.campaign?.budget}</td>
+                    <td>${item?.doc?.campaign?.pay_per_hundred}</td>
+                    <td>{item?.doc?.transaction_type}</td>
+                    <td>{item?.count}</td>
+                    {/* <td className="text-center">
+                      <i
+                        role="button"
+                        onClick={() => {
+                          setSingleData(item);
+                          setTransactionModal(true);
+                        }}
+                        className="fa fa-eye"
+                      ></i>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </>
       );
     }
@@ -318,25 +414,7 @@ function AffiliateTransaction({
                       <NoDataFound />
                     </>
                   ) : (
-                    <Table responsive="sm" className="transactions-box">
-                      <thead>
-                        <tr>
-                          <th>PID</th>
-                          <th>Date/Time</th>
-                          <th>Influencer </th>
-                          <th>Campaign </th>
-                          <th>Start Date</th>
-                          <th>End Date</th>
-                          <th>Category</th>
-                          <th>Campaign Type</th>
-                          <th>Budget</th>
-                          <th>Click Rate</th>
-                          <th>Transaction Type</th>
-                          <th className="text-center">View</th>
-                        </tr>
-                      </thead>
-                      <tbody>{dataTable()}</tbody>
-                    </Table>
+                    <>{submit === "" ? dataTable() : dataTable1()}</>
                   )}
                 </>
               )}
