@@ -57,10 +57,6 @@ function AffiliateTransaction({
   ];
   const groupByList = [
     {
-      label: "Date",
-      value: "date",
-    },
-    {
       label: "Influencer",
       value: "influencer",
     },
@@ -87,7 +83,7 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
-    getAffiliateTransactions("active", "", "", "", 1, limit).then(() => {
+    getAffiliateTransactions("active", "", "", "", "", 1, limit).then(() => {
       setLoading(false);
     });
   }, []);
@@ -103,6 +99,7 @@ function AffiliateTransaction({
       campaignId.value,
       influencerId.value,
       transactionType.value,
+      groupBy.value,
       1,
       limit
     ).then((data) => {
@@ -115,13 +112,16 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
-    getAffiliateTransactions("active".value, "", "", "", 1, limit).then(() => {
-      setLoading(false);
-    });
+    getAffiliateTransactions("active".value, "", "", "", "", 1, limit).then(
+      () => {
+        setLoading(false);
+      }
+    );
     setStatus({ value: "active", label: "Active" });
     setCampaignId("");
     setInfluencerId("");
     setTransactionType("");
+    setGroupBy("");
   };
 
   const handlePageClick = (e) => {
@@ -133,6 +133,7 @@ function AffiliateTransaction({
       campaignId.value,
       influencerId.value,
       transactionType.value,
+      groupBy.value,
       page + 1,
       limit
     ).then(() => {
