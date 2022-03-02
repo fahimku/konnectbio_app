@@ -253,7 +253,7 @@ function MarketplaceTransaction({
                     <td>
                       {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
                     </td>
-                    <td>{item?.campaign?.instagram_username}</td>
+                    <td>{item?.brand?.brand_name}</td>
                     <td>{item?.campaign?.campaign_name}</td>
                     <td>
                       {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
@@ -304,6 +304,7 @@ function MarketplaceTransaction({
                 <th>Budget</th>
                 <th>Click Rate</th>
                 <th>Transaction Type</th>
+                <th>Count</th>
                 {/* <th className="text-center">View</th> */}
               </tr>
             </thead>
@@ -317,7 +318,7 @@ function MarketplaceTransaction({
                         "YYYY-MM-DD h:mm A"
                       )}
                     </td>
-                    <td>{item?.doc?.campaign.instagram_username}</td>
+                    <td>{item?.doc?.brand?.brand_name}</td>
                     <td>{item?.doc?.campaign?.campaign_name}</td>
                     <td>
                       {moment(item?.doc?.campaign?.start_date).format(
