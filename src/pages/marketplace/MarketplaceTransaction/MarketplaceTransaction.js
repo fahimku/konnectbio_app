@@ -297,6 +297,7 @@ function MarketplaceTransaction({
                       styles={style}
                     />
                   </Col>
+
                   <Col
                     className="transaction-search d-flex"
                     xs={12}

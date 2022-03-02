@@ -24,6 +24,7 @@ function AffiliateTransaction({
   const [transactionType, setTransactionType] = useState("");
   const [status, setStatus] = useState("");
   const [singleData, setSingleData] = useState([]);
+  const [groupBy, setGroupBy] = useState("");
 
   const transactionTypeList = [
     {
@@ -52,6 +53,20 @@ function AffiliateTransaction({
     {
       label: "Expired",
       value: "expired",
+    },
+  ];
+  const groupByList = [
+    {
+      label: "Date",
+      value: "date",
+    },
+    {
+      label: "Influencer",
+      value: "influencer",
+    },
+    {
+      label: "Campaign",
+      value: "campaign",
     },
   ];
 
@@ -144,6 +159,10 @@ function AffiliateTransaction({
   const changeStatus = (e) => {
     setStatus(e);
     getAffiliateActiveCampaign(e.value);
+  };
+
+  const changeGroupBy = (e) => {
+    setGroupBy(e);
   };
 
   function dataTable() {
@@ -239,6 +258,18 @@ function AffiliateTransaction({
                       options={transactionTypeList}
                       placeholder="Select Transaction Type"
                       onChange={changeTransactionType}
+                      styles={style}
+                    />
+                  </Col>
+                  <Col xs={12} xl md={6}>
+                    <p>Group By</p>
+                    <Select
+                      value={groupBy}
+                      name="transactionType"
+                      className="selectCustomization"
+                      options={groupByList}
+                      placeholder="Select Group By"
+                      onChange={changeGroupBy}
                       styles={style}
                     />
                   </Col>
