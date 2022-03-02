@@ -38,7 +38,7 @@ export default function Box({ item, addCampaignToShop, index }) {
 
   return (
     <React.Fragment>
-      {!addCampaign && (
+      {/* {!addCampaign && ( */}
         <Col key={index} xs={12} xl={3} md={6}>
           <div className="card any_bx analytic-box campaign-box">
             <div className="camp-row row">
@@ -130,7 +130,7 @@ export default function Box({ item, addCampaignToShop, index }) {
             </div>
           </div>
         </Col>
-      )}
+      {/* )} */}
     </React.Fragment>
   );
 }
