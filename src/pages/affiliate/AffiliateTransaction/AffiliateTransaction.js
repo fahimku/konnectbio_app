@@ -414,7 +414,11 @@ function AffiliateTransaction({
                       <NoDataFound />
                     </>
                   ) : (
-                    <>{submit === "" ? dataTable() : dataTable1()}</>
+                    <>
+                      {submit === "" || submit === undefined
+                        ? dataTable()
+                        : dataTable1()}
+                    </>
                   )}
                 </>
               )}
