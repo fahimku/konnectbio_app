@@ -12,6 +12,7 @@ export const getAffiliateTransactions =
     campaignId = "",
     influencerId = "",
     transactionType = "",
+    groupBy = "",
     page = 1,
     limit = 25
   ) =>
@@ -19,7 +20,7 @@ export const getAffiliateTransactions =
     let promise = new Promise((resolve, reject) => {
       axios
         .get(
-          `${config.hostApi}/v1/affiliate/getlogs?status=${status}&campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`
+          `${config.hostApi}/v1/affiliate/getlogs?status=${status}&campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&group_by=${groupBy}&page=${page}&limit=${limit}`
         )
         .then((res) => {
           resolve("success");

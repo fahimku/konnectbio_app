@@ -27,6 +27,8 @@ function MarketplaceTransaction({
   const [brandStatus, setBrandStatus] = useState("");
   const [influencerStatus, setInfluencerStatus] = useState("");
   const [singleData, setSingleData] = useState([]);
+  const [groupBy, setGroupBy] = useState("");
+  const [submit, setSubmit] = useState("");
 
   const transactionTypeList = [
     {
@@ -71,6 +73,16 @@ function MarketplaceTransaction({
       value: "expired",
     },
   ];
+  const groupByList = [
+    {
+      label: "Brand",
+      value: "brand",
+    },
+    {
+      label: "Campaign",
+      value: "campaign",
+    },
+  ];
 
   const limit = 12;
   const style = {
@@ -91,11 +103,18 @@ function MarketplaceTransaction({
     getMarketplaceActiveCampaign("active", "active", "all");
     // getActiveInfluencer("");
     getMarketplaceBrand("");
-    getMarketplaceTransactions("active", "active", "", "", "", 1, limit).then(
-      () => {
-        setLoading(false);
-      }
-    );
+    getMarketplaceTransactions(
+      "active",
+      "active",
+      "",
+      "",
+      "",
+      "",
+      1,
+      limit
+    ).then(() => {
+      setLoading(false);
+    });
   }, []);
 
   const handleSubmit = (e) => {
@@ -110,10 +129,12 @@ function MarketplaceTransaction({
       campaignId.value,
       brandId.value,
       transactionType.value,
+      groupBy.value,
       1,
       limit
     ).then((data) => {
       setLoading(false);
+      setSubmit(groupBy.value);
     });
   };
 
@@ -123,16 +144,25 @@ function MarketplaceTransaction({
     getMarketplaceActiveCampaign("active", "active", "all");
     // getActiveInfluencer("");
     getMarketplaceBrand("");
-    getMarketplaceTransactions("active", "active", "", "", "", 1, limit).then(
-      () => {
-        setLoading(false);
-      }
-    );
+    getMarketplaceTransactions(
+      "active",
+      "active",
+      "",
+      "",
+      "",
+      "",
+      1,
+      limit
+    ).then(() => {
+      setLoading(false);
+    });
     setBrandStatus({ value: "active", label: "Active" });
     setInfluencerStatus({ value: "active", label: "Active" });
     setCampaignId("");
     setBrandId("");
     setTransactionType("");
+    setGroupBy("");
+    setSubmit("");
   };
 
   const handlePageClick = (e) => {
@@ -145,6 +175,7 @@ function MarketplaceTransaction({
       campaignId.value,
       brandId.value,
       transactionType.value,
+      groupBy.value,
       page + 1,
       limit
     ).then(() => {
@@ -188,41 +219,138 @@ function MarketplaceTransaction({
     setInfluencerStatus(e);
     getMarketplaceActiveCampaign(brandStatus.value, e.value, brandId.value);
   };
+  const changeGroupBy = (e) => {
+    setGroupBy(e);
+  };
 
   function dataTable() {
     let data = marketplaceTransactions?.message?.data;
     if (data) {
       return (
         <>
-          {data.map((item, i) => {
-            return (
-              <tr key={i}>
-                <td>{item?.user?.pixel_id}</td>
-                <td>{moment(item?.created_at).format("YYYY-MM-DD h:mm A")}</td>
-                <td>{item?.campaign.instagram_username}</td>
-                <td>{item?.campaign?.campaign_name}</td>
-                <td>
-                  {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
-                </td>
-                <td>{moment(item?.campaign?.end_date).format("YYYY-MM-DD")}</td>
-                <td>{item?.parent_category?.category_name}</td>
-                <td>{item?.campaign?.campaign_type}</td>
-                <td>${item.campaign?.budget}</td>
-                <td>${item.campaign?.pay_per_hundred}</td>
-                <td>{item?.transaction_type}</td>
-                <td className="text-center">
-                  <i
-                    role="button"
-                    onClick={() => {
-                      setSingleData(item);
-                      setTransactionModal(true);
-                    }}
-                    className="fa fa-eye"
-                  ></i>
-                </td>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Date/Time</th>
+                <th>Brand </th>
+                <th>Campaign </th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Category</th>
+                <th>Campaign Type</th>
+                <th>Budget</th>
+                <th>Click Rate</th>
+                <th>Transaction Type</th>
+                <th className="text-center">View</th>
               </tr>
-            );
-          })}
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.user?.pixel_id}</td>
+                    <td>
+                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
+                    </td>
+                    <td>{item?.brand?.brand_name}</td>
+                    <td>{item?.campaign?.campaign_name}</td>
+                    <td>
+                      {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
+                    </td>
+                    <td>
+                      {moment(item?.campaign?.end_date).format("YYYY-MM-DD")}
+                    </td>
+                    <td>{item?.parent_category?.category_name}</td>
+                    <td>{item?.campaign?.campaign_type}</td>
+                    <td>${item.campaign?.budget}</td>
+                    <td>${item.campaign?.pay_per_hundred}</td>
+                    <td>{item?.transaction_type}</td>
+                    <td className="text-center">
+                      <i
+                        role="button"
+                        onClick={() => {
+                          setSingleData(item);
+                          setTransactionModal(true);
+                        }}
+                        className="fa fa-eye"
+                      ></i>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
+  function dataTable1() {
+    let data = marketplaceTransactions?.message?.data;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>PID</th>
+                <th>Date/Time</th>
+                <th>Brand </th>
+                <th>Campaign </th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Category</th>
+                <th>Campaign Type</th>
+                <th>Budget</th>
+                <th>Click Rate</th>
+                <th>Transaction Type</th>
+                <th>Count</th>
+                {/* <th className="text-center">View</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.doc?.user?.pixel_id}</td>
+                    <td>
+                      {moment(item?.doc?.created_at).format(
+                        "YYYY-MM-DD h:mm A"
+                      )}
+                    </td>
+                    <td>{item?.doc?.brand?.brand_name}</td>
+                    <td>{item?.doc?.campaign?.campaign_name}</td>
+                    <td>
+                      {moment(item?.doc?.campaign?.start_date).format(
+                        "YYYY-MM-DD"
+                      )}
+                    </td>
+                    <td>
+                      {moment(item?.doc?.campaign?.end_date).format(
+                        "YYYY-MM-DD"
+                      )}
+                    </td>
+                    <td>{item?.doc?.parent_category?.category_name}</td>
+                    <td>{item?.doc?.campaign?.campaign_type}</td>
+                    <td>${item?.doc?.campaign?.budget}</td>
+                    <td>${item?.doc?.campaign?.pay_per_hundred}</td>
+                    <td>{item?.doc?.transaction_type}</td>
+                    <td>{item?.count}</td>
+                    {/* <td className="text-center">
+                      <i
+                        role="button"
+                        onClick={() => {
+                          setSingleData(item);
+                          setTransactionModal(true);
+                        }}
+                        className="fa fa-eye"
+                      ></i>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </>
       );
     }
@@ -292,11 +420,24 @@ function MarketplaceTransaction({
                       name="transactionType"
                       className="selectCustomization"
                       options={transactionTypeList}
-                      placeholder="Select Transaction Type"
+                      placeholder="Transaction Type"
                       onChange={changeTransactionType}
                       styles={style}
                     />
                   </Col>
+                  <Col xs={12} xl md={6}>
+                    <p>Group By</p>
+                    <Select
+                      value={groupBy}
+                      name="transactionType"
+                      className="selectCustomization"
+                      options={groupByList}
+                      placeholder="Select Group By"
+                      onChange={changeGroupBy}
+                      styles={style}
+                    />
+                  </Col>
+
                   <Col
                     className="transaction-search d-flex"
                     xs={12}
@@ -341,25 +482,11 @@ function MarketplaceTransaction({
                       <NoDataFound />
                     </>
                   ) : (
-                    <Table responsive="sm" className="transactions-box">
-                      <thead>
-                        <tr>
-                          <th>PID</th>
-                          <th>Date/Time</th>
-                          <th>Brand </th>
-                          <th>Campaign </th>
-                          <th>Start Date</th>
-                          <th>End Date</th>
-                          <th>Category</th>
-                          <th>Campaign Type</th>
-                          <th>Budget</th>
-                          <th>Click Rate</th>
-                          <th>Transaction Type</th>
-                          <th className="text-center">View</th>
-                        </tr>
-                      </thead>
-                      <tbody>{dataTable()}</tbody>
-                    </Table>
+                    <>
+                      {submit === "" || submit === undefined
+                        ? dataTable()
+                        : dataTable1()}
+                    </>
                   )}
                 </>
               )}
