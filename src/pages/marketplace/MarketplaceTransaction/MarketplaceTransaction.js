@@ -199,7 +199,7 @@ function MarketplaceTransaction({
               <tr key={i}>
                 <td>{item?.user?.pixel_id}</td>
                 <td>{moment(item?.created_at).format("YYYY-MM-DD h:mm A")}</td>
-                <td>{item?.instagram_username}</td>
+                <td>{item?.campaign.instagram_username}</td>
                 <td>{item?.campaign?.campaign_name}</td>
                 <td>
                   {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
@@ -346,7 +346,7 @@ function MarketplaceTransaction({
                         <tr>
                           <th>PID</th>
                           <th>Date/Time</th>
-                          <th>Influencer </th>
+                          <th>Brand </th>
                           <th>Campaign </th>
                           <th>Start Date</th>
                           <th>End Date</th>
@@ -466,6 +466,12 @@ function MarketplaceTransaction({
                         <h5 class="count-title">Campaign Name</h5>
                         <h3 class="count" title="Test 3">
                           {singleData?.campaign?.campaign_name}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Campaign Username</h5>
+                        <h3 class="count" title="Test 3">
+                          {singleData?.campaign?.instagram_username}
                         </h3>
                       </div>
                       <div class="col-12 count-box">
