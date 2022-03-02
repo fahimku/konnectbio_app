@@ -967,7 +967,7 @@ class AffiliateForm extends React.Component {
                       {/* <h5 className="mt-4">
                         Total Influencer: {this.state.reach.toString()}
                       </h5> */}
-                      <h5 className="mt-2">
+                      <h5 className="mt-4">
                         Total Reach: {this.state.reach.toString()}
                       </h5>
                     </>
