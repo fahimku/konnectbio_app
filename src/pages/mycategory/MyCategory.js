@@ -520,91 +520,91 @@ class MyCategory extends React.Component {
                 <div className="profile_box_main col-md-8">
                   <div className="dash_block_profile">
                     <div className="dash_content_profile">
-                      <form onSubmit={this.handleSubmit}>
-                        <p
-                          style={{
-                            color: "gray",
-                            borderBottom: "1px solid lightgray",
-                            paddingBottom: 10,
-                          }}
-                        >
-                          Number of categories in{" "}
-                          {userInfo1.package.package_name} plan is{" "}
-                          {this.state.categoryLimit}
-                        </p>
-                        <Row>
-                          <Col md={12}>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                              }}
-                            >
-                              <label>Add Category</label>
-                              <p>
-                                ({this.state.saveCategories.length}/
-                                {this.state.categoryLimit})
-                              </p>
-                            </div>
-                            {/* <label>Add Category</label>
+                      {/* <form onSubmit={this.handleSubmit}> */}
+                      <p
+                        style={{
+                          color: "gray",
+                          borderBottom: "1px solid lightgray",
+                          paddingBottom: 10,
+                        }}
+                      >
+                        Number of categories in {userInfo1.package.package_name}{" "}
+                        plan is {this.state.categoryLimit}
+                      </p>
+                      <Row>
+                        <Col md={12}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <label>Add Category</label>
+                            <p>
+                              ({this.state.saveCategories.length}/
+                              {this.state.categoryLimit})
+                            </p>
+                          </div>
+                          {/* <label>Add Category</label>
                             <div className="text-right mb-1">
                               ({this.state.saveCategories.length}/
                               {this.state.categoryLimit})
                             </div> */}
-                            {/* <label>Select Category: </label> */}
-                            {this.state.saveCategories === "" ? null : (
-                              <Select
-                                isMulti={true}
-                                name="category"
-                                className="selectCustomization"
-                                options={this.state?.myCategory}
-                                value={this.state.saveCategories}
-                                placeholder="Select Category"
-                                onChange={(options, e) =>
-                                  this.handleSelect(e, options)
-                                }
-                              />
-                            )}
-                            <span className="text-danger">
-                              {this.state.categoryError}
-                            </span>
-
-                            {this.state.saveCategories.length === 0 ? (
-                              <Row>
-                                <span className="ml-4 mt-2 mb-2">
-                                  No Category Selected
-                                </span>
-                              </Row>
-                            ) : (
-                              <SortableList
-                                items={this.state.saveCategories}
-                                onSortEnd={this.onSortEnd}
-                                axis="xy"
-                                lockToContainerEdges={true}
-                                lockOffset="0%"
-                                distance={1}
-                              />
-                            )}
-                          </Col>
-                        </Row>
-
-                        <Row>
-                          <Col md={5} xl={3}>
-                            <Button
-                              variant="primary"
-                              type="submit"
-                              className="category-btn btn-block"
-                              id="cat-save"
-                              disabled={
-                                // this.state.saveCategories.length &&
-                                !this.state.loading ? false : true
+                          {/* <label>Select Category: </label> */}
+                          {this.state.saveCategories === "" ? null : (
+                            <Select
+                              isMulti={true}
+                              name="category"
+                              className="selectCustomization"
+                              options={this.state?.myCategory}
+                              value={this.state.saveCategories}
+                              placeholder="Select Category"
+                              onChange={(options, e) =>
+                                this.handleSelect(e, options)
                               }
-                            >
-                              Save
-                            </Button>
-                          </Col>
-                        </Row>
-                      </form>
+                            />
+                          )}
+                          <span className="text-danger">
+                            {this.state.categoryError}
+                          </span>
+
+                          {this.state.saveCategories.length === 0 ? (
+                            <Row>
+                              <span className="ml-4 mt-2 mb-2">
+                                No Category Selected
+                              </span>
+                            </Row>
+                          ) : (
+                            <SortableList
+                              items={this.state.saveCategories}
+                              onSortEnd={this.onSortEnd}
+                              axis="xy"
+                              lockToContainerEdges={true}
+                              lockOffset="0%"
+                              distance={1}
+                            />
+                          )}
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col md={5} xl={3}>
+                          <Button
+                            variant="primary"
+                            type="submit"
+                            className="category-btn btn-block"
+                            id="cat-save"
+                            disabled={
+                              // this.state.saveCategories.length &&
+                              !this.state.loading ? false : true
+                            }
+                            onClick={this.handleSubmit}
+                          >
+                            Save
+                          </Button>
+                        </Col>
+                      </Row>
+                      {/* </form> */}
                     </div>
                   </div>
                 </div>

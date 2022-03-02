@@ -127,75 +127,76 @@ class BrandComponent extends React.Component {
                   className={"brand-section dash_block_profile"}
                 >
                   <div className="dash_content_profile">
-                    <form onSubmit={this.handleSubmit}>
-                      <p
-                        style={{
-                          color: "gray",
-                          borderBottom: "1px solid lightgray",
-                          paddingBottom: 10,
-                        }}
-                      >
-                        Select Brands
-                      </p>
-                      {/* <h5>Select Brands</h5> */}
+                    {/* <form onSubmit={this.handleSubmit}> */}
+                    <p
+                      style={{
+                        color: "gray",
+                        borderBottom: "1px solid lightgray",
+                        paddingBottom: 10,
+                      }}
+                    >
+                      Select Brands
+                    </p>
+                    {/* <h5>Select Brands</h5> */}
 
-                      <Row>
-                        <Col md={12}>
-                          {this.state.brandLoading ? (
-                            <Loader />
-                          ) : (
-                            <React.Fragment>
-                              <Select
-                                defaultValue={this.state.myBrand.filter(
-                                  function (element) {
-                                    return element.label !== undefined;
-                                  }
-                                )}
-                                isMulti
-                                name="brands"
-                                options={this.state.brandList.filter(function (
-                                  element
-                                ) {
-                                  return element.label !== undefined;
-                                })}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                placeholder="Select Brand"
-                                onChange={(options, e) =>
-                                  this.handleMultiSelect(e, options)
-                                }
-                              />
-                              {/* <AsyncSelectField
+                    <Row>
+                      <Col md={12}>
+                        {this.state.brandLoading ? (
+                          <Loader />
+                        ) : (
+                          <React.Fragment>
+                            <Select
+                              defaultValue={this.state.myBrand.filter(function (
+                                element
+                              ) {
+                                return element.label !== undefined;
+                              })}
+                              isMulti
+                              name="brands"
+                              options={this.state.brandList.filter(function (
+                                element
+                              ) {
+                                return element.label !== undefined;
+                              })}
+                              className="basic-multi-select"
+                              classNamePrefix="select"
+                              placeholder="Select Brand"
+                              onChange={(options, e) =>
+                                this.handleMultiSelect(e, options)
+                              }
+                            />
+                            {/* <AsyncSelectField
                                 name="brand"
                                 placeholder="Search By Brand"
                                 getBrand={this.getBrand}
                                 defaultValue={this.state.myBrand}
                               />
                             */}
-                              {this.state.brands.length === 0 ? (
-                                <span className="text-danger mt-2">
-                                  Please select brands to unlock marketplace.
-                                </span>
-                              ) : null}
-                            </React.Fragment>
-                          )}
-                        </Col>
-                      </Row>
+                            {this.state.brands.length === 0 ? (
+                              <span className="text-danger mt-2">
+                                Please select brands to unlock marketplace.
+                              </span>
+                            ) : null}
+                          </React.Fragment>
+                        )}
+                      </Col>
+                    </Row>
 
-                      <Row>
-                        <Col md={5} xl={3}>
-                          <Button
-                            variant="primary"
-                            type="submit"
-                            className="btn-block mt-3"
-                            id="brand-save"
-                            disabled={!this.state.loading ? false : true}
-                          >
-                            Save
-                          </Button>
-                        </Col>
-                      </Row>
-                    </form>
+                    <Row>
+                      <Col md={5} xl={3}>
+                        <Button
+                          variant="primary"
+                          type="submit"
+                          className="btn-block mt-3"
+                          id="brand-save"
+                          disabled={!this.state.loading ? false : true}
+                          onClick={this.handleSubmit}
+                        >
+                          Save
+                        </Button>
+                      </Col>
+                    </Row>
+                    {/* </form> */}
                   </div>
                 </div>
               </div>

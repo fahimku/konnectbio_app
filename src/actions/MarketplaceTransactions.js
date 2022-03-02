@@ -13,6 +13,7 @@ export const getMarketplaceTransactions =
     campaignId = "",
     influencerId = "",
     transactionType = "",
+    groupBy = "",
     page = 1,
     limit = 25
   ) =>
@@ -20,7 +21,7 @@ export const getMarketplaceTransactions =
     let promise = new Promise((resolve, reject) => {
       axios
         .post(
-          `${config.hostApi}/v1/users/marketPlace/getlogs?brand_status=${brand_status}&influencer_status=${influencer_status}&campaign_id=${campaignId}&brand_id=${influencerId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`
+          `${config.hostApi}/v1/users/marketPlace/getlogs?brand_status=${brand_status}&influencer_status=${influencer_status}&campaign_id=${campaignId}&brand_id=${influencerId}&transaction_type=${transactionType}&group_by=${groupBy}&page=${page}&limit=${limit}`
         )
         .then((res) => {
           resolve("success");

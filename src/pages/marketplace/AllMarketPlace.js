@@ -41,9 +41,9 @@ function AllMarketplace({
     value: "commission",
     label: "COMMISSION",
   });
+
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
-
   const fromDate = moment(new Date()).format("YYYY-MM-DD");
   const toDate = moment().add(1, "year").format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
@@ -394,9 +394,7 @@ function AllMarketplace({
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
                   onPageChange={handlePageClick}
-                  containerClassName={
-                    "pagination justify-content-center mt-2 custom-paginate"
-                  }
+                  containerClassName={"pagination justify-content-center mt-2 custom-paginate"}
                   // subContainerClassName={"pages pagination"}
                   activeClassName={"active"}
                 />

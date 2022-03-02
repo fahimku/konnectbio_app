@@ -1545,25 +1545,25 @@ a.pkg_read:hover {
 .dzu-submitButton:hover {
   background-color: #000 !important;
 }
-.selectCustomization{
-  z-index: 99 !important;
+.selectCustomization {
+  /* z-index: 99 !important; */
 }
-.inr-side-pkg{
+.inr-side-pkg {
   position: relative;
 }
-.pkg_app_inner{
+.pkg_app_inner {
   position: absolute !important;
   right: 0;
 }
-.pkg_app_inner .custom_pkg{
+.pkg_app_inner .custom_pkg {
   padding: 15px;
-  background: #FFF;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.3rem;
 }
-.pkg_app_inner .custom_pkg ul{
+.pkg_app_inner .custom_pkg ul {
   margin-bottom: 0;
 }
-.pkg_app_inner .custom_pkg ul li:last-child{
+.pkg_app_inner .custom_pkg ul li:last-child {
   padding-bottom: 0;
 }
