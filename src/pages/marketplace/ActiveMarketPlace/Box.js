@@ -10,32 +10,34 @@ export default function Box({ item, toggleCampaigns, index, type }) {
             <div className="cmp-h-right">
               {/* {toggleLoading && <Loader />} */}
               {type !== "expired" ? (
-                <div className="form-check custom-switch custom-switch-md">
-                  <input
-                    type="checkbox"
-                    checked={toggleCampaign}
-                    onClick={() => {
-                      toggleCampaigns(item.is_linked, item.campaign_id).then(
-                        function () {
-                          setToggleCampaign(!item.is_linked);
-                          setTimeout(() => {
-                            setToggleCampaign(item.is_linked);
-                          }, 300);
-                        },
-                        function () {
-                          setToggleCampaign(item.is_Linked);
-                        }
-                      );
-                    }}
-                    className="custom-control-input"
-                    id={`customSwitch` + index}
-                    readOnly
-                  />
-                  <label
-                    className="custom-control-label"
-                    htmlFor={`customSwitch` + index}
-                  ></label>
-                </div>
+                item?.is_hard_active === false ? null : (
+                  <div className="form-check custom-switch custom-switch-md">
+                    <input
+                      type="checkbox"
+                      checked={toggleCampaign}
+                      onClick={() => {
+                        toggleCampaigns(item.is_linked, item.campaign_id).then(
+                          function () {
+                            setToggleCampaign(!item.is_linked);
+                            setTimeout(() => {
+                              setToggleCampaign(item.is_linked);
+                            }, 300);
+                          },
+                          function () {
+                            setToggleCampaign(item.is_Linked);
+                          }
+                        );
+                      }}
+                      className="custom-control-input"
+                      id={`customSwitch` + index}
+                      readOnly
+                    />
+                    <label
+                      className="custom-control-label"
+                      htmlFor={`customSwitch` + index}
+                    ></label>
+                  </div>
+                )
               ) : null}
             </div>
           </div>
