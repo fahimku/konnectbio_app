@@ -47,6 +47,8 @@ function HashtagsList({ createMedia, title }) {
     return bytes + " P";
   }
   const onSubmit = (files, allFiles) => {
+    alert("ss")
+    console.log("cl", files)
     setSubmit(true);
     if (fields.title && fields.image) {
       setLoading(true);
@@ -66,10 +68,20 @@ function HashtagsList({ createMedia, title }) {
     return { url: "https://httpbin.org/post" };
   };
   const onFileChange = ({ file }) => {
-    setFields({
-      ...fields,
-      image: file,
-    });
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/gif" ||
+      file.type === "image/svg+xml"
+    ) {
+      setFields({
+        ...fields,
+        image: file,
+      });
+    }
+    else { 
+      toast.error("Image type not Acceptable!")
+    }
   };
   const getFilesFromEvent = (e) => {
     return new Promise((resolve) => {
@@ -186,7 +198,7 @@ function HashtagsList({ createMedia, title }) {
                   InputComponent={selectFileInput}
                   getUploadParams={fileParams}
                   getFilesFromEvent={getFilesFromEvent}
-                  accept="image/*"
+                  accept=".jpg, .jpeg, .png, .gif, .svg"
                   maxFiles={1}
                   multiple={false}
                   // inputContent="Drop A File"
