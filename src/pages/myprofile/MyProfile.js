@@ -74,7 +74,7 @@ class MyProfile extends React.Component {
   resetImages = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "You want to reset images ,this won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -82,6 +82,9 @@ class MyProfile extends React.Component {
       confirmButtonText: "Yes, Reset Default",
     }).then((result) => {
       if (result.isConfirmed) {
+        this.setState({ cancelDefaultImage: false });
+        this.setState({ setDefaultImage: true });
+        this.setState({ disabled: false });
         axios
           .put(`/users/revise/resetUserMenuImage/${userInfo.user_id}`)
           .then((response) => {
@@ -93,15 +96,20 @@ class MyProfile extends React.Component {
             parseUserInformation.menu = imageResponse.data;
             const storeUserInformation = JSON.stringify(parseUserInformation);
             localStorage.setItem("userInfo", storeUserInformation);
-            Swal.fire("Default Pictures Reset Successfully");
+            // Swal.fire("Default Pictures Reset Successfully");
+            Swal.fire({
+              text: "Default Pictures Reset Successfully",
+              icon: "success",
+              confirmButtonColor: "#010b40",
+            });
           })
           .catch((err) => {
             toast.error(err.response.data.message);
           });
       } else {
-        this.setState({ cancelDefaultImage: true });
-        this.setState({ setDefaultImage: false });
-        this.setState({ disabled: true });
+        // this.setState({ cancelDefaultImage: true });
+        // this.setState({ setDefaultImage: false });
+        // this.setState({ disabled: true });
       }
     });
   };
@@ -382,14 +390,15 @@ class MyProfile extends React.Component {
                     <div className="pr-sv-btn mt-3">
                       <Button
                         onClick={() => {
-                          this.setDefaultImage();
+                          // this.setDefaultImage();
+                          this.resetImages();
                         }}
                         type="submit"
                         color="default"
                       >
-                        Default
+                        Reset All
                       </Button>
-                      <Button
+                      {/* <Button
                         onClick={() => {
                           this.resetImages();
                         }}
@@ -399,7 +408,7 @@ class MyProfile extends React.Component {
                         className="select-image"
                       >
                         Save
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </div>

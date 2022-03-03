@@ -169,7 +169,7 @@ function HashtagsList({ createMedia, title }) {
                 <div className="upload_area">
                   <h4>Upload your image</h4>
                   <p className="text-muted">
-                    PNG, JPG and GIF files are allowed
+                    PNG, JPG, SVG and GIF files are allowed
                   </p>
                 </div>
                 <div class="upload_area_3 form-group">
