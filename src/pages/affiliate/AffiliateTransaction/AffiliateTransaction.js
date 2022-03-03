@@ -7,6 +7,7 @@ import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import moment from "moment";
+import numeral from "numeral";
 
 function AffiliateTransaction({
   getAffiliateActiveCampaign,
@@ -175,42 +176,39 @@ function AffiliateTransaction({
           <Table responsive="sm" className="transactions-box">
             <thead>
               <tr>
-                <th>PID</th>
-                <th>Date/Time</th>
-                <th>Influencer </th>
-                <th>Campaign </th>
+                <th>Status</th>
+                <th>Campaign</th>
+                <th>Category </th>
+                <th>Budget </th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Category</th>
-                <th>Campaign Type</th>
-                <th>Budget</th>
-                <th>Click Rate</th>
-                <th>Transaction Type</th>
-                <th className="text-center">View</th>
+                <th>Type</th>
+                <th>Rate/click</th>
+                <th>Clicks</th>
+                <th>IMP</th>
+                <th>CTR</th>
+                <th>Spent</th>
+                {/* <th className="text-center">View</th> */}
               </tr>
             </thead>
             <tbody>
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.user?.pixel_id}</td>
-                    <td>
-                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
-                    </td>
-                    <td>{item?.instagram_username}</td>
-                    <td>{item?.campaign?.campaign_name}</td>
-                    <td>
-                      {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
-                    </td>
-                    <td>
-                      {moment(item?.campaign?.end_date).format("YYYY-MM-DD")}
-                    </td>
-                    <td>{item?.parent_category?.category_name}</td>
-                    <td>{item?.campaign?.campaign_type}</td>
-                    <td>${item.campaign?.budget}</td>
-                    <td>${item.campaign?.pay_per_hundred}</td>
-                    <td>{item?.transaction_type}</td>
-                    <td className="text-center">
+                    <td>{item?.campaign_status ? "Active" : "Paused"}</td>
+                    <td>{item?.campaign_name}</td>
+                    <td>{item?.c_category}</td>
+                    <td>{numeral(item?.budget).format("$0,0.0'")}</td>
+                    <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
+                    <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
+                    <td>{item?.campaign_type}</td>
+                    <td>{numeral(item?.rate).format("$0,0.00'")}</td>
+                    <td>{numeral(item?.clicks).format("0,0'")}</td>
+                    <td>{numeral(item?.impressions).format("0,0'")}</td>
+                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
+                    <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+
+                    {/* <td className="text-center">
                       <i
                         role="button"
                         onClick={() => {
@@ -219,7 +217,7 @@ function AffiliateTransaction({
                         }}
                         className="fa fa-eye"
                       ></i>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}
@@ -308,7 +306,7 @@ function AffiliateTransaction({
         <div className="brand_container_main aff-payment">
           <Row>
             <div className="col-md-12">
-              <form className="mb-3" onSubmit={handleSubmit}>
+              {/* <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
                   <Col xs={12} xl md={6}>
                     <p>Select Status</p>
@@ -403,7 +401,7 @@ function AffiliateTransaction({
                     )}
                   </Col>
                 </Row>
-              </form>
+              </form> */}
 
               {loading ? (
                 <Loader size="30" />
