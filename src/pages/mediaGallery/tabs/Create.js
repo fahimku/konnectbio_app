@@ -151,10 +151,21 @@ function HashtagsList({ createMedia, title }) {
     allFiles.forEach((f) => f.remove());
   };
   const onFileChange = ({ file }) => {
-    setFields({
-      ...fields,
-      image: file,
-    });
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png" ||
+      file.type === "image/gif" ||
+      file.type === "image/svg+xml"
+    ) {
+      setFields({
+        ...fields,
+        image: file,
+      });
+    }
+    else { 
+      toast.error("Image type not Acceptable!")
+    }
   };
 
   return (
@@ -195,7 +206,7 @@ function HashtagsList({ createMedia, title }) {
                   InputComponent={selectFileInput}
                   getUploadParams={fileParams}
                   getFilesFromEvent={getFilesFromEvent}
-                  accept="image/*"
+                  accept=".jpg, .jpeg, .png, .gif, .svg"
                   maxFiles={1}
                   // inputContent="Drop A File"
                   addClassNames={{
