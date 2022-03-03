@@ -147,17 +147,30 @@ class MyProfile extends React.Component {
   };
 
   onChangeInputImage = (e) => {
-    const files = [];
-    const reader = new FileReader();
-    files.push(e.target.files[0]);
-    reader.onloadend = () => {
-      files[0].preview = reader.result;
-      files[0].toUpload = true;
-      this.setState({
-        imageFiles: files,
-      });
-    };
-    reader.readAsDataURL(e.target.files[0]);
+
+    if (e.target.files.length === 1) {
+      if (
+        e.target.files[0]?.type === "image/jpeg" ||
+        e.target.files[0]?.type === "image/webp" ||
+        e.target.files[0]?.type === "image/png" ||
+        e.target.files[0]?.type === "image/svg+xml"
+      ) {
+        const files = [];
+        const reader = new FileReader();
+        files.push(e.target.files[0]);
+        reader.onloadend = () => {
+          files[0].preview = reader.result;
+          files[0].toUpload = true;
+          this.setState({
+            imageFiles: files,
+          });
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+      else {
+        toast.error("Image type not acceptable!");
+      }
+    }
   };
 
   uploadImage = async () => {
@@ -252,7 +265,7 @@ class MyProfile extends React.Component {
                       </span>
                       <div className="dp_buttons">
                         <input
-                          accept="image/*"
+                          accept=".jpg, .jpeg, .png, .webp, .gif"
                           onChange={(e) => this.onChangeInputImage(e)}
                           id="fileupload5"
                           type="file"
@@ -260,7 +273,7 @@ class MyProfile extends React.Component {
                           className="d-none"
                         />
                         <Button
-                          accept="image/*"
+                        accept=".jpg, .jpeg, .png, .webp, .gif"
                           onChange={(e) => this.onChangeInputImage(e)}
                           type="file"
                           color="default"
