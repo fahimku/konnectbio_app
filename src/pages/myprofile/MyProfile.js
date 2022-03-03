@@ -396,7 +396,7 @@ class MyProfile extends React.Component {
                         type="submit"
                         color="default"
                       >
-                        Reset Default
+                        Reset All
                       </Button>
                       {/* <Button
                         onClick={() => {
