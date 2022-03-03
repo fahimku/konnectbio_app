@@ -26,6 +26,7 @@ function AffiliateTransaction({
   const [singleData, setSingleData] = useState([]);
   const [groupBy, setGroupBy] = useState("");
   const [submit, setSubmit] = useState("");
+  const [campaignModal, setCampaignModal] = useState(false);
 
   const transactionTypeList = [
     {
@@ -198,7 +199,16 @@ function AffiliateTransaction({
                       {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
                     </td>
                     <td>{item?.instagram_username}</td>
-                    <td>{item?.campaign?.campaign_name}</td>
+                    <td>
+                      <button
+                        className="btn-link"
+                        onClick={() => {
+                          setCampaignModal(true);
+                        }}
+                      >
+                        {item?.campaign?.campaign_name}
+                      </button>
+                    </td>
                     <td>
                       {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
                     </td>
@@ -463,6 +473,7 @@ function AffiliateTransaction({
         className="change-password"
         centered
         size="xl"
+        animation={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Transaction Information</Modal.Title>
@@ -594,6 +605,138 @@ function AffiliateTransaction({
             Close
           </Button>
         </Modal.Footer>
+      </Modal>
+      <Modal
+        show={campaignModal}
+        // onHide={() => {
+        //   setCampaignModal(false);
+        // }}
+        className="change-password"
+        centered
+        // size="xl"
+        animation={false}
+        backdrop={true}
+        keyboard={false}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header>
+          <Modal.Title>Transaction Information</Modal.Title>
+          <button
+            type="button"
+            class="close"
+            onClick={() => {
+              setCampaignModal(false);
+            }}
+          >
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </Modal.Header>
+        <Modal.Body className="bg-white transection-detail">
+          <Row>
+            <Col xs={12} xl={6} md={6}>
+              <div class="card analytic-box analytics-page">
+                <h5 className="mb-4">User Information</h5>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Pixel ID</h5>
+                  <h3 class="count">{singleData?.user?.pixel_id}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Username</h5>
+                  <h3 class="count">{singleData?.instagram_username}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Email</h5>
+                  <h3 class="count">{singleData?.user?.email}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Country</h5>
+                  <h3 class="count">{singleData?.user?.country}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">State</h5>
+                  <h3 class="count">{singleData?.user?.state}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">City</h5>
+                  <h3 class="count">{singleData?.user?.city}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Gender</h5>
+                  <h3 class="count">{singleData?.user?.gender}</h3>
+                </div>
+              </div>
+            </Col>
+            <Col xs={12} xl={6} md={6}>
+              <div class="card analytic-box analytics-page">
+                <h5 className="mb-4">Campaign Information</h5>
+                <div class="card-row row">
+                  <div class="any-post-img-col col-5">
+                    <div class="any-post-image">
+                      <div class="any-image-box">
+                        <div class="any-image-box-iner">
+                          <img
+                            src={singleData?.campaign?.media_url}
+                            class="img-fluid media-image"
+                            alt="IMAGE"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-7 analytic-caption">
+                    <div class="row count-main-box">
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Campaign Name</h5>
+                        <h3 class="count" title="Test 3">
+                          {singleData?.campaign?.campaign_name}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Campaign Type</h5>
+                        <h3 class="count">
+                          {singleData?.campaign?.campaign_type}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Category</h5>
+                        <h3 class="count">
+                          {singleData?.parent_category?.category_name}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Budget</h5>
+                        <h3 class="count">${singleData?.campaign?.budget}</h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Click Rate</h5>
+                        <h3 class="count">
+                          ${singleData?.campaign?.pay_per_hundred}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">Start Date</h5>
+                        <h3 class="count">
+                          {moment(singleData?.campaign?.start_date).format(
+                            "YYYY-MM-DD"
+                          )}
+                        </h3>
+                      </div>
+                      <div class="col-12 count-box">
+                        <h5 class="count-title">End Date</h5>
+                        <h3 class="count">
+                          {moment(singleData?.campaign?.end_date).format(
+                            "YYYY-MM-DD"
+                          )}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Modal.Body>
       </Modal>
     </React.Fragment>
   );
