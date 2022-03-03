@@ -1049,6 +1049,12 @@ code.sm-color {
 .modal-70w {
   max-width: 70%;
 }
+.campaign-detail-modal .modal-content {
+  height: 650px;
+}
+.campaign-detail-modal .aff-payment .transactions-box {
+  box-shadow: none;
+}
 .modal-open {
   // padding: 0px !important;
   // overflow: auto !important;

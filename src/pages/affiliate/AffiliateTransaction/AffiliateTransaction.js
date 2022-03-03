@@ -33,6 +33,7 @@ function AffiliateTransaction({
   const [groupBy, setGroupBy] = useState("");
   const [submit, setSubmit] = useState("");
   const [campaignModal, setCampaignModal] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
 
   // const transactionTypeList = [
   //   {
@@ -75,6 +76,7 @@ function AffiliateTransaction({
   // ];
 
   const limit = 12;
+  const detailLimit = 12;
   const style = {
     control: (base, state) => ({
       ...base,
@@ -175,6 +177,18 @@ function AffiliateTransaction({
   // const changeGroupBy = (e) => {
   //   setGroupBy(e);
   // };
+  const handleDetailPageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+    setDetailLoading(true);
+    getCampaignDetailTransactions(campaignId.value, page + 1, detailLimit).then(
+      () => {
+        if (campaignDetailTransactions?.message?.data?.length > 0) {
+          setDetailLoading(false);
+        }
+      }
+    );
+  };
 
   function dataTable() {
     let data = affiliateTransactions?.message?.data;
@@ -208,7 +222,15 @@ function AffiliateTransaction({
                         className="btn-link"
                         onClick={() => {
                           setCampaignModal(true);
-                          getCampaignDetailTransactions();
+                          setDetailLoading(true);
+                          getCampaignDetailTransactions(
+                            item?.campaign_id,
+                            1,
+                            detailLimit
+                          ).then(() => {
+                            setDetailLoading(false);
+                          });
+                          // getCampaignDetailTransactions(item?.campaign_id);
                         }}
                       >
                         {item?.campaign_name}
@@ -219,7 +241,7 @@ function AffiliateTransaction({
                     <td>{numeral(item?.budget).format("$0,0.0'")}</td>
                     <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
                     <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
-                    <td>{item?.campaign_type}</td>
+                    <td className="text-capitalize">{item?.campaign_type}</td>
                     <td>{numeral(item?.rate).format("$0,0.00'")}</td>
                     <td>{numeral(item?.clicks).format("0,0'")}</td>
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
@@ -317,7 +339,53 @@ function AffiliateTransaction({
     }
   }
 
-  console.log(campaignDetailTransactions, "campaignDetailTransactions");
+  function dataDetailTable() {
+    let data = campaignDetailTransactions?.message?.data;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>Category </th>
+                <th>Influencer </th>
+                <th>Clicks</th>
+                <th>Impressions</th>
+                <th>CTR</th>
+                <th>Spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>
+                      <button
+                        className="btn-link"
+                        // onClick={() => {
+                        //   setCampaignModal(true);
+                        //   getCampaignDetailTransactions(item?.campaign_id);
+                        // }}
+                      >
+                        {item?.campaign_name}
+                      </button>
+                    </td>
+                    <td>{item?.c_category}</td>
+                    <td>{item?.instagram_username}</td>
+                    <td>{numeral(item?.clicks).format("0,0'")}</td>
+                    <td>{numeral(item?.impressions).format("0,0'")}</td>
+                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
+                    <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
 
   return (
     <React.Fragment>
@@ -620,7 +688,7 @@ function AffiliateTransaction({
         // onHide={() => {
         //   setCampaignModal(false);
         // }}
-        className="change-password"
+        className="campaign-detail-modal"
         centered
         // size="xl"
         animation={false}
@@ -629,7 +697,7 @@ function AffiliateTransaction({
         dialogClassName="modal-90w"
       >
         <Modal.Header>
-          <Modal.Title>Transaction Information</Modal.Title>
+          <Modal.Title>Campaign Details</Modal.Title>
           <button
             type="button"
             class="close"
@@ -641,110 +709,51 @@ function AffiliateTransaction({
             <span class="sr-only">Close</span>
           </button>
         </Modal.Header>
-        <Modal.Body className="bg-white transection-detail">
-          <Row>
-            <Col xs={12} xl={6} md={6}>
-              <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">User Information</h5>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Pixel ID</h5>
-                  <h3 class="count">{singleData?.user?.pixel_id}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Username</h5>
-                  <h3 class="count">{singleData?.instagram_username}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Email</h5>
-                  <h3 class="count">{singleData?.user?.email}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Country</h5>
-                  <h3 class="count">{singleData?.user?.country}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">State</h5>
-                  <h3 class="count">{singleData?.user?.state}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">City</h5>
-                  <h3 class="count">{singleData?.user?.city}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Gender</h5>
-                  <h3 class="count">{singleData?.user?.gender}</h3>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} xl={6} md={6}>
-              <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">Campaign Information</h5>
-                <div class="card-row row">
-                  <div class="any-post-img-col col-5">
-                    <div class="any-post-image">
-                      <div class="any-image-box">
-                        <div class="any-image-box-iner">
-                          <img
-                            src={singleData?.campaign?.media_url}
-                            class="img-fluid media-image"
-                            alt="IMAGE"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-7 analytic-caption">
-                    <div class="row count-main-box">
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Campaign Name</h5>
-                        <h3 class="count" title="Test 3">
-                          {singleData?.campaign?.campaign_name}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Campaign Type</h5>
-                        <h3 class="count">
-                          {singleData?.campaign?.campaign_type}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Category</h5>
-                        <h3 class="count">
-                          {singleData?.parent_category?.category_name}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Budget</h5>
-                        <h3 class="count">${singleData?.campaign?.budget}</h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Click Rate</h5>
-                        <h3 class="count">
-                          ${singleData?.campaign?.pay_per_hundred}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Start Date</h5>
-                        <h3 class="count">
-                          {moment(singleData?.campaign?.start_date).format(
-                            "YYYY-MM-DD"
-                          )}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">End Date</h5>
-                        <h3 class="count">
-                          {moment(singleData?.campaign?.end_date).format(
-                            "YYYY-MM-DD"
-                          )}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
+        <Modal.Body className="bg-white transection-detail aff-payment">
+          {detailLoading ? (
+            <Loader size="30" />
+          ) : (
+            <>
+              {campaignDetailTransactions?.message?.data?.length === 0 ? (
+                <>
+                  <NoDataFound />
+                </>
+              ) : (
+                dataDetailTable()
+              )}
+            </>
+          )}
+          {campaignDetailTransactions?.message?.data?.length > 0 &&
+            !detailLoading && (
+              <Row>
+                <ReactPaginate
+                  previousLabel=""
+                  nextLabel=""
+                  pageClassName="page-item "
+                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  forcePage={currentPage}
+                  pageCount={Math.ceil(
+                    campaignDetailTransactions?.message?.total_records /
+                      detailLimit
+                  )}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                  onPageChange={handleDetailPageClick}
+                  containerClassName={
+                    "pagination justify-content-center mt-2 custom-paginate"
+                  }
+                  // subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Row>
+            )}
         </Modal.Body>
       </Modal>
     </React.Fragment>

@@ -74,7 +74,9 @@ export const getCampaignDetailTransactions =
   async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
-        .get(`${config.hostApi}/v1/affiliate/getsummarylogs`)
+        .get(
+          `${config.hostApi}/v1/affiliate/getdetaillogs?campaign_id=${campaignId}&page=${page}&limit=${limit}`
+        )
         .then((res) => {
           resolve("success");
           dispatch({
