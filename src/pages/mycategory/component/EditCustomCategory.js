@@ -20,17 +20,29 @@ class EditCustomCategory extends React.Component {
     cat_id: this.props.catData.category_id,
   };
   onChangeInputImage = (e) => {
-    const files = [];
-    const reader = new FileReader();
-    files.push(e.target.files[0]);
-    reader.onloadend = () => {
-      files[0].preview = reader.result;
-      files[0].toUpload = true;
-      this.setState({
-        imageFiles: files,
-      });
-    };
-    reader.readAsDataURL(e.target.files[0]);
+    if (e.target.files.length === 1) {
+      if (
+        e.target.files[0]?.type === "image/jpeg" ||
+        e.target.files[0]?.type === "image/webp" ||
+        e.target.files[0]?.type === "image/png" ||
+        e.target.files[0]?.type === "image/svg+xml"
+      ) {
+        const files = [];
+        const reader = new FileReader();
+        files.push(e.target.files[0]);
+        reader.onloadend = () => {
+          files[0].preview = reader.result;
+          files[0].toUpload = true;
+          this.setState({
+            imageFiles: files,
+          });
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+      else {
+        toast.error("Image type not Acceptable!")
+      }
+    }
   };
   // handleChange = (e) => {
   //   this.setState({
@@ -95,7 +107,7 @@ class EditCustomCategory extends React.Component {
           <Col md={12} className="text-center">
             <div className="fileinput file-profile">
               <input
-                accept="image/*"
+                accept=".jpg, .jpeg, .png, .webp, .svg"
                 onChange={(e) => this.onChangeInputImage(e)}
                 id="fileupload2"
                 type="file"
