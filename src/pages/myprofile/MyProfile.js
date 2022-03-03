@@ -74,7 +74,7 @@ class MyProfile extends React.Component {
   resetImages = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to reset images ,this won't be able to revert this!",
+      text: "You want to reset images",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -147,7 +147,6 @@ class MyProfile extends React.Component {
   };
 
   onChangeInputImage = (e) => {
-
     if (e.target.files.length === 1) {
       if (
         e.target.files[0]?.type === "image/jpeg" ||
@@ -166,8 +165,7 @@ class MyProfile extends React.Component {
           });
         };
         reader.readAsDataURL(e.target.files[0]);
-      }
-      else {
+      } else {
         toast.error("Image type not acceptable!");
       }
     }
@@ -273,7 +271,7 @@ class MyProfile extends React.Component {
                           className="d-none"
                         />
                         <Button
-                        accept=".jpg, .jpeg, .png, .webp, .gif"
+                          accept=".jpg, .jpeg, .png, .webp, .gif"
                           onChange={(e) => this.onChangeInputImage(e)}
                           type="file"
                           color="default"
