@@ -26,17 +26,24 @@ export default function ScreenButtons(props) {
   }, [props.cancelDefaultImage]);
 
   const onChangeInputImage = (e) => {
-    props.setImageDefault(true);
-    const files = [];
-    const reader = new FileReader();
-    files.push(e.target.files[0]);
-    reader.onloadend = () => {
-      files[0].preview = reader.result;
-      files[0].toUpload = true;
-      setImageFiles(files);
-      setDisabled(false);
-    };
-    reader.readAsDataURL(e.target.files[0]);
+
+    if (e.target.files[0].type === "image/jpeg" || e.target.files[0].type === "image/webp" || e.target.files[0].type === "image/png" || e.target.files[0].type === "image/svg+xml") {
+      if (e.target.files[0].type)
+        props.setImageDefault(true);
+      const files = [];
+      const reader = new FileReader();
+      files.push(e.target.files[0]);
+      reader.onloadend = () => {
+        files[0].preview = reader.result;
+        files[0].toUpload = true;
+        setImageFiles(files);
+        setDisabled(false);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+    else{ 
+      toast.error("Image type not acceptable!");
+    }
   };
 
   const uploadImage = async (e) => {
@@ -105,7 +112,7 @@ export default function ScreenButtons(props) {
 
       <div className="dp_buttons">
         <input
-          accept="image/*"
+          accept=".jpg, .jpeg, .png, .webp"
           onChange={(e) => onChangeInputImage(e)}
           id={`fileupload` + props.id}
           type="file"
