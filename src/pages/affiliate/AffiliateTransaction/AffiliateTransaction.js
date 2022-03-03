@@ -16,6 +16,8 @@ function AffiliateTransaction({
   affiliateInfluencers,
   getAffiliateTransactions,
   affiliateTransactions,
+  getCampaignDetailTransactions,
+  campaignDetailTransactions,
 }) {
   const [loading, setLoading] = useState(true);
   const [transactionModal, setTransactionModal] = useState(false);
@@ -205,7 +207,8 @@ function AffiliateTransaction({
                       <button
                         className="btn-link"
                         onClick={() => {
-                          setTransactionModal(true);
+                          setCampaignModal(true);
+                          getCampaignDetailTransactions();
                         }}
                       >
                         {item?.campaign_name}
@@ -313,6 +316,8 @@ function AffiliateTransaction({
       );
     }
   }
+
+  console.log(campaignDetailTransactions, "campaignDetailTransactions");
 
   return (
     <React.Fragment>
@@ -750,8 +755,14 @@ function mapStateToProps({
   affiliateTransactions,
   affiliateCampaigns,
   affiliateInfluencers,
+  campaignDetailTransactions,
 }) {
-  return { affiliateTransactions, affiliateCampaigns, affiliateInfluencers };
+  return {
+    affiliateTransactions,
+    affiliateCampaigns,
+    affiliateInfluencers,
+    campaignDetailTransactions,
+  };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
   AffiliateTransaction
