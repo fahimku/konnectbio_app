@@ -16,32 +16,39 @@ function AffiliateTransaction({
   affiliateInfluencers,
   getAffiliateTransactions,
   affiliateTransactions,
+  getCampaignDetailTransactions,
+  campaignDetailTransactions,
 }) {
   const [loading, setLoading] = useState(true);
   const [transactionModal, setTransactionModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [campaignId, setCampaignId] = useState("");
+  const [campaignId, setCampaignId] = useState({
+    label: "ALL",
+    value: "all",
+  });
   const [influencerId, setInfluencerId] = useState("");
   const [transactionType, setTransactionType] = useState("");
   const [status, setStatus] = useState("");
   const [singleData, setSingleData] = useState([]);
   const [groupBy, setGroupBy] = useState("");
   const [submit, setSubmit] = useState("");
+  const [campaignModal, setCampaignModal] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
 
-  const transactionTypeList = [
-    {
-      label: "ALL",
-      value: "",
-    },
-    {
-      label: "Click",
-      value: "click",
-    },
-    {
-      label: "Impression",
-      value: "impression",
-    },
-  ];
+  // const transactionTypeList = [
+  //   {
+  //     label: "ALL",
+  //     value: "",
+  //   },
+  //   {
+  //     label: "Click",
+  //     value: "click",
+  //   },
+  //   {
+  //     label: "Impression",
+  //     value: "impression",
+  //   },
+  // ];
 
   const statusList = [
     {
@@ -57,18 +64,19 @@ function AffiliateTransaction({
       value: "expired",
     },
   ];
-  const groupByList = [
-    {
-      label: "Influencer",
-      value: "influencer",
-    },
-    {
-      label: "Campaign",
-      value: "campaign",
-    },
-  ];
+  // const groupByList = [
+  //   {
+  //     label: "Influencer",
+  //     value: "influencer",
+  //   },
+  //   {
+  //     label: "Campaign",
+  //     value: "campaign",
+  //   },
+  // ];
 
   const limit = 12;
+  const detailLimit = 12;
   const style = {
     control: (base, state) => ({
       ...base,
@@ -85,7 +93,7 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
-    getAffiliateTransactions("active", "", "", "", "", 1, limit).then(() => {
+    getAffiliateTransactions("active", "", 1, limit).then(() => {
       setLoading(false);
     });
   }, []);
@@ -97,9 +105,9 @@ function AffiliateTransaction({
     getAffiliateTransactions(
       status.value,
       campaignId.value,
-      influencerId.value,
-      transactionType.value,
-      groupBy.value,
+      // influencerId.value,
+      // transactionType.value,
+      // groupBy.value,
       1,
       limit
     ).then((data) => {
@@ -113,16 +121,18 @@ function AffiliateTransaction({
     setLoading(true);
     getAffiliateActiveCampaign("active");
     getActiveInfluencer("");
-    getAffiliateTransactions("active".value, "", "", "", "", 1, limit).then(
-      () => {
-        setLoading(false);
-      }
-    );
+    getAffiliateTransactions("active".value, "", 1, limit).then(() => {
+      setLoading(false);
+    });
     setStatus({ value: "active", label: "Active" });
-    setCampaignId("");
-    setInfluencerId("");
-    setTransactionType("");
-    setGroupBy("");
+    setCampaignId({
+      label: "ALL",
+      value: "all",
+    });
+
+    // setInfluencerId("");
+    // setTransactionType("");
+    // setGroupBy("");
     setSubmit("");
   };
 
@@ -133,9 +143,9 @@ function AffiliateTransaction({
     getAffiliateTransactions(
       status.value,
       campaignId.value,
-      influencerId.value,
-      transactionType.value,
-      groupBy.value,
+      // influencerId.value,
+      // transactionType.value,
+      // groupBy.value,
       page + 1,
       limit
     ).then(() => {
@@ -146,26 +156,38 @@ function AffiliateTransaction({
   };
 
   const changeCampaign = (e) => {
-    setInfluencerId("");
-    getActiveInfluencer(e.value);
+    // setInfluencerId("");
+    // getActiveInfluencer(e.value);
     setCampaignId(e);
   };
 
-  const changeInfluencer = (e) => {
-    setInfluencerId(e);
-  };
+  // const changeInfluencer = (e) => {
+  //   setInfluencerId(e);
+  // };
 
-  const changeTransactionType = (e) => {
-    setTransactionType(e);
-  };
+  // const changeTransactionType = (e) => {
+  //   setTransactionType(e);
+  // };
 
   const changeStatus = (e) => {
     setStatus(e);
     getAffiliateActiveCampaign(e.value);
   };
 
-  const changeGroupBy = (e) => {
-    setGroupBy(e);
+  // const changeGroupBy = (e) => {
+  //   setGroupBy(e);
+  // };
+  const handleDetailPageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+    setDetailLoading(true);
+    getCampaignDetailTransactions(campaignId.value, page + 1, detailLimit).then(
+      () => {
+        if (campaignDetailTransactions?.message?.data?.length > 0) {
+          setDetailLoading(false);
+        }
+      }
+    );
   };
 
   function dataTable() {
@@ -176,8 +198,8 @@ function AffiliateTransaction({
           <Table responsive="sm" className="transactions-box">
             <thead>
               <tr>
-                <th>Status</th>
                 <th>Campaign</th>
+                <th>No. of Influencers</th>
                 <th>Category </th>
                 <th>Budget </th>
                 <th>Start Date</th>
@@ -185,7 +207,7 @@ function AffiliateTransaction({
                 <th>Type</th>
                 <th>Rate/click</th>
                 <th>Clicks</th>
-                <th>IMP</th>
+                <th>Impressions</th>
                 <th>CTR</th>
                 <th>Spent</th>
                 {/* <th className="text-center">View</th> */}
@@ -195,13 +217,31 @@ function AffiliateTransaction({
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.campaign_status ? "Active" : "Paused"}</td>
-                    <td>{item?.campaign_name}</td>
+                    <td>
+                      <button
+                        className="btn-link"
+                        onClick={() => {
+                          setCampaignModal(true);
+                          setDetailLoading(true);
+                          getCampaignDetailTransactions(
+                            item?.campaign_id,
+                            1,
+                            detailLimit
+                          ).then(() => {
+                            setDetailLoading(false);
+                          });
+                          // getCampaignDetailTransactions(item?.campaign_id);
+                        }}
+                      >
+                        {item?.campaign_name}
+                      </button>
+                    </td>
+                    <td>{numeral(item?.influencers).format("0,0'")}</td>
                     <td>{item?.c_category}</td>
                     <td>{numeral(item?.budget).format("$0,0.0'")}</td>
                     <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
                     <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
-                    <td>{item?.campaign_type}</td>
+                    <td className="text-capitalize">{item?.campaign_type}</td>
                     <td>{numeral(item?.rate).format("$0,0.00'")}</td>
                     <td>{numeral(item?.clicks).format("0,0'")}</td>
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
@@ -299,6 +339,54 @@ function AffiliateTransaction({
     }
   }
 
+  function dataDetailTable() {
+    let data = campaignDetailTransactions?.message?.data;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>Campaign</th>
+                <th>Category </th>
+                <th>Influencer </th>
+                <th>Clicks</th>
+                <th>Impressions</th>
+                <th>CTR</th>
+                <th>Spent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>
+                      <button
+                        className="btn-link"
+                        // onClick={() => {
+                        //   setCampaignModal(true);
+                        //   getCampaignDetailTransactions(item?.campaign_id);
+                        // }}
+                      >
+                        {item?.campaign_name}
+                      </button>
+                    </td>
+                    <td>{item?.c_category}</td>
+                    <td>{item?.instagram_username}</td>
+                    <td>{numeral(item?.clicks).format("0,0'")}</td>
+                    <td>{numeral(item?.impressions).format("0,0'")}</td>
+                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
+                    <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
+
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -306,9 +394,9 @@ function AffiliateTransaction({
         <div className="brand_container_main aff-payment">
           <Row>
             <div className="col-md-12">
-              {/* <form className="mb-3" onSubmit={handleSubmit}>
+              <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
-                  <Col xs={12} xl md={6}>
+                  <Col xs={12} xl={3} md={6}>
                     <p>Select Status</p>
                     <Select
                       value={status}
@@ -320,7 +408,7 @@ function AffiliateTransaction({
                       styles={style}
                     />
                   </Col>
-                  <Col xs={12} xl md={6}>
+                  <Col xs={12} xl={3} md={6}>
                     <p>Select Campaign</p>
                     <Select
                       value={campaignId}
@@ -332,7 +420,8 @@ function AffiliateTransaction({
                       styles={style}
                     />
                   </Col>
-                  <Col xs={12} xl md={6}>
+
+                  {/* <Col xs={12} xl md={6}>
                     <p>Select Influencer</p>
                     <Select
                       value={influencerId}
@@ -367,7 +456,7 @@ function AffiliateTransaction({
                       onChange={changeGroupBy}
                       styles={style}
                     />
-                  </Col>
+                  </Col> */}
                   <Col
                     className="transaction-search d-flex"
                     xs={12}
@@ -401,7 +490,7 @@ function AffiliateTransaction({
                     )}
                   </Col>
                 </Row>
-              </form> */}
+              </form>
 
               {loading ? (
                 <Loader size="30" />
@@ -461,6 +550,7 @@ function AffiliateTransaction({
         className="change-password"
         centered
         size="xl"
+        animation={false}
       >
         <Modal.Header closeButton>
           <Modal.Title>Transaction Information</Modal.Title>
@@ -593,6 +683,79 @@ function AffiliateTransaction({
           </Button>
         </Modal.Footer>
       </Modal>
+      <Modal
+        show={campaignModal}
+        // onHide={() => {
+        //   setCampaignModal(false);
+        // }}
+        className="campaign-detail-modal"
+        centered
+        // size="xl"
+        animation={false}
+        backdrop={true}
+        keyboard={false}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header>
+          <Modal.Title>Campaign Details</Modal.Title>
+          <button
+            type="button"
+            class="close"
+            onClick={() => {
+              setCampaignModal(false);
+            }}
+          >
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </Modal.Header>
+        <Modal.Body className="bg-white transection-detail aff-payment">
+          {detailLoading ? (
+            <Loader size="30" />
+          ) : (
+            <>
+              {campaignDetailTransactions?.message?.data?.length === 0 ? (
+                <>
+                  <NoDataFound />
+                </>
+              ) : (
+                dataDetailTable()
+              )}
+            </>
+          )}
+          {campaignDetailTransactions?.message?.data?.length > 0 &&
+            !detailLoading && (
+              <Row>
+                <ReactPaginate
+                  previousLabel=""
+                  nextLabel=""
+                  pageClassName="page-item "
+                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  forcePage={currentPage}
+                  pageCount={Math.ceil(
+                    campaignDetailTransactions?.message?.total_records /
+                      detailLimit
+                  )}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                  onPageChange={handleDetailPageClick}
+                  containerClassName={
+                    "pagination justify-content-center mt-2 custom-paginate"
+                  }
+                  // subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Row>
+            )}
+        </Modal.Body>
+      </Modal>
     </React.Fragment>
   );
 }
@@ -601,8 +764,14 @@ function mapStateToProps({
   affiliateTransactions,
   affiliateCampaigns,
   affiliateInfluencers,
+  campaignDetailTransactions,
 }) {
-  return { affiliateTransactions, affiliateCampaigns, affiliateInfluencers };
+  return {
+    affiliateTransactions,
+    affiliateCampaigns,
+    affiliateInfluencers,
+    campaignDetailTransactions,
+  };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
   AffiliateTransaction

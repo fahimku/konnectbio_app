@@ -3,24 +3,17 @@ import {
   GET_AFFILIATE_TRANSACTIONS,
   GET_AFFILIATE_CAMPAIGNS,
   GET_AFFILIATE_INFLUENCER,
+  GET_CAMPAIGN_DETAIL_TRANSACTIONS,
 } from "./type";
 import config from "../config";
 
 export const getAffiliateTransactions =
-  (
-    status = "active",
-    campaignId = "",
-    influencerId = "",
-    transactionType = "",
-    groupBy = "",
-    page = 1,
-    limit = 25
-  ) =>
+  (status = "active", campaignId = "", page = 1, limit = 25) =>
   async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
         .get(
-          `${config.hostApi}/v1/affiliate/getlogs?status=${status}&campaign_id=${campaignId}&influencer_id=${influencerId}&transaction_type=${transactionType}&group_by=${groupBy}&page=${page}&limit=${limit}`
+          `${config.hostApi}/v1/affiliate/getsummarylogs?status=${status}&campaign_id=${campaignId}&page=${page}&limit=${limit}`
         )
         .then((res) => {
           resolve("success");
@@ -75,3 +68,29 @@ export const getActiveInfluencer = (campaignId) => async (dispatch) => {
       });
     });
 };
+
+export const getCampaignDetailTransactions =
+  (campaignId = "", page = 1, limit = 25) =>
+  async (dispatch) => {
+    let promise = new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${config.hostApi}/v1/affiliate/getdetaillogs?campaign_id=${campaignId}&page=${page}&limit=${limit}`
+        )
+        .then((res) => {
+          resolve("success");
+          dispatch({
+            type: GET_CAMPAIGN_DETAIL_TRANSACTIONS,
+            payload: res.data,
+          });
+        })
+        .catch(() => {
+          dispatch({
+            type: GET_CAMPAIGN_DETAIL_TRANSACTIONS,
+            payload: [],
+          });
+          reject("error");
+        });
+    });
+    return promise;
+  };
