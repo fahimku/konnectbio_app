@@ -8,7 +8,6 @@ import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import moment from "moment";
 import numeral from "numeral";
-import CampaignDetailTransaction from "./CampaignDetailTransaction";
 
 function AffiliateTransaction({
   getAffiliateActiveCampaign,
@@ -355,6 +354,7 @@ function AffiliateTransaction({
                 <th>Impressions</th>
                 <th>CTR</th>
                 <th>Spent</th>
+                <th className="text-center">View</th>
               </tr>
             </thead>
             <tbody>
@@ -378,6 +378,16 @@ function AffiliateTransaction({
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
                     <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
                     <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+                    <td className="text-center">
+                      <i
+                        role="button"
+                        onClick={() => {
+                          // setSingleData(item);
+                          setTransactionModal(true);
+                        }}
+                        className="fa fa-eye"
+                      ></i>
+                    </td>
                   </tr>
                 );
               })}
@@ -684,8 +694,8 @@ function AffiliateTransaction({
           </Button>
         </Modal.Footer>
       </Modal>
-      <CampaignDetailTransaction />
-      {/* <Modal
+
+      <Modal
         show={campaignModal}
         // onHide={() => {
         //   setCampaignModal(false);
@@ -757,7 +767,7 @@ function AffiliateTransaction({
               </Row>
             )}
         </Modal.Body>
-      </Modal> */}
+      </Modal>
     </React.Fragment>
   );
 }
