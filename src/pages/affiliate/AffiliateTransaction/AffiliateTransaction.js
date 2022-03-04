@@ -201,11 +201,12 @@ function AffiliateTransaction({
                 <th>Campaign</th>
                 <th>No. of Influencers</th>
                 <th>Category </th>
-                <th>Budget </th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Type</th>
-                <th>Rate/click</th>
+                <th>Budget </th>
+                <th>Rate / 1000 Clicks</th>
+                <th>Rate / Click</th>
                 <th>Clicks</th>
                 <th>Impressions</th>
                 <th>CTR</th>
@@ -238,10 +239,12 @@ function AffiliateTransaction({
                     </td>
                     <td>{numeral(item?.influencers).format("0,0'")}</td>
                     <td>{item?.c_category}</td>
-                    <td>{numeral(item?.budget).format("$0,0.0'")}</td>
+
                     <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
                     <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
                     <td className="text-capitalize">{item?.campaign_type}</td>
+                    <td>{numeral(item?.budget).format("$0,0.0'")}</td>
+                    <td>{numeral(item?.pay_per_hundred).format("$0,0.0'")}</td>
                     <td>{numeral(item?.rate).format("$0,0.00'")}</td>
                     <td>{numeral(item?.clicks).format("0,0'")}</td>
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
@@ -360,19 +363,16 @@ function AffiliateTransaction({
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>
-                      <button
-                        className="btn-link"
-                        // onClick={() => {
-                        //   setCampaignModal(true);
-                        //   getCampaignDetailTransactions(item?.campaign_id);
-                        // }}
-                      >
-                        {item?.campaign_name}
-                      </button>
-                    </td>
+                    <td>{item?.campaign_name}</td>
                     <td>{item?.c_category}</td>
-                    <td>{item?.instagram_username}</td>
+                    <td>
+                      <a
+                        href={`https://konnect.bio/${item?.instagram_username}`}
+                        target="_blank"
+                      >
+                        {item?.instagram_username}
+                      </a>
+                    </td>
                     <td>{numeral(item?.clicks).format("0,0'")}</td>
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
                     <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
