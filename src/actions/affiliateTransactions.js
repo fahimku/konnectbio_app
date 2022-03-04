@@ -4,6 +4,7 @@ import {
   GET_AFFILIATE_CAMPAIGNS,
   GET_AFFILIATE_INFLUENCER,
   GET_CAMPAIGN_DETAIL_TRANSACTIONS,
+  GET_INFLUENCER_DETAIL_TRANSACTIONS,
 } from "./type";
 import config from "../config";
 
@@ -70,7 +71,7 @@ export const getActiveInfluencer = (campaignId) => async (dispatch) => {
 };
 
 export const getCampaignDetailTransactions =
-  (campaignId = "", page = 1, limit = 25) =>
+  (campaignId = "", page = 1, limit = 12) =>
   async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
@@ -87,6 +88,38 @@ export const getCampaignDetailTransactions =
         .catch(() => {
           dispatch({
             type: GET_CAMPAIGN_DETAIL_TRANSACTIONS,
+            payload: [],
+          });
+          reject("error");
+        });
+    });
+    return promise;
+  };
+
+export const getInfluencerDetailTransactions =
+  (
+    influencerId = "",
+    campaignId = "",
+    transactionType = "",
+    page = 1,
+    limit = 12
+  ) =>
+  async (dispatch) => {
+    let promise = new Promise((resolve, reject) => {
+      axios
+        .get(
+          `${config.hostApi}/v1/affiliate/getlogs?influencer_id=${influencerId}&campaign_id=${campaignId}&transaction_type=${transactionType}&page=${page}&limit=${limit}`
+        )
+        .then((res) => {
+          resolve("success");
+          dispatch({
+            type: GET_INFLUENCER_DETAIL_TRANSACTIONS,
+            payload: res.data,
+          });
+        })
+        .catch(() => {
+          dispatch({
+            type: GET_INFLUENCER_DETAIL_TRANSACTIONS,
             payload: [],
           });
           reject("error");
