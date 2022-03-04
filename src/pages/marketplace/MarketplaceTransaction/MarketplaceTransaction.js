@@ -7,6 +7,7 @@ import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import moment from "moment";
+import numeral from "numeral";
 
 function MarketplaceTransaction({
   getMarketplaceActiveCampaign,
@@ -231,42 +232,39 @@ function MarketplaceTransaction({
           <Table responsive="sm" className="transactions-box">
             <thead>
               <tr>
-                <th>PID</th>
-                <th>Date/Time</th>
-                <th>Brand </th>
-                <th>Campaign </th>
+                <th>Brand</th>
+                <th>Campaign</th>
+                <th>Category</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Category</th>
-                <th>Campaign Type</th>
-                <th>Budget</th>
-                <th>Click Rate</th>
-                <th>Transaction Type</th>
-                <th className="text-center">View</th>
+                <th>Type</th>
+                {/* <th>Budget </th> */}
+                <th>Rate / 1000 Clicks</th>
+                <th>Rate / Click</th>
+                <th>Clicks</th>
+                <th>Impressions</th>
+                <th>CTR</th>
+                <th>Earned</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.user?.pixel_id}</td>
-                    <td>
-                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
-                    </td>
-                    <td>{item?.brand?.brand_name}</td>
-                    <td>{item?.campaign?.campaign_name}</td>
-                    <td>
-                      {moment(item?.campaign?.start_date).format("YYYY-MM-DD")}
-                    </td>
-                    <td>
-                      {moment(item?.campaign?.end_date).format("YYYY-MM-DD")}
-                    </td>
-                    <td>{item?.parent_category?.category_name}</td>
-                    <td>{item?.campaign?.campaign_type}</td>
-                    <td>${item.campaign?.budget}</td>
-                    <td>${item.campaign?.pay_per_hundred}</td>
-                    <td>{item?.transaction_type}</td>
-                    <td className="text-center">
+                    <td>{item?.doc?.brand?.brand_name}</td>
+                    <td>{item?.campaign_name}</td>
+                    <td>{item?.c_category}</td>
+                    <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
+                    <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
+                    <td className="text-capitalize">{item?.campaign_type}</td>
+                    {/* <td>{numeral(item?.budget).format("$0,0.0'")}</td> */}
+                    <td>{numeral(item?.pay_per_hundred).format("$0,0.0'")}</td>
+                    <td>{numeral(item?.rate).format("$0,0.00'")}</td>
+                    <td>{numeral(item?.clicks).format("0,0'")}</td>
+                    <td>{numeral(item?.impressions).format("0,0'")}</td>
+                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
+                    <td>{numeral(item?.earned).format("$0,0.00'")}</td>
+                    {/* <td className="text-center">
                       <i
                         role="button"
                         onClick={() => {
@@ -275,7 +273,7 @@ function MarketplaceTransaction({
                         }}
                         className="fa fa-eye"
                       ></i>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}
@@ -365,7 +363,7 @@ function MarketplaceTransaction({
             <div className="col-md-12">
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
-                  <Col xs={12} xl md={6}>
+                  {/* <Col xs={12} xl md={6}>
                     <p>Select Brand</p>
                     <Select
                       value={brandId}
@@ -450,7 +448,10 @@ function MarketplaceTransaction({
                       className="fltr-hpr"
                     >
                       Search
-                    </Button>
+                    </Button> */}
+                  <Col md={9}></Col>
+
+                  <Col md={3} className="text-right">
                     {loading ? (
                       <Button
                         className="fltr-hpr btn-gray"
@@ -483,9 +484,10 @@ function MarketplaceTransaction({
                     </>
                   ) : (
                     <>
-                      {submit === "" || submit === undefined
+                      {dataTable()}
+                      {/* {submit === "" || submit === undefined
                         ? dataTable()
-                        : dataTable1()}
+                        : dataTable1()} */}
                     </>
                   )}
                 </>

@@ -20,8 +20,11 @@ export const getMarketplaceTransactions =
   async (dispatch) => {
     let promise = new Promise((resolve, reject) => {
       axios
+        // .post(
+        //   `${config.hostApi}/v1/users/marketPlace/getsummarylogs?brand_status=${brand_status}&influencer_status=${influencer_status}&campaign_id=${campaignId}&brand_id=${influencerId}&transaction_type=${transactionType}&group_by=${groupBy}&page=${page}&limit=${limit}`
+        // )
         .post(
-          `${config.hostApi}/v1/users/marketPlace/getlogs?brand_status=${brand_status}&influencer_status=${influencer_status}&campaign_id=${campaignId}&brand_id=${influencerId}&transaction_type=${transactionType}&group_by=${groupBy}&page=${page}&limit=${limit}`
+          `${config.hostApi}/v1/users/marketPlace/getsummarylogs?page=${page}&limit=${limit}`
         )
         .then((res) => {
           resolve("success");
