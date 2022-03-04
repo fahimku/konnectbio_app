@@ -8,6 +8,7 @@ import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import moment from "moment";
 import numeral from "numeral";
+import CampaignDetailTransaction from "./CampaignDetailTransaction";
 
 function AffiliateTransaction({
   getAffiliateActiveCampaign,
@@ -683,7 +684,8 @@ function AffiliateTransaction({
           </Button>
         </Modal.Footer>
       </Modal>
-      <Modal
+      <CampaignDetailTransaction />
+      {/* <Modal
         show={campaignModal}
         // onHide={() => {
         //   setCampaignModal(false);
@@ -755,7 +757,7 @@ function AffiliateTransaction({
               </Row>
             )}
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 }
