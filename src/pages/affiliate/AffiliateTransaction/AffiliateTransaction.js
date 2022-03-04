@@ -8,6 +8,7 @@ import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import moment from "moment";
 import numeral from "numeral";
+// import CampaignDetailTransaction from "./CampaignDetailTransaction";
 
 function AffiliateTransaction({
   getAffiliateActiveCampaign,
@@ -18,6 +19,8 @@ function AffiliateTransaction({
   affiliateTransactions,
   getCampaignDetailTransactions,
   campaignDetailTransactions,
+  getInfluencerDetailTransactions,
+  influencerDetailTransactions,
 }) {
   const [loading, setLoading] = useState(true);
   const [transactionModal, setTransactionModal] = useState(false);
@@ -29,11 +32,16 @@ function AffiliateTransaction({
   const [influencerId, setInfluencerId] = useState("");
   const [transactionType, setTransactionType] = useState("");
   const [status, setStatus] = useState("");
-  const [singleData, setSingleData] = useState([]);
+  const [singleData, setSingleData] = useState("");
   const [groupBy, setGroupBy] = useState("");
   const [submit, setSubmit] = useState("");
   const [campaignModal, setCampaignModal] = useState(false);
   const [detailLoading, setDetailLoading] = useState(false);
+  const [influencerLoading, setInfluencerLoading] = useState(false);
+  const [userTransctionType, setUserTransactionType] = useState({
+    label: "ALL",
+    value: "all",
+  });
 
   // const transactionTypeList = [
   //   {
@@ -74,9 +82,24 @@ function AffiliateTransaction({
   //     value: "campaign",
   //   },
   // ];
+  const transactionTypeOption = [
+    {
+      label: "ALL",
+      value: "",
+    },
+    {
+      label: "Click",
+      value: "click",
+    },
+    {
+      label: "Impression",
+      value: "impression",
+    },
+  ];
 
   const limit = 12;
   const detailLimit = 12;
+  const influncerLimit = 12;
   const style = {
     control: (base, state) => ({
       ...base,
@@ -136,6 +159,36 @@ function AffiliateTransaction({
     setSubmit("");
   };
 
+  const refreshCampaignPage = (e) => {
+    setCurrentPage(0);
+    setDetailLoading(true);
+
+    getCampaignDetailTransactions(singleData.campaign_id, 1, detailLimit).then(
+      () => {
+        setDetailLoading(false);
+      }
+    );
+  };
+
+  const refreshInfluencerPage = (e) => {
+    setCurrentPage(0);
+    setInfluencerLoading(true);
+
+    getInfluencerDetailTransactions(
+      influencerId,
+      singleData.campaign_id,
+      "",
+      1,
+      influncerLimit
+    ).then(() => {
+      setInfluencerLoading(false);
+    });
+    setUserTransactionType({
+      label: "ALL",
+      value: "all",
+    });
+  };
+
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
@@ -168,6 +221,9 @@ function AffiliateTransaction({
   // const changeTransactionType = (e) => {
   //   setTransactionType(e);
   // };
+  const changeTransectionType = (e) => {
+    setUserTransactionType(e);
+  };
 
   const changeStatus = (e) => {
     setStatus(e);
@@ -188,6 +244,37 @@ function AffiliateTransaction({
         }
       }
     );
+  };
+  const handleInfluencerPageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+    setInfluencerLoading(true);
+    getInfluencerDetailTransactions(
+      influencerId,
+      singleData.campaign_id,
+      userTransctionType.value,
+      page + 1,
+      influncerLimit
+    ).then(() => {
+      if (influencerDetailTransactions?.message?.data?.length > 0) {
+        setInfluencerLoading(false);
+      }
+    });
+  };
+
+  const filterInfluencer = (e) => {
+    setInfluencerLoading(true);
+    e.preventDefault();
+    // setCurrentPage(0);
+    getInfluencerDetailTransactions(
+      influencerId,
+      singleData.campaign_id,
+      userTransctionType.value,
+      1,
+      influncerLimit
+    ).then(() => {
+      setInfluencerLoading(false);
+    });
   };
 
   function dataTable() {
@@ -224,6 +311,7 @@ function AffiliateTransaction({
                         onClick={() => {
                           setCampaignModal(true);
                           setDetailLoading(true);
+                          setSingleData(item);
                           getCampaignDetailTransactions(
                             item?.campaign_id,
                             1,
@@ -357,6 +445,7 @@ function AffiliateTransaction({
                 <th>Impressions</th>
                 <th>CTR</th>
                 <th>Spent</th>
+                <th className="text-center">View</th>
               </tr>
             </thead>
             <tbody>
@@ -377,6 +466,67 @@ function AffiliateTransaction({
                     <td>{numeral(item?.impressions).format("0,0'")}</td>
                     <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
                     <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+                    <td className="text-center">
+                      <i
+                        role="button"
+                        // onClick={() => {
+                        //   // setSingleData(item);
+                        //   setTransactionModal(true);
+                        // }}
+                        onClick={() => {
+                          setTransactionModal(true);
+                          setInfluencerLoading(true);
+                          setInfluencerId(item?.influencer_id);
+                          getInfluencerDetailTransactions(
+                            item?.influencer_id,
+                            singleData.campaign_id,
+                            userTransctionType.value,
+                            1,
+                            influncerLimit
+                          ).then(() => {
+                            setInfluencerLoading(false);
+                          });
+                        }}
+                        className="fa fa-eye campaign-eye"
+                      ></i>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
+
+  function dataInfluencerDetailTable() {
+    let data = influencerDetailTransactions?.message?.data;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="transactions-box">
+            <thead>
+              <tr>
+                <th>Influencer</th>
+                <th>Date</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.instagram_username}</td>
+
+                    <td>
+                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
+                    </td>
+                    <td>{item?.country}</td>
+                    <td>{item?.city}</td>
+                    <td>{item?.transaction_type}</td>
                   </tr>
                 );
               })}
@@ -544,145 +694,132 @@ function AffiliateTransaction({
       </div>
       <Modal
         show={transactionModal}
-        onHide={() => {
-          setTransactionModal(false);
-        }}
-        className="change-password"
+        // onHide={() => {
+        //   setTransactionModal(false);
+        // }}
+        // className="change-password"
         centered
-        size="xl"
+        className="campaign-detail-modal aff-payment"
         animation={false}
+        backdrop={true}
+        keyboard={false}
+        dialogClassName="modal-90w"
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Transaction Information</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="bg-white transection-detail">
-          <Row>
-            <Col xs={12} xl={6} md={6}>
-              <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">User Information</h5>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Pixel ID</h5>
-                  <h3 class="count">{singleData?.user?.pixel_id}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Username</h5>
-                  <h3 class="count">{singleData?.instagram_username}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Email</h5>
-                  <h3 class="count">{singleData?.user?.email}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Country</h5>
-                  <h3 class="count">{singleData?.user?.country}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">State</h5>
-                  <h3 class="count">{singleData?.user?.state}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">City</h5>
-                  <h3 class="count">{singleData?.user?.city}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Gender</h5>
-                  <h3 class="count">{singleData?.user?.gender}</h3>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} xl={6} md={6}>
-              <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">Campaign Information</h5>
-                <div class="card-row row">
-                  <div class="any-post-img-col col-5">
-                    <div class="any-post-image">
-                      <div class="any-image-box">
-                        <div class="any-image-box-iner">
-                          <img
-                            src={singleData?.campaign?.media_url}
-                            class="img-fluid media-image"
-                            alt="IMAGE"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-7 analytic-caption">
-                    <div class="row count-main-box">
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Campaign Name</h5>
-                        <h3 class="count" title="Test 3">
-                          {singleData?.campaign?.campaign_name}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Campaign Type</h5>
-                        <h3 class="count">
-                          {singleData?.campaign?.campaign_type}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Category</h5>
-                        <h3 class="count">
-                          {singleData?.parent_category?.category_name}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Budget</h5>
-                        <h3 class="count">${singleData?.campaign?.budget}</h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Click Rate</h5>
-                        <h3 class="count">
-                          ${singleData?.campaign?.pay_per_hundred}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">Start Date</h5>
-                        <h3 class="count">
-                          {moment(singleData?.campaign?.start_date).format(
-                            "YYYY-MM-DD"
-                          )}
-                        </h3>
-                      </div>
-                      <div class="col-12 count-box">
-                        <h5 class="count-title">End Date</h5>
-                        <h3 class="count">
-                          {moment(singleData?.campaign?.end_date).format(
-                            "YYYY-MM-DD"
-                          )}
-                        </h3>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} xl={6} md={6}>
-              <div class="card analytic-box analytics-page">
-                <h5 className="mb-4">System Information</h5>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">IP Address</h5>
-                  <h3 class="count">{singleData?.ip_address}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">User Agent</h5>
-                  <h3 class="count">{singleData?.user_agent?.substr(0, 50)}</h3>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
+        <Modal.Header>
+          <Modal.Title>User Information</Modal.Title>
+          <button
+            type="button"
+            class="close"
             onClick={() => {
+              setCurrentPage(0);
+              setUserTransactionType({
+                label: "ALL",
+                value: "all",
+              });
               setTransactionModal(false);
             }}
           >
-            Close
-          </Button>
-        </Modal.Footer>
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </Modal.Header>
+        <Modal.Body className="bg-white transection-detail">
+          <form className="mb-3" onSubmit={filterInfluencer}>
+            <Row>
+              <Col xs={12} xl={3} md={6}>
+                <p>Select Transaction Type</p>
+                <Select
+                  value={userTransctionType}
+                  name="status"
+                  className="selectCustomization"
+                  options={transactionTypeOption}
+                  placeholder="Transaction Type"
+                  onChange={changeTransectionType}
+                  styles={style}
+                />
+              </Col>
+
+              <Col className="transaction-search d-flex" xs={12} xl={3} md={3}>
+                <Button type="submit" variant="primary" className="fltr-hpr">
+                  Search
+                </Button>
+                {loading ? (
+                  <Button
+                    className="fltr-hpr btn-gray"
+                    type="button"
+                    variant="primary"
+                  >
+                    <Loader size="30" />
+                  </Button>
+                ) : (
+                  <Button
+                    className="fltr-hpr btn-gray"
+                    onClick={refreshInfluencerPage}
+                    type="button"
+                    variant="primary"
+                  >
+                    Refresh
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          </form>
+          {influencerLoading ? (
+            <Loader size="30" />
+          ) : (
+            <>
+              {influencerDetailTransactions?.message?.data?.length === 0 ? (
+                <>
+                  <NoDataFound />
+                </>
+              ) : (
+                dataInfluencerDetailTable()
+              )}
+            </>
+          )}
+          {influencerDetailTransactions?.message?.data?.length > 0 &&
+            !influencerLoading && (
+              <Row>
+                <ReactPaginate
+                  previousLabel=""
+                  nextLabel=""
+                  pageClassName="page-item "
+                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  forcePage={currentPage}
+                  pageCount={Math.ceil(
+                    influencerDetailTransactions?.message?.total_records /
+                      influncerLimit
+                  )}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                  onPageChange={handleInfluencerPageClick}
+                  containerClassName={
+                    "pagination justify-content-center mt-2 custom-paginate"
+                  }
+                  // subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Row>
+            )}
+        </Modal.Body>
       </Modal>
+
+      {/* <CampaignDetailTransaction
+        campaignModal={campaignModal}
+        setCampaignModal={() => setCampaignModal()}
+        detailLoading={detailLoading}
+        campaignDetailTransactions={campaignDetailTransactions}
+        campaignId={campaignId}
+        getCampaignDetailTransactions={getCampaignDetailTransactions}
+      /> */}
+
       <Modal
         show={campaignModal}
         // onHide={() => {
@@ -710,6 +847,19 @@ function AffiliateTransaction({
           </button>
         </Modal.Header>
         <Modal.Body className="bg-white transection-detail aff-payment">
+          <Row>
+            <Col className="text-right mb-3">
+              <Button
+                className="fltr-hpr btn-gray"
+                onClick={refreshCampaignPage}
+                type="button"
+                variant="primary"
+              >
+                Refresh
+              </Button>
+            </Col>
+          </Row>
+
           {detailLoading ? (
             <Loader size="30" />
           ) : (
@@ -765,12 +915,14 @@ function mapStateToProps({
   affiliateCampaigns,
   affiliateInfluencers,
   campaignDetailTransactions,
+  influencerDetailTransactions,
 }) {
   return {
     affiliateTransactions,
     affiliateCampaigns,
     affiliateInfluencers,
     campaignDetailTransactions,
+    influencerDetailTransactions,
   };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(

@@ -39,6 +39,8 @@ import affiliateTransactions from "./affiliateTransactions/affiliateTransactions
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
+import influencerDetailTransactions from "./affiliateTransactions/influencerDetailTransactions";
+
 import marketplaceTransactions from "./marketplaceTransactions/marketplaceTransactions";
 import marketplaceBrands from "./marketplaceTransactions/marketplaceBrands";
 import marketplaceCampaigns from "./marketplaceTransactions/marketplaceCampaigns";
@@ -88,4 +90,5 @@ export default (history) =>
     marketplaceBrands,
     marketplaceCampaigns,
     campaignDetailTransactions,
+    influencerDetailTransactions,
   });

@@ -58,6 +58,9 @@ export const GET_AFFILIATE_CAMPAIGNS = "getAffiliateCampaigns";
 export const GET_AFFILIATE_INFLUENCER = "getAffiliateInfluencer";
 export const GET_CAMPAIGN_DETAIL_TRANSACTIONS = "getCampaignDetailTransactions";
 export const GET_CAMPAIGN_DETAIL_PAGINATION = "getCampaignDetailPagination";
+export const GET_INFLUENCER_DETAIL_TRANSACTIONS =
+  "getInfluencerDetailTransactions";
+export const GET_INFLUENCER_DETAIL_PAGINATION = "getInfluencerDetailPagination";
 
 /**********Marketplace Action Types******************* */
 export const GET_MARKETPLACE_TRANSACTIONS = "getMarketplaceTransactions";

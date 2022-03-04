@@ -1050,7 +1050,7 @@ code.sm-color {
   max-width: 70%;
 }
 .campaign-detail-modal .modal-content {
-  height: 650px;
+  height: 700px;
 }
 .campaign-detail-modal .aff-payment .transactions-box {
   box-shadow: none;
@@ -1081,4 +1081,13 @@ code.sm-color {
   .any-image-box-iner
   img {
   // object-fit: fill;
+}
+.transection-detail .transactions-box {
+  box-shadow: none !important;
+}
+.fltr-hpr:hover {
+  color: #fff !important;
+}
+.campaign-eye {
+  color: #1a86d0;
 }
