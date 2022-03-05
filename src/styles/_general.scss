@@ -1073,6 +1073,19 @@ code.sm-color {
   .transection-detail .analytics-page {
     margin: 1rem;
   }
+  .modal-90w {
+    max-width: 100%;
+  }
+  .campaign-detail-modal .modal-content {
+    min-height: auto;
+    padding: 0 15px;
+  }
+  .transection-detail {
+    padding-top: 10px !important;
+  }
+  .custom-paginate {
+    margin-top: 15px !important;
+  }
 }
 .transection-detail
   .analytics-page
