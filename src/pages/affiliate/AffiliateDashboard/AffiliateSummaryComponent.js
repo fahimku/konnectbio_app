@@ -55,11 +55,16 @@ class AffiliateSummaryComponent extends React.Component {
     const data = this.props.campaignSummary;
     return (
       <>
-        <div className={`summary_container_main ${this.props.className ? this.props.className : ""}`}>
-          <div className="summary_box_main"
-          // className={`summary_box_main ${
-          //   this.props.className ? this.props.className : "col-md-12"
-          // }`}
+        <div
+          className={`summary_container_main ${
+            this.props.className ? this.props.className : ""
+          }`}
+        >
+          <div
+            className="summary_box_main"
+            // className={`summary_box_main ${
+            //   this.props.className ? this.props.className : "col-md-12"
+            // }`}
           >
             <div className="summary_block_profile">
               <div className="summary_content_profile">
@@ -114,11 +119,20 @@ class AffiliateSummaryComponent extends React.Component {
                         : "0"}
                     </h3>
                   </div>
+
                   <div className="col-12 count-box">
                     <h5 className="count-title">Total In-Active Campaigns</h5>
                     <h3 className="count">
                       {data.campaign_summary.in_active_campaigns
                         ? data.campaign_summary.in_active_campaigns
+                        : "0"}
+                    </h3>
+                  </div>
+                  <div className="col-12 count-box">
+                    <h5 className="count-title">Total Expired Campaigns</h5>
+                    <h3 className="count">
+                      {data.campaign_summary.expired_campaigns
+                        ? data.campaign_summary.expired_campaigns
                         : "0"}
                     </h3>
                   </div>
