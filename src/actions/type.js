@@ -67,3 +67,7 @@ export const GET_MARKETPLACE_TRANSACTIONS = "getMarketplaceTransactions";
 export const MARKETPLACE_PAGINATION = "marketplacePagination";
 export const GET_MARKETPLACE_CAMPAIGNS = "getMarketplaceCampaigns";
 export const GET_MARKETPLACE_BRAND = "getMarketplaceBrand";
+export const GET_MARKETPLACE_DETAIL_TRANSACTIONS =
+  "getMarketplaceDetailTransactions";
+export const GET_MARKETPLACE_DETAIL_PAGINATION =
+  "getMarketplaceDetailPagination";

@@ -18,18 +18,32 @@ function MarketplaceTransaction({
   marketplaceBrands,
   getMarketplaceTransactions,
   marketplaceTransactions,
+  getMarketplaceDetailTransactions,
+  marketplaceDetailTransactions,
 }) {
   const [loading, setLoading] = useState(true);
   const [transactionModal, setTransactionModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [campaignId, setCampaignId] = useState("");
-  const [brandId, setBrandId] = useState("");
+  const [campaignId, setCampaignId] = useState({
+    label: "ALL",
+    value: "",
+  });
+  const [brandId, setBrandId] = useState({
+    label: "ALL",
+    value: "",
+  });
   const [transactionType, setTransactionType] = useState("");
   const [brandStatus, setBrandStatus] = useState("");
   const [influencerStatus, setInfluencerStatus] = useState("");
   const [singleData, setSingleData] = useState([]);
   const [groupBy, setGroupBy] = useState("");
   const [submit, setSubmit] = useState("");
+  const [campaignModal, setCampaignModal] = useState(false);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [userTransctionType, setUserTransactionType] = useState({
+    label: "ALL",
+    value: "all",
+  });
 
   const transactionTypeList = [
     {
@@ -69,10 +83,10 @@ function MarketplaceTransaction({
       label: "Paused",
       value: "paused",
     },
-    {
-      label: "Expired",
-      value: "expired",
-    },
+    // {
+    //   label: "Expired",
+    //   value: "expired",
+    // },
   ];
   const groupByList = [
     {
@@ -85,7 +99,23 @@ function MarketplaceTransaction({
     },
   ];
 
+  const transactionTypeOption = [
+    {
+      label: "ALL",
+      value: "",
+    },
+    {
+      label: "Click",
+      value: "click",
+    },
+    {
+      label: "Impression",
+      value: "impression",
+    },
+  ];
+
   const limit = 12;
+  const detailLimit = 12;
   const style = {
     control: (base, state) => ({
       ...base,
@@ -101,21 +131,14 @@ function MarketplaceTransaction({
     setBrandStatus({ value: "active", label: "Active" });
     setInfluencerStatus({ value: "active", label: "Active" });
     setLoading(true);
-    getMarketplaceActiveCampaign("active", "active", "all");
+    getMarketplaceActiveCampaign("active", "active");
     // getActiveInfluencer("");
     getMarketplaceBrand("");
-    getMarketplaceTransactions(
-      "active",
-      "active",
-      "",
-      "",
-      "",
-      "",
-      1,
-      limit
-    ).then(() => {
-      setLoading(false);
-    });
+    getMarketplaceTransactions("", "active", "active", "", 1, limit).then(
+      () => {
+        setLoading(false);
+      }
+    );
   }, []);
 
   const handleSubmit = (e) => {
@@ -125,17 +148,35 @@ function MarketplaceTransaction({
     // console.log('pages',page)
     setCurrentPage(0);
     getMarketplaceTransactions(
+      // brandStatus.value,
+      // influencerStatus.value,
+      // campaignId.value,
+
+      // transactionType.value,
+      // groupBy.value,
+      brandId.value,
       brandStatus.value,
       influencerStatus.value,
       campaignId.value,
-      brandId.value,
-      transactionType.value,
-      groupBy.value,
       1,
       limit
     ).then((data) => {
       setLoading(false);
-      setSubmit(groupBy.value);
+      // setSubmit(groupBy.value);
+    });
+  };
+
+  const filterInfluencer = (e) => {
+    setDetailLoading(true);
+    e.preventDefault();
+    // setCurrentPage(0);
+    getMarketplaceDetailTransactions(
+      singleData.campaign_id,
+      userTransctionType.value,
+      1,
+      detailLimit
+    ).then(() => {
+      setDetailLoading(false);
     });
   };
 
@@ -145,25 +186,41 @@ function MarketplaceTransaction({
     getMarketplaceActiveCampaign("active", "active", "all");
     // getActiveInfluencer("");
     getMarketplaceBrand("");
-    getMarketplaceTransactions(
-      "active",
-      "active",
-      "",
-      "",
-      "",
-      "",
-      1,
-      limit
-    ).then(() => {
-      setLoading(false);
-    });
+    getMarketplaceTransactions("", "active", "active", "", 1, limit).then(
+      () => {
+        setLoading(false);
+      }
+    );
     setBrandStatus({ value: "active", label: "Active" });
     setInfluencerStatus({ value: "active", label: "Active" });
-    setCampaignId("");
-    setBrandId("");
-    setTransactionType("");
-    setGroupBy("");
-    setSubmit("");
+    setCampaignId({
+      label: "ALL",
+      value: "",
+    });
+    setBrandId({
+      label: "ALL",
+      value: "",
+    });
+    // setTransactionType("");
+    // setGroupBy("");
+    // setSubmit("");
+  };
+  const refreshCampaignPage = (e) => {
+    setCurrentPage(0);
+    setDetailLoading(true);
+
+    getMarketplaceDetailTransactions(
+      singleData.campaign_id,
+      "",
+      1,
+      detailLimit
+    ).then(() => {
+      setDetailLoading(false);
+    });
+    setUserTransactionType({
+      label: "ALL",
+      value: "all",
+    });
   };
 
   const handlePageClick = (e) => {
@@ -171,12 +228,16 @@ function MarketplaceTransaction({
     setCurrentPage(page);
     setLoading(true);
     getMarketplaceTransactions(
+      // brandStatus.value,
+      // influencerStatus.value,
+      // campaignId.value,
+
+      // transactionType.value,
+      // groupBy.value,
+      brandId.value,
       brandStatus.value,
       influencerStatus.value,
       campaignId.value,
-      brandId.value,
-      transactionType.value,
-      groupBy.value,
       page + 1,
       limit
     ).then(() => {
@@ -193,13 +254,13 @@ function MarketplaceTransaction({
   };
 
   const changeBrand = (e) => {
-    setCampaignId("");
+    // setCampaignId("");
     setBrandId(e);
-    getMarketplaceActiveCampaign(
-      brandStatus.value,
-      influencerStatus.value,
-      e.value
-    );
+    // getMarketplaceActiveCampaign(
+    //   brandStatus.value,
+    //   influencerStatus.value,
+    //   e.value
+    // );
   };
 
   const changeTransactionType = (e) => {
@@ -209,11 +270,8 @@ function MarketplaceTransaction({
   const changeBrandStatus = (e) => {
     setCampaignId("");
     setBrandStatus(e);
-    getMarketplaceActiveCampaign(
-      e.value,
-      influencerStatus.value,
-      brandId.value
-    );
+    setInfluencerStatus(e);
+    getMarketplaceActiveCampaign(e.value, e.value, brandId.value);
   };
   const changeInfluencerStatus = (e) => {
     setCampaignId("");
@@ -222,6 +280,25 @@ function MarketplaceTransaction({
   };
   const changeGroupBy = (e) => {
     setGroupBy(e);
+  };
+  const changeTransectionType = (e) => {
+    setUserTransactionType(e);
+  };
+
+  const handleDetailPageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+    setDetailLoading(true);
+    getMarketplaceDetailTransactions(
+      singleData.campaign_id,
+      "",
+      page + 1,
+      detailLimit
+    ).then(() => {
+      if (marketplaceDetailTransactions?.message?.data?.length > 0) {
+        setDetailLoading(false);
+      }
+    });
   };
 
   function dataTable() {
@@ -251,8 +328,27 @@ function MarketplaceTransaction({
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.doc?.brand?.brand_name}</td>
-                    <td>{item?.campaign_name}</td>
+                    <td>{item?.brand_name}</td>
+                    <td>
+                      <button
+                        className="btn-link"
+                        onClick={() => {
+                          setCampaignModal(true);
+                          setDetailLoading(true);
+                          setSingleData(item);
+                          getMarketplaceDetailTransactions(
+                            item?.campaign_id,
+                            "",
+                            1,
+                            detailLimit
+                          ).then(() => {
+                            setDetailLoading(false);
+                          });
+                        }}
+                      >
+                        {item?.campaign_name}
+                      </button>
+                    </td>
                     <td>{item?.c_category}</td>
                     <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
                     <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
@@ -283,67 +379,105 @@ function MarketplaceTransaction({
       );
     }
   }
-  function dataTable1() {
-    let data = marketplaceTransactions?.message?.data;
+
+  // function dataTable1() {
+  //   let data = marketplaceTransactions?.message?.data;
+  //   if (data) {
+  //     return (
+  //       <>
+  //         <Table responsive="sm" className="transactions-box">
+  //           <thead>
+  //             <tr>
+  //               <th>PID</th>
+  //               <th>Date/Time</th>
+  //               <th>Brand </th>
+  //               <th>Campaign </th>
+  //               <th>Start Date</th>
+  //               <th>End Date</th>
+  //               <th>Category</th>
+  //               <th>Campaign Type</th>
+  //               <th>Budget</th>
+  //               <th>Click Rate</th>
+  //               <th>Transaction Type</th>
+  //               <th>Count</th>
+  //               {/* <th className="text-center">View</th> */}
+  //             </tr>
+  //           </thead>
+  //           <tbody>
+  //             {data.map((item, i) => {
+  //               return (
+  //                 <tr key={i}>
+  //                   <td>{item?.doc?.user?.pixel_id}</td>
+  //                   <td>
+  //                     {moment(item?.doc?.created_at).format(
+  //                       "YYYY-MM-DD h:mm A"
+  //                     )}
+  //                   </td>
+  //                   <td>{item?.brand_name}</td>
+  //                   <td>{item?.doc?.campaign?.campaign_name}</td>
+  //                   <td>
+  //                     {moment(item?.doc?.campaign?.start_date).format(
+  //                       "YYYY-MM-DD"
+  //                     )}
+  //                   </td>
+  //                   <td>
+  //                     {moment(item?.doc?.campaign?.end_date).format(
+  //                       "YYYY-MM-DD"
+  //                     )}
+  //                   </td>
+  //                   <td>{item?.doc?.parent_category?.category_name}</td>
+  //                   <td>{item?.doc?.campaign?.campaign_type}</td>
+  //                   <td>${item?.doc?.campaign?.budget}</td>
+  //                   <td>${item?.doc?.campaign?.pay_per_hundred}</td>
+  //                   <td>{item?.doc?.transaction_type}</td>
+  //                   <td>{item?.count}</td>
+  //                   {/* <td className="text-center">
+  //                     <i
+  //                       role="button"
+  //                       onClick={() => {
+  //                         setSingleData(item);
+  //                         setTransactionModal(true);
+  //                       }}
+  //                       className="fa fa-eye"
+  //                     ></i>
+  //                   </td> */}
+  //                 </tr>
+  //               );
+  //             })}
+  //           </tbody>
+  //         </Table>
+  //       </>
+  //     );
+  //   }
+  // }
+
+  function dataDetailTable() {
+    let data = marketplaceDetailTransactions?.message?.data;
     if (data) {
       return (
         <>
           <Table responsive="sm" className="transactions-box">
             <thead>
               <tr>
-                <th>PID</th>
-                <th>Date/Time</th>
-                <th>Brand </th>
-                <th>Campaign </th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Category</th>
-                <th>Campaign Type</th>
-                <th>Budget</th>
-                <th>Click Rate</th>
-                <th>Transaction Type</th>
-                <th>Count</th>
-                {/* <th className="text-center">View</th> */}
+                <th>Brand</th>
+                <th>Date</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Type</th>
               </tr>
             </thead>
             <tbody>
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.doc?.user?.pixel_id}</td>
+                    <td>{item?.brand?.brand_name}</td>
+
                     <td>
-                      {moment(item?.doc?.created_at).format(
-                        "YYYY-MM-DD h:mm A"
-                      )}
+                      {moment(item?.created_at).format("YYYY-MM-DD h:mm A")}
                     </td>
-                    <td>{item?.doc?.brand?.brand_name}</td>
-                    <td>{item?.doc?.campaign?.campaign_name}</td>
-                    <td>
-                      {moment(item?.doc?.campaign?.start_date).format(
-                        "YYYY-MM-DD"
-                      )}
-                    </td>
-                    <td>
-                      {moment(item?.doc?.campaign?.end_date).format(
-                        "YYYY-MM-DD"
-                      )}
-                    </td>
-                    <td>{item?.doc?.parent_category?.category_name}</td>
-                    <td>{item?.doc?.campaign?.campaign_type}</td>
-                    <td>${item?.doc?.campaign?.budget}</td>
-                    <td>${item?.doc?.campaign?.pay_per_hundred}</td>
-                    <td>{item?.doc?.transaction_type}</td>
-                    <td>{item?.count}</td>
-                    {/* <td className="text-center">
-                      <i
-                        role="button"
-                        onClick={() => {
-                          setSingleData(item);
-                          setTransactionModal(true);
-                        }}
-                        className="fa fa-eye"
-                      ></i>
-                    </td> */}
+                    <td>{item?.country}</td>
+                    <td>{item?.city}</td>
+                    <td>{item?.transaction_type}</td>
                   </tr>
                 );
               })}
@@ -363,7 +497,7 @@ function MarketplaceTransaction({
             <div className="col-md-12">
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
-                  {/* <Col xs={12} xl md={6}>
+                  <Col xs={12} xl md={6}>
                     <p>Select Brand</p>
                     <Select
                       value={brandId}
@@ -397,6 +531,12 @@ function MarketplaceTransaction({
                       placeholder="Select Influencer Status"
                       onChange={changeInfluencerStatus}
                       styles={style}
+                      isDisabled={
+                        brandStatus.value === "paused" ||
+                        brandStatus.value === "expired"
+                          ? true
+                          : false
+                      }
                     />
                   </Col>
                   <Col xs={12} xl md={6}>
@@ -411,6 +551,10 @@ function MarketplaceTransaction({
                       styles={style}
                     />
                   </Col>
+
+                  {/*
+                  
+                  
                   <Col xs={12} xl md={6}>
                     <p>Transaction Type</p>
                     <Select
@@ -434,7 +578,7 @@ function MarketplaceTransaction({
                       onChange={changeGroupBy}
                       styles={style}
                     />
-                  </Col>
+                  </Col>*/}
 
                   <Col
                     className="transaction-search d-flex"
@@ -448,10 +592,8 @@ function MarketplaceTransaction({
                       className="fltr-hpr"
                     >
                       Search
-                    </Button> */}
-                  <Col md={9}></Col>
+                    </Button>
 
-                  <Col md={3} className="text-right">
                     {loading ? (
                       <Button
                         className="fltr-hpr btn-gray"
@@ -512,7 +654,7 @@ function MarketplaceTransaction({
                     )}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                    onPageChange={handlePageClick}
+                    onPageChange={handleDetailPageClick}
                     containerClassName={
                       "pagination justify-content-center mt-2 custom-paginate"
                     }
@@ -671,6 +813,135 @@ function MarketplaceTransaction({
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <Modal
+        show={campaignModal}
+        className="campaign-detail-modal"
+        centered
+        // size="xl"
+        animation={false}
+        backdrop={true}
+        keyboard={false}
+        dialogClassName="modal-90w"
+      >
+        <Modal.Header>
+          <Modal.Title>Campaign Details</Modal.Title>
+          <button
+            type="button"
+            class="close"
+            onClick={() => {
+              setCurrentPage(0);
+              setUserTransactionType({
+                label: "ALL",
+                value: "all",
+              });
+              setCampaignModal(false);
+            }}
+          >
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </Modal.Header>
+        <Modal.Body className="bg-white transection-detail aff-payment">
+          {/* <Row>
+            <Col className="text-right mb-3">
+              <Button
+                className="fltr-hpr btn-gray"
+                onClick={refreshCampaignPage}
+                type="button"
+                variant="primary"
+              >
+                Refresh
+              </Button>
+            </Col>
+          </Row> */}
+          <form className="mb-3" onSubmit={filterInfluencer}>
+            <Row>
+              <Col xs={12} xl={3} md={6}>
+                <p>Select Transaction Type</p>
+                <Select
+                  value={userTransctionType}
+                  name="status"
+                  className="selectCustomization"
+                  options={transactionTypeOption}
+                  placeholder="Transaction Type"
+                  onChange={changeTransectionType}
+                  styles={style}
+                />
+              </Col>
+
+              <Col className="transaction-search d-flex" xs={12} xl={3} md={3}>
+                <Button type="submit" variant="primary" className="fltr-hpr">
+                  Search
+                </Button>
+                {loading ? (
+                  <Button
+                    className="fltr-hpr btn-gray"
+                    type="button"
+                    variant="primary"
+                  >
+                    <Loader size="30" />
+                  </Button>
+                ) : (
+                  <Button
+                    className="fltr-hpr btn-gray"
+                    onClick={refreshCampaignPage}
+                    type="button"
+                    variant="primary"
+                  >
+                    Refresh
+                  </Button>
+                )}
+              </Col>
+            </Row>
+          </form>
+
+          {detailLoading ? (
+            <Loader size="30" />
+          ) : (
+            <>
+              {marketplaceDetailTransactions?.message?.data?.length === 0 ? (
+                <>
+                  <NoDataFound />
+                </>
+              ) : (
+                dataDetailTable()
+              )}
+            </>
+          )}
+          {marketplaceDetailTransactions?.message?.data?.length > 0 &&
+            !detailLoading && (
+              <Row>
+                <ReactPaginate
+                  previousLabel=""
+                  nextLabel=""
+                  pageClassName="page-item "
+                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  forcePage={currentPage}
+                  pageCount={Math.ceil(
+                    marketplaceDetailTransactions?.message?.total_records /
+                      detailLimit
+                  )}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                  onPageChange={handleDetailPageClick}
+                  containerClassName={
+                    "pagination justify-content-center mt-2 custom-paginate"
+                  }
+                  // subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Row>
+            )}
+        </Modal.Body>
+      </Modal>
     </React.Fragment>
   );
 }
@@ -679,11 +950,13 @@ function mapStateToProps({
   marketplaceTransactions,
   marketplaceBrands,
   marketplaceCampaigns,
+  marketplaceDetailTransactions,
 }) {
   return {
     marketplaceTransactions,
     marketplaceBrands,
     marketplaceCampaigns,
+    marketplaceDetailTransactions,
   };
 }
 export default connect(mapStateToProps, { ...marketplaceTransactionsActions })(
