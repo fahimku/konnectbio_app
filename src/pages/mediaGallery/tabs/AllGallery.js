@@ -95,7 +95,7 @@ function AllGallery({
     let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
     if (currentPage === 0) page = 1;
 
-    let statusName = status ? "disable" : "enable";
+    let statusName = status ? "In-Active" : "Active";
     Swal.fire({
       title: `Are you sure you want to ${statusName} this media?`,
       text:

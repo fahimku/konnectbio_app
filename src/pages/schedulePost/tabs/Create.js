@@ -47,8 +47,6 @@ function HashtagsList({ createMedia, title }) {
     return bytes + " P";
   }
   const onSubmit = (files, allFiles) => {
-    alert("ss")
-    console.log("cl", files)
     setSubmit(true);
     if (fields.title && fields.image) {
       setLoading(true);

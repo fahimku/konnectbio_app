@@ -202,7 +202,7 @@ function HashtagsList({ createMedia, title }) {
                 </div>
                 <Dropzone
                   onSubmit={onSubmit}
-                  onChangeStatus={onFileChange}
+                  onChangeStatus={onFileChange} 
                   InputComponent={selectFileInput}
                   getUploadParams={fileParams}
                   getFilesFromEvent={getFilesFromEvent}
