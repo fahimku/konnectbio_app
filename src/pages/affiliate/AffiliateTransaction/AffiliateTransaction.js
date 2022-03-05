@@ -445,7 +445,7 @@ function AffiliateTransaction({
                 <th>Impressions</th>
                 <th>CTR</th>
                 <th>Spent</th>
-                <th className="text-center">View</th>
+                <th className="text-center">BioShop</th>
               </tr>
             </thead>
             <tbody>
@@ -455,24 +455,7 @@ function AffiliateTransaction({
                     <td>{item?.campaign_name}</td>
                     <td>{item?.c_category}</td>
                     <td>
-                      <a
-                        href={`https://konnect.bio/${item?.instagram_username}`}
-                        target="_blank"
-                      >
-                        {item?.instagram_username}
-                      </a>
-                    </td>
-                    <td>{numeral(item?.clicks).format("0,0'")}</td>
-                    <td>{numeral(item?.impressions).format("0,0'")}</td>
-                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
-                    <td>{numeral(item?.spent).format("$0,0.00'")}</td>
-                    <td className="text-center">
-                      <i
-                        role="button"
-                        // onClick={() => {
-                        //   // setSingleData(item);
-                        //   setTransactionModal(true);
-                        // }}
+                      <button
                         onClick={() => {
                           setTransactionModal(true);
                           setInfluencerLoading(true);
@@ -487,8 +470,22 @@ function AffiliateTransaction({
                             setInfluencerLoading(false);
                           });
                         }}
-                        className="fa fa-eye campaign-eye"
-                      ></i>
+                        className="btn-link"
+                      >
+                        {item?.instagram_username}
+                      </button>
+                    </td>
+                    <td>{numeral(item?.clicks).format("0,0'")}</td>
+                    <td>{numeral(item?.impressions).format("0,0'")}</td>
+                    <td>{numeral(item?.ctr).format("0.00") + "%"}</td>
+                    <td>{numeral(item?.spent).format("$0,0.00'")}</td>
+                    <td className="text-center">
+                      <a
+                        href={`https://konnect.bio/${item?.instagram_username}`}
+                        target="_blank"
+                      >
+                        <i class="fa fa-external-link" aria-hidden="true"></i>
+                      </a>
                     </td>
                   </tr>
                 );

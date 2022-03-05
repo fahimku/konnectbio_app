@@ -44,6 +44,7 @@ import influencerDetailTransactions from "./affiliateTransactions/influencerDeta
 import marketplaceTransactions from "./marketplaceTransactions/marketplaceTransactions";
 import marketplaceBrands from "./marketplaceTransactions/marketplaceBrands";
 import marketplaceCampaigns from "./marketplaceTransactions/marketplaceCampaigns";
+import marketplaceDetailTransactions from "./marketplaceTransactions/marketplaceDetailTransactions";
 
 export default (history) =>
   combineReducers({
@@ -86,9 +87,10 @@ export default (history) =>
     affiliateTransactions,
     affiliateCampaigns,
     affiliateInfluencers,
+    campaignDetailTransactions,
+    influencerDetailTransactions,
     marketplaceTransactions,
     marketplaceBrands,
     marketplaceCampaigns,
-    campaignDetailTransactions,
-    influencerDetailTransactions,
+    marketplaceDetailTransactions,
   });
