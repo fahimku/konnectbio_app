@@ -170,7 +170,7 @@ function TopHashTag({
                     onChange={(e) => {
                       setBrand(e);
                     }}
-                    placeholder="Select Brand"
+                    placeholder="Select Hashtags"
                     styles={style}
                     isSearchable={false}
                   />
