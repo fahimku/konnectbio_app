@@ -830,6 +830,11 @@ function MarketplaceTransaction({
             type="button"
             class="close"
             onClick={() => {
+              setCurrentPage(0);
+              setUserTransactionType({
+                label: "ALL",
+                value: "all",
+              });
               setCampaignModal(false);
             }}
           >
