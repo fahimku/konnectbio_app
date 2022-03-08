@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
@@ -16,6 +16,10 @@ function HashtagsList({ createMedia, title }) {
   const uploadRef = useRef(null);
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [imgSize, setImgsize] = useState(false);
+  const [bytesSize, setBytesize] = useState('');
+  const [ImgMsg, setImgMsg] = useState('')
+  
   const [previewLoading, setPreviewLoading] = useState(false);
   const [fields, setFields] = useState({
     title: "",
@@ -39,16 +43,24 @@ function HashtagsList({ createMedia, title }) {
       );
     }
   }
+
+
   function preview(url) {
     return URL.createObjectURL(url);
   }
   function bytesToSize(bytes) {
+
     var sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
     for (var i = 0; i < sizes.length; i++) {
       if (bytes <= 1024) {
+       
+        setBytesize(bytes + " " + sizes[i]);
         return bytes + " " + sizes[i];
+        
       } else {
+        
         bytes = parseFloat(bytes / 1024).toFixed(2);
+       
       }
     }
     return bytes + " P";
@@ -57,6 +69,7 @@ function HashtagsList({ createMedia, title }) {
   const fileParams = ({ meta }) => {
     return { url: "https://httpbin.org/post" };
   };
+
 
   const onSubmit = (files, allFiles) => {
     setSubmit(true);
@@ -82,6 +95,7 @@ function HashtagsList({ createMedia, title }) {
     });
   };
   const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
+    
     const textMsg = files.length > 0 ? "Upload Again" : "Browse Image";
     return (
       <>
@@ -89,6 +103,7 @@ function HashtagsList({ createMedia, title }) {
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
           <h4>Drag & Drop your image here</h4>
           <h4>OR</h4>
+          {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
             <input
@@ -107,7 +122,42 @@ function HashtagsList({ createMedia, title }) {
       </>
     );
   };
+
+  const remove = (allFiles)  => {
+    // setFields({
+    //   ...fields,
+    //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
+    // });
+    setSubmit(false);
+    setLoading(false);
+    allFiles.forEach((f) => f.remove());
+  };
+
+
   const Preview = ({ meta, files }) => {
+
+    const [first, ...rest] = bytesSize.split(' ');
+    var val = parseFloat(first);
+    var byte = rest[0];
+
+    if (byte === "MB") {
+      setImgMsg('')
+      if (val > 20) {
+        setImgsize(true)
+        setImgMsg("Your file size can not be exceed more than 10 MB.")
+        remove(files)
+      }
+    }
+    
+     if(byte === "KB") { 
+        setImgMsg('')  
+      if (val < 20) {
+          setImgsize(true)
+          setImgMsg("Your file size can not be less than 20 KB.")
+          remove(files)
+        }
+    }
+    
     const { name, percent, status, previewUrl, size } = meta;
     setPreviewLoading(status === "done" ? false : true);
     return (
@@ -141,6 +191,9 @@ function HashtagsList({ createMedia, title }) {
       </>
     );
   };
+
+
+
   const removeFile = (allFiles) => () => {
     // setFields({
     //   ...fields,
@@ -150,7 +203,7 @@ function HashtagsList({ createMedia, title }) {
     setLoading(false);
     allFiles.forEach((f) => f.remove());
   };
-  const onFileChange = ({ file }) => {
+  const onFileChange = ({  file }) => {
     if (
       file.type === "image/jpeg" ||
       file.type === "image/jpg" ||
@@ -172,58 +225,57 @@ function HashtagsList({ createMedia, title }) {
     <React.Fragment>
       <div className="container-fluid">
         <h4 className="page-title">{title}</h4>
-
-        <div className="brand_container_main container">
-          <Row>
-            <div className="profile_box_main col-md-8">
-              <div className=" brand-section dash_block_profile dash_content_profile">
-                <div className="upload_area">
-                  <h4>Upload your image</h4>
-                  <p className="text-muted">
-                    PNG, JPG, SVG and GIF files are allowed
-                  </p>
-                </div>
-                <div class="upload_area_3 form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="exampleFormControlInput1"
-                    placeholder="Add Media Title"
-                    onChange={(e) =>
-                      setFields({ ...fields, title: e.target.value })
-                    }
-                    value={fields.title}
+          <div className="brand_container_main container">
+            <Row>
+              <div className="profile_box_main col-md-8">
+                <div className=" brand-section dash_block_profile dash_content_profile">
+                  <div className="upload_area">
+                    <h4>Upload your image</h4>
+                    <p className="text-muted">
+                      PNG, JPG, SVG and GIF files are allowed
+                    </p>
+                  </div>
+                  <div class="upload_area_3 form-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="exampleFormControlInput1"
+                      placeholder="Add Media Title"
+                      onChange={(e) =>
+                        setFields({ ...fields, title: e.target.value })
+                      }
+                      value={fields.title}
+                    />
+                    {submit && !fields.title ? (
+                      <small style={{ color: "red" }}>
+                        Please Fill Media Title
+                      </small>
+                    ) : null}
+                  </div>
+                  <Dropzone
+                    onSubmit={onSubmit}
+                    onChangeStatus={onFileChange}
+                    InputComponent={selectFileInput}
+                    getUploadParams={fileParams}
+                    getFilesFromEvent={getFilesFromEvent}
+                    accept=".jpg, .jpeg, .png, .gif, .svg"
+                    maxFiles={1}
+                    // inputContent="Drop A File"
+                    addClassNames={{
+                      dropzone: "drag-drop-ift",
+                      submitButtonContainer: "upload_btn",
+                    }}
+                    PreviewComponent={Preview}
+                    submitButtonContent={() => (loading ? <Loader /> : "Upload")}
+                    submitButtonDisabled={loading}
+                    styles={{
+                      dropzoneActive: { borderColor: "green" },
+                    }}
                   />
-                  {submit && !fields.title ? (
-                    <small style={{ color: "red" }}>
-                      Please Fill Media Title
-                    </small>
+                  {submit && !fields.image ? (
+                    <small style={{ color: "red" }}>Please Select Image</small>
                   ) : null}
-                </div>
-                <Dropzone
-                  onSubmit={onSubmit} 
-                  onChangeStatus={onFileChange} 
-                  InputComponent={selectFileInput}
-                  getUploadParams={fileParams}
-                  getFilesFromEvent={getFilesFromEvent}
-                  accept=".jpg, .jpeg, .png, .gif, .svg"
-                  maxFiles={1}
-                  // inputContent="Drop A File"
-                  addClassNames={{
-                    dropzone: "drag-drop-ift",
-                    submitButtonContainer: "upload_btn",
-                  }}
-                  PreviewComponent={Preview}
-                  submitButtonContent={() => (loading ? <Loader /> : "Upload")}
-                  submitButtonDisabled={loading}
-                  styles={{
-                    dropzoneActive: { borderColor: "green" },
-                  }}
-                />
-                {submit && !fields.image ? (
-                  <small style={{ color: "red" }}>Please Select Image</small>
-                ) : null}
-                {/* {loading ? (
+                  {/* {loading ? (
                     <Button
                       style={{
                         borderTopLeftRadius: 0,
@@ -247,10 +299,10 @@ function HashtagsList({ createMedia, title }) {
                       Create
                     </Button>
                   )} */}
+                </div>
               </div>
-            </div>
-          </Row>
-        </div>
+            </Row>
+          </div>
       </div>
     </React.Fragment>
   );

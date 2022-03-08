@@ -212,7 +212,7 @@ class Affiliate extends React.Component {
                         
 
 
-                        <NavItem>
+                        {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "sales",
@@ -223,7 +223,7 @@ class Affiliate extends React.Component {
                     >
                       <span>Sales</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                 </Nav>
 
                 <TabContent
@@ -295,11 +295,11 @@ class Affiliate extends React.Component {
                       <AffiliateTransaction />
                     ) : null}
                         </TabPane>
-                        <TabPane tabId="sales">
+                        {/* <TabPane tabId="sales">
                     {this.state.activeTab === "sales" ? (
                       <AffiliateSales />
                     ) : null}
-                  </TabPane>
+                  </TabPane> */}
                 </TabContent>
               </div>
             </Row>

@@ -537,7 +537,10 @@
     display: block;
   }
 
-  .header {
+  // .header {
+  //   display: none;
+  // }
+  .header .addbio-topbar,.header .right-top-bar{
     display: none;
   }
 
