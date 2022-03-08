@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Row, Col, Table } from "react-bootstrap";
 import AffiliateDeposit from "./AffiliateDeposit";
+import { Label, Input } from "reactstrap";
 
 function AffiliateBalance() {
   const [deposit, setDeposit] = useState("");
@@ -49,10 +50,28 @@ function AffiliateBalance() {
           <Row>
             <div className="col-md-8">
               <div className="conn-set-inner">
-                <div className="amount-box">list card</div>
+                <div className="amount-box">
+                  <h6>Choose an existing deposit method</h6>
+
+                  <div className="checkbox abc-checkbox abc-checkbox-primary">
+                    <Input
+                      defaultChecked
+                      name="payment"
+                      value="Monthly"
+                      className="mt-0"
+                      id="checkbox1"
+                      type="radio"
+                      onChange={(e) => {
+                        this.setState({ plan: e.target.value });
+                      }}
+                    />{" "}
+                    <Label for="checkbox1" />
+                    Pay Monthly: $
+                  </div>
+                </div>
                 <div className="amount-box">
                   <form onSubmit={depositAmount}>
-                    <label>Enter Amount</label>
+                    <h6>Enter Amount</h6>
 
                     <div className="d-flex flex-row hashtag-box">
                       <span className="input-group-text">$</span>
