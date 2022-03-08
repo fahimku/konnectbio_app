@@ -206,7 +206,8 @@ function AffiliateTransaction({
         setLoading(false);
       }
     });
-  };
+  }
+
 
   const changeCampaign = (e) => {
     // setInfluencerId("");

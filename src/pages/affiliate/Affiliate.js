@@ -8,6 +8,7 @@ import AffiliateCampaign from "./AffiliateCampaign/AffiliateCampaign";
 import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCampaign";
 import AffiliateScheduleCampaign from "./AffiliateCampaign/AffiliateScheduleCampaign";
 import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
+import AffiliateSales from "./AffiliateSales/Sales";
 import AffiliateBalance from "./AffiliateBalance/AffiliateBalance";
 import axios from "axios";
 import { createBrowserHistory } from "history";
@@ -206,6 +207,22 @@ class Affiliate extends React.Component {
                     >
                       <span>Transactions</span>
                     </NavLink>
+                        </NavItem>
+                        
+                        
+
+
+                        <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "sales",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("sales");
+                      }}
+                    >
+                      <span>Sales</span>
+                    </NavLink>
                   </NavItem>
                 </Nav>
 
@@ -276,6 +293,11 @@ class Affiliate extends React.Component {
                   <TabPane tabId="transaction">
                     {this.state.activeTab === "transaction" ? (
                       <AffiliateTransaction />
+                    ) : null}
+                        </TabPane>
+                        <TabPane tabId="sales">
+                    {this.state.activeTab === "sales" ? (
+                      <AffiliateSales />
                     ) : null}
                   </TabPane>
                 </TabContent>

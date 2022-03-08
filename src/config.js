@@ -31,6 +31,7 @@ const visitorURL =
 export default {
   redirectURL,
   hostApi,
+  
   portApi,
   baseURLApi,
   baseURLApiToken,

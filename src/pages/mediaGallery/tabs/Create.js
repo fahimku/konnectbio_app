@@ -201,7 +201,7 @@ function HashtagsList({ createMedia, title }) {
                   ) : null}
                 </div>
                 <Dropzone
-                  onSubmit={onSubmit}
+                  onSubmit={onSubmit} 
                   onChangeStatus={onFileChange} 
                   InputComponent={selectFileInput}
                   getUploadParams={fileParams}
