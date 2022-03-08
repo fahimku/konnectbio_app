@@ -203,7 +203,7 @@ function ActiveMarketPlace({
 
   const toggleCampaigns = async (status, campaignId) => {
     let promise = new Promise((resolve, reject) => {
-      let statusName = status ? "Deactivate" : "Activate";
+      let statusName = status ? "Pause" : "Active";
       Swal.fire({
         title: `Are you sure you want to ${statusName} this campaign?`,
         icon: status ? "warning" : "success",

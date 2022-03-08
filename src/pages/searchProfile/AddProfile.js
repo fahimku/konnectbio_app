@@ -195,8 +195,8 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Number of profile monitoring in{" "}
-                        {userInfo1.package.package_name} plan is{" "}
+                        Number Of Profile Monitoring In{" "}
+                        {userInfo1.package.package_name} Plan Is{" "}
                         {profiles.profile_limit}
                       </p>
                       <Row>

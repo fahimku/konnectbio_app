@@ -528,7 +528,7 @@ class MyCategory extends React.Component {
                           paddingBottom: 10,
                         }}
                       >
-                        Number of categories in {userInfo1.package.package_name}{" "}
+                        Number Of Categories In {userInfo1.package.package_name}{" "}
                         plan is {this.state.categoryLimit}
                       </p>
                       <Row>
