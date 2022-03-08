@@ -22,9 +22,10 @@ import { toast } from "react-toastify";
 
 function AffiliateDeposit() {
   const [showCard, setShowCard] = useState(false);
-  const stripePromise = loadStripe(
-    "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
-  );
+  // const stripePromise = loadStripe(
+  //   "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
+  // );
+  const stripePromise = loadStripe("");
   const options = {
     iconStyle: "solid",
     hidePostalCode: true,
