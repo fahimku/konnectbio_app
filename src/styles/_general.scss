@@ -1108,3 +1108,26 @@ code.sm-color {
 .amount-box {
   padding: 15px;
 }
+.deposit_card {
+  padding: 0 10px;
+  border: 1px solid #ede9e9;
+  margin-bottom: 10px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+}
+.deposit_card:hover,
+.deposit_card label:hover {
+  background-color: #ede9e9;
+  cursor: pointer;
+}
+.deposit_card label {
+  margin-left: 10px;
+  margin-bottom: 0;
+  width: 96%;
+}
+@media screen and (max-width: 668px) {
+  .deposit_card label {
+    width: 90%;
+  }
+}

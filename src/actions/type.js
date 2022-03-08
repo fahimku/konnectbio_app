@@ -71,3 +71,6 @@ export const GET_MARKETPLACE_DETAIL_TRANSACTIONS =
   "getMarketplaceDetailTransactions";
 export const GET_MARKETPLACE_DETAIL_PAGINATION =
   "getMarketplaceDetailPagination";
+
+/**********AFFILIATE Deposit Action Types******************* */
+export const GET_AFFILIATE_CARDS = "getAffiliateCards";

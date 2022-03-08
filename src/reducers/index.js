@@ -46,6 +46,8 @@ import marketplaceBrands from "./marketplaceTransactions/marketplaceBrands";
 import marketplaceCampaigns from "./marketplaceTransactions/marketplaceCampaigns";
 import marketplaceDetailTransactions from "./marketplaceTransactions/marketplaceDetailTransactions";
 
+import affiliateCards from "./affiliateDeposit/affiliateCards";
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -93,4 +95,5 @@ export default (history) =>
     marketplaceBrands,
     marketplaceCampaigns,
     marketplaceDetailTransactions,
+    affiliateCards,
   });
