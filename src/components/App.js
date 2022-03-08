@@ -25,6 +25,7 @@ import Reset from "../pages/auth/reset";
 import Forgot from "../pages/auth/forgot";
 import Package from "../pages/package/package";
 import Payment from "../pages/payment/payment";
+import Deposit from "../pages/deposit/deposit";
 
 const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
@@ -47,19 +48,49 @@ class App extends React.PureComponent {
           <Router>
             <Switch>
               <Route path="/" exact component={Login} />
-              <Route path="/app" exact render={() => <Redirect to="/app/main" />} />
-              <UserRoute path="/app" dispatch={this.props.dispatch} component={LayoutComponent} />
-              <AdminRoute path="/admin" currentUser={this.props.currentUser} dispatch={this.props.dispatch} component={LayoutComponent} />
+              <Route
+                path="/app"
+                exact
+                render={() => <Redirect to="/app/main" />}
+              />
+              <UserRoute
+                path="/app"
+                dispatch={this.props.dispatch}
+                component={LayoutComponent}
+              />
+              <AdminRoute
+                path="/admin"
+                currentUser={this.props.currentUser}
+                dispatch={this.props.dispatch}
+                component={LayoutComponent}
+              />
               <Route path="/connect" exact component={Connect} />
-              <UserRoute path="/package" exact component={Package} dispatch={this.props.dispatch} />
+              <UserRoute
+                path="/package"
+                exact
+                component={Package}
+                dispatch={this.props.dispatch}
+              />
               <Route path="/logout" exact component={Logout} />
               <AuthRoute path="/register" exact component={Register} />
               <AuthRoute path="/login" exact component={Login} />
               <AuthRoute path="/verify-email" exact component={Verify} />
               <AuthRoute path="/password-reset" exact component={Reset} />
               <AuthRoute path="/forgot" exact component={Forgot} />
-              <UserRoute path="/payment" exact component={Payment} dispatch={this.props.dispatch} />
+              <UserRoute
+                path="/payment"
+                exact
+                component={Payment}
+                dispatch={this.props.dispatch}
+              />
+              <UserRoute
+                path="/deposit"
+                exact
+                component={Deposit}
+                dispatch={this.props.dispatch}
+              />
               <Route path="/error" exact component={ErrorPage} />
+
               <Redirect from="*" to="/login" />
             </Switch>
           </Router>
