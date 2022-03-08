@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Button, Row, Col, Table } from "react-bootstrap";
+import AffiliateDeposit from "./AffiliateDeposit";
 
 function AffiliateBalance() {
   return (
@@ -26,7 +27,8 @@ function AffiliateBalance() {
               </div>
             </div>
           </Row>
-          <Row>
+          {/* <AffiliateDeposit /> */}
+          {/* <Row>
             <div className="col-md-4">
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
@@ -38,7 +40,7 @@ function AffiliateBalance() {
                 </div>
               </div>
             </div>
-          </Row>
+          </Row> */}
         </div>
       </div>
     </React.Fragment>
