@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Row, Col, Table } from "react-bootstrap";
-// import AffiliateDeposit from "./AffiliateDeposit";
+import AffiliateDeposit from "./AffiliateDeposit";
 import { connect } from "react-redux";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
+import Loader from "../../../components/Loader/Loader";
 
 function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
   const [amount, setAmount] = useState("");
+  const [amountError, setAmountError] = useState(false);
+  const [depositLoading, setDepositLoading] = useState(false);
 
   useEffect(() => {
     setCardLoading(true);
@@ -20,19 +23,117 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
 
   const depositAmount = async (e) => {
     e.preventDefault();
-    await axios
-      .post(`/deposit/intent`)
-      .then((response) => {
-        console.log(response.data.message, "response");
-        setDeposit(response.data.message);
-        setAmount("");
-      })
-      .catch((err) => {
-        console.log(err.response, "err");
-      });
+    if (amount === "") {
+      setAmountError(true);
+    } else {
+      setDepositLoading(true);
+      await axios
+        .post(`/deposit/intent`, {
+          payment_method_type: affiliateCards?.message?.data[0].type.split(),
+          payment_method: affiliateCards?.message?.data[0].id,
+          amount: Number(amount),
+        })
+        .then((response) => {
+          console.log(response.data.message, "response");
+          setDeposit(response.data.message);
+          setAmount("");
+          setDepositLoading(false);
+        })
+        .catch((err) => {
+          console.log(err.response, "err");
+          setDepositLoading(false);
+        });
+    }
   };
-  console.log(affiliateCards, "affiliateCards");
-  console.log(cardLoading, "cardLoading");
+  function dataCardDetail() {
+    let data = affiliateCards?.message?.data;
+    if (data) {
+      return (
+        <>
+          {data.map((item, i) => {
+            return (
+              <>
+                <form onSubmit={depositAmount}>
+                  <div className="amount-box">
+                    <h6>Enter Amount</h6>
+                    <div className="d-flex flex-row hashtag-box">
+                      <span className="input-group-text">$</span>
+                      <input
+                        onChange={(e) => {
+                          setAmount(e.target.value);
+                          setAmountError(false);
+                        }}
+                        type="number"
+                        name="name"
+                        placeholder="Enter Amount"
+                        className="form-control comment-field"
+                        value={amount}
+                        onKeyDown={(evt) =>
+                          ["e", "E", "+", "-"].includes(evt.key) &&
+                          evt.preventDefault()
+                        }
+                        autoComplete="off"
+                      />
+                    </div>
+                    {amountError && (
+                      <span className="text-danger deposit-error">
+                        This field is required
+                      </span>
+                    )}
+                  </div>
+                  <div className="amount-box">
+                    <h6>Choose an existing deposit method</h6>
+                    <div className="deposit_card">
+                      <input
+                        type="radio"
+                        name="card"
+                        id="card1"
+                        class="infchecked"
+                        value="card1"
+                        defaultChecked
+                        onChange={(e) => {
+                          setChangeCard(e.target.value);
+                        }}
+                      />
+                      <label for="card1">
+                        <div className="pull-left">
+                          <span className="card-name">{item.card.brand}</span>{" "}
+                          ending in {item.card.last4}
+                        </div>
+                        <div className="text-right">
+                          Expired:{" "}
+                          {item.card.exp_month < 10
+                            ? "0" + item.card.exp_month
+                            : String.valueOf(item.card.exp_month)}
+                          /{item.card.exp_year}
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                  <div className="amount-box pt-0">
+                    {depositLoading ? (
+                      <Button>
+                        <Loader />
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className=""
+                        disabled={depositLoading ? true : false}
+                      >
+                        Deposit
+                      </Button>
+                    )}
+                  </div>
+                </form>
+              </>
+            );
+          })}
+        </>
+      );
+    }
+  }
 
   return (
     <React.Fragment>
@@ -59,66 +160,26 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
           </Row>
           {/* <AffiliateDeposit config={config} /> */}
           <h4 className="page-title">Deposit</h4>
+
           <Row>
             <div className="col-md-8">
               <div className="conn-set-inner">
-                <div className="amount-box">
-                  <h6>Choose an existing deposit method</h6>
-                  <div className="deposit_card">
-                    <input
-                      type="radio"
-                      name="card"
-                      id="card1"
-                      class="infchecked"
-                      value="card1"
-                      defaultChecked
-                      onChange={(e) => {
-                        setChangeCard(e.target.value);
-                      }}
-                    />
-                    <label for="card1">
-                      <div className="pull-left">Card1 ending in 1002</div>
-                      <div className="text-right">expires: 07/2022</div>
-                    </label>
+                {cardLoading ? (
+                  <div className="deposit_loader">
+                    <Loader />
                   </div>
-                  <div className="deposit_card">
-                    <input
-                      type="radio"
-                      name="card"
-                      id="card2"
-                      class="infchecked"
-                      value="card2"
-                      onChange={(e) => {
-                        setChangeCard(e.target.value);
-                      }}
-                    />
-                    <label for="card2">
-                      <div className="pull-left">Card2 ending in 3022</div>
-                      <div className="text-right">Expires: 01/2023</div>
-                    </label>
-                  </div>
-                </div>
-                <div className="amount-box">
-                  <form onSubmit={depositAmount}>
-                    <h6>Enter Amount</h6>
-
-                    <div className="d-flex flex-row hashtag-box">
-                      <span className="input-group-text">$</span>
-                      <input
-                        onChange={(e) => setAmount(e.target.value)}
-                        type="number"
-                        name="name"
-                        placeholder="Enter Amount"
-                        className="form-control comment-field"
-                        required
-                        value={amount}
-                      />
-                    </div>
-                    <Button variant="primary" type="submit" className="mt-3">
-                      Deposit
-                    </Button>
-                  </form>
-                </div>
+                ) : (
+                  <>
+                    {affiliateCards?.is_payment_method ? (
+                      <>{dataCardDetail()}</>
+                    ) : (
+                      <>
+                        <div className="amount-box">addcard</div>
+                        <AffiliateDeposit />
+                      </>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </Row>

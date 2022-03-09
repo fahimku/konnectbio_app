@@ -1126,6 +1126,15 @@ code.sm-color {
   margin-bottom: 0;
   width: 96%;
 }
+.card-name {
+  text-transform: uppercase;
+}
+.deposit_loader {
+  height: 200px;
+}
+.deposit-error {
+  position: absolute;
+}
 @media screen and (max-width: 668px) {
   .deposit_card label {
     width: 90%;

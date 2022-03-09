@@ -170,7 +170,7 @@ function AffiliateDeposit() {
   return (
     <React.Fragment>
       <Row>
-        <div className="col-md-4">
+        <div className="col-md-12">
           <div className="conn-set-inner">
             <div className="affiliate-wallet">
               <h5>Deposit Amount</h5>

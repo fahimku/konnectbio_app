@@ -5,7 +5,7 @@ import config from "../config";
 export const getAffiliateCards = () => async (dispatch) => {
   let promise = new Promise((resolve, reject) => {
     axios
-      .post(`${config.hostApi}/v1/deposit/intent`)
+      .post(`${config.hostApi}/v1/deposit/paymentmethods`)
       .then((res) => {
         resolve("success");
         dispatch({
