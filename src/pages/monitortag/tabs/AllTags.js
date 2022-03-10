@@ -15,7 +15,14 @@ const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY-MM-DD";
 
-function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
+function ALLTAGS({
+  title,
+  getHashtag,
+  tags,
+  getTags,
+  createTags,
+  refreshTags,
+}) {
   const [searchLoading, setSearchLoading] = useState(false);
   const [clearLoading, setClearLoading] = useState(false);
 
@@ -46,6 +53,23 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
       });
     });
   }, []);
+
+  const Onrefresh = () => {
+    setSearchLoading(true);
+    refreshTags().then(() => {
+      getTags(
+        {
+          from_date: startDate.toString(),
+          to_date: endDate.toString(),
+          sort: sortBy.value,
+          order_by: orderBy.value,
+        },
+        1
+      ).then(() => {
+        setSearchLoading(false);
+      });
+    });
+  };
 
   function onSubmitData(e) {
     e.preventDefault();
@@ -162,7 +186,7 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                     isSearchable={false}
                   />
                 </Col>
-             
+
                 <Col className="d-flex col-xl-2dot4" xs={12} md={6}>
                   {searchLoading ? (
                     <Button
@@ -181,6 +205,13 @@ function ALLTAGS({ title, getHashtag, tags, getTags, createTags }) {
                       Search
                     </Button>
                   )}
+                  <Button
+                    onClick={Onrefresh}
+                    variant="primary"
+                    className="fltr-hpr"
+                  >
+                    Refresh
+                  </Button>
                   {clearLoading ? (
                     <Button variant="gray" className="fltr-hpr btn-primary">
                       <Loader />

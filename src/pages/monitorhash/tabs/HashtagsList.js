@@ -180,8 +180,8 @@ function HashtagsList({
                           paddingBottom: 10,
                         }}
                       >
-                        Number of hashtags in {userInfo1.package.package_name}{" "}
-                        plan is {hashtags.hashtag_limit}
+                        Number Of Hashtags In {userInfo1.package.package_name}{" "}
+                        Plan Is {hashtags.hashtag_limit}
                       </p>
                       <Row>
                         <Col md={12}>
@@ -203,7 +203,7 @@ function HashtagsList({
                                   borderTopRightRadius: 0,
                                   borderBottomRightRadius: 0,
                                   width: "85%",
-                                }}
+                                }}  
                                 onChange={(e) => setHash(e.target.value)}
                                 type="text"
                                 name="name"

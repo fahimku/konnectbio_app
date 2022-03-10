@@ -64,6 +64,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
       setSearchLoading(false);
     });
   }
+
   const clearMarketPlace = (e) => {
     setClearLoading(true);
     setBrand({ value: "all", label: "ALL" });
@@ -197,6 +198,7 @@ function CommentTags({ title, getHashtag, tags, getTags, createTags }) {
                       Search
                     </Button>
                   )}
+
                   {clearLoading ? (
                     <Button variant="gray" className="fltr-hpr btn-primary">
                       <Loader />

@@ -6,7 +6,7 @@ import AffiliateBrand from "./AffiliateBrand/AffiliateBrand";
 // import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
 // import AffiliateBalance from "../affiliate/AffiliateBalance/AffiliateBalance";
 import AffiliatePayment from "./AffiliatePayment/AffiliatePayment";
-
+import AffiliateBilling from "./AffiliateBilling/billing";
 class AffiliateSetup extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -56,6 +56,18 @@ class AffiliateSetup extends React.Component {
                         <span>Brand</span>
                       </NavLink>
                     </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active: this.state.activeSecondTab === "billingtab",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("billingtab");
+                        }}
+                      >
+                        <span>Billing</span>
+                      </NavLink>
+                    </NavItem>
                     {/* <NavItem>
                       <NavLink
                         className={classnames({
@@ -101,6 +113,11 @@ class AffiliateSetup extends React.Component {
                     <TabPane tabId="brandtab">
                       {this.state.activeSecondTab === "brandtab" ? (
                         <AffiliateBrand />
+                      ) : null}
+                    </TabPane>
+                    <TabPane tabId="billingtab">
+                      {this.state.activeSecondTab === "billingtab" ? (
+                        <AffiliateBilling />
                       ) : null}
                     </TabPane>
                     {/* <TabPane tabId="balance">

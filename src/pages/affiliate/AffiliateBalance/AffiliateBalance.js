@@ -162,7 +162,6 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
           </Row>
           {/* <AffiliateDeposit config={config} /> */}
           <h4 className="page-title">Deposit</h4>
-
           <Row>
             <div className="col-md-8">
               <div className="conn-set-inner">

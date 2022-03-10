@@ -13,6 +13,9 @@ function HashtagsList({ createMedia, title }) {
   const [submit, setSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [imgSize, setImgsize] = useState(false);
+  const [bytesSize, setBytesize] = useState('');
+  const [ImgMsg, setImgMsg] = useState('')
 
   const [fields, setFields] = useState({
     title: "",
@@ -25,7 +28,7 @@ function HashtagsList({ createMedia, title }) {
     if (fields.title && fields.image) {
       setLoading(true);
       createMedia(fields).then(() => {
-        toast.success("Successfully Created");
+        toast.success("Media Upload Successfully");
         setLoading(false);
         setFields({
           title: "",
@@ -39,6 +42,7 @@ function HashtagsList({ createMedia, title }) {
     var sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
     for (var i = 0; i < sizes.length; i++) {
       if (bytes <= 1024) {
+        setBytesize(bytes + " " + sizes[i]);
         return bytes + " " + sizes[i];
       } else {
         bytes = parseFloat(bytes / 1024).toFixed(2);
@@ -88,7 +92,42 @@ function HashtagsList({ createMedia, title }) {
       });
     });
   };
+
+  const remove = (allFiles)  => {
+    // setFields({
+    //   ...fields,
+    //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
+    // });
+    setSubmit(false);
+    setLoading(false);
+    allFiles.forEach((f) => f.remove());
+  };
+
   const Preview = ({ meta, files }) => {
+
+    const [first, ...rest] = bytesSize.split(' ');
+    var val = parseFloat(first);
+    var byte = rest[0];
+
+    if (byte === "MB") {
+      setImgMsg('')
+      if (val > 20) {
+        setImgsize(true)
+        setImgMsg("Your file size can not be exceed more than 10 MB.")
+        remove(files)
+      }
+    }
+    
+     if(byte === "KB") { 
+        setImgMsg('')  
+      if (val < 20) {
+          setImgsize(true)
+          setImgMsg("Your file size can not be less than 20 KB.")
+          remove(files)
+        }
+    }
+
+
     const { name, percent, status, previewUrl, size } = meta;
     setPreviewLoading(status === "done" ? false : true);
     return (
@@ -139,6 +178,7 @@ function HashtagsList({ createMedia, title }) {
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
           <h4>Drag & Drop your image here</h4>
           <h4>OR</h4>
+          {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
             <input
