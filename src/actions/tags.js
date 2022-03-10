@@ -26,3 +26,8 @@ export const createTags = () => async (dispatch) => {
   const res = axios.post(`${config.hostApi}/v1/graph/tag/create`);
   return res;
 };
+
+export const refreshTags = () => async (dispatch) => {
+  const res = axios.post(`${config.hostApi}/v1/graph/tag/refresh`);
+  return res;
+};
