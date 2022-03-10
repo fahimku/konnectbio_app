@@ -5,6 +5,7 @@ import AffiliateDeposit from "./AffiliateDeposit";
 import { connect } from "react-redux";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import Loader from "../../../components/Loader/Loader";
+import { toast } from "react-toastify";
 
 function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
   const [deposit, setDeposit] = useState("");
@@ -35,6 +36,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
         })
         .then((response) => {
           console.log(response.data.message, "response");
+          toast.success(response.data.message);
           setDeposit(response.data.message);
           setAmount("");
           setDepositLoading(false);
@@ -174,7 +176,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
                       <>{dataCardDetail()}</>
                     ) : (
                       <>
-                        <div className="amount-box">addcard</div>
+                        {/* <div className="amount-box">addcard</div> */}
                         <AffiliateDeposit />
                       </>
                     )}

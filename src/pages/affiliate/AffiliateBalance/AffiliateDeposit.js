@@ -169,22 +169,17 @@ function AffiliateDeposit() {
   };
   return (
     <React.Fragment>
-      <Row>
-        <div className="col-md-12">
-          <div className="conn-set-inner">
-            <div className="affiliate-wallet">
-              <h5>Deposit Amount</h5>
-              <p>Make a deposit amount</p>
-              <button
-                className="btn btn-primary btn-block"
-                onClick={() => setShowCard(true)}
-              >
-                Make Deposit
-              </button>
-            </div>
-          </div>
-        </div>
-      </Row>
+      <div className="affiliate-wallet">
+        <h5>Deposit Amount</h5>
+        <p>Make a deposit amount</p>
+        <button
+          className="btn btn-primary btn-block"
+          onClick={() => setShowCard(true)}
+        >
+          Make Deposit
+        </button>
+      </div>
+
       <Modal
         className="addbio-modal"
         show={showCard}
