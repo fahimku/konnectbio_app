@@ -26,7 +26,7 @@ function AffiliateBalance() {
               </div>
             </div>
           </Row>
-          <Row>
+          {/* <Row>
             <div className="col-md-4">
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
@@ -38,7 +38,7 @@ function AffiliateBalance() {
                 </div>
               </div>
             </div>
-          </Row>
+          </Row> */}
         </div>
       </div>
     </React.Fragment>
