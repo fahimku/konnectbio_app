@@ -58,11 +58,11 @@ function AffiliateDeposit({makePayment,affiliatePayment}) {
   //   },
   // };
 
-  const paymentMethod = () => {
+  const paymentMethod = () => { 
   
     if(affiliatePayment?.success == true){
       let data = affiliatePayment?.message;   
-      window.open(data,"_blank")
+      window.open(data,"_self")
     }
     else{
       
