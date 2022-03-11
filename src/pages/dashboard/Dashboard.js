@@ -335,7 +335,7 @@ function Dashboard({ getDashboard, dashboard }) {
                   </span>
                   <h4>{userData.package.package_name}</h4>
                   <div className="text-muted">
-                    This is your current active plan
+                    This Is Your Current Active Plan
                   </div>
                 </div>
               </div>

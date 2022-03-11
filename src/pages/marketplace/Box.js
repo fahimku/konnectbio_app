@@ -7,9 +7,16 @@ import Loader from "../../components/Loader/Loader";
 export default function Box({ item, addCampaignToShop, index }) {
   const [addCampaign, setAddCampaign] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const styleObj = {
+    textTransform: 'capitalize',
+    fontsize: '14px'
+  }
+
+
   const confirmAddToCampaign = (campaignId, categoryId, userId) => {
     Swal.fire({
-      title: `Are you sure you want to add this campaign?`,
+      title: `Are You Sure You Want To Add This Campaign?`,
       icon: "warning",
       showCancelButton: true,
       cancelButtonText: "No",
@@ -71,17 +78,14 @@ export default function Box({ item, addCampaignToShop, index }) {
                   <div className="col-12 count-box">
                     <h5 className="count-title">Campaign Type</h5>
                     <h3
-                      className="count"
-                      style={{
-                        "text-transform": "capitalize",
-                      }}
+                    style={styleObj}
                     >
                       {item.campaign_type}
                     </h3>
                   </div>
 
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Commission / 100 clicks</h5>
+                    <h5 className="count-title">Commission / 100 Clicks</h5>
                     <h3 className="count">${item.commission}</h3>
                   </div>
 

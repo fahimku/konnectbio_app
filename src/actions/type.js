@@ -55,7 +55,8 @@ export const GET_MEDIA_SUMMARY = "getMediaSummary";
 export const GET_AFFILIATE_TRANSACTIONS = "getAffiliateTransactions";
 export const AFFILIATE_PAGINATION = "affiliatePagination";
 export const GET_AFFILIATE_CAMPAIGNS = "getAffiliateCampaigns";
-// export const GET_AFFILIATE_SALES = "getAffiliateSales";
+export const GET_AFFILIATE_SALES = "getAffiliateSales";
+
 export const GET_AFFILIATE_INFLUENCER = "getAffiliateInfluencer";
 export const GET_CAMPAIGN_DETAIL_TRANSACTIONS = "getCampaignDetailTransactions";
 export const GET_CAMPAIGN_DETAIL_PAGINATION = "getCampaignDetailPagination";
@@ -75,3 +76,4 @@ export const GET_MARKETPLACE_DETAIL_PAGINATION =
 
 /**********AFFILIATE Deposit Action Types******************* */
 export const GET_AFFILIATE_CARDS = "getAffiliateCards";
+export const GET_PAYMENT_METHOD = "getPaymentMethod";

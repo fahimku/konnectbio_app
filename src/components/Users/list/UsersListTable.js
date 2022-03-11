@@ -164,7 +164,7 @@ class UsersListTable extends Component {
           <Modal size="sm" isOpen={this.props.modalOpen} toggle={() => this.closeModal()}>
             <ModalHeader toggle={() => this.closeModal()}>Confirm delete</ModalHeader>
             <ModalBody className="bg-white">
-              Are you sure you want to delete this item?
+              Are You Sure You Want To Delete This Item?
             </ModalBody>
             <ModalFooter>
               <Button color="secondary" onClick={() => this.closeModal()}>Cancel</Button>

@@ -78,14 +78,14 @@ class AccountDelete extends React.Component {
         <Container>
           <div className={`${s.errorContainer} mx-auto`}>
             <p className={s.errorInfo}>
-              Are you sure you want delete your account?
+              Are You Sure You Want Delete Your Account?
             </p>
             <p className={[s.errorHelp, "mb-3"].join(" ")}>
-              This action is not reversible and it will remove all your data
-              from our servers.
+              This Action Is Not Reversible And It Will Remove All Your Data
+              From Our Servers.
             </p>
             <p className={[s.errorHelp, "mb-3"].join(" ")}>
-              <i>For support please contact support@konnect.bio .</i>
+              <i>For Support Please Contact support@konnect.bio .</i>
             </p>
 
             {this.state.loading ? (

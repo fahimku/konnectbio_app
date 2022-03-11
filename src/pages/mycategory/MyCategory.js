@@ -219,8 +219,8 @@ class MyCategory extends React.Component {
     );
     if (difference.length > 0) {
       Swal.fire({
-        title: "Are you sure you want to delete this category?",
-        text: "This will uncategorize all your post related to this category.",
+        title: "Are You Sure You Want To Delete This Category?",
+        text: "This Will Uncategorize All Your Post Related To This Category.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#010b40",
@@ -246,7 +246,7 @@ class MyCategory extends React.Component {
         options.pop();
         this.setState({
           saveCategories: options,
-          categoryError: `You have only ${this.state.categoryLimit} categories allowed in this plan`,
+          categoryError: `You Have Only ${this.state.categoryLimit} Categories Allowed In This Plan`,
         });
       } else {
         this.setState({
@@ -296,8 +296,8 @@ class MyCategory extends React.Component {
   };
   deleteCustomCat = async (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      title: "Are You Sure?",
+      text: "You Won't Be Able To Revert This!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -529,7 +529,7 @@ class MyCategory extends React.Component {
                         }}
                       >
                         Number Of Categories In {userInfo1.package.package_name}{" "}
-                        plan is {this.state.categoryLimit}
+                        Plan Is {this.state.categoryLimit}
                       </p>
                       <Row>
                         <Col md={12}>

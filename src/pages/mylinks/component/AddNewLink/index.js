@@ -69,7 +69,7 @@ const AddNewLink = (props) => {
                   name="basic"
                   required
                   value={props.title}
-                  placeholder="Add a link title"
+                  placeholder="Add A Link Title"
                   onChange={(evt) => {
                     props.titleChange(evt.target.value);
                   }}
@@ -87,7 +87,7 @@ const AddNewLink = (props) => {
                   trigger="change"
                   validations="isUrl"
                   validationError={{
-                    isUrl: "This value should be a valid url.",
+                    isUrl: "This Value Should Be A Valid Url.",
                   }}
                   value={props.redirectedUrl}
                   onChange={(evt) => {

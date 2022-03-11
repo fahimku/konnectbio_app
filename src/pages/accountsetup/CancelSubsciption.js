@@ -42,7 +42,7 @@ class CancelSubsciption extends React.Component {
           <Modal.Title>Cancel Subsciption</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-white">
-          Are you sure you want to Cancel Subsciption.
+          Are You Sure You Want To Cancel Subsciption.
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.cancelToggleModal}>Close</Button>

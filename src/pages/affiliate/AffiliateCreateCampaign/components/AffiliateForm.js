@@ -601,7 +601,7 @@ class AffiliateForm extends React.Component {
                   </div>
                   <div className="col-md-6 mt-3">
                     <label>
-                      Cost per 1000 {this.state.campaign_type} (CPC)
+                      Cost Per 1000 {this.state.campaign_type} (CPC)
                     </label>
                     <InputNumberValidation
                       type="number"

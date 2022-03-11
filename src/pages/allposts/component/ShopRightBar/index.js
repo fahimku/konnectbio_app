@@ -325,7 +325,7 @@ const ShopRightBar = (props) => {
             Delete Post
           </ModalHeader>
           <ModalBody className="bg-white">
-            Are you sure you want to delete?
+            Are You Sure You Want To Delete?
           </ModalBody>
           <ModalFooter>
             <Button

@@ -40,7 +40,7 @@ class EditCustomCategory extends React.Component {
         reader.readAsDataURL(e.target.files[0]);
       }
       else {
-        toast.error("Image type not Acceptable!")
+        toast.error("We Only Support PNG, WEBP, Or JPG Image")
       }
     }
   };

@@ -205,7 +205,7 @@ function ActiveMarketPlace({
     let promise = new Promise((resolve, reject) => {
       let statusName = status ? "Pause" : "Active";
       Swal.fire({
-        title: `Are you sure you want to ${statusName} this campaign?`,
+        title: `Are You Sure You Want To ${statusName} This Campaign?`,
         icon: status ? "warning" : "success",
         cancelButtonText: "No",
         showCancelButton: true,

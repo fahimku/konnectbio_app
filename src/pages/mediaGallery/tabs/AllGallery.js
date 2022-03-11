@@ -62,8 +62,8 @@ function AllGallery({
 
     if (currentPage === 0) page = 1;
     Swal.fire({
-      title: "Are you sure you want to delete this media?",
-      text: "This will remove your media from BioShop as well!",
+      title: "Are You Sure You Want To Delete This Media?",
+      text: "This Will Remove Your Media From BioShop As Well!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#010b40",
@@ -97,10 +97,10 @@ function AllGallery({
 
     let statusName = status ? "In-Active" : "Active";
     Swal.fire({
-      title: `Are you sure you want to ${statusName} this media?`,
+      title: `Are You Sure You Want To ${statusName} This Media?`,
       text:
         statusName === "disable"
-          ? "This will remove your media from BioShop as well!"
+          ? "This Will Remove Your Media From BioShop As Well!"
           : "",
       icon: "warning",
       cancelButtonText: "No",
@@ -458,8 +458,8 @@ function AllGallery({
   function onPublish(seletedItem) {
     setCurrentData(seletedItem);
     Swal.fire({
-      title: "Are you sure?",
-      text: "You want to publish this post on instagram?",
+      title: "Are You Sure?",
+      text: "You Want To Publish This Post On Instagram?",
       icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#010b40",

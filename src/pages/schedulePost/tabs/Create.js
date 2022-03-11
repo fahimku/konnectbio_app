@@ -82,7 +82,7 @@ function HashtagsList({ createMedia, title }) {
       });
     }
     else { 
-      toast.error("Image type not Acceptable!")
+      toast.error("We Only Support PNG, GIF, Or JPG Image")
     }
   };
   const getFilesFromEvent = (e) => {
@@ -113,7 +113,7 @@ function HashtagsList({ createMedia, title }) {
       setImgMsg('')
       if (val > 20) {
         setImgsize(true)
-        setImgMsg("Your file size can not be exceed more than 10 MB.")
+        setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.")
         remove(files)
       }
     }
@@ -122,7 +122,7 @@ function HashtagsList({ createMedia, title }) {
         setImgMsg('')  
       if (val < 20) {
           setImgsize(true)
-          setImgMsg("Your file size can not be less than 20 KB.")
+          setImgMsg("Your File Size Can Not Be Less Than 20 KB.")
           remove(files)
         }
     }
@@ -176,8 +176,8 @@ function HashtagsList({ createMedia, title }) {
       <>
         <div className="upload_area_2">
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
-          <h4>Drag & Drop your image here</h4>
-          <h4>OR</h4>
+          <h4>Drag & Drop Your Image Here</h4>
+          <h4>Or</h4>
           {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
@@ -208,9 +208,9 @@ function HashtagsList({ createMedia, title }) {
             <div className="profile_box_main col-md-8">
               <div className=" brand-section dash_block_profile dash_content_profile">
                 <div className="upload_area">
-                  <h4>Upload your image</h4>
+                  <h4>Upload Your Image</h4>
                   <p className="text-muted">
-                    PNG, JPG, SVG and GIF files are allowed
+                    PNG, JPG, SVG & GIF Files Are Allowed
                   </p>
                 </div>
                 <div class="upload_area_3 form-group">

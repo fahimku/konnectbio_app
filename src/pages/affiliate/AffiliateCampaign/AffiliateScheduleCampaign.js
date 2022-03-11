@@ -120,8 +120,8 @@ function AffiliateCampaign(props) {
 
   const deleteCampaign = async (campaignId) => {
     Swal.fire({
-      title: `Are you sure you want to delete this campaign?`,
-      text: "You won't be able to revert this!",
+      title: `Are You Sure You Want To Delete This Campaign?`,
+      text: "You Won't Be Able To Revert This!",
       icon: "warning",
       cancelButtonText: "No",
       showCancelButton: true,
@@ -172,6 +172,12 @@ function AffiliateCampaign(props) {
   };
 
   const postData = () => {
+
+    const styleObj = {
+     fontSize:'14px',
+     textTransform: 'capitalize'
+
+    }
     const data1 = data;
     const truncate = (str, max, suffix) =>
       str.length < max
@@ -218,7 +224,7 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Campaign Type</h5>
-                    <h3 className="count">{record.campaign_type}</h3>
+                    <h3 style={styleObj}>{record.campaign_type}</h3>
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Total Budget</h5>
@@ -226,7 +232,7 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">
-                      Pay per 100 {record.campaign_type}
+                      Pay Per 100 {record.campaign_type}
                     </h5>
                     <h3 className="count">${record.pay_per_hundred}</h3>
                   </div>

@@ -166,7 +166,7 @@ class MyProfile extends React.Component {
         };
         reader.readAsDataURL(e.target.files[0]);
       } else {
-        toast.error("Image type not acceptable!");
+        toast.error("We Only Support PNG, WEBP, Or JPG Image");
       }
     }
   };

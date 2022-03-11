@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Modal } from "react-bootstrap";
 import { loadStripe } from "@stripe/stripe-js";
+import { connect } from "react-redux";
+import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
+import Loader from "../../../components/Loader/Loader";
 // import {
 //   CardElement,
 //   Elements,
@@ -20,29 +23,51 @@ import {
 } from "@stripe/react-stripe-js";
 import { toast } from "react-toastify";
 
-function AffiliateDeposit() {
+
+
+function AffiliateDeposit({makePayment,affiliatePayment}) {
   const [showCard, setShowCard] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+
+  useEffect(() => {
+    setPaymentLoading(true);
+    makePayment().then((res) => {
+      setPaymentLoading(false);
+    });
+  }, []);
+
   // const stripePromise = loadStripe(
   //   "pk_test_51KKN8wESMcKchi62cRYwS5o4v1hiIUYZVF4GQRbqcjj8FQ9su5vvWCq1sSbN11MDmBB3LIOCG36oXygjVq2S0GMT00t9ASYQfK"
   // );
-  const stripePromise = loadStripe("");
-  const options = {
-    iconStyle: "solid",
-    hidePostalCode: true,
-    style: {
-      base: {
-        color: "#424770",
-        letterSpacing: "0.025em",
-        fontFamily: "Source Code Pro, monospace",
-        "::placeholder": {
-          color: "#aab7c4",
-        },
-      },
-      invalid: {
-        color: "#9e2146",
-      },
-    },
-  };
+  // const stripePromise = loadStripe("");
+  // const options = {
+  //   iconStyle: "solid",
+  //   hidePostalCode: true,
+  //   style: {
+  //     base: {
+  //       color: "#424770",
+  //       letterSpacing: "0.025em",
+  //       fontFamily: "Source Code Pro, monospace",
+  //       "::placeholder": {
+  //         color: "#aab7c4",
+  //       },
+  //     },
+  //     invalid: {
+  //       color: "#9e2146",
+  //     },
+  //   },
+  // };
+
+  const paymentMethod = () => {
+  
+    if(affiliatePayment?.success == true){
+      let data = affiliatePayment?.message;   
+      window.open(data,"_blank")
+    }
+    else{
+      
+    }
+  }
   const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
@@ -75,7 +100,7 @@ function AffiliateDeposit() {
           <label className="col-md-12">
             Card number
             <CardNumberElement
-              options={options}
+              // options={options}
               // onReady={() => {
               //   console.log("CardNumberElement [ready]");
               // }}
@@ -95,7 +120,7 @@ function AffiliateDeposit() {
           <label className="col-md-12">
             Expiration date
             <CardExpiryElement
-              options={options}
+              // options={options}
               // onReady={() => {
               //   console.log("CardNumberElement [ready]");
               // }}
@@ -114,7 +139,7 @@ function AffiliateDeposit() {
           <label className="col-md-12">
             CVC
             <CardCvcElement
-              options={options}
+              // options={options}
               // onReady={() => {
               //   console.log("CardNumberElement [ready]");
               // }}
@@ -169,18 +194,21 @@ function AffiliateDeposit() {
   };
   return (
     <React.Fragment>
+      {paymentLoading ?  <Loader /> :
+      
       <div className="affiliate-wallet">
         <h5>Deposit Amount</h5>
         <p>Make a deposit amount</p>
         <button
           className="btn btn-primary btn-block"
-          onClick={() => setShowCard(true)}
+          onClick={() => paymentMethod()}
         >
           Make Deposit
         </button>
       </div>
+      }
 
-      <Modal
+      {/* <Modal
         className="addbio-modal"
         show={showCard}
         onHide={() => setShowCard(false)}
@@ -189,18 +217,29 @@ function AffiliateDeposit() {
         <Modal.Header closeButton>
           <Modal.Title>Add Card</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body> */}
           {/* <ElementsConsumer stripe={stripePromise}>
             {({ stripe, elements }) => (
               <CheckoutForm stripe={stripe} elements={elements} />
             )}
           </ElementsConsumer> */}
-          <Elements stripe={stripePromise}>
+          {/* <Elements stripe={stripePromise}>
             <CheckoutForm />
           </Elements>
         </Modal.Body>
-      </Modal>
+      </Modal> */}
     </React.Fragment>
   );
 }
-export default AffiliateDeposit;
+
+function mapStateToProps({ affiliatePayment }) {
+  return {
+    affiliatePayment
+    
+  };
+}
+
+export default connect(mapStateToProps, { ...affiliateDepositActions })(
+  AffiliateDeposit
+);
+

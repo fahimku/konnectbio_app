@@ -127,6 +127,12 @@ function MarketplaceTransaction({
     }),
   };
 
+  const styleObj = {
+    textTransform: 'capitalize',
+    fontsize: '14px'
+  }
+
+  
   useEffect(() => {
     setBrandStatus({ value: "active", label: "Active" });
     setInfluencerStatus({ value: "active", label: "Active" });
@@ -747,7 +753,7 @@ function MarketplaceTransaction({
                       </div>
                       <div class="col-12 count-box">
                         <h5 class="count-title">Campaign Type</h5>
-                        <h3 class="count">
+                        <h3 style={styleObj}>
                           {singleData?.campaign?.campaign_type}
                         </h3>
                       </div>
