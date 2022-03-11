@@ -37,7 +37,7 @@ import mobileDropdown from "./mobileDropdrown";
 import mediaSummary from "./media/mediaSummary";
 import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
-import affiliateSales from "./affiliateTransactions/affiliateSales";
+//import affiliateSales from "./affiliateTransactions/affiliateSales";
 import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
 import influencerDetailTransactions from "./affiliateTransactions/influencerDetailTransactions";
@@ -90,7 +90,7 @@ export default (history) =>
     mediaSummary,
     affiliateTransactions,
     affiliateCampaigns,
-    affiliateSales,
+  // affiliateSales,
     affiliateInfluencers,
     campaignDetailTransactions,
     influencerDetailTransactions,
