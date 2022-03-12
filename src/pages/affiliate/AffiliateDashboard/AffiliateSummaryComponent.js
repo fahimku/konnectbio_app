@@ -121,7 +121,7 @@ class AffiliateSummaryComponent extends React.Component {
                   </div>
 
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Total In-Active Campaigns</h5>
+                    <h5 className="count-title">Total Paused Campaigns</h5>
                     <h3 className="count">
                       {data.campaign_summary.in_active_campaigns
                         ? data.campaign_summary.in_active_campaigns
