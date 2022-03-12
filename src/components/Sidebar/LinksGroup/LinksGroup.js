@@ -109,8 +109,7 @@ class LinksGroup extends Component {
         );
       }
       return (
-        <li
-            id={this.props.id}>
+        <li id={this.props.id}>
           <NavLink
             to={this.props.link}
             activeClassName={s.headerLinkActive}
@@ -140,7 +139,7 @@ class LinksGroup extends Component {
           const { match } = params;
           return (
             <li
-            id={this.props.id}
+              id={this.props.id}
               className={classnames(
                 "link-wrapper",
                 { [s.headerLink]: this.props.isHeader },
@@ -153,10 +152,10 @@ class LinksGroup extends Component {
                   { [s.collapsed]: isOpen },
                   "d-flex"
                 )}
-                style={{
-                  paddingLeft: `${this.props.deep == 0 ? 50 : 26 + 10 * (this.props.deep - 1)
-                    }px`,
-                }}
+                // style={{
+                //   paddingLeft: `${this.props.deep == 0 ? 50 : 26 + 10 * (this.props.deep - 1)
+                //     }px`,
+                // }}
                 onClick={() => {
                   this.togglePanelCollapse(this.props.link);
                   this.props.onClick && this.props.onClick;
@@ -189,7 +188,7 @@ class LinksGroup extends Component {
                           onActiveSidebarItemChange={
                             this.props.onActiveSidebarItemChange
                           }
-                          id={this.props.id + '-'+ ind}
+                          id={this.props.id + "-" + ind}
                           activeItem={this.props.activeItem}
                           header={child.header}
                           link={child.link}
