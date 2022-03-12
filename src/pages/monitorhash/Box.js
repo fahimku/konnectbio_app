@@ -11,8 +11,9 @@ import Divider from "@mui/material/Divider";
 import numeral from "numeral";
 import { useHistory } from "react-router-dom";
 import GroupIcon from "@mui/icons-material/Group";
-
 import Carousel from "react-material-ui-carousel";
+import CarouselIcon from "../../images/carouselIcon.svg";
+import NoImage from "../../images/no-image.png";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -56,13 +57,15 @@ export default function Box({ data }) {
           height="450"
           sx={{ objectFit: "cover", borderRadius: 2 }}
           image={
-            item.media_type === "CAROUSEL_ALBUM" ? item.children?.data[0].media_url : item.media_url
+            item.media_type === "CAROUSEL_ALBUM"
+              ? item.children?.data[0].media_url
+              : item.media_url
           }
           alt="Paella dish"
         />
       );
     }
-   
+
     if (item.media_type === "VIDEO") {
       return (
         <>
@@ -95,8 +98,8 @@ export default function Box({ data }) {
 
   function renderCarousel(item) {
     return (
-    <>
-      {/*<Carousel
+      <>
+        {/*<Carousel
         className="cr-album"
         navButtonsAlwaysVisible={true}
         navButtonsProps={{
@@ -108,42 +111,59 @@ export default function Box({ data }) {
         swipe={true}
       >
       */}
-        {item.children.data.map((it2, i) => {
-          if (i === 0) {
-            if (it2.media_type === "IMAGE") {
-              return (
-                <a target="_blank" href={data.permalink}>
-                  <CardMedia
-                    component="img"
-                    height="450"
-                    sx={{ objectFit: "cover", borderRadius: 2 }}
-                    image={it2.media_url}
-                    alt="Paella dish"
-                  />
-                </a>
-              );
+        {item.children.data.length === 0 ? (
+          <a target="_blank" href={data.permalink}>
+            <button className="btn-link btn-play btn-carousel">
+              <img src={CarouselIcon} alt="CarouselIcon" />
+            </button>
+            <CardMedia
+              component="img"
+              height="450"
+              sx={{ objectFit: "cover", borderRadius: 2 }}
+              image={NoImage}
+              alt="Paella dish"
+            />
+          </a>
+        ) : (
+          item.children.data.map((it2, i) => {
+            if (i === 0) {
+              if (it2.media_type === "IMAGE") {
+                return (
+                  <a target="_blank" href={data.permalink}>
+                    <button className="btn-link btn-play btn-carousel">
+                      <img src={CarouselIcon} alt="CarouselIcon" />
+                    </button>
+                    <CardMedia
+                      component="img"
+                      height="450"
+                      sx={{ objectFit: "cover", borderRadius: 2 }}
+                      image={it2.media_url}
+                      alt="Paella dish"
+                    />
+                  </a>
+                );
+              }
+              if (it2.media_type === "VIDEO") {
+                return (
+                  <a target="_blank" href={data.permalink}>
+                    <CardMedia
+                      component="video"
+                      sx={{ objectFit: "cover", borderRadius: 2 }}
+                      autoPlay={false}
+                      controls
+                      //  loop
+                      height="450"
+                      image={it2.media_url}
+                      alt="Paella dish"
+                    />
+                  </a>
+                );
+              }
             }
-            if (it2.media_type === "VIDEO") {
-              return (
-                <a target="_blank" href={data.permalink}>
-                  <CardMedia
-                    component="video"
-                    sx={{ objectFit: "cover", borderRadius: 2 }}
-                    autoPlay={false}
-                    controls
-                    //  loop
-                    height="450"
-                    image={it2.media_url}
-                    alt="Paella dish"
-                  />
-                </a>
-              );
-            }
-          }
-        })}
-      {/*</Carousel>*/ }
+          })
+        )}
+        {/*</Carousel>*/}
       </>
-
     );
   }
 
@@ -193,7 +213,7 @@ export default function Box({ data }) {
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
           {data.media_type === "CAROUSEL_ALBUM" ? (
-              <a target="_blank" href={data.permalink}>
+            <a target="_blank" href={data.permalink}>
               {renderCarousel(data)}
             </a>
           ) : (
