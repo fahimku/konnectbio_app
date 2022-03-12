@@ -301,7 +301,7 @@ class Register extends React.Component {
         this.props.dispatch(authError("The country field is required"));
       } else if (this.state.countryStateCode === "") {
         this.props.dispatch(authError("The state field is required"));
-      } else if (this.state.city === "") {
+      } else if (this.state.city === "" && this.state.cities.length !== 0) {
         this.props.dispatch(authError("The city field is required"));
       } else {
         this.props.dispatch(authError(""));
