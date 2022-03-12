@@ -770,6 +770,18 @@ h1 small {
   background-color: #222;
   border-radius: 6px;
 }
+.media-box-post .btn-carousel {
+  // background: transparent;
+}
+.media-box-post .btn-carousel img {
+  width: 100%;
+  // filter: invert(100%);
+  // -webkit-filter: invert(100%);
+  // filter: brightness(0) invert(1);
+  position: relative;
+  top: -2px;
+}
+
 .media-box-post .btn-play .fa {
   font-size: 10px;
   position: relative;

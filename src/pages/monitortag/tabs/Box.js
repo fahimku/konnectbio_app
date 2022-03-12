@@ -30,6 +30,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 import Carousel from "react-material-ui-carousel";
+import CarouselIcon from "../../../images/carouselIcon.svg";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -82,17 +83,24 @@ export default function Box({ data }) {
   function renderMedia(item) {
     if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
       return (
-        <CardMedia
-          component="img"
-          height="400"
-          sx={{ objectFit: "cover", borderRadius: 2 }}
-          image={
-            item.media_type === "CAROUSEL_ALBUM"
-              ? item.children?.data[0].media_url
-              : item.media_url
-          }
-          alt="Paella dish"
-        />
+        <>
+          {item.media_type === "CAROUSEL_ALBUM" && (
+            <button className="btn-link btn-play btn-carousel">
+              <img src={CarouselIcon} alt="CarouselIcon" />
+            </button>
+          )}
+          <CardMedia
+            component="img"
+            height="400"
+            sx={{ objectFit: "cover", borderRadius: 2 }}
+            image={
+              item.media_type === "CAROUSEL_ALBUM"
+                ? item.children?.data[0].media_url
+                : item.media_url
+            }
+            alt="Paella dish"
+          />
+        </>
       );
     }
     if (item.media_type === "VIDEO") {
@@ -214,7 +222,7 @@ export default function Box({ data }) {
               </a>
             </Typography>
           }
-        // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
+          // subheader={`${new Date(data.timestamp).toLocaleDateString()}`}
         />
         <Divider />
         <div className="media-box-post" style={{ padding: "15px" }}>
@@ -222,8 +230,8 @@ export default function Box({ data }) {
             <a target="_blank" href={data.permalink}>
               {renderMedia(data)}
             </a>
-            //renderCarousel(data)
           ) : (
+            //renderCarousel(data)
             <a target="_blank" href={data.permalink}>
               {renderMedia(data)}
             </a>
