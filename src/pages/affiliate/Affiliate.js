@@ -72,6 +72,9 @@ class Affiliate extends React.Component {
   };
 
   toggleTabs(tab) {
+    const url = new URL(window.location.href.split("?")[0]);
+    window.history.replaceState(null, null, url.href);
+
     if (this.state.activeTab !== tab) {
       this.setState({
         activeTab: tab,
