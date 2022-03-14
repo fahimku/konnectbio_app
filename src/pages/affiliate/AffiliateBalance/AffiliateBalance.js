@@ -14,7 +14,7 @@ function AffiliateBalance({
   makePayment,
   affiliatePayment,
   showBalance,
-  affiliateBalance
+  affiliateBalance,
 }) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
@@ -34,9 +34,7 @@ function AffiliateBalance({
       setPaymentLoading(false);
     });
 
-    showBalance().then((res) =>{
-
-    });
+    showBalance().then((res) => {});
   }, []);
 
   const paymentMethod = () => {
@@ -69,6 +67,7 @@ function AffiliateBalance({
           setDeposit(response.data.message);
           setAmount("");
           setDepositLoading(false);
+          showBalance().then((res) => {});
         })
         .catch((err) => {
           console.log(err.response, "err");
@@ -172,7 +171,6 @@ function AffiliateBalance({
 
   return (
     <React.Fragment>
-      
       <div className="container-fluid">
         <div className="brand_container_main container aff-payment">
           <h4 className="page-title">Balance</h4>
@@ -181,18 +179,15 @@ function AffiliateBalance({
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
                   <h5>Current Balance</h5>
-                  {
-                  affiliateBalance?.success == true ? 
-                  <div className="aff-amount"> 
-                     ${affiliateBalance?.message?.current_balance}
-                     </div> :
-                     <div className="aff-amount">
-                      $0
+                  {affiliateBalance?.success == true ? (
+                    <div className="aff-amount">
+                      ${affiliateBalance?.message?.current_balance}
+                    </div>
+                  ) : (
+                    <div className="aff-amount">$0</div>
+                  )}
                 </div>
-          
-              }
               </div>
-            </div>
             </div>
             <div className="col-md-4">
               <div className="conn-set-inner">
@@ -232,11 +227,15 @@ function AffiliateBalance({
     </React.Fragment>
   );
 }
-function mapStateToProps({ affiliateCards, affiliatePayment,affiliateBalance }) {
+function mapStateToProps({
+  affiliateCards,
+  affiliatePayment,
+  affiliateBalance,
+}) {
   return {
     affiliateCards,
     affiliatePayment,
-    affiliateBalance
+    affiliateBalance,
   };
 }
 export default connect(mapStateToProps, { ...affiliateDepositActions })(
