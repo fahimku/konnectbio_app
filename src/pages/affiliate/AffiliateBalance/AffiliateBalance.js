@@ -24,6 +24,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
 
   const depositAmount = async (e) => {
     e.preventDefault();
+
     if (amount === "") {
       setAmountError(true);
     } else {
@@ -31,7 +32,9 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
       await axios
         .post(`/deposit/intent`, {
           payment_method_type: affiliateCards?.message?.data[0].type.split(),
-          payment_method: affiliateCards?.message?.data[0].id,
+          payment_method: changeCard
+            ? changeCard
+            : affiliateCards?.message?.data[0].id,
           amount: Number(amount),
         })
         .then((response) => {
@@ -52,52 +55,52 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
     if (data) {
       return (
         <>
-          {data.map((item, i) => {
-            return (
-              <>
-                <form onSubmit={depositAmount}>
-                  <div className="amount-box">
-                    <h6>Enter Amount</h6>
-                    <div className="d-flex flex-row hashtag-box">
-                      <span className="input-group-text">$</span>
-                      <input
-                        onChange={(e) => {
-                          setAmount(e.target.value);
-                          setAmountError(false);
-                        }}
-                        type="number"
-                        name="name"
-                        placeholder="Enter Amount"
-                        className="form-control comment-field"
-                        value={amount}
-                        onKeyDown={(evt) =>
-                          ["e", "E", "+", "-"].includes(evt.key) &&
-                          evt.preventDefault()
-                        }
-                        autoComplete="off"
-                      />
-                    </div>
-                    {amountError && (
-                      <span className="text-danger deposit-error">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                  <div className="amount-box">
-                    <h6>Choose an existing deposit method</h6>
+          <form onSubmit={depositAmount}>
+            <div className="amount-box">
+              <h6>Enter Amount</h6>
+              <div className="d-flex flex-row hashtag-box">
+                <span className="input-group-text">$</span>
+                <input
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                    setAmountError(false);
+                  }}
+                  type="number"
+                  name="name"
+                  placeholder="Enter Amount"
+                  className="form-control comment-field"
+                  value={amount}
+                  onKeyDown={(evt) =>
+                    ["e", "E", "+", "-"].includes(evt.key) &&
+                    evt.preventDefault()
+                  }
+                  autoComplete="off"
+                />
+              </div>
+              {amountError && (
+                <span className="text-danger deposit-error">
+                  This field is required
+                </span>
+              )}
+            </div>
+            <div className="amount-box">
+              <h6>Choose an existing deposit method</h6>
+              {data.map((item, i) => {
+                return (
+                  <>
                     <div className="deposit_card">
                       <input
                         type="radio"
                         name="card"
                         id="card1"
                         class="infchecked"
-                        value="card1"
-                        defaultChecked
+                        value={item.id}
+                        defaultChecked={i === 0 ? true : false}
                         onChange={(e) => {
                           setChangeCard(e.target.value);
                         }}
                       />
-                      <label for="card1">
+                      <label for={item.id}>
                         <div className="pull-left">
                           <span className="card-name">{item.card.brand}</span>{" "}
                           ending in {item.card.last4}
@@ -111,27 +114,27 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
                         </div>
                       </label>
                     </div>
-                  </div>
-                  <div className="amount-box pt-0">
-                    {depositLoading ? (
-                      <Button>
-                        <Loader />
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        type="submit"
-                        className=""
-                        disabled={depositLoading ? true : false}
-                      >
-                        Deposit
-                      </Button>
-                    )}
-                  </div>
-                </form>
-              </>
-            );
-          })}
+                  </>
+                );
+              })}
+            </div>
+            <div className="amount-box pt-0">
+              {depositLoading ? (
+                <Button>
+                  <Loader />
+                </Button>
+              ) : (
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className=""
+                  disabled={depositLoading ? true : false}
+                >
+                  Deposit
+                </Button>
+              )}
+            </div>
+          </form>
         </>
       );
     }
