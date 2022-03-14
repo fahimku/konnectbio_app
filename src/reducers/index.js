@@ -49,6 +49,8 @@ import marketplaceDetailTransactions from "./marketplaceTransactions/marketplace
 
 import affiliateCards from "./affiliateDeposit/affiliateCards";
 import affiliatePayment from "./affiliateDeposit/affiliatePayment"
+import affiliateBalance from "./affiliateDeposit/affiliateBalance"
+
 
 export default (history) =>
   combineReducers({
@@ -99,5 +101,6 @@ export default (history) =>
     marketplaceCampaigns,
     marketplaceDetailTransactions,
     affiliateCards,
-    affiliatePayment
+    affiliatePayment,
+    affiliateBalance
   });

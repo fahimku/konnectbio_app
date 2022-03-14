@@ -8,7 +8,7 @@ import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 
-function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment }) {
+function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment,affiliateBalance,showBalance }) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
@@ -25,6 +25,10 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     makePayment().then((res) => {
       setPaymentLoading(false);
     });
+
+    showBalance().then((res) =>{
+
+    });
   }, []);
 
 
@@ -35,7 +39,6 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     } else {
     }
   };
-
 
   const depositAmount = async (e) => {
     e.preventDefault();
@@ -166,6 +169,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
 
   return (
     <React.Fragment>
+      
       <div className="container-fluid">
         <div className="brand_container_main container aff-payment">
           <h4 className="page-title">Balance</h4>
@@ -174,9 +178,18 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
                   <h5>Current Balance</h5>
-                  <div className="aff-amount">$0</div>
+                  {
+                  affiliateBalance?.success == true ? 
+                  <div className="aff-amount"> 
+                     ${affiliateBalance?.message?.current_balance}
+                     </div> :
+                     <div className="aff-amount">
+                      $0
                 </div>
+          
+              }
               </div>
+            </div>
             </div>
             <div className="col-md-4">
               <div className="conn-set-inner">
@@ -216,10 +229,11 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     </React.Fragment>
   );
 }
-function mapStateToProps({ affiliateCards,affiliatePayment }) {
+function mapStateToProps({ affiliateCards,affiliatePayment,affiliateBalance }) {
   return {
     affiliateCards,
-    affiliatePayment
+    affiliatePayment,
+    affiliateBalance,
   };
 }
 export default connect(mapStateToProps, { ...affiliateDepositActions })(
