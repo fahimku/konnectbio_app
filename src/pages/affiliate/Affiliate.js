@@ -13,6 +13,9 @@ import AffiliateBalance from "./AffiliateBalance/AffiliateBalance";
 import axios from "axios";
 import { createBrowserHistory } from "history";
 import Loader from "../../components/Loader/Loader";
+import queryString from "query-string";
+import { toast } from "react-toastify";
+
 export const history = createBrowserHistory({
   forceRefresh: true,
 });
@@ -20,11 +23,13 @@ export const history = createBrowserHistory({
 class Affiliate extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const params = queryString.parse(window.location.search);
+
     let username = userInfo.username;
     super(props);
     this.toggleTabs = this.toggleTabs.bind(this);
     this.state = {
-      activeTab: "dashboard",
+      activeTab: params?.status ? "balance" : "dashboard",
       username: username,
       package_name: userInfo?.package?.package_name,
       myBrand: "",
@@ -38,6 +43,12 @@ class Affiliate extends React.Component {
     // });
     if (this.state.package_name !== "61c02e2ff40bec74fac2ca09") {
       this.getMyBrands();
+    }
+    const params = queryString.parse(window.location.search);
+    if (params.status === "success") {
+      toast.success("Card added succesfully!");
+    } else if (params.status === "error") {
+      toast.error("Failed to Add Card!");
     }
   }
   getMyBrands = async () => {
@@ -207,12 +218,9 @@ class Affiliate extends React.Component {
                     >
                       <span>Transactions</span>
                     </NavLink>
-                        </NavItem>
-                        
-                        
+                  </NavItem>
 
-
-                        {/* <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "sales",
@@ -294,8 +302,8 @@ class Affiliate extends React.Component {
                     {this.state.activeTab === "transaction" ? (
                       <AffiliateTransaction />
                     ) : null}
-                        </TabPane>
-                        {/* <TabPane tabId="sales">
+                  </TabPane>
+                  {/* <TabPane tabId="sales">
                     {this.state.activeTab === "sales" ? (
                       <AffiliateSales />
                     ) : null}
