@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment }) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
+  const [paymentType, setPaymentType] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState(false);
@@ -39,14 +40,15 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
 
   const depositAmount = async (e) => {
     e.preventDefault();
-
     if (amount === "") {
       setAmountError(true);
     } else {
       setDepositLoading(true);
       await axios
         .post(`/deposit/intent`, {
-          payment_method_type: affiliateCards?.message?.data[0].type.split(),
+          payment_method_type: paymentType
+            ? paymentType.split()
+            : affiliateCards?.message?.data[0].type.split(),
           payment_method: changeCard
             ? changeCard
             : affiliateCards?.message?.data[0].id,
@@ -113,6 +115,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                         defaultChecked={i === 0 ? true : false}
                         onChange={(e) => {
                           setChangeCard(e.target.value);
+                          setPaymentType(item.type);
                         }}
                       />
                       <label for={item.id}>
