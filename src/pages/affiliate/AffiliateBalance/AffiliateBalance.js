@@ -4,23 +4,38 @@ import { Button, Row, Col, Table } from "react-bootstrap";
 import AffiliateDeposit from "./AffiliateDeposit";
 import { connect } from "react-redux";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
+
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 
-function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
+function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment }) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState(false);
   const [depositLoading, setDepositLoading] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   useEffect(() => {
     setCardLoading(true);
     getAffiliateCards().then(() => {
       setCardLoading(false);
     });
+    makePayment().then((res) => {
+      setPaymentLoading(false);
+    });
   }, []);
+
+
+  const paymentMethod = () => {
+    if (affiliatePayment?.success == true) {
+      let data = affiliatePayment?.message;
+      window.open(data, "_self");
+    } else {
+    }
+  };
+
 
   const depositAmount = async (e) => {
     e.preventDefault();
@@ -126,7 +141,9 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
                       >
                         Deposit
                       </Button>
+                       
                     )}
+                  
                   </div>
                 </form>
               </>
@@ -189,9 +206,10 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards }) {
     </React.Fragment>
   );
 }
-function mapStateToProps({ affiliateCards }) {
+function mapStateToProps({ affiliateCards,affiliatePayment }) {
   return {
     affiliateCards,
+    affiliatePayment
   };
 }
 export default connect(mapStateToProps, { ...affiliateDepositActions })(
