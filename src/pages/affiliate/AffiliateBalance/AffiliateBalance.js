@@ -8,9 +8,17 @@ import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 
-function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment,affiliateBalance,showBalance }) {
+function AffiliateBalance({
+  getAffiliateCards,
+  affiliateCards,
+  makePayment,
+  affiliatePayment,
+  showBalance,
+  affiliateBalance
+}) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
+  const [paymentType, setPaymentType] = useState("");
   const [cardLoading, setCardLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState(false);
@@ -31,7 +39,6 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     });
   }, []);
 
-
   const paymentMethod = () => {
     if (affiliatePayment?.success == true) {
       let data = affiliatePayment?.message;
@@ -42,14 +49,15 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
 
   const depositAmount = async (e) => {
     e.preventDefault();
-
     if (amount === "") {
       setAmountError(true);
     } else {
       setDepositLoading(true);
       await axios
         .post(`/deposit/intent`, {
-          payment_method_type: affiliateCards?.message?.data[0].type.split(),
+          payment_method_type: paymentType
+            ? paymentType.split()
+            : affiliateCards?.message?.data[0].type.split(),
           payment_method: changeCard
             ? changeCard
             : affiliateCards?.message?.data[0].id,
@@ -110,12 +118,13 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                       <input
                         type="radio"
                         name="card"
-                        id="card1"
+                        id={item.id}
                         class="infchecked"
                         value={item.id}
                         defaultChecked={i === 0 ? true : false}
                         onChange={(e) => {
                           setChangeCard(e.target.value);
+                          setPaymentType(item.type);
                         }}
                       />
                       <label for={item.id}>
@@ -124,11 +133,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                           ending in {item.card.last4}
                         </div>
                         <div className="text-right">
-                          Expired:{" "}
-                          {item.card.exp_month < 10
-                            ? "0" + item.card.exp_month
-                            : String.valueOf(item.card.exp_month)}
-                          /{item.card.exp_year}
+                          Expired: {item.card.exp_month}/{item.card.exp_year}
                         </div>
                       </label>
                     </div>
@@ -152,14 +157,12 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                 </Button>
               )}
               <Button
-                  variant="primary"
-                 
-                  className=""
-                  onClick={() => paymentMethod()}
-                >
-                  Add Card
-                </Button>
-               
+                variant="primary"
+                className=""
+                onClick={() => paymentMethod()}
+              >
+                Add Card
+              </Button>
             </div>
           </form>
         </>
@@ -229,11 +232,11 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     </React.Fragment>
   );
 }
-function mapStateToProps({ affiliateCards,affiliatePayment,affiliateBalance }) {
+function mapStateToProps({ affiliateCards, affiliatePayment,affiliateBalance }) {
   return {
     affiliateCards,
     affiliatePayment,
-    affiliateBalance,
+    affiliateBalance
   };
 }
 export default connect(mapStateToProps, { ...affiliateDepositActions })(
