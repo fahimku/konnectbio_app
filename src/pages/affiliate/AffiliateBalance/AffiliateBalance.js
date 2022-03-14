@@ -112,7 +112,7 @@ function AffiliateBalance({
                       <input
                         type="radio"
                         name="card"
-                        id="card1"
+                        id={item.id}
                         class="infchecked"
                         value={item.id}
                         defaultChecked={i === 0 ? true : false}
