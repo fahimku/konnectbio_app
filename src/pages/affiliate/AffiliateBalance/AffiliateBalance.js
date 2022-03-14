@@ -8,7 +8,12 @@ import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 
-function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affiliatePayment }) {
+function AffiliateBalance({
+  getAffiliateCards,
+  affiliateCards,
+  makePayment,
+  affiliatePayment,
+}) {
   const [deposit, setDeposit] = useState("");
   const [changeCard, setChangeCard] = useState("");
   const [paymentType, setPaymentType] = useState("");
@@ -28,7 +33,6 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     });
   }, []);
 
-
   const paymentMethod = () => {
     if (affiliatePayment?.success == true) {
       let data = affiliatePayment?.message;
@@ -36,7 +40,6 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     } else {
     }
   };
-
 
   const depositAmount = async (e) => {
     e.preventDefault();
@@ -124,11 +127,7 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                           ending in {item.card.last4}
                         </div>
                         <div className="text-right">
-                          Expired:{" "}
-                          {item.card.exp_month < 10
-                            ? "0" + item.card.exp_month
-                            : String.valueOf(item.card.exp_month)}
-                          /{item.card.exp_year}
+                          Expired: {item.card.exp_month}/{item.card.exp_year}
                         </div>
                       </label>
                     </div>
@@ -152,14 +151,12 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
                 </Button>
               )}
               <Button
-                  variant="primary"
-                 
-                  className=""
-                  onClick={() => paymentMethod()}
-                >
-                  Add Card
-                </Button>
-               
+                variant="primary"
+                className=""
+                onClick={() => paymentMethod()}
+              >
+                Add Card
+              </Button>
             </div>
           </form>
         </>
@@ -219,10 +216,10 @@ function AffiliateBalance({ getAffiliateCards, affiliateCards,makePayment, affil
     </React.Fragment>
   );
 }
-function mapStateToProps({ affiliateCards,affiliatePayment }) {
+function mapStateToProps({ affiliateCards, affiliatePayment }) {
   return {
     affiliateCards,
-    affiliatePayment
+    affiliatePayment,
   };
 }
 export default connect(mapStateToProps, { ...affiliateDepositActions })(
