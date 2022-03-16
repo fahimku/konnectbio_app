@@ -106,10 +106,10 @@ function HashtagsList({ createMedia, title }) {
     // const [first, ...rest] = bytesSize.split(" ");
     // var val = parseFloat(first);
     // var byte = rest[0];
-    // console.log(byte, "byte");
+    console.log(meta.size, "meta.size");
 
     // setImgMsg("");
-    if (meta.size < 20480) {
+    if (meta.size < 20480 || meta.size > 20971520) {
       setImgsize(true);
       // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
       remove(files);
@@ -191,7 +191,7 @@ function HashtagsList({ createMedia, title }) {
           <h4>Or</h4>
           {imgSize ? (
             <h5 class="text-danger">
-              Your File Size Can Not Be Less Than 20 KB.
+              Your File Size Can Not Be Less Than 20 KB & More Than 20 MB.
             </h5>
           ) : (
             <></>

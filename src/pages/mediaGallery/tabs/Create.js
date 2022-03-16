@@ -98,7 +98,7 @@ function HashtagsList({ createMedia, title }) {
           {/* {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>} */}
           {imgSize ? (
             <h5 class="text-danger">
-              Your File Size Can Not Be Less Than 20 KB.
+              Your File Size Can Not Be Less Than 20 KB & More Than 20 MB.
             </h5>
           ) : (
             <></>
@@ -154,7 +154,7 @@ function HashtagsList({ createMedia, title }) {
     //       remove(files)
     //     }
     // }
-    if (meta.size < 20480) {
+    if (meta.size < 20480 || meta.size > 20971520) {
       setImgsize(true);
       // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
       remove(files);
