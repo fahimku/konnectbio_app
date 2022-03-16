@@ -14,8 +14,8 @@ function HashtagsList({ createMedia, title }) {
   const [loading, setLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [imgSize, setImgsize] = useState(false);
-  const [bytesSize, setBytesize] = useState('');
-  const [ImgMsg, setImgMsg] = useState('')
+  const [bytesSize, setBytesize] = useState("");
+  const [ImgMsg, setImgMsg] = useState("");
 
   const [fields, setFields] = useState({
     title: "",
@@ -80,9 +80,8 @@ function HashtagsList({ createMedia, title }) {
         ...fields,
         image: file,
       });
-    }
-    else { 
-      toast.error("We Only Support PNG, GIF, Or JPG Image")
+    } else {
+      toast.error("We Only Support PNG, GIF, Or JPG Image");
     }
   };
   const getFilesFromEvent = (e) => {
@@ -93,7 +92,7 @@ function HashtagsList({ createMedia, title }) {
     });
   };
 
-  const remove = (allFiles)  => {
+  const remove = (allFiles) => {
     // setFields({
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
@@ -103,30 +102,42 @@ function HashtagsList({ createMedia, title }) {
     allFiles.forEach((f) => f.remove());
   };
 
-  const Preview = ({ meta, files }) => {
+  const Preview = ({ meta, files, file }) => {
+    // const [first, ...rest] = bytesSize.split(" ");
+    // var val = parseFloat(first);
+    // var byte = rest[0];
+    // console.log(byte, "byte");
 
-    const [first, ...rest] = bytesSize.split(' ');
-    var val = parseFloat(first);
-    var byte = rest[0];
-
-    if (byte === "MB") {
-      setImgMsg('')
-      if (val > 20) {
-        setImgsize(true)
-        setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.")
-        remove(files)
-      }
-    }
-    
-     if(byte === "KB") { 
-        setImgMsg('')  
-      if (val < 20) {
-          setImgsize(true)
-          setImgMsg("Your File Size Can Not Be Less Than 20 KB.")
-          remove(files)
-        }
+    // setImgMsg("");
+    if (meta.size < 20480) {
+      setImgsize(true);
+      // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
+      remove(files);
+    } else {
+      setImgsize(false);
     }
 
+    // if (byte === "MB") {
+    //   // setImgMsg("");
+    //   if (val > 20) {
+    //     setImgsize(true);
+    //     // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
+    //     remove(files);
+    //   } else {
+    //     setImgsize(false);
+    //   }
+    // }
+
+    // if (byte === "KB") {
+    //   // setImgMsg("");
+    //   if (val < 20) {
+    //     setImgsize(true);
+    //     // setImgMsg("Your File Size Can Not Be Less Than 20 KB.");
+    //     remove(files);
+    //   } else {
+    //     setImgsize(false);
+    //   }
+    // }
 
     const { name, percent, status, previewUrl, size } = meta;
     setPreviewLoading(status === "done" ? false : true);
@@ -178,7 +189,13 @@ function HashtagsList({ createMedia, title }) {
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
           <h4>Drag & Drop Your Image Here</h4>
           <h4>Or</h4>
-          {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
+          {imgSize ? (
+            <h5 class="text-danger">
+              Your File Size Can Not Be Less Than 20 KB.
+            </h5>
+          ) : (
+            <></>
+          )}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
             <input
