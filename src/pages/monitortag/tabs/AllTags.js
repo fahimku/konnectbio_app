@@ -225,6 +225,17 @@ function ALLTAGS({
                       Reset
                     </Button>
                   )}
+                  <span
+                    className=""
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                    title="Download PDF"
+                  >
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                  </span>
                 </Col>
               </Row>
             </form>
