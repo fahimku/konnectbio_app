@@ -19,6 +19,7 @@ function HashtagsList({ createMedia, title }) {
   const [imgSize, setImgsize] = useState(false);
   const [bytesSize, setBytesize] = useState('');
   const [ImgMsg, setImgMsg] = useState('')
+  const [flag, setFlag] = useState(false);
   
   const [previewLoading, setPreviewLoading] = useState(false);
   const [fields, setFields] = useState({
@@ -54,8 +55,9 @@ function HashtagsList({ createMedia, title }) {
     for (var i = 0; i < sizes.length; i++) {
       if (bytes <= 1024) {
        
-        setBytesize(bytes + " " + sizes[i]);
+       
         return bytes + " " + sizes[i];
+        
         
       } else {
         
@@ -128,6 +130,8 @@ function HashtagsList({ createMedia, title }) {
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
     // });
+    setFlag(false);
+    setImgMsg('');
     setSubmit(false);
     setLoading(false);
     allFiles.forEach((f) => f.remove());
@@ -135,30 +139,22 @@ function HashtagsList({ createMedia, title }) {
 
 
   const Preview = ({ meta, files }) => {
-
-    const [first, ...rest] = bytesSize.split(' ');
-    var val = parseFloat(first);
-    var byte = rest[0];
-
-    if (byte === "MB") {
-      setImgMsg('')
-      if (val > 20) {
-        setImgsize(true)
-        setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.")
-        remove(files)
-      }
-    }
-    
-     if(byte === "KB") { 
-        setImgMsg('')  
-      if (val < 20) {
-          setImgsize(true)
-          setImgMsg("Your File Size Can Not Be Less Than 20 KB.")
-          remove(files)
-        }
-    }
     
     const { name, percent, status, previewUrl, size } = meta;
+   
+    if(size > 2050000  ){
+      setFlag(true);
+      setImgsize(true)
+      remove(files)
+      setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.")
+    }
+    if(size < 20500){
+      setFlag(true)
+      setImgsize(true)
+      remove(files)
+      setImgMsg("Your File Size Can Not Be Less Than 20 KB.")
+      
+    }
     setPreviewLoading(status === "done" ? false : true);
     return (
       <>
@@ -172,12 +168,17 @@ function HashtagsList({ createMedia, title }) {
             <div className="glry-img-size">{bytesToSize(size)}</div>
             {status !== "done" ? <span>Uploading</span> : "Done"}
             <div className="status">{status}</div>
+            
             <div className="pro-brar-ift">
+            {flag === false ?
               <ProgressBar
                 animated
                 now={percent}
                 label={`${percent.toFixed(0)}%`}
               />
+              :
+             <></>
+            }
               <span
                 className="glyphicon glyphicon-remove"
                 onClick={removeFile(files)}
@@ -195,15 +196,20 @@ function HashtagsList({ createMedia, title }) {
 
 
   const removeFile = (allFiles) => () => {
+    setFlag(false)
     // setFields({
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
     // });
+    setImgMsg('');
     setSubmit(false);
     setLoading(false);
     allFiles.forEach((f) => f.remove());
   };
   const onFileChange = ({  file }) => {
+
+
+    console.log(file,"fileSize")
     if (
       file.type === "image/jpeg" ||
       file.type === "image/jpg" ||
@@ -211,6 +217,7 @@ function HashtagsList({ createMedia, title }) {
       file.type === "image/gif" ||
       file.type === "image/svg+xml"
     ) {
+      
       setFields({
         ...fields,
         image: file,
@@ -260,6 +267,8 @@ function HashtagsList({ createMedia, title }) {
                     getFilesFromEvent={getFilesFromEvent}
                     accept=".jpg, .jpeg, .png, .gif, .svg"
                     maxFiles={1}
+                    maxSizeBytes={2050000}
+                    minSizeBytes={20500}
                     // inputContent="Drop A File"
                     addClassNames={{
                       dropzone: "drag-drop-ift",
