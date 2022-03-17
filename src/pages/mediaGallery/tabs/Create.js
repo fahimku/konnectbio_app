@@ -1,4 +1,4 @@
-import React, { useRef, useState,useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { connect } from "react-redux";
@@ -45,12 +45,10 @@ function HashtagsList({ createMedia, title }) {
     }
   }
 
-
   function preview(url) {
     return URL.createObjectURL(url);
   }
   function bytesToSize(bytes) {
-
     var sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
     for (var i = 0; i < sizes.length; i++) {
       if (bytes <= 1024) {
@@ -60,9 +58,7 @@ function HashtagsList({ createMedia, title }) {
         
         
       } else {
-        
         bytes = parseFloat(bytes / 1024).toFixed(2);
-       
       }
     }
     return bytes + " P";
@@ -71,7 +67,6 @@ function HashtagsList({ createMedia, title }) {
   const fileParams = ({ meta }) => {
     return { url: "https://httpbin.org/post" };
   };
-
 
   const onSubmit = (files, allFiles) => {
     setSubmit(true);
@@ -97,7 +92,6 @@ function HashtagsList({ createMedia, title }) {
     });
   };
   const selectFileInput = ({ accept, onFiles, files, getFilesFromEvent }) => {
-    
     const textMsg = files.length > 0 ? "Upload Again" : "Browse Image";
     return (
       <>
@@ -105,6 +99,7 @@ function HashtagsList({ createMedia, title }) {
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
           <h4>Drag & Drop Your Image Here</h4>
           <h4>Or</h4>
+          {/* {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>} */}
           {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
@@ -125,7 +120,7 @@ function HashtagsList({ createMedia, title }) {
     );
   };
 
-  const remove = (allFiles)  => {
+  const remove = (allFiles) => {
     // setFields({
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
@@ -136,7 +131,6 @@ function HashtagsList({ createMedia, title }) {
     setLoading(false);
     allFiles.forEach((f) => f.remove());
   };
-
 
   const Preview = ({ meta, files }) => {
     
@@ -193,8 +187,6 @@ function HashtagsList({ createMedia, title }) {
     );
   };
 
-
-
   const removeFile = (allFiles) => () => {
     setFlag(false)
     // setFields({
@@ -222,9 +214,8 @@ function HashtagsList({ createMedia, title }) {
         ...fields,
         image: file,
       });
-    }
-    else { 
-      toast.error("We Only Support PNG, GIF, Or JPG Image")
+    } else {
+      toast.error("We Only Support PNG, GIF, Or JPG Image");
     }
   };
 
@@ -281,10 +272,11 @@ function HashtagsList({ createMedia, title }) {
                       dropzoneActive: { borderColor: "green" },
                     }}
                   />
-                  {submit && !fields.image ? (
-                    <small style={{ color: "red" }}>Please Select Image</small>
-                  ) : null}
-                  {/* {loading ? (
+           
+                {submit && !fields.image ? (
+                  <small style={{ color: "red" }}>Please Select Image</small>
+                ) : null}
+                {/* {loading ? (
                     <Button
                       style={{
                         borderTopLeftRadius: 0,
@@ -308,10 +300,10 @@ function HashtagsList({ createMedia, title }) {
                       Create
                     </Button>
                   )} */}
-                </div>
               </div>
-            </Row>
-          </div>
+            </div>
+          </Row>
+        </div>
       </div>
     </React.Fragment>
   );

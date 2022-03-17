@@ -80,9 +80,8 @@ function HashtagsList({ createMedia, title }) {
         ...fields,
         image: file,
       });
-    }
-    else { 
-      toast.error("We Only Support PNG, GIF, Or JPG Image")
+    } else {
+      toast.error("We Only Support PNG, GIF, Or JPG Image");
     }
   };
   const getFilesFromEvent = (e) => {
@@ -93,7 +92,7 @@ function HashtagsList({ createMedia, title }) {
     });
   };
 
-  const remove = (allFiles)  => {
+  const remove = (allFiles) => {
     // setFields({
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
@@ -105,7 +104,11 @@ function HashtagsList({ createMedia, title }) {
     allFiles.forEach((f) => f.remove());
   };
 
-  const Preview = ({ meta, files }) => {
+  const Preview = ({ meta, files, file }) => {
+    // const [first, ...rest] = bytesSize.split(" ");
+    // var val = parseFloat(first);
+    // var byte = rest[0];
+    console.log(meta.size, "meta.size");
 
     const { name, percent, status, previewUrl, size } = meta;
 
