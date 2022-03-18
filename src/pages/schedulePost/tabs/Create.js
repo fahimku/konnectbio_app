@@ -14,8 +14,9 @@ function HashtagsList({ createMedia, title }) {
   const [loading, setLoading] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const [imgSize, setImgsize] = useState(false);
-  const [bytesSize, setBytesize] = useState("");
-  const [ImgMsg, setImgMsg] = useState("");
+  const [bytesSize, setBytesize] = useState('');
+  const [ImgMsg, setImgMsg] = useState('')
+  const [flag, setFlag] = useState(false);
 
   const [fields, setFields] = useState({
     title: "",
@@ -42,7 +43,6 @@ function HashtagsList({ createMedia, title }) {
     var sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
     for (var i = 0; i < sizes.length; i++) {
       if (bytes <= 1024) {
-        setBytesize(bytes + " " + sizes[i]);
         return bytes + " " + sizes[i];
       } else {
         bytes = parseFloat(bytes / 1024).toFixed(2);
@@ -97,6 +97,8 @@ function HashtagsList({ createMedia, title }) {
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
     // });
+    setFlag(false);
+    setImgMsg('');
     setSubmit(false);
     setLoading(false);
     allFiles.forEach((f) => f.remove());
@@ -108,38 +110,22 @@ function HashtagsList({ createMedia, title }) {
     // var byte = rest[0];
     console.log(meta.size, "meta.size");
 
-    // setImgMsg("");
-    if (meta.size < 20480 || meta.size > 20971520) {
-      setImgsize(true);
-      // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
-      remove(files);
-    } else {
-      setImgsize(false);
+    const { name, percent, status, previewUrl, size } = meta;
+
+    if(size > 2050000  ){
+      setFlag(true);
+      setImgsize(true)
+      remove(files)
+      setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.")
+    }
+    if(size < 20500){
+      setFlag(true)
+      setImgsize(true)
+      remove(files)
+      setImgMsg("Your File Size Can Not Be Less Than 20 KB.")
+      
     }
 
-    // if (byte === "MB") {
-    //   // setImgMsg("");
-    //   if (val > 20) {
-    //     setImgsize(true);
-    //     // setImgMsg("Your File Size Can Not Be Exceed More Than 20 MB.");
-    //     remove(files);
-    //   } else {
-    //     setImgsize(false);
-    //   }
-    // }
-
-    // if (byte === "KB") {
-    //   // setImgMsg("");
-    //   if (val < 20) {
-    //     setImgsize(true);
-    //     // setImgMsg("Your File Size Can Not Be Less Than 20 KB.");
-    //     remove(files);
-    //   } else {
-    //     setImgsize(false);
-    //   }
-    // }
-
-    const { name, percent, status, previewUrl, size } = meta;
     setPreviewLoading(status === "done" ? false : true);
     return (
       <>
@@ -154,11 +140,15 @@ function HashtagsList({ createMedia, title }) {
             {status !== "done" ? <span>Uploading</span> : "Done"}
             <div className="status">{status}</div>
             <div className="pro-brar-ift">
+            {flag === false ?
               <ProgressBar
                 animated
                 now={percent}
                 label={`${percent.toFixed(0)}%`}
               />
+              :
+              <></>
+            }
               <span
                 className="glyphicon glyphicon-remove"
                 onClick={removeFile(files)}
@@ -177,6 +167,8 @@ function HashtagsList({ createMedia, title }) {
     //   ...fields,
     //   image: allFiles.forEach((f) => f.remove()) === undefined ? "" : "",
     // });
+    setFlag(false)  
+    setImgMsg('');
     setSubmit(false);
     setLoading(false);
     allFiles.forEach((f) => f.remove());
@@ -189,13 +181,7 @@ function HashtagsList({ createMedia, title }) {
           <span class="pt-1 pb-4 glyphicon glyphicon-cloud-upload	fa-4x"></span>
           <h4>Drag & Drop Your Image Here</h4>
           <h4>Or</h4>
-          {imgSize ? (
-            <h5 class="text-danger">
-              Your File Size Can Not Be Less Than 20 KB & More Than 20 MB.
-            </h5>
-          ) : (
-            <></>
-          )}
+          {imgSize ? <h5 class="text-danger">{ImgMsg}</h5>:<></>}
           <label className="btn btn-primary mr-0 mb-0">
             {textMsg}
             <input
@@ -256,6 +242,8 @@ function HashtagsList({ createMedia, title }) {
                   accept=".jpg, .jpeg, .png, .gif, .svg"
                   maxFiles={1}
                   multiple={false}
+                  maxSizeBytes={2050000}
+                  minSizeBytes={20500}
                   // inputContent="Drop A File"
                   addClassNames={{
                     dropzone: "drag-drop-ift",
