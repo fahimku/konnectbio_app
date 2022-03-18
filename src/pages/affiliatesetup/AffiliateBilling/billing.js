@@ -44,9 +44,9 @@ class AffiliateBilling extends React.Component {
                           address: "",
                           contactPerson: "",
                         }}
-                        onSubmit={(values, actions) => {
-                          this.onSubmitting(values, actions);
-                        }}
+                        // onSubmit={(values, actions) => {
+                        //   this.onSubmitting(values, actions);
+                        // }}
                       >
                         {({
                           values,

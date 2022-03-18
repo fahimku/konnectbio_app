@@ -247,9 +247,7 @@ class Package extends React.Component {
             className="pricing_tabs_ifti mb-3"
           >
             <Tab eventKey="Monthly" title="Monthly">
-              <div
-                className={`package_parent  package_parent_influencer`}
-              >
+              <div className={`package_parent  package_parent_influencer`}>
                 {userInfo.account_type == "influencer" ? (
                   <>
                     {Object.keys(basic).length !== 0 &&
@@ -572,10 +570,7 @@ class Package extends React.Component {
               </div>
             </Tab>
             <Tab eventKey="Yearly" title="Yearly">
-
-              <div
-                className={`package_parent  package_parent_influencer`}
-              >
+              <div className={`package_parent  package_parent_influencer`}>
                 {userInfo.account_type == "influencer" ? (
                   <>
                     {Object.keys(basic).length !== 0 &&
