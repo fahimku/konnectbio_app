@@ -340,6 +340,9 @@ class UpdateModal extends React.Component {
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
+  disabledDate(current) {
+    return current && current < moment().endOf("day");
+  }
 
   render() {
     const { affData } = this.props;
@@ -502,6 +505,7 @@ class UpdateModal extends React.Component {
                     format="YYYY-MM-DD"
                     // onChange={this.dateRangePickerChanger}
                     onChange={this.dateRangePickerChanger.bind(this)}
+                    // disabledDate={this.disabledDate()}
                   />
                 </div>
               </div>
