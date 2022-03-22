@@ -19,19 +19,7 @@ class SummaryComponent extends React.Component {
             <div className="col-md-12">
               <h4 className="page-title">Analytics</h4>
             </div>
-            <div
-              className={`analytics-summery-box ${
-                this.state.packageName === "61d695e9bccdaf69f46efc66"
-                  ? "col-md-6"
-                  : "col-md-4"
-              } `}
-            >
-              {/* <h4 className="page-title">Post Summary</h4> */}
-              <SummaryDataComponent
-                username={this.state.username}
-                packageName={this.state.packageName}
-              />
-            </div>
+           
 
             <div
               className={`analytics-summery-box ${
@@ -46,6 +34,21 @@ class SummaryComponent extends React.Component {
                 packageName={this.state.packageName}
               />
             </div>
+
+            <div
+              className={`analytics-summery-box ${
+                this.state.packageName === "61d695e9bccdaf69f46efc66"
+                  ? "col-md-6"
+                  : "col-md-4"
+              } `}
+            >
+              {/* <h4 className="page-title">Post Summary</h4> */}
+              <SummaryDataComponent
+                username={this.state.username}
+                packageName={this.state.packageName}
+              />
+            </div>
+            
             {this.state.packageName !== "61d695e9bccdaf69f46efc66" && (
               <div className="analytics-summery-box col-md-4">
                 <CampaignSummaryComponent
