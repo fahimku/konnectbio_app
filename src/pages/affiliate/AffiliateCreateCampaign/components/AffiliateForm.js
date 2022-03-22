@@ -50,20 +50,19 @@ class AffiliateForm extends React.Component {
     // console.log(campaign_name, "campaign_name");
   };
   ppClick = (value) => {
-    this.setState({
-      pay_per_hundred: value
-  },() => {
-     
-    });
+    this.setState(
+      {
+        pay_per_hundred: value,
+      },
+      () => {}
+    );
     var pay_per_hundered = parseInt(this.state.pay_per_hundred);
     var budget = parseInt(this.state.budget);
     if (pay_per_hundered > budget) {
       this.setState({ budgetCondition: "PPC can not be greater than budget" });
-      console.log(pay_per_hundered, "===", budget)
-    }
-    else { 
+      console.log(pay_per_hundered, "===", budget);
+    } else {
       this.setState({ budgetCondition: "" });
-      
     }
   };
   budget = (value) => {
@@ -230,45 +229,44 @@ class AffiliateForm extends React.Component {
       campaign_type &&
       place
     ) {
-        this.setState({ loading: true });
-        await axios
-          .post(`/campaigns/reserve`, {
-            post_id: id,
-            campaign_name: this.state.campaign_name,
-            campaign_type: this.state.campaign_type,
-            redirected_url: this.props.affData.redirected_url,
-            media_url: this.props.affData.media_url,
-            category_id:
-              this.props.affData.categories.length !== 0
-                ? this.props.affData.categories[0].category_id
-                : "",
-            budget: parseInt(this.state.budget),
-            pay_per_hundred: parseInt(this.state.pay_per_hundred),
-            // traffic: 100,
-            demographics:
-              this.state.inputList[0].country === "" ? "" : this.state.inputList,
-            start_date: this.state.startDate,
-            end_date: this.state.endDate,
-          })
-          .then((response) => {
-            toast.success("Your Campaign is Schedule Successfully");
-            this.setState({ loading: false });
-            // this.props.affCloseModal();
-            // this.props.getPosts(1, null, this.props.clearPost);
-            this.props.updatePost(id);
-            // this.props.affCloseModal();
-            this.props.toggleTabs();
-          })
-          .catch((err) => {
-            this.setState({ loading: false });
-            if (err.message) {
-              toast.error("PPC cannot be greater than budget")
-            }
-            else {
-              toast.error("Something went wrong");
-            }
-            });
-      }
+      this.setState({ loading: true });
+      await axios
+        .post(`/campaigns/reserve`, {
+          post_id: id,
+          campaign_name: this.state.campaign_name,
+          campaign_type: this.state.campaign_type,
+          redirected_url: this.props.affData.redirected_url,
+          media_url: this.props.affData.media_url,
+          category_id:
+            this.props.affData.categories.length !== 0
+              ? this.props.affData.categories[0].category_id
+              : "",
+          budget: parseInt(this.state.budget),
+          pay_per_hundred: parseInt(this.state.pay_per_hundred),
+          // traffic: 100,
+          demographics:
+            this.state.inputList[0].country === "" ? "" : this.state.inputList,
+          start_date: this.state.startDate,
+          end_date: this.state.endDate,
+        })
+        .then((response) => {
+          toast.success("Your Campaign is Schedule Successfully");
+          this.setState({ loading: false });
+          // this.props.affCloseModal();
+          // this.props.getPosts(1, null, this.props.clearPost);
+          this.props.updatePost(id);
+          // this.props.affCloseModal();
+          this.props.toggleTabs();
+        })
+        .catch((err) => {
+          this.setState({ loading: false });
+          if (err.message) {
+            toast.error("PPC cannot be greater than budget");
+          } else {
+            toast.error("Something went wrong");
+          }
+        });
+    }
   };
   // handle Zip input change
   handleZipChange = (e, index) => {
@@ -343,6 +341,9 @@ class AffiliateForm extends React.Component {
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
+  disabledDate(current) {
+    return current && current < moment().endOf("day");
+  }
   render() {
     const { affData } = this.props;
     let category =
@@ -492,6 +493,7 @@ class AffiliateForm extends React.Component {
                     format="YYYY-MM-DD"
                     // onChange={this.dateRangePickerChanger}
                     onChange={this.dateRangePickerChanger.bind(this)}
+                    disabledDate={this.disabledDate}
                   />
                 </div>
               </div>
@@ -615,7 +617,9 @@ class AffiliateForm extends React.Component {
                       min="0"
                     />
 
-                    <span className="text-danger">{this.state.budgetCondition}</span>
+                    <span className="text-danger">
+                      {this.state.budgetCondition}
+                    </span>
                   </div>
                 </div>
 

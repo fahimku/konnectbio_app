@@ -88,7 +88,7 @@ class Analysis extends React.Component {
                           this.toggleSecondTabs("tab22");
                         }}
                       >
-                        <span>  BioShop Performance</span>
+                        <span> BioShop Performance</span>
                       </NavLink>
                     </NavItem>
 
@@ -122,20 +122,20 @@ class Analysis extends React.Component {
                       </NavItem>
                     ) : null}
 
-                    {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? ( 
-                    <NavItem>
-                      <NavLink
-                        className={classnames({
-                          active: this.state.activeSecondTab === "tab23",
-                        })}
-                        onClick={() => {
-                          this.toggleSecondTabs("tab23");
-                        }}
-                      >
-                        <span>Campaign Performance</span>
-                      </NavLink>
-                    </NavItem> 
-                     ) : null}
+                    {this.state.packageName === "61c02d43f40bec74fac2c9a0" ? (
+                      <NavItem>
+                        <NavLink
+                          className={classnames({
+                            active: this.state.activeSecondTab === "tab23",
+                          })}
+                          onClick={() => {
+                            this.toggleSecondTabs("tab23");
+                          }}
+                        >
+                          <span>Campaign Performance</span>
+                        </NavLink>
+                      </NavItem>
+                    ) : null}
                     {/* <NavItem>
                       <NavLink
                         className={classnames({

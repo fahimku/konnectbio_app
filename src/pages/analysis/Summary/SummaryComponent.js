@@ -54,14 +54,20 @@ class SummaryComponent extends React.Component {
                 />
               </div>
             )}
-            {this.state.packageName === "61d695e9bccdaf69f46efc66" &&
-               <div className={`analytics-summery-box ${this.state.packageName === "61d695e9bccdaf69f46efc66" ? 'col-md-6':'col-md-4'} `}>
+            {this.state.packageName === "61d695e9bccdaf69f46efc66" && (
+              <div
+                className={`analytics-summery-box ${
+                  this.state.packageName === "61d695e9bccdaf69f46efc66"
+                    ? "col-md-6"
+                    : "col-md-4"
+                } `}
+              >
                 <AffiliateSummaryComponent
                   username={this.state.username}
-                // className="col-md-12"
+                  // className="col-md-12"
                 />
               </div>
-            }
+            )}
           </div>
         </div>
       </React.Fragment>
