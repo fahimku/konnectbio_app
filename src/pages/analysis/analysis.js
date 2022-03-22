@@ -107,7 +107,7 @@ class Analysis extends React.Component {
                       </NavItem>
                     )}
 
-                    {/* {this.state.packageName === "61d695e9bccdaf69f46efc66" ? (
+                    {this.state.packageName === "61d695e9bccdaf69f46efc66" ? (
                       <NavItem>
                         <NavLink
                           className={classnames({
@@ -120,10 +120,10 @@ class Analysis extends React.Component {
                           <span>Campaign Performance</span>
                         </NavLink>
                       </NavItem>
-                    ) : null} */}
+                    ) : null}
 
-                    {/* {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? ( */}
-                    {/* <NavItem>
+                    {this.state.packageName ==="61c02d43f40bec74fac2c9a0" ? ( 
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active: this.state.activeSecondTab === "tab23",
@@ -134,8 +134,8 @@ class Analysis extends React.Component {
                       >
                         <span>Campaign Performance</span>
                       </NavLink>
-                    </NavItem> */}
-                    {/* ) : null} */}
+                    </NavItem> 
+                     ) : null}
                     {/* <NavItem>
                       <NavLink
                         className={classnames({

@@ -73,9 +73,10 @@ function HashtagsList({ createMedia, title }) {
     if (fields.title && fields.image) {
       setLoading(true);
       createMedia(fields).then(() => {
-        toast.success("Successfully Created");
+        toast.success("Media Upload Successfully");
         setLoading(false);
         files.forEach((f) => f.remove());
+        setImgMsg('');
         setFields({
           title: "",
           image: "",
@@ -112,7 +113,7 @@ function HashtagsList({ createMedia, title }) {
                 getFilesFromEvent(e).then((chosenFiles) => {
                   onFiles(chosenFiles);
                 });
-              }}
+              }}l
             />
           </label>
         </div>
