@@ -8,6 +8,7 @@ import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
 import BrandComponent from "./Brand/BrandComponent";
 import MyCategory from "../mycategory/MyCategory";
 import MarketplaceEarning from "./MarketplaceEarning/MarketplaceEarning";
+import AffiliateSalesInf from "./MarketplaceSale/InfSales";
 import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
 
 class MarketPlace extends React.Component {
@@ -169,6 +170,21 @@ class MarketPlace extends React.Component {
                       <span>Transactions</span>
                     </NavLink>
                   </NavItem>
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "sale",
+                      })}
+                      id="mark-transaction"
+                      onClick={() => {
+                        this.toggleTabs("sale");
+                      }}
+                    >
+                      <span>Sales</span>
+                    </NavLink>
+                  </NavItem>
+
                   {/* <NavItem>
                     <NavLink
                       className={classnames({
@@ -240,6 +256,11 @@ class MarketPlace extends React.Component {
                   <TabPane tabId="transaction">
                     {this.state.activeTab === "transaction" ? (
                       <MarketplaceTransaction />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="sale">
+                    {this.state.activeTab === "sale" ? (
+                      <AffiliateSalesInf />
                     ) : null}
                   </TabPane>
 

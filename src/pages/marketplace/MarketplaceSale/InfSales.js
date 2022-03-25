@@ -10,7 +10,7 @@ import moment from "moment";
 import numeral from "numeral";
 // import CampaignDetailTransaction from "./CampaignDetailTransaction";
 
-function AffiliateSales({
+function AffiliateSalesInf({
     getAffiliateSalesByBrand,
     getAffiliateSalesByInfluencer,
     affiliateSales
@@ -76,12 +76,12 @@ function AffiliateSales({
                                       <td>{i+1}</td>
                                       <td>{item?.order_id}</td>
                                       <td>{item?.pixel_id}</td>
-                                      <td>{item?.publisher?.name}</td>
-                                      <td>{item?.publisher?.email}</td>
+                                      <td>{item?.advertiser[0].name}</td>
+                                      <td>{item?.advertiser[0].email}</td>
                     
-                                      <td>{item?.publisher?.account_type}</td>
-                                      <td>{item?.publisher?.country}</td>
-                                      <td>{item?.publisher?.instagram_username}</td>
+                                      <td>{item?.advertiser[0].account_type}</td>
+                                      <td>{item?.advertiser[0].country}</td>
+                                      <td>{item?.advertiser[0].instagram_username}</td>
                                       <td>{item?.totalQty}</td>
                                       <td>{item?.totalSale}</td>
                                       <td>{item?.order_totalprice}</td>
@@ -127,5 +127,5 @@ function mapStateToProps({
   };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
-  AffiliateSales
+    AffiliateSalesInf
 );
