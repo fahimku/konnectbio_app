@@ -79,7 +79,7 @@ function AffiliateSalesInf({
                                       <td>{item?.advertiser[0].name}</td>
                                       <td>{item?.advertiser[0].email}</td>
                     
-                                      <td>{item?.advertiser[0].account_type}</td>
+                                      <td>{item?.advertisergit [0].account_type}</td>
                                       <td>{item?.advertiser[0].country}</td>
                                       <td>{item?.advertiser[0].instagram_username}</td>
                                       <td>{item?.totalQty}</td>
