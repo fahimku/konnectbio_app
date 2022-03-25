@@ -59,7 +59,7 @@ class SubcriptionSetup extends React.Component {
       .get(`/package/receive`)
       .then((response) => {
         const selectPackages = [];
-        let packages = response.data.message;
+        let packages = response.data.message.reverse();
         if (this.state.userInfo.package.package_name === "Brand") {
           packages = packages.filter((item) => item.package_name === "Brand");
         } else {
@@ -85,25 +85,31 @@ class SubcriptionSetup extends React.Component {
         this.setState({ packageIndex: index });
         this.setState({ allPackages: packages });
         this.setState({ singlePackage: singlePackage[0] });
-
+        let disabledSelect =
+          this.state.userInfo.package.package_id === "61c02e2ff40bec74fac2ca09"
+            ? true
+            : false;
         packages.map(({ package_id, package_name }, index1) => {
-          let disabledSelect = false;
+          // let disabledSelect = false;
           //Influencer Account
+          console.log(index, "index");
 
-          if (index === 1) {
-            if (index1 === 0) {
-              disabledSelect = true;
-            }
-          }
+          // if (index === 1) {
+          //   if (index1 === 0) {
+          //     disabledSelect = true;
+          //   }
+          // }
 
-          //Influencer Plus
+          // //Influencer Plus
 
-          if (index === 2) {
-            if (index1 === 0 || index1 === 1) {
-              disabledSelect = true;
-            }
-          }
-
+          // if (index === 2) {
+          //   if (index1 === 0 || index1 === 1) {
+          //     disabledSelect = true;
+          //   }
+          // }
+          // if (package_id === "61c02d43f40bec74fac2c9a0") {
+          //   disabledSelect = true;
+          // }
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -277,6 +283,7 @@ class SubcriptionSetup extends React.Component {
   };
 
   render() {
+    console.log(this.state.packages, "packages");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="profile-page account-setup">
