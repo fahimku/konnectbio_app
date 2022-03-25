@@ -278,7 +278,6 @@ function ALLTAGS({
                     </Button>
                   ) : (
                     <Button
-                      type="submit"
                       variant="gray"
                       className="fltr-hpr btn-primary"
                       onClick={() => generatePDF(tags.message)}
