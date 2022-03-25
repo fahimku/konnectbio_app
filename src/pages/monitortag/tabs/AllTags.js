@@ -10,6 +10,8 @@ import moment from "moment";
 import { connect } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import * as tagActions from "../../../actions/tags";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const { RangePicker } = DatePicker;
 
@@ -130,6 +132,50 @@ function ALLTAGS({
     setEndDate(endDate);
   };
 
+  // define a generatePDF function that accepts a tickets argument
+  const generatePDF = (tickets) => {
+    // initialize jsPDF
+    const doc = new jsPDF();
+
+    // define the columns we want and their titles
+    const tableColumn = [
+      "Sno",
+      "Username",
+      "Followers Count",
+      "Like Count",
+      "Comments Count",
+      "Date",
+      // "image",
+    ];
+    // define an empty array of rows
+    const tableRows = [];
+
+    // for each ticket pass all its data into an array
+    tickets.forEach((ticket, i) => {
+      const ticketData = [
+        i + 1,
+        ticket.username,
+        ticket.followers_count,
+        ticket.like_count,
+        ticket.comments_count,
+        new Date(ticket.timestamp).toDateString(),
+        // ticket.media_url
+      ];
+      // push each tickcet's info into a row
+      tableRows.push(ticketData);
+    });
+
+    // startY is basically margin-top
+    doc.autoTable(tableColumn, tableRows);
+    const date = Date().split(" ");
+    // we use a date string to generate our filename.
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+    // ticket title. and margin-top + margin-left
+    // doc.text("Closed tickets within the last one month.", 14, 15);
+    // we define the name of our PDF file.
+    doc.save(`report_${dateStr}.pdf`);
+  };
+
   return (
     <>
       <div className="container-fluid">
@@ -225,17 +271,22 @@ function ALLTAGS({
                       Reset
                     </Button>
                   )}
-                  <span
-                    className=""
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                    }}
-                    title="Download PDF"
-                  >
-                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-                  </span>
+
+                  {searchLoading ? (
+                    <Button type="button" variant="gray" className="fltr-hpr">
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      type="submit"
+                      variant="gray"
+                      className="fltr-hpr btn-primary"
+                      onClick={() => generatePDF(tags.message)}
+                    >
+                      <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{" "}
+                      Download PDF
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </form>
