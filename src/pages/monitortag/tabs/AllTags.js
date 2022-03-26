@@ -40,8 +40,10 @@ function ALLTAGS({
   const [endDate, setEndDate] = useState(toDate);
 
   useEffect(() => {
+    var msg = '';
     setSearchLoading(true);
-    createTags().then(() => {
+    createTags().then((res) => {
+      msg = res.data.message;
       getTags(
         {
           from_date: startDate.toString(),
@@ -51,7 +53,23 @@ function ALLTAGS({
         },
         1
       ).then(() => {
-        setSearchLoading(false);
+        if(msg === "Tag already added!"){
+            console.log('refresh call')
+          refreshTags().then(() => {
+          getTags(
+            {
+              from_date: startDate.toString(),
+              to_date: endDate.toString(),
+              sort: sortBy.value,
+              order_by: orderBy.value,
+            },
+            1
+          ).then(() => {
+            setSearchLoading(false);
+          });
+        });
+      }
+        //setSearchLoading(false);
       });
     });
   }, []);
