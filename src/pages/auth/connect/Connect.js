@@ -48,8 +48,16 @@ class Connect extends React.Component {
     const fbPage = userInfo?.page_token;
     const package1 = userInfo?.package?.package_id;
 
-    const checkCon = this.state.pack === "61c02e2ff40bec74fac2ca09" || package1 === "61c02e2ff40bec74fac2ca09" || this.state.pack === "61d695e9bccdaf69f46efc66" ||
-      package1 === "61d695e9bccdaf69f46efc66" ? access_token !== "" && fbPage ? true : false : access_token !== "" ? true
+    const checkCon =
+      this.state.pack === "61c02e2ff40bec74fac2ca09" ||
+      package1 === "61c02e2ff40bec74fac2ca09" ||
+      this.state.pack === "61d695e9bccdaf69f46efc66" ||
+      package1 === "61d695e9bccdaf69f46efc66"
+        ? access_token !== "" && fbPage
+          ? true
+          : false
+        : access_token !== ""
+        ? true
         : false;
 
     if (!package1) {
@@ -78,7 +86,11 @@ class Connect extends React.Component {
         parseUserInformation.access_token = response.data.access_token;
         const storeUserInformation = JSON.stringify(parseUserInformation);
         localStorage.setItem("userInfo", storeUserInformation);
-        this.updateAccessToken(userInfo.user_id,response.data.username,response.data.access_token);
+        this.updateAccessToken(
+          userInfo.user_id,
+          response.data.username,
+          response.data.access_token
+        );
       })
       .catch((err) => {
         toast.error(err.response.data.message, {
@@ -103,31 +115,44 @@ class Connect extends React.Component {
   }
 
   completeProcess = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    let access_token = userInfo?.access_token;
+
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_id;
     if (
-      this.state.pack ==="61c02e2ff40bec74fac2ca09" ||
-      package1 ==="61c02e2ff40bec74fac2ca09" ||
-      this.state.pack ==="61d695e9bccdaf69f46efc66" ||
-      package1 ==="61d695e9bccdaf69f46efc66"
+      this.state.pack === "61c02e2ff40bec74fac2ca09" ||
+      package1 === "61c02e2ff40bec74fac2ca09" ||
+      this.state.pack === "61d695e9bccdaf69f46efc66" ||
+      package1 === "61d695e9bccdaf69f46efc66"
     ) {
       const fbPage = JSON.parse(localStorage.getItem("userInfo")).page_token;
       // const fbToken =  JSON.parse(localStorage.getItem("userInfo")).fb_token;
-      return fbPage || this.state.fbPageLocal ? false : true;
+      return access_token === ""
+        ? true
+        : fbPage || this.state.fbPageLocal
+        ? false
+        : true;
     } else {
       const insta = this.state.instagramCode === "" ? true : false;
       return insta;
     }
   };
 
-  
-
   connectionMessage = () => {
-    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package?.package_id;
-    if (package1 ==="61c02d43f40bec74fac2c9a0" && this.completeProcess()) {
+    const package1 = JSON.parse(localStorage.getItem("userInfo"))?.package
+      ?.package_id;
+    if (package1 === "61c02d43f40bec74fac2c9a0" && this.completeProcess()) {
       return "Please connect your Instagram account";
-    } else if (package1 ==="61c02e2ff40bec74fac2ca09" && this.completeProcess()) {
+    } else if (
+      package1 === "61c02e2ff40bec74fac2ca09" &&
+      this.completeProcess()
+    ) {
       return "Please connect your Instagram and Facebook account";
-    } else if (package1 ==="61d695e9bccdaf69f46efc66" && this.completeProcess()) {
+    } else if (
+      package1 === "61d695e9bccdaf69f46efc66" &&
+      this.completeProcess()
+    ) {
       return "Please connect your Instagram and Facebook account";
     }
   };

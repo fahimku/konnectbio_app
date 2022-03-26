@@ -281,6 +281,7 @@ function ALLTAGS({
                       variant="gray"
                       className="fltr-hpr btn-primary"
                       onClick={() => generatePDF(tags.message)}
+                      disabled={tags.message.length === 0 ? true : false}
                     >
                       <i class="fa fa-file-pdf-o" aria-hidden="true"></i>{" "}
                       Download PDF
