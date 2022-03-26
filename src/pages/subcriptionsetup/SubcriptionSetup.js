@@ -85,7 +85,10 @@ class SubcriptionSetup extends React.Component {
         this.setState({ packageIndex: index });
         this.setState({ allPackages: packages });
         this.setState({ singlePackage: singlePackage[0] });
-
+        // let disabledSelect =
+        //   this.state.userInfo.package.package_id === "61c02e2ff40bec74fac2ca09"
+        //     ? true
+        //     : false;
         packages.map(({ package_id, package_name }, index1) => {
           let disabledSelect = false;
           //Influencer Account
@@ -103,7 +106,9 @@ class SubcriptionSetup extends React.Component {
               disabledSelect = true;
             }
           }
-
+          if (package_id === "61c02d43f40bec74fac2c9a0") {
+            disabledSelect = true;
+          }
           return selectPackages.push({
             value: package_id,
             label: package_name,
@@ -277,6 +282,7 @@ class SubcriptionSetup extends React.Component {
   };
 
   render() {
+    console.log(this.state.packages, "packages");
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     return (
       <div className="profile-page account-setup">
