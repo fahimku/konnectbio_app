@@ -1151,4 +1151,11 @@ code.sm-color {
   .deposit_card label {
     width: 90%;
   }
+  .col-xl-2dot4 {
+    display: block !important;
+  }
+  .col-xl-2dot4 .fltr-hpr {
+    min-width: 48% !important;
+    margin-bottom: 10px;
+  }
 }
