@@ -1,60 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Table } from "react-bootstrap";
 import { toast } from "react-toastify";
-//import AsyncSelectField from "./AsyncSelectField";
 import Loader from "../../../components/Loader/Loader";
 import Select from "react-select";
-// import MyCategory from "../../mycategory/MyCategory";
+import * as marketplaceBrandActions from "../../../actions/MarketplaceBrands";
+import { connect } from "react-redux";
 
-class BrandComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: this.props.title,
-      type: this.props.type,
-      selectedBrands: [],
-      brand: [],
-      brandList: [],
-      loading: false,
-      brandLoading: true,
-      myBrand: [],
-      brandCategory: [],
-    };
-  }
+function BrandComponent({
+  title,
+  brandTab,
+  getMarketplaceApproval,
+  marketplaceApproval,
+}) {
+  const [myBrand, setMyBrand] = useState("");
+  const [brandLoading, setBrandLoading] = useState(true);
+  const [selectedBrands, setSelectedBrands] = useState("");
+  const [brandList, setBrandList] = useState([]);
+  const [brandError, setBrandError] = useState(false);
+  const [brandStatus, setBrandStatus] = useState("");
+  const [saveLoading, setSaveLoading] = useState(false);
 
-  componentDidMount() {
-    this.fetchMyBrand();
-    this.brandList();
-  }
+  useEffect(() => {
+    getMyBrand();
+    getBrandList();
+    getMarketplaceApproval();
+  }, []);
 
-  brandList = async () => {
-    await axios
-      .post("users/marketPlace/brands")
-      .then((response) => {
-        const loadBrand = [];
-        const brands = response.data.message;
-        brands.map(({ brand_id, brand_name }) => {
-          return loadBrand.push({
-            value: brand_id,
-            label: brand_name,
-          });
-        });
-        this.setState({ brandList: loadBrand });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  handleMultiSelect = (e, options) => {
-    this.setState({
-      selectedBrands: options,
-      brands: options,
-    });
-  };
-
-  fetchMyBrand = async () => {
+  const getMyBrand = async () => {
     await axios
       .post("/users/marketPlace/getUserBrands")
       .then((response) => {
@@ -66,10 +39,11 @@ class BrandComponent extends React.Component {
             label: brand_name,
           });
         });
-        this.setState({ myBrand: selectBrands, brands: selectBrands });
-        this.setState({ selectedBrands: selectBrands });
-        this.setState({ brandLoading: false }, () => {
-          this.props.brandTab(this.state.myBrand, this.state.brandLoading);
+        setMyBrand(selectBrands);
+        // setSelectedBrands(selectBrands);
+        // setBrands(selectBrands);
+        setBrandLoading(false, () => {
+          brandTab(myBrand, brandLoading);
         });
       })
       .catch((error) => {
@@ -77,139 +51,192 @@ class BrandComponent extends React.Component {
       });
   };
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    let brand = this.state.selectedBrands.map((brand) => {
-      return brand.value;
-    });
-
-    this.setState({ loading: true });
+  const getBrandList = async () => {
     await axios
-      .post(`/users/marketPlace/updateUserBrands`, {
-        user_brands: brand,
-      })
+      .post("users/marketPlace/brands")
       .then((response) => {
-        this.setState({
-          loading: false,
+        const loadBrand = [];
+        const brands = response.data.message;
+        brands.map(({ brand_id, brand_name, status }) => {
+          return loadBrand.push({
+            value: brand_id,
+            label: brand_name,
+            status: status,
+          });
         });
-        this.fetchMyBrand();
-        toast.success(response.data.message);
+        let allBrand = loadBrand.filter((item) => item.status === "");
+        setBrandList(allBrand);
       })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        this.setState({ loading: false });
+      .catch(function (error) {
+        console.log(error);
       });
   };
-  getCategory = (category) => {
-    this.setState({ brandCategory: category });
+
+  const handleMultiSelect = (e, options) => {
+    setSelectedBrands(options);
+    setBrandError(false);
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className="container-fluid">
-          <h4 className="page-title">{this.state.title}</h4>
-          {/* <MyCategory
-          hideUpgradeCategory={window.innerWidth >= 1251 ? false : true}
-        //  hideCategory={window.innerWidth >= 1251 ?  false: true}
-            page="brand"
-            getCategory={this.getCategory}
-          /> */}
-          <div className="brand_container_main container">
-            <Row>
-              <div className="profile_box_main col-md-8">
-                <div
-                  // className={`brand-section dash_block_profile ${
-                  //   this.state.brandCategory.length === 0
-                  //     ? "brandcatdisable"
-                  //     : ""
-                  // }`}
-                  className={"brand-section dash_block_profile"}
-                >
-                  <div className="dash_content_profile">
-                    {/* <form onSubmit={this.handleSubmit}> */}
-                    <p
-                      style={{
-                        color: "gray",
-                        borderBottom: "1px solid lightgray",
-                        paddingBottom: 10,
-                      }}
-                    >
-                      Select Brands
-                    </p>
-                    {/* <h5>Select Brands</h5> */}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (selectedBrands !== "") {
+      setSaveLoading(true);
+      await axios
+        .post(`users/marketPlace/requestbrand`, {
+          brand_id: selectedBrands.value,
+        })
+        .then((response) => {
+          setSaveLoading(false);
+          setSelectedBrands("");
+          getBrandList();
+          getMarketplaceApproval();
+          toast.success(response.data.message);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+          setSaveLoading(false);
+          setSelectedBrands("");
+        });
+    } else {
+      setBrandError(true);
+    }
+  };
 
-                    <Row>
-                      <Col md={12}>
-                        {this.state.brandLoading ? (
-                          <Loader />
-                        ) : (
-                          <React.Fragment>
-                            <Select
-                              defaultValue={this.state.myBrand.filter(function (
-                                element
-                              ) {
-                                return element.label !== undefined;
-                              })}
-                              isMulti
-                              name="brands"
-                              options={this.state.brandList.filter(function (
-                                element
-                              ) {
-                                return element.label !== undefined;
-                              })}
-                              className="basic-multi-select"
-                              classNamePrefix="select"
-                              placeholder="Select Brand"
-                              onChange={(options, e) =>
-                                this.handleMultiSelect(e, options)
-                              }
-                            />
-                            {/* <AsyncSelectField
-                                name="brand"
-                                placeholder="Search By Brand"
-                                getBrand={this.getBrand}
-                                defaultValue={this.state.myBrand}
-                              />
-                            */}
-                            {this.state.brands.length === 0 ? (
-                              <span className="text-danger mt-2">
-                                Please select brands to unlock marketplace.
-                              </span>
-                            ) : null}
-                          </React.Fragment>
-                        )}
-                      </Col>
-                    </Row>
+  function dataTable() {
+    let data = marketplaceApproval?.message;
+    if (data) {
+      return (
+        <>
+          <Table responsive="sm" className="approval-box">
+            <thead>
+              <tr>
+                <th>Brand Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.brand_name}</td>
 
-                    <Row>
-                      <Col md={5} xl={3}>
-                        <Button
-                          variant="primary"
-                          type="submit"
-                          className="btn-block mt-3"
-                          id="brand-save"
-                          disabled={!this.state.loading ? false : true}
-                          onClick={this.handleSubmit}
-                        >
-                          Save
-                        </Button>
-                      </Col>
-                    </Row>
-                    {/* </form> */}
-                  </div>
+                    <td>
+                      {item?.status === "Pending" ? (
+                        <span class="badge badge-info">Pending</span>
+                      ) : (
+                        ""
+                      )}
+                      {item?.status === "Approved" ? (
+                        <span class="badge badge-success">Approved</span>
+                      ) : (
+                        ""
+                      )}
+                      {item?.status === "Rejected" ? (
+                        <span class="badge badge-danger">Rejected</span>
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </>
+      );
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <div className="container-fluid">
+        <h4 className="page-title">{title}</h4>
+
+        <div className="brand_container_main container">
+          <Row>
+            <div className="profile_box_main col-md-8">
+              <div className={"brand-section dash_block_profile"}>
+                <div className="dash_content_profile">
+                  <p
+                    style={{
+                      color: "gray",
+                      borderBottom: "1px solid lightgray",
+                      paddingBottom: 10,
+                    }}
+                  >
+                    Select Brands
+                  </p>
+                  <Row>
+                    <Col md={12}>
+                      {brandLoading ? (
+                        <Loader />
+                      ) : (
+                        <React.Fragment>
+                          <Select
+                            // defaultValue={myBrand.filter(function (element) {
+                            //   return element.label !== undefined;
+                            // })}
+                            value={selectedBrands}
+                            // isMulti
+                            name="brands"
+                            options={brandList.filter(function (element) {
+                              return element.label !== undefined;
+                            })}
+                            className="basic-multi-select"
+                            classNamePrefix="select"
+                            placeholder="Select Brand"
+                            onChange={(options, e) =>
+                              handleMultiSelect(e, options)
+                            }
+                          />
+
+                          {brandError ? (
+                            <span className="text-danger mt-2">
+                              Please select brands.
+                            </span>
+                          ) : null}
+                        </React.Fragment>
+                      )}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={5} xl={3}>
+                      <Button
+                        variant="primary"
+                        type="submit"
+                        className="btn-block mt-3"
+                        id="brand-save"
+                        disabled={!saveLoading ? false : true}
+                        onClick={handleSubmit}
+                      >
+                        Save
+                      </Button>
+                    </Col>
+                  </Row>
                 </div>
               </div>
-            </Row>
-          </div>
-          {/* <MyCategory
-            hideUpgradeCategory={window.innerWidth <= 1251 ? false : true}
-            hideCategory={true}
-            page="brand"
-            getCategory={this.getCategory} /> */}
+              {marketplaceApproval?.message?.length > 0 ? (
+                <>
+                  <h4 className="page-title">Brand Request</h4>
+                  <div
+                    className={"brand-section dash_block_profile brand_table"}
+                  >
+                    {dataTable()}
+                  </div>
+                </>
+              ) : null}
+            </div>
+          </Row>
         </div>
-      </React.Fragment>
-    );
-  }
+      </div>
+    </React.Fragment>
+  );
 }
-export default BrandComponent;
+function mapStateToProps({ marketplaceApproval }) {
+  return {
+    marketplaceApproval,
+  };
+}
+export default connect(mapStateToProps, { ...marketplaceBrandActions })(
+  BrandComponent
+);

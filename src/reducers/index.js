@@ -46,11 +46,11 @@ import marketplaceTransactions from "./marketplaceTransactions/marketplaceTransa
 import marketplaceBrands from "./marketplaceTransactions/marketplaceBrands";
 import marketplaceCampaigns from "./marketplaceTransactions/marketplaceCampaigns";
 import marketplaceDetailTransactions from "./marketplaceTransactions/marketplaceDetailTransactions";
+import marketplaceApproval from "./marketplaceBrand/marketplaceApproval";
 
 import affiliateCards from "./affiliateDeposit/affiliateCards";
-import affiliatePayment from "./affiliateDeposit/affiliatePayment"
-import affiliateBalance from "./affiliateDeposit/affiliateBalance"
-
+import affiliatePayment from "./affiliateDeposit/affiliatePayment";
+import affiliateBalance from "./affiliateDeposit/affiliateBalance";
 
 export default (history) =>
   combineReducers({
@@ -92,7 +92,7 @@ export default (history) =>
     mediaSummary,
     affiliateTransactions,
     affiliateCampaigns,
-     affiliateSales,
+    affiliateSales,
     affiliateInfluencers,
     campaignDetailTransactions,
     influencerDetailTransactions,
@@ -102,5 +102,6 @@ export default (history) =>
     marketplaceDetailTransactions,
     affiliateCards,
     affiliatePayment,
-    affiliateBalance
+    affiliateBalance,
+    marketplaceApproval,
   });
