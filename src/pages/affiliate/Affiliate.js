@@ -9,6 +9,7 @@ import AffiliateCreateCampaign from "./AffiliateCreateCampaign/AffiliateCreateCa
 import AffiliateScheduleCampaign from "./AffiliateCampaign/AffiliateScheduleCampaign";
 import AffiliateTransaction from "./AffiliateTransaction/AffiliateTransaction";
 import AffiliateSales from "./AffiliateSales/Sales";
+import Approvals from "./BrandApproval/Approval";
 import AffiliateBalance from "./AffiliateBalance/AffiliateBalance";
 import axios from "axios";
 import { createBrowserHistory } from "history";
@@ -33,7 +34,7 @@ class Affiliate extends React.Component {
       username: username,
       package_name: userInfo?.package?.package_name,
       myBrand: "",
-      brandLoading: false,
+      brandLoading: false,  
     };
   }
 
@@ -210,6 +211,20 @@ class Affiliate extends React.Component {
                     </NavLink>
                   </NavItem>
 
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "approval",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("approval");
+                      }}
+                    >
+                      <span>Approvals</span>
+                    </NavLink>
+                  </NavItem>
+
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -304,6 +319,11 @@ class Affiliate extends React.Component {
                   <TabPane tabId="transaction">
                     {this.state.activeTab === "transaction" ? (
                       <AffiliateTransaction />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="approval">
+                    {this.state.activeTab === "approval" ? (
+                      <Approvals />
                     ) : null}
                   </TabPane>
                   <TabPane tabId="sales">

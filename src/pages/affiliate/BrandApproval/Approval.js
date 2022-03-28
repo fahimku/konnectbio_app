@@ -10,7 +10,7 @@ import moment from "moment";
 import numeral from "numeral";
 // import CampaignDetailTransaction from "./CampaignDetailTransaction";
 
-function AffiliateSales({
+function Approvals({
     getAffiliateSalesByBrand,
     getAffiliateSalesByInfluencer,
     affiliateSales
@@ -23,6 +23,9 @@ function AffiliateSales({
      const accountType = currentUser.account_type;
      const UserId = currentUser.user_id;
   
+
+    console.log("type",accountType)
+    console.log("User",UserId)
 
     if(accountType === 'brand'){
     getAffiliateSalesByBrand(UserId).then(() => {
@@ -124,5 +127,5 @@ function mapStateToProps({
   };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
-  AffiliateSales
+  Approvals
 );

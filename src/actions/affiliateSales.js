@@ -13,12 +13,12 @@ export const getAffiliateSalesByBrand = (salesId) => async (dispatch) => {
                id:salesId
             })
             .then((res) => {
-                console.log('test',res)
+                
                 dispatch({
                     type: GET_AFFILIATE_SALES,
                     payload: res.data,
                 });
-                console.log(res)
+                
                 resolve("success");
             })
             .catch((error) => {
@@ -39,12 +39,11 @@ export const getAffiliateSalesByInfluencer = (salesId) => async (dispatch) => {
                id:salesId
             })
             .then((res) => {
-                console.log('test',res)
+               
                 dispatch({
                     type: GET_AFFILIATE_SALES_INF,
                     payload: res.data,
                 });
-                console.log(res)
                 resolve("success");
             })
             .catch((error) => {

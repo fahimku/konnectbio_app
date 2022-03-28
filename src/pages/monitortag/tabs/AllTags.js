@@ -101,7 +101,7 @@ function ALLTAGS({
         sort: sortBy.value,
         order_by: orderBy.value,
       },
-      1
+      
     ).then(() => {
       setSearchLoading(false);
     });
