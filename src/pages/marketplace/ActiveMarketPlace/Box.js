@@ -2,10 +2,9 @@ import React, { useState } from "react";
 export default function Box({ item, toggleCampaigns, index, type }) {
   const [toggleCampaign, setToggleCampaign] = useState(item.is_linked);
   const styleObj = {
-    fontSize:'14px',
-    textTransform: 'capitalize'
-
-   }
+    fontSize: "14px",
+    textTransform: "capitalize",
+  };
   return (
     <React.Fragment>
       <div className="card any_bx analytic-box campaign-box pb-0">
@@ -75,7 +74,7 @@ export default function Box({ item, toggleCampaigns, index, type }) {
               </div>
 
               <div className="col-12 count-box">
-                <h5 className="count-title">Commission / 100 Clicks</h5>
+                <h5 className="count-title">Commission / 1000 Clicks</h5>
                 <h3 className="count">${item.commission}</h3>
               </div>
 
