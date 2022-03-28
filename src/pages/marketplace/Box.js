@@ -83,7 +83,7 @@ export default function Box({ item, addCampaignToShop, index }) {
                 </div>
 
                 <div className="col-12 count-box">
-                  <h5 className="count-title">Commission / 100 Clicks</h5>
+                  <h5 className="count-title">Commission / 1000 Clicks</h5>
                   <h3 className="count">${item.commission}</h3>
                 </div>
 
