@@ -42,9 +42,10 @@ function BrandComponent({
         setMyBrand(selectBrands);
         // setSelectedBrands(selectBrands);
         // setBrands(selectBrands);
-        setBrandLoading(false, () => {
-          brandTab(myBrand, brandLoading);
-        });
+        console.log(myBrands, "myBrands");
+        // setBrandLoading(false, () => {
+        brandTab(myBrands, brandLoading);
+        // });
       })
       .catch((error) => {
         console.log(error);
@@ -146,7 +147,6 @@ function BrandComponent({
       );
     }
   }
-  console.log(marketplaceApproval?.messagem, "sdsds");
 
   return (
     <React.Fragment>
