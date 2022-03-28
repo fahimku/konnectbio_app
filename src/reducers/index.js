@@ -38,6 +38,7 @@ import mediaSummary from "./media/mediaSummary";
 import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateSales from "./affiliateTransactions/affiliateSales";
+import affiliateRequest from "./affiliateTransactions/affiliateRequest";
 import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
 import influencerDetailTransactions from "./affiliateTransactions/influencerDetailTransactions";
@@ -50,6 +51,7 @@ import marketplaceDetailTransactions from "./marketplaceTransactions/marketplace
 import affiliateCards from "./affiliateDeposit/affiliateCards";
 import affiliatePayment from "./affiliateDeposit/affiliatePayment"
 import affiliateBalance from "./affiliateDeposit/affiliateBalance"
+import addAffiliateRequest from "./affiliateTransactions/addAffiliateRequest"
 
 
 export default (history) =>
@@ -93,6 +95,7 @@ export default (history) =>
     affiliateTransactions,
     affiliateCampaigns,
      affiliateSales,
+     affiliateRequest,
     affiliateInfluencers,
     campaignDetailTransactions,
     influencerDetailTransactions,
@@ -102,5 +105,6 @@ export default (history) =>
     marketplaceDetailTransactions,
     affiliateCards,
     affiliatePayment,
+    addAffiliateRequest,
     affiliateBalance
   });
