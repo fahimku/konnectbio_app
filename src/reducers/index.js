@@ -107,4 +107,5 @@ export default (history) =>
     affiliatePayment,
     addAffiliateRequest,
     affiliateBalance,
+    marketplaceApproval,
   });

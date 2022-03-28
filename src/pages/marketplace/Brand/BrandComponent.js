@@ -146,6 +146,7 @@ function BrandComponent({
       );
     }
   }
+  console.log(marketplaceApproval?.messagem, "sdsds");
 
   return (
     <React.Fragment>

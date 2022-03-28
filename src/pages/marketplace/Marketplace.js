@@ -44,8 +44,8 @@ class MarketPlace extends React.Component {
 
   render() {
     const { brandtab, brandLoading, catTab, catLoading } = this.state;
-    console.log(brandtab, "brandtab");
-    console.log(brandLoading, "brandLoading");
+    // console.log(brandtab, "brandtab");
+    // console.log(brandLoading, "brandLoading");
 
     return (
       <div className="analytics-page affiliate-page linkin-bio">
