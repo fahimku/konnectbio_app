@@ -44,6 +44,9 @@ class MarketPlace extends React.Component {
 
   render() {
     const { brandtab, brandLoading, catTab, catLoading } = this.state;
+    console.log(brandtab, "brandtab");
+    console.log(brandLoading, "brandLoading");
+
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
@@ -90,7 +93,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("marketplace");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        (!brandLoading && brandtab.length === 0) ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>New</span>
@@ -106,7 +112,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("active");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        (!brandLoading && brandtab.length === 0) ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Active</span>
@@ -122,7 +131,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("in-active");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        (!brandLoading && brandtab.length === 0) ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Paused</span>
@@ -138,7 +150,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("expired");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        (!brandLoading && brandtab.length === 0) ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Expired</span>
@@ -208,13 +223,13 @@ class MarketPlace extends React.Component {
                     ) : null}
                   </TabPane>
                   <TabPane tabId="brand">
-                    {/* {this.state.activeTab === "brand" ? ( */}
-                    <BrandComponent
-                      title="Brand"
-                      type="brand"
-                      brandTab={this.brandTab}
-                    />
-                    {/* ) : null} */}
+                    {this.state.activeTab === "brand" ? (
+                      <BrandComponent
+                        title="Brand"
+                        type="brand"
+                        brandTab={this.brandTab}
+                      />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
