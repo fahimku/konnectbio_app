@@ -43,6 +43,7 @@ function BrandComponent({
         // setSelectedBrands(selectBrands);
         // setBrands(selectBrands);
         console.log(myBrands, "myBrands");
+        setBrandLoading(false);
         // setBrandLoading(false, () => {
         brandTab(myBrands, brandLoading);
         // });

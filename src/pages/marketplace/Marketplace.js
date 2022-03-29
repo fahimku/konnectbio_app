@@ -211,13 +211,13 @@ class MarketPlace extends React.Component {
                     ) : null}
                   </TabPane>
                   <TabPane tabId="brand">
-                    {this.state.activeTab === "brand" ? (
-                      <BrandComponent
-                        title="Brand"
-                        type="brand"
-                        brandTab={this.brandTab}
-                      />
-                    ) : null}
+                    {/* {this.state.activeTab === "brand" ? ( */}
+                    <BrandComponent
+                      title="Brand"
+                      type="brand"
+                      brandTab={this.brandTab}
+                    />
+                    {/* ) : null} */}
                   </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
