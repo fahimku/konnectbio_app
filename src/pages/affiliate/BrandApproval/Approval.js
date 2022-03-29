@@ -70,7 +70,7 @@ function dataTable() {
                   <Table responsive="sm" className="transactions-box">
                       <thead>
                           <tr>
-                              <th>S.#</th>
+
                               <th>Name</th>
                               <th>Status</th>
                               <th>Request</th>
@@ -80,15 +80,25 @@ function dataTable() {
                       <tbody>
                            {data.map((item, i) => {
                               return (
+                                <>  
+                                {
+                                    item?.status === 'Rejected'? <></>:
                   
                                    <tr key={i}>
-                 
-                                      <td>{i+1}</td>
+                                        
+                                      
                                       <td>{item?.instagram_username}</td>
                                       <td>{item?.status}</td>
-                                      <td><span class="badge badge-info btn"  onClick={() => approveMethod(item?.influencer_id)}>Approve</span>|<span class="badge badge-danger btn"  onClick={() => rejectMethod(item?.influencer_id)}>Reject</span></td>
-                   
+                                      <td>
+                                      {
+                                          item?.status === 'Approved'?
+                                          <span class="badge badge-success">Approved</span>
+                                          :
+                                          <span class="badge badge-info btn"  onClick={() => approveMethod(item?.influencer_id)}>Approve</span>}|<span class="badge badge-danger btn"  onClick={() => rejectMethod(item?.influencer_id)}>Reject</span></td>
+                           
                                       </tr>
+                                  }
+                                  </>
                               );
                           })}
                       </tbody>
