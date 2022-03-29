@@ -136,7 +136,7 @@ class MarketPlace extends React.Component {
                       <span>Active</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "in-active",
@@ -154,7 +154,7 @@ class MarketPlace extends React.Component {
                     >
                       <span>Paused</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                   <NavItem>
                     <NavLink
                       className={classnames({
