@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 function BrandComponent({
   title,
-  brandTab,
+  // brandTab,
   getMarketplaceApproval,
   marketplaceApproval,
 }) {
@@ -42,10 +42,9 @@ function BrandComponent({
         setMyBrand(selectBrands);
         // setSelectedBrands(selectBrands);
         // setBrands(selectBrands);
-        console.log(myBrands, "myBrands");
         setBrandLoading(false);
         // setBrandLoading(false, () => {
-        brandTab(myBrands, brandLoading);
+        // brandTab(myBrands, brandLoading);
         // });
       })
       .catch((error) => {
