@@ -10,6 +10,7 @@ import MyCategory from "../mycategory/MyCategory";
 import MarketplaceEarning from "./MarketplaceEarning/MarketplaceEarning";
 import AffiliateSalesInf from "./MarketplaceSale/InfSales";
 import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
+import axios from "axios";
 
 class MarketPlace extends React.Component {
   constructor(props) {
@@ -26,6 +27,21 @@ class MarketPlace extends React.Component {
       catLoading: true,
     };
   }
+  componentDidMount() {
+    this.fetchMyBrand();
+  }
+
+  fetchMyBrand = async () => {
+    await axios
+      .post("/users/marketPlace/getUserBrands")
+      .then((response) => {
+        const myBrands = response.data.data;
+        this.setState({ brandtab: myBrands });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   toggleTabs(tab) {
     if (this.state.activeTab !== tab) {
@@ -35,15 +51,16 @@ class MarketPlace extends React.Component {
     }
   }
 
-  brandTab = (brand, brandLoading) => {
-    this.setState({ brandtab: brand, brandLoading: brandLoading });
-  };
+  // brandTab = (brand, brandLoading) => {
+  //   this.setState({ brandtab: brand, brandLoading: brandLoading });
+  // };
   catTab = (category, catLoading) => {
     this.setState({ catTab: category, catLoading: catLoading });
   };
 
   render() {
-    const { brandtab, brandLoading, catTab, catLoading } = this.state;
+    const { brandtab, catTab, catLoading } = this.state;
+
     return (
       <div className="analytics-page affiliate-page linkin-bio">
         <Row className="ml-0 mr-0 tab-section">
@@ -90,7 +107,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("marketplace");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        brandtab.length === 0 ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>New</span>
@@ -106,7 +126,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("active");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        brandtab.length === 0 ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Active</span>
@@ -122,7 +145,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("in-active");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        brandtab.length === 0 ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Paused</span>
@@ -138,7 +164,10 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("expired");
                       }}
                       disabled={
-                        !brandLoading && brandtab.length === 0 ? true : false
+                        brandtab.length === 0 ||
+                        (!catLoading && catTab.length === 0)
+                          ? true
+                          : false
                       }
                     >
                       <span>Expired</span>
@@ -207,14 +236,15 @@ class MarketPlace extends React.Component {
                       <MyCategory catTab={this.catTab} type="marketcategory" />
                     ) : null}
                   </TabPane>
+
                   <TabPane tabId="brand">
-                    {/* {this.state.activeTab === "brand" ? ( */}
-                    <BrandComponent
-                      title="Brand"
-                      type="brand"
-                      brandTab={this.brandTab}
-                    />
-                    {/* ) : null} */}
+                    {this.state.activeTab === "brand" ? (
+                      <BrandComponent
+                        title="Brand"
+                        type="brand"
+                        // brandTab={this.brandTab}
+                      />
+                    ) : null}
                   </TabPane>
                   <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
