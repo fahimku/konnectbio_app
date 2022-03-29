@@ -56,6 +56,7 @@ class MarketPlace extends React.Component {
   // };
   catTab = (category, catLoading) => {
     this.setState({ catTab: category, catLoading: catLoading });
+    this.fetchMyBrand();
   };
 
   render() {
