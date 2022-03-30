@@ -71,21 +71,25 @@ class AffiliateForm extends React.Component {
     this.setState({ budget: value });
   };
   discount = (value) => {
-    if (value <= 50) {
-      this.setState({ discount: value });
-      this.setState({ discountError: "" });
-    } else {
-      this.setState({ discountError: "Discount can not be greater than 50" });
+    if (!isNaN(value)) {
+      if (value <= 50) {
+        this.setState({ discount: value });
+        this.setState({ discountError: "" });
+      } else {
+        this.setState({ discountError: "Discount can not be greater than 50" });
+      }
     }
   };
   commission = (value) => {
-    if (value <= 50) {
-      this.setState({ commission: value });
-      this.setState({ CommissionError: "" });
-    } else {
-      this.setState({
-        CommissionError: "Commission can not be greater than 50",
-      });
+    if (!isNaN(value)) {
+      if (value <= 50) {
+        this.setState({ commission: value });
+        this.setState({ CommissionError: "" });
+      } else {
+        this.setState({
+          CommissionError: "Commission can not be greater than 50",
+        });
+      }
     }
   };
 
@@ -405,8 +409,8 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    console.log(this.state.commission, "commission");
-    console.log(this.state.discount, "discount");
+    // console.log(this.state.commission, "commission");
+    // console.log(this.state.discount, "discount");
 
     return (
       <React.Fragment>
@@ -660,7 +664,7 @@ class AffiliateForm extends React.Component {
                   <div className="col-md-6 mt-3">
                     <label>Discount</label>
                     <InputNumberValidation
-                      type="number"
+                      type="text"
                       id="discount"
                       name="discount"
                       value={this.state.discount}
@@ -677,7 +681,7 @@ class AffiliateForm extends React.Component {
                   <div className="col-md-6 mt-3">
                     <label>Commission</label>
                     <InputNumberValidation
-                      type="number"
+                      type="text"
                       id="commission"
                       name="commission"
                       value={this.state.commission}

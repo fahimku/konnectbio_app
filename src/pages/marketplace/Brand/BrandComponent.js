@@ -133,7 +133,7 @@ function BrandComponent({
                         ""
                       )}
                       {item?.status === "Rejected" ? (
-                        <span class="badge badge-danger">Rejected</span>
+                        <span class="badge badge-danger">Disapproved</span>
                       ) : (
                         ""
                       )}
