@@ -182,6 +182,7 @@ function AllMarketplace({
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
+    setLoading(true);
     getMarketPlace(
       page + 1,
       limit,
