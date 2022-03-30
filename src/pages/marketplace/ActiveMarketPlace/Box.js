@@ -73,10 +73,17 @@ export default function Box({ item, toggleCampaigns, index, type }) {
                 <h3 style={styleObj}>{item.campaign_type}</h3>
               </div>
 
-              <div className="col-12 count-box">
-                <h5 className="count-title">Commission / 1000 Clicks</h5>
-                <h3 className="count">${item.commission}</h3>
-              </div>
+              {item.campaign_type === "clicks" ? (
+                <div className="col-12 count-box">
+                  <h5 className="count-title">Commission / 1000 Clicks</h5>
+                  <h3 className="count">${item.pay_per_hundred}</h3>
+                </div>
+              ) : (
+                <div className="col-12 count-box">
+                  <h5 className="count-title">Discount</h5>
+                  <h3 className="count">{item.commission}%</h3>
+                </div>
+              )}
 
               <div className="col-12 count-box">
                 <h5 className="count-title">Start Date</h5>

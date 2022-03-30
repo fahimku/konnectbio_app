@@ -22,12 +22,10 @@ import { fontSize } from "@mui/system";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-
 const styleObj = {
-  textTransform:"capitalize",
-  fontSize: '14px',
-}
-
+  textTransform: "capitalize",
+  fontSize: "14px",
+};
 
 function AffiliateCampaign(props) {
   const [data, setData] = useState([]);
@@ -247,18 +245,33 @@ function AffiliateCampaign(props) {
                   </div>
                   <div className="col-12 count-box">
                     <h5 className="count-title">Campaign Type</h5>
-                    <h3 style={styleObj} >{record.campaign_type}</h3>
+                    <h3 style={styleObj}>{record.campaign_type}</h3>
                   </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">Total Budget</h5>
-                    <h3 className="count">${record.budget}</h3>
-                  </div>
-                  <div className="col-12 count-box">
-                    <h5 className="count-title">
-                      Pay Per 100 {record.campaign_type}
-                    </h5>
-                    <h3 className="count">${record.pay_per_hundred}</h3>
-                  </div>
+                  {record.campaign_type === "clicks" ? (
+                    <>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Total Budget</h5>
+                        <h3 className="count">${record.budget}</h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">
+                          Pay Per 1000 {record.campaign_type}
+                        </h5>
+                        <h3 className="count">${record.pay_per_hundred}</h3>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Discount</h5>
+                        <h3 className="count">{record.discount}%</h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Commission</h5>
+                        <h3 className="count">{record.commission}%</h3>
+                      </div>
+                    </>
+                  )}
                   <div className="col-12 count-box">
                     <h5 className="count-title">Total Spent</h5>
                     <h3 className="count">$0</h3>

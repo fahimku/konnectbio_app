@@ -70,7 +70,7 @@ class InputNumberValidation extends React.Component {
     return (
       <div className={this.props.className}>
         <div className="mb-2 input-group">
-          <span class="input-group-text">$</span>
+          <span class="input-group-text">%</span>
           <input
             type={this.props.type}
             name={this.props.name}

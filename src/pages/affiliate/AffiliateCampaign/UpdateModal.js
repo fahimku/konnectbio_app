@@ -47,6 +47,8 @@ class UpdateModal extends React.Component {
       submit: false,
       cities2: [],
       states: [],
+      discount: this.props.affData?.discount,
+      commission: this.props.affData?.commission,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -85,11 +87,29 @@ class UpdateModal extends React.Component {
   titleChange = (value) => {
     this.setState({ campaign_name: value });
   };
-  ppClick = (value) => {
-    this.setState({ pay_per_hundred: value });
+  // ppClick = (value) => {
+  //   this.setState({ pay_per_hundred: value });
+  // };
+  // budget = (value) => {
+  //   this.setState({ budget: value });
+  // };
+  discount = (value) => {
+    if (value <= 50) {
+      this.setState({ discount: value });
+      this.setState({ discountError: "" });
+    } else {
+      this.setState({ discountError: "Discount can not be greater than 50" });
+    }
   };
-  budget = (value) => {
-    this.setState({ budget: value });
+  commission = (value) => {
+    if (value <= 50) {
+      this.setState({ commission: value });
+      this.setState({ CommissionError: "" });
+    } else {
+      this.setState({
+        CommissionError: "Commission can not be greater than 50",
+      });
+    }
   };
   dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -215,20 +235,21 @@ class UpdateModal extends React.Component {
 
     const {
       campaign_name,
-      budget,
-      pay_per_hundred,
+      // budget,
+      // pay_per_hundred,
+      discount,
+      commission,
       startDate,
       endDate,
       campaign_type,
     } = this.state;
     if (
-      campaign_name &&
-      budget &&
-      pay_per_hundred &&
-      startDate &&
-      endDate &&
-      campaign_type &&
-      place
+      (campaign_name &&
+        // budget &&
+        // pay_per_hundred &&
+        discount,
+      commission,
+      startDate && endDate && campaign_type && place)
     ) {
       this.setState({ loading: true });
       await axios
@@ -241,8 +262,10 @@ class UpdateModal extends React.Component {
             redirected_url: this.props.affData.redirected_url,
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
-            budget: parseInt(this.state.budget),
-            pay_per_hundred: parseInt(this.state.pay_per_hundred),
+            discount: parseInt(this.state.discount),
+            commission: parseInt(this.state.commission),
+            // budget: parseInt(this.state.budget),
+            // pay_per_hundred: parseInt(this.state.pay_per_hundred),
             // traffic: 100,
             demographics:
               this.state.inputList[0].country === ""
@@ -324,8 +347,10 @@ class UpdateModal extends React.Component {
       reach: "",
       campaign_name: this.props.affData?.campaign_name,
       campaign_type: this.props.affData?.campaign_type,
-      pay_per_hundred: this.props.affData?.pay_per_hundred,
-      budget: this.props.affData?.budget,
+      // pay_per_hundred: this.props.affData?.pay_per_hundred,
+      // budget: this.props.affData?.budget,
+      discount: this.props.affData?.discount,
+      commission: this.props.affData?.commission,
       startDate: this.props.affData?.start_date_and_time,
       endDate: this.props.affData?.end_date_and_time,
       inputList: this.props.affData?.demographics,
@@ -537,7 +562,7 @@ class UpdateModal extends React.Component {
                      
                     </label>
                   </div> */}
-                  <div class="col1">
+                  {/* <div class="col1">
                     <input
                       type="radio"
                       name="platform"
@@ -561,9 +586,9 @@ class UpdateModal extends React.Component {
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
-                    </div> */}
+                    </div> 
                     </label>
-                  </div>
+                  </div> */}
                   <div class="col1">
                     <input
                       type="radio"
@@ -572,7 +597,9 @@ class UpdateModal extends React.Component {
                       class="d-none imgbgchk"
                       value="sales"
                       onChange={this.changeType}
-                      disabled
+                      checked={
+                        this.state.campaign_type === "clicks" ? true : false
+                      }
                     />
                     <label for="sales">
                       <span className="imp-click">
@@ -594,7 +621,7 @@ class UpdateModal extends React.Component {
           {this.state.campaign_type !== "" ? (
             <>
               <div className="demographic-section">
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-6 mt-3">
                     <label>Total Budget</label>
                     <InputNumberValidation
@@ -624,6 +651,42 @@ class UpdateModal extends React.Component {
                       required
                       min="0"
                     />
+                  </div>
+                </div> */}
+                <div className="row">
+                  <div className="col-md-6 mt-3">
+                    <label>Discount</label>
+                    <InputNumberValidation
+                      type="number"
+                      id="discount"
+                      name="discount"
+                      value={this.state.discount}
+                      onChange={(evt) => {
+                        this.discount(evt.target.value);
+                      }}
+                      required
+                      min="0"
+                    />
+                    <span className="text-danger">
+                      {this.state.discountError}
+                    </span>
+                  </div>
+                  <div className="col-md-6 mt-3">
+                    <label>Commission</label>
+                    <InputNumberValidation
+                      type="number"
+                      id="commission"
+                      name="commission"
+                      value={this.state.commission}
+                      onChange={(evt) => {
+                        this.commission(evt.target.value);
+                      }}
+                      required
+                      min="0"
+                    />
+                    <span className="text-danger">
+                      {this.state.CommissionError}
+                    </span>
                   </div>
                 </div>
 
