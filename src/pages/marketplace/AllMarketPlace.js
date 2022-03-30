@@ -27,6 +27,7 @@ function AllMarketplace({
   title,
   getBrands,
   brands,
+  activateDeactivateCampaign,
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
@@ -372,6 +373,7 @@ function AllMarketplace({
                       key={index}
                       userInfo={userInfo}
                       addCampaignToShop={addCampaignToShop}
+                      activateDeactivateCampaign={activateDeactivateCampaign}
                       item={item}
                       index={index}
                     />
