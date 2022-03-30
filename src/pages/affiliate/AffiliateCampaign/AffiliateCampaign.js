@@ -299,6 +299,7 @@ function AffiliateCampaign(props) {
                     setCurrentCampaign(record);
                     setModal(true);
                   }}
+                  disabled={record.campaign_type === "clicks" ? true : false}
                 >
                   <i className="fa fa-pencil-square-o" /> Edit
                 </button>

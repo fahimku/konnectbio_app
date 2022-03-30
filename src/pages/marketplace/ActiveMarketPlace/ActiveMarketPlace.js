@@ -205,7 +205,7 @@ function ActiveMarketPlace({
     let promise = new Promise((resolve, reject) => {
       let statusName = status ? "Pause" : "Active";
       Swal.fire({
-        title: `Are You Sure You Want To ${statusName} This Campaign?`,
+        title: `Are You Sure You Want To remove This Campaign?`,
         icon: status ? "warning" : "success",
         cancelButtonText: "No",
         showCancelButton: true,
@@ -218,7 +218,7 @@ function ActiveMarketPlace({
             function () {
               clearMarketPlace();
               resolve("success");
-              toast.success("Campaign " + statusName + " Successfully");
+              toast.success("Campaign removed Successfully");
             },
             function (error) {
               reject("error");

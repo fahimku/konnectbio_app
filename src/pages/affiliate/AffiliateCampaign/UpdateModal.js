@@ -598,7 +598,7 @@ class UpdateModal extends React.Component {
                       value="sales"
                       onChange={this.changeType}
                       checked={
-                        this.state.campaign_type === "clicks" ? true : false
+                        this.state.campaign_type === "sales" ? true : false
                       }
                     />
                     <label for="sales">
