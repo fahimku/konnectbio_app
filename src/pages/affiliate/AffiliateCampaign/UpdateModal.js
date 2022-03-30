@@ -94,25 +94,21 @@ class UpdateModal extends React.Component {
   //   this.setState({ budget: value });
   // };
   discount = (value) => {
-    if (!isNaN(value)) {
-      if (value <= 50) {
-        this.setState({ discount: value });
-        this.setState({ discountError: "" });
-      } else {
-        this.setState({ discountError: "Discount can not be greater than 50" });
-      }
+    if (value <= 50) {
+      this.setState({ discount: value });
+      this.setState({ discountError: "" });
+    } else {
+      this.setState({ discountError: "Discount can not be greater than 50" });
     }
   };
   commission = (value) => {
-    if (!isNaN(value)) {
-      if (value <= 50) {
-        this.setState({ commission: value });
-        this.setState({ CommissionError: "" });
-      } else {
-        this.setState({
-          CommissionError: "Commission can not be greater than 50",
-        });
-      }
+    if (value <= 50) {
+      this.setState({ commission: value });
+      this.setState({ CommissionError: "" });
+    } else {
+      this.setState({
+        CommissionError: "Commission can not be greater than 50",
+      });
     }
   };
   dateRangePickerChanger(value, dataString) {
