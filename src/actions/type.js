@@ -59,6 +59,7 @@ export const GET_AFFILIATE_SALES = "getAffiliateSales";
 export const GET_AFFILIATE_SALES_INF = "getAffiliateSalesInf";
 export const GET_AFFILIATE_REQUEST = "getAffiliateRequest";
 export const ADD_AFFILIATE_REQUEST = "postAffiliateRequest"
+export const GET_PROMO_REQUEST = "getPromoRequest";
 
 export const GET_AFFILIATE_INFLUENCER = "getAffiliateInfluencer";
 export const GET_CAMPAIGN_DETAIL_TRANSACTIONS = "getCampaignDetailTransactions";

@@ -54,6 +54,8 @@ import affiliatePayment from "./affiliateDeposit/affiliatePayment";
 import affiliateBalance from "./affiliateDeposit/affiliateBalance";
 import addAffiliateRequest from "./affiliateTransactions/addAffiliateRequest";
 
+import promoRequest from "./promoRequest/promoCode";
+
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -107,5 +109,6 @@ export default (history) =>
     affiliatePayment,
     addAffiliateRequest,
     affiliateBalance,
+    promoRequest,
     marketplaceApproval,
   });
