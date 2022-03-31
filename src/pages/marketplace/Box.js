@@ -3,6 +3,7 @@ import { Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import Loader from "../../components/Loader/Loader";
+import moment from "moment";
 
 export default function Box({
   item,
@@ -64,6 +65,20 @@ export default function Box({
             setAddCampaign(true);
             toast.success("Campaign Added Successfully");
             setLoading(false);
+            // getMarketPlace(
+            //   1,
+            //   8,
+            //   "all",
+            //   "commission",
+            //   "desc",
+            //   moment(new Date()).format("YYYY-MM-DD"),
+            //   moment().add(1, "year").format("YYYY-MM-DD"),
+            //   "marketplace",
+            //   "all",
+            //   "users/marketPlace/getCampaigns"
+            // ).then(function () {
+            //   setLoading(false);
+            // });
           },
           function (error) {
             toast.error(error?.response?.data?.message, {
@@ -141,52 +156,47 @@ export default function Box({
             </div>
             <div className="cam-buttons col-12">
               {/* {item.is_linked || addCampaign ? ( */}
-              {
-                // item.is_linked && item.is_active ? (
-                item.is_linked ? (
-                  <button
-                    // disabled
-                    // style={{ pointerEvents: "none" }}
-                    key={index}
-                    className="btn"
-                    onClick={() => {
-                      confirmReActiveCampaigns(false, item.campaign_id);
-                    }}
-                  >
-                    Campaign Available
-                  </button>
-                ) : loading ? (
-                  <button key={index} className="btn">
-                    <Loader />{" "}
-                  </button>
-                ) : (
-                  <button
-                    key={index}
-                    onClick={() => {
-                      confirmAddToCampaign(
-                        item.campaign_id,
-                        item.category_id,
-                        item.user_id
-                      );
-                    }}
-                    className="btn"
-                    id="select-campaign"
-                  >
-                    Campaign Available
-                  </button>
-                )
-              }
-              {/* ) : (
+              {(item.is_linked && item?.is_active) || addCampaign ? (
                 <button
                   disabled
                   style={{ pointerEvents: "none" }}
                   key={index}
                   className="btn"
-                  
                 >
                   Campaign Added
                 </button>
-              )} */}
+              ) : item.is_linked && !item?.is_active ? (
+                <button
+                  // disabled
+                  // style={{ pointerEvents: "none" }}
+                  key={index}
+                  className="btn"
+                  onClick={() => {
+                    confirmReActiveCampaigns(false, item.campaign_id);
+                  }}
+                >
+                  Campaign Available again
+                </button>
+              ) : loading ? (
+                <button key={index} className="btn">
+                  <Loader />{" "}
+                </button>
+              ) : (
+                <button
+                  key={index}
+                  onClick={() => {
+                    confirmAddToCampaign(
+                      item.campaign_id,
+                      item.category_id,
+                      item.user_id
+                    );
+                  }}
+                  className="btn"
+                  id="select-campaign"
+                >
+                  Campaign Available
+                </button>
+              )}
             </div>
           </div>
         </div>
