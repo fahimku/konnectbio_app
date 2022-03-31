@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Formsy from "formsy-react";
 import { Button } from "reactstrap";
 import moment from "moment";
@@ -15,6 +15,7 @@ import * as postActions from "../../../../actions/posts";
 // import { Country, State, City } from "country-state-city";
 import VirtualizedSelect from "react-virtualized-select";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
+import ShopifyPromo from "./shopifyPromo";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -30,6 +31,7 @@ class AffiliateForm extends React.Component {
       campaign_type: "",
       pay_per_hundred: "",
       budget: "",
+      promoCode:'',
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
       inputList: [{ country: "", state: "", city: "", zip: "" }],
@@ -44,6 +46,7 @@ class AffiliateForm extends React.Component {
       submit: false,
       discount: "",
       commission: "",
+      promoCond:true,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -56,7 +59,7 @@ class AffiliateForm extends React.Component {
       {
         pay_per_hundred: value,
       },
-      () => {}
+      () => { }
     );
     var pay_per_hundered = parseInt(this.state.pay_per_hundred);
     var budget = parseInt(this.state.budget);
@@ -171,6 +174,30 @@ class AffiliateForm extends React.Component {
     this.setState({ city: options, inputList: list });
     this.reachCampaign();
   };
+
+
+
+  handleClick=(data) =>{
+    console.log('sett',data)
+    const promo = data;
+    console.log('P',promo)
+    if(data.length > 0){
+      this.setState({promoCond: false})
+    }
+    else{
+      this.setState({promoCond: true})
+    }
+    const selectState = [];
+    promo.map((x) => {
+      return selectState.push({
+        value: x,
+        label: x,
+      
+      });
+    });
+    this.setState({promoCode: selectState});
+     console.log('ayas',data)
+  }
   getState = async (countryCode) => {
     await axios
       .post(`/common/receive/states`, { country_code: countryCode })
@@ -484,10 +511,10 @@ class AffiliateForm extends React.Component {
                   >
                     {affData.categories
                       ? affData.categories.map(
-                          ({ category_id, category_name }, i) => (
-                            <Option value={category_id}>{category_name}</Option>
-                          )
+                        ({ category_id, category_name }, i) => (
+                          <Option value={category_id}>{category_name}</Option>
                         )
+                      )
                       : []}
                   </Select>
                 </div>
@@ -598,7 +625,7 @@ class AffiliateForm extends React.Component {
                       value="sales"
                       onChange={this.changeType}
                       checked={this.state.campaign_name !== "" ? true : false}
-                      // disabled
+                    // disabled
                     />
                     <label for="sales">
                       <span className="imp-click">
@@ -656,8 +683,30 @@ class AffiliateForm extends React.Component {
                     </span>
                   </div>
                 </div> */}
+                  <ShopifyPromo PromoPayload={(betAmount) => this.handleClick(betAmount)}/>
+               
+                 
+
                 <div className="row">
                   <div className="col-md-6 mt-3">
+
+                 {!this.state.promoCond ? <>
+
+                  <label>PromoCode</label>
+                          <Select2
+                           name="promoCode"
+                            
+                            // onChange={(options, e) =>
+                            //   this.changeCountry(e, options, "country", i)
+                            // }
+                            placeholder="Select PromoCode"
+                            style={{ width: "100%" }}
+                            options={this.state.promoCode}
+                            
+                          />
+                        </>
+                   :
+                    <>
                     <label>Discount</label>
                     <InputNumberValidation
                       type="number"
@@ -673,7 +722,11 @@ class AffiliateForm extends React.Component {
                     <span className="text-danger">
                       {this.state.discountError}
                     </span>
+                  
+                  </>
+                   }
                   </div>
+                   
                   <div className="col-md-6 mt-3">
                     <label>Commission</label>
                     <InputNumberValidation
@@ -737,7 +790,7 @@ class AffiliateForm extends React.Component {
                             disabled={
                               // this.state.stateList === ""
                               this.state.inputList[i].country === "" ||
-                              this.state.inputList.length - 1 !== i
+                                this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
@@ -759,10 +812,10 @@ class AffiliateForm extends React.Component {
                             value={
                               x.city
                                 ? {
-                                    value: x.city,
-                                    label:
-                                      x.city === "all" ? "All Cities" : x.city,
-                                  }
+                                  value: x.city,
+                                  label:
+                                    x.city === "all" ? "All Cities" : x.city,
+                                }
                                 : { value: "", label: "All Cities" }
                             }
                             onChange={(options, e) =>
@@ -774,8 +827,8 @@ class AffiliateForm extends React.Component {
                             clearable={false}
                             disabled={
                               this.state.inputList[i].state === "" ||
-                              this.state.inputList.length - 1 !== i ||
-                              this.state.inputList[i].state === "all"
+                                this.state.inputList.length - 1 !== i ||
+                                this.state.inputList[i].state === "all"
                                 ? true
                                 : false
                             }
@@ -830,11 +883,11 @@ class AffiliateForm extends React.Component {
                               onClick={this.handleAddClick}
                               disabled={
                                 this.state.inputList[i].country === "" ||
-                                this.state.inputList[i].state === "" ||
-                                this.state.inputList[i].city === ""
+                                  this.state.inputList[i].state === "" ||
+                                  this.state.inputList[i].city === ""
                                   ? // (this.state.inputList[i].city === "all" &&
-                                    //   this.state.inputList[i].state === "all")
-                                    true
+                                  //   this.state.inputList[i].state === "all")
+                                  true
                                   : false
                               }
                             >
