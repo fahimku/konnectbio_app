@@ -432,8 +432,8 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    console.log(this.state.commission, "commission");
-    console.log(this.state.discount, "discount");
+    // console.log(this.state.commission, "commission");
+    // console.log(this.state.discount, "discount");
 
     return (
       <React.Fragment>
@@ -710,7 +710,7 @@ class AffiliateForm extends React.Component {
                     <label>Discount</label>
                     <InputNumberValidation
                       type="number"
-                      id="discount"
+                      id="number"
                       name="discount"
                       value={this.state.discount}
                       onChange={(evt) => {
@@ -718,7 +718,9 @@ class AffiliateForm extends React.Component {
                       }}
                       required
                       min="0"
+                      max="50"
                     />
+
                     <span className="text-danger">
                       {this.state.discountError}
                     </span>
@@ -731,7 +733,7 @@ class AffiliateForm extends React.Component {
                     <label>Commission</label>
                     <InputNumberValidation
                       type="number"
-                      id="commission"
+                      id="number"
                       name="commission"
                       value={this.state.commission}
                       onChange={(evt) => {
@@ -739,6 +741,7 @@ class AffiliateForm extends React.Component {
                       }}
                       required
                       min="0"
+                      max="50"
                     />
                     <span className="text-danger">
                       {this.state.CommissionError}

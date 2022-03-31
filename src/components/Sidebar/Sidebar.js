@@ -88,7 +88,7 @@ class Sidebar extends React.Component {
           <ul className={s.nav}>
             <>
               <LinksGroup
-                id='dashboard'
+                id="dashboard"
                 className="sidebar-nav-links"
                 header="Dashboard"
                 link="/app/dashboard"
@@ -100,7 +100,7 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
               <LinksGroup
-                id='my-posts'
+                id="my-posts"
                 className="sidebar-nav-links"
                 header="My Posts"
                 link="/app/my/posts"
@@ -113,7 +113,7 @@ class Sidebar extends React.Component {
                 labelColor="info"
               />
               <LinksGroup
-                id='manage-bioshop'
+                id="manage-bioshop"
                 className="sidebar-nav-links"
                 header="Manage BioShop"
                 link="/app/linkinbio"
@@ -128,7 +128,7 @@ class Sidebar extends React.Component {
 
               {PermissionHelper.validate(["marketplace_access"]) ? (
                 <LinksGroup
-                  id='marketplace'
+                  id="marketplace"
                   className="sidebar-nav-links"
                   header="Marketplace"
                   link="/app/marketplace"
@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
 
               {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
-                  id='affiliate'
+                  id="affiliate"
                   className="sidebar-nav-links"
                   header="Campaigns"
                   link="/app/campaign"
@@ -157,7 +157,7 @@ class Sidebar extends React.Component {
               ) : null}
 
               <LinksGroup
-                id='manage-links'
+                id="manage-links"
                 className="sidebar-nav-links"
                 header="Manage Links"
                 link="/app/my/links"
@@ -182,7 +182,7 @@ class Sidebar extends React.Component {
               /> */}
               {/* {PermissionHelper.validate(["affiliate_access"]) ? ( */}
               <LinksGroup
-                id='media-gallery'
+                id="media-gallery"
                 className="sidebar-nav-links"
                 header="Media Gallery"
                 link="/app/gallery"
@@ -197,7 +197,7 @@ class Sidebar extends React.Component {
 
               {/* ) : null} */}
               <LinksGroup
-                id='schedule-post'
+                id="schedule-post"
                 className="sidebar-nav-links"
                 header="Schedule Post"
                 link="/app/schedule/posts"
@@ -253,7 +253,7 @@ class Sidebar extends React.Component {
                 labelColor="info"
               /> */}
               <LinksGroup
-                id='ugc'
+                id="ugc"
                 className="sidebar-nav-links "
                 onActiveSidebarItemChange={(activeItem) =>
                   this.props.dispatch(changeActiveSidebarItem(activeItem))
@@ -283,7 +283,7 @@ class Sidebar extends React.Component {
 
               {PermissionHelper.validate(["analytics_access"]) ? (
                 <LinksGroup
-                  id='analysis'
+                  id="analysis"
                   className="sidebar-nav-links"
                   header="Analytics"
                   link="/app/analysis"
@@ -298,7 +298,7 @@ class Sidebar extends React.Component {
               <br></br>
               <div className={`settings-bottom ${s.bottomLinks}`}>
                 <LinksGroup
-                  id='settings'
+                  id="settings"
                   className="sidebar-nav-links "
                   onActiveSidebarItemChange={(activeItem) =>
                     this.props.dispatch(changeActiveSidebarItem(activeItem))
@@ -315,57 +315,61 @@ class Sidebar extends React.Component {
                   childrenLinks={
                     userInfo?.package?.package_id === "61d695e9bccdaf69f46efc66"
                       ? [
-                        {
-                          header: "Basic Setup",
-                          link: "/app/account/profile",
-                        },
-                        {
-                          header: "Category Setup",
-                          link: "/app/account/categories",
-                        },
-                        {
-                          header: "Campaign Setup",
-                          link: "/app/account/affiliate",
-                        },
-                        {
-                          header: "Connection Setup",
-                          link: "/app/account/setup",
-                        },
-                        {
-                          header: "Subscription Setup",
-                          link: "/app/subcription/setup",
-                        },
-                        {
-                          header: "Delete Account",
-                          link: "/app/account/delete",
-                        },
-                      ]
+                          {
+                            header: "Basic Setup",
+                            link: "/app/account/profile",
+                          },
+                          {
+                            header: "Category Setup",
+                            link: "/app/account/categories",
+                          },
+                          {
+                            header: "Campaign Setup",
+                            link: "/app/account/affiliate",
+                          },
+                          {
+                            header: "Shopify Setup",
+                            link: "/app/account/shopify",
+                          },
+                          {
+                            header: "Connection Setup",
+                            link: "/app/account/setup",
+                          },
+                          {
+                            header: "Subscription Setup",
+                            link: "/app/subcription/setup",
+                          },
+                          {
+                            header: "Delete Account",
+                            link: "/app/account/delete",
+                          },
+                        ]
                       : [
-                        {
-                          header: "Basic Setup",
-                          link: "/app/account/profile",
-                        },
-                        {
-                          header: "Category Setup",
-                          link: "/app/account/categories",
-                        },
-                        {
-                          header: "Connection Setup",
-                          link: "/app/account/setup",
-                        },
-                        {
-                          header: "Subscription Setup",
-                          link: "/app/subcription/setup",
-                        },
-                        {
-                          header: "Delete Account",
-                          link: "/app/account/delete",
-                        },
-                      ]
+                          {
+                            header: "Basic Setup",
+                            link: "/app/account/profile",
+                          },
+                          {
+                            header: "Category Setup",
+                            link: "/app/account/categories",
+                          },
+                          {
+                            header: "Connection Setup",
+                            link: "/app/account/setup",
+                          },
+                          {
+                            header: "Subscription Setup",
+                            link: "/app/subcription/setup",
+                          },
+                          {
+                            header: "Delete Account",
+                            link: "/app/account/delete",
+                          },
+                        ]
                   }
                 />
                 <LinksGroup
-                  id='logout'
+                  id="logout"
                   className="sidebar-nav-links"
                   header="Logout"
                   link="/logout"
