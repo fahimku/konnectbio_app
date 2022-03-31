@@ -175,7 +175,7 @@ export default function Box({
                     confirmReActiveCampaigns(false, item.campaign_id);
                   }}
                 >
-                  Campaign Available again
+                  Campaign Available
                 </button>
               ) : loading ? (
                 <button key={index} className="btn">
