@@ -26,15 +26,17 @@ function ShopifyPromo({
 
        if(loader == true){
         data = promoRequest.message;
+       
        }
   return (
     <>
     {!loader? <Loader size="30" />:
     
+    
        <div className="row">
                   <div className="col-md-6 mt-3">
                     <div class="form-check">
-                     
+                                 
                       
                       <input onChange={() => PromoPayload(data)} class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
                       <label class="form-check-label" for="flexRadioDefault1">
@@ -42,14 +44,7 @@ function ShopifyPromo({
                       </label>
                     </div>
                   </div>
-                  <div className="col-md-6 mt-3">
-                    <div class="form-check">
-                      <input onChange={() => PromoPayload(a)} class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        Default Shop
-                      </label>
-                    </div>
-                  </div>
+               
                 </div>
   }
     </>
