@@ -21,12 +21,16 @@ const { RangePicker } = DatePicker;
 class UpdateModal extends React.Component {
   constructor(props) {
     super(props);
+   
     this.state = {
       username: this.props.username,
       campaign_name: this.props.affData?.campaign_name,
       campaign_type: this.props.affData?.campaign_type,
       pay_per_hundred: this.props.affData?.pay_per_hundred,
       budget: this.props.affData?.budget,
+      promoCodes: this.props.affData?.promo,
+      promoList: this.props.promoCodes,
+      
       // startDate: moment(),
       // endDate: moment().add(30, "days"),
       startDate: moment(this.props.affData?.start_date_and_time).format(
@@ -47,7 +51,8 @@ class UpdateModal extends React.Component {
       submit: false,
       cities2: [],
       states: [],
-      discount: this.props.affData?.discount,
+      promoCodeVal:'',
+      //discount: this.props.affData?.discount,
       commission: this.props.affData?.commission,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
@@ -93,6 +98,12 @@ class UpdateModal extends React.Component {
   // budget = (value) => {
   //   this.setState({ budget: value });
   // };
+
+  changePromoCode = (e, options, name, index) => {
+    this.setState({promoCodes:options.value})  
+  };
+
+
   discount = (value) => {
     if (value <= 50) {
       this.setState({ discount: value });
@@ -111,6 +122,9 @@ class UpdateModal extends React.Component {
       });
     }
   };
+
+  
+
   dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
     let endDate = dataString[1];
@@ -237,7 +251,8 @@ class UpdateModal extends React.Component {
       campaign_name,
       // budget,
       // pay_per_hundred,
-      discount,
+      //discount,
+      promoCodes,
       commission,
       startDate,
       endDate,
@@ -247,7 +262,8 @@ class UpdateModal extends React.Component {
       (campaign_name &&
         // budget &&
         // pay_per_hundred &&
-        discount,
+      //  discount,
+      promoCodes,
       commission,
       startDate && endDate && campaign_type && place)
     ) {
@@ -262,7 +278,9 @@ class UpdateModal extends React.Component {
             redirected_url: this.props.affData.redirected_url,
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
-            discount: parseInt(this.state.discount),
+            promo: this.state.promoCodes,
+            discount_type:'shopify',
+            // discount: parseInt(this.state.discount),
             commission: parseInt(this.state.commission),
             // budget: parseInt(this.state.budget),
             // pay_per_hundred: parseInt(this.state.pay_per_hundred),
@@ -369,18 +387,14 @@ class UpdateModal extends React.Component {
     return current && current < moment().endOf("day");
   }
 
+  
+
   render() {
     const { affData } = this.props;
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
 
-    const renderConValue = (x) => {
-      const exit = this.props.countries.filter(
-        (item) => item.value === x.country
-      );
-
-      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-    };
+   
 
     const renderStateValue = (x, i) => {
       if (x.country) {
@@ -396,6 +410,20 @@ class UpdateModal extends React.Component {
         return { value: "", label: "All States" };
       }
     };
+
+   const renderConValuePromoList = (x) => {
+       return { value: x, label: x };
+     };
+    const renderConValue = (x) => {
+      const exit = this.props.countries.filter(
+        (item) => item.value === x.country
+      );
+
+      return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    };
+
+
+
     const renderCityValue = (x, i) => {
       if (x.state) {
         const exit = [
@@ -655,23 +683,21 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-6 mt-3">
-                    <label>Discount</label>
-                    <InputNumberValidation
-                      type="number"
-                      id="discount"
-                      name="discount"
-                      value={this.state.discount}
-                      onChange={(evt) => {
-                        this.discount(evt.target.value);
-                      }}
-                      required
-                      min="0"
-                    />
-                    <span className="text-danger">
-                      {this.state.discountError}
-                    </span>
-                  </div>
+                <div className="col-md-6 mt-3">
+                  <label>PromoCode</label>
+                          <Select2
+                           name="promoCode"
+                           value={renderConValuePromoList(this.state.promoCodes)}
+                              onChange={(options, e) =>
+                               this.changePromoCode(e,options)
+                             }
+                            placeholder="Select PromoCode"
+                            style={{ width: "100%" }}
+                            options={this.state.promoList}
+                            
+                          />
+                         
+                            </div>
                   <div className="col-md-6 mt-3">
                     <label>Commission</label>
                     <InputNumberValidation
