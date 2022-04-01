@@ -22,6 +22,11 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
     });
   }, []);
 
+  React.useEffect(() => {
+    console.log(shopifyDetail, "shopifyDetail");
+    setData(shopifyDetail.shopify);
+  }, [shopifyDetail]);
+
   // const getShopifyDetail = async () => {
   //   await axios
   //     .get("users/receive/shopify")
@@ -66,7 +71,7 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
     e.stopPropagation();
     setType(type === "input" ? "password" : "input");
   };
-  console.log(shopifyDetail, "shopifyDetail");
+  console.log(data, "data");
 
   return (
     <React.Fragment>
