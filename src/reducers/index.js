@@ -55,6 +55,7 @@ import affiliateBalance from "./affiliateDeposit/affiliateBalance";
 import addAffiliateRequest from "./affiliateTransactions/addAffiliateRequest";
 
 import promoRequest from "./promoRequest/promoCode";
+import shopifyDetail from "./shopifySetup/shopifyDetail";
 
 export default (history) =>
   combineReducers({
@@ -111,4 +112,5 @@ export default (history) =>
     affiliateBalance,
     promoRequest,
     marketplaceApproval,
+    shopifyDetail,
   });
