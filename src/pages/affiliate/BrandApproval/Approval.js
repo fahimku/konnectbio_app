@@ -73,10 +73,7 @@ function Approvals({
               <tbody>
                 {data.map((item, i) => {
                   return (
-                    <>
-                      {item?.status === "Rejected" ? (
-                        <></>
-                      ) : (
+                  
                         <tr key={i}>
                           <td>{item?.instagram_username}</td>
                           <td>{item?.status}</td>
@@ -102,8 +99,7 @@ function Approvals({
                             </span>
                           </td>
                         </tr>
-                      )}
-                    </>
+                     
                   );
                 })}
               </tbody>

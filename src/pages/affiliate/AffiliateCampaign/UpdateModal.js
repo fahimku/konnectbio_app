@@ -653,6 +653,7 @@ class UpdateModal extends React.Component {
                     />
                   </div>
                 </div> */}
+
                 <div className="row">
                   <div className="col-md-6 mt-3">
                     <label>Discount</label>
