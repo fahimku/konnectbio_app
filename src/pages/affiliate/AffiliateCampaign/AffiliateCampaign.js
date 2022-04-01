@@ -12,6 +12,7 @@ import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import * as catActions from "../../../actions/category";
+import * as promo from "../../../actions/promoRequest";
 import { connect } from "react-redux";
 import AnalyticModal from "./AnalyticModal";
 import { DatePicker } from "antd";
@@ -19,6 +20,8 @@ import moment from "moment";
 import Select from "react-select";
 import { fontSize } from "@mui/system";
 
+let dataPromo;
+let PassPromoCode;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
@@ -27,7 +30,9 @@ const styleObj = {
   fontSize: "14px",
 };
 
-function AffiliateCampaign(props) {
+function AffiliateCampaign(props, { getPromoRequest,
+  promoRequest,
+  PromoPayload, }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -58,12 +63,40 @@ function AffiliateCampaign(props) {
     label: "COMMISSION",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
+  const [loader, setLoader] = useState(true)
+  const [promoCode, setPromoCode] = useState('');
 
   useEffect(() => {
     props.getCountries();
     fetchPostPerformance();
+    setLoader(false);
+    props.getPromoRequest().then((res) => {
+      setLoader(true);
+      
+    });
   }, []);
 
+  if(loader == true){
+    dataPromo = props.promoRequest.message;
+    const promo = dataPromo;
+    
+    if(dataPromo != undefined){
+      console.log("sees",dataPromo);
+      const selectState = [];
+    promo.map((x) => {
+      return selectState.push({
+        value: x,
+        label: x,
+      
+      });
+    });
+    PassPromoCode = selectState;
+    }
+    else{
+     
+    }
+   
+  }
   useEffect(() => {
     props.getUserCategories().then(
       function (res) {
@@ -160,6 +193,7 @@ function AffiliateCampaign(props) {
       )
       .then((response) => {
         setData(response.data.message);
+        console.log('Seller', response.data.message)
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -177,23 +211,26 @@ function AffiliateCampaign(props) {
     // postData();
   };
 
+
+
+
+
   const postData = () => {
     const data1 = data;
     const truncate = (str, max, suffix) =>
       str.length < max
         ? str
         : `${str.substr(
-            0,
-            str.substr(0, max - suffix.length).lastIndexOf(" ")
-          )}${suffix}`;
+          0,
+          str.substr(0, max - suffix.length).lastIndexOf(" ")
+        )}${suffix}`;
     const slice = data1.slice(offset, offset + perPage);
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div
-            className={`card any_bx analytic-box campaign-box ${
-              props.type !== "expired" ? "" : "pb-0"
-            }`}
+            className={`card any_bx analytic-box campaign-box ${props.type !== "expired" ? "" : "pb-0"
+              }`}
           >
             <div className="camp-row row">
               <div className="campaign-header col-12">
@@ -263,8 +300,8 @@ function AffiliateCampaign(props) {
                   ) : (
                     <>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">Discount</h5>
-                        <h3 className="count">{record.discount}%</h3>
+                        <h5 className="count-title">Promo Code</h5>
+                        <h3 className="count">{record.promo}</h3>
                       </div>
                       <div className="col-12 count-box">
                         <h5 className="count-title">Commission</h5>
@@ -582,6 +619,7 @@ function AffiliateCampaign(props) {
           </Modal.Header>
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <UpdateModal
+              promoCodes={PassPromoCode}
               affData={currentCampaign}
               countries={props.countries}
               affCloseModal={() => setModal(false)}
@@ -614,10 +652,15 @@ function AffiliateCampaign(props) {
   );
 }
 
-function mapStateToProps({ countries, campaign }) {
-  return { countries, campaign };
+function mapStateToProps({ getPromoRequest,
+  promoRequest, countries, campaign }) {
+  return {
+    getPromoRequest,
+    promoRequest, countries, campaign
+  };
 }
 export default connect(mapStateToProps, {
+  ...promo,
   ...countryAct,
   ...campAct,
   ...catActions,
