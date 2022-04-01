@@ -58,7 +58,7 @@ function ShopifySetup() {
     apiKey: Yup.string().required("This field is required"),
     password: Yup.string().required("This field is required"),
   });
-  console.log(data, "data");
+  // console.log(data, "data");
 
   return (
     <React.Fragment>
