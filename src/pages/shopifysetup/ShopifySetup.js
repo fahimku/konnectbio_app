@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
-import Swal from "sweetalert2";
-import { connect } from "react-redux";
-import * as profileActions from "../../actions/searchProfile";
-import * as subActions from "../../actions/subscribe";
+import { Row, Button } from "react-bootstrap";
+// import Swal from "sweetalert2";
+// import { connect } from "react-redux";
+// import * as shopifyActions from "../../actions/shopifySetup";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -14,6 +13,7 @@ function ShopifySetup() {
   const [saveloading, setSaveLoading] = useState(false);
   const [data, setData] = useState("");
   const [ShopifyLoading, setShopifyLoading] = useState(true);
+  const [type, setType] = useState("password");
 
   useEffect(() => {
     getShopifyDetail();
@@ -58,7 +58,11 @@ function ShopifySetup() {
     apiKey: Yup.string().required("This field is required"),
     password: Yup.string().required("This field is required"),
   });
-  console.log(data, "data");
+  const showHide = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setType(type === "input" ? "password" : "input");
+  };
 
   return (
     <React.Fragment>
@@ -71,10 +75,10 @@ function ShopifySetup() {
                 <div className="dash_content_profile">
                   {!ShopifyLoading && (
                     <Row className="shopify_heading">
-                      <div className="col-md-8">
+                      <div className="col-md-8 col-7">
                         <h5>Enter Shopify Detail</h5>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-5">
                         {data ? (
                           <span class="connection-status-badge-green connection">
                             Connected
@@ -143,10 +147,10 @@ function ShopifySetup() {
                                   {errors.apiKey}
                                 </span>
                               </div>
-                              <div className="mb-0">
+                              <div className="mb-0 password-box password-api">
                                 <label>Enter API Secret Key</label>
                                 <input
-                                  type="password"
+                                  type={type}
                                   name="password"
                                   // onBlur={handleBlur}
                                   onChange={handleChange}
@@ -155,6 +159,16 @@ function ShopifySetup() {
                                   className="form-control comment-field"
                                   autoComplete="off"
                                 />
+                                <span
+                                  className="password_show"
+                                  onClick={showHide}
+                                >
+                                  {type === "input" ? (
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                  ) : (
+                                    <span class="glyphicon glyphicon-eye-close"></span>
+                                  )}
+                                </span>
                                 <span className="text-danger">
                                   {errors.password}
                                 </span>
@@ -187,10 +201,8 @@ function ShopifySetup() {
     </React.Fragment>
   );
 }
-// function mapStateToProps({ profiles }) {
-//   return { profiles };
+// function mapStateToProps({ shopifyDetail }) {
+//   return { shopifyDetail };
 // }
 export default ShopifySetup;
-// export default connect(mapStateToProps, { ...profileActions, ...subActions })(
-//   HashtagsList
-// );
+// export default connect(mapStateToProps, { ...shopifyActions })(ShopifySetup);
