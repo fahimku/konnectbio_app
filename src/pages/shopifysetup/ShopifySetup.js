@@ -1,45 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
-import Swal from "sweetalert2";
-import { connect } from "react-redux";
-import * as shopifyActions from "../../actions/shopifySetup";
+import { Row, Button } from "react-bootstrap";
+// import Swal from "sweetalert2";
+// import { connect } from "react-redux";
+// import * as shopifyActions from "../../actions/shopifySetup";
 import Loader from "../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import axios from "axios";
 
-function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
+function ShopifySetup() {
   const [saveloading, setSaveLoading] = useState(false);
   const [data, setData] = useState("");
   const [ShopifyLoading, setShopifyLoading] = useState(true);
   const [type, setType] = useState("password");
 
   useEffect(() => {
-    // getShopifyDetail();
-    getShopifyDetail().then(() => {
-      setShopifyLoading(false);
-    });
+    getShopifyDetail();
   }, []);
 
-  React.useEffect(() => {
-    console.log(shopifyDetail, "shopifyDetail");
-    setData(shopifyDetail.shopify);
-  }, [shopifyDetail]);
-
-  // const getShopifyDetail = async () => {
-  //   await axios
-  //     .get("users/receive/shopify")
-  //     .then((response) => {
-  //       const shopifyData = response.data.message;
-  //       setData(shopifyData.shopify);
-  //       setShopifyLoading(false);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error.response);
-  //       setShopifyLoading(false);
-  //     });
-  // };
+  const getShopifyDetail = async () => {
+    await axios
+      .get("users/receive/shopify")
+      .then((response) => {
+        const shopifyData = response.data.message;
+        setData(shopifyData.shopify);
+        setShopifyLoading(false);
+      })
+      .catch(function (error) {
+        console.log(error.response);
+        setShopifyLoading(false);
+      });
+  };
 
   const onSubmitting = async (values, actions) => {
     console.log(values, "values");
@@ -71,7 +63,6 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
     e.stopPropagation();
     setType(type === "input" ? "password" : "input");
   };
-  console.log(data, "data");
 
   return (
     <React.Fragment>
@@ -210,8 +201,8 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
     </React.Fragment>
   );
 }
-function mapStateToProps({ shopifyDetail }) {
-  return { shopifyDetail };
-}
-// export default ShopifySetup;
-export default connect(mapStateToProps, { ...shopifyActions })(ShopifySetup);
+// function mapStateToProps({ shopifyDetail }) {
+//   return { shopifyDetail };
+// }
+export default ShopifySetup;
+// export default connect(mapStateToProps, { ...shopifyActions })(ShopifySetup);
