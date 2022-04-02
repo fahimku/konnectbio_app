@@ -291,9 +291,9 @@ function AffiliateTransaction({
                 <th>Category </th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Type</th>
+                {/* <th>Type</th>
                 <th>Budget </th>
-                <th>Rate / 1000 Clicks</th>
+                <th>Rate / 1000 Clicks</th> */}
                 <th>Rate / Click</th>
                 <th>Clicks</th>
                 <th>Impressions</th>
@@ -331,9 +331,9 @@ function AffiliateTransaction({
 
                     <td>{moment(item?.start_date).format("YYYY-MM-DD")}</td>
                     <td>{moment(item?.end_date).format("YYYY-MM-DD")}</td>
-                    <td className="text-capitalize">{item?.campaign_type}</td>
+                    {/* <td className="text-capitalize">{item?.campaign_type}</td>
                     <td>{numeral(item?.budget).format("$0,0.0'")}</td>
-                    <td>{numeral(item?.pay_per_hundred).format("$0,0.0'")}</td>
+                    <td>{numeral(item?.pay_per_hundred).format("$0,0.0'")}</td> */}
                     <td>{numeral(item?.rate).format("$0,0.00'")}</td>
                     <td>{numeral(item?.clicks).format("0,0'")}</td>
                     <td>{numeral(item?.impressions).format("0,0'")}</td>

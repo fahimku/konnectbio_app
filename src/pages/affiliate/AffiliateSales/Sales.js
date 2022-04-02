@@ -52,9 +52,12 @@ function AffiliateSales({
                       <thead>
                           <tr>
                               <th>S.#</th>
+                              <th>Date</th>
+                              <th>Campaign Name</th>
+                              <th>Promo</th>
                               <th>Order Id</th>
                               <th>Pixel Id</th>
-                              <th>Name </th>
+                              <th>Inf.Name </th>
                               <th>Email</th>
                               <th>Account Type</th>
                               <th>Country</th>
@@ -71,6 +74,9 @@ function AffiliateSales({
                                    <tr key={i}>
                  
                                       <td>{i+1}</td>
+                                      <td>{moment(item?.createdAt).format("YYYY-MM-DD")}</td>
+                                      <td>{item?.campaign?.campaign_name}</td>
+                                      <td>{item?.campaign?.promo}</td>
                                       <td>{item?.order_id}</td>
                                       <td>{item?.pixel_id}</td>
                                       <td>{item?.publisher?.name}</td>
