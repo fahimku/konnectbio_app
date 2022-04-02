@@ -58,7 +58,7 @@ export const GET_AFFILIATE_CAMPAIGNS = "getAffiliateCampaigns";
 export const GET_AFFILIATE_SALES = "getAffiliateSales";
 export const GET_AFFILIATE_SALES_INF = "getAffiliateSalesInf";
 export const GET_AFFILIATE_REQUEST = "getAffiliateRequest";
-export const ADD_AFFILIATE_REQUEST = "postAffiliateRequest"
+export const ADD_AFFILIATE_REQUEST = "postAffiliateRequest";
 export const GET_PROMO_REQUEST = "getPromoRequest";
 
 export const GET_AFFILIATE_INFLUENCER = "getAffiliateInfluencer";
@@ -83,3 +83,6 @@ export const GET_MARKETPLACE_APPROVAL = "getMarketplaceApproval";
 export const GET_AFFILIATE_CARDS = "getAffiliateCards";
 export const GET_PAYMENT_METHOD = "getPaymentMethod";
 export const GET_BALANCE_REQUEST = "getBalanceMethod";
+
+/**********Shopify Action Types******************* */
+export const GET_SHOPIFY_DETAIL = "getShopifyDetail";
