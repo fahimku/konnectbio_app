@@ -30,6 +30,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       label: "Date",
       value: "date",
     },
+    {
+      label: "Campaign",
+      value: "campaign",
+    },
+    {
+      label: "Influencer",
+      value: "influencer",
+    },
   ]);
 
   const style = {
