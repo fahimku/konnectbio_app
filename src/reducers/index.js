@@ -39,7 +39,7 @@ import affiliateTransactions from "./affiliateTransactions/affiliateTransactions
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateSales from "./affiliateTransactions/affiliateSales";
 import affiliateRequest from "./affiliateTransactions/affiliateRequest";
-import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
+// import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
 import influencerDetailTransactions from "./affiliateTransactions/influencerDetailTransactions";
 
@@ -99,7 +99,7 @@ export default (history) =>
     affiliateCampaigns,
     affiliateSales,
     affiliateRequest,
-    affiliateInfluencers,
+    // affiliateInfluencers,
     campaignDetailTransactions,
     influencerDetailTransactions,
     marketplaceTransactions,
