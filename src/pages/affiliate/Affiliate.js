@@ -34,7 +34,7 @@ class Affiliate extends React.Component {
       username: username,
       package_name: userInfo?.package?.package_name,
       myBrand: "",
-      brandLoading: false,  
+      brandLoading: false,
     };
   }
 
@@ -211,7 +211,6 @@ class Affiliate extends React.Component {
                     </NavLink>
                   </NavItem>
 
-
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -225,7 +224,7 @@ class Affiliate extends React.Component {
                     </NavLink>
                   </NavItem>
 
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "transaction",
@@ -236,7 +235,7 @@ class Affiliate extends React.Component {
                     >
                       <span>Transactions</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
 
                   <NavItem>
                     <NavLink
@@ -316,15 +315,13 @@ class Affiliate extends React.Component {
                       <AffiliateBalance />
                     ) : null}
                   </TabPane>
-                  <TabPane tabId="transaction">
+                  {/* <TabPane tabId="transaction">
                     {this.state.activeTab === "transaction" ? (
                       <AffiliateTransaction />
                     ) : null}
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tabId="approval">
-                    {this.state.activeTab === "approval" ? (
-                      <Approvals />
-                    ) : null}
+                    {this.state.activeTab === "approval" ? <Approvals /> : null}
                   </TabPane>
                   <TabPane tabId="sales">
                     {this.state.activeTab === "sales" ? (
