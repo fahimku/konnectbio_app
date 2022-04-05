@@ -1199,3 +1199,6 @@ code.sm-color {
   background-color: #798892 !important;
   border-color: #798892 !important;
 }
+.filter-date .btn-primary:disabled {
+  cursor: no-drop;
+}
