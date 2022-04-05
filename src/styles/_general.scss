@@ -1185,3 +1185,17 @@ code.sm-color {
 .password-api .password_show {
   top: 37px;
 }
+.filter-date {
+}
+.filter-date .btn {
+  padding: 7px 10px !important;
+  min-width: 100px;
+  height: 35px;
+  margin-right: 0px;
+}
+.filter-date .btn-primary:disabled,
+.filter-date .btn-primary:hover {
+  color: #fff;
+  background-color: #798892 !important;
+  border-color: #798892 !important;
+}
