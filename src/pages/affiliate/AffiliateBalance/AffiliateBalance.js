@@ -181,7 +181,7 @@ function AffiliateBalance({
                   <h5>Current Balance</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
-                      ${affiliateBalance?.message?.current_balance}
+                     ${affiliateBalance?.message?.current_balance.toFixed(2)}
                     </div>
                   ) : (
                     <div className="aff-amount">$0</div>
