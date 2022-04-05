@@ -167,8 +167,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>Influencer Instagram</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -225,8 +225,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -273,8 +273,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
 
                   <th>Campaign Name</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -316,8 +316,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Instagram</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
