@@ -118,6 +118,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   const refreshPage = (e) => {
     setCurrentPage(0);
     setLoading(true);
+    setFilterDisable("");
     setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
     setEndDate(moment(new Date()).format("YYYY-MM-DD"));
     getAffiliateSalesByBrand(
