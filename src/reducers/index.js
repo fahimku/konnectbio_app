@@ -38,6 +38,7 @@ import mediaSummary from "./media/mediaSummary";
 import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateSales from "./affiliateTransactions/affiliateSales";
+import affiliateSalesInf from "./marketplaceTransactions/marketPlaceSales"
 import affiliateRequest from "./affiliateTransactions/affiliateRequest";
 // import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
@@ -98,6 +99,7 @@ export default (history) =>
     affiliateTransactions,
     affiliateCampaigns,
     affiliateSales,
+    affiliateSalesInf,
     affiliateRequest,
     // affiliateInfluencers,
     campaignDetailTransactions,
