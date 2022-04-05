@@ -26,6 +26,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     value: "",
   });
   const [submit, setSubmit] = useState("");
+  const [filterDisable, setFilterDisable] = useState("");
 
   const groupByList = [
     {
@@ -134,6 +135,19 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     });
     setSubmit("");
   };
+  const filterDate = (sDate, eDate, filterType) => {
+    setLoading(true);
+    setFilterDisable(filterType);
+    setStartDate(sDate);
+    setEndDate(eDate);
+    setGroupBy({
+      label: "ALL",
+      value: "",
+    });
+    getAffiliateSalesByBrand("", 1, limit, sDate, eDate).then(() => {
+      setLoading(false);
+    });
+  };
 
   function allTable() {
     let data = affiliateSales?.message?.data;
@@ -168,7 +182,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           : moment(item?.created_date).format("YYYY-MM-DD")}
                       </td>
                       <td>{item?.campaign_name}</td>
-                      <td>{item?.influencer_name}</td>
+                      <td>
+                        <a
+                          target="_blank"
+                          href={`https://www.instagram.com/${item?.influencer_name}`}
+                        >
+                          {item?.influencer_name}
+                        </a>
+                      </td>
                       <td>{item?.order_id}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
@@ -190,7 +211,6 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       );
     }
   }
-
   function dateTable() {
     let data = affiliateSales?.message?.data;
     if (data) {
@@ -305,7 +325,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   return (
                     <tr key={i}>
                       <td>{i + 1}</td>
-                      <td>{item?.influencer_name}</td>
+                      <td>
+                        <a
+                          target="_blank"
+                          href={`https://www.instagram.com/${item?.influencer_name}`}
+                        >
+                          {item?.influencer_name}
+                        </a>
+                      </td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
@@ -330,6 +357,53 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       <div className="container-fluid">
         <h4 className="page-title">Sales</h4>
         <div className="brand_container_main aff-payment">
+          <Row className="filter-date mb-3">
+            <div className="col-md-12">
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "today"
+                  )
+                }
+                disabled={filterDisable === "today" ? true : false}
+              >
+                Today
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment().startOf("month").format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "month"
+                  )
+                }
+                disabled={
+                  filterDisable === "month" || filterDisable === ""
+                    ? true
+                    : false
+                }
+              >
+                MTD
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment().startOf("year").format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "year"
+                  )
+                }
+                disabled={filterDisable === "year" ? true : false}
+              >
+                YTD
+              </button>
+            </div>
+          </Row>
           <Row>
             <div className="col-md-12">
               <form className="mb-3" onSubmit={handleSubmit}>
@@ -408,6 +482,11 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                         onClick={refreshPage}
                         type="button"
                         variant="primary"
+                        disabled={
+                          affiliateSales?.message?.data?.length === 0
+                            ? true
+                            : false
+                        }
                       >
                         Refresh
                       </Button>
