@@ -21,9 +21,15 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   const toDate = moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
-  const [groupBy, setGroupBy] = useState([
+  const [groupBy, setGroupBy] = useState({
+    label: "ALL",
+    value: "",
+  });
+  const [submit, setSubmit] = useState("");
+
+  const groupByList = [
     {
-      label: "All",
+      label: "ALL",
       value: "",
     },
     {
@@ -38,7 +44,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       label: "Influencer",
       value: "influencer",
     },
-  ]);
+  ];
 
   const style = {
     control: (base, state) => ({
@@ -55,10 +61,15 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("userInfo"));
     const accountType = currentUser.account_type;
-    const UserId = currentUser.user_id;
 
     if (accountType === "brand") {
-      getAffiliateSalesByBrand("", 1, limit).then(() => {
+      getAffiliateSalesByBrand(
+        groupBy.value,
+        1,
+        limit,
+        startDate,
+        endDate
+      ).then(() => {
         setLoading(false);
       });
     }
@@ -75,17 +86,25 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     setLoading(true);
     e.preventDefault();
     setCurrentPage(0);
-    getAffiliateSalesByBrand(groupBy.value, 1, limit).then((data) => {
-      setLoading(false);
-      // setSubmit(groupBy.value);
-    });
+    getAffiliateSalesByBrand(groupBy.value, 1, limit, startDate, endDate).then(
+      (data) => {
+        setLoading(false);
+        setSubmit(groupBy.value);
+      }
+    );
   };
 
   const handlePageClick = (e) => {
     const page = e.selected;
     setCurrentPage(page);
     setLoading(true);
-    getAffiliateSalesByBrand(groupBy.value, page + 1, limit).then(() => {
+    getAffiliateSalesByBrand(
+      groupBy.value,
+      page + 1,
+      limit,
+      startDate,
+      endDate
+    ).then(() => {
       if (affiliateSales?.message?.data?.length > 0) {
         setLoading(false);
       }
@@ -93,12 +112,30 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   };
 
   const changegroupBy = (e) => {
-    // setInfluencerId("");
-    // getActiveInfluencer(e.value);
     setGroupBy(e);
   };
+  const refreshPage = (e) => {
+    setCurrentPage(0);
+    setLoading(true);
+    setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
+    setEndDate(moment(new Date()).format("YYYY-MM-DD"));
+    getAffiliateSalesByBrand(
+      "",
+      1,
+      limit,
+      moment().startOf("month").format("YYYY-MM-DD"),
+      moment(new Date()).format("YYYY-MM-DD")
+    ).then(() => {
+      setLoading(false);
+    });
+    setGroupBy({
+      label: "ALL",
+      value: "",
+    });
+    setSubmit("");
+  };
 
-  function dataTable() {
+  function allTable() {
     let data = affiliateSales?.message?.data;
     if (data) {
       return (
@@ -134,10 +171,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.influencer_name}</td>
                       <td>{item?.order_id}</td>
                       <td>{item?.total_qty}</td>
-                      <td>{item?.total_sale}</td>
-                      <td>{item?.order_totalprice}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>
-                        {item?.total_commission ? item?.total_commission : "0"}
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
                       </td>
                     </tr>
                   );
@@ -149,8 +190,141 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       );
     }
   }
-  console.log(affiliateSales, "affiliateSales");
 
+  function dateTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Date</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        {!item?.created_date
+                          ? "-"
+                          : moment(item?.created_date).format("YYYY-MM-DD")}
+                      </td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
+  function campaignTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+
+                  <th>Campaign Name</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.campaign_name}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
+  function influencerTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Influencer Instagram</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.influencer_name}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -197,10 +371,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <Col xs={12} xl={3} md={6}>
                     <p>Group By</p>
                     <Select
-                      // value={groupBy}
+                      value={groupBy}
                       name="campaign"
                       className="selectCustomization"
-                      options={groupBy}
+                      options={groupByList}
                       placeholder="Select Group By"
                       onChange={changegroupBy}
                       styles={style}
@@ -220,7 +394,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     >
                       Search
                     </Button>
-                    {/* {loading ? (
+                    {loading ? (
                       <Button
                         className="fltr-hpr btn-gray"
                         type="button"
@@ -231,13 +405,13 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     ) : (
                       <Button
                         className="fltr-hpr btn-gray"
-                        //onClick={refreshPage}
+                        onClick={refreshPage}
                         type="button"
                         variant="primary"
                       >
                         Refresh
                       </Button>
-                    )} */}
+                    )}
                   </Col>
                 </Row>
               </form>
@@ -251,40 +425,53 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <NoDataFound />
                     </>
                   ) : (
-                    <>{dataTable()}</>
+                    <>
+                      {submit === "" || submit === undefined
+                        ? allTable()
+                        : null}
+                      {submit === "date" || submit === undefined
+                        ? dateTable()
+                        : null}
+                      {submit === "campaign" || submit === undefined
+                        ? campaignTable()
+                        : null}
+                      {submit === "influencer" || submit === undefined
+                        ? influencerTable()
+                        : null}
+                    </>
                   )}
                 </>
               )}
 
-              {/* {affiliateSales?.message?.data?.length > 0 && !loading && ( */}
-              <Row>
-                <ReactPaginate
-                  previousLabel=""
-                  nextLabel=""
-                  pageClassName="page-item "
-                  pageLinkClassName="page-link custom-paginate-link btn btn-primary"
-                  previousClassName="page-item"
-                  previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
-                  nextClassName="page-item"
-                  nextLinkClassName="page-link custom-paginate-next btn btn-primary"
-                  breakLabel="..."
-                  breakClassName="page-item"
-                  breakLinkClassName="page-link"
-                  forcePage={currentPage}
-                  pageCount={Math.ceil(
-                    affiliateSales?.message?.total_records / limit
-                  )}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                  onPageChange={handlePageClick}
-                  containerClassName={
-                    "pagination justify-content-center mt-2 custom-paginate"
-                  }
-                  // subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              </Row>
-              {/* )} */}
+              {affiliateSales?.message?.data?.length > 0 && !loading && (
+                <Row>
+                  <ReactPaginate
+                    previousLabel=""
+                    nextLabel=""
+                    pageClassName="page-item "
+                    pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    forcePage={currentPage}
+                    pageCount={Math.ceil(
+                      affiliateSales?.message?.total_records / limit
+                    )}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+                    onPageChange={handlePageClick}
+                    containerClassName={
+                      "pagination justify-content-center mt-2 custom-paginate"
+                    }
+                    // subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
+                </Row>
+              )}
             </div>
           </Row>
         </div>
