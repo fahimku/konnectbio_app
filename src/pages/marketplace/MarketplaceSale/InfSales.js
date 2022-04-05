@@ -25,6 +25,8 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
     label: "ALL",
     value: "",
   });
+
+  const [filterDisable, setFilterDisable] = useState("");
   const [submit, setSubmit] = useState("");
 
   const groupByList = [
@@ -134,6 +136,22 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
     });
     setSubmit("");
   };
+
+  const filterDate = (sDate, eDate, filterType) => {
+    setLoading(true);
+    setFilterDisable(filterType);
+    setStartDate(sDate);
+    setEndDate(eDate);
+    setGroupBy({
+      label: "ALL",
+      value: "",
+    });
+    getAffiliateSalesByInfluencer("", 1, limit, sDate, eDate).then(() => {
+      setLoading(false);
+    });
+  };
+
+
 
   function allTable() {
     let data = affiliateSalesInf?.message?.data;
@@ -336,6 +354,53 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
       <div className="container-fluid">
         <h4 className="page-title">Sales</h4>
         <div className="brand_container_main aff-payment">
+        <Row className="filter-date mb-3">
+            <div className="col-md-12">
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "today"
+                  )
+                }
+                disabled={filterDisable === "today" ? true : false}
+              >
+                Today
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment().startOf("month").format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "month"
+                  )
+                }
+                disabled={
+                  filterDisable === "month" || filterDisable === ""
+                    ? true
+                    : false
+                }
+              >
+                MTD
+              </button>
+              <button
+                class="btn btn-primary btn-sm"
+                onClick={() =>
+                  filterDate(
+                    moment().startOf("year").format("YYYY-MM-DD"),
+                    moment(new Date()).format("YYYY-MM-DD"),
+                    "year"
+                  )
+                }
+                disabled={filterDisable === "year" ? true : false}
+              >
+                YTD
+              </button>
+            </div>
+          </Row>
           <Row>
             <div className="col-md-12">
               <form className="mb-3" onSubmit={handleSubmit}>
