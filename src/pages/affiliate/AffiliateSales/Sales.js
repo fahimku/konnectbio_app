@@ -14,268 +14,373 @@ import numeral from "numeral";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function AffiliateSales({
-    getAffiliateSalesByBrand,
-    getAffiliateSalesByInfluencer,
-    affiliateSales
-}) {
-    const [loading, setLoading] = useState(true);
-    const [currentPage, setCurrentPage] = useState(0);
-    const fromDate =
-   
-      moment(new Date()).format("YYYY-MM-DD")
-      moment().startOf("year").format("YYYY-MM-DD");
-  const toDate =
-       moment().add(1, "year").format("YYYY-MM-DD")
-       moment(new Date()).format("YYYY-MM-DD");
+function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const fromDate = moment().startOf("month").format("YYYY-MM-DD");
+  const toDate = moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
+  const [groupBy, setGroupBy] = useState({
+    label: "ALL",
+    value: "",
+  });
+  const [submit, setSubmit] = useState("");
 
+  const groupByList = [
+    {
+      label: "ALL",
+      value: "",
+    },
+    {
+      label: "Date",
+      value: "date",
+    },
+    {
+      label: "Campaign",
+      value: "campaign",
+    },
+    {
+      label: "Influencer",
+      value: "influencer",
+    },
+  ];
 
-    const style = {
-      control: (base, state) => ({
-        ...base,
-        height: "44px",
-        boxShadow: "none",
-        "&:hover": {
-          // border: "1px solid black",
-        },
-      }),
-    };
+  const style = {
+    control: (base, state) => ({
+      ...base,
+      height: "44px",
+      boxShadow: "none",
+      "&:hover": {
+        // border: "1px solid black",
+      },
+    }),
+  };
+  const limit = 12;
 
-    const limit = 12;
-    const detailLimit = 12;
-    const influncerLimit = 12;
-    const dateRangePickerChanger = (value, dataString) => {
-      const startDate = dataString[0];
-      const endDate = dataString[1];
-      setStartDate(startDate);
-      setEndDate(endDate);
-    };
-
-    const handleSubmit = (e) => {
-      // setLoading(true);
-      // e.preventDefault();
-      // setCurrentPage(0);
-      // getAffiliateTransactions(
-      //   status.value,
-      //   campaignId.value,
-      //   // influencerId.value,
-      //   // transactionType.value,
-      //   // groupBy.value,
-      //   1,
-      //   limit
-      // ).then((data) => {
-      //   setLoading(false);
-      //   setSubmit(groupBy.value);
-      // });
-    };
-
-    const handlePageClick = (e) => {
-      const page = e.selected;
-      setCurrentPage(page);
-      setLoading(true);
-      getAffiliateSalesByBrand(
-       // status.value,
-       // campaignId.value,
-        // influencerId.value,
-        // transactionType.value,
-        // groupBy.value,
-       // page + 1,
-       // limit
-      ).then(() => {
-        if (affiliateSales?.message?.data?.length > 0) {
-          setLoading(false);
-        }
-      });
-    }
-  
   useEffect(() => {
-    
-    const currentUser = JSON.parse(localStorage.getItem('userInfo'));
-     const accountType = currentUser.account_type;
-     const UserId = currentUser.user_id;
-  
+    const currentUser = JSON.parse(localStorage.getItem("userInfo"));
+    const accountType = currentUser.account_type;
 
-    if(accountType === 'brand'){
-    getAffiliateSalesByBrand(UserId).then(() => {
+    if (accountType === "brand") {
+      getAffiliateSalesByBrand(
+        groupBy.value,
+        1,
+        limit,
+        startDate,
+        endDate
+      ).then(() => {
         setLoading(false);
       });
     }
-    if(accountType === 'influencer'){
-        getAffiliateSalesByInfluencer(UserId).then(() => {
-            setLoading(false);
-          });
-        }
   }, []);
 
-  function dataTable() {
-      let data = affiliateSales;
-      
-      console.log('update',affiliateSales)
+  const dateRangePickerChanger = (value, dataString) => {
+    const startDate = dataString[0];
+    const endDate = dataString[1];
+    setStartDate(startDate);
+    setEndDate(endDate);
+  };
 
+  const handleSubmit = (e) => {
+    setLoading(true);
+    e.preventDefault();
+    setCurrentPage(0);
+    getAffiliateSalesByBrand(groupBy.value, 1, limit, startDate, endDate).then(
+      (data) => {
+        setLoading(false);
+        setSubmit(groupBy.value);
+      }
+    );
+  };
+
+  const handlePageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
+    setLoading(true);
+    getAffiliateSalesByBrand(
+      groupBy.value,
+      page + 1,
+      limit,
+      startDate,
+      endDate
+    ).then(() => {
+      if (affiliateSales?.message?.data?.length > 0) {
+        setLoading(false);
+      }
+    });
+  };
+
+  const changegroupBy = (e) => {
+    setGroupBy(e);
+  };
+  const refreshPage = (e) => {
+    setCurrentPage(0);
+    setLoading(true);
+    setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
+    setEndDate(moment(new Date()).format("YYYY-MM-DD"));
+    getAffiliateSalesByBrand(
+      "",
+      1,
+      limit,
+      moment().startOf("month").format("YYYY-MM-DD"),
+      moment(new Date()).format("YYYY-MM-DD")
+    ).then(() => {
+      setLoading(false);
+    });
+    setGroupBy({
+      label: "ALL",
+      value: "",
+    });
+    setSubmit("");
+  };
+
+  function allTable() {
+    let data = affiliateSales?.message?.data;
     if (data) {
       return (
-          <>
-              {loading ? (
-                  <Loader size="30" />
-              ) : (
-                
-                  <Table responsive="sm" className="transactions-box">
-                      <thead>
-                          <tr>
-                              <th>S.#</th>
-                              <th>Date</th>
-                              <th>Campaign Name</th>
-                              <th>Promo</th>
-                              <th>Order Id</th>
-                              <th>Pixel Id</th>
-                              <th>Inf.Name </th>
-                              <th>Email</th>
-                              <th>Account Type</th>
-                              <th>Country</th>
-                              <th>Instagram UserName </th>
-                              <th>Total Qty</th>
-                              <th>Total Sale</th>
-                              <th>Order Total Price</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          {data.map((item, i) => {
-                              return (
-                  
-                                   <tr key={i}>
-                 
-                                      <td>{i+1}</td>
-                                      <td>{moment(item?.createdAt).format("YYYY-MM-DD")}</td>
-                                      <td>{item?.campaign?.campaign_name}</td>
-                                      <td>{item?.campaign?.promo}</td>
-                                      <td>{item?.order_id}</td>
-                                      <td>{item?.pixel_id}</td>
-                                      <td>{item?.publisher?.name}</td>
-                                      <td>{item?.publisher?.email}</td>
-                    
-                                      <td>{item?.publisher?.account_type}</td>
-                                      <td>{item?.publisher?.country}</td>
-                                      <td>{item?.publisher?.instagram_username}</td>
-                                      <td>{item?.totalQty}</td>
-                                      <td>{item?.totalSale}</td>
-                                      <td>{item?.order_totalprice}</td>
-                   
-                                  </tr>
-                              );
-                          })}
-                      </tbody>
-                  </Table>
-              )}
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Date</th>
+                  <th>Campaign Name</th>
+                  <th>Influencer Instagram</th>
+                  <th>Order#</th>
+                  <th>Qty</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        {!item?.created_date
+                          ? "-"
+                          : moment(item?.created_date).format("YYYY-MM-DD")}
+                      </td>
+                      <td>{item?.campaign_name}</td>
+                      <td>{item?.influencer_name}</td>
+                      <td>{item?.order_id}</td>
+                      <td>{item?.total_qty}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
         </>
       );
     }
   }
 
+  function dateTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Date</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>
+                        {!item?.created_date
+                          ? "-"
+                          : moment(item?.created_date).format("YYYY-MM-DD")}
+                      </td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
+  function campaignTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+
+                  <th>Campaign Name</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.campaign_name}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
+  function influencerTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Influencer Instagram</th>
+                  <th>Total Amount</th>
+                  <th>Paid Amount</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.influencer_name}</td>
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "0"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
   return (
     <React.Fragment>
-    <div className="container-fluid">
-      <h4 className="page-title">Sales</h4>
-      <div className="brand_container_main aff-payment">
-        <Row>
-          <div className="col-md-12">
-          <form className="mb-3" onSubmit={handleSubmit}>
+      <div className="container-fluid">
+        <h4 className="page-title">Sales</h4>
+        <div className="brand_container_main aff-payment">
+          <Row>
+            <div className="col-md-12">
+              <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
-                <Col xs={12} xl md={6}>
-                  <p>Select Start Date / End Date</p>
-                  <RangePicker
-                    key={4}
-                    value={
-                      startDate && endDate
-                        ? [moment(startDate), moment(endDate)]
-                        : []
-                    }
-                    allowClear={false}
-                    ranges={{
-                      Today: [moment(), moment()],
-                      Tomorrow: [
-                        moment().add(1, "days"),
-                        moment().add(1, "days"),
-                      ],
-                      Yesterday: [
-                        moment().subtract(1, "days"),
-                        moment().subtract(1, "days"),
-                      ],
-                      "This Month": [
-                        moment().startOf("month"),
-                        moment().endOf("month"),
-                      ],
-                      "Last Month": [
-                        moment().subtract(1, "month").startOf("month"),
-                        moment().subtract(1, "month").endOf("month"),
-                      ],
-                    }}
-                    format={dateFormat}
-                    onChange={dateRangePickerChanger}
-                  />
-                </Col>
-                <Col xs={12} xl={3} md={6}>
-                    <p>Select Status</p>
-                    <Select
-                     // value={status}
-                      name="status"
-                      className="selectCustomization"
-                     // options={statusList}
-                      placeholder="Select Status"
-                      //onChange={changeStatus}
-                      styles={style}
+                  <Col xs={12} xl={3} md={6}>
+                    <p>Select Start Date / End Date</p>
+                    <RangePicker
+                      key={4}
+                      value={
+                        startDate && endDate
+                          ? [moment(startDate), moment(endDate)]
+                          : []
+                      }
+                      allowClear={false}
+                      ranges={{
+                        Today: [moment(), moment()],
+                        Tomorrow: [
+                          moment().add(1, "days"),
+                          moment().add(1, "days"),
+                        ],
+                        Yesterday: [
+                          moment().subtract(1, "days"),
+                          moment().subtract(1, "days"),
+                        ],
+                        "This Month": [
+                          moment().startOf("month"),
+                          moment().endOf("month"),
+                        ],
+                        "Last Month": [
+                          moment().subtract(1, "month").startOf("month"),
+                          moment().subtract(1, "month").endOf("month"),
+                        ],
+                      }}
+                      format={dateFormat}
+                      onChange={dateRangePickerChanger}
                     />
                   </Col>
+
                   <Col xs={12} xl={3} md={6}>
-                    <p>Select Campaign</p>
+                    <p>Group By</p>
                     <Select
-                      //value={campaignId}
-                      name="category"
+                      value={groupBy}
+                      name="campaign"
                       className="selectCustomization"
-                      //options={affiliateCampaigns}
-                      placeholder="Select Campaign"
-                      //onChange={changeCampaign}
+                      options={groupByList}
+                      placeholder="Select Group By"
+                      onChange={changegroupBy}
                       styles={style}
                     />
                   </Col>
 
-                  {/* <Col xs={12} xl md={6}>
-                    <p>Select Influencer</p>
-                    <Select
-                      value={influencerId}
-                      name="category"
-                      className="selectCustomization"
-                      options={affiliateInfluencers}
-                      placeholder="Select Influencer"
-                      onChange={changeInfluencer}
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl md={6}>
-                    <p>Transaction Type</p>
-                    <Select
-                      value={transactionType}
-                      name="transactionType"
-                      className="selectCustomization"
-                      options={transactionTypeList}
-                      placeholder="Select Transaction Type"
-                      onChange={changeTransactionType}
-                      styles={style}
-                    />
-                  </Col>
-                  <Col xs={12} xl md={6}>
-                    <p>Group By</p>
-                    <Select
-                      value={groupBy}
-                      name="transactionType"
-                      className="selectCustomization"
-                      options={groupByList}
-                      placeholder="Select Group By"
-                      onChange={changeGroupBy}
-                      styles={style}
-                    />
-                  </Col> */}
                   <Col
                     className="transaction-search d-flex"
                     xs={12}
@@ -300,7 +405,7 @@ function AffiliateSales({
                     ) : (
                       <Button
                         className="fltr-hpr btn-gray"
-                        //onClick={refreshPage}
+                        onClick={refreshPage}
                         type="button"
                         variant="primary"
                       >
@@ -321,14 +426,24 @@ function AffiliateSales({
                     </>
                   ) : (
                     <>
-                      { dataTable()
-                       }
+                      {submit === "" || submit === undefined
+                        ? allTable()
+                        : null}
+                      {submit === "date" || submit === undefined
+                        ? dateTable()
+                        : null}
+                      {submit === "campaign" || submit === undefined
+                        ? campaignTable()
+                        : null}
+                      {submit === "influencer" || submit === undefined
+                        ? influencerTable()
+                        : null}
                     </>
                   )}
                 </>
               )}
 
-                {/* {affiliateSales?.message?.data?.length > 0 && !loading && ( */}
+              {affiliateSales?.message?.data?.length > 0 && !loading && (
                 <Row>
                   <ReactPaginate
                     previousLabel=""
@@ -356,25 +471,19 @@ function AffiliateSales({
                     activeClassName={"active"}
                   />
                 </Row>
-               {/* )} */}
-
-                      </div>
-                  </Row>
-              </div>
-          </div>
-          </React.Fragment>
+              )}
+            </div>
+          </Row>
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 
-function mapStateToProps({
-  affiliateSales,
-  getAffiliateSalesByBrand,
-  getAffiliateSalesByInfluencer,
-}) {
+function mapStateToProps({ affiliateSales, getAffiliateSalesByBrand }) {
   return {
     affiliateSales,
     getAffiliateSalesByBrand,
-    getAffiliateSalesByInfluencer,
   };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(

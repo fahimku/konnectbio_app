@@ -34,7 +34,7 @@ class Affiliate extends React.Component {
       username: username,
       package_name: userInfo?.package?.package_name,
       myBrand: "",
-      brandLoading: false,  
+      brandLoading: false,
     };
   }
 
@@ -211,7 +211,6 @@ class Affiliate extends React.Component {
                     </NavLink>
                   </NavItem>
 
-
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -322,9 +321,7 @@ class Affiliate extends React.Component {
                     ) : null}
                   </TabPane> */}
                   <TabPane tabId="approval">
-                    {this.state.activeTab === "approval" ? (
-                      <Approvals />
-                    ) : null}
+                    {this.state.activeTab === "approval" ? <Approvals /> : null}
                   </TabPane>
                   <TabPane tabId="sales">
                     {this.state.activeTab === "sales" ? (
