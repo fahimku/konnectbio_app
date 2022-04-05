@@ -168,6 +168,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>Order#</th>
                   <th>Qty</th>
                   <th>Amount</th>
+                  <th>Promo</th>
                   <th>Paid</th>
                   <th>Commission</th>
                 </tr>
@@ -194,13 +195,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.order_id}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{item?.promo}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -247,7 +249,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -291,7 +293,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -341,7 +343,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );

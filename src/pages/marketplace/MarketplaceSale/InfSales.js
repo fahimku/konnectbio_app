@@ -14,7 +14,10 @@ import numeral from "numeral";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf }) {
+function AffiliateSalesInf({
+  getAffiliateSalesByInfluencer,
+  affiliateSalesInf,
+}) {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const fromDate = moment().startOf("month").format("YYYY-MM-DD");
@@ -65,7 +68,7 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
     const accountType = currentUser.account_type;
 
     if (accountType === "influencer") {
-        getAffiliateSalesByInfluencer(
+      getAffiliateSalesByInfluencer(
         groupBy.value,
         1,
         limit,
@@ -88,12 +91,16 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
     setLoading(true);
     e.preventDefault();
     setCurrentPage(0);
-    getAffiliateSalesByInfluencer(groupBy.value, 1, limit, startDate, endDate).then(
-      (data) => {
-        setLoading(false);
-        setSubmit(groupBy.value);
-      }
-    );
+    getAffiliateSalesByInfluencer(
+      groupBy.value,
+      1,
+      limit,
+      startDate,
+      endDate
+    ).then((data) => {
+      setLoading(false);
+      setSubmit(groupBy.value);
+    });
   };
 
   const handlePageClick = (e) => {
@@ -151,8 +158,6 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
     });
   };
 
-
-
   function allTable() {
     let data = affiliateSalesInf?.message?.data;
     if (data) {
@@ -170,8 +175,8 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                   <th>Brand Name</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -194,9 +199,11 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -223,8 +230,8 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                   <th>S.#</th>
                   <th>Date</th>
                   <th>Total Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -244,9 +251,11 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -273,8 +282,8 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
 
                   <th>Campaign Name</th>
                   <th>Total Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Influencer Commission</th>
                 </tr>
               </thead>
@@ -290,9 +299,11 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -318,8 +329,8 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                   <th>S.#</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -335,9 +346,11 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -354,7 +367,7 @@ function AffiliateSalesInf({ getAffiliateSalesByInfluencer, affiliateSalesInf })
       <div className="container-fluid">
         <h4 className="page-title">Sales</h4>
         <div className="brand_container_main aff-payment">
-        <Row className="filter-date mb-3">
+          <Row className="filter-date mb-3">
             <div className="col-md-12">
               <button
                 class="btn btn-primary btn-sm"
@@ -558,5 +571,5 @@ function mapStateToProps({ affiliateSalesInf, getAffiliateSalesByInfluencer }) {
   };
 }
 export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
-    AffiliateSalesInf
+  AffiliateSalesInf
 );
