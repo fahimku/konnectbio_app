@@ -30,9 +30,10 @@ const styleObj = {
   fontSize: "14px",
 };
 
-function AffiliateCampaign(props, { getPromoRequest,
-  promoRequest,
-  PromoPayload, }) {
+function AffiliateCampaign(
+  props,
+  { getPromoRequest, promoRequest, PromoPayload }
+) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -63,8 +64,8 @@ function AffiliateCampaign(props, { getPromoRequest,
     label: "COMMISSION",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
-  const [loader, setLoader] = useState(true)
-  const [promoCode, setPromoCode] = useState('');
+  const [loader, setLoader] = useState(true);
+  const [promoCode, setPromoCode] = useState("");
 
   useEffect(() => {
     props.getCountries();
@@ -72,30 +73,25 @@ function AffiliateCampaign(props, { getPromoRequest,
     setLoader(false);
     props.getPromoRequest().then((res) => {
       setLoader(true);
-      
     });
   }, []);
 
-  if(loader == true){
+  if (loader == true) {
     dataPromo = props.promoRequest.message;
     const promo = dataPromo;
-    
-    if(dataPromo != undefined){
-      console.log("sees",dataPromo);
+
+    if (dataPromo != undefined) {
+      console.log("sees", dataPromo);
       const selectState = [];
-    promo.map((x) => {
-      return selectState.push({
-        value: x,
-        label: x,
-      
+      promo.map((x) => {
+        return selectState.push({
+          value: x,
+          label: x,
+        });
       });
-    });
-    PassPromoCode = selectState;
+      PassPromoCode = selectState;
+    } else {
     }
-    else{
-     
-    }
-   
   }
   useEffect(() => {
     props.getUserCategories().then(
@@ -193,7 +189,7 @@ function AffiliateCampaign(props, { getPromoRequest,
       )
       .then((response) => {
         setData(response.data.message);
-        console.log('Seller', response.data.message)
+        console.log("Seller", response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -211,26 +207,23 @@ function AffiliateCampaign(props, { getPromoRequest,
     // postData();
   };
 
-
-
-
-
   const postData = () => {
     const data1 = data;
     const truncate = (str, max, suffix) =>
       str.length < max
         ? str
         : `${str.substr(
-          0,
-          str.substr(0, max - suffix.length).lastIndexOf(" ")
-        )}${suffix}`;
+            0,
+            str.substr(0, max - suffix.length).lastIndexOf(" ")
+          )}${suffix}`;
     const slice = data1.slice(offset, offset + perPage);
     const postDataInner = slice.map((record, index) => (
       <React.Fragment>
         <Col xs={12} xl={3} md={6}>
           <div
-            className={`card any_bx analytic-box campaign-box ${props.type !== "expired" ? "" : "pb-0"
-              }`}
+            className={`card any_bx analytic-box campaign-box ${
+              props.type !== "expired" ? "" : "pb-0"
+            }`}
           >
             <div className="camp-row row">
               <div className="campaign-header col-12">
@@ -652,11 +645,17 @@ function AffiliateCampaign(props, { getPromoRequest,
   );
 }
 
-function mapStateToProps({ getPromoRequest,
-  promoRequest, countries, campaign }) {
+function mapStateToProps({
+  getPromoRequest,
+  promoRequest,
+  countries,
+  campaign,
+}) {
   return {
     getPromoRequest,
-    promoRequest, countries, campaign
+    promoRequest,
+    countries,
+    campaign,
   };
 }
 export default connect(mapStateToProps, {

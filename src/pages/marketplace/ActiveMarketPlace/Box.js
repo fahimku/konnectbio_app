@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import numeral from "numeral";
 export default function Box({ item, toggleCampaigns, index, type }) {
   const [toggleCampaign, setToggleCampaign] = useState(item.is_linked);
   const styleObj = {
@@ -84,6 +85,17 @@ export default function Box({ item, toggleCampaigns, index, type }) {
                   <h3 className="count">{item.commission}%</h3>
                 </div>
               )}
+
+              <div className="col-12 count-box">
+                <h5 className="count-title">Earnings</h5>
+                {!item.earning ? (
+                  <h3 style={styleObj}>$0</h3>
+                ) : (
+                  <h3 style={styleObj}>
+                    {numeral(item?.earning).format("$0,0.0'")}
+                  </h3>
+                )}
+              </div>
 
               <div className="col-12 count-box">
                 <h5 className="count-title">Start Date</h5>
