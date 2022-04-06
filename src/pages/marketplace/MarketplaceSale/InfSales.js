@@ -281,6 +281,7 @@ function AffiliateSalesInf({
                   <th>S.#</th>
 
                   <th>Campaign Name</th>
+                  <th>Brand Name</th>
                   <th>Total Qty</th>
                   <th>Amount</th>
                   <th>Paid</th>
@@ -293,6 +294,7 @@ function AffiliateSalesInf({
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>{item?.campaign_name}</td>
+                      <td>{item?.advertiser_name}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>
