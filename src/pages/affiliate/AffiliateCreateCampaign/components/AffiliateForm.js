@@ -31,9 +31,9 @@ class AffiliateForm extends React.Component {
       campaign_type: "",
       pay_per_hundred: "",
       budget: "",
-      promoCode:'',
-      promoCodeVal:'',
-      discountType:'',
+      promoCode: "",
+      promoCodeVal: "",
+      discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
       inputList: [{ country: "", state: "", city: "", zip: "" }],
@@ -48,7 +48,7 @@ class AffiliateForm extends React.Component {
       submit: false,
       discount: "",
       commission: "",
-      promoCond:true,
+      promoCond: true,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -61,7 +61,7 @@ class AffiliateForm extends React.Component {
       {
         pay_per_hundred: value,
       },
-      () => { }
+      () => {}
     );
     var pay_per_hundered = parseInt(this.state.pay_per_hundred);
     var budget = parseInt(this.state.budget);
@@ -153,10 +153,9 @@ class AffiliateForm extends React.Component {
 
   changePromoCode = (e, options, name, index) => {
     let data = String(options.value);
-    this.setState({promoCodeVal:data})
+    this.setState({ promoCodeVal: data });
   };
 
-  
   changeState = (e, options, name, index) => {
     const list = [...this.state.inputList];
     list[index][name] = options.value;
@@ -184,27 +183,22 @@ class AffiliateForm extends React.Component {
     this.reachCampaign();
   };
 
-
-
-  handleClick=(data) =>{
+  handleClick = (data) => {
     const promo = data;
-    if(data.length > 0){
-      this.setState({promoCond: false})
-    }
-    else{
-      this.setState({promoCond: true})
+    if (data.length > 0) {
+      this.setState({ promoCond: false });
+    } else {
+      this.setState({ promoCond: true });
     }
     const selectState = [];
     promo.map((x) => {
       return selectState.push({
         value: x,
         label: x,
-      
       });
     });
-    this.setState({promoCode: selectState});
-     
-  }
+    this.setState({ promoCode: selectState });
+  };
   getState = async (countryCode) => {
     await axios
       .post(`/common/receive/states`, { country_code: countryCode })
@@ -284,15 +278,11 @@ class AffiliateForm extends React.Component {
       campaign_type,
     } = this.state;
     if (
-      campaign_name &&
-      // budget &&
-      // pay_per_hundred &&
-      promoCodeVal,
-      commission &&
-      startDate &&
-      endDate &&
-      campaign_type &&
-      place
+      (campaign_name &&
+        // budget &&
+        // pay_per_hundred &&
+        promoCodeVal,
+      commission && startDate && endDate && campaign_type && place)
     ) {
       this.setState({ loading: true });
       await axios
@@ -302,7 +292,7 @@ class AffiliateForm extends React.Component {
           campaign_type: this.state.campaign_type,
           redirected_url: this.props.affData.redirected_url,
           media_url: this.props.affData.media_url,
-          discount_type:'shopify',
+          discount_type: "shopify",
           promo: this.state.promoCodeVal,
           category_id:
             this.props.affData.categories.length !== 0
@@ -329,7 +319,7 @@ class AffiliateForm extends React.Component {
         })
         .catch((err) => {
           this.setState({ loading: false });
-          toast.error("Something went wrong");
+          toast.error("Insufficient Balance");
           // if (err.message) {
           //   // toast.error("PPC cannot be greater than budget");
           // } else {
@@ -390,7 +380,7 @@ class AffiliateForm extends React.Component {
       // pay_per_hundred: "",
       // budget: "",
       //discount: "",
-      promoCodeVal:"",
+      promoCodeVal: "",
       commission: "",
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       startDate: moment(),
@@ -527,10 +517,10 @@ class AffiliateForm extends React.Component {
                   >
                     {affData.categories
                       ? affData.categories.map(
-                        ({ category_id, category_name }, i) => (
-                          <Option value={category_id}>{category_name}</Option>
+                          ({ category_id, category_name }, i) => (
+                            <Option value={category_id}>{category_name}</Option>
+                          )
                         )
-                      )
                       : []}
                   </Select>
                 </div>
@@ -641,7 +631,7 @@ class AffiliateForm extends React.Component {
                       value="sales"
                       onChange={this.changeType}
                       checked={this.state.campaign_name !== "" ? true : false}
-                    // disabled
+                      // disabled
                     />
                     <label for="sales">
                       <span className="imp-click">
@@ -699,47 +689,49 @@ class AffiliateForm extends React.Component {
                     </span>
                   </div>
                 </div> */}
-                  <ShopifyPromo PromoPayload={(betAmount) => this.handleClick(betAmount)}/>
+                <ShopifyPromo
+                  PromoPayload={(betAmount) => this.handleClick(betAmount)}
+                />
 
-                  {this.state.promoCond? <></>:
+                {this.state.promoCond ? (
+                  <></>
+                ) : (
                   <>
-                  <div className="row">
-                  <div className="col-md-6 mt-3">
-                  <label>PromoCode</label>
-                          <Select2
-                           name="promoCode"
-                           //value={renderConValue(x)}
-                              onChange={(options, e) =>
-                               this.changePromoCode(e,options)
-                             }
-                            placeholder="Select PromoCode"
-                            style={{ width: "100%" }}
-                            options={this.state.promoCode}
-                            
-                          />
-                           
-                            </div>
-                            <div className="col-md-6 mt-3">
-                    <label>Commission</label>
-                    <InputNumberValidation
-                      type="number"
-                      id="number"
-                      name="commission"
-                      value={this.state.commission}
-                      onChange={(evt) => {
-                        this.commission(evt.target.value);
-                      }}
-                      required
-                      min="0"
-                      max="50"
-                    />
-                    <span className="text-danger">
-                      {this.state.CommissionError}
-                    </span>
-                  </div>
-                            </div>
-                 </>
-  }
+                    <div className="row">
+                      <div className="col-md-6 mt-3">
+                        <label>PromoCode</label>
+                        <Select2
+                          name="promoCode"
+                          //value={renderConValue(x)}
+                          onChange={(options, e) =>
+                            this.changePromoCode(e, options)
+                          }
+                          placeholder="Select PromoCode"
+                          style={{ width: "100%" }}
+                          options={this.state.promoCode}
+                        />
+                      </div>
+                      <div className="col-md-6 mt-3">
+                        <label>Commission</label>
+                        <InputNumberValidation
+                          type="number"
+                          id="number"
+                          name="commission"
+                          value={this.state.commission}
+                          onChange={(evt) => {
+                            this.commission(evt.target.value);
+                          }}
+                          required
+                          min="0"
+                          max="50"
+                        />
+                        <span className="text-danger">
+                          {this.state.CommissionError}
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
                 {/* <div className="row">
                   <div className="col-md-6 mt-3">
 
@@ -846,7 +838,7 @@ class AffiliateForm extends React.Component {
                             disabled={
                               // this.state.stateList === ""
                               this.state.inputList[i].country === "" ||
-                                this.state.inputList.length - 1 !== i
+                              this.state.inputList.length - 1 !== i
                                 ? true
                                 : false
                             }
@@ -868,10 +860,10 @@ class AffiliateForm extends React.Component {
                             value={
                               x.city
                                 ? {
-                                  value: x.city,
-                                  label:
-                                    x.city === "all" ? "All Cities" : x.city,
-                                }
+                                    value: x.city,
+                                    label:
+                                      x.city === "all" ? "All Cities" : x.city,
+                                  }
                                 : { value: "", label: "All Cities" }
                             }
                             onChange={(options, e) =>
@@ -883,8 +875,8 @@ class AffiliateForm extends React.Component {
                             clearable={false}
                             disabled={
                               this.state.inputList[i].state === "" ||
-                                this.state.inputList.length - 1 !== i ||
-                                this.state.inputList[i].state === "all"
+                              this.state.inputList.length - 1 !== i ||
+                              this.state.inputList[i].state === "all"
                                 ? true
                                 : false
                             }
@@ -939,11 +931,11 @@ class AffiliateForm extends React.Component {
                               onClick={this.handleAddClick}
                               disabled={
                                 this.state.inputList[i].country === "" ||
-                                  this.state.inputList[i].state === "" ||
-                                  this.state.inputList[i].city === ""
+                                this.state.inputList[i].state === "" ||
+                                this.state.inputList[i].city === ""
                                   ? // (this.state.inputList[i].city === "all" &&
-                                  //   this.state.inputList[i].state === "all")
-                                  true
+                                    //   this.state.inputList[i].state === "all")
+                                    true
                                   : false
                               }
                             >
