@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 function BrandComponent({
   title,
   // brandTab,
-  getMarketplaceApproval,
+  // getMarketplaceApproval,
   marketplaceApproval,
 }) {
   const [myBrand, setMyBrand] = useState("");
@@ -24,7 +24,7 @@ function BrandComponent({
   useEffect(() => {
     getMyBrand();
     getBrandList();
-    getMarketplaceApproval();
+    // getMarketplaceApproval();
   }, []);
 
   const getMyBrand = async () => {
@@ -90,7 +90,7 @@ function BrandComponent({
           setSaveLoading(false);
           setSelectedBrands("");
           getBrandList();
-          getMarketplaceApproval();
+          // getMarketplaceApproval();
           toast.success(response.data.message);
         })
         .catch((err) => {
@@ -216,7 +216,7 @@ function BrandComponent({
                   </Row>
                 </div>
               </div>
-              {marketplaceApproval?.message?.length > 0 ? (
+              {/* {marketplaceApproval?.message?.length > 0 ? (
                 <>
                   <h4 className="page-title">Brand Request</h4>
                   <div
@@ -225,7 +225,7 @@ function BrandComponent({
                     {dataTable()}
                   </div>
                 </>
-              ) : null}
+              ) : null} */}
             </div>
           </Row>
         </div>

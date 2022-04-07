@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Table, Modal } from "react-bootstrap";
-import * as affiliateTransactionsActions from "../../../actions/affiliateRequest";
+import { Row, Col, Button, Table } from "react-bootstrap";
+import * as marketplaceBrandActions from "../../../actions/MarketplaceBrands";
 import { connect } from "react-redux";
-import ReactPaginate from "react-paginate";
 import Loader from "../../../components/Loader/Loader";
-import { toast } from "react-toastify";
-import Select from "react-select";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
-import moment from "moment";
-import numeral from "numeral";
-// import CampaignDetailTransaction from "./CampaignDetailTransaction";
+import ReactPaginate from "react-paginate";
+import Select from "react-select";
 
-function Approvals({
-  AddAffiliateRequest,
-  addAffiliateRequest,
-  getAffiliateRequest,
-  affiliateRequest,
-}) {
+function MarketplaceRequest({ getMarketplaceApproval, marketplaceApproval }) {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [status, setStatus] = useState({
     label: "ALL",
     value: "",
   });
-  const limit = 12;
   const statusList = [
     {
       label: "ALL",
@@ -52,26 +42,26 @@ function Approvals({
       },
     }),
   };
+  const limit = 12;
 
   useEffect(() => {
-    getAffiliateRequest(status.value, 1, limit).then(() => {
+    getMarketplaceApproval(status.value, 1, limit).then(() => {
       setLoading(false);
     });
   }, []);
 
-  const handlePageClick = (e) => {
-    const page = e.selected;
-    setCurrentPage(page);
+  const handleSubmit = (e) => {
+    e.preventDefault();
     setLoading(true);
-    getAffiliateRequest(status.value, page + 1, limit).then(() => {
+    setCurrentPage(0);
+    getMarketplaceApproval(status.value, 1, limit).then(() => {
       setLoading(false);
     });
   };
-
   const refreshPage = (e) => {
     setCurrentPage(0);
     setLoading(true);
-    getAffiliateRequest("", 1, limit).then(() => {
+    getMarketplaceApproval("", 1, limit).then(() => {
       setLoading(false);
     });
     setStatus({
@@ -80,94 +70,57 @@ function Approvals({
     });
   };
 
-  const approveMethod = (id) => {
+  const handlePageClick = (e) => {
+    const page = e.selected;
+    setCurrentPage(page);
     setLoading(true);
-    let payload = {
-      influencer_id: id,
-      status: "Approved",
-    };
-    AddAffiliateRequest(payload).then(() => {
-      toast.success("Approved Successfully!");
-      getAffiliateRequest().then(() => {
+    getMarketplaceApproval(page + 1, limit).then(() => {
+      if (marketplaceApproval?.message?.data?.length > 0) {
         setLoading(false);
-      });
-    });
-  };
-
-  const rejectMethod = (id) => {
-    setLoading(true);
-    let payload = {
-      influencer_id: id,
-      status: "Rejected",
-    };
-    AddAffiliateRequest(payload).then(() => {
-      toast.success("Rejected Successfully!");
-      getAffiliateRequest().then(() => {
-        setLoading(false);
-      });
-    });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setCurrentPage(0);
-    getAffiliateRequest(status.value, 1, limit).then(() => {
-      setLoading(false);
+      }
     });
   };
 
   function dataTable() {
-    let data = affiliateRequest?.message?.data;
-
+    let data = marketplaceApproval?.message?.data;
     if (data) {
       return (
         <>
-          {loading ? (
-            <Loader size="30" />
-          ) : (
-            <Table responsive="sm" className="transactions-box">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Status</th>
-                  <th>Request</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{item?.instagram_username}</td>
-                      <td>
-                        {item?.status === "Rejected"
-                          ? "Disapproved"
-                          : "Approved"}
-                      </td>
-                      <td>
-                        {item?.status === "Approved" ? (
-                          <span class="badge badge-success">Approved</span>
-                        ) : (
-                          <span
-                            class="badge badge-info btn"
-                            onClick={() => approveMethod(item?.influencer_id)}
-                          >
-                            Approve
-                          </span>
-                        )}
-                        |
-                        <span
-                          class="badge badge-danger btn"
-                          onClick={() => rejectMethod(item?.influencer_id)}
-                        >
-                          Disapproved
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
+          <Table responsive="sm" className="approval-box">
+            <thead>
+              <tr>
+                <th>Brand Name</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((item, i) => {
+                return (
+                  <tr key={i}>
+                    <td>{item?.brand_name}</td>
+
+                    <td>
+                      {item?.status === "Pending" ? (
+                        <span class="badge badge-info">Pending</span>
+                      ) : (
+                        ""
+                      )}
+                      {item?.status === "Approved" ? (
+                        <span class="badge badge-success">Approved</span>
+                      ) : (
+                        ""
+                      )}
+                      {item?.status === "Rejected" ? (
+                        <span class="badge badge-danger">Disapproved</span>
+                      ) : (
+                        ""
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
         </>
       );
     }
@@ -176,10 +129,10 @@ function Approvals({
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <h4 className="page-title">Request</h4>
-        <div className="brand_container_main aff-payment">
+        <h4 className="page-title">Requests</h4>
+        <div className="brand_container_main request_container">
           <Row>
-            <div className="col-md-12">
+            <div className="col-md-8">
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
                   <Col xs={12} xl={3} md={6}>
@@ -223,7 +176,7 @@ function Approvals({
                         type="button"
                         variant="primary"
                         disabled={
-                          affiliateRequest?.message?.data?.length === 0
+                          marketplaceApproval?.message?.data?.length === 0
                             ? true
                             : false
                         }
@@ -234,21 +187,27 @@ function Approvals({
                   </Col>
                 </Row>
               </form>
-
               {loading ? (
                 <Loader size="30" />
               ) : (
                 <>
-                  {affiliateRequest?.message?.data?.length === 0 ? (
+                  {marketplaceApproval?.message?.data?.length === 0 ? (
                     <>
                       <NoDataFound />
                     </>
                   ) : (
-                    <>{dataTable()}</>
+                    <div
+                      className={
+                        "brand-section dash_block_profile request_table"
+                      }
+                    >
+                      {dataTable()}
+                    </div>
                   )}
                 </>
               )}
-              {affiliateRequest?.message?.data?.length > 0 && !loading && (
+
+              {marketplaceApproval?.message?.data?.length > 0 && !loading && (
                 <Row>
                   <ReactPaginate
                     previousLabel=""
@@ -264,7 +223,7 @@ function Approvals({
                     breakLinkClassName="page-link"
                     forcePage={currentPage}
                     pageCount={Math.ceil(
-                      affiliateRequest?.message?.total_records / limit
+                      marketplaceApproval?.message?.total_records / limit
                     )}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
@@ -285,19 +244,11 @@ function Approvals({
   );
 }
 
-function mapStateToProps({
-  AddAffiliateRequest,
-  addAffiliateRequest,
-  getAffiliateRequest,
-  affiliateRequest,
-}) {
+function mapStateToProps({ marketplaceApproval }) {
   return {
-    AddAffiliateRequest,
-    addAffiliateRequest,
-    getAffiliateRequest,
-    affiliateRequest,
+    marketplaceApproval,
   };
 }
-export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
-  Approvals
+export default connect(mapStateToProps, { ...marketplaceBrandActions })(
+  MarketplaceRequest
 );

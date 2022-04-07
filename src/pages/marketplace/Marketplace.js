@@ -11,6 +11,7 @@ import MarketplaceEarning from "./MarketplaceEarning/MarketplaceEarning";
 import AffiliateSalesInf from "./MarketplaceSale/InfSales";
 import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
 import axios from "axios";
+import MarketplaceRequest from "./MarketplaceRequest/MarketplaceRequest";
 
 class MarketPlace extends React.Component {
   constructor(props) {
@@ -214,6 +215,19 @@ class MarketPlace extends React.Component {
                       <span>Earning</span>
                     </NavLink>
                   </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "request",
+                      })}
+                      id="mark-transaction"
+                      onClick={() => {
+                        this.toggleTabs("request");
+                      }}
+                    >
+                      <span>Requests</span>
+                    </NavLink>
+                  </NavItem>
 
                   {/* <NavItem>
                     <NavLink
@@ -294,10 +308,15 @@ class MarketPlace extends React.Component {
                       <AffiliateSalesInf />
                     ) : null}
                   </TabPane>
-
-                  <TabPane tabId="accounting" className="tab-accounting">
-                    {this.state.activeTab === "accounting" ? "" : null}
+                  <TabPane tabId="request">
+                    {this.state.activeTab === "request" ? (
+                      <MarketplaceRequest />
+                    ) : null}
                   </TabPane>
+
+                  {/* <TabPane tabId="accounting" className="tab-accounting">
+                    {this.state.activeTab === "accounting" ? "" : null}
+                  </TabPane> */}
                 </TabContent>
               </div>
             </Row>
