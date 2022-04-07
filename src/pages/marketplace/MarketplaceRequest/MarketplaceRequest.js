@@ -24,11 +24,11 @@ function MarketplaceRequest({ getMarketplaceApproval, marketplaceApproval }) {
       value: "approved",
     },
     {
-      label: "Pending",
+      label: "Under Review",
       value: "pending",
     },
     {
-      label: "Rejected",
+      label: "Disapproved",
       value: "rejected",
     },
   ];
@@ -101,7 +101,7 @@ function MarketplaceRequest({ getMarketplaceApproval, marketplaceApproval }) {
 
                     <td>
                       {item?.status === "Pending" ? (
-                        <span class="badge badge-info">Pending</span>
+                        <span class="badge badge-info">Under Review</span>
                       ) : (
                         ""
                       )}
