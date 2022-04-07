@@ -197,7 +197,15 @@ function AffiliateBalance({
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
                   <h5>Spent Amount</h5>
-                  <div className="aff-amount">$0</div>
+                  {affiliateBalance?.success == true ? (
+                    <div className="aff-amount">
+                      {numeral(affiliateBalance?.message?.spent_amount).format(
+                        "$0,0.0'"
+                      )}
+                    </div>
+                  ) : (
+                    <div className="aff-amount">$0</div>
+                  )}
                 </div>
               </div>
             </div>
