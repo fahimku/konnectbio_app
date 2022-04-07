@@ -91,7 +91,8 @@ function BrandComponent({
           setSelectedBrands("");
           getBrandList();
           // getMarketplaceApproval();
-          toast.success(response.data.message);
+          // toast.success(response.data.message);
+          toast.success("Request has been send Successfully");
         })
         .catch((err) => {
           toast.error(err.response.data.message);

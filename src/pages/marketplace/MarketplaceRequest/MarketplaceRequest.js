@@ -97,21 +97,36 @@ function MarketplaceRequest({ getMarketplaceApproval, marketplaceApproval }) {
               {data.map((item, i) => {
                 return (
                   <tr key={i}>
-                    <td>{item?.brand_name}</td>
+                    <td className="pt-3">{item?.brand_name}</td>
 
                     <td>
                       {item?.status === "Pending" ? (
-                        <span class="badge badge-info">Under Review</span>
+                        <button
+                          class="btn btn-info btn-sm btn-approve_disable"
+                          disabled
+                        >
+                          Under Review
+                        </button>
                       ) : (
                         ""
                       )}
                       {item?.status === "Approved" ? (
-                        <span class="badge badge-success">Approved</span>
+                        <button
+                          class="btn btn-success btn-sm btn-approve_disable"
+                          disabled
+                        >
+                          Approved
+                        </button>
                       ) : (
                         ""
                       )}
                       {item?.status === "Rejected" ? (
-                        <span class="badge badge-danger">Disapproved</span>
+                        <button
+                          class="btn badge-danger btn-sm btn-approve_disable"
+                          disabled
+                        >
+                          Disapproved
+                        </button>
                       ) : (
                         ""
                       )}

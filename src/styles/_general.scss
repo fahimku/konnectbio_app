@@ -1223,3 +1223,16 @@ code.sm-color {
 .request_container .request_table {
   min-height: auto;
 }
+.btn-approve:hover,
+.btn-approve_disable:hover {
+  color: #fff;
+  cursor: auto;
+}
+.btn-approve_disable:disabled {
+  opacity: 1;
+  cursor: auto;
+}
+.approve-brand tbody tr td:last-child {
+  white-space: nowrap;
+  width: 1%;
+}

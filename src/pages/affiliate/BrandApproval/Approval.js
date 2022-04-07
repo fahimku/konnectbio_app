@@ -125,42 +125,47 @@ function Approvals({
           {loading ? (
             <Loader size="30" />
           ) : (
-            <Table responsive="sm" className="transactions-box">
+            <Table responsive="sm" className="transactions-box approve-brand">
               <thead>
                 <tr>
                   <th>Name</th>
                   <th>Status</th>
-                  <th>Request</th>
+                  <th className="text-center">Request</th>
                 </tr>
               </thead>
               <tbody>
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{item?.instagram_username}</td>
+                      <td className="pt-3">{item?.instagram_username}</td>
                       <td>
-                        {item?.status === "Rejected"
-                          ? "Disapproved"
-                          : "Approved"}
+                        {item?.status === "Rejected" ? "Disapproved" : null}
+                        {item?.status === "Pending" ? "Under Review" : null}
+                        {item?.status === "Approved" ? "Approved" : null}
                       </td>
                       <td>
                         {item?.status === "Approved" ? (
-                          <span class="badge badge-success">Approved</span>
+                          <button
+                            class="btn badge-success btn-sm btn-approve"
+                            disabled
+                          >
+                            Approve
+                          </button>
                         ) : (
-                          <span
-                            class="badge badge-info btn"
+                          <button
+                            class="btn badge-success btn-sm btn-approve"
                             onClick={() => approveMethod(item?.influencer_id)}
                           >
                             Approve
-                          </span>
+                          </button>
                         )}
-                        |
-                        <span
-                          class="badge badge-danger btn"
+
+                        <button
+                          class="btn badge-danger btn-sm ml-1 btn-approve"
                           onClick={() => rejectMethod(item?.influencer_id)}
                         >
-                          Disapproved
-                        </span>
+                          Disapprove
+                        </button>
                       </td>
                     </tr>
                   );
@@ -179,7 +184,7 @@ function Approvals({
         <h4 className="page-title">Request</h4>
         <div className="brand_container_main aff-payment">
           <Row>
-            <div className="col-md-12">
+            <div className="col-md-8">
               <form className="mb-3" onSubmit={handleSubmit}>
                 <Row>
                   <Col xs={12} xl={3} md={6}>
