@@ -1202,3 +1202,21 @@ code.sm-color {
 .filter-date .btn-primary:disabled {
   cursor: no-drop;
 }
+.link-wrapper .activenav {
+  color: #010b40;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+.link-wrapper .icon {
+  margin-top: 0px !important;
+}
+.active_campaign {
+  background-color: #010b40 !important;
+  color: #fff !important;
+  border-bottom-left-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+}
+.disable_campaign {
+  border-bottom-left-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+}

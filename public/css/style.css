@@ -302,7 +302,8 @@ span.icon {
 }
 .cam-buttons.col-12 .btn {
   padding: 6px 0;
-  background-color: #e4e7ed;
+  background-color: gray;
+  color: #fff;
   flex: 100%;
   max-width: 100%;
   border-radius: 0;
