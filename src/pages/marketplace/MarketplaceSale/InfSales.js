@@ -279,7 +279,6 @@ function AffiliateSalesInf({
               <thead>
                 <tr>
                   <th>S.#</th>
-
                   <th>Campaign Name</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>

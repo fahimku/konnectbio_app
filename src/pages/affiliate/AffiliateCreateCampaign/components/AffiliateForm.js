@@ -16,6 +16,7 @@ import * as postActions from "../../../../actions/posts";
 import VirtualizedSelect from "react-virtualized-select";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ShopifyPromo from "./shopifyPromo";
+import { textAlign } from "@mui/system";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -49,6 +50,7 @@ class AffiliateForm extends React.Component {
       discount: "",
       commission: "",
       promoCond: true,
+      connNotFound: true,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -183,7 +185,14 @@ class AffiliateForm extends React.Component {
     this.reachCampaign();
   };
 
-  handleClick = (data) => {
+  handleClick = (data,status) => {
+console.log("checking data",data,status)
+if(status === false){
+       
+  this.setState({connNotFound: false})
+}else{
+   if(data == undefined){  this.setState({ promoCond: true });}else{
+    
     const promo = data;
     if (data.length > 0) {
       this.setState({ promoCond: false });
@@ -198,6 +207,8 @@ class AffiliateForm extends React.Component {
       });
     });
     this.setState({ promoCode: selectState });
+  }
+}
   };
   getState = async (countryCode) => {
     await axios
@@ -442,6 +453,17 @@ class AffiliateForm extends React.Component {
     // console.log(this.state.discount, "discount");
 
     return (
+      <>
+     { this.state.connNotFound === false ?
+      <div className="image-box-info">
+     <span className={"help-block text-danger"}>
+     
+        Connect To Shopify First!
+        
+     
+      </span>
+    </div>
+    :
       <React.Fragment>
         <Formsy.Form
           onValidSubmit={() =>
@@ -690,7 +712,7 @@ class AffiliateForm extends React.Component {
                   </div>
                 </div> */}
                 <ShopifyPromo
-                  PromoPayload={(betAmount) => this.handleClick(betAmount)}
+                  PromoPayload={this.handleClick}
                 />
 
                 {this.state.promoCond ? (
@@ -1008,6 +1030,8 @@ class AffiliateForm extends React.Component {
           ) : null}
         </Formsy.Form>
       </React.Fragment>
+  }
+  </>
     );
   }
 }

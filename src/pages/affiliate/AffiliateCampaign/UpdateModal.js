@@ -100,7 +100,7 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-    this.setState({ promoCodes: options.value });
+    this.setState({ promoCodes: options });
   };
 
   discount = (value) => {
@@ -275,7 +275,8 @@ class UpdateModal extends React.Component {
             redirected_url: this.props.affData.redirected_url,
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
-            promo: this.state.promoCodes,
+            promo: this.state.promoCodes.label,
+            promo_id: this.state.promoCodes.value,
             discount_type: "shopify",
             // discount: parseInt(this.state.discount),
             commission: parseInt(this.state.commission),
@@ -405,6 +406,7 @@ class UpdateModal extends React.Component {
     };
 
     const renderConValuePromoList = (x) => {
+      console.log(x,"x");
       return { value: x, label: x };
     };
     const renderConValue = (x) => {
@@ -414,6 +416,7 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
+    console.log(this.state.promoCodes,"promoCodes");
 
     // const renderCityValue = (x, i) => {
     //   if (x.state) {
