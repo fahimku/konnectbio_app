@@ -399,8 +399,10 @@ function AffiliateSalesInf({
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
                           : "$0.00"}
                       </td>
                     </tr>
