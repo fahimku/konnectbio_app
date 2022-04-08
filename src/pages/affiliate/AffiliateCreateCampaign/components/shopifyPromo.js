@@ -15,11 +15,14 @@ function ShopifyPromo({
     
     const [loader, setLoader] = useState(true)
     const [Pcode, setPcode] = useState([]);
+    const [shopifyErr, setShopifyErr] = useState();
+
 
   useEffect(() => {
       setLoader(false)
     getPromoRequest().then((res) => {
        setLoader(true);
+       setShopifyErr(res);
     });
     
 }, []);
@@ -30,6 +33,10 @@ function ShopifyPromo({
        }
   return (
     <>
+    {!shopifyErr?  <span className={"help-block text-danger"}>
+                              Connect Your Shopify! 
+                            </span>
+                            :<>
     {!loader? <Loader size="30" />:
     
     
@@ -47,7 +54,10 @@ function ShopifyPromo({
                
                 </div>
   }
-    </>
+  </>
+}
+</>
+
   );
 }
 

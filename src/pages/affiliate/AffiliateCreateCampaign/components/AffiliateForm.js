@@ -152,7 +152,8 @@ class AffiliateForm extends React.Component {
   };
 
   changePromoCode = (e, options, name, index) => {
-    let data = String(options.value);
+    console.log({hel:options});
+    let data = options;
     this.setState({promoCodeVal:data})
   };
 
@@ -188,6 +189,7 @@ class AffiliateForm extends React.Component {
 
   handleClick=(data) =>{
     const promo = data;
+    console.log("check data",promo)
     if(data.length > 0){
       this.setState({promoCond: false})
     }
@@ -197,8 +199,8 @@ class AffiliateForm extends React.Component {
     const selectState = [];
     promo.map((x) => {
       return selectState.push({
-        value: x,
-        label: x,
+        value: x.promo_id,
+        label: x.title,
       
       });
     });
@@ -303,7 +305,8 @@ class AffiliateForm extends React.Component {
           redirected_url: this.props.affData.redirected_url,
           media_url: this.props.affData.media_url,
           discount_type:'shopify',
-          promo: this.state.promoCodeVal,
+          promo: this.state.promoCodeVal.label,
+          promo_id: this.state.promoCodeVal.value,
           category_id:
             this.props.affData.categories.length !== 0
               ? this.props.affData.categories[0].category_id
@@ -452,6 +455,8 @@ class AffiliateForm extends React.Component {
     // console.log(this.state.discount, "discount");
 
     return (
+
+      
       <React.Fragment>
         <Formsy.Form
           onValidSubmit={() =>

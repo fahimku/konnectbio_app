@@ -81,12 +81,12 @@ function AffiliateCampaign(props, { getPromoRequest,
     const promo = dataPromo;
     
     if(dataPromo != undefined){
-      console.log("sees",dataPromo);
+      
       const selectState = [];
     promo.map((x) => {
       return selectState.push({
-        value: x,
-        label: x,
+        value: x.promo_id,
+        label: x.title,
       
       });
     });
@@ -193,7 +193,6 @@ function AffiliateCampaign(props, { getPromoRequest,
       )
       .then((response) => {
         setData(response.data.message);
-        console.log('Seller', response.data.message)
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
