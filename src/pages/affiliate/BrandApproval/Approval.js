@@ -88,7 +88,7 @@ function Approvals({
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Approved Successfully!");
-      getAffiliateRequest().then(() => {
+      getAffiliateRequest(status.value, 1, limit).then(() => {
         setLoading(false);
       });
     });
@@ -102,7 +102,7 @@ function Approvals({
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Rejected Successfully!");
-      getAffiliateRequest().then(() => {
+      getAffiliateRequest(status.value, 1, limit).then(() => {
         setLoading(false);
       });
     });
@@ -160,12 +160,21 @@ function Approvals({
                           </button>
                         )}
 
-                        <button
-                          class="btn badge-danger btn-sm ml-1 btn-approve"
-                          onClick={() => rejectMethod(item?.influencer_id)}
-                        >
-                          Disapprove
-                        </button>
+                        {item?.status === "Rejected" ? (
+                          <button
+                            class="btn badge-danger btn-sm ml-1 btn-approve"
+                            disabled
+                          >
+                            Disapprove
+                          </button>
+                        ) : (
+                          <button
+                            class="btn badge-danger btn-sm ml-1 btn-approve"
+                            onClick={() => rejectMethod(item?.influencer_id)}
+                          >
+                            Disapprove
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );
