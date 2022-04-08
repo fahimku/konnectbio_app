@@ -82,6 +82,7 @@ class AffiliateBrand extends React.Component {
   };
 
   render() {
+    console.log(this.state.brandDiscount, "sdsd");
     return (
       <React.Fragment>
         <div className="container-fluid">
@@ -164,82 +165,86 @@ class AffiliateBrand extends React.Component {
                         </Col>
                       </Row>
                       {this.state.brand_name ? (
-                        <Row className="brandrow">
-                          <Col xs={4}>
-                            <span>
-                              {this.state.affiliateCheck
-                                ? "Disabled "
-                                : "Enable "}
-                              Affiliate:
-                            </span>
-                          </Col>
-                          <Col xs={8}>
-                            <div className="form-check custom-switch custom-switch-md">
-                              <input
-                                type="checkbox"
-                                defaultChecked={this.state.is_affiliate_enabled}
-                                className="custom-control-input"
-                                id={`customSwitch`}
-                                readOnly
-                                onChange={(e) => {
-                                  this.setState({
-                                    affiliateCheck: e.target.checked,
-                                    checkDisabled: !this.state.checkDisabled,
-                                  });
-                                }}
-                              />
-                              <label
-                                className="custom-control-label"
-                                htmlFor={`customSwitch`}
-                              ></label>
-                            </div>
-                          </Col>
-                        </Row>
-                      ) : null}
-
-                      <Row className="brandrow">
-                        <Col xs={4}>
-                          <span>Website Discount:</span>
-                        </Col>
-                        <Col xs={8}>
-                          <div className="row brandInput demographic-section">
-                            <Col xs={5}>
-                              <div className="mb-2 input-group">
-                                <span class="input-group-text">%</span>
+                        <>
+                          <Row className="brandrow">
+                            <Col xs={4}>
+                              <span>
+                                {this.state.affiliateCheck
+                                  ? "Disabled "
+                                  : "Enable "}
+                                Affiliate:
+                              </span>
+                            </Col>
+                            <Col xs={8}>
+                              <div className="form-check custom-switch custom-switch-md">
                                 <input
-                                  type="number"
-                                  id="discount"
-                                  name="discount"
-                                  className={"form-control"}
-                                  // placeholder="Enter Discount"
-                                  value={this.state.brandDiscount}
-                                  onChange={(e) => {
-                                    if (e.target.value <= 100) {
-                                      this.setState({
-                                        brandDiscount: e.target.value,
-                                        checkDisabled:
-                                          !this.state.checkDisabled,
-                                      });
-                                    } else {
-                                      this.setState({
-                                        checkDisabled:
-                                          !this.state.checkDisabled,
-                                      });
-                                    }
-                                  }}
-                                  autoComplete="off"
-                                  onKeyDown={(evt) =>
-                                    ["e", "E", "+", "-"].includes(evt.key) &&
-                                    evt.preventDefault()
+                                  type="checkbox"
+                                  defaultChecked={
+                                    this.state.is_affiliate_enabled
                                   }
-                                  min="0"
-                                  max="100"
+                                  className="custom-control-input"
+                                  id={`customSwitch`}
+                                  readOnly
+                                  onChange={(e) => {
+                                    this.setState({
+                                      affiliateCheck: e.target.checked,
+                                      checkDisabled: !this.state.checkDisabled,
+                                    });
+                                  }}
                                 />
+                                <label
+                                  className="custom-control-label"
+                                  htmlFor={`customSwitch`}
+                                ></label>
                               </div>
                             </Col>
-                          </div>
-                        </Col>
-                      </Row>
+                          </Row>
+                          <Row className="brandrow">
+                            <Col xs={4}>
+                              <span>Website Discount:</span>
+                            </Col>
+                            <Col xs={8}>
+                              <div className="row brandInput demographic-section">
+                                <Col xs={5}>
+                                  <div className="mb-2 input-group">
+                                    <span class="input-group-text">%</span>
+                                    <input
+                                      type="number"
+                                      id="discount"
+                                      name="discount"
+                                      className={"form-control"}
+                                      // placeholder="Enter Discount"
+                                      value={this.state.brandDiscount}
+                                      onChange={(e) => {
+                                        if (e.target.value <= 100) {
+                                          this.setState({
+                                            brandDiscount: e.target.value,
+                                            checkDisabled:
+                                              !this.state.checkDisabled,
+                                          });
+                                        } else {
+                                          this.setState({
+                                            checkDisabled:
+                                              !this.state.checkDisabled,
+                                          });
+                                        }
+                                      }}
+                                      autoComplete="off"
+                                      onKeyDown={(evt) =>
+                                        ["e", "E", "+", "-"].includes(
+                                          evt.key
+                                        ) && evt.preventDefault()
+                                      }
+                                      min="0"
+                                      max="100"
+                                    />
+                                  </div>
+                                </Col>
+                              </div>
+                            </Col>
+                          </Row>
+                        </>
+                      ) : null}
 
                       <Row>
                         <Col md={5} xl={3}>
