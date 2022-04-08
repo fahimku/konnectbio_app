@@ -279,6 +279,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
 
                   <th>Campaign Name</th>
+                  <th>Qty</th>
                   <th>Amount</th>
                   <th>Paid</th>
                   <th>Commission</th>
@@ -290,6 +291,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>{item?.campaign_name}</td>
+                      <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
@@ -322,6 +324,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Instagram</th>
+                  <th>Qty</th>
                   <th>Amount</th>
                   <th>Paid</th>
                   <th>Commission</th>
@@ -340,6 +343,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           {item?.influencer_name}
                         </a>
                       </td>
+                      <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
@@ -372,6 +376,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Brand Name</th>
+                  <th>Qty</th>
                   <th>Amount</th>
                   <th>Paid</th>
                   <th>Commission</th>
@@ -383,6 +388,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>{item?.brand_name}</td>
+                      <td>{item?.total_qty}</td>
 
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>

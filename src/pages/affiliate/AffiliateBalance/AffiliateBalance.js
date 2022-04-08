@@ -213,9 +213,12 @@ function AffiliateBalance({
           </Row>
           <Row>
             <div className="col-md-4">
-              <div className="conn-set-inner">
+              <div
+                className="conn-set-inner"
+                style={{ backgroundColor: "#010b40 ", color: "white" }}
+              >
                 <div className="affiliate-wallet">
-                  <h5>Current Balance</h5>
+                  <h5 style={{ color: "white" }}>Current Balance</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
                       {numeral(
