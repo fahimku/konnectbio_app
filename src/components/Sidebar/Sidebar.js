@@ -324,7 +324,7 @@ class Sidebar extends React.Component {
                             link: "/app/account/categories",
                           },
                           {
-                            header: "Campaign Setup",
+                            header: "Brand Setup",
                             link: "/app/account/affiliate",
                           },
                           {

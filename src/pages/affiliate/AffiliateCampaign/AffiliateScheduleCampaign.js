@@ -48,8 +48,8 @@ function AffiliateCampaign(props) {
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
+    value: "date",
+    label: "DATE",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
 
@@ -150,7 +150,7 @@ function AffiliateCampaign(props) {
     setLoading(true);
     await axios
       .get(
-        `campaigns/receive/getUpcoming?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive/getUpcoming?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -338,13 +338,13 @@ function AffiliateCampaign(props) {
     setClearLoading(true);
     setLoading(true);
     setCategory({ value: "all", label: "ALL" });
-    setSortBy({ value: "commission", label: "COMMISSION" });
+    setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
       .get(
-        `campaigns/receive/getUpcoming?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive/getUpcoming?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -372,8 +372,8 @@ function AffiliateCampaign(props) {
   };
 
   const sortByOptions = [
-    { value: "commission", label: "COMMISSION" },
     { value: "date", label: "DATE" },
+    { value: "commission", label: "COMMISSION" },
   ];
 
   // const sortOrderOptions = [

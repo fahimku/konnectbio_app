@@ -80,11 +80,12 @@ function Approvals({
     });
   };
 
-  const approveMethod = (id) => {
-    setLoading(true);
+  const approveMethod = (id, updated) => {
+    // setLoading(true);
     let payload = {
       influencer_id: id,
       status: "Approved",
+      // updated: updated,
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Approved Successfully!");
@@ -94,11 +95,12 @@ function Approvals({
     });
   };
 
-  const rejectMethod = (id) => {
-    setLoading(true);
+  const rejectMethod = (id, updated) => {
+    // setLoading(true);
     let payload = {
       influencer_id: id,
       status: "Rejected",
+      // updated: updated,
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Rejected Successfully!");
@@ -154,7 +156,12 @@ function Approvals({
                         ) : (
                           <button
                             class="btn badge-success btn-sm btn-approve"
-                            onClick={() => approveMethod(item?.influencer_id)}
+                            onClick={() =>
+                              approveMethod(
+                                item?.influencer_id
+                                // item?.status === "Pending" ? false : true
+                              )
+                            }
                           >
                             Approve
                           </button>
@@ -170,7 +177,12 @@ function Approvals({
                         ) : (
                           <button
                             class="btn badge-danger btn-sm ml-1 btn-approve"
-                            onClick={() => rejectMethod(item?.influencer_id)}
+                            onClick={() =>
+                              rejectMethod(
+                                item?.influencer_id
+                                // item?.status === "Pending" ? false : true
+                              )
+                            }
                           >
                             Disapprove
                           </button>

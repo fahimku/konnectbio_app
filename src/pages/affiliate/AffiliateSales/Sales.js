@@ -22,15 +22,19 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const [groupBy, setGroupBy] = useState({
-    label: "ALL",
-    value: "",
+    label: "Summary",
+    value: "brand",
   });
-  const [submit, setSubmit] = useState("");
+  const [submit, setSubmit] = useState("brand");
   const [filterDisable, setFilterDisable] = useState("");
 
   const groupByList = [
     {
-      label: "ALL",
+      label: "Summary",
+      value: "brand",
+    },
+    {
+      label: "Detailed",
       value: "",
     },
     {
@@ -122,7 +126,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
     setEndDate(moment(new Date()).format("YYYY-MM-DD"));
     getAffiliateSalesByBrand(
-      "",
+      "brand",
       1,
       limit,
       moment().startOf("month").format("YYYY-MM-DD"),
@@ -131,10 +135,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       setLoading(false);
     });
     setGroupBy({
-      label: "ALL",
-      value: "",
+      label: "Summary",
+      value: "brand",
     });
-    setSubmit("");
+    setSubmit("brand");
   };
   const filterDate = (sDate, eDate, filterType) => {
     setLoading(true);
@@ -142,10 +146,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     setStartDate(sDate);
     setEndDate(eDate);
     setGroupBy({
-      label: "ALL",
-      value: "",
+      label: "Summary",
+      value: "brand",
     });
-    getAffiliateSalesByBrand("", 1, limit, sDate, eDate).then(() => {
+    getAffiliateSalesByBrand(groupBy.value, 1, limit, sDate, eDate).then(() => {
       setLoading(false);
     });
   };
@@ -355,6 +359,50 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       );
     }
   }
+  function summaryTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Brand Name</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
+                  <th>Commission</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.brand_name}</td>
+
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "$0.00"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -508,6 +556,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     </>
                   ) : (
                     <>
+                      {submit === "brand" || submit === undefined
+                        ? summaryTable()
+                        : null}
                       {submit === "" || submit === undefined
                         ? allTable()
                         : null}

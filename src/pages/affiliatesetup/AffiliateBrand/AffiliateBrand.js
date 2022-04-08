@@ -17,6 +17,7 @@ class AffiliateBrand extends React.Component {
       affiliateCheck: false,
       brandEdit: false,
       oldBrand: "",
+      brandDiscount: "0",
     };
   }
 
@@ -32,6 +33,8 @@ class AffiliateBrand extends React.Component {
           oldBrand: response?.data?.data?.brand_name,
           brand_name: response?.data?.data?.brand_name,
           is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
+          affiliateCheck: response?.data?.data?.is_affiliate_enabled,
+          brandDiscount: response?.data?.data?.website_discount,
         });
       })
       .catch(function (error) {
@@ -57,6 +60,7 @@ class AffiliateBrand extends React.Component {
         .post(`/affiliate/createAndUpdateBrandName`, {
           brand_name: this.state.brand_name,
           is_affiliate_enabled: this.state.affiliateCheck,
+          website_discount: this.state.brandDiscount,
         })
         .then((response) => {
           this.setState({
@@ -192,6 +196,50 @@ class AffiliateBrand extends React.Component {
                           </Col>
                         </Row>
                       ) : null}
+
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Website Discount:</span>
+                        </Col>
+                        <Col xs={8}>
+                          <div className="row brandInput demographic-section">
+                            <Col xs={5}>
+                              <div className="mb-2 input-group">
+                                <span class="input-group-text">%</span>
+                                <input
+                                  type="number"
+                                  id="discount"
+                                  name="discount"
+                                  className={"form-control"}
+                                  // placeholder="Enter Discount"
+                                  value={this.state.brandDiscount}
+                                  onChange={(e) => {
+                                    if (e.target.value <= 100) {
+                                      this.setState({
+                                        brandDiscount: e.target.value,
+                                        checkDisabled:
+                                          !this.state.checkDisabled,
+                                      });
+                                    } else {
+                                      this.setState({
+                                        checkDisabled:
+                                          !this.state.checkDisabled,
+                                      });
+                                    }
+                                  }}
+                                  autoComplete="off"
+                                  onKeyDown={(evt) =>
+                                    ["e", "E", "+", "-"].includes(evt.key) &&
+                                    evt.preventDefault()
+                                  }
+                                  min="0"
+                                  max="100"
+                                />
+                              </div>
+                            </Col>
+                          </div>
+                        </Col>
+                      </Row>
 
                       <Row>
                         <Col md={5} xl={3}>
