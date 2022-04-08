@@ -38,7 +38,7 @@ function Approvals({
       value: "pending",
     },
     {
-      label: "Rejected",
+      label: "Disapproved",
       value: "rejected",
     },
   ];
@@ -202,7 +202,7 @@ function Approvals({
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <h4 className="page-title">Request</h4>
+        <h4 className="page-title">Requests</h4>
         <div className="brand_container_main aff-payment">
           <Row>
             <div className="col-md-8">

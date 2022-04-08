@@ -178,7 +178,7 @@ function AffiliateBalance({
             <div className="col-md-4">
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
-                  <h5>Current Balance</h5>
+                  <h5>Balance</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
                       {numeral(
@@ -196,7 +196,7 @@ function AffiliateBalance({
             <div className="col-md-4">
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
-                  <h5>Spent Amount</h5>
+                  <h5>Commission Paid</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
                       {numeral(affiliateBalance?.message?.spent_amount).format(
