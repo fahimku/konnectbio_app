@@ -6,6 +6,7 @@ import Loader from "../../../../components/Loader/Loader";
 
 let data;
 let a = [];
+let promoCodes = [];
 function ShopifyPromo({
     getPromoRequest,
     promoRequest,
@@ -14,7 +15,7 @@ function ShopifyPromo({
   }) {   
     
     const [loader, setLoader] = useState(true)
-    const [Pcode, setPcode] = useState([]);
+    const [Pcode, setPcode] = useState('');
     const [shopifyErr, setShopifyErr] = useState();
 
 
@@ -23,29 +24,44 @@ function ShopifyPromo({
     getPromoRequest().then((res) => {
        setLoader(true);
        setShopifyErr(res);
-    });
-    
+  
+    }).catch((res) =>{
+     
+      setShopifyErr(false);
+      PromoPayload("",false)
+    })
+
 }, []);
 
-       if(loader == true){
-        data = promoRequest.message;
-       
-       }
+       if(loader == true){  
+        data = promoRequest.message;        
+        PromoPayload(data,shopifyErr)
+        } 
+      
   return (
     <>
-    {!shopifyErr?  <span className={"help-block text-danger"}>
-                              Connect Your Shopify! 
-                            </span>
-                            :<>
+   
     {!loader? <Loader size="30" />:
     
     
        <div className="row">
-                  <div className="col-md-6 mt-3">
+                  {/* <div className="col-md-6 mt-3">
                     <div class="form-check">
                                  
                       
                       <input onChange={() => PromoPayload(data)} class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                      <label class="form-check-label" for="flexRadioDefault1">
+                        Shopify
+                      </label>
+                    </div>
+                  </div> */}
+
+
+                  <div className="col-md-6 mt-3">
+                    <div class="form-check">
+                                 
+                      
+                      <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked/>
                       <label class="form-check-label" for="flexRadioDefault1">
                         Shopify
                       </label>
@@ -55,9 +71,6 @@ function ShopifyPromo({
                 </div>
   }
   </>
-}
-</>
-
   );
 }
 
