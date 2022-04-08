@@ -1199,3 +1199,40 @@ code.sm-color {
   background-color: #798892 !important;
   border-color: #798892 !important;
 }
+.filter-date .btn-primary:disabled {
+  cursor: no-drop;
+}
+.link-wrapper .activenav {
+  color: #010b40;
+  font-family: "Nunito Sans", sans-serif !important;
+  font-weight: 700 !important;
+}
+.link-wrapper .icon {
+  margin-top: 0px !important;
+}
+.active_campaign {
+  background-color: #010b40 !important;
+  color: #fff !important;
+  border-bottom-left-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+}
+.disable_campaign {
+  border-bottom-left-radius: 0.3rem !important;
+  border-bottom-right-radius: 0.3rem !important;
+}
+.request_container .request_table {
+  min-height: auto;
+}
+.btn-approve:hover,
+.btn-approve_disable:hover {
+  color: #fff;
+  cursor: auto;
+}
+.btn-approve_disable:disabled {
+  opacity: 1;
+  cursor: auto;
+}
+.approve-brand tbody tr td:last-child {
+  white-space: nowrap;
+  width: 1%;
+}

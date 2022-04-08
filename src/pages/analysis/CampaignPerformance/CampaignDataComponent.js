@@ -157,7 +157,8 @@ class CampaignDataComponent extends React.Component {
   };
 
   paginationPrev = () => {
-    let { username, fromDate, toDate, saveStatus, limit, previous } = this.state;
+    let { username, fromDate, toDate, saveStatus, limit, previous } =
+      this.state;
     this.fetchPostPerformance(
       username,
       fromDate,
@@ -216,7 +217,7 @@ class CampaignDataComponent extends React.Component {
       this.state.username,
       moment().subtract(30, "day").format("YYYY-MM-DD"),
       moment(new Date()).format("YYYY-MM-DD"),
-      'active',
+      "active",
       this.state.limit,
       this.state.page,
       "",
@@ -232,7 +233,7 @@ class CampaignDataComponent extends React.Component {
   };
 
   handleStatus = (event) => {
-    console.log('event', event)
+    console.log("event", event);
     this.setState({
       saveStatus: event.value,
       optionStatus: event,
@@ -309,10 +310,10 @@ class CampaignDataComponent extends React.Component {
                     <h5 className="count-title">End Date</h5>
                     <h3 className="count">{record.end_date}</h3>
                   </div>
-                  <div className="col-12 count-box">
+                  {/* <div className="col-12 count-box">
                     <h5 className="count-title">Revenue</h5>
                     <h3 className="count">{record.revenue}</h3>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

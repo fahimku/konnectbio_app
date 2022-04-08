@@ -161,7 +161,7 @@ export default function Box({
                   disabled
                   style={{ pointerEvents: "none" }}
                   key={index}
-                  className="btn"
+                  className="btn disable_campaign"
                 >
                   Campaign Added
                 </button>
@@ -170,7 +170,7 @@ export default function Box({
                   // disabled
                   // style={{ pointerEvents: "none" }}
                   key={index}
-                  className="btn"
+                  className="btn active_campaign"
                   onClick={() => {
                     confirmReActiveCampaigns(false, item.campaign_id);
                   }}
@@ -191,7 +191,7 @@ export default function Box({
                       item.user_id
                     );
                   }}
-                  className="btn"
+                  className="btn active_campaign"
                   id="select-campaign"
                 >
                   Campaign Available

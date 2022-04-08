@@ -220,7 +220,7 @@ class Affiliate extends React.Component {
                         this.toggleTabs("approval");
                       }}
                     >
-                      <span>Approvals</span>
+                      <span>Requests</span>
                     </NavLink>
                   </NavItem>
 

@@ -4,7 +4,7 @@ import { Button, Row, Col, Table } from "react-bootstrap";
 import AffiliateDeposit from "./AffiliateDeposit";
 import { connect } from "react-redux";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
-
+import numeral from "numeral";
 import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 
@@ -181,7 +181,11 @@ function AffiliateBalance({
                   <h5>Current Balance</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
-                     ${affiliateBalance?.message?.current_balance.toFixed(2)}
+                      {numeral(
+                        affiliateBalance?.message?.current_balance
+                      ).format("$0,0.0'")}
+
+                      {/* {affiliateBalance?.message?.current_balance.toFixed(2)} */}
                     </div>
                   ) : (
                     <div className="aff-amount">$0</div>
@@ -193,7 +197,15 @@ function AffiliateBalance({
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
                   <h5>Spent Amount</h5>
-                  <div className="aff-amount">$0</div>
+                  {affiliateBalance?.success == true ? (
+                    <div className="aff-amount">
+                      {numeral(affiliateBalance?.message?.spent_amount).format(
+                        "$0,0.0'"
+                      )}
+                    </div>
+                  ) : (
+                    <div className="aff-amount">$0</div>
+                  )}
                 </div>
               </div>
             </div>

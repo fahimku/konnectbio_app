@@ -167,8 +167,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>Influencer Instagram</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Promo</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -194,13 +195,14 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.order_id}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{item?.promo}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -225,8 +227,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -247,7 +249,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -273,8 +275,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
 
                   <th>Campaign Name</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -291,7 +293,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );
@@ -316,8 +318,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Instagram</th>
-                  <th>Total Amount</th>
-                  <th>Paid Amount</th>
+                  <th>Amount</th>
+                  <th>Paid</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -341,7 +343,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>
                         {item?.total_commission
                           ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "0"}
+                          : "$0.00"}
                       </td>
                     </tr>
                   );

@@ -2,9 +2,9 @@ import {
   GET_MARKETPLACE_TRANSACTIONS,
   MARKETPLACE_PAGINATION,
 } from "../../actions/type";
-const initialState = { message: [], pagination: {} };
+// const initialState = { message: [], pagination: {} };
 
-export default function marketplaceTransactions(state = initialState, action) {
+export default function marketplaceTransactions(state = [], action) {
   switch (action.type) {
     case GET_MARKETPLACE_TRANSACTIONS:
       return action.payload;

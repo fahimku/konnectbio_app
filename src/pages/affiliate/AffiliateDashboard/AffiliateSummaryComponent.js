@@ -137,14 +137,14 @@ class AffiliateSummaryComponent extends React.Component {
                     </h3>
                   </div>
 
-                  <div className="col-12 count-box">
+                  {/* <div className="col-12 count-box">
                     <h5 className="count-title">Total Budget</h5>
                     <h3 className="count">
                       {data.campaign_summary.total_budget
                         ? data.campaign_summary.total_budget
                         : "$0"}
                     </h3>
-                  </div>
+                  </div>*/}
                   <div className="col-12 count-box">
                     <h5 className="count-title">Total Clicks</h5>
                     <h3 className="count">
