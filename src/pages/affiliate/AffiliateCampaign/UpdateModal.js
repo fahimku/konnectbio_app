@@ -100,6 +100,8 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
+    console.log("as", options.value);
+
     this.setState({ promoCodes: options.value });
   };
 
@@ -276,7 +278,7 @@ class UpdateModal extends React.Component {
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
             promo: this.state.promoCodes,
-            // promo_id: this.state.promoCodes.value,
+            //promo_id: this.state.promoCodes.value,
             discount_type: "shopify",
             // discount: parseInt(this.state.discount),
             commission: parseInt(this.state.commission),
@@ -385,6 +387,22 @@ class UpdateModal extends React.Component {
     return current && current < moment().endOf("day");
   }
 
+  formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex", position: "relative" }}>
+      <div>{label}</div>
+      <div
+        style={{
+          position: "absolute",
+          color: "black",
+          right: "0",
+          fontSize: "12px",
+        }}
+      >
+        {discount}%
+      </div>
+    </div>
+  );
+
   render() {
     const { affData } = this.props;
     let category =
@@ -405,10 +423,35 @@ class UpdateModal extends React.Component {
       }
     };
 
-    const renderConValuePromoList = (x) => {
-      return { value: x, label: x };
-    };
+    const formatOptionLabel = ({ value, label, discount }) => (
+      <div style={{ display: "flex", position: "relative" }}>
+        <div>{label}</div>
+        <div
+          style={{
+            position: "absolute",
+            color: "black",
+            right: "0",
+            fontSize: "12px",
+          }}
+        >
+          {discount}%
+        </div>
+      </div>
+    );
 
+    const renderConValuePromoList = (x) => {
+      const filterPromo = this.state.promoList.filter((item) => {
+        if (item.label == x) {
+          return item;
+        }
+      });
+      console.log(" ss", this.state.promoList);
+      return {
+        value: filterPromo[0].value,
+        label: filterPromo[0].label,
+        discount: filterPromo[0].discount,
+      };
+    };
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
         (item) => item.value === x.country
@@ -416,6 +459,7 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
+    console.log(this.state.promoCodes, "promoCodes");
 
     // const renderCityValue = (x, i) => {
     //   if (x.state) {
@@ -437,6 +481,7 @@ class UpdateModal extends React.Component {
     // };
     const renderCityValue = (x, i) => {
       if (x.state) {
+        console.log(this.state.cities2[0].data.message, "sdsd");
         const exit = [
           { value: "all", name: "all" },
 
@@ -703,6 +748,7 @@ class UpdateModal extends React.Component {
                       }
                       placeholder="Select PromoCode"
                       style={{ width: "100%" }}
+                      formatOptionLabel={formatOptionLabel}
                       options={this.state.promoList}
                     />
                   </div>

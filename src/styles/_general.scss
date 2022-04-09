@@ -1221,7 +1221,7 @@ code.sm-color {
   border-bottom-right-radius: 0.3rem !important;
 }
 .request_container .request_table {
-  min-height: auto;
+  min-height: unset;
 }
 .btn-approve:hover,
 .btn-approve_disable:hover {

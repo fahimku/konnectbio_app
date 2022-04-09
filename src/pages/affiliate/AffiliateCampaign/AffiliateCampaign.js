@@ -59,7 +59,10 @@ function AffiliateCampaign(
   // const limit = 8;
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [sortBy, setSortBy] = useState({ value: "date", label: "DATE" });
+  const [sortBy, setSortBy] = useState({
+    value: "commission",
+    label: "COMMISSION",
+  });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [loader, setLoader] = useState(true);
   const [promoCode, setPromoCode] = useState("");
@@ -78,11 +81,13 @@ function AffiliateCampaign(
     const promo = dataPromo;
 
     if (dataPromo != undefined) {
+      console.log("sees", dataPromo);
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
-          value: x,
-          label: x,
+          value: x.promo,
+          label: x.promo,
+          discount: x.promo_percent,
         });
       });
       PassPromoCode = selectState;
@@ -181,11 +186,11 @@ function AffiliateCampaign(
     setLoading(true);
     await axios
       .get(
-        `campaigns/receive?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
-
+        console.log("Seller", response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -194,6 +199,22 @@ function AffiliateCampaign(
         setLoading(false);
       });
   };
+
+  const formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex", position: "relative" }}>
+      <div>{label}</div>
+      <div
+        style={{
+          position: "absolute",
+          color: "black",
+          right: "0",
+          fontSize: "12px",
+        }}
+      >
+        {discount}%
+      </div>
+    </div>
+  );
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;
@@ -388,13 +409,13 @@ function AffiliateCampaign(
     setClearLoading(true);
     setLoading(true);
     setCategory({ value: "all", label: "ALL" });
-    setSortBy({ value: "date", label: "Date" });
+    setSortBy({ value: "commission", label: "COMMISSION" });
     setOrderBy({ value: "desc", label: "DESC" });
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
       .get(
-        `campaigns/receive?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -422,8 +443,8 @@ function AffiliateCampaign(
   };
 
   const sortByOptions = [
-    { value: "date", label: "DATE" },
     { value: "commission", label: "COMMISSION" },
+    { value: "date", label: "DATE" },
   ];
 
   // const sortOrderOptions = [

@@ -54,8 +54,8 @@ function AffiliateCampaign(
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [sortBy, setSortBy] = useState({
-    value: "date",
-    label: "DATE",
+    value: "commission",
+    label: "COMMISSION",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [loader, setLoader] = useState(true);
@@ -80,7 +80,6 @@ function AffiliateCampaign(
         toast.error(error?.response?.data?.message);
       }
     );
-
     setLoader(false);
     props.getPromoRequest().then((res) => {
       setLoader(true);
@@ -95,8 +94,9 @@ function AffiliateCampaign(
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
-          value: x,
-          label: x,
+          value: x.promo,
+          label: x.promo,
+          discount: x.promo_percent,
         });
       });
       PassPromoCode = selectState;
@@ -176,11 +176,27 @@ function AffiliateCampaign(
     });
   };
 
+  const formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex", position: "relative" }}>
+      <div>{label}</div>
+      <div
+        style={{
+          position: "absolute",
+          color: "black",
+          right: "0",
+          fontSize: "12px",
+        }}
+      >
+        {discount}%
+      </div>
+    </div>
+  );
+
   const fetchSchedulePosts = async () => {
     setLoading(true);
     await axios
       .get(
-        `campaigns/receive/getUpcoming?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive/getUpcoming?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -368,13 +384,13 @@ function AffiliateCampaign(
     setClearLoading(true);
     setLoading(true);
     setCategory({ value: "all", label: "ALL" });
-    setSortBy({ value: "date", label: "DATE" });
+    setSortBy({ value: "commission", label: "COMMISSION" });
     setOrderBy({ value: "desc", label: "DESC" });
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
       .get(
-        `campaigns/receive/getUpcoming?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive/getUpcoming?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -402,8 +418,8 @@ function AffiliateCampaign(
   };
 
   const sortByOptions = [
-    { value: "date", label: "DATE" },
     { value: "commission", label: "COMMISSION" },
+    { value: "date", label: "DATE" },
   ];
 
   // const sortOrderOptions = [
@@ -588,8 +604,8 @@ function AffiliateCampaign(
           </Modal.Header>
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <UpdateModal
-              promoCodes={PassPromoCode}
               affData={currentCampaign}
+              promoCodes={PassPromoCode}
               countries={props.countries}
               affCloseModal={() => setModal(false)}
               reload={() => {

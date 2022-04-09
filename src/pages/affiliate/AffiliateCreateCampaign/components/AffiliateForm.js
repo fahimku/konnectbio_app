@@ -185,30 +185,31 @@ class AffiliateForm extends React.Component {
     this.reachCampaign();
   };
 
-  handleClick = (data,status) => {
-console.log("checking data",data,status)
-if(status === false){
-       
-  this.setState({connNotFound: false})
-}else{
-   if(data == undefined){  this.setState({ promoCond: true });}else{
-    
-    const promo = data;
-    if (data.length > 0) {
-      this.setState({ promoCond: false });
+  handleClick = (data, status) => {
+    console.log("checking data", data, status);
+    if (status === false) {
+      this.setState({ connNotFound: false });
     } else {
-      this.setState({ promoCond: true });
+      if (data == undefined) {
+        this.setState({ promoCond: true });
+      } else {
+        const promo = data;
+        if (data.length > 0) {
+          this.setState({ promoCond: false });
+        } else {
+          this.setState({ promoCond: true });
+        }
+        const selectState = [];
+        promo.map((x) => {
+          return selectState.push({
+            value: x.promo,
+            label: x.promo,
+            discount: x.promo_percent,
+          });
+        });
+        this.setState({ promoCode: selectState });
+      }
     }
-    const selectState = [];
-    promo.map((x) => {
-      return selectState.push({
-        value: x,
-        label: x,
-      });
-    });
-    this.setState({ promoCode: selectState });
-  }
-}
   };
   getState = async (countryCode) => {
     await axios
@@ -430,6 +431,22 @@ if(status === false){
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
 
+    const formatOptionLabel = ({ value, label, discount }) => (
+      <div style={{ display: "flex", position: "relative" }}>
+        <div>{label}</div>
+        <div
+          style={{
+            position: "absolute",
+            color: "black",
+            right: "0",
+            fontSize: "12px",
+          }}
+        >
+          {discount}%
+        </div>
+      </div>
+    );
+
     const renderStateValue = (x) => {
       const exit =
         this.state.stateList === ""
@@ -454,47 +471,44 @@ if(status === false){
 
     return (
       <>
-     { this.state.connNotFound === false ?
-      <div className="image-box-info">
-     <span className={"help-block text-danger"}>
-     
-        Connect To Shopify First!
-        
-     
-      </span>
-    </div>
-    :
-      <React.Fragment>
-        <Formsy.Form
-          onValidSubmit={() =>
-            this.saveCampaign(affData.post_id, affData.redirected_url)
-          }
-        >
-          <div className="image-wrapper">
-            <div className="image-box">
-              <img src={`${affData.media_url}`} alt="media_url" />
-            </div>
-            <div className="aff-img-edit-link image-edit-links">
-              <div className="row">
-                <div className="campaign-name col-md-6">
-                  <label>Campaign Name</label>
-                  <InputValidation
-                    className=""
-                    type="text"
-                    id="campaign_name"
-                    name="campaign_name"
-                    required
-                    value={this.state.campaign_name}
-                    placeholder="Campaign Name"
-                    onChange={(evt) => {
-                      this.titleChange(evt.target.value);
-                    }}
-                    autoFocus
-                  />
+        {this.state.connNotFound === false ? (
+          <div className="image-box-info">
+            <span className={"help-block text-danger"}>
+              Connect To Shopify First!
+            </span>
+          </div>
+        ) : (
+          <React.Fragment>
+            <Formsy.Form
+              onValidSubmit={() =>
+                this.saveCampaign(affData.post_id, affData.redirected_url)
+              }
+            >
+              <div className="image-wrapper">
+                <div className="image-box">
+                  <img src={`${affData.media_url}`} alt="media_url" />
                 </div>
-                <div className="campaign-url col-md-6">
-                  <label>URL</label>
-                  {/* <InputValidation
+                <div className="aff-img-edit-link image-edit-links">
+                  <div className="row">
+                    <div className="campaign-name col-md-6">
+                      <label>Campaign Name</label>
+                      <InputValidation
+                        className=""
+                        type="text"
+                        id="campaign_name"
+                        name="campaign_name"
+                        required
+                        value={this.state.campaign_name}
+                        placeholder="Campaign Name"
+                        onChange={(evt) => {
+                          this.titleChange(evt.target.value);
+                        }}
+                        autoFocus
+                      />
+                    </div>
+                    <div className="campaign-url col-md-6">
+                      <label>URL</label>
+                      {/* <InputValidation
                     className=""
                     placeholder="Please Enter Website Address"
                     type="text"
@@ -504,92 +518,94 @@ if(status === false){
                     value={affData.redirected_url}
                     disabled
                   /> */}
-                  <div className="url-copy">
-                    <div className="your-copy-link">
-                      <div className="item-a">
-                        <a
-                          target="_blank"
-                          rel="noreferrer"
-                          href={affData.redirected_url}
-                        >
-                          {affData.redirected_url}
-                        </a>
-                      </div>
-                      <div
-                        onClick={() =>
-                          this.copyToClipboard(affData.redirected_url)
-                        }
-                        className="item-b"
-                      >
-                        Copy
+                      <div className="url-copy">
+                        <div className="your-copy-link">
+                          <div className="item-a">
+                            <a
+                              target="_blank"
+                              rel="noreferrer"
+                              href={affData.redirected_url}
+                            >
+                              {affData.redirected_url}
+                            </a>
+                          </div>
+                          <div
+                            onClick={() =>
+                              this.copyToClipboard(affData.redirected_url)
+                            }
+                            className="item-b"
+                          >
+                            Copy
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="row  mt-3">
-                <div className="select-categories col-md-6">
-                  <label>Category</label>
-                  <Select
-                    key={Date.now()}
-                    value={category}
-                    style={{ width: "100%" }}
-                    placeholder="Category"
-                    disabled={true}
-                  >
-                    {affData.categories
-                      ? affData.categories.map(
-                          ({ category_id, category_name }, i) => (
-                            <Option value={category_id}>{category_name}</Option>
-                          )
-                        )
-                      : []}
-                  </Select>
-                </div>
+                  <div className="row  mt-3">
+                    <div className="select-categories col-md-6">
+                      <label>Category</label>
+                      <Select
+                        key={Date.now()}
+                        value={category}
+                        style={{ width: "100%" }}
+                        placeholder="Category"
+                        disabled={true}
+                      >
+                        {affData.categories
+                          ? affData.categories.map(
+                              ({ category_id, category_name }, i) => (
+                                <Option value={category_id}>
+                                  {category_name}
+                                </Option>
+                              )
+                            )
+                          : []}
+                      </Select>
+                    </div>
 
-                <div className="date-range-aff col-md-6">
-                  <label>Select Start Date / End Date</label>
-                  <RangePicker
-                    key={1}
-                    defaultValue={[
-                      moment(this.state.startDate),
-                      moment(this.state.endDate),
-                    ]}
-                    value={[
-                      moment(this.state.startDate),
-                      moment(this.state.endDate),
-                    ]}
-                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                    allowClear={false}
-                    ranges={{
-                      Today: [moment(), moment()],
+                    <div className="date-range-aff col-md-6">
+                      <label>Select Start Date / End Date</label>
+                      <RangePicker
+                        key={1}
+                        defaultValue={[
+                          moment(this.state.startDate),
+                          moment(this.state.endDate),
+                        ]}
+                        value={[
+                          moment(this.state.startDate),
+                          moment(this.state.endDate),
+                        ]}
+                        defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                        allowClear={false}
+                        ranges={{
+                          Today: [moment(), moment()],
 
-                      Tomorrow: [
-                        moment().add(1, "days"),
-                        moment().add(1, "days"),
-                      ],
-                      "This Month": [
-                        moment().startOf("month"),
-                        moment().endOf("month"),
-                      ],
-                    }}
-                    style={{ width: "100%" }}
-                    // format={dateFormat}
-                    // showTime={{ format: "HH:mm" }}
-                    format="YYYY-MM-DD"
-                    // onChange={this.dateRangePickerChanger}
-                    onChange={this.dateRangePickerChanger.bind(this)}
-                    disabledDate={this.disabledDate}
-                  />
-                </div>
-              </div>
+                          Tomorrow: [
+                            moment().add(1, "days"),
+                            moment().add(1, "days"),
+                          ],
+                          "This Month": [
+                            moment().startOf("month"),
+                            moment().endOf("month"),
+                          ],
+                        }}
+                        style={{ width: "100%" }}
+                        // format={dateFormat}
+                        // showTime={{ format: "HH:mm" }}
+                        format="YYYY-MM-DD"
+                        // onChange={this.dateRangePickerChanger}
+                        onChange={this.dateRangePickerChanger.bind(this)}
+                        disabledDate={this.disabledDate}
+                      />
+                    </div>
+                  </div>
 
-              <div className="row mt-4">
-                <div className="camp-type-ift col-md-12 d-flex">
-                  <label className="n-camp-type pr-4">
-                    <strong>Type of campaign:</strong>
-                  </label>
-                  {/* <div class="col1">
+                  <div className="row mt-4">
+                    <div className="camp-type-ift col-md-12 d-flex">
+                      <label className="n-camp-type pr-4">
+                        <strong>Type of campaign:</strong>
+                      </label>
+                      {/* <div class="col1">
                     <input
                       type="radio"
                       name="platform"
@@ -611,7 +627,7 @@ if(status === false){
                       
                     </label>
                   </div> */}
-                  {/* <div class="col1">
+                      {/* <div class="col1">
                     <input
                       // type="radio"
                       name="platform"
@@ -642,40 +658,42 @@ if(status === false){
                     </div> 
                     </label>
                   </div> */}
-                  <div class="col1">
-                    <input
-                      type={
-                        this.state.campaign_name === "" ? "submit" : "radio"
-                      }
-                      name="platform"
-                      id="sales"
-                      class="d-none imgbgchk"
-                      value="sales"
-                      onChange={this.changeType}
-                      checked={this.state.campaign_name !== "" ? true : false}
-                      // disabled
-                    />
-                    <label for="sales">
-                      <span className="imp-click">
-                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
-                      </span>
-                      <span className="imp-name">Sales</span>
-                      {/* <div class="tick_container">
+                      <div class="col1">
+                        <input
+                          type={
+                            this.state.campaign_name === "" ? "submit" : "radio"
+                          }
+                          name="platform"
+                          id="sales"
+                          class="d-none imgbgchk"
+                          value="sales"
+                          onChange={this.changeType}
+                          checked={
+                            this.state.campaign_name !== "" ? true : false
+                          }
+                          // disabled
+                        />
+                        <label for="sales">
+                          <span className="imp-click">
+                            <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                          </span>
+                          <span className="imp-name">Sales</span>
+                          {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
                     </div> */}
-                    </label>
+                        </label>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {this.state.campaign_name !== "" ? (
-            <>
-              <div className="demographic-section">
-                {/* <div className="row">
+              {this.state.campaign_name !== "" ? (
+                <>
+                  <div className="demographic-section">
+                    {/* <div className="row">
                   <div className="col-md-6 mt-3">
                     <label>Total Budget</label>
                     <InputNumberValidation
@@ -711,50 +729,50 @@ if(status === false){
                     </span>
                   </div>
                 </div> */}
-                <ShopifyPromo
-                  PromoPayload={this.handleClick}
-                />
+                    <ShopifyPromo PromoPayload={this.handleClick} />
 
-                {this.state.promoCond ? (
-                  <></>
-                ) : (
-                  <>
-                    <div className="row">
-                      <div className="col-md-6 mt-3">
-                        <label>PromoCode</label>
-                        <Select2
-                          name="promoCode"
-                          //value={renderConValue(x)}
-                          onChange={(options, e) =>
-                            this.changePromoCode(e, options)
-                          }
-                          placeholder="Select PromoCode"
-                          style={{ width: "100%" }}
-                          options={this.state.promoCode}
-                        />
-                      </div>
-                      <div className="col-md-6 mt-3">
-                        <label>Commission</label>
-                        <InputNumberValidation
-                          type="number"
-                          id="number"
-                          name="commission"
-                          value={this.state.commission}
-                          onChange={(evt) => {
-                            this.commission(evt.target.value);
-                          }}
-                          required
-                          min="0"
-                          max="50"
-                        />
-                        <span className="text-danger">
-                          {this.state.CommissionError}
-                        </span>
-                      </div>
-                    </div>
-                  </>
-                )}
-                {/* <div className="row">
+                    {this.state.promoCond ? (
+                      <></>
+                    ) : (
+                      <>
+                        <div className="row">
+                          <div className="col-md-6 mt-3">
+                            <label>PromoCode</label>
+                            <Select2
+                              name="promoCode"
+                              //value={renderConValue(x)}
+                              onChange={(options, e) =>
+                                this.changePromoCode(e, options)
+                              }
+                              placeholder="Select PromoCode"
+                              style={{ width: "100%" }}
+                              //formatOptionLabel={this.state.promoCode}
+                              formatOptionLabel={formatOptionLabel}
+                              options={this.state.promoCode}
+                            />
+                          </div>
+                          <div className="col-md-6 mt-3">
+                            <label>Commission</label>
+                            <InputNumberValidation
+                              type="number"
+                              id="number"
+                              name="commission"
+                              value={this.state.commission}
+                              onChange={(evt) => {
+                                this.commission(evt.target.value);
+                              }}
+                              required
+                              min="0"
+                              max="50"
+                            />
+                            <span className="text-danger">
+                              {this.state.CommissionError}
+                            </span>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    {/* <div className="row">
                   <div className="col-md-6 mt-3">
 
                  {!this.state.promoCond ? <>
@@ -816,222 +834,224 @@ if(status === false){
                   </div>
                 </div> */}
 
-                <div className="country-select">
-                  {this.state.inputList.map((x, i) => {
-                    return (
-                      <div className="c-con-select row">
-                        <div className="col-md-3 mt-3">
-                          <label>Country {i + 1}</label>
-                          <Select2
-                            key={i}
-                            name="country"
-                            value={renderConValue(x)}
-                            onChange={(options, e) =>
-                              this.changeCountry(e, options, "country", i)
-                            }
-                            placeholder="Select Country"
-                            style={{ width: "100%" }}
-                            options={this.props.countries}
-                            isDisabled={
-                              this.state.inputList.length - 1 !== i
-                                ? true
-                                : false
-                            }
-                          />
-                          {this.state.submit && !x.country ? (
-                            <span className={"help-block text-danger"}>
-                              This value is required.
-                            </span>
-                          ) : null}
-                        </div>
-                        <div className="col-md-3 mt-3">
-                          <label>State {i + 1}</label>
-                          <VirtualizedSelect
-                            className
-                            key={i}
-                            name="state"
-                            value={renderStateValue(x)}
-                            onChange={(options, e) =>
-                              this.changeState(e, options, "state", i)
-                            }
-                            placeholder="All States"
-                            style={{ width: "100%" }}
-                            options={this.state.stateList}
-                            disabled={
-                              // this.state.stateList === ""
-                              this.state.inputList[i].country === "" ||
-                              this.state.inputList.length - 1 !== i
-                                ? true
-                                : false
-                            }
-                            clearable={false}
-                          />
-                          {this.state.submit && !x.state ? (
-                            <span className={"help-block text-danger"}>
-                              This value is required.
-                            </span>
-                          ) : null}
-                        </div>
-                        <div className="col-md-3 mt-3">
-                          <label>City {i + 1}</label>
+                    <div className="country-select">
+                      {this.state.inputList.map((x, i) => {
+                        return (
+                          <div className="c-con-select row">
+                            <div className="col-md-3 mt-3">
+                              <label>Country {i + 1}</label>
+                              <Select2
+                                key={i}
+                                name="country"
+                                value={renderConValue(x)}
+                                onChange={(options, e) =>
+                                  this.changeCountry(e, options, "country", i)
+                                }
+                                placeholder="Select Country"
+                                style={{ width: "100%" }}
+                                options={this.props.countries}
+                                isDisabled={
+                                  this.state.inputList.length - 1 !== i
+                                    ? true
+                                    : false
+                                }
+                              />
+                              {this.state.submit && !x.country ? (
+                                <span className={"help-block text-danger"}>
+                                  This value is required.
+                                </span>
+                              ) : null}
+                            </div>
+                            <div className="col-md-3 mt-3">
+                              <label>State {i + 1}</label>
+                              <VirtualizedSelect
+                                className
+                                key={i}
+                                name="state"
+                                value={renderStateValue(x)}
+                                onChange={(options, e) =>
+                                  this.changeState(e, options, "state", i)
+                                }
+                                placeholder="All States"
+                                style={{ width: "100%" }}
+                                options={this.state.stateList}
+                                disabled={
+                                  // this.state.stateList === ""
+                                  this.state.inputList[i].country === "" ||
+                                  this.state.inputList.length - 1 !== i
+                                    ? true
+                                    : false
+                                }
+                                clearable={false}
+                              />
+                              {this.state.submit && !x.state ? (
+                                <span className={"help-block text-danger"}>
+                                  This value is required.
+                                </span>
+                              ) : null}
+                            </div>
+                            <div className="col-md-3 mt-3">
+                              <label>City {i + 1}</label>
 
-                          <VirtualizedSelect
-                            className
-                            key={i}
-                            name="city"
-                            value={
-                              x.city
-                                ? {
-                                    value: x.city,
-                                    label:
-                                      x.city === "all" ? "All Cities" : x.city,
+                              <VirtualizedSelect
+                                className
+                                key={i}
+                                name="city"
+                                value={
+                                  x.city
+                                    ? {
+                                        value: x.city,
+                                        label:
+                                          x.city === "all"
+                                            ? "All Cities"
+                                            : x.city,
+                                      }
+                                    : { value: "", label: "All Cities" }
+                                }
+                                onChange={(options, e) =>
+                                  this.changeCity(e, options, "city", i)
+                                }
+                                placeholder="All Cities"
+                                style={{ width: "100%" }}
+                                options={this.state.cities}
+                                clearable={false}
+                                disabled={
+                                  this.state.inputList[i].state === "" ||
+                                  this.state.inputList.length - 1 !== i ||
+                                  this.state.inputList[i].state === "all"
+                                    ? true
+                                    : false
+                                }
+                              />
+                              {this.state.submit && !x.city ? (
+                                <span className={"help-block text-danger"}>
+                                  This value is required.
+                                </span>
+                              ) : null}
+                            </div>
+                            <div className="col-md-2 mt-3">
+                              <label>Zip {i + 1}</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                name="zip"
+                                placeholder="Zip"
+                                value={x.zip}
+                                onChange={(e) => this.handleZipChange(e, i)}
+                                autoComplete="off"
+                                onKeyDown={(evt) =>
+                                  ["e", "E", "+", "-"].includes(evt.key) &&
+                                  evt.preventDefault()
+                                }
+                                min="0"
+                                disabled={
+                                  this.state.inputList.length - 1 !== i
+                                    ? true
+                                    : false
+                                }
+                              />
+                            </div>
+
+                            <div className="add-del-btns col-md-1 pl-0">
+                              {this.state.inputList.length !== 1 && (
+                                <button
+                                  className="btn p-0 m-0"
+                                  onClick={() => this.handleRemoveClick(i)}
+                                >
+                                  <span>
+                                    <i
+                                      class="glyphicon glyphicon-trash fa-1x"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <strong>Remove</strong>
+                                </button>
+                              )}
+                              {this.state.inputList.length - 1 === i && (
+                                <button
+                                  className="btn p-0 m-0"
+                                  onClick={this.handleAddClick}
+                                  disabled={
+                                    this.state.inputList[i].country === "" ||
+                                    this.state.inputList[i].state === "" ||
+                                    this.state.inputList[i].city === ""
+                                      ? // (this.state.inputList[i].city === "all" &&
+                                        //   this.state.inputList[i].state === "all")
+                                        true
+                                      : false
                                   }
-                                : { value: "", label: "All Cities" }
-                            }
-                            onChange={(options, e) =>
-                              this.changeCity(e, options, "city", i)
-                            }
-                            placeholder="All Cities"
-                            style={{ width: "100%" }}
-                            options={this.state.cities}
-                            clearable={false}
-                            disabled={
-                              this.state.inputList[i].state === "" ||
-                              this.state.inputList.length - 1 !== i ||
-                              this.state.inputList[i].state === "all"
-                                ? true
-                                : false
-                            }
-                          />
-                          {this.state.submit && !x.city ? (
-                            <span className={"help-block text-danger"}>
-                              This value is required.
-                            </span>
-                          ) : null}
-                        </div>
-                        <div className="col-md-2 mt-3">
-                          <label>Zip {i + 1}</label>
-                          <input
-                            type="number"
-                            className="form-control"
-                            name="zip"
-                            placeholder="Zip"
-                            value={x.zip}
-                            onChange={(e) => this.handleZipChange(e, i)}
-                            autoComplete="off"
-                            onKeyDown={(evt) =>
-                              ["e", "E", "+", "-"].includes(evt.key) &&
-                              evt.preventDefault()
-                            }
-                            min="0"
-                            disabled={
-                              this.state.inputList.length - 1 !== i
-                                ? true
-                                : false
-                            }
-                          />
-                        </div>
-
-                        <div className="add-del-btns col-md-1 pl-0">
-                          {this.state.inputList.length !== 1 && (
-                            <button
-                              className="btn p-0 m-0"
-                              onClick={() => this.handleRemoveClick(i)}
-                            >
-                              <span>
-                                <i
-                                  class="glyphicon glyphicon-trash fa-1x"
-                                  aria-hidden="true"
-                                ></i>
-                              </span>
-                              <strong>Remove</strong>
-                            </button>
-                          )}
-                          {this.state.inputList.length - 1 === i && (
-                            <button
-                              className="btn p-0 m-0"
-                              onClick={this.handleAddClick}
-                              disabled={
-                                this.state.inputList[i].country === "" ||
-                                this.state.inputList[i].state === "" ||
-                                this.state.inputList[i].city === ""
-                                  ? // (this.state.inputList[i].city === "all" &&
-                                    //   this.state.inputList[i].state === "all")
-                                    true
-                                  : false
-                              }
-                            >
-                              <span>
-                                <i
-                                  class="fa fa-plus fa-1x"
-                                  aria-hidden="true"
-                                ></i>
-                              </span>
-                              <strong>Add</strong>
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                  {this.state.reach === "" ? (
-                    ""
-                  ) : (
-                    <>
-                      <h5 className="mt-4">
-                        Total Influencer: {this.state.reach.toString()}
-                      </h5>
-                      {/* <h5 className="mt-4">
+                                >
+                                  <span>
+                                    <i
+                                      class="fa fa-plus fa-1x"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </span>
+                                  <strong>Add</strong>
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                      {this.state.reach === "" ? (
+                        ""
+                      ) : (
+                        <>
+                          <h5 className="mt-4">
+                            Total Influencer: {this.state.reach.toString()}
+                          </h5>
+                          {/* <h5 className="mt-4">
                         Total Reach: {this.state.reach.toString()}
                       </h5> */}
-                    </>
-                  )}
-                </div>
-              </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
 
-              <div className="row mt-4">
-                <div className="aff-sub-button col-md-12">
-                  {this.state.loading ? (
-                    <Button>
-                      <Loader />
-                    </Button>
-                  ) : (
-                    <>
-                      <Button
-                        className="custom_btns_ift"
-                        color="primary"
-                        type="submit"
-                      >
-                        &nbsp;Save&nbsp;
-                      </Button>
+                  <div className="row mt-4">
+                    <div className="aff-sub-button col-md-12">
+                      {this.state.loading ? (
+                        <Button>
+                          <Loader />
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            type="submit"
+                          >
+                            &nbsp;Save&nbsp;
+                          </Button>
 
-                      <Button
-                        className="custom_btns_ift"
-                        color="primary"
-                        onClick={() => this.reset()}
-                      >
-                        &nbsp;Reset&nbsp;
-                      </Button>
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => this.reset()}
+                          >
+                            &nbsp;Reset&nbsp;
+                          </Button>
 
-                      <Button
-                        className="custom_btns_ift"
-                        color="primary"
-                        onClick={() => {
-                          this.props.affCloseModal();
-                        }}
-                      >
-                        &nbsp;Cancel&nbsp;
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
-          ) : null}
-        </Formsy.Form>
-      </React.Fragment>
-  }
-  </>
+                          <Button
+                            className="custom_btns_ift"
+                            color="primary"
+                            onClick={() => {
+                              this.props.affCloseModal();
+                            }}
+                          >
+                            &nbsp;Cancel&nbsp;
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </>
+              ) : null}
+            </Formsy.Form>
+          </React.Fragment>
+        )}
+      </>
     );
   }
 }
