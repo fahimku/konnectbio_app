@@ -437,7 +437,6 @@ class UpdateModal extends React.Component {
     // };
     const renderCityValue = (x, i) => {
       if (x.state) {
-        console.log(this.state.cities2[0].data.message, "sdsd");
         const exit = [
           { value: "all", name: "all" },
 

@@ -78,7 +78,6 @@ function AffiliateCampaign(
     const promo = dataPromo;
 
     if (dataPromo != undefined) {
-      console.log("sees", dataPromo);
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
@@ -186,7 +185,7 @@ function AffiliateCampaign(
       )
       .then((response) => {
         setData(response.data.message);
-        console.log("Seller", response.data.message);
+
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
