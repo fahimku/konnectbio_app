@@ -163,21 +163,25 @@ function TopHashTag({
   //   };
 
   const clearMarketPlace = (e) => {
-    // setClearLoading(true);
+    setClearLoading(true);
     // setBrand({ value: "all", label: "ALL" });
-    setBrand("");
+    // setBrand("");
     setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
-    clearHashtag();
-    // getHashtag({
-    //   hashtag_id: "all",
-    //   from_date: fromDate.toString(),
-    //   to_date: toDate.toString(),
-    //   sort: "date",
-    //   order_by: "desc",
-    // }).then(() => {
-    //   setClearLoading(false);
-    // });
+    setStartDate(
+      moment().subtract(2, "year").startOf("year").format("YYYY-MM-DD")
+    );
+    setEndDate(moment(new Date()).format("YYYY-MM-DD"));
+    // clearHashtag();
+    getHashtag({
+      hashtag_id: brand,
+      from_date: fromDate.toString(),
+      to_date: toDate.toString(),
+      sort: "date",
+      order_by: "desc",
+    }).then(() => {
+      setClearLoading(false);
+    });
   };
 
   //   const handlePageClick = (e) => {
