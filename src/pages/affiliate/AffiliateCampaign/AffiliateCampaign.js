@@ -48,11 +48,11 @@ function AffiliateCampaign(
   const [clearLoading, setClearLoading] = useState(false);
   const fromDate =
     props.type !== "expired"
-      ? moment(new Date()).format("YYYY-MM-DD")
+      ? moment().startOf("year").format("YYYY-MM-DD")
       : moment().startOf("year").format("YYYY-MM-DD");
   const toDate =
     props.type !== "expired"
-      ? moment().add(1, "year").format("YYYY-MM-DD")
+      ? moment(new Date()).format("YYYY-MM-DD")
       : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
