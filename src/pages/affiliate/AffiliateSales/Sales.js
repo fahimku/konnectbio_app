@@ -154,6 +154,55 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     });
   };
 
+  function summaryTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Brand Name</th>
+                  <th>Qty</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.brand_name}</td>
+                      <td>{item?.total_qty}</td>
+
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>0%</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "$0.00"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
+
   function allTable() {
     let data = affiliateSales?.message?.data;
     if (data) {
@@ -171,10 +220,11 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>Influencer Instagram</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Amount</th>
+                  <th>Gross Sales</th>
                   <th>Promo</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -200,6 +250,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>{item?.promo}</td>
+                      <td>0%</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -231,9 +282,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -247,6 +299,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           : moment(item?.created_date).format("YYYY-MM-DD")}
                       </td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>0%</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -280,9 +333,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
 
                   <th>Campaign Name</th>
                   <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -293,6 +347,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.campaign_name}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>0%</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -325,9 +380,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
                   <th>Influencer Instagram</th>
                   <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -345,6 +401,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       </td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>0%</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -363,54 +420,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       );
     }
   }
-  function summaryTable() {
-    let data = affiliateSales?.message?.data;
-    if (data) {
-      return (
-        <>
-          {loading ? (
-            <Loader size="30" />
-          ) : (
-            <Table responsive="sm" className="transactions-box">
-              <thead>
-                <tr>
-                  <th>S.#</th>
-                  <th>Brand Name</th>
-                  <th>Qty</th>
-                  <th>Gross Sales</th>
-                  {/* <th>Discount(%)</th> */}
-                  <th>Net Sales</th>
-                  <th>Commission</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item, i) => {
-                  return (
-                    <tr key={i}>
-                      <td>{i + 1}</td>
-                      <td>{item?.brand_name}</td>
-                      <td>{item?.total_qty}</td>
 
-                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-                      {/* <td>0</td> */}
-                      <td>
-                        {numeral(item?.order_totalprice).format("$0,0.0'")}
-                      </td>
-                      <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "$0.00"}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          )}
-        </>
-      );
-    }
-  }
   return (
     <React.Fragment>
       <div className="container-fluid">

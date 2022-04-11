@@ -38,10 +38,7 @@ function AllMarketplace({
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
   const [brand, setBrand] = useState({ value: "all", label: "ALL" });
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
-  });
+  const [sortBy, setSortBy] = useState({ value: "date", label: "DATE" });
 
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
@@ -57,7 +54,7 @@ function AllMarketplace({
       1,
       limit,
       "all",
-      "commission",
+      "date",
       "desc",
       startDate,
       endDate,
@@ -148,7 +145,7 @@ function AllMarketplace({
     setLoading(true);
     setCategory({ value: "all", label: "ALL" });
     setBrand({ value: "all", label: "ALL" });
-    setSortBy({ value: "commission", label: "COMMISSION" });
+    setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     // setCurrentPage();
     setStartDate(fromDate);
@@ -157,7 +154,7 @@ function AllMarketplace({
       page,
       limit,
       "all",
-      "commission",
+      "date",
       "desc",
       fromDate,
       toDate,
@@ -211,8 +208,8 @@ function AllMarketplace({
   };
 
   const sortByOptions = [
-    { value: "commission", label: "COMMISSION" },
     { value: "date", label: "DATE" },
+    { value: "commission", label: "COMMISSION" },
   ];
 
   const sortOrderOptions = [
