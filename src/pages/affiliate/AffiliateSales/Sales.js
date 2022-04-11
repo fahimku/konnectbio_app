@@ -145,10 +145,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     setFilterDisable(filterType);
     setStartDate(sDate);
     setEndDate(eDate);
-    setGroupBy({
-      label: "Summary",
-      value: "brand",
-    });
+    // setGroupBy({
+    //   label: "Summary",
+    //   value: "brand",
+    // });
     getAffiliateSalesByBrand(groupBy.value, 1, limit, sDate, eDate).then(() => {
       setLoading(false);
     });
@@ -183,7 +183,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
 
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-                      <td>0%</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -250,7 +250,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>{item?.promo}</td>
-                      <td>0%</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -299,7 +299,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           : moment(item?.created_date).format("YYYY-MM-DD")}
                       </td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-                      <td>0%</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -347,7 +347,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.campaign_name}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-                      <td>0%</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -401,7 +401,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       </td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-                      <td>0%</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
