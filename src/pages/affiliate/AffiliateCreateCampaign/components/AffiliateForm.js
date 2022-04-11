@@ -486,7 +486,26 @@ class AffiliateForm extends React.Component {
             >
               <div className="image-wrapper">
                 <div className="image-box">
-                  <img src={`${affData.media_url}`} alt="media_url" />
+                  {affData.media_type === "VIDEO" ? (
+                    <video
+                      id={`post-video-${affData.post_id}`}
+                      //autoPlay
+                      controls
+                      controlsList="nodownload"
+                    >
+                      <source
+                        src={affData.media_url + "#t=0.001"}
+                        type="video/mp4"
+                      ></source>
+                    </video>
+                  ) : (
+                    <img
+                      src={affData.media_url}
+                      alt="media_url"
+                      className="post-image"
+                    />
+                  )}
+                  {/* <img src={`${affData.media_url}`} alt="media_url" /> */}
                 </div>
                 <div className="aff-img-edit-link image-edit-links">
                   <div className="row">
