@@ -377,8 +377,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
                   <th>Brand Name</th>
                   <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
+                  <th>Gross Sales</th>
+                  <th>Discount(%)</th>
+                  <th>Net Sales</th>
                   <th>Commission</th>
                 </tr>
               </thead>
@@ -391,6 +392,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
 
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>0</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>

@@ -38,7 +38,7 @@ import mediaSummary from "./media/mediaSummary";
 import affiliateTransactions from "./affiliateTransactions/affiliateTransactions";
 import affiliateCampaigns from "./affiliateTransactions/affiliateCampaigns";
 import affiliateSales from "./affiliateTransactions/affiliateSales";
-import affiliateSalesInf from "./marketplaceTransactions/marketPlaceSales"
+import affiliateSalesInf from "./marketplaceTransactions/marketPlaceSales";
 import affiliateRequest from "./affiliateTransactions/affiliateRequest";
 // import affiliateInfluencers from "./affiliateTransactions/affiliateInfluencers";
 import campaignDetailTransactions from "./affiliateTransactions/campaignDetailTransactions";
@@ -57,6 +57,8 @@ import addAffiliateRequest from "./affiliateTransactions/addAffiliateRequest";
 
 import promoRequest from "./promoRequest/promoCode";
 import shopifyDetail from "./shopifySetup/shopifyDetail";
+
+import affiliateBillingDetail from "./affiliateBilling/affiliateBillingDetail";
 
 export default (history) =>
   combineReducers({
@@ -115,4 +117,5 @@ export default (history) =>
     promoRequest,
     marketplaceApproval,
     shopifyDetail,
+    affiliateBillingDetail,
   });

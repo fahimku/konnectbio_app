@@ -82,7 +82,6 @@ class AffiliateBrand extends React.Component {
   };
 
   render() {
-    console.log(this.state.brandDiscount, "sdsd");
     return (
       <React.Fragment>
         <div className="container-fluid">

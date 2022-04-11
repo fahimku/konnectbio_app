@@ -195,30 +195,12 @@ function AffiliateBalance({
             </div>
 
             <div className="col-md-4">
-              <div className="conn-set-inner">
-                <div className="affiliate-wallet">
-                  <h5>Commission Paid</h5>
-                  {affiliateBalance?.success == true ? (
-                    <div className="aff-amount">
-                      {numeral(affiliateBalance?.message?.spent_amount).format(
-                        "$0,0.0'"
-                      )}
-                    </div>
-                  ) : (
-                    <div className="aff-amount">$0</div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Row>
-          <Row>
-            <div className="col-md-4">
               <div
                 className="conn-set-inner"
                 style={{ backgroundColor: "#010b40 ", color: "white" }}
               >
                 <div className="affiliate-wallet">
-                  <h5 style={{ color: "white" }}>Current Balance</h5>
+                  <h5 style={{ color: "white" }}>Balance</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
                       {numeral(
@@ -231,13 +213,31 @@ function AffiliateBalance({
                 </div>
               </div>
             </div>
+          </Row>
+          <Row>
             <div className="col-md-4">
               <div className="conn-set-inner">
                 <div className="affiliate-wallet">
-                  <h5>Total Sale</h5>
+                  <h5>Net Sales</h5>
                   {affiliateBalance?.success == true ? (
                     <div className="aff-amount">
                       {numeral(affiliateBalance?.message?.total_sale).format(
+                        "$0,0.0'"
+                      )}
+                    </div>
+                  ) : (
+                    <div className="aff-amount">$0</div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4">
+              <div className="conn-set-inner">
+                <div className="affiliate-wallet">
+                  <h5>Commission Paid</h5>
+                  {affiliateBalance?.success == true ? (
+                    <div className="aff-amount">
+                      {numeral(affiliateBalance?.message?.spent_amount).format(
                         "$0,0.0'"
                       )}
                     </div>

@@ -93,3 +93,6 @@ export const GET_BALANCE_REQUEST = "getBalanceMethod";
 
 /**********Shopify Action Types******************* */
 export const GET_SHOPIFY_DETAIL = "getShopifyDetail";
+
+/**********Affiliate billing Types******************* */
+export const GET_AFFILIATE_BILLING_DETAIL = "getAffiliateBillingDetail";

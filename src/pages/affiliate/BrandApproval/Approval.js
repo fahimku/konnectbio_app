@@ -139,7 +139,14 @@ function Approvals({
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td className="pt-3">{item?.instagram_username}</td>
+                      <td className="pt-3">
+                        <a
+                          target="_blank"
+                          href={`https://www.instagram.com/${item?.instagram_username}`}
+                        >
+                          {item?.instagram_username}
+                        </a>
+                      </td>
                       <td>
                         {item?.status === "Rejected" ? "Disapproved" : null}
                         {item?.status === "Pending" ? "Under Review" : null}
