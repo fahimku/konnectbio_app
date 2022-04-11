@@ -208,7 +208,7 @@ function AffiliateCampaign(
           fontSize: "12px",
         }}
       >
-        {discount}%
+        {discount}
       </div>
     </div>
   );

@@ -398,7 +398,7 @@ class UpdateModal extends React.Component {
           fontSize: "12px",
         }}
       >
-        {discount}%
+        {discount}
       </div>
     </div>
   );
@@ -434,7 +434,7 @@ class UpdateModal extends React.Component {
             fontSize: "12px",
           }}
         >
-          {discount}%
+          {discount}
         </div>
       </div>
     );
