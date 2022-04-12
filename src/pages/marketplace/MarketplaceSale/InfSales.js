@@ -181,9 +181,9 @@ function AffiliateSalesInf({
                   <th>Brand Name</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -236,9 +236,9 @@ function AffiliateSalesInf({
                   <th>S.#</th>
                   <th>Date</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -288,9 +288,9 @@ function AffiliateSalesInf({
                   <th>Campaign Name</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Influencer Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -336,9 +336,9 @@ function AffiliateSalesInf({
                   <th>S.#</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -382,9 +382,9 @@ function AffiliateSalesInf({
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Name</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
