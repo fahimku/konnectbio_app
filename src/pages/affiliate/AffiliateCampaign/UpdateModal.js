@@ -445,12 +445,19 @@ class UpdateModal extends React.Component {
           return item;
         }
       });
-      console.log(" ss", this.state.promoList);
-      return {
-        value: filterPromo[0].value,
-        label: filterPromo[0].label,
-        discount: filterPromo[0].discount,
-      };
+      if (filterPromo.length === 0) {
+        return {
+          value: "",
+          label: "Select Promo",
+          discount: "",
+        };
+      } else {
+        return {
+          value: filterPromo[0]?.value,
+          label: filterPromo[0]?.label,
+          discount: filterPromo[0]?.discount,
+        };
+      }
     };
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
