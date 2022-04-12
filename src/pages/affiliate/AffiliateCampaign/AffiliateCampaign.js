@@ -30,10 +30,7 @@ const styleObj = {
   fontSize: "14px",
 };
 
-function AffiliateCampaign(
-  props,
-  { getPromoRequest, promoRequest, PromoPayload }
-) {
+function AffiliateCampaign(props) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -78,7 +75,6 @@ function AffiliateCampaign(
     const promo = dataPromo;
 
     if (dataPromo != undefined) {
-      console.log("sees", dataPromo);
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
@@ -187,7 +183,6 @@ function AffiliateCampaign(
       )
       .then((response) => {
         setData(response.data.message);
-        console.log("Seller", response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -236,7 +231,7 @@ function AffiliateCampaign(
         <Col xs={12} xl={3} md={6}>
           <div
             className={`card any_bx analytic-box campaign-box ${
-              props.type !== "expired" ? "" : "pb-0"
+              props.type !== "expired" && props.type !== "deleted" ? "" : "pb-0"
             }`}
           >
             <div className="camp-row row">
@@ -244,7 +239,7 @@ function AffiliateCampaign(
                 <h6 title={record.campaign_name}>
                   {truncate(record.campaign_name, 40, "...")}
                 </h6>
-                {props.type !== "expired" ? (
+                {props.type !== "expired" && props.type !== "deleted" ? (
                   <div className="cmp-h-right">
                     {/* {toggleLoading && <Loader />} */}
                     <div class="form-check custom-switch custom-switch-md">
@@ -335,7 +330,7 @@ function AffiliateCampaign(
                 </div>
               </div>
             </div>
-            {props.type !== "expired" ? (
+            {props.type !== "expired" && props.type !== "deleted" ? (
               <div className="cam-buttons col-12">
                 <button
                   className="btn"

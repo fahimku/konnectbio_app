@@ -680,7 +680,9 @@ h1 small {
 .select__menu-list::-webkit-scrollbar {
   width: 10px;
 }
-
+::-webkit-scrollbar {
+  width: 10px !important;
+}
 .pac-info {
   border: 1px solid #222;
   width: 15px;

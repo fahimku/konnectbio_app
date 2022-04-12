@@ -100,8 +100,6 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-    console.log("as", options.value);
-
     this.setState({ promoCodes: options.value });
   };
 
@@ -445,7 +443,7 @@ class UpdateModal extends React.Component {
           return item;
         }
       });
-      console.log(" ss", this.state.promoList);
+
       return {
         value: filterPromo[0].value,
         label: filterPromo[0].label,
@@ -459,7 +457,6 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.promoCodes, "promoCodes");
 
     // const renderCityValue = (x, i) => {
     //   if (x.state) {
@@ -481,7 +478,6 @@ class UpdateModal extends React.Component {
     // };
     const renderCityValue = (x, i) => {
       if (x.state) {
-        console.log(this.state.cities2[0].data.message, "sdsd");
         const exit = [
           { value: "all", name: "all" },
 

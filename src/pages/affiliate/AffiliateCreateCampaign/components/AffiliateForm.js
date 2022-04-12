@@ -33,7 +33,7 @@ class AffiliateForm extends React.Component {
       pay_per_hundred: "",
       budget: "",
       promoCode: "",
-      promoCodeVal: "",
+      promoCodeVal: { value: "KB0", label: "KB0", discount: "0%" },
       discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
@@ -154,8 +154,8 @@ class AffiliateForm extends React.Component {
   };
 
   changePromoCode = (e, options, name, index) => {
-    let data = String(options.value);
-    this.setState({ promoCodeVal: data });
+    // let data = String(options.value);
+    this.setState({ promoCodeVal: options });
   };
 
   changeState = (e, options, name, index) => {
@@ -186,7 +186,6 @@ class AffiliateForm extends React.Component {
   };
 
   handleClick = (data, status) => {
-    console.log("checking data", data, status);
     if (status === false) {
       this.setState({ connNotFound: false });
     } else {
@@ -305,7 +304,7 @@ class AffiliateForm extends React.Component {
           redirected_url: this.props.affData.redirected_url,
           media_url: this.props.affData.media_url,
           discount_type: "shopify",
-          promo: this.state.promoCodeVal,
+          promo: this.state.promoCodeVal.value,
           category_id:
             this.props.affData.categories.length !== 0
               ? this.props.affData.categories[0].category_id
@@ -455,6 +454,7 @@ class AffiliateForm extends React.Component {
 
       return exit[0];
     };
+
     // const renderCityValue = (x, i) => {
     //   if (this.state.state.value === "all") {
     //     return { value: "all", label: "All" };
@@ -466,7 +466,7 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    // console.log(this.state.commission, "commission");
+    // console.log(this.state.promoCodeVal, "promoCodeVal");
     // console.log(this.state.discount, "discount");
 
     return (
@@ -759,7 +759,8 @@ class AffiliateForm extends React.Component {
                             <label>PromoCode</label>
                             <Select2
                               name="promoCode"
-                              //value={renderConValue(x)}
+                              // value={renderConValue(x)}
+                              value={this.state.promoCodeVal}
                               onChange={(options, e) =>
                                 this.changePromoCode(e, options)
                               }
