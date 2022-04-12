@@ -33,7 +33,11 @@ class AffiliateForm extends React.Component {
       pay_per_hundred: "",
       budget: "",
       promoCode: "",
-      promoCodeVal: { value: "KB0", label: "KB0", discount: "0%" },
+      promoCodeVal: {
+        value: "KB0",
+        label: "KB0",
+        discount: "0%",
+      },
       discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
@@ -48,7 +52,7 @@ class AffiliateForm extends React.Component {
       reach: "",
       submit: false,
       discount: "",
-      commission: "",
+      commission: "10",
       promoCond: true,
       connNotFound: true,
     };
@@ -466,8 +470,7 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    // console.log(this.state.promoCodeVal, "promoCodeVal");
-    // console.log(this.state.discount, "discount");
+    // console.log(this.state.commission, "promoCodeVal");
 
     return (
       <>
@@ -755,8 +758,8 @@ class AffiliateForm extends React.Component {
                     ) : (
                       <>
                         <div className="row">
-                          <div className="col-md-6 mt-3">
-                            <label>PromoCode</label>
+                          <div className="col-md-3 mt-3">
+                            <label>PromoCode For Customers</label>
                             <Select2
                               name="promoCode"
                               // value={renderConValue(x)}
@@ -767,12 +770,23 @@ class AffiliateForm extends React.Component {
                               placeholder="Select PromoCode"
                               style={{ width: "100%" }}
                               //formatOptionLabel={this.state.promoCode}
-                              formatOptionLabel={formatOptionLabel}
+                              // formatOptionLabel={formatOptionLabel}
                               options={this.state.promoCode}
                             />
                           </div>
+                          <div className="col-md-3 mt-3">
+                            <label>Discount</label>
+                            <div className="promo_discount form-control">
+                              {this.state.promoCodeVal.discount}
+                            </div>
+                          </div>
                           <div className="col-md-6 mt-3">
-                            <label>Commission</label>
+                            <label>
+                              Influencer Commission{" "}
+                              <span className="small">
+                                (Including 3% KB fees)
+                              </span>
+                            </label>
                             <InputNumberValidation
                               type="number"
                               id="number"
@@ -782,9 +796,12 @@ class AffiliateForm extends React.Component {
                                 this.commission(evt.target.value);
                               }}
                               required
-                              min="0"
+                              min="10"
                               max="50"
                             />
+                            <div className="small">
+                              Note: minimum commission is 10%
+                            </div>
                             <span className="text-danger">
                               {this.state.CommissionError}
                             </span>

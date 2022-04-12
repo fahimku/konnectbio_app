@@ -464,7 +464,6 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-
     // const renderCityValue = (x, i) => {
     //   if (x.state) {
     //     const exit = [
@@ -741,8 +740,8 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-6 mt-3">
-                    <label>PromoCode</label>
+                  <div className="col-md-3 mt-3">
+                    <label>PromoCode For Customers</label>
                     <Select2
                       name="promoCode"
                       value={renderConValuePromoList(this.state.promoCodes)}
@@ -751,12 +750,21 @@ class UpdateModal extends React.Component {
                       }
                       placeholder="Select PromoCode"
                       style={{ width: "100%" }}
-                      formatOptionLabel={formatOptionLabel}
+                      // formatOptionLabel={formatOptionLabel}
                       options={this.state.promoList}
                     />
                   </div>
+                  <div className="col-md-3 mt-3">
+                    <label>Discount</label>
+                    <div className="promo_discount form-control">
+                      {renderConValuePromoList(this.state.promoCodes).discount}
+                    </div>
+                  </div>
                   <div className="col-md-6 mt-3">
-                    <label>Commission</label>
+                    <label>
+                      Influencer Commission{" "}
+                      <span className="small">(Including 3% KB fees)</span>
+                    </label>
                     <InputNumberValidation
                       type="number"
                       id="commission"
@@ -766,8 +774,10 @@ class UpdateModal extends React.Component {
                         this.commission(evt.target.value);
                       }}
                       required
-                      min="0"
+                      min="10"
+                      max="50"
                     />
+                    <div className="small">Note: minimum commission is 10%</div>
                     <span className="text-danger">
                       {this.state.CommissionError}
                     </span>
