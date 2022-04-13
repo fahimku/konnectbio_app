@@ -122,7 +122,7 @@ class Categories extends React.Component {
     this.setState({modalComp:false})
   }
   changeFlag = () =>{
-    
+    alert('ss')
   }
   fetchSaveCategory = async () => {
     await axios
