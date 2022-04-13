@@ -30,10 +30,7 @@ const styleObj = {
   fontSize: "14px",
 };
 
-function AffiliateCampaign(
-  props,
-  { getPromoRequest, promoRequest, PromoPayload }
-) {
+function AffiliateCampaign(props) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -48,21 +45,18 @@ function AffiliateCampaign(
   const [clearLoading, setClearLoading] = useState(false);
   const fromDate =
     props.type !== "expired"
-      ? moment(new Date()).format("YYYY-MM-DD")
+      ? moment().startOf("year").format("YYYY-MM-DD")
       : moment().startOf("year").format("YYYY-MM-DD");
   const toDate =
     props.type !== "expired"
-      ? moment().add(1, "year").format("YYYY-MM-DD")
+      ? moment(new Date()).format("YYYY-MM-DD")
       : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   // const limit = 8;
   const [category, setCategory] = useState({ value: "all", label: "ALL" });
   const [categoryOptions, setCategoryOptions] = useState([]);
-  const [sortBy, setSortBy] = useState({
-    value: "commission",
-    label: "COMMISSION",
-  });
+  const [sortBy, setSortBy] = useState({ value: "date", label: "DATE" });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [loader, setLoader] = useState(true);
   const [promoCode, setPromoCode] = useState("");
@@ -81,13 +75,12 @@ function AffiliateCampaign(
     const promo = dataPromo;
 
     if (dataPromo != undefined) {
-      console.log("sees", dataPromo);
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
           value: x.promo,
           label: x.promo,
-          discount: x.promo_percent
+          discount: x.promo_percent,
         });
       });
       PassPromoCode = selectState;
@@ -127,24 +120,28 @@ function AffiliateCampaign(
             is_active: !status,
           })
           .then(() => {
-            let data1 = [...data];
-            let objIndex = data1.findIndex(
-              (obj) => obj.campaign_id === campaignId
-            );
-            data1[objIndex].is_active = !status;
+            // let data1 = [...data];
+            // let objIndex = data1.findIndex(
+            //   (obj) => obj.campaign_id === campaignId
+            // );
+            // data1[objIndex].is_active = !status;
+            // setData(data1);
+            // setTimeout(() => {
+            //   let data2 = [...data].filter(function (item) {
+            //     return item.campaign_id !== campaignId;
+            //   });
+            //   setData(data2);
+            //   const page = Math.ceil(data2.length / perPage) - 1;
+            //   const selectedPage = page;
+            //   const offset = selectedPage * perPage;
+            //   setPageCount(page + 1);
+            //   setCurrentPage(selectedPage);
+            //   setOffset(offset);
+            // }, 300);
+            let data1 = [...data].filter(function (item) {
+              return item.campaign_id !== campaignId;
+            });
             setData(data1);
-            setTimeout(() => {
-              let data2 = [...data].filter(function (item) {
-                return item.campaign_id !== campaignId;
-              });
-              setData(data2);
-              const page = Math.ceil(data2.length / perPage) - 1;
-              const selectedPage = page;
-              const offset = selectedPage * perPage;
-              setPageCount(page + 1);
-              setCurrentPage(selectedPage);
-              setOffset(offset);
-            }, 300);
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
@@ -186,11 +183,10 @@ function AffiliateCampaign(
     setLoading(true);
     await axios
       .get(
-        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive?status=${props.type}&sort_by=${sortBy.value}&order_by=desc&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
-        console.log("Seller", response.data.message);
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -201,9 +197,16 @@ function AffiliateCampaign(
   };
 
   const formatOptionLabel = ({ value, label, discount }) => (
-    <div style={{ display: "flex",position: "relative" }}>
+    <div style={{ display: "flex", position: "relative" }}>
       <div>{label}</div>
-      <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+      <div
+        style={{
+          position: "absolute",
+          color: "black",
+          right: "0",
+          fontSize: "12px",
+        }}
+      >
         {discount}
       </div>
     </div>
@@ -232,7 +235,7 @@ function AffiliateCampaign(
         <Col xs={12} xl={3} md={6}>
           <div
             className={`card any_bx analytic-box campaign-box ${
-              props.type !== "expired" ? "" : "pb-0"
+              props.type !== "expired" && props.type !== "deleted" ? "" : "pb-0"
             }`}
           >
             <div className="camp-row row">
@@ -240,7 +243,7 @@ function AffiliateCampaign(
                 <h6 title={record.campaign_name}>
                   {truncate(record.campaign_name, 40, "...")}
                 </h6>
-                {props.type !== "expired" ? (
+                {props.type !== "expired" && props.type !== "deleted" ? (
                   <div className="cmp-h-right">
                     {/* {toggleLoading && <Loader />} */}
                     <div class="form-check custom-switch custom-switch-md">
@@ -303,19 +306,19 @@ function AffiliateCampaign(
                   ) : (
                     <>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">Promo Code</h5>
+                        <h5 className="count-title">Promo Code For Customer</h5>
                         <h3 className="count">{record.promo}</h3>
                       </div>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">Commission</h5>
+                        <h5 className="count-title">Influencer Commission</h5>
                         <h3 className="count">{record.commission}%</h3>
                       </div>
                     </>
                   )}
-                  <div className="col-12 count-box">
+                  {/* <div className="col-12 count-box">
                     <h5 className="count-title">Total Spent</h5>
                     <h3 className="count">${record.total_spent}</h3>
-                  </div>
+                  </div> */}
                   <div className="col-12 count-box">
                     <h5 className="count-title">Number of Participants</h5>
                     <h3 className="count">{record.total_participant}</h3>
@@ -331,7 +334,7 @@ function AffiliateCampaign(
                 </div>
               </div>
             </div>
-            {props.type !== "expired" ? (
+            {props.type !== "expired" && props.type !== "deleted" ? (
               <div className="cam-buttons col-12">
                 <button
                   className="btn"
@@ -402,13 +405,13 @@ function AffiliateCampaign(
     setClearLoading(true);
     setLoading(true);
     setCategory({ value: "all", label: "ALL" });
-    setSortBy({ value: "commission", label: "COMMISSION" });
+    setSortBy({ value: "date", label: "DATE" });
     setOrderBy({ value: "desc", label: "DESC" });
     setStartDate(fromDate);
     setEndDate(toDate);
     await axios
       .get(
-        `campaigns/receive?status=${props.type}&start_date=${startDate}&end_date=${endDate}`
+        `campaigns/receive?status=${props.type}&sort_by=date&order_by=desc&start_date=${startDate}&end_date=${endDate}`
       )
       .then((response) => {
         setData(response.data.message);
@@ -436,8 +439,8 @@ function AffiliateCampaign(
   };
 
   const sortByOptions = [
-    { value: "commission", label: "COMMISSION" },
     { value: "date", label: "DATE" },
+    { value: "commission", label: "COMMISSION" },
   ];
 
   // const sortOrderOptions = [

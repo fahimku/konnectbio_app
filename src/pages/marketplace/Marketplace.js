@@ -229,7 +229,7 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("sale");
                       }}
                     >
-                      <span>Earning</span>
+                      <span>Earnings</span>
                     </NavLink>
                   </NavItem>
                   <NavItem>

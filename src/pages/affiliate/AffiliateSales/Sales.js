@@ -22,15 +22,19 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const [groupBy, setGroupBy] = useState({
-    label: "ALL",
-    value: "",
+    label: "Summary",
+    value: "brand",
   });
-  const [submit, setSubmit] = useState("");
+  const [submit, setSubmit] = useState("brand");
   const [filterDisable, setFilterDisable] = useState("");
 
   const groupByList = [
     {
-      label: "ALL",
+      label: "Summary",
+      value: "brand",
+    },
+    {
+      label: "Detailed",
       value: "",
     },
     {
@@ -122,7 +126,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
     setEndDate(moment(new Date()).format("YYYY-MM-DD"));
     getAffiliateSalesByBrand(
-      "",
+      "brand",
       1,
       limit,
       moment().startOf("month").format("YYYY-MM-DD"),
@@ -131,24 +135,73 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       setLoading(false);
     });
     setGroupBy({
-      label: "ALL",
-      value: "",
+      label: "Summary",
+      value: "brand",
     });
-    setSubmit("");
+    setSubmit("brand");
   };
   const filterDate = (sDate, eDate, filterType) => {
     setLoading(true);
     setFilterDisable(filterType);
     setStartDate(sDate);
     setEndDate(eDate);
-    setGroupBy({
-      label: "ALL",
-      value: "",
-    });
-    getAffiliateSalesByBrand("", 1, limit, sDate, eDate).then(() => {
+    // setGroupBy({
+    //   label: "Summary",
+    //   value: "brand",
+    // });
+    getAffiliateSalesByBrand(groupBy.value, 1, limit, sDate, eDate).then(() => {
       setLoading(false);
     });
   };
+
+  function summaryTable() {
+    let data = affiliateSales?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Brand Name</th>
+                  <th>Qty</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.brand_name}</td>
+                      <td>{item?.total_qty}</td>
+
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.total_commission
+                          ? numeral(item?.total_commission).format("$0,0.0'")
+                          : "$0.00"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
 
   function allTable() {
     let data = affiliateSales?.message?.data;
@@ -167,10 +220,11 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>Influencer Instagram</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Amount</th>
+                  <th>Gross Sales</th>
                   <th>Promo</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -196,6 +250,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>{item?.promo}</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -227,9 +282,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -243,6 +299,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           : moment(item?.created_date).format("YYYY-MM-DD")}
                       </td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -275,9 +332,11 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   <th>S.#</th>
 
                   <th>Campaign Name</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Qty</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -286,7 +345,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     <tr key={i}>
                       <td>{i + 1}</td>
                       <td>{item?.campaign_name}</td>
+                      <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -318,9 +379,11 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Instagram</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Qty</th>
+                  <th>Gross Sales</th>
+                  <th>Discount</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -336,7 +399,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           {item?.influencer_name}
                         </a>
                       </td>
+                      <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
                       </td>
@@ -355,6 +420,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
       );
     }
   }
+
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -508,6 +574,9 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     </>
                   ) : (
                     <>
+                      {submit === "brand" || submit === undefined
+                        ? summaryTable()
+                        : null}
                       {submit === "" || submit === undefined
                         ? allTable()
                         : null}

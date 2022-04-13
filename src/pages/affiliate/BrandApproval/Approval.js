@@ -38,7 +38,7 @@ function Approvals({
       value: "pending",
     },
     {
-      label: "Rejected",
+      label: "Disapproved",
       value: "rejected",
     },
   ];
@@ -80,11 +80,12 @@ function Approvals({
     });
   };
 
-  const approveMethod = (id) => {
-    setLoading(true);
+  const approveMethod = (id, updated) => {
+    // setLoading(true);
     let payload = {
       influencer_id: id,
       status: "Approved",
+      // updated: updated,
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Approved Successfully!");
@@ -94,11 +95,12 @@ function Approvals({
     });
   };
 
-  const rejectMethod = (id) => {
-    setLoading(true);
+  const rejectMethod = (id, updated) => {
+    // setLoading(true);
     let payload = {
       influencer_id: id,
       status: "Rejected",
+      // updated: updated,
     };
     AddAffiliateRequest(payload).then(() => {
       toast.success("Rejected Successfully!");
@@ -137,7 +139,14 @@ function Approvals({
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td className="pt-3">{item?.instagram_username}</td>
+                      <td className="pt-3">
+                        <a
+                          target="_blank"
+                          href={`https://www.instagram.com/${item?.instagram_username}`}
+                        >
+                          {item?.instagram_username}
+                        </a>
+                      </td>
                       <td>
                         {item?.status === "Rejected" ? "Disapproved" : null}
                         {item?.status === "Pending" ? "Under Review" : null}
@@ -154,7 +163,12 @@ function Approvals({
                         ) : (
                           <button
                             class="btn badge-success btn-sm btn-approve"
-                            onClick={() => approveMethod(item?.influencer_id)}
+                            onClick={() =>
+                              approveMethod(
+                                item?.influencer_id
+                                // item?.status === "Pending" ? false : true
+                              )
+                            }
                           >
                             Approve
                           </button>
@@ -170,7 +184,12 @@ function Approvals({
                         ) : (
                           <button
                             class="btn badge-danger btn-sm ml-1 btn-approve"
-                            onClick={() => rejectMethod(item?.influencer_id)}
+                            onClick={() =>
+                              rejectMethod(
+                                item?.influencer_id
+                                // item?.status === "Pending" ? false : true
+                              )
+                            }
                           >
                             Disapprove
                           </button>
@@ -190,7 +209,7 @@ function Approvals({
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <h4 className="page-title">Request</h4>
+        <h4 className="page-title">Requests</h4>
         <div className="brand_container_main aff-payment">
           <Row>
             <div className="col-md-8">

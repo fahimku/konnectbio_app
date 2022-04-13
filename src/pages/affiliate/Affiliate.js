@@ -188,6 +188,18 @@ class Affiliate extends React.Component {
                   <NavItem>
                     <NavLink
                       className={classnames({
+                        active: this.state.activeTab === "deleted-campaign",
+                      })}
+                      onClick={() => {
+                        this.toggleTabs("deleted-campaign");
+                      }}
+                    >
+                      <span>Deleted</span>
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
                         active: this.state.activeTab === "schedule-campaign",
                       })}
                       onClick={() => {
@@ -298,6 +310,15 @@ class Affiliate extends React.Component {
                         username={this.state.username}
                         type="expired"
                         title="Expired Campaigns"
+                      />
+                    ) : null}
+                  </TabPane>
+                  <TabPane tabId="deleted-campaign">
+                    {this.state.activeTab === "deleted-campaign" ? (
+                      <AffiliateCampaign
+                        username={this.state.username}
+                        type="deleted"
+                        title="Deleted Campaigns"
                       />
                     ) : null}
                   </TabPane>

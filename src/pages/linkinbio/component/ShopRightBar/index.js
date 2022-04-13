@@ -27,6 +27,12 @@ const ShopRightBar = (props) => {
   const [redirectedUrl, setRedirectedUrl] = useState("");
   const [copyModal, setCopyModal] = useState(false);
   const formRef = useRef("LinkForm");
+  const [promoCode, setPromoCode] = useState("");
+  const [promoCodeVal, setPromoCodeVal] = useState({
+    value: "KB0",
+    label: "KB0",
+    discount: "0%",
+  });
 
   useEffect(() => {
     setStartDate(props.startDate);
@@ -47,6 +53,9 @@ const ShopRightBar = (props) => {
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
+  const changePromoCode = (e, options) => {
+    setPromoCodeVal(options);
+  };
   return (
     <>
       {props.startDate && props.endDate && (
@@ -326,6 +335,33 @@ const ShopRightBar = (props) => {
                     onChange={dateRangePickerChanger}
                   />
                 </div>
+
+                {/* <div className="mt-3 row">
+                  <div className="col-md-3">
+                    <label>PromoCode For Customers</label>
+                    <Select
+                      name="promoCode"
+                      value={promoCodeVal}
+                      onChange={(options, e) => changePromoCode(e, options)}
+                      placeholder="Select PromoCode"
+                      style={{ width: "100%" }}
+                      //formatOptionLabel={promoCode}
+                      // formatOptionLabel={formatOptionLabel}
+                      options={promoCode}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <label>Discount</label>
+                    <div className="promo_discount form-control">
+                      {promoCodeVal.discount}
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <label>KB Fee</label>
+                    <div className="promo_discount form-control">10%</div>
+                  </div>
+                </div> */}
+
                 <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (
                     <>

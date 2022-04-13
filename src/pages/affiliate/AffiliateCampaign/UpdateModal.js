@@ -102,9 +102,6 @@ class UpdateModal extends React.Component {
 
   
   changePromoCode = (e, options, name, index) => {
-
-    console.log("as",options.value)
-    
     this.setState({ promoCodes: options.value });
   };
 
@@ -390,12 +387,17 @@ class UpdateModal extends React.Component {
     return current && current < moment().endOf("day");
   }
 
-  
-
-   formatOptionLabel = ({ value, label, discount }) => (
-    <div style={{ display: "flex",position: "relative" }}>
+  formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex", position: "relative" }}>
       <div>{label}</div>
-      <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+      <div
+        style={{
+          position: "absolute",
+          color: "black",
+          right: "0",
+          fontSize: "12px",
+        }}
+      >
         {discount}
       </div>
     </div>
@@ -422,23 +424,40 @@ class UpdateModal extends React.Component {
     };
 
     const formatOptionLabel = ({ value, label, discount }) => (
-      <div style={{ display: "flex",position: "relative" }}>
+      <div style={{ display: "flex", position: "relative" }}>
         <div>{label}</div>
-        <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
-          {discount}%
+        <div
+          style={{
+            position: "absolute",
+            color: "black",
+            right: "0",
+            fontSize: "12px",
+          }}
+        >
+          {discount}
         </div>
       </div>
     );
 
     const renderConValuePromoList = (x) => {
-      const filterPromo =  this.state.promoList.filter((item)=>{
-
-        if(item.label == x){
-         return item
+      const filterPromo = this.state.promoList.filter((item) => {
+        if (item.label == x) {
+          return item;
         }
-      })
-      console.log(" ss", this.state.promoList)
-      return { value: filterPromo[0].value, label: filterPromo[0].label, discount: filterPromo[0].discount };
+      });
+      if (filterPromo.length === 0) {
+        return {
+          value: "",
+          label: "Select Promo",
+          discount: "",
+        };
+      } else {
+        return {
+          value: filterPromo[0]?.value,
+          label: filterPromo[0]?.label,
+          discount: filterPromo[0]?.discount,
+        };
+      }
     };
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
@@ -447,8 +466,6 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    console.log(this.state.promoCodes,"promoCodes");
-
     // const renderCityValue = (x, i) => {
     //   if (x.state) {
     //     const exit = [
@@ -469,7 +486,6 @@ class UpdateModal extends React.Component {
     // };
     const renderCityValue = (x, i) => {
       if (x.state) {
-        console.log(this.state.cities2[0].data.message, "sdsd");
         const exit = [
           { value: "all", name: "all" },
 
@@ -727,8 +743,8 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-6 mt-3">
-                    <label>PromoCode</label>
+                  <div className="col-md-3 mt-3">
+                    <label>PromoCode For Customers</label>
                     <Select2
                       name="promoCode"
                       value={renderConValuePromoList(this.state.promoCodes)}
@@ -737,12 +753,21 @@ class UpdateModal extends React.Component {
                       }
                       placeholder="Select PromoCode"
                       style={{ width: "100%" }}
-                      formatOptionLabel={formatOptionLabel}
+                      // formatOptionLabel={formatOptionLabel}
                       options={this.state.promoList}
                     />
                   </div>
+                  <div className="col-md-3 mt-3">
+                    <label>Discount</label>
+                    <div className="promo_discount form-control">
+                      {renderConValuePromoList(this.state.promoCodes).discount}
+                    </div>
+                  </div>
                   <div className="col-md-6 mt-3">
-                    <label>Commission</label>
+                    <label>
+                      Influencer Commission{" "}
+                      <span className="small">(Including 3% KB fees)</span>
+                    </label>
                     <InputNumberValidation
                       type="number"
                       id="commission"
@@ -752,8 +777,10 @@ class UpdateModal extends React.Component {
                         this.commission(evt.target.value);
                       }}
                       required
-                      min="0"
+                      min="10"
+                      max="50"
                     />
+                    <div className="small">Note: minimum commission is 10%</div>
                     <span className="text-danger">
                       {this.state.CommissionError}
                     </span>

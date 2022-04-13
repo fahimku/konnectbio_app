@@ -680,7 +680,9 @@ h1 small {
 .select__menu-list::-webkit-scrollbar {
   width: 10px;
 }
-
+::-webkit-scrollbar {
+  width: 10px !important;
+}
 .pac-info {
   border: 1px solid #222;
   width: 15px;
@@ -1221,7 +1223,7 @@ code.sm-color {
   border-bottom-right-radius: 0.3rem !important;
 }
 .request_container .request_table {
-  min-height: auto;
+  min-height: unset;
 }
 .btn-approve:hover,
 .btn-approve_disable:hover {
@@ -1235,4 +1237,23 @@ code.sm-color {
 .approve-brand tbody tr td:last-child {
   white-space: nowrap;
   width: 1%;
+}
+.promo_discount {
+  border: 1px solid #e1e1ee;
+  display: flex;
+  align-items: center;
+}
+.demographic-section .form-control {
+  min-height: 36px;
+}
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  border-radius: 50%;
+  display: flex;
+  z-index: 999999;
+  position: absolute;
+  right: 3px;
+  top: 5px;
 }

@@ -25,16 +25,20 @@ function AffiliateSalesInf({
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);
   const [groupBy, setGroupBy] = useState({
-    label: "ALL",
-    value: "",
+    label: "Summary",
+    value: "influencer",
   });
 
   const [filterDisable, setFilterDisable] = useState("");
-  const [submit, setSubmit] = useState("");
+  const [submit, setSubmit] = useState("influencer");
 
   const groupByList = [
     {
-      label: "ALL",
+      label: "Summary",
+      value: "influencer",
+    },
+    {
+      label: "Detailed",
       value: "",
     },
     {
@@ -129,7 +133,7 @@ function AffiliateSalesInf({
     setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
     setEndDate(moment(new Date()).format("YYYY-MM-DD"));
     getAffiliateSalesByInfluencer(
-      "",
+      "influencer",
       1,
       limit,
       moment().startOf("month").format("YYYY-MM-DD"),
@@ -138,10 +142,10 @@ function AffiliateSalesInf({
       setLoading(false);
     });
     setGroupBy({
-      label: "ALL",
-      value: "",
+      label: "Summary",
+      value: "influencer",
     });
-    setSubmit("");
+    setSubmit("influencer");
   };
 
   const filterDate = (sDate, eDate, filterType) => {
@@ -150,12 +154,14 @@ function AffiliateSalesInf({
     setStartDate(sDate);
     setEndDate(eDate);
     setGroupBy({
-      label: "ALL",
-      value: "",
+      label: "Summary",
+      value: "influencer",
     });
-    getAffiliateSalesByInfluencer("", 1, limit, sDate, eDate).then(() => {
-      setLoading(false);
-    });
+    getAffiliateSalesByInfluencer(groupBy.value, 1, limit, sDate, eDate).then(
+      () => {
+        setLoading(false);
+      }
+    );
   };
 
   function allTable() {
@@ -175,9 +181,9 @@ function AffiliateSalesInf({
                   <th>Brand Name</th>
                   <th>Order#</th>
                   <th>Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -230,9 +236,9 @@ function AffiliateSalesInf({
                   <th>S.#</th>
                   <th>Date</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -282,9 +288,9 @@ function AffiliateSalesInf({
                   <th>Campaign Name</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Influencer Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -330,9 +336,9 @@ function AffiliateSalesInf({
                   <th>S.#</th>
                   <th>Brand Name</th>
                   <th>Total Qty</th>
-                  <th>Amount</th>
-                  <th>Paid</th>
-                  <th>Commission</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
                 </tr>
               </thead>
               <tbody>
@@ -363,10 +369,56 @@ function AffiliateSalesInf({
       );
     }
   }
+  function summaryTable() {
+    let data = affiliateSalesInf?.message?.data;
+    if (data) {
+      return (
+        <>
+          {loading ? (
+            <Loader size="30" />
+          ) : (
+            <Table responsive="sm" className="transactions-box">
+              <thead>
+                <tr>
+                  <th>S.#</th>
+                  <th>Influencer Name</th>
+                  <th>Gross Sales</th>
+                  <th>Net Sales</th>
+                  <th>Commission Paid</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>{i + 1}</td>
+                      <td>{item?.influencer_name}</td>
+
+                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
+                      <td>
+                        {numeral(item?.order_totalprice).format("$0,0.0'")}
+                      </td>
+                      <td>
+                        {item?.influencer_commission
+                          ? numeral(item?.influencer_commission).format(
+                              "$0,0.0'"
+                            )
+                          : "$0.00"}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          )}
+        </>
+      );
+    }
+  }
   return (
     <React.Fragment>
       <div className="container-fluid">
-        <h4 className="page-title">Sales</h4>
+        <h4 className="page-title">Earnings</h4>
         <div className="brand_container_main aff-payment">
           <Row className="filter-date mb-3">
             <div className="col-md-12">
@@ -511,6 +563,9 @@ function AffiliateSalesInf({
                     </>
                   ) : (
                     <>
+                      {submit === "influencer" || submit === undefined
+                        ? summaryTable()
+                        : null}
                       {submit === "" || submit === undefined
                         ? allTable()
                         : null}

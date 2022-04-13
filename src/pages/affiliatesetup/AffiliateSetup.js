@@ -92,7 +92,7 @@ class AffiliateSetup extends React.Component {
                         <span>Analytics</span>
                       </NavLink>
                     </NavItem> */}
-                    <NavItem>
+                    {/* <NavItem>
                       <NavLink
                         className={classnames({
                           active:
@@ -104,7 +104,7 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Payment Method</span>
                       </NavLink>
-                    </NavItem>
+                    </NavItem> */}
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"
@@ -130,11 +130,11 @@ class AffiliateSetup extends React.Component {
                         <AffiliateTransaction />
                       ) : null}
                     </TabPane> */}
-                    <TabPane tabId="paymentmethod">
+                    {/* <TabPane tabId="paymentmethod">
                       {this.state.activeSecondTab === "paymentmethod" ? (
                         <AffiliatePayment />
                       ) : null}
-                    </TabPane>
+                    </TabPane> */}
                   </TabContent>
                 </div>
               </Row>
