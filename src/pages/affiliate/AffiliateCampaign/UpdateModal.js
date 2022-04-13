@@ -29,6 +29,7 @@ class UpdateModal extends React.Component {
       pay_per_hundred: this.props.affData?.pay_per_hundred,
       budget: this.props.affData?.budget,
       promoCodes: this.props.affData?.promo,
+      promoCodesDiscount: this.props.affData?.discount,
       promoList: this.props.promoCodes,
 
       // startDate: moment(),
@@ -58,6 +59,8 @@ class UpdateModal extends React.Component {
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
   async componentDidMount() {
+    console.log("-----",this.props.affData)
+  
     await axios
       .post(`/campaigns/reach`, {
         demographics: this.state.inputList,
@@ -89,6 +92,7 @@ class UpdateModal extends React.Component {
       this.setState({ states: res });
     });
   }
+  
   titleChange = (value) => {
     this.setState({ campaign_name: value });
   };
@@ -100,7 +104,9 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
+   
     this.setState({ promoCodes: options.value });
+    this.setState({ promoCodesDiscount: options.discount });
   };
 
   discount = (value) => {
@@ -278,7 +284,7 @@ class UpdateModal extends React.Component {
             promo: this.state.promoCodes,
             //promo_id: this.state.promoCodes.value,
             discount_type: "shopify",
-            // discount: parseInt(this.state.discount),
+            discount: this.state.promoCodesDiscount,
             commission: parseInt(this.state.commission),
             // budget: parseInt(this.state.budget),
             // pay_per_hundred: parseInt(this.state.pay_per_hundred),

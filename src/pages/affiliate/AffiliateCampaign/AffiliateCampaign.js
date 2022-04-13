@@ -311,7 +311,7 @@ function AffiliateCampaign(props) {
                       <div className="col-12 count-box">
                         <h5 className="count-title">Discount</h5>
                         <h3 className="count">
-                          {record?.discount ? record?.discount + "%" : "0%"}
+                          {record?.discount ? record?.discount  : "0%"}
                         </h3>
                       </div>
                       <div className="col-12 count-box">
