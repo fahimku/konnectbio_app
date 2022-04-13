@@ -283,19 +283,25 @@ function AffiliateCampaign(
                   ) : (
                     <>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">PromoCode</h5>
+                        <h5 className="count-title">Promo Code For Customer</h5>
                         <h3 className="count">{record.promo}</h3>
                       </div>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">Commission</h5>
+                        <h5 className="count-title">Discount</h5>
+                        <h3 className="count">
+                          {record?.discount ? record?.discount + "%" : "0%"}
+                        </h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Influencer Commission</h5>
                         <h3 className="count">{record.commission}%</h3>
                       </div>
                     </>
                   )}
-                  <div className="col-12 count-box">
+                  {/* <div className="col-12 count-box">
                     <h5 className="count-title">Total Spent</h5>
                     <h3 className="count">${record.total_spent}</h3>
-                  </div>
+                  </div> */}
                   <div className="col-12 count-box">
                     <h5 className="count-title">Number of Participants</h5>
                     <h3 className="count">{record.total_participant}</h3>
