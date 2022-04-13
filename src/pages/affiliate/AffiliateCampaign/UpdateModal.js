@@ -99,8 +99,13 @@ class UpdateModal extends React.Component {
   //   this.setState({ budget: value });
   // };
 
+
+  
   changePromoCode = (e, options, name, index) => {
-    this.setState({ promoCodes: options });
+
+    console.log("as",options.value)
+    
+    this.setState({ promoCodes: options.value });
   };
 
   discount = (value) => {
@@ -275,8 +280,8 @@ class UpdateModal extends React.Component {
             redirected_url: this.props.affData.redirected_url,
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
-            promo: this.state.promoCodes.label,
-            promo_id: this.state.promoCodes.value,
+            promo: this.state.promoCodes,
+            //promo_id: this.state.promoCodes.value,
             discount_type: "shopify",
             // discount: parseInt(this.state.discount),
             commission: parseInt(this.state.commission),
@@ -385,6 +390,17 @@ class UpdateModal extends React.Component {
     return current && current < moment().endOf("day");
   }
 
+  
+
+   formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex",position: "relative" }}>
+      <div>{label}</div>
+      <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+        {discount}
+      </div>
+    </div>
+  );
+
   render() {
     const { affData } = this.props;
     let category =
@@ -405,9 +421,24 @@ class UpdateModal extends React.Component {
       }
     };
 
+    const formatOptionLabel = ({ value, label, discount }) => (
+      <div style={{ display: "flex",position: "relative" }}>
+        <div>{label}</div>
+        <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+          {discount}%
+        </div>
+      </div>
+    );
+
     const renderConValuePromoList = (x) => {
-      console.log(x,"x");
-      return { value: x, label: x };
+      const filterPromo =  this.state.promoList.filter((item)=>{
+
+        if(item.label == x){
+         return item
+        }
+      })
+      console.log(" ss", this.state.promoList)
+      return { value: filterPromo[0].value, label: filterPromo[0].label, discount: filterPromo[0].discount };
     };
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
@@ -456,6 +487,7 @@ class UpdateModal extends React.Component {
     };
 
     return (
+      
       <React.Fragment>
         <Formsy.Form
           onValidSubmit={() =>
@@ -705,6 +737,7 @@ class UpdateModal extends React.Component {
                       }
                       placeholder="Select PromoCode"
                       style={{ width: "100%" }}
+                      formatOptionLabel={formatOptionLabel}
                       options={this.state.promoList}
                     />
                   </div>

@@ -6,7 +6,8 @@ import classnames from "classnames";
 import AllMarketPlace from "./AllMarketPlace";
 import ActiveMarketPlace from "./ActiveMarketPlace/ActiveMarketPlace";
 import BrandComponent from "./Brand/BrandComponent";
-import MyCategory from "../mycategory/MyCategory";
+//import MyCategory from "../mycategory/MyCategory";
+import Categories from "./Categories/categoriesMarketPlace";
 import MarketplaceEarning from "./MarketplaceEarning/MarketplaceEarning";
 import AffiliateSalesInf from "./MarketplaceSale/InfSales";
 import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
@@ -20,7 +21,7 @@ class MarketPlace extends React.Component {
     super(props);
     this.toggleTabs = this.toggleTabs.bind(this);
     this.state = {
-      activeTab: "category",
+      activeTab: "categories",
       username: username,
       brandtab: [],
       brandLoading: true,
@@ -55,8 +56,8 @@ class MarketPlace extends React.Component {
   // brandTab = (brand, brandLoading) => {
   //   this.setState({ brandtab: brand, brandLoading: brandLoading });
   // };
-  catTab = (category, catLoading) => {
-    this.setState({ catTab: category, catLoading: catLoading });
+  catTab = (categories, catLoading) => {
+    this.setState({ catTab: categories, catLoading: catLoading });
     this.fetchMyBrand();
   };
 
@@ -70,7 +71,7 @@ class MarketPlace extends React.Component {
             <Row className="ml-0 mr-0">
               <div className="affiliate_in_col marketing-tabs">
                 <Nav tabs className={`${s.coloredNav}`}>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "category",
@@ -82,7 +83,23 @@ class MarketPlace extends React.Component {
                     >
                       <span>Category</span>
                     </NavLink>
+                  </NavItem> */}
+
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "categories",
+                      })}
+                      id="mark-category"
+                      onClick={() => {
+                        this.toggleTabs("categories");
+                      }}
+                    >
+                      <span>Categories</span>
+                    </NavLink>
                   </NavItem>
+
+
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -246,9 +263,16 @@ class MarketPlace extends React.Component {
                   className="affiliate_tab_ift"
                   activeTab={this.state.activeTab}
                 >
-                  <TabPane tabId="category">
+                  {/* <TabPane tabId="category">
                     {this.state.activeTab === "category" ? (
                       <MyCategory catTab={this.catTab} type="marketcategory" />
+                    ) : null}
+                  </TabPane> */}
+
+
+                  <TabPane tabId="categories">
+                    {this.state.activeTab === "categories" ? (
+                      <Categories catTab={this.catTab} type="marketcategory" />
                     ) : null}
                   </TabPane>
 

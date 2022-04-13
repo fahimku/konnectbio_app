@@ -12,16 +12,22 @@ import Loader from "../../../components/Loader/Loader";
 import * as countryAct from "../../../actions/countries";
 import * as campAct from "../../../actions/campaign";
 import * as catActions from "../../../actions/category";
+import * as promo from "../../../actions/promoRequest";
 import { connect } from "react-redux";
 import AnalyticModal from "./AnalyticModal";
 import { DatePicker } from "antd";
 import moment from "moment";
 import Select from "react-select";
 
+let dataPromo;
+let  PassPromoCode;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function AffiliateCampaign(props) {
+function AffiliateCampaign(
+  props,
+  { getPromoRequest, promoRequest, PromoPayload }
+) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -52,10 +58,13 @@ function AffiliateCampaign(props) {
     label: "COMMISSION",
   });
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
+  const [loader, setLoader] = useState(true);
+  const [promoCode, setPromoCode] = useState("");
 
   useEffect(() => {
     props.getCountries();
     fetchSchedulePosts();
+   
   }, []);
 
   useEffect(() => {
@@ -71,8 +80,32 @@ function AffiliateCampaign(props) {
       function (error) {
         toast.error(error?.response?.data?.message);
       }
+      
     );
+    setLoader(false);
+    props.getPromoRequest().then((res) => {
+      setLoader(true);
+    });
   }, []);
+
+  if (loader == true) {
+    dataPromo = props.promoRequest.message;
+    const promo = dataPromo;
+
+    if (dataPromo != undefined) {
+     
+      const selectState = [];
+      promo.map((x) => {
+        return selectState.push({
+          value: x.promo,
+          label: x.promo,
+          discount: x.promo_percent
+        });
+      });
+      PassPromoCode = selectState;
+    } else {
+    }
+  }
 
   // const toggleCampaigns = async (status, campaignId) => {
   //   let statusName = status ? "disable" : "enable";
@@ -145,6 +178,15 @@ function AffiliateCampaign(props) {
       }
     });
   };
+
+  const formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex",position: "relative" }}>
+      <div>{label}</div>
+      <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+        {discount}
+      </div>
+    </div>
+  );
 
   const fetchSchedulePosts = async () => {
     setLoading(true);
@@ -240,8 +282,8 @@ function AffiliateCampaign(props) {
                   ) : (
                     <>
                       <div className="col-12 count-box">
-                        <h5 className="count-title">Discount</h5>
-                        <h3 className="count">{record.discount}%</h3>
+                        <h5 className="count-title">PromoCode</h5>
+                        <h3 className="count">{record.promo}</h3>
                       </div>
                       <div className="col-12 count-box">
                         <h5 className="count-title">Commission</h5>
@@ -559,6 +601,7 @@ function AffiliateCampaign(props) {
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <UpdateModal
               affData={currentCampaign}
+              promoCodes={PassPromoCode}
               countries={props.countries}
               affCloseModal={() => setModal(false)}
               reload={() => {
@@ -590,10 +633,13 @@ function AffiliateCampaign(props) {
   );
 }
 
-function mapStateToProps({ countries, campaign }) {
-  return { countries, campaign };
+function mapStateToProps({  getPromoRequest,
+  promoRequest,countries, campaign }) {
+  return {  getPromoRequest,
+    promoRequest,countries, campaign };
 }
 export default connect(mapStateToProps, {
+  ...promo,
   ...countryAct,
   ...campAct,
   ...catActions,

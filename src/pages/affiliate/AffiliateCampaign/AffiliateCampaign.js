@@ -85,8 +85,9 @@ function AffiliateCampaign(
       const selectState = [];
       promo.map((x) => {
         return selectState.push({
-          value: x,
-          label: x,
+          value: x.promo,
+          label: x.promo,
+          discount: x.promo_percent
         });
       });
       PassPromoCode = selectState;
@@ -198,6 +199,15 @@ function AffiliateCampaign(
         setLoading(false);
       });
   };
+
+  const formatOptionLabel = ({ value, label, discount }) => (
+    <div style={{ display: "flex",position: "relative" }}>
+      <div>{label}</div>
+      <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+        {discount}
+      </div>
+    </div>
+  );
 
   const handlePageClick = (e) => {
     const selectedPage = e.selected;

@@ -202,8 +202,9 @@ if(status === false){
     const selectState = [];
     promo.map((x) => {
       return selectState.push({
-        value: x,
-        label: x,
+        value: x.promo,
+        label: x.promo,
+        discount: x.promo_percent
       });
     });
     this.setState({ promoCode: selectState });
@@ -429,6 +430,17 @@ if(status === false){
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
+
+
+    const formatOptionLabel = ({ value, label, discount }) => (
+      <div style={{ display: "flex",position: "relative" }}>
+        <div>{label}</div>
+        <div style={{ position: "absolute", color: "black", right: "0", fontSize: "12px"}}>
+          {discount}   
+        </div>
+      </div>
+    );
+
 
     const renderStateValue = (x) => {
       const exit =
@@ -730,6 +742,8 @@ if(status === false){
                           }
                           placeholder="Select PromoCode"
                           style={{ width: "100%" }}
+                          //formatOptionLabel={this.state.promoCode}
+                          formatOptionLabel={formatOptionLabel}
                           options={this.state.promoCode}
                         />
                       </div>

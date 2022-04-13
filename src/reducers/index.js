@@ -19,6 +19,7 @@ import dashboard from "./dashboard";
 import campaignAnalytics from "./campaign/campaignAnalytics";
 import brands from "./brands/brands";
 import brandsCategory from "./brands/brandsCategory";
+import categoryById from "./brands/categoryById";
 import bioshop from "./bioshop/bioshop";
 import singleBioShop from "./bioshop/singleBioShop";
 import postSummary from "./post/postSummary";
@@ -66,6 +67,7 @@ export default (history) =>
     brands,
     addCampaignToShop,
     brandsCategory,
+    categoryById,
     alerts,
     auth,
     navigation,
