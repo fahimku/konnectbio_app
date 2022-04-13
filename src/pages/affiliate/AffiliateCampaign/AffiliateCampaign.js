@@ -18,7 +18,6 @@ import AnalyticModal from "./AnalyticModal";
 import { DatePicker } from "antd";
 import moment from "moment";
 import Select from "react-select";
-import { fontSize } from "@mui/system";
 
 let dataPromo;
 let PassPromoCode;
@@ -308,6 +307,12 @@ function AffiliateCampaign(props) {
                       <div className="col-12 count-box">
                         <h5 className="count-title">Promo Code For Customer</h5>
                         <h3 className="count">{record.promo}</h3>
+                      </div>
+                      <div className="col-12 count-box">
+                        <h5 className="count-title">Discount</h5>
+                        <h3 className="count">
+                          {record?.discount ? record?.discount + "%" : "0%"}
+                        </h3>
                       </div>
                       <div className="col-12 count-box">
                         <h5 className="count-title">Influencer Commission</h5>
