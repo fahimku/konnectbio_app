@@ -120,24 +120,28 @@ function AffiliateCampaign(props) {
             is_active: !status,
           })
           .then(() => {
-            let data1 = [...data];
-            let objIndex = data1.findIndex(
-              (obj) => obj.campaign_id === campaignId
-            );
-            data1[objIndex].is_active = !status;
+            // let data1 = [...data];
+            // let objIndex = data1.findIndex(
+            //   (obj) => obj.campaign_id === campaignId
+            // );
+            // data1[objIndex].is_active = !status;
+            // setData(data1);
+            // setTimeout(() => {
+            //   let data2 = [...data].filter(function (item) {
+            //     return item.campaign_id !== campaignId;
+            //   });
+            //   setData(data2);
+            //   const page = Math.ceil(data2.length / perPage) - 1;
+            //   const selectedPage = page;
+            //   const offset = selectedPage * perPage;
+            //   setPageCount(page + 1);
+            //   setCurrentPage(selectedPage);
+            //   setOffset(offset);
+            // }, 300);
+            let data1 = [...data].filter(function (item) {
+              return item.campaign_id !== campaignId;
+            });
             setData(data1);
-            setTimeout(() => {
-              let data2 = [...data].filter(function (item) {
-                return item.campaign_id !== campaignId;
-              });
-              setData(data2);
-              const page = Math.ceil(data2.length / perPage) - 1;
-              const selectedPage = page;
-              const offset = selectedPage * perPage;
-              setPageCount(page + 1);
-              setCurrentPage(selectedPage);
-              setOffset(offset);
-            }, 300);
             toast.success("Campaign " + statusName + " Successfully");
           })
           .catch((err) => {
