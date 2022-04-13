@@ -111,6 +111,9 @@ export default function Box({
                     />
                   </div>
                 </div>
+                {item.is_linked && !item?.is_active ? (
+                  <span class="dot"></span>
+                ) : null}
               </div>
             </div>
             <div className="col-12 analytic-caption">
@@ -138,7 +141,7 @@ export default function Box({
                   </div>
                 ) : (
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Commission</h5>
+                    <h5 className="count-title">Influencer Commission</h5>
                     <h3 className="count">{item.commission}%</h3>
                   </div>
                 )}

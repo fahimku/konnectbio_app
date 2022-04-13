@@ -336,7 +336,7 @@ const ShopRightBar = (props) => {
                   />
                 </div>
 
-                <div className="mt-3 row">
+                {/* <div className="mt-3 row">
                   <div className="col-md-3">
                     <label>PromoCode For Customers</label>
                     <Select
@@ -360,7 +360,7 @@ const ShopRightBar = (props) => {
                     <label>KB Fee</label>
                     <div className="promo_discount form-control">10%</div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (

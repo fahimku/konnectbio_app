@@ -1246,3 +1246,14 @@ code.sm-color {
 .demographic-section .form-control {
   min-height: 36px;
 }
+.dot {
+  height: 15px;
+  width: 15px;
+  background-color: red;
+  border-radius: 50%;
+  display: flex;
+  z-index: 999999;
+  position: absolute;
+  right: 3px;
+  top: 5px;
+}
