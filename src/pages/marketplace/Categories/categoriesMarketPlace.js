@@ -1,24 +1,12 @@
 import React from "react";
 import axios from "axios";
-import Select from "react-select";
-import { Row, Col, Button } from "react-bootstrap";
-import { toast } from "react-toastify";
 import placeholder from "../../../../src/images/placeholder.svg";
-// import CustomCategory from "./component/CustomCategory";
 import * as subActions from "../../../actions/subscribe";
 import { connect } from "react-redux";
-import { createBrowserHistory } from "history";
 import ModalCategories from "./modalCategories";
 import Loader from "../../../components/Loader/Loader";
-import Swal from "sweetalert2";
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove,
-} from "react-sortable-hoc";
-export const history = createBrowserHistory({
-  forceRefresh: true,
-});
+import { Row, Col } from "react-bootstrap";
+import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -28,27 +16,9 @@ class Categories extends React.Component {
     this.state = {
       brandData: "",
       modalComp: true,
-      modalData: "",
-      myCategory: "",
-      myCustomCategory: "",
-      user_id: "",
-      category: [],
-      defaultCategory: "",
       saveCategories: "",
       brandCategory: "",
       categoryError: "",
-      loading: false,
-      packages: "",
-      package: userInfo.package.package_name,
-      categoryAllow: userInfo.package.category_count,
-      package_amount: userInfo.package.package_amount,
-      sort: false,
-      priceId: "",
-      categoryLimit: "",
-      showInterval: false,
-      plan: "Yearly",
-      config: [],
-      unitAmount: "",
       catLoading: true,
     };
   }
@@ -57,15 +27,6 @@ class Categories extends React.Component {
     this.fetchSaveCategory();
   }
 
-  brand = (value) => {
-    this.setState({ brandData: value });
-    this.setState({ modalComp: false });
-  };
-  changeFlag = () => {
-    this.setState({
-      modalComp: true,
-    });
-  };
   fetchSaveCategory = async () => {
     await axios
       .get(`/users/receive/categories?id=${userInfo.user_id}`)
@@ -87,7 +48,6 @@ class Categories extends React.Component {
         );
 
         this.setState({
-          // defaultCategory: myCategories,
           saveCategories: saveCategories,
           brandCategory: saveCategories,
         });
@@ -105,6 +65,15 @@ class Categories extends React.Component {
       .catch((error) => {
         console.log(error);
       });
+  };
+  brand = (value) => {
+    this.setState({ brandData: value });
+    this.setState({ modalComp: false });
+  };
+  changeFlag = () => {
+    this.setState({
+      modalComp: true,
+    });
   };
 
   render() {
@@ -161,32 +130,38 @@ class Categories extends React.Component {
                             <ModalCategories catData={this.state.brandData} />
                           ) : (
                             <>
-                              {this.state.saveCategories.length === 0 ? (
+                              {this.state.catLoading ? (
                                 <Loader size="30" />
                               ) : (
                                 <Row>
-                                  {this.state.saveCategories.map((value) => (
-                                    <div
-                                      key={value.value}
-                                      className="brand-box col-sm-3 col-4"
-                                    >
-                                      <img
-                                        key={value.value}
-                                        src={
-                                          value.image === "" ||
-                                          value.image === undefined
-                                            ? placeholder
-                                            : value.image
-                                        }
-                                        alt="cat-logo"
-                                        className="img-fluid brand-cat"
-                                        onClick={() => this.brand(value)}
-                                      />
-                                      <div className="cat-lable">
-                                        {value.label}
-                                      </div>
+                                  {this.state.saveCategories.length === 0 ? (
+                                    <div className="col-md-12">
+                                      No Category Added
                                     </div>
-                                  ))}
+                                  ) : (
+                                    this.state.saveCategories.map((value) => (
+                                      <div
+                                        key={value.value}
+                                        className="brand-box col-sm-3 col-4"
+                                      >
+                                        <img
+                                          key={value.value}
+                                          src={
+                                            value.image === "" ||
+                                            value.image === undefined
+                                              ? placeholder
+                                              : value.image
+                                          }
+                                          alt="cat-logo"
+                                          className="img-fluid brand-cat"
+                                          onClick={() => this.brand(value)}
+                                        />
+                                        <div className="cat-lable">
+                                          {value.label}
+                                        </div>
+                                      </div>
+                                    ))
+                                  )}
                                 </Row>
                               )}
                             </>

@@ -66,7 +66,11 @@ function BrandFilterComponent({ title }) {
                                   : item.profile_image_url
                               }
                               alt="cat-logo"
-                              className="img-fluid brand-cat"
+                              className={`img-fluid brand-cat ${
+                                item.brand_id === "61baedec5ab558359825084e"
+                                  ? "custom-brand-cat"
+                                  : ""
+                              }`}
                               onClick={() =>
                                 brandSelect(item.brand_id, item.brand_name)
                               }
