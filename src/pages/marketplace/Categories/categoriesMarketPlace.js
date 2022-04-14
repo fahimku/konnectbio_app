@@ -6,8 +6,11 @@ import { connect } from "react-redux";
 import ModalCategories from "./modalCategories";
 import Loader from "../../../components/Loader/Loader";
 import { Row, Col } from "react-bootstrap";
-import NoDataFound from "../../../components/NoDataFound/NoDataFound";
-
+// import NoDataFound from "../../../components/NoDataFound/NoDataFound";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Categories extends React.Component {
@@ -85,16 +88,10 @@ class Categories extends React.Component {
         <div className="profile-page account-setup">
           <div className={this.props.page === "brand" ? "" : "container-fluid"}>
             {this.props.page === "brand" ? null : (
-              <div
-                className={`row ${
-                  this.props.type === "marketcategory" ? "" : "mt-4"
-                }`}
-              >
+              <div className="row">
                 <div class="col-md-12">
                   <h4 class="page-title">
-                    {this.props.type === "marketcategory"
-                      ? "Category"
-                      : "Category Setup"}
+                    {this.state.modalComp ? "Categories" : "Brands"}
                   </h4>
                 </div>
               </div>
@@ -116,7 +113,9 @@ class Categories extends React.Component {
                               class="fa fa-arrow-left brand-back"
                               onClick={() => this.changeFlag()}
                             ></i>{" "}
-                            Select Brands
+                            <span className="ml-3">
+                              {this.state.brandData.label}
+                            </span>
                           </span>
                         </>
                       )}
@@ -135,8 +134,20 @@ class Categories extends React.Component {
                               ) : (
                                 <Row>
                                   {this.state.saveCategories.length === 0 ? (
-                                    <div className="col-md-12">
-                                      No Category Added
+                                    <div className="col-md-12 no-data-cat">
+                                      <p className="text-muted">
+                                        No Category Added
+                                      </p>
+                                      <button
+                                        class="btn btn-primary"
+                                        onClick={() =>
+                                          history.push(
+                                            "/app/account/categories"
+                                          )
+                                        }
+                                      >
+                                        Add Category
+                                      </button>
                                     </div>
                                   ) : (
                                     this.state.saveCategories.map((value) => (
