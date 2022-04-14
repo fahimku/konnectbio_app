@@ -13,6 +13,7 @@ import AffiliateSalesInf from "./MarketplaceSale/InfSales";
 import MarketplaceTransaction from "../marketplace/MarketplaceTransaction/MarketplaceTransaction";
 import axios from "axios";
 import MarketplaceRequest from "./MarketplaceRequest/MarketplaceRequest";
+import BrandFilterComponent from "./Brand/BrandFilterComponent";
 
 class MarketPlace extends React.Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class MarketPlace extends React.Component {
   // };
   catTab = (categories, catLoading) => {
     this.setState({ catTab: categories, catLoading: catLoading });
-    this.fetchMyBrand();
+    // this.fetchMyBrand();
   };
 
   render() {
@@ -99,7 +100,6 @@ class MarketPlace extends React.Component {
                     </NavLink>
                   </NavItem>
 
-
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -116,7 +116,7 @@ class MarketPlace extends React.Component {
                       <span>Brand</span>
                     </NavLink>
                   </NavItem>
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "marketplace",
@@ -134,7 +134,7 @@ class MarketPlace extends React.Component {
                     >
                       <span>New</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                   <NavItem>
                     <NavLink
                       className={classnames({
@@ -173,7 +173,7 @@ class MarketPlace extends React.Component {
                       <span>Paused</span>
                     </NavLink>
                   </NavItem> */}
-                  <NavItem>
+                  {/* <NavItem>
                     <NavLink
                       className={classnames({
                         active: this.state.activeTab === "expired",
@@ -191,7 +191,7 @@ class MarketPlace extends React.Component {
                     >
                       <span>Expired</span>
                     </NavLink>
-                  </NavItem>
+                  </NavItem> */}
                   {/* <NavItem>
                     <NavLink
                       className={classnames({
@@ -269,7 +269,6 @@ class MarketPlace extends React.Component {
                     ) : null}
                   </TabPane> */}
 
-
                   <TabPane tabId="categories">
                     {this.state.activeTab === "categories" ? (
                       <Categories catTab={this.catTab} type="marketcategory" />
@@ -278,18 +277,19 @@ class MarketPlace extends React.Component {
 
                   <TabPane tabId="brand">
                     {this.state.activeTab === "brand" ? (
-                      <BrandComponent
-                        title="Brand"
-                        type="brand"
-                        // brandTab={this.brandTab}
-                      />
+                      // <BrandComponent
+                      //   title="Brand"
+                      //   type="brand"
+                      //   // brandTab={this.brandTab}
+                      // />
+                      <BrandFilterComponent />
                     ) : null}
                   </TabPane>
-                  <TabPane tabId="marketplace">
+                  {/* <TabPane tabId="marketplace">
                     {this.state.activeTab === "marketplace" ? (
                       <AllMarketPlace title="New Campaign" type="marketplace" />
                     ) : null}
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tabId="active">
                     {this.state.activeTab === "active" ? (
                       <ActiveMarketPlace
@@ -299,7 +299,7 @@ class MarketPlace extends React.Component {
                       />
                     ) : null}
                   </TabPane>
-                  <TabPane type="inActive" tabId="in-active">
+                  {/* <TabPane type="inActive" tabId="in-active">
                     {this.state.activeTab === "in-active" ? (
                       <ActiveMarketPlace
                         title="Paused Campaign"
@@ -316,7 +316,7 @@ class MarketPlace extends React.Component {
                         endPoint="users/marketPlace/getExpiredCampaigns"
                       />
                     ) : null}
-                  </TabPane>
+                  </TabPane> */}
                   <TabPane tabId="earning">
                     {this.state.activeTab === "earning" ? (
                       <MarketplaceEarning />

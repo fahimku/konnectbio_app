@@ -1257,3 +1257,27 @@ code.sm-color {
   right: 3px;
   top: 5px;
 }
+/*******************/
+.brand-box {
+  text-align: center;
+  margin-top: 10px;
+}
+.brand-cat {
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  width: 90px;
+}
+.brand-box:hover .brand-cat {
+  opacity: 0.3;
+}
+.brand-back {
+  cursor: pointer;
+}
+.cat_heading {
+  color: gray;
+  border-bottom: 1px solid lightgray;
+  padding-bottom: 10px;
+  margin-bottom: 1em;
+  display: block;
+}
