@@ -159,10 +159,8 @@ class AffiliateForm extends React.Component {
 
   changePromoCode = (e, options, name, index) => {
     // let data = String(options.value);
-    console.log("----",options)
+    console.log("----", options);
     this.setState({ promoCodeVal: options });
-    
-    
   };
 
   changeState = (e, options, name, index) => {
@@ -312,7 +310,7 @@ class AffiliateForm extends React.Component {
           media_url: this.props.affData.media_url,
           discount_type: "shopify",
           promo: this.state.promoCodeVal.value,
-          discount:this.state.promoCodeVal.discount,
+          discount: this.state.promoCodeVal.discount,
           category_id:
             this.props.affData.categories.length !== 0
               ? this.props.affData.categories[0].category_id
@@ -793,7 +791,7 @@ class AffiliateForm extends React.Component {
                             <label>
                               Influencer Commission{" "}
                               <span className="small">
-                                (Including 3% KB fees)
+                                (Including {affData?.kb_fee}% KB fees)
                               </span>
                             </label>
                             <InputNumberValidation

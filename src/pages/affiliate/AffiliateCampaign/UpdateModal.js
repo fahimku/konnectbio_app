@@ -59,8 +59,8 @@ class UpdateModal extends React.Component {
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
   async componentDidMount() {
-    console.log("-----",this.props.affData)
-  
+    console.log("-----", this.props.affData);
+
     await axios
       .post(`/campaigns/reach`, {
         demographics: this.state.inputList,
@@ -92,7 +92,7 @@ class UpdateModal extends React.Component {
       this.setState({ states: res });
     });
   }
-  
+
   titleChange = (value) => {
     this.setState({ campaign_name: value });
   };
@@ -104,7 +104,6 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-   
     this.setState({ promoCodes: options.value });
     this.setState({ promoCodesDiscount: options.discount });
   };
