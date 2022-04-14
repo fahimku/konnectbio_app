@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_USER_BRANDS, GET_BRANDS_CATEGORY } from "./type";
+import { GET_USER_BRANDS, GET_BRANDS_CATEGORY, GET_CAT_BRAND } from "./type";
 import config from "../config";
 
 export const getBrands = () => async (dispatch) => {
@@ -32,6 +32,38 @@ export const getBrandsCategory = (brandId) => async (dispatch) => {
           payload: res.data?.message,
         });
         resolve(res.data?.message);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+  return promise;
+};
+
+// export const getCatbrands = (categoryId) => async (dispatch) => {
+//   try {
+//       const res = await konnect.post(`/v1/mobile/category/campainWiseBrand`,{categoryId})
+//       dispatch({
+//           type: GET_CAT_BRAND,
+//           payload: res.data.data
+//       })
+//   } catch (err) {
+//       console.log(err)
+//   }
+// }
+
+export const getCatbrands = (categoryId) => async (dispatch) => {
+  let promise = new Promise((resolve, reject) => {
+    axios
+      .post(`${config.baseURLApi}/mobile/category/campainWiseBrand`, {
+        categoryId
+      })
+      .then((res) => {
+        dispatch({
+          type: GET_CAT_BRAND,
+          payload: res.data?.data,
+        });
+        resolve(res.data?.data);
       })
       .catch((error) => {
         reject(error);

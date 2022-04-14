@@ -470,41 +470,41 @@ class UpdateModal extends React.Component {
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
     };
-    // const renderCityValue = (x, i) => {
-    //   if (x.state) {
-    //     const exit = [
-    //       { value: "all", name: "all" },
-
-    //       this.state.cities2[0].data.message,
-    //     ].filter((item) => item.name === x.city);
-
-    //     return exit[0]
-    //       ? {
-    //           value: exit[0].name,
-    //           label: exit[0].name === "all" ? "All Cities" : exit[0].name,
-    //         }
-    //       : { value: "", label: "All Cities" };
-    //   } else {
-    //     return { value: "", label: "All Cities" };
-    //   }
-    // };
     const renderCityValue = (x, i) => {
       if (x.state) {
         const exit = [
           { value: "all", name: "all" },
 
-          ...this.state.cities2[i].data.message,
+          this.state.cities2[0].data.message,
         ].filter((item) => item.name === x.city);
+
         return exit[0]
           ? {
               value: exit[0].name,
-              label: exit[0].name === "all" ? "All" : exit[0].name,
+              label: exit[0].name === "all" ? "All Cities" : exit[0].name,
             }
-          : { value: "", label: "Select City" };
+          : { value: "", label: "All Cities" };
       } else {
-        return { value: "", label: "Select City" };
+        return { value: "", label: "All Cities" };
       }
     };
+    // const renderCityValue = (x, i) => {
+    //   if (x.state) {
+    //     const exit = [
+    //       { value: "all", name: "all" },
+
+    //       ...this.state.cities2[i].data.message,
+    //     ].filter((item) => item.name === x.city);
+    //     return exit[0]
+    //       ? {
+    //           value: exit[0].name,
+    //           label: exit[0].name === "all" ? "All" : exit[0].name,
+    //         }
+    //       : { value: "", label: "Select City" };
+    //   } else {
+    //     return { value: "", label: "Select City" };
+    //   }
+    // };
 
     return (
       <React.Fragment>

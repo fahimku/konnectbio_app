@@ -1568,3 +1568,7 @@ a.pkg_read:hover {
 .pkg_app_inner .custom_pkg ul li:last-child {
   padding-bottom: 0;
 }
+.categories-modal{
+  width: 90%;
+
+}

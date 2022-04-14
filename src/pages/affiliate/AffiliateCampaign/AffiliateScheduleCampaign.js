@@ -61,6 +61,7 @@ function AffiliateCampaign(
   useEffect(() => {
     props.getCountries();
     fetchSchedulePosts();
+   
   }, []);
 
   useEffect(() => {
@@ -76,6 +77,7 @@ function AffiliateCampaign(
       function (error) {
         toast.error(error?.response?.data?.message);
       }
+      
     );
     setLoader(false);
     props.getPromoRequest().then((res) => {
