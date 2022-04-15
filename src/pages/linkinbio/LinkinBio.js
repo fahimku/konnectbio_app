@@ -18,17 +18,24 @@ import moment from "moment";
 import ShopRightBar from "./component/ShopRightBar/index";
 import { connect } from "react-redux";
 import * as dropdownAction from "../../actions/mobileDropdown";
+import { createBrowserHistory } from "history";
+export const history = createBrowserHistory({
+  forceRefresh: true,
+});
+
 
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const username = userInfo.username;
     const userId = userInfo.user_id;
+    
     super(props);
     this.error = this.error.bind(this);
     this.state = {
       postLoading: false,
       showInstagramButton: false,
+      ShopifyConnFound: true,
       iframeKey: 0,
       nextPageCount: 0,
       deleteId: "",
@@ -61,17 +68,37 @@ class LinkinBio extends React.Component {
       accordionFirst: [false, false, false],
       accordionSecond: [false, true, false],
       autoFocus: false,
+      flag: false,
       error: "",
       updatedAt: "",
       fetchUserPost: [],
       dropdown: "instagram",
+      promoCodeDsc:({value: "KB0",
+      label: "KB0",
+      discount: "0%",}),
+  
+      promoCodeVal:({
+      value: "KB0",
+      label: "KB0",
+      discount: "0%",
+  })
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
     this.changePostType = this.changePostType.bind(this);
   }
 
+  componentDidMount() {
+    axios.get("/campaigns/receive/getpromocodes").then((res) =>{
+      
+    }).catch((res) =>{
+      this.setState({ShopifyConnFound: false});
+  })
+}
+
+
   componentWillMount() {
+   
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
     let savedAccessToken = userInfo.access_token;
     this.fetchInstagramPosts(savedAccessToken);
@@ -162,7 +189,11 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+        console.log(response.data.success,"............")
         // let that = this;
+        
+        this.setState({promoCodeDsc: response.data.message.discount});
+        this.setState({promoCodeVal: response.data.message.promo});
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -188,6 +219,7 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/users/receive/categories?id=${this.state.userId}`)
       .then((response) => {
+        
         const selectCategories = [];
         const categories = response.data.message;
         categories.map(({ parent_id, category_name, category_id }) => {
@@ -201,7 +233,8 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = () => {
+  savePost = (i,item1,item2) => {
+    
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -217,7 +250,7 @@ class LinkinBio extends React.Component {
         }),
         async () => {
           this.setState({ loading: true });
-
+         
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
@@ -233,6 +266,8 @@ class LinkinBio extends React.Component {
               start_date: this.state.startDate,
               end_date: this.state.endDate,
               source: this.props.mobileDropdown,
+              promo: item2.value,
+              discount: item2.discount
             })
             .then((response) => {
               this.setState({ loading: false });
@@ -261,8 +296,10 @@ class LinkinBio extends React.Component {
     }
   };
 
-  updatePost = async (id, url) => {
-    // console.log(this.state.category, "sdsdsd");
+  updatePost = async (id, url,promo) => {
+    
+    console.log("update---",id, url,promo)
+    
     let newCategory;
     let oldCategory = this.state.category;
     if (
@@ -283,6 +320,8 @@ class LinkinBio extends React.Component {
         post_type: this.state.postType,
         start_date: this.state.startDate,
         end_date: this.state.endDate,
+        promo: promo.value,
+        discount: promo.discount
       })
       .then((response) => {
         this.setState({ loading: false });
@@ -298,6 +337,7 @@ class LinkinBio extends React.Component {
         this.setState({ instagramPosts: instagramPosts });
         toast.success("Your Post Link is Updated");
         this.selectPost(false, "");
+        
       });
   };
   reload = () => {
@@ -473,6 +513,7 @@ class LinkinBio extends React.Component {
 
   }
 
+
   shopRightBar = () => {
     return (
       <ShopRightBar
@@ -498,14 +539,19 @@ class LinkinBio extends React.Component {
         startDate={this.state.startDate}
         endDate={this.state.endDate}
         subCategory={this.state.subCategory}
+        promo ={this.state.promoCodeVal}
+        discount ={this.state.promoCodeDsc}
+        flag = {this.state.flag}
         changeSubCategory={this.changeSubCategory}
         subCategories={this.state.subCategories}
         changePostType={this.changePostType}
         postType={this.state.postType}
         savePost={this.savePost}
-        updatePost={(val1, val2) => {
-          this.updatePost(val1, val2);
-        }}
+        // updatePost={(val1, val2) => {
+        //   this.updatePost(val1, val2);
+        // }}
+        updatePost={this.updatePost}
+        
         media_id={this.state.media_id}
         deletePost={(deleteId) => {
           this.setState({ deleteId: deleteId });
@@ -531,7 +577,10 @@ class LinkinBio extends React.Component {
 
     return (
       <div className="linkin-bio">
-        <Row className="app_main_cont_ift main-container">
+        
+          
+        <Row className="app_main_cont_ift main-container"> 
+     
           <Col className="left-column" md="5" xs="12" xl="3">
             <TopBar
               username={this.state.username}
@@ -575,12 +624,32 @@ class LinkinBio extends React.Component {
                 ></iframe>
               ) : null}
             </div>
+            {this.state.ShopifyConnFound == false && this.state.selectPost ?
+          <div className="container-fluid">
+          <div class="coming_iner">
+            <h2>Connect To Shopify</h2>
+            {/* <p className="text-muted">
+              {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
+                ? "This option is only available for Influencer Plus."
+                : "This option is only available for Brand."}
+            </p> */}
+            <button
+              class="btn btn-primary"
+              onClick={() => history.push("/app/account/shopify")}
+            >
+              Shopify Setup
+            </button>
+          </div>
+        </div>:<>
             <Row className="linked_edit_box">
               <Col xs="12" className="p-5">
                 {this.shopRightBar()}
               </Col>
             </Row>
+            </>
+  }
           </Col>
+     
         </Row>
 
         {window.innerWidth <= 760 && (
@@ -623,12 +692,8 @@ class LinkinBio extends React.Component {
           </ModalFooter>
         </Modal>
 
-
-       
-        
-        
-
       </div>
+        
     );
   }
 }

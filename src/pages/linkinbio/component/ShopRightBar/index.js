@@ -13,26 +13,64 @@ import InputValidation from "../../../../components/InputValidation";
 import Formsy from "formsy-react";
 import { DatePicker } from "antd";
 import "antd/dist/antd.css";
+import * as promo from "../../../../actions/promoRequest";
 import PermissionHelper from "../../../../components/PermissionHelper";
 import Swal from "sweetalert2";
+import { connect } from "react-redux";
+import axios from "axios";
+import numeral from "numeral";
+
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-const ShopRightBar = (props) => {
+let dataPromo;
+let PassPromoCode;
+var subPromo ;
+var subDiscount;
+  
+function ShopRightBar(
+  props,
+  { getPromoRequest, promoRequest, PromoPayload }
+) {
+  if(typeof props.promo == 'object' && props.promo !== null){    
+  }else{
+  subPromo = props.promo;
+  subDiscount = props.discount;
+  
+}
   const media_id = props.singlePost.post_id;
+  
+ 
   const [startDate, setStartDate] = useState("");
+  const [connNotFound, setconnFound] = useState(true);
   const [endDate, setEndDate] = useState("");
   const [redirectedUrl, setRedirectedUrl] = useState("");
   const [copyModal, setCopyModal] = useState(false);
   const formRef = useRef("LinkForm");
   const [promoCode, setPromoCode] = useState("");
+  const [loader, setLoader] = useState(true);
+  const [Kbfee, setKbfee] = useState();
+  const [promoCodeDsc, setPromoCodeDsc] = useState({value: "KB0",
+  label: "KB0",
+  discount: "0%",})
+  
   const [promoCodeVal, setPromoCodeVal] = useState({
     value: "KB0",
     label: "KB0",
     discount: "0%",
   });
+
+
+useEffect(() => {
+  axios.post("/fee").then((res) =>{
+    console.log(res)
+    setKbfee(res.data.message)  
+  }).catch((res) =>{
+    
+})
+},[])
 
   useEffect(() => {
     setStartDate(props.startDate);
@@ -48,14 +86,105 @@ const ShopRightBar = (props) => {
     props.closeModel(false);
   }, [props.mobileDropdown]);
 
+  useEffect(() =>{
+    
+  setLoader(false);
+  props.getPromoRequest().then((res) => {
+    setLoader(true);
+   }).catch((res) =>{
+    setconnFound(false);
+  
+  });
+}, []);
+
+
+useEffect(() =>{
+if(typeof props.promo == 'object' && props.promo !== null){    
+  console.log(props.promo)
+  
+}
+ else{ 
+  setPromoCodeVal({
+    value: props.promo,
+    label: props.promo,
+    discount:props.discount
+  })
+  setPromoCodeDsc({
+    value: props.promo,
+    label: props.promo,
+    discount:props.discount
+  })
+}
+// setPromoCodeVal({
+//   value: a,
+//   label: a,
+//   discount:b,
+// });
+ 
+},[props]);
+
+if (loader == true) {
+  dataPromo = props.promoRequest.message;
+  
+  const promo = dataPromo;
+
+  if (dataPromo != undefined) {
+    const selectState = [];
+    promo.map((x) => {
+      return selectState.push({
+        value: x.promo,
+        label: x.promo,
+        discount: x.promo_percent,
+      });
+    });
+    PassPromoCode = selectState;
+    
+  } else {
+  }
+}
+
+const renderConValuePromoList = (x) => {
+  const filterPromo = this.state.promoList.filter((item) => {
+    if (item.label == x) {
+      return item;
+    }
+  });
+  if (filterPromo.length === 0) {
+    return {
+      value: "",
+      label: "Select Promo",
+      discount: "",
+    };
+  } else {
+    return {
+      value: filterPromo[0]?.value,
+      label: filterPromo[0]?.label,
+      discount: filterPromo[0]?.discount,
+    };
+  }
+};
+const renderConValue = (x) => {
+  const exit = this.props.countries.filter(
+    (item) => item.value === x.country
+  );
+
+  return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+};
+
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
     let endDate = dataString[1];
     props.dateRange(startDate, endDate);
   }
-  const changePromoCode = (e, options) => {
+
+
+
+  const changePromoCode = (e, options,item) => {
     setPromoCodeVal(options);
-  };
+    setPromoCodeDsc(e)
+    
+  }
+  // };
   return (
     <>
       {props.startDate && props.endDate && (
@@ -64,7 +193,7 @@ const ShopRightBar = (props) => {
             if (props.updatePage) {
               props.updatePost();
             } else {
-              props.savePost && props.savePost(this);
+              props.savePost && props.savePost(this,promoCodeVal,promoCodeDsc);
             }
           }}
           ref={formRef}
@@ -336,31 +465,35 @@ const ShopRightBar = (props) => {
                   />
                 </div>
 
-                {/* <div className="mt-3 row">
+                <div className="mt-3 row">
                   <div className="col-md-3">
                     <label>PromoCode For Customers</label>
                     <Select
+                    
                       name="promoCode"
+                      
                       value={promoCodeVal}
-                      onChange={(options, e) => changePromoCode(e, options)}
+                      onChange={(options, e) => changePromoCode(e, options,PassPromoCode)}
                       placeholder="Select PromoCode"
                       style={{ width: "100%" }}
                       //formatOptionLabel={promoCode}
                       // formatOptionLabel={formatOptionLabel}
-                      options={promoCode}
+                      options={PassPromoCode}
+                      
                     />
                   </div>
                   <div className="col-md-3">
                     <label>Discount</label>
                     <div className="promo_discount form-control">
-                      {promoCodeVal.discount}
+                    {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                    {promoCodeDsc.discount}
                     </div>
                   </div>
                   <div className="col-md-6">
                     <label>KB Fee</label>
-                    <div className="promo_discount form-control">10%</div>
+                    <div className="promo_discount form-control">{numeral(Kbfee).format("0,0'")}%</div>
                   </div>
-                </div> */}
+                </div>
 
                 <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (
@@ -375,7 +508,7 @@ const ShopRightBar = (props) => {
                             className="custom_btns_ift"
                             color="primary"
                             onClick={(ev) =>
-                              props.updatePost(media_id, props.redirectedUrl)
+                              props.updatePost(media_id, props.redirectedUrl,promoCodeDsc)
                             }
                           >
                             &nbsp;Update&nbsp;
@@ -456,7 +589,18 @@ const ShopRightBar = (props) => {
           </div>
         </Formsy.Form>
       )}
+
     </>
   );
 };
-export default ShopRightBar;
+
+function mapStateToProps({
+  getPromoRequest,
+  promoRequest,
+
+}) {
+  return { getPromoRequest, promoRequest };
+}
+export default connect(mapStateToProps, {
+  ...promo,
+})(ShopRightBar);

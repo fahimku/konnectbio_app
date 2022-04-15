@@ -13,6 +13,7 @@ import axios from "axios";
 import Loader from "../../../components/Loader/Loader";
 import InputNumberValidation from "../../../components/InputValidation/InputNumberValidation";
 import { connect } from "react-redux";
+import numeral from "numeral";
 import * as postActions from "../../../actions/posts";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -53,6 +54,7 @@ class UpdateModal extends React.Component {
       cities2: [],
       states: [],
       promoCodeVal: "",
+      Kbfee:"",
       //discount: this.props.affData?.discount,
       commission: this.props.affData?.commission,
     };
@@ -61,6 +63,14 @@ class UpdateModal extends React.Component {
   async componentDidMount() {
     console.log("-----",this.props.affData)
   
+      axios.post("/fee").then((res) =>{
+        console.log(res)
+        this.setState({Kbfee:res.data.message})  
+      }).catch((res) =>{
+        
+    })
+    
+
     await axios
       .post(`/campaigns/reach`, {
         demographics: this.state.inputList,
@@ -769,7 +779,7 @@ class UpdateModal extends React.Component {
                   <div className="col-md-6 mt-3">
                     <label>
                       Influencer Commission{" "}
-                      <span className="small">(Including 3% KB fees)</span>
+                      <span className="small">(Including{numeral(this.state.Kbfee).format("0,0'")}% KB fees)</span>
                     </label>
                     <InputNumberValidation
                       type="number"
@@ -783,7 +793,7 @@ class UpdateModal extends React.Component {
                       min="10"
                       max="50"
                     />
-                    <div className="small">Note: minimum commission is 10%</div>
+                    <div className="small">Note: minimum commission is {numeral(this.state.Kbfee).format("0,0'")}%</div>
                     <span className="text-danger">
                       {this.state.CommissionError}
                     </span>

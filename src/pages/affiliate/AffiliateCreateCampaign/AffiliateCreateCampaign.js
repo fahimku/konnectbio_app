@@ -6,6 +6,7 @@ import CarouselComponent from "./components/CarouselComponent";
 import AffiliateForm from "./components/AffiliateForm";
 import PostGallery from "./components/PostGallery";
 import Loader from "../../../components/Loader/Loader";
+import Connection from "../../connectToShopify/connShopify"
 
 class AffiliateCreateCampaign extends React.Component {
   state = {
@@ -19,12 +20,19 @@ class AffiliateCreateCampaign extends React.Component {
     affDataLoading: false,
     id: "",
     categoryLoading: false,
+    ShopifyConnFound: true
   };
+
   componentDidMount() {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     this.setState({ userInfo: userInfo });
     // this.getAllPost();
     this.fetchAllCategory();
+    axios.get("/campaigns/receive/getpromocodes").then((res) =>{
+     
+    }).catch((res) =>{
+      this.setState({ShopifyConnFound: false});
+  })
   }
   // getAllPost = async () => {
   //   await axios
@@ -129,13 +137,16 @@ class AffiliateCreateCampaign extends React.Component {
             />
           )}
         </Alert> */}
+        {/* {this.state.ShopifyConnFound == true ?
+        <> */}
         <div className="image-box-info">
           <h4>
             Create Campaign
             <span onClick={this.affToggleModal} className="fa fa-times"></span>
           </h4>
         </div>
-
+        
+        
         {this.state.affDataLoading ? (
           <Loader className="analytics-loading" size={60} />
         ) : (
@@ -146,6 +157,13 @@ class AffiliateCreateCampaign extends React.Component {
             toggleTabs={this.props.toggleTabs}
           />
         )}
+        {/* </>
+        :
+        <Connection/>
+  }
+         */}
+        
+  
 
         {/* {window.innerWidth <= 760 && (
           <Modal
@@ -169,8 +187,12 @@ class AffiliateCreateCampaign extends React.Component {
             )}
           </Modal>
         )} */}
+       
       </div>
+   
     ) : (
+      
+      
       <div className="create_campaign_heading">
         <h4>Create campaign</h4>
       </div>
@@ -212,6 +234,8 @@ class AffiliateCreateCampaign extends React.Component {
                   />
                 </div>
               </Col>
+              {this.state.ShopifyConnFound == true ?
+        <>
               <Col
                 className={`right-bar-affiliate bg-white ${
                   this.state.aff_modal ? "affiliate-block" : ""
@@ -222,6 +246,16 @@ class AffiliateCreateCampaign extends React.Component {
               >
                 {this.affiliateModal()}
               </Col>
+              </>:
+               <Col
+               className={"right-bar-affiliate bg-white"}
+               md="7"
+               xs="12"
+               xl="9"
+             >
+              <Connection/>
+  </Col>
+  }
             </Row>
           </div>
         </div>

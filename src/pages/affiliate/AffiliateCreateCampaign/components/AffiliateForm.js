@@ -17,7 +17,8 @@ import VirtualizedSelect from "react-virtualized-select";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ShopifyPromo from "./shopifyPromo";
 import { textAlign } from "@mui/system";
-
+import Connection from "../../../connectToShopify/connShopify"
+import numeral from "numeral";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
@@ -55,6 +56,7 @@ class AffiliateForm extends React.Component {
       commission: "10",
       promoCond: true,
       connNotFound: true,
+      Kbfee:"",
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -62,6 +64,14 @@ class AffiliateForm extends React.Component {
     this.setState({ campaign_name: value, campaign_type: "sales" });
     // console.log(campaign_name, "campaign_name");
   };
+
+  componentDidMount() {
+    axios.post("/fee").then((res) =>{
+      console.log(res)
+      this.setState({Kbfee:res.data.message})  
+    }).catch((res) =>{
+  })
+}
   ppClick = (value) => {
     this.setState(
       {
@@ -482,14 +492,7 @@ class AffiliateForm extends React.Component {
     // console.log(this.state.commission, "promoCodeVal");
 
     return (
-      <>
-        {this.state.connNotFound === false ? (
-          <div className="image-box-info">
-            <span className={"help-block text-danger"}>
-              Connect To Shopify First!
-            </span>
-          </div>
-        ) : (
+     
           <React.Fragment>
             <Formsy.Form
               onValidSubmit={() =>
@@ -809,7 +812,7 @@ class AffiliateForm extends React.Component {
                               max="50"
                             />
                             <div className="small">
-                              Note: minimum commission is 10%
+                            Note: minimum commission is {numeral(this.state.Kbfee).format("0,0'")}%
                             </div>
                             <span className="text-danger">
                               {this.state.CommissionError}
@@ -1096,8 +1099,8 @@ class AffiliateForm extends React.Component {
               ) : null}
             </Formsy.Form>
           </React.Fragment>
-        )}
-      </>
+        
+    
     );
   }
 }
