@@ -392,10 +392,10 @@ class SubcriptionSetup extends React.Component {
                           <h3 className="count col-md-6 pr-0">
                             <Select
                               isSearchable={false}
-                              isOptionDisabled={(option) => option.isdisabled} // disable an option
+                              // isOptionDisabled={(option) => option.isdisabled} // disable an option
                               options={this.state.packages}
                               placeholder="Select Package"
-                              defaultValue={{
+                              value={{
                                 label: this.state.package,
                                 value: this.state.packageId,
                               }}

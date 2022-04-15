@@ -91,7 +91,7 @@ class Categories extends React.Component {
               <div className="row">
                 <div class="col-md-12">
                   <h4 class="page-title">
-                    {this.state.modalComp ? "Categories" : "Brands"}
+                    {this.state.modalComp ? "Category" : "Brands"}
                   </h4>
                 </div>
               </div>

@@ -34,7 +34,7 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
 
   const brandApproval = (item) => {
     Swal.fire({
-      title: `Need To Be Approved By Brand. Please Request Participation.`,
+      title: `Need To Be Approved By Brand Please Request Participation.`,
       imageUrl: item?.profile_image_url,
       customClass: {
         image: "swal-brand-image",
@@ -82,7 +82,11 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
                         item.status === "Approved" ? "status_green" : ""
                       } ${item.status === "Rejected" ? "status_red" : ""}`}
                     >
-                      {item.status === "Pending" ? "Under Review" : item.status}
+                      {item.status === "Pending"
+                        ? "Under Review"
+                        : item.status === "Rejected"
+                        ? "Disapproved"
+                        : item.status}
                     </span>
                     <img
                       alt="profile-icon"

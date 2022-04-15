@@ -96,7 +96,7 @@ class MarketPlace extends React.Component {
                         this.toggleTabs("categories");
                       }}
                     >
-                      <span>Categories</span>
+                      <span>Category</span>
                     </NavLink>
                   </NavItem>
 
