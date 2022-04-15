@@ -25,6 +25,7 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
+let userInfo;
 let dataPromo;
 let PassPromoCode;
 var subPromo ;
@@ -64,6 +65,7 @@ function ShopRightBar(
 
 
 useEffect(() => {
+  userInfo = JSON.parse(localStorage.getItem("userInfo"));
   axios.post("/fee").then((res) =>{
     console.log(res)
     setKbfee(res.data.message)  
@@ -465,6 +467,8 @@ const renderConValue = (x) => {
                   />
                 </div>
 
+                {userInfo?.account_type == "influencer" ?
+                <></>:
                 <div className="mt-3 row">
                   <div className="col-md-3">
                     <label>PromoCode For Customers</label>
@@ -494,6 +498,7 @@ const renderConValue = (x) => {
                     <div className="promo_discount form-control">{numeral(Kbfee).format("0,0'")}%</div>
                   </div>
                 </div>
+}
 
                 <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (

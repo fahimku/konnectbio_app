@@ -23,7 +23,7 @@ export const history = createBrowserHistory({
   forceRefresh: true,
 });
 
-
+let userInfo;
 class LinkinBio extends React.Component {
   constructor(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -89,6 +89,7 @@ class LinkinBio extends React.Component {
   }
 
   componentDidMount() {
+    userInfo = JSON.parse(localStorage.getItem("userInfo"));
     axios.get("/campaigns/receive/getpromocodes").then((res) =>{
       
     }).catch((res) =>{
@@ -191,9 +192,10 @@ class LinkinBio extends React.Component {
       .then((response) => {
         console.log(response.data.success,"............")
         // let that = this;
-        
+        if(userInfo?.account_type == "influencer"){}else{
         this.setState({promoCodeDsc: response.data.message.discount});
         this.setState({promoCodeVal: response.data.message.promo});
+        }
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -243,6 +245,7 @@ class LinkinBio extends React.Component {
     } else {
       newRedirectedUrl = "http://" + this.state.redirectedUrl;
     }
+    
     if (this.state.redirectedUrl) {
       this.setState(
         (previousState) => ({
@@ -250,7 +253,47 @@ class LinkinBio extends React.Component {
         }),
         async () => {
           this.setState({ loading: true });
-         
+          if(userInfo?.account_type == "influencer"){   
+            await axios
+            .post(`/posts/reserve`, {
+              id: this.state.currentPost.id,
+              caption: this.state.currentPost.caption,
+              media_url: this.state.currentPost.media_url,
+              media_type: this.state.currentPost.media_type,
+              timestamp: this.state.currentPost.timestamp,
+              redirected_url: newRedirectedUrl,
+              username: this.state.currentPost.username,
+              categories: this.state.category,
+              sub_categories: this.state.subCategory,
+              post_type: this.state.postType,
+              start_date: this.state.startDate,
+              end_date: this.state.endDate,
+              source: this.props.mobileDropdown,
+              
+            })
+            .then((response) => {
+              this.setState({ loading: false });
+              let singlePostIndex = this.state.instagramPosts.data.findIndex(
+                (item) => item.id === this.state.currentPost.id
+              );
+              let currentPost = this.state.currentPost;
+              currentPost.redirected_url = this.state.redirectedUrl;
+              currentPost.linked = true;
+              let instagramPosts = JSON.parse(
+                JSON.stringify(this.state.instagramPosts)
+              );
+              instagramPosts.data[singlePostIndex] = currentPost;
+              this.setState({ instagramPosts: instagramPosts }, () => { });
+              toast.success("Your Post is Linked Successfully");
+              this.selectPost(false, "");
+              this.reload();
+            })
+
+            .catch((err) => {
+              this.setState({ loading: false });
+              toast.error(err);
+            });
+          }else{
           await axios
             .post(`/posts/reserve`, {
               id: this.state.currentPost.id,
@@ -292,7 +335,9 @@ class LinkinBio extends React.Component {
               toast.error(err);
             });
         }
-      );
+      }
+        );
+    
     }
   };
 
@@ -312,6 +357,32 @@ class LinkinBio extends React.Component {
     }
 
     this.setState({ loading: true });
+    if(userInfo?.account_type == "influencer"){await axios
+      .put(`/posts/revise/${id}`, {
+        redirected_url: url,
+        categories: newCategory,
+        sub_categories: this.state.subCategory,
+        post_type: this.state.postType,
+        start_date: this.state.startDate,
+        end_date: this.state.endDate,
+   
+      })
+      .then((response) => {
+        this.setState({ loading: false });
+        let singlePostIndex = this.state.instagramPosts.data.findIndex(
+          (item) => item.id === id
+        );
+        let currentPost = this.state.singlePost;
+        currentPost.redirected_url = url;
+        let instagramPosts = JSON.parse(
+          JSON.stringify(this.state.instagramPosts)
+        );
+        instagramPosts.data[singlePostIndex] = currentPost;
+        this.setState({ instagramPosts: instagramPosts });
+        toast.success("Your Post Link is Updated");
+        this.selectPost(false, "");
+        
+      });}else{
     await axios
       .put(`/posts/revise/${id}`, {
         redirected_url: url,
@@ -339,6 +410,7 @@ class LinkinBio extends React.Component {
         this.selectPost(false, "");
         
       });
+    }
   };
   reload = () => {
     const current = this.props.location.pathname;
@@ -624,6 +696,13 @@ class LinkinBio extends React.Component {
                 ></iframe>
               ) : null}
             </div>
+            {userInfo?.account_type == "influencer" ?
+              <Row className="linked_edit_box">
+              <Col xs="12" className="p-5">
+                {this.shopRightBar()}
+              </Col>
+            </Row>:
+            <>
             {this.state.ShopifyConnFound == false && this.state.selectPost ?
           <div className="container-fluid">
           <div class="coming_iner">
@@ -647,6 +726,8 @@ class LinkinBio extends React.Component {
               </Col>
             </Row>
             </>
+  }
+  </>
   }
           </Col>
      
