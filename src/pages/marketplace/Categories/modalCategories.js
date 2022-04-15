@@ -4,6 +4,9 @@ import * as brandActions from "../../../actions/brands";
 import { connect } from "react-redux";
 import { Row, Modal } from "react-bootstrap";
 import BrandMarketPlace from "../BrandMarketPlace";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function ModalCategories({ catData, categoryById, getCatbrands }) {
   const [loading, setLoading] = useState(true);
@@ -29,6 +32,36 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
     setBrandName(brand_name);
   };
 
+  const brandApproval = (item) => {
+    Swal.fire({
+      title: `Need To Be Approved By Brand. Please Request Participation.`,
+      imageUrl: item?.profile_image_url,
+      customClass: {
+        image: "swal-brand-image",
+      },
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(`users/marketPlace/requestbrand`, {
+            brand_id: item.brand_id,
+          })
+          .then((response) => {
+            toast.success("Request has been send Successfully");
+            getCatbrands(parent_id).then((res) => {
+              setLoading(false);
+            });
+          })
+          .catch((err) => {
+            toast.error(err.response.data.message);
+          });
+      }
+    });
+  };
+
   return (
     <div className="brand-section">
       {loading ? (
@@ -36,20 +69,45 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
       ) : (
         <>
           <Row>
-            {data.map((item, i) => {
-              return (
-                <div key={i} className="brand-box col-sm-3 col-4">
-                  <img
-                    alt="profile-icon"
-                    src={item?.profile_image_url}
-                    style={{ width: "100px", height: "100px" }}
-                    className="img-fluid brand-cat"
-                    onClick={() => brandSelect(item.brand_id, item.brand_name)}
-                  />
-                  <div className="cat-lable">{item.brand_name}</div>
-                </div>
-              );
-            })}
+            {data.length === 0 ? (
+              <div className="col-md-12 no-data-cat">
+                <p className="text-muted">No Brand</p>
+              </div>
+            ) : (
+              data.map((item, i) => {
+                return (
+                  <div key={i} className="brand-box col-sm-3 col-6">
+                    <span
+                      className={`brand_status ${
+                        item.status === "Approved" ? "status_green" : ""
+                      } ${item.status === "Rejected" ? "status_red" : ""}`}
+                    >
+                      {item.status === "Pending" ? "Under Review" : item.status}
+                    </span>
+                    <img
+                      alt="profile-icon"
+                      src={item?.profile_image_url}
+                      style={{ width: "100px", height: "100px" }}
+                      className={`img-fluid brand-cat ${
+                        item.brand_id === "61baedec5ab558359825084e"
+                          ? "custom-brand-cat"
+                          : ""
+                      } ${
+                        item.status === "Pending" || item.status === "Rejected"
+                          ? "pending-brand-cat"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        item.status === ""
+                          ? brandApproval(item)
+                          : brandSelect(item.brand_id, item.brand_name)
+                      }
+                    />
+                    <div className="cat-lable">{item.brand_name}</div>
+                  </div>
+                );
+              })
+            )}
           </Row>
         </>
       )}
@@ -85,7 +143,7 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
             <span class="sr-only">Close</span>
           </button>
         </Modal.Header>
-        <Modal.Body className="bg-white transection-detail">
+        <Modal.Body className="bg-white">
           <BrandMarketPlace brandId={brandId} catId={catData.category_id} />
         </Modal.Body>
       </Modal>

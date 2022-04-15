@@ -19,15 +19,7 @@ function BrandMarketPlace({
 }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [loading, setLoading] = useState(false);
-  const [searchLoading, setSearchLoading] = useState(false);
-  const [clearLoading, setClearLoading] = useState(false);
-  const [categoryLoading, setCategoryLoading] = useState(false);
-
-  const [category, setCategory] = useState({ value: "all", label: "ALL" });
-  const [categoryOptions, setCategoryOptions] = useState([]);
-  const [brand, setBrand] = useState({ value: "all", label: "ALL" });
   const [sortBy, setSortBy] = useState({ value: "date", label: "DATE" });
-
   const [orderBy, setOrderBy] = useState({ value: "desc", label: "DESC" });
   const [currentPage, setCurrentPage] = useState(0);
   const fromDate = moment(new Date()).format("YYYY-MM-DD");

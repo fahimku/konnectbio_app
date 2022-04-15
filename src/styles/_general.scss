@@ -1252,7 +1252,7 @@ code.sm-color {
   background-color: red;
   border-radius: 50%;
   display: flex;
-  z-index: 999999;
+  z-index: 9;
   position: absolute;
   right: 3px;
   top: 5px;
@@ -1261,11 +1261,30 @@ code.sm-color {
 .brand-box {
   text-align: center;
   margin-top: 10px;
+  position: relative;
+}
+.brand-box .brand_status {
+  position: absolute;
+  color: #fff;
+  font-size: 11px;
+  right: 45px;
+  padding: 0 5px;
+  background: rgba(0, 0, 0, 0.5);
+  border-top-right-radius: 10px;
+}
+.status_gray {
+  background: rgba(0, 0, 0, 0.5);
+}
+.status_green {
+  background: rgba(0, 230, 64, 0.6) !important;
+}
+.status_red {
+  background: rgba(207, 0, 15, 0.6) !important;
 }
 .brand-cat {
   cursor: pointer;
-  border-radius: 50%;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  // border: 1px solid #ccc;
   width: 90px;
 }
 .brand-box:hover .brand-cat {
@@ -1280,4 +1299,41 @@ code.sm-color {
   padding-bottom: 10px;
   margin-bottom: 1em;
   display: block;
+}
+.custom-brand-cat {
+  border: none;
+}
+.no-data-cat {
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  margin-top: 60px;
+}
+.pending-brand-cat {
+  pointer-events: none;
+}
+.swal-brand-image {
+  border-radius: 10px;
+  width: 70px;
+  height: 70px;
+}
+
+.skew_label {
+  background: red;
+  width: 90px;
+  height: 18px;
+  // -webkit-clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+  clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+  position: absolute;
+  bottom: 0px;
+  right: 44px;
+  // border-bottom-right-radius: 10px;
+  color: white;
+  font-size: 12px;
+  text-align: right;
+  padding-right: 7px;
+  font-family: "SegoeUIBold";
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }

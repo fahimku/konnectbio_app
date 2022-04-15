@@ -102,7 +102,7 @@ class UpdateModal extends React.Component {
       this.setState({ states: res });
     });
   }
-  
+
   titleChange = (value) => {
     this.setState({ campaign_name: value });
   };
@@ -114,7 +114,6 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-   
     this.setState({ promoCodes: options.value });
     this.setState({ promoCodesDiscount: options.discount });
   };
@@ -779,7 +778,7 @@ class UpdateModal extends React.Component {
                   <div className="col-md-6 mt-3">
                     <label>
                       Influencer Commission{" "}
-                      <span className="small">(Including{numeral(this.state.Kbfee).format("0,0'")}% KB fees)</span>
+                      <span className="small">(Including {numeral(this.state.Kbfee).format("0,0'")}% KB fees)</span>
                     </label>
                     <InputNumberValidation
                       type="number"

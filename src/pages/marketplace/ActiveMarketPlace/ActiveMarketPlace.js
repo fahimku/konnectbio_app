@@ -49,11 +49,11 @@ function ActiveMarketPlace({
   // const toDate = moment().add(1, "year").format("YYYY-MM-DD");
   const fromDate =
     type !== "expired"
-      ? moment(new Date()).format("YYYY-MM-DD")
+      ? moment().startOf("year").format("YYYY-MM-DD")
       : moment().startOf("year").format("YYYY-MM-DD");
   const toDate =
     type !== "expired"
-      ? moment().add(1, "year").format("YYYY-MM-DD")
+      ? moment(new Date()).format("YYYY-MM-DD")
       : moment(new Date()).format("YYYY-MM-DD");
   const [startDate, setStartDate] = useState(fromDate);
   const [endDate, setEndDate] = useState(toDate);

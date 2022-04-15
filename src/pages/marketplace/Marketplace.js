@@ -109,11 +109,11 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("brand");
                       }}
-                      disabled={
-                        !catLoading && catTab.length === 0 ? true : false
-                      }
+                      // disabled={
+                      //   !catLoading && catTab.length === 0 ? true : false
+                      // }
                     >
-                      <span>Brand</span>
+                      <span>Brands</span>
                     </NavLink>
                   </NavItem>
                   {/* <NavItem>
@@ -144,12 +144,12 @@ class MarketPlace extends React.Component {
                       onClick={() => {
                         this.toggleTabs("active");
                       }}
-                      disabled={
-                        brandtab.length === 0 ||
-                        (!catLoading && catTab.length === 0)
-                          ? true
-                          : false
-                      }
+                      // disabled={
+                      //   brandtab.length === 0 ||
+                      //   (!catLoading && catTab.length === 0)
+                      //     ? true
+                      //     : false
+                      // }
                     >
                       <span>Active</span>
                     </NavLink>

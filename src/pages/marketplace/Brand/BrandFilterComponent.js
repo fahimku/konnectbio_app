@@ -41,7 +41,7 @@ function BrandFilterComponent({ title }) {
     <React.Fragment>
       <div className="profile-page account-setup">
         <div className="container-fluid">
-          <h4 class="page-title">Brand</h4>
+          <h4 class="page-title">Brands</h4>
           <div className="profile_container_main container">
             <div className="row">
               <div className="profile_box_main col-md-8">
@@ -52,29 +52,48 @@ function BrandFilterComponent({ title }) {
                       <Loader size="30" />
                     ) : (
                       <Row>
-                        {myBrand.map((item) => (
-                          <div
-                            key={item.brand_id}
-                            className="brand-box col-sm-3 col-4"
-                          >
-                            <img
-                              key={item.brand_id}
-                              src={
-                                item.profile_image_url === "" ||
-                                item.profile_image_url === undefined
-                                  ? placeholder
-                                  : item.profile_image_url
-                              }
-                              alt="cat-logo"
-                              className="img-fluid brand-cat"
-                              onClick={() =>
-                                brandSelect(item.brand_id, item.brand_name)
-                              }
-                              style={{ width: "100px", height: "100px" }}
-                            />
-                            <div className="cat-lable">{item.brand_name}</div>
+                        {myBrand.length === 0 ? (
+                          <div className="col-md-12 no-data-cat">
+                            <p className="text-muted">No Brand</p>
                           </div>
-                        ))}
+                        ) : (
+                          myBrand.map((item) => (
+                            <div
+                              key={item.brand_id}
+                              className="brand-box col-sm-3 col-6"
+                            >
+                              <div className="inner-brand-box">
+                                <img
+                                  key={item.brand_id}
+                                  src={
+                                    item.profile_image_url === "" ||
+                                    item.profile_image_url === undefined
+                                      ? placeholder
+                                      : item.profile_image_url
+                                  }
+                                  alt="cat-logo"
+                                  className={`img-fluid brand-cat ${
+                                    item.brand_id === "61baedec5ab558359825084e"
+                                      ? "custom-brand-cat"
+                                      : ""
+                                  }`}
+                                  onClick={() =>
+                                    brandSelect(item.brand_id, item.brand_name)
+                                  }
+                                  style={{ width: "100px", height: "100px" }}
+                                />
+                                {item?.website_discount ? (
+                                  <span className="skew_label">
+                                    {item?.website_discount}% OFF
+                                  </span>
+                                ) : null}
+                                {/* <div className="cat-lable">
+                                  {item.brand_name}
+                                </div> */}
+                              </div>
+                            </div>
+                          ))
+                        )}
                       </Row>
                     )}
                   </div>
