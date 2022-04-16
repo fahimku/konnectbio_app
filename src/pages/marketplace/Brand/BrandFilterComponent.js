@@ -126,7 +126,7 @@ function BrandFilterComponent({ title }) {
           </button>
         </Modal.Header>
         <Modal.Body className="bg-white transection-detail">
-          <BrandMarketPlace brandId={brandId} />
+          <BrandMarketPlace brandId={brandId} type="marketplace" />
         </Modal.Body>
       </Modal>
     </React.Fragment>

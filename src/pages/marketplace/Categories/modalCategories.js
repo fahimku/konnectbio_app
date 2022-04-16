@@ -148,7 +148,11 @@ function ModalCategories({ catData, categoryById, getCatbrands }) {
           </button>
         </Modal.Header>
         <Modal.Body className="bg-white">
-          <BrandMarketPlace brandId={brandId} catId={catData.category_id} />
+          <BrandMarketPlace
+            brandId={brandId}
+            catId={catData.category_id}
+            type="marketplace"
+          />
         </Modal.Body>
       </Modal>
     </div>
