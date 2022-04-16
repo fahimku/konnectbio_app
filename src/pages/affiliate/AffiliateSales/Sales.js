@@ -62,6 +62,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
     }),
   };
   const limit = 12;
+  const upperLimit = (currentPage + 1) * limit;
+  const lowerLimit = upperLimit - limit + 1;
 
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("userInfo"));
@@ -231,7 +233,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{i + 1}</td>
+                      <td>{lowerLimit + i}</td>
                       <td>
                         {!item?.created_date
                           ? "-"
