@@ -102,14 +102,14 @@ useEffect(() => {
 
 useEffect(() =>{
 if(typeof props.promo == 'object' && props.promo !== null){    
-  console.log(props.promo)
   
 }
  else{ 
+if(props.promo){
   setPromoCodeVal({
-    value: props.promo,
+    value: props.promo, 
     label: props.promo,
-    discount:props.discount
+    discount:props.discount 
   })
   setPromoCodeDsc({
     value: props.promo,
@@ -117,11 +117,21 @@ if(typeof props.promo == 'object' && props.promo !== null){
     discount:props.discount
   })
 }
-// setPromoCodeVal({
-//   value: a,
-//   label: a,
-//   discount:b,
-// });
+else{
+  
+  setPromoCodeVal({
+    value: "KB0", 
+    label: "KB0",
+    discount:"0%" 
+  })
+  setPromoCodeDsc({
+    value: "KB0",
+    label: "KB0",
+    discount:"0%"
+  })
+}
+}
+
  
 },[props]);
 
