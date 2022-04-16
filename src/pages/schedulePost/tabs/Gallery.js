@@ -14,6 +14,7 @@ import { Col, Row, Modal } from "react-bootstrap";
 import { Label, Input } from "reactstrap";
 import Select from "react-select";
 import { DatePicker } from "antd";
+import ReactPaginate from "react-paginate";
 
 const { RangePicker } = DatePicker;
 
@@ -42,6 +43,8 @@ function Gallery({
     end_date: "",
     categories: { value: "", label: "Please Select" },
   });
+  const [currentPage, setCurrentPage] = useState(0);
+  const limit = 8;
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -50,6 +53,9 @@ function Gallery({
   }, []);
 
   const onDelete = async (item) => {
+    let page = gallery.data.length === 1 ? currentPage : currentPage + 1;
+
+    if (currentPage === 0) page = 1;
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -61,7 +67,12 @@ function Gallery({
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMedia(item.media_library_id).then(() => {
-          getMedia("active");
+          // getMedia("active");
+          getMedia("active", page);
+          // setDeleteLoading(false);
+          if (gallery.data.length === 1) {
+            setCurrentPage(currentPage - 1);
+          }
           // toast.error("successfully deleted")
         });
       }
@@ -369,10 +380,41 @@ function Gallery({
       }
     });
   }
+  const handlePageClick = (e) => {
+    setLoading(true);
+    const page = e.selected;
+    setCurrentPage(page);
+    getMedia("active", page + 1, limit).then(() => setLoading(false));
+  };
   return (
     <div className="container-fluid">
       <h4 className="page-title">{title}</h4>
       {renderContent()}
+      {gallery?.data?.length > 0 && !loading && (
+        <ReactPaginate
+          previousLabel=""
+          nextLabel=""
+          pageClassName="page-item "
+          pageLinkClassName="page-link custom-paginate-link btn btn-primary"
+          previousClassName="page-item"
+          previousLinkClassName="page-link custom-paginate-prev btn btn-primary"
+          nextClassName="page-item"
+          nextLinkClassName="page-link custom-paginate-next btn btn-primary"
+          breakLabel="..."
+          breakClassName="page-item"
+          breakLinkClassName="page-link"
+          forcePage={currentPage}
+          pageCount={Math.ceil(gallery.total_count / limit)}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
+          onPageChange={handlePageClick}
+          containerClassName={
+            "pagination justify-content-center mt-2 custom-paginate"
+          }
+          // subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      )}
       <Modal
         show={modal}
         onHide={() => {
