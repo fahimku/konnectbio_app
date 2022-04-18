@@ -1338,3 +1338,36 @@ code.sm-color {
   justify-content: end;
   align-items: center;
 }
+
+/*******customer Page*********/
+.customer_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.customer_page .height {
+  height: 80vh;
+}
+
+.customer_page .app-button {
+  width: 55%;
+  height: 48px;
+  border-radius: 10px;
+  background: #010b40;
+  border: 1px solid #010b40;
+  position: relative;
+  font-family: Nunito Sans, sans-serif;
+  font-weight: 600;
+  padding-top: 8px;
+  line-height: 30px;
+}
+
+.customer_page .app-button span {
+  font-size: 18px;
+}
+.customer_page .app-button .fa {
+  position: absolute;
+  left: 30px;
+}
+.customer_page .title {
+}
