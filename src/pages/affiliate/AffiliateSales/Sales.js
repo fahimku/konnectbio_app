@@ -360,7 +360,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   return (
                     <tr key={i}>
                       <td>{lowerLimit + i}</td>
-                      <td>{item?.campaign_name.length === 0 ? "BioShop" : item?.campaign_name }</td>
+                      <td>{item?.campaign_name?.length === 0 ? "BioShop" : item?.campaign_name }</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>{numeral(item?.discount).format("$0,0.0'")}</td>
@@ -407,6 +407,10 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                   return (
                     <tr key={i}>
                       <td>{lowerLimit + i}</td>
+                      
+                      {item?.influencer_name === "Konnect Bio" ?
+                      <td>{item?.influencer_name}</td>
+                      :
                       <td>
                         <a
                           target="_blank"
@@ -415,6 +419,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                           {item?.influencer_name}
                         </a>
                       </td>
+                }
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       <td>{numeral(item?.discount).format("$0,0.0'")}</td>
