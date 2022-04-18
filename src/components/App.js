@@ -26,6 +26,7 @@ import Forgot from "../pages/auth/forgot";
 import Package from "../pages/package/package";
 import Payment from "../pages/payment/payment";
 import Deposit from "../pages/deposit/deposit";
+import Customer from "../pages/customer/customer";
 
 const CloseButton = ({ closeToast }) => (
   <i onClick={closeToast} className="la la-close notifications-close" />
@@ -87,6 +88,12 @@ class App extends React.PureComponent {
                 path="/deposit"
                 exact
                 component={Deposit}
+                dispatch={this.props.dispatch}
+              />
+              <UserRoute
+                path="/customer"
+                exact
+                component={Customer}
                 dispatch={this.props.dispatch}
               />
               <Route path="/error" exact component={ErrorPage} />

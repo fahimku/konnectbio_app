@@ -159,7 +159,7 @@ export function loginUser(creds) {
             next_payment_date: res.data.message.next_payment_date,
             recurring_payment_type: res.data.message.recurring_payment_type,
             is_trial_expired: res.data?.message?.is_trial_expired,
-            account_type:res.data?.message?.account_type,
+            account_type: res.data?.message?.account_type,
           };
 
           localStorage.setItem("userInfo", JSON.stringify(userInfo));
@@ -171,41 +171,48 @@ export function loginUser(creds) {
           ).page_token;
           // const fbPage=localStorage.getItem('fbPage')
           // const fbToken=localStorage.getItem('fbToken')
-
-          if (res?.data?.message?.is_trial_expired) {
-            history.push("/package");
-          } else if (
-            res?.data?.message?.package &&
-            !res?.data?.message?.access_token &&
-            !res.data.message.fb_token
-          ) {
-            history.push("/connect");
-          } else if (
-            res?.data?.message?.package &&
-            res?.data?.message?.access_token &&
-            !res.data.message.fb_token &&
-            res?.data?.message?.package?.package_id !=="61c02d43f40bec74fac2c9a0"
-          ) {
-            history.push("/connect");
-          } else if (
-            res?.data?.message?.package?.package_id ==="61c02d43f40bec74fac2c9a0" &&
-            res?.data?.message?.access_token
-          ) {
-            history.push("/app/linkinbio");
-          } else if (
-            res?.data?.message?.package?.package_id ==="61c02e2ff40bec74fac2ca09" &&
-            res?.data?.message?.access_token &&
-            fbPage
-          ) {
-            history.push("/app/linkinbio");
-          } else if (
-            res?.data?.message?.package?.package_id ==="61d695e9bccdaf69f46efc66" &&
-            res?.data?.message?.access_token &&
-            fbPage
-          ) {
-            history.push("/app/linkinbio");
+          if (res?.data?.message?.account_type === "customer") {
+            history.push("/customer");
           } else {
-            history.push("/package");
+            if (res?.data?.message?.account_type) {
+              history.push("/package");
+            } else if (
+              res?.data?.message?.package &&
+              !res?.data?.message?.access_token &&
+              !res.data.message.fb_token
+            ) {
+              history.push("/connect");
+            } else if (
+              res?.data?.message?.package &&
+              res?.data?.message?.access_token &&
+              !res.data.message.fb_token &&
+              res?.data?.message?.package?.package_id !==
+                "61c02d43f40bec74fac2c9a0"
+            ) {
+              history.push("/connect");
+            } else if (
+              res?.data?.message?.package?.package_id ===
+                "61c02d43f40bec74fac2c9a0" &&
+              res?.data?.message?.access_token
+            ) {
+              history.push("/app/linkinbio");
+            } else if (
+              res?.data?.message?.package?.package_id ===
+                "61c02e2ff40bec74fac2ca09" &&
+              res?.data?.message?.access_token &&
+              fbPage
+            ) {
+              history.push("/app/linkinbio");
+            } else if (
+              res?.data?.message?.package?.package_id ===
+                "61d695e9bccdaf69f46efc66" &&
+              res?.data?.message?.access_token &&
+              fbPage
+            ) {
+              history.push("/app/linkinbio");
+            } else {
+              history.push("/package");
+            }
           }
         })
         .catch((error) => {
