@@ -174,7 +174,7 @@ export function loginUser(creds) {
           if (res?.data?.message?.account_type === "customer") {
             history.push("/customer");
           } else {
-            if (res?.data?.message?.account_type) {
+            if (res?.data?.message?.is_trial_expired) {
               history.push("/package");
             } else if (
               res?.data?.message?.package &&

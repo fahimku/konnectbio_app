@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Row, Button } from "react-bootstrap";
 // import Swal from "sweetalert2";
-import { connect } from "react-redux";
-import * as shopifyActions from "../../actions/shopifySetup";
-import axios from "axios";
+// import { connect } from "react-redux";
+// import * as shopifyActions from "../../actions/shopifySetup";
+// import axios from "axios";
 import logo from "../../images/konnectbiologo.svg";
 import { createBrowserHistory } from "history";
 export const history = createBrowserHistory({
@@ -11,7 +11,7 @@ export const history = createBrowserHistory({
 });
 
 function Customer() {
-  const [saveloading, setSaveLoading] = useState(false);
+  // const [saveloading, setSaveLoading] = useState(false);
   useEffect(() => {
     console.log("dfd");
   }, []);
