@@ -331,8 +331,8 @@ class Register extends React.Component {
         })
         .then((response) => {
           toast.success(response.data.message);
-
-          this.setState({ step1: true });
+          this.props.history.push("/login");
+          this.setState({ step1: false });
           this.setState({ step2: false });
           this.setState({ step3: false });
         })
@@ -598,7 +598,7 @@ class Register extends React.Component {
                               <div className="form-group">
                                 <Select
                                   className="form_select_group"
-                                  value={
+                                  value={ 
                                     this.state.gender && {
                                       label:
                                         this.state.gender
