@@ -408,7 +408,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                     <tr key={i}>
                       <td>{lowerLimit + i}</td>
                       
-                      {item?.influencer_name === "Konnect Bio" ?
+                      {item?.influencer_name === "KonnectBio" ?
                       <td>{item?.influencer_name}</td>
                       :
                       <td>
