@@ -25,39 +25,46 @@ export const history = createBrowserHistory({
 const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
 class Package extends React.Component {
-  state = {
-    showBasic: false,
-    isExpiredModal: userInfo.is_trial_expired
-      ? Swal.fire({
-          title: "Expired",
-          text: "Your Trial has been expired please make the payment to proceed.",
-          icon: "warning",
-          customClass: {
-            title: "trial-title",
-          },
-        })
-      : null,
-    showPremium: false,
-    showPremiumPlus: false,
-    packages: "",
-    loading: false,
-    promo_code: "",
-    promo_error: false,
-    promoCodeError: "",
-    showSelectPackage: false,
-    checkbox: {},
-    plan: "",
-    showPromo: false,
-    showPromoPlus: false,
-    help1: true,
-    help2: true,
-    help3: true,
-    packageId: "",
-    prices: [],
-    selectedtab: "Yearly",
-    paymentLoading: false,
-    trailLoading: false,
-  };
+  constructor(props) {
+    if (userInfo?.account_type === "customer") {
+      history.push("/customer");
+    }
+
+    super(props);
+    this.state = {
+      showBasic: false,
+      isExpiredModal: userInfo.is_trial_expired
+        ? Swal.fire({
+            title: "Expired",
+            text: "Your Trial has been expired please make the payment to proceed.",
+            icon: "warning",
+            customClass: {
+              title: "trial-title",
+            },
+          })
+        : null,
+      showPremium: false,
+      showPremiumPlus: false,
+      packages: "",
+      loading: false,
+      promo_code: "",
+      promo_error: false,
+      promoCodeError: "",
+      showSelectPackage: false,
+      checkbox: {},
+      plan: "",
+      showPromo: false,
+      showPromoPlus: false,
+      help1: true,
+      help2: true,
+      help3: true,
+      packageId: "",
+      prices: [],
+      selectedtab: "Yearly",
+      paymentLoading: false,
+      trailLoading: false,
+    };
+  }
 
   componentDidMount() {
     this.props.configSubs().then((res) => {
