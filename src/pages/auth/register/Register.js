@@ -593,7 +593,30 @@ class Register extends React.Component {
                                 placeholder="Email"
                               />
                             </div>
-                            {this.state.accountType === "influencer" || this.state.accountType === "customer" && (
+
+                            {this.state.accountType === "customer" && (
+                              <div className="form-group">
+                                <Select
+                                  className="form_select_group"
+                                  value={
+                                    this.state.gender && {
+                                      label:
+                                        this.state.gender
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                        this.state.gender.slice(1),
+                                      value: this.state.gender,
+                                    }
+                                  }
+                                  onChange={this.changeGender}
+                                  placeholder="Select Gender"
+                                  options={this.state.genderList}
+                                  styles={styles}
+                                />
+                              </div>
+                            )}
+
+                            {this.state.accountType === "influencer" && (
                               <div className="form-group">
                                 <Select
                                   className="form_select_group"
