@@ -294,7 +294,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{i + 1}</td>
+                      <td>{lowerLimit + i}</td>
                       <td>
                         {!item?.created_date
                           ? "-"
@@ -345,7 +345,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{i + 1}</td>
+                      <td>{lowerLimit + i}</td>
                       <td>{item?.campaign_name}</td>
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
@@ -392,7 +392,7 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{i + 1}</td>
+                      <td>{lowerLimit + i}</td>
                       <td>
                         <a
                           target="_blank"
