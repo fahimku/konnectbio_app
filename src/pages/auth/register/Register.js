@@ -324,7 +324,7 @@ class Register extends React.Component {
             email: this.state.email,
             gender: this.state.gender,
             country: this.state.countryCode,
-            state: this.state.countryStateCode,
+            state: this.state.countryStateCode, 
             city: this.state.city,
             password: this.state.password,
            
@@ -480,7 +480,7 @@ class Register extends React.Component {
                             onChange={this.changeType}
                           />
                           <label for="customer">
-                            <span className="imp-inf"></span>
+                            <span className="imp-cus"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Customer</h4>
                               <p>
