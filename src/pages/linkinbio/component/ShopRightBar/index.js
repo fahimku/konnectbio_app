@@ -67,7 +67,7 @@ function ShopRightBar(
 useEffect(() => {
   userInfo = JSON.parse(localStorage.getItem("userInfo"));
   axios.post("/fee").then((res) =>{
-    console.log(res)
+   
     setKbfee(res.data.message)  
   }).catch((res) =>{
     

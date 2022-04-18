@@ -190,8 +190,7 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
-        console.log(response.data.success,"............")
-        // let that = this;
+       
         if(userInfo?.account_type == "influencer"){}else{
         this.setState({promoCodeDsc: response.data.message.discount});
         this.setState({promoCodeVal: response.data.message.promo});
