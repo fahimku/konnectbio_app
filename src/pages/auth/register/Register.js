@@ -275,7 +275,7 @@ class Register extends React.Component {
     }
   }
 
-  doRegister(e) {
+  doRegister = async (e) => {
     e.preventDefault();
 
     if (this.state.step1) {
@@ -315,6 +315,33 @@ class Register extends React.Component {
     } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
+
+      if(this.state.accountType == "customer"){
+        console.log("customer workings")  
+        await axios
+        .post(`/mobile/auth/appUserSignup`, {
+          name: this.state.name,
+            email: this.state.email,
+            gender: this.state.gender,
+            country: this.state.countryCode,
+            state: this.state.countryStateCode,
+            city: this.state.city,
+            password: this.state.password,
+           
+        })
+        .then((response) => {
+          toast.success(response.data.message);
+
+          this.setState({ step1: true });
+          this.setState({ step2: false });
+          this.setState({ step3: false });
+        })
+        .catch(function (response) {
+          toast.error("Something Went Wrong.");
+        });
+
+      }
+      else{
       if (
         this.props.dispatch(
           registerUser({
@@ -336,9 +363,11 @@ class Register extends React.Component {
         this.setState({ step3: false });
       }
     }
+    }
   }
 
   changeType = (e) => {
+  
     const { value } = e.target;
     this.setState({
       accountType: value,
@@ -438,6 +467,31 @@ class Register extends React.Component {
                       {/* <p>Click on relevant account type to proceed</p> */}
                     </div>
                     <div className="camp-type-ift col-md-12">
+                    
+                    {/* For Customer*/}
+                    <div class="role-type">
+                        <div className="ac_type_block">
+                          <input
+                            type="radio"
+                            name="platform"
+                            id="customer"
+                            class="d-none infchecked"
+                            value="customer"
+                            onChange={this.changeType}
+                          />
+                          <label for="customer">
+                            <span className="imp-inf"></span>
+                            <span className="brnd-right-content">
+                              <h4 className="mb-1">Customer</h4>
+                              <p>
+                              Enjoy exclusive discounts
+                              </p>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                     
+                     {/* For Influencer*/}
                       <div class="role-type">
                         <div className="ac_type_block">
                           <input
@@ -461,6 +515,7 @@ class Register extends React.Component {
                         </div>
                       </div>
                       <div class="role-type">
+                        {/* For Brand*/}
                         <div className="ac_type_block">
                           <input
                             type="radio"
@@ -522,7 +577,7 @@ class Register extends React.Component {
                                 type="text"
                                 name="name"
                                 placeholder={`${
-                                  this.state.accountType === "influencer"
+                                  this.state.accountType === "influencer" || this.state.accountType === "customer" 
                                     ? "Name"
                                     : "Company Name"
                                 }`}
@@ -538,7 +593,7 @@ class Register extends React.Component {
                                 placeholder="Email"
                               />
                             </div>
-                            {this.state.accountType === "influencer" && (
+                            {this.state.accountType === "influencer" || this.state.accountType === "customer" && (
                               <div className="form-group">
                                 <Select
                                   className="form_select_group"
