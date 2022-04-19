@@ -260,11 +260,8 @@ function AffiliateSales({ getAffiliateSalesByBrand, affiliateSales }) {
                       <td>{item?.total_qty}</td>
                       <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
                       
-                      {item?.sale_type === "brandBioshop" ?
-                      <td>{item?.promo1}</td>
-                      :
                       <td>{item?.promo}</td>
-                        }
+                       
                       <td>{numeral(item?.discount).format("$0,0.0'")}</td>
                       <td>
                         {numeral(item?.order_totalprice).format("$0,0.0'")}
