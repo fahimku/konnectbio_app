@@ -184,10 +184,10 @@ function Gallery({
                 showTime={{ format: "HH:mm A" }}
                 format="YYYY-MM-DD HH:mm A"
                 onChange={(e) => {
-                  setFields({ ...fields, publish_date: e._d });
+                  setFields({ ...fields, publish_date: e?._d });
                 }}
               />
-              {submit && !fields.publish_date ? (
+              {submit && !fields?.publish_date ? (
                 <small style={{ color: "red" }}>Please Fill</small>
               ) : null}
             </div>
