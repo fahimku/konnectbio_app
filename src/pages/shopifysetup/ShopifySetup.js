@@ -51,7 +51,12 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
       });
   };
   const Schema = Yup.object().shape({
-    shopName: Yup.string().required("This field is required"),
+    shopName: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Please enter correct shop url"
+      )
+      .required("Please enter shop url"),
     apiKey: Yup.string().required("This field is required"),
     password: Yup.string().required("This field is required"),
   });
@@ -118,11 +123,11 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                           <form onSubmit={handleSubmit}>
                             <div className="dp_fields mb-0">
                               <div className="mb-3">
-                                <label>Enter Shop Name</label>
+                                <label>Enter Shop Url</label>
                                 <input
                                   type="text"
                                   name="shopName"
-                                  placeholder="Enter Shop Name"
+                                  placeholder="Enter Shop Url"
                                   onInput={handleChange}
                                   className="form-control comment-field"
                                   // onBlur={handleBlur}
