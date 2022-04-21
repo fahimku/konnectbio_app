@@ -173,7 +173,7 @@ function AffiliateSalesInf({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
@@ -231,7 +231,7 @@ function AffiliateSalesInf({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
                   <th>Date</th>
@@ -282,7 +282,7 @@ function AffiliateSalesInf({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
                   <th>Campaign Name</th>
@@ -331,7 +331,7 @@ function AffiliateSalesInf({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
                   <th>Brand Name</th>
@@ -378,7 +378,7 @@ function AffiliateSalesInf({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
                   <th>Influencer Name</th>

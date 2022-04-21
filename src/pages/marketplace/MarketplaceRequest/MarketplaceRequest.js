@@ -87,7 +87,7 @@ function MarketplaceRequest({ getMarketplaceApproval, marketplaceApproval }) {
       return (
         <>
           <Table responsive="sm" className="approval-box">
-            <thead>
+            <thead className="table_heading">
               <tr>
                 <th>Brand Name</th>
                 <th>Status</th>
