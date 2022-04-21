@@ -125,8 +125,8 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                                   placeholder="Enter Shop Name"
                                   onInput={handleChange}
                                   className="form-control comment-field"
-                                  onBlur={handleBlur}
-                                  onChange={handleChange}
+                                  // onBlur={handleBlur}
+                                  // onChange={handleChange}
                                   value={values.shopName}
                                   autoComplete="off"
                                 />
@@ -139,8 +139,9 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                                 <input
                                   type="text"
                                   name="apiKey"
-                                  onBlur={handleBlur}
-                                  onChange={handleChange}
+                                  onInput={handleChange}
+                                  // onBlur={handleBlur}
+                                  // onChange={handleChange}
                                   value={values.apiKey}
                                   placeholder="Enter API Key"
                                   className="form-control comment-field"
@@ -151,14 +152,15 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                                 </span>
                               </div>
                               <div className="mb-0 password-box password-api">
-                                <label>Enter API Secret Key</label>
+                                <label>Enter Admin API Access Token</label>
                                 <input
                                   type={type}
                                   name="password"
-                                  onBlur={handleBlur}
-                                  onChange={handleChange}
+                                  onInput={handleChange}
+                                  // onBlur={handleBlur}
+                                  // onChange={handleChange}
                                   value={values.password}
-                                  placeholder="Enter API Secret Key"
+                                  placeholder="Enter Admin API Access Token"
                                   className="form-control comment-field"
                                   autoComplete="new-password"
                                 />
