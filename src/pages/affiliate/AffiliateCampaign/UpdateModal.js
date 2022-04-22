@@ -54,22 +54,22 @@ class UpdateModal extends React.Component {
       cities2: [],
       states: [],
       promoCodeVal: "",
-      Kbfee:"",
+      Kbfee: "",
       //discount: this.props.affData?.discount,
       commission: this.props.affData?.commission,
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
   async componentDidMount() {
-    console.log("-----",this.props.affData)
-  
-      axios.post("/fee").then((res) =>{
-        console.log(res)
-        this.setState({Kbfee:res.data.message})  
-      }).catch((res) =>{
-        
-    })
-    
+    console.log("-----", this.props.affData);
+
+    axios
+      .post("/fee")
+      .then((res) => {
+        console.log(res);
+        this.setState({ Kbfee: res.data.message });
+      })
+      .catch((res) => {});
 
     await axios
       .post(`/campaigns/reach`, {
@@ -778,7 +778,10 @@ class UpdateModal extends React.Component {
                   <div className="col-md-6 mt-3">
                     <label>
                       Influencer Commission{" "}
-                      <span className="small">(Including {numeral(this.state.Kbfee).format("0,0'")}% KB fees)</span>
+                      <span className="small">
+                        (Including {numeral(this.state.Kbfee).format("0,0'")}%
+                        KB fees)
+                      </span>
                     </label>
                     <InputNumberValidation
                       type="number"
@@ -792,7 +795,10 @@ class UpdateModal extends React.Component {
                       min="10"
                       max="50"
                     />
-                    <div className="small">Note: minimum commission is {numeral(this.state.Kbfee).format("0,0'")}%</div>
+                    <div className="small">
+                      Note: minimum commission is{" "}
+                      {numeral(this.state.Kbfee).format("0,0'")}%
+                    </div>
                     <span className="text-danger">
                       {this.state.CommissionError}
                     </span>
@@ -814,7 +820,9 @@ class UpdateModal extends React.Component {
                             }
                             placeholder="Select Country"
                             style={{ width: "100%" }}
-                            options={this.props.countries}
+                            options={this.props.countries.filter((item) => {
+                              return item.value === "US";
+                            })}
                             // isDisabled={
                             //   this.state.inputList.length - 1 !== i
                             //     ? true
