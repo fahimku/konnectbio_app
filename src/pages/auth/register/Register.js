@@ -52,11 +52,11 @@ class Register extends React.Component {
         { value: "Brand", label: "Brand" },
       ],
       accountType: "",
-      country: "",
+      country: "United States of America",
       city: "",
       password: "",
       confirmPassword: "",
-      countryCode: "",
+      countryCode: "US",
       packages: "",
       packageType: "",
       zip: "",
@@ -315,36 +315,10 @@ class Register extends React.Component {
     } else if (!this.isPasswordValid()) {
       this.checkPassword();
     } else {
-
-      if(this.state.accountType == "customer"){
-        console.log("customer workings")  
+      if (this.state.accountType == "customer") {
+        console.log("customer workings");
         await axios
-        .post(`/mobile/auth/appUserSignup`, {
-          name: this.state.name,
-            email: this.state.email,
-            gender: this.state.gender,
-            country: this.state.countryCode,
-            state: this.state.countryStateCode, 
-            city: this.state.city,
-            password: this.state.password,
-           
-        })
-        .then((response) => {
-          toast.success(response.data.message);
-          this.props.history.push("/login");
-          this.setState({ step1: false });
-          this.setState({ step2: false });
-          this.setState({ step3: false });
-        })
-        .catch(function (response) {
-          toast.error("Something Went Wrong.");
-        });
-
-      }
-      else{
-      if (
-        this.props.dispatch(
-          registerUser({
+          .post(`/mobile/auth/appUserSignup`, {
             name: this.state.name,
             email: this.state.email,
             gender: this.state.gender,
@@ -352,22 +326,43 @@ class Register extends React.Component {
             state: this.state.countryStateCode,
             city: this.state.city,
             password: this.state.password,
-            zip: this.state.zip,
-            referred_by: this.state.referred_by,
-            account_type: this.state.accountType,
           })
-        )
-      ) {
-        this.setState({ step1: true });
-        this.setState({ step2: false });
-        this.setState({ step3: false });
+          .then((response) => {
+            toast.success(response.data.message);
+            this.props.history.push("/login");
+            this.setState({ step1: false });
+            this.setState({ step2: false });
+            this.setState({ step3: false });
+          })
+          .catch(function (response) {
+            toast.error("Something Went Wrong.");
+          });
+      } else {
+        if (
+          this.props.dispatch(
+            registerUser({
+              name: this.state.name,
+              email: this.state.email,
+              gender: this.state.gender,
+              country: this.state.countryCode,
+              state: this.state.countryStateCode,
+              city: this.state.city,
+              password: this.state.password,
+              zip: this.state.zip,
+              referred_by: this.state.referred_by,
+              account_type: this.state.accountType,
+            })
+          )
+        ) {
+          this.setState({ step1: true });
+          this.setState({ step2: false });
+          this.setState({ step3: false });
+        }
       }
     }
-    }
-  }
+  };
 
   changeType = (e) => {
-  
     const { value } = e.target;
     this.setState({
       accountType: value,
@@ -467,9 +462,8 @@ class Register extends React.Component {
                       {/* <p>Click on relevant account type to proceed</p> */}
                     </div>
                     <div className="camp-type-ift col-md-12">
-                    
-                    {/* For Customer*/}
-                    <div class="role-type">
+                      {/* For Customer*/}
+                      <div class="role-type">
                         <div className="ac_type_block">
                           <input
                             type="radio"
@@ -483,15 +477,13 @@ class Register extends React.Component {
                             <span className="imp-cus"></span>
                             <span className="brnd-right-content">
                               <h4 className="mb-1">Customer</h4>
-                              <p>
-                              Enjoy exclusive discounts
-                              </p>
+                              <p>Enjoy exclusive discounts</p>
                             </span>
                           </label>
                         </div>
                       </div>
-                     
-                     {/* For Influencer*/}
+
+                      {/* For Influencer*/}
                       <div class="role-type">
                         <div className="ac_type_block">
                           <input
@@ -577,7 +569,8 @@ class Register extends React.Component {
                                 type="text"
                                 name="name"
                                 placeholder={`${
-                                  this.state.accountType === "influencer" || this.state.accountType === "customer" 
+                                  this.state.accountType === "influencer" ||
+                                  this.state.accountType === "customer"
                                     ? "Name"
                                     : "Company Name"
                                 }`}
@@ -598,7 +591,7 @@ class Register extends React.Component {
                               <div className="form-group">
                                 <Select
                                   className="form_select_group"
-                                  value={ 
+                                  value={
                                     this.state.gender && {
                                       label:
                                         this.state.gender
