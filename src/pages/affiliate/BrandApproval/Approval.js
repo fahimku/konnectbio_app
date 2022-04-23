@@ -128,7 +128,7 @@ function Approvals({
             <Loader size="30" />
           ) : (
             <Table responsive="sm" className="transactions-box approve-brand">
-              <thead>
+              <thead className="table_heading">
                 <tr>
                   <th>Name</th>
                   <th>Status</th>

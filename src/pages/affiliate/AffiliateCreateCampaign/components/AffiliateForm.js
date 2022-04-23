@@ -17,7 +17,7 @@ import VirtualizedSelect from "react-virtualized-select";
 import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 import ShopifyPromo from "./shopifyPromo";
 import { textAlign } from "@mui/system";
-import Connection from "../../../connectToShopify/connShopify"
+import Connection from "../../../connectToShopify/connShopify";
 import numeral from "numeral";
 const { Option } = Select;
 
@@ -36,8 +36,8 @@ class AffiliateForm extends React.Component {
       pay_per_hundred: "",
       budget: "",
       promoCode: "",
-      promoCodeDsc: "",
-      promoCodePromo: "",
+      promoCodeDsc: "0%",
+      promoCodePromo: "KB0",
     
       discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
@@ -56,7 +56,7 @@ class AffiliateForm extends React.Component {
       commission: "10",
       promoCond: true,
       connNotFound: true,
-      Kbfee:"",
+      Kbfee: "",
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
@@ -66,12 +66,14 @@ class AffiliateForm extends React.Component {
   };
 
   componentDidMount() {
-    axios.post("/fee").then((res) =>{
-      console.log(res)
-      this.setState({Kbfee:res.data.message})  
-    }).catch((res) =>{
-  })
-}
+    axios
+      .post("/fee")
+      .then((res) => {
+        console.log(res);
+        this.setState({ Kbfee: res.data.message });
+      })
+      .catch((res) => {});
+  }
   ppClick = (value) => {
     this.setState(
       {
@@ -169,13 +171,14 @@ class AffiliateForm extends React.Component {
 
   changePromoCode = (e, options, name, index) => {
     // let data = String(options.value);
-    var values = e.value.split(" ");
-    var discount = values[0];
+  
     if(e === undefined ){
     this.setState({ promoCodeDsc: '0%' });
     this.setState({ promoCodePromo: 'KB0'});
     }
     else{
+      var values = e.value.split(" ");
+      var discount = values[0];
       this.setState({ promoCodeDsc: discount });
       this.setState({ promoCodePromo: e.children});
     }
@@ -410,8 +413,8 @@ class AffiliateForm extends React.Component {
       // budget: "",
       //discount: "",
       // promoCodeVal: "",
-      promoCodeDsc: "",
-      promoCodePromo: "",
+      promoCodeDsc: "0%",
+      promoCodePromo: "KB0",
       commission: "10",
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       startDate: moment(),
@@ -493,57 +496,56 @@ class AffiliateForm extends React.Component {
     // console.log(this.state.commission, "promoCodeVal");
 
     return (
-     
-          <React.Fragment>
-            <Formsy.Form
-              onValidSubmit={() =>
-                this.saveCampaign(affData.post_id, affData.redirected_url)
-              }
-            >
-              <div className="image-wrapper">
-                <div className="image-box">
-                  {affData.media_type === "VIDEO" ? (
-                    <video
-                      id={`post-video-${affData.post_id}`}
-                      //autoPlay
-                      controls
-                      controlsList="nodownload"
-                    >
-                      <source
-                        src={affData.media_url + "#t=0.001"}
-                        type="video/mp4"
-                      ></source>
-                    </video>
-                  ) : (
-                    <img
-                      src={affData.media_url}
-                      alt="media_url"
-                      className="post-image"
-                    />
-                  )}
-                  {/* <img src={`${affData.media_url}`} alt="media_url" /> */}
+      <React.Fragment>
+        <Formsy.Form
+          onValidSubmit={() =>
+            this.saveCampaign(affData.post_id, affData.redirected_url)
+          }
+        >
+          <div className="image-wrapper">
+            <div className="image-box">
+              {affData.media_type === "VIDEO" ? (
+                <video
+                  id={`post-video-${affData.post_id}`}
+                  //autoPlay
+                  controls
+                  controlsList="nodownload"
+                >
+                  <source
+                    src={affData.media_url + "#t=0.001"}
+                    type="video/mp4"
+                  ></source>
+                </video>
+              ) : (
+                <img
+                  src={affData.media_url}
+                  alt="media_url"
+                  className="post-image"
+                />
+              )}
+              {/* <img src={`${affData.media_url}`} alt="media_url" /> */}
+            </div>
+            <div className="aff-img-edit-link image-edit-links">
+              <div className="row">
+                <div className="campaign-name col-md-6">
+                  <label>Campaign Name</label>
+                  <InputValidation
+                    className=""
+                    type="text"
+                    id="campaign_name"
+                    name="campaign_name"
+                    required
+                    value={this.state.campaign_name}
+                    placeholder="Campaign Name"
+                    onChange={(evt) => {
+                      this.titleChange(evt.target.value);
+                    }}
+                    autoFocus
+                  />
                 </div>
-                <div className="aff-img-edit-link image-edit-links">
-                  <div className="row">
-                    <div className="campaign-name col-md-6">
-                      <label>Campaign Name</label>
-                      <InputValidation
-                        className=""
-                        type="text"
-                        id="campaign_name"
-                        name="campaign_name"
-                        required
-                        value={this.state.campaign_name}
-                        placeholder="Campaign Name"
-                        onChange={(evt) => {
-                          this.titleChange(evt.target.value);
-                        }}
-                        autoFocus
-                      />
-                    </div>
-                    <div className="campaign-url col-md-6">
-                      <label>URL</label>
-                      {/* <InputValidation
+                <div className="campaign-url col-md-6">
+                  <label>URL</label>
+                  {/* <InputValidation
                     className=""
                     placeholder="Please Enter Website Address"
                     type="text"
@@ -553,94 +555,92 @@ class AffiliateForm extends React.Component {
                     value={affData.redirected_url}
                     disabled
                   /> */}
-                      <div className="url-copy">
-                        <div className="your-copy-link">
-                          <div className="item-a">
-                            <a
-                              target="_blank"
-                              rel="noreferrer"
-                              href={affData.redirected_url}
-                            >
-                              {affData.redirected_url}
-                            </a>
-                          </div>
-                          <div
-                            onClick={() =>
-                              this.copyToClipboard(affData.redirected_url)
-                            }
-                            className="item-b"
-                          >
-                            Copy
-                          </div>
-                        </div>
+                  <div className="url-copy">
+                    <div className="your-copy-link">
+                      <div className="item-a">
+                        <a
+                          target="_blank"
+                          rel="noreferrer"
+                          href={affData.redirected_url}
+                        >
+                          {affData.redirected_url}
+                        </a>
+                      </div>
+                      <div
+                        onClick={() =>
+                          this.copyToClipboard(affData.redirected_url)
+                        }
+                        className="item-b"
+                      >
+                        Copy
                       </div>
                     </div>
                   </div>
-                  <div className="row  mt-3">
-                    <div className="select-categories col-md-6">
-                      <label>Category</label>
-                      <Select
-                        key={Date.now()}
-                        value={category}
-                        style={{ width: "100%" }}
-                        placeholder="Category"
-                        disabled={true}
-                      >
-                        {affData.categories
-                          ? affData.categories.map(
-                              ({ category_id, category_name }, i) => (
-                                <Option value={category_id}>
-                                  {category_name}
-                                </Option>
-                              )
-                            )
-                          : []}
-                      </Select>
-                    </div>
+                </div>
+              </div>
+              <div className="row  mt-3">
+                <div className="select-categories col-md-6">
+                  <label>Category</label>
+                  <Select
+                    key={Date.now()}
+                    value={category}
+                    style={{ width: "100%" }}
+                    placeholder="Category"
+                    disabled={true}
+                  >
+                    {affData.categories
+                      ? affData.categories.map(
+                          ({ category_id, category_name }, i) => (
+                            <Option value={category_id}>{category_name}</Option>
+                          )
+                        )
+                      : []}
+                  </Select>
+                </div>
 
-                    <div className="date-range-aff col-md-6">
-                      <label>Select Start Date / End Date</label>
-                      <RangePicker
-                        key={1}
-                        defaultValue={[
-                          moment(this.state.startDate),
-                          moment(this.state.endDate),
-                        ]}
-                        value={[
-                          moment(this.state.startDate),
-                          moment(this.state.endDate),
-                        ]}
-                        defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
-                        allowClear={false}
-                        ranges={{
-                          Today: [moment(), moment()],
+                <div className="date-range-aff col-md-6">
+                  <label>Select Start Date / End Date</label>
+                  <RangePicker
+                    key={1}
+                    defaultValue={[
+                      moment(this.state.startDate),
+                      moment(this.state.endDate),
+                    ]}
+                    value={[
+                      moment(this.state.startDate),
+                      moment(this.state.endDate),
+                    ]}
+                    defaultPickerValue={moment(new Date(), "YYYY-MM-DD")}
+                    allowClear={false}
+                    ranges={{
+                      Today: [moment(), moment()],
 
-                          Tomorrow: [
-                            moment().add(1, "days"),
-                            moment().add(1, "days"),
-                          ],
-                          "This Month": [
-                            moment().startOf("month"),
-                            moment().endOf("month"),
-                          ],
-                        }}
-                        style={{ width: "100%" }}
-                        // format={dateFormat}
-                        // showTime={{ format: "HH:mm" }}
-                        format="YYYY-MM-DD"
-                        // onChange={this.dateRangePickerChanger}
-                        onChange={this.dateRangePickerChanger.bind(this)}
-                        disabledDate={this.disabledDate}
-                      />
-                    </div>
-                  </div>
+                      Tomorrow: [
+                        moment().add(1, "days"),
+                        moment().add(1, "days"),
+                      ],
+                      "This Month": [
+                        moment().startOf("month"),
+                        moment().endOf("month"),
+                      ],
+                    }}
+                    style={{ width: "100%" }}
+                    // format={dateFormat}
+                    // showTime={{ format: "HH:mm" }}
+                    format="YYYY-MM-DD"
+                    // onChange={this.dateRangePickerChanger}
+                    onChange={this.dateRangePickerChanger.bind(this)}
+                    disabledDate={this.disabledDate}
+                  />
+                </div>
+              </div>
 
-                  <div className="row mt-4">
-                    <div className="camp-type-ift col-md-12 d-flex">
-                      <label className="n-camp-type pr-4">
-                        <strong>Type of campaign:</strong>
-                      </label>
-                      {/* <div class="col1">
+              <div className="row mt-4">
+                <div className="camp-type-ift col-md-12 d-flex">
+                  <label className="n-camp-type pr-4">
+                    <strong>Type of campaign:</strong>
+                  </label>
+                  {/* <div class="col1">
                     <input
                       type="radio"
                       name="platform"
@@ -662,7 +662,7 @@ class AffiliateForm extends React.Component {
                       
                     </label>
                   </div> */}
-                      {/* <div class="col1">
+                  {/* <div class="col1">
                     <input
                       // type="radio"
                       name="platform"
@@ -693,42 +693,40 @@ class AffiliateForm extends React.Component {
                     </div> 
                     </label>
                   </div> */}
-                      <div class="col1">
-                        <input
-                          type={
-                            this.state.campaign_name === "" ? "submit" : "radio"
-                          }
-                          name="platform"
-                          id="sales"
-                          class="d-none imgbgchk"
-                          value="sales"
-                          onChange={this.changeType}
-                          checked={
-                            this.state.campaign_name !== "" ? true : false
-                          }
-                          // disabled
-                        />
-                        <label for="sales">
-                          <span className="imp-click">
-                            <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span className="imp-name">Sales</span>
-                          {/* <div class="tick_container">
+                  <div class="col1">
+                    <input
+                      type={
+                        this.state.campaign_name === "" ? "submit" : "radio"
+                      }
+                      name="platform"
+                      id="sales"
+                      class="d-none imgbgchk"
+                      value="sales"
+                      onChange={this.changeType}
+                      checked={this.state.campaign_name !== "" ? true : false}
+                      // disabled
+                    />
+                    <label for="sales">
+                      <span className="imp-click">
+                        <i class="fa fa-usd fa-2x" aria-hidden="true"></i>
+                      </span>
+                      <span className="imp-name">Sales</span>
+                      {/* <div class="tick_container">
                       <div class="tick">
                         <i class="fa fa-check"></i>
                       </div>
                     </div> */}
-                        </label>
-                      </div>
-                    </div>
+                    </label>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              {this.state.campaign_name !== "" ? (
-                <>
-                  <div className="demographic-section">
-                    {/* <div className="row">
+          {this.state.campaign_name !== "" ? (
+            <>
+              <div className="demographic-section">
+                {/* <div className="row">
                   <div className="col-md-6 mt-3">
                     <label>Total Budget</label>
                     <InputNumberValidation
@@ -764,7 +762,7 @@ class AffiliateForm extends React.Component {
                     </span>
                   </div>
                 </div> */}
-                    <ShopifyPromo PromoPayload={this.handleClick} />
+                <ShopifyPromo PromoPayload={this.handleClick} />
 
                     {this.state.promoCond ? (
                       <></>
@@ -852,9 +850,12 @@ class AffiliateForm extends React.Component {
                             </span>
                           </div>
                         </div>
-                      </>
-                    )}
-                    {/* <div className="row">
+                      
+                     
+                   
+                  </>
+                )}
+                {/* <div className="row">
                   <div className="col-md-6 mt-3">
 
                  {!this.state.promoCond ? <>
@@ -978,165 +979,161 @@ class AffiliateForm extends React.Component {
                             <div className="col-md-3 mt-3">
                               <label>City {i + 1}</label>
 
-                              <VirtualizedSelect
-                                className
-                                key={i}
-                                name="city"
-                                value={
-                                  x.city
-                                    ? {
-                                        value: x.city,
-                                        label:
-                                          x.city === "all"
-                                            ? "All Cities"
-                                            : x.city,
-                                      }
-                                    : { value: "", label: "All Cities" }
-                                }
-                                onChange={(options, e) =>
-                                  this.changeCity(e, options, "city", i)
-                                }
-                                placeholder="All Cities"
-                                style={{ width: "100%" }}
-                                options={this.state.cities}
-                                clearable={false}
-                                disabled={
-                                  this.state.inputList[i].state === "" ||
-                                  this.state.inputList.length - 1 !== i ||
-                                  this.state.inputList[i].state === "all"
-                                    ? true
-                                    : false
-                                }
-                              />
-                              {this.state.submit && !x.city ? (
-                                <span className={"help-block text-danger"}>
-                                  This value is required.
-                                </span>
-                              ) : null}
-                            </div>
-                            <div className="col-md-2 mt-3">
-                              <label>Zip {i + 1}</label>
-                              <input
-                                type="number"
-                                className="form-control"
-                                name="zip"
-                                placeholder="Zip"
-                                value={x.zip}
-                                onChange={(e) => this.handleZipChange(e, i)}
-                                autoComplete="off"
-                                onKeyDown={(evt) =>
-                                  ["e", "E", "+", "-"].includes(evt.key) &&
-                                  evt.preventDefault()
-                                }
-                                min="0"
-                                disabled={
-                                  this.state.inputList.length - 1 !== i
-                                    ? true
-                                    : false
-                                }
-                              />
-                            </div>
-
-                            <div className="add-del-btns col-md-1 pl-0">
-                              {this.state.inputList.length !== 1 && (
-                                <button
-                                  className="btn p-0 m-0"
-                                  onClick={() => this.handleRemoveClick(i)}
-                                >
-                                  <span>
-                                    <i
-                                      class="glyphicon glyphicon-trash fa-1x"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </span>
-                                  <strong>Remove</strong>
-                                </button>
-                              )}
-                              {this.state.inputList.length - 1 === i && (
-                                <button
-                                  className="btn p-0 m-0"
-                                  onClick={this.handleAddClick}
-                                  disabled={
-                                    this.state.inputList[i].country === "" ||
-                                    this.state.inputList[i].state === "" ||
-                                    this.state.inputList[i].city === ""
-                                      ? // (this.state.inputList[i].city === "all" &&
-                                        //   this.state.inputList[i].state === "all")
-                                        true
-                                      : false
+                          <VirtualizedSelect
+                            className
+                            key={i}
+                            name="city"
+                            value={
+                              x.city
+                                ? {
+                                    value: x.city,
+                                    label:
+                                      x.city === "all" ? "All Cities" : x.city,
                                   }
-                                >
-                                  <span>
-                                    <i
-                                      class="fa fa-plus fa-1x"
-                                      aria-hidden="true"
-                                    ></i>
-                                  </span>
-                                  <strong>Add</strong>
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                      {this.state.reach === "" ? (
-                        ""
-                      ) : (
-                        <>
-                          <h5 className="mt-4">
-                            Total Influencer: {this.state.reach.toString()}
-                          </h5>
-                          {/* <h5 className="mt-4">
+                                : { value: "", label: "All Cities" }
+                            }
+                            onChange={(options, e) =>
+                              this.changeCity(e, options, "city", i)
+                            }
+                            placeholder="All Cities"
+                            style={{ width: "100%" }}
+                            options={this.state.cities}
+                            clearable={false}
+                            disabled={
+                              this.state.inputList[i].state === "" ||
+                              this.state.inputList.length - 1 !== i ||
+                              this.state.inputList[i].state === "all"
+                                ? true
+                                : false
+                            }
+                          />
+                          {this.state.submit && !x.city ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-2 mt-3">
+                          <label>Zip {i + 1}</label>
+                          <input
+                            type="number"
+                            className="form-control"
+                            name="zip"
+                            placeholder="Zip"
+                            value={x.zip}
+                            onChange={(e) => this.handleZipChange(e, i)}
+                            autoComplete="off"
+                            onKeyDown={(evt) =>
+                              ["e", "E", "+", "-"].includes(evt.key) &&
+                              evt.preventDefault()
+                            }
+                            min="0"
+                            disabled={
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
+                          />
+                        </div>
+
+                        <div className="add-del-btns col-md-1 pl-0">
+                          {this.state.inputList.length !== 1 && (
+                            <button
+                              className="btn p-0 m-0"
+                              onClick={() => this.handleRemoveClick(i)}
+                            >
+                              <span>
+                                <i
+                                  class="glyphicon glyphicon-trash fa-1x"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                              <strong>Remove</strong>
+                            </button>
+                          )}
+                          {this.state.inputList.length - 1 === i && (
+                            <button
+                              className="btn p-0 m-0"
+                              onClick={this.handleAddClick}
+                              disabled={
+                                this.state.inputList[i].country === "" ||
+                                this.state.inputList[i].state === "" ||
+                                this.state.inputList[i].city === ""
+                                  ? // (this.state.inputList[i].city === "all" &&
+                                    //   this.state.inputList[i].state === "all")
+                                    true
+                                  : false
+                              }
+                            >
+                              <span>
+                                <i
+                                  class="fa fa-plus fa-1x"
+                                  aria-hidden="true"
+                                ></i>
+                              </span>
+                              <strong>Add</strong>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {this.state.reach === "" ? (
+                    ""
+                  ) : (
+                    <>
+                      <h5 className="mt-4">
+                        Total Influencer: {this.state.reach.toString()}
+                      </h5>
+                      {/* <h5 className="mt-4">
                         Total Reach: {this.state.reach.toString()}
                       </h5> */}
-                        </>
-                      )}
-                    </div>
-                  </div>
+                    </>
+                  )}
+                </div>
+              </div>
 
-                  <div className="row mt-4">
-                    <div className="aff-sub-button col-md-12">
-                      {this.state.loading ? (
-                        <Button>
-                          <Loader />
-                        </Button>
-                      ) : (
-                        <>
-                          <Button
-                            className="custom_btns_ift"
-                            color="primary"
-                            type="submit"
-                          >
-                            &nbsp;Save&nbsp;
-                          </Button>
+              <div className="row mt-4">
+                <div className="aff-sub-button col-md-12">
+                  {this.state.loading ? (
+                    <Button>
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <>
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        type="submit"
+                      >
+                        &nbsp;Save&nbsp;
+                      </Button>
 
-                          <Button
-                            className="custom_btns_ift"
-                            color="primary"
-                            onClick={() => this.reset()}
-                          >
-                            &nbsp;Reset&nbsp;
-                          </Button>
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        onClick={() => this.reset()}
+                      >
+                        &nbsp;Reset&nbsp;
+                      </Button>
 
-                          <Button
-                            className="custom_btns_ift"
-                            color="primary"
-                            onClick={() => {
-                              this.props.affCloseModal();
-                            }}
-                          >
-                            &nbsp;Cancel&nbsp;
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </>
-              ) : null}
-            </Formsy.Form>
-          </React.Fragment>
-        
-    
+                      <Button
+                        className="custom_btns_ift"
+                        color="primary"
+                        onClick={() => {
+                          this.props.affCloseModal();
+                        }}
+                      >
+                        &nbsp;Cancel&nbsp;
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          ) : null}
+        </Formsy.Form>
+      </React.Fragment>
     );
   }
 }

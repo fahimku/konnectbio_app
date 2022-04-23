@@ -324,7 +324,7 @@ class PostDataComponent extends React.Component {
                     <h3 className="count">{record.end_date}</h3>
                   </div>
                   <div className="col-12 count-box">
-                    <h5 className="count-title">Revenue</h5>
+                    <h5 className="count-title">Net Sales</h5>
                     <h3 className="count">{record.revenue}</h3>
                   </div>
                 </div>

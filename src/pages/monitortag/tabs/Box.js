@@ -81,25 +81,59 @@ export default function Box({ data }) {
     setExpanded2(!expanded2);
   };
   function renderMedia(item) {
-    if (item.media_type === "IMAGE" || item.media_type === "CAROUSEL_ALBUM") {
+    if (item?.media_type === "IMAGE" || item?.media_type === "CAROUSEL_ALBUM") {
       return (
         <>
-          {item.media_type === "CAROUSEL_ALBUM" && (
+          {item?.media_type === "CAROUSEL_ALBUM" && (
             <button className="btn-link btn-play btn-carousel">
               <img src={CarouselIcon} alt="CarouselIcon" />
             </button>
           )}
-          <CardMedia
-            component="img"
-            height="400"
-            sx={{ objectFit: "cover", borderRadius: 2 }}
-            image={
-              item.media_type === "CAROUSEL_ALBUM"
-                ? item.children?.data[0].media_url
-                : item.media_url
-            }
-            alt="Paella dish"
-          />
+          {item?.children === false ? (
+            <CardMedia
+              component="img"
+              height="400"
+              sx={{ objectFit: "cover", borderRadius: 2 }}
+              image={item.media_url}
+              alt="Paella dish"
+            />
+          ) : item?.children?.data[0]?.media_type === "VIDEO" ? (
+            <>
+              <button
+                onClick={(e) => Pauseplay(e, item?.children?.data[0]?.id)}
+                className="btn-link btn-play"
+              >
+                {!videoIcon ? (
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                ) : (
+                  <i class="fa fa-pause" aria-hidden="true"></i>
+                )}
+              </button>
+              <CardMedia
+                component="video"
+                sx={{ objectFit: "cover", borderRadius: 2 }}
+                autoPlay={false}
+                controls
+                //loop
+                height="400"
+                image={item?.children?.data[0].media_url}
+                alt="Paella dish"
+                id={item?.children?.data[0].id}
+              />
+            </>
+          ) : (
+            <CardMedia
+              component="img"
+              height="400"
+              sx={{ objectFit: "cover", borderRadius: 2 }}
+              image={
+                item.media_type === "CAROUSEL_ALBUM"
+                  ? item.children?.data[0].media_url
+                  : item.media_url
+              }
+              alt="Paella dish"
+            />
+          )}
         </>
       );
     }
