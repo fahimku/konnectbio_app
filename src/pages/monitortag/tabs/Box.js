@@ -103,7 +103,7 @@ export default function Box({ data }) {
         </>
       );
     }
-    if (item.media_type === "VIDEO") {
+    if (item.media_type === "VIDEO" || item.media_type === "CAROUSEL_ALBUM") {
       return (
         <>
           <button

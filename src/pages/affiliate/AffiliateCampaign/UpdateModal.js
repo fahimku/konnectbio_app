@@ -22,7 +22,7 @@ const { RangePicker } = DatePicker;
 class UpdateModal extends React.Component {
   constructor(props) {
     super(props);
-
+      console.log("prop",this.props)
     this.state = {
       username: this.props.username,
       campaign_name: this.props.affData?.campaign_name,
@@ -114,8 +114,17 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-    this.setState({ promoCodes: options.value });
-    this.setState({ promoCodesDiscount: options.discount });
+  
+    if(e === undefined ){
+      this.setState({ promoCodesDiscount: '0%' });
+      this.setState({ promoCodes: 'KB0'});
+      }
+      else{
+        var values = e.value.split(" ");
+        var discount = values[0];
+        this.setState({ promoCodesDiscount: discount });
+        this.setState({ promoCodes: e.children});
+      }
   };
 
   discount = (value) => {
@@ -369,6 +378,8 @@ class UpdateModal extends React.Component {
   };
   reset = () => {
     this.setState({
+      promoCodeDsc: "",
+      promoCodePromo: "",
       country: "",
       state: "",
       city: "",
@@ -452,26 +463,6 @@ class UpdateModal extends React.Component {
       </div>
     );
 
-    const renderConValuePromoList = (x) => {
-      const filterPromo = this.state.promoList.filter((item) => {
-        if (item.label == x) {
-          return item;
-        }
-      });
-      if (filterPromo.length === 0) {
-        return {
-          value: "",
-          label: "Select Promo",
-          discount: "",
-        };
-      } else {
-        return {
-          value: filterPromo[0]?.value,
-          label: filterPromo[0]?.label,
-          discount: filterPromo[0]?.discount,
-        };
-      }
-    };
     const renderConValue = (x) => {
       const exit = this.props.countries.filter(
         (item) => item.value === x.country
@@ -497,23 +488,7 @@ class UpdateModal extends React.Component {
         return { value: "", label: "All Cities" };
       }
     };
-    // const renderCityValue = (x, i) => {
-    //   if (x.state) {
-    //     const exit = [
-    //       { value: "all", name: "all" },
-
-    //       ...this.state.cities2[i].data.message,
-    //     ].filter((item) => item.name === x.city);
-    //     return exit[0]
-    //       ? {
-    //           value: exit[0].name,
-    //           label: exit[0].name === "all" ? "All" : exit[0].name,
-    //         }
-    //       : { value: "", label: "Select City" };
-    //   } else {
-    //     return { value: "", label: "Select City" };
-    //   }
-    // };
+   
 
     return (
       <React.Fragment>
@@ -755,7 +730,38 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-3 mt-3">
+                <div className="col-md-3 mt-3">
+                        <label>PromoCode</label>
+                        <Select
+                                    size="small"
+                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    defaultValue={this.state.promoCodes}
+                                    //disabled={!(formState === "add" || formState === "edit")}
+                                    placeholder="KB0"
+                                    //loading={this.state.promoCond}
+                                    optionFilterProp="children"
+                                    className="w-100 campaign-promo-select"
+                                   // onSearch={onSearch}
+                                    onChange={(options, e) =>
+                                      this.changePromoCode(e, options)
+                                    }
+                                    showSearch
+                                    allowClear
+                                  >
+                                    {this.state.promoList.map(
+                                      (customer,key) => {
+                                        return (
+                                          <Option key = {customer.promo_percent+' '+key} >
+                                            {customer.promo}
+                                          </Option>
+                                        );
+                                      }
+                                    )}
+                                  </Select>
+                      </div>
+                
+                
+                  {/* <div className="col-md-3 mt-3">
                     <label>PromoCode For Customers</label>
                     <Select2
                       name="promoCode"
@@ -768,11 +774,11 @@ class UpdateModal extends React.Component {
                       // formatOptionLabel={formatOptionLabel}
                       options={this.state.promoList}
                     />
-                  </div>
+                  </div> */}
                   <div className="col-md-3 mt-3">
                     <label>Discount</label>
                     <div className="promo_discount form-control">
-                      {renderConValuePromoList(this.state.promoCodes).discount}
+                      {this.state.promoCodesDiscount}
                     </div>
                   </div>
                   <div className="col-md-6 mt-3">

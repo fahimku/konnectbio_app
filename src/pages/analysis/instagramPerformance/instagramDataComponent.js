@@ -5,6 +5,7 @@ import Loader from "../../../components/Loader/Loader";
 import NoDataFound from "../../../components/NoDataFound/NoDataFound";
 import { Row, Col, Button } from "react-bootstrap";
 import moment from "moment";
+import numeral from "numeral";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -336,28 +337,28 @@ function InstagramDataComponent({
                         <div className="row count-main-box">
                           <div className="col-12 count-box">
                             <h5 className="count-title">Like Count</h5>
-                            <h3 className="count">{record.like_count}</h3>
+                            <h3 className="count">{numeral(record.like_count).format("0,0")}</h3>
                           </div>
                           <div className="col-12 count-box">
                             <h5 className="count-title">Comment Count</h5>
-                            <h3 className="count">{record.comments_count}</h3>
+                            <h3 className="count">{numeral(record.comments_count).format("0,0")}</h3>
                           </div>
                           <div className="col-12 count-box">
                             <h5 className="count-title">Engagement</h5>
                             <h3 className="count">
-                              {record.insights[0].engagement}
+                              {numeral(record.insights[0].engagement).format("0,0")}
                             </h3>
                           </div>
                           <div className="col-12 count-box">
                             <h5 className="count-title">Impressions</h5>
                             <h3 className="count">
-                              {record.insights[1].impressions}
+                              {numeral(record.insights[1].impressions).format("0,0")}
                             </h3>
                           </div>
                           <div className="col-12 count-box">
                             <h5 className="count-title">Reach</h5>
                             <h3 className="count">
-                              {record.insights[2].reach}
+                              {numeral(record.insights[2].reach).format("0,0")}
                             </h3>
                           </div>
                           <div className="col-12 count-box">

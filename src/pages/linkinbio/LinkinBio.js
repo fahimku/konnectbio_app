@@ -234,8 +234,8 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = (i,item1,item2) => {
-    
+  savePost = (i,Subpromo,SubDsc) => {
+   
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -308,8 +308,8 @@ class LinkinBio extends React.Component {
               start_date: this.state.startDate,
               end_date: this.state.endDate,
               source: this.props.mobileDropdown,
-              promo: item2.value,
-              discount: item2.discount
+              promo: Subpromo,
+              discount: SubDsc
             })
             .then((response) => {
               this.setState({ loading: false });
@@ -340,9 +340,9 @@ class LinkinBio extends React.Component {
     }
   };
 
-  updatePost = async (id, url,promo) => {
+  updatePost = async (id, url,promo,dsc) => {
     
-    console.log("update---",id, url,promo)
+    console.log("update---",id, url,promo,dsc)
     
     let newCategory;
     let oldCategory = this.state.category;
@@ -390,8 +390,8 @@ class LinkinBio extends React.Component {
         post_type: this.state.postType,
         start_date: this.state.startDate,
         end_date: this.state.endDate,
-        promo: promo.value,
-        discount: promo.discount
+        promo: promo,
+        discount: dsc
       })
       .then((response) => {
         this.setState({ loading: false });

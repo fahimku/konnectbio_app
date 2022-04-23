@@ -445,7 +445,7 @@ function AffiliateCampaign(props) {
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "commission", label: "COMMISSION" },
+    { value: "commission", label: "INFLUENCER COMMISSION" },
   ];
 
   // const sortOrderOptions = [
@@ -630,7 +630,7 @@ function AffiliateCampaign(props) {
           </Modal.Header>
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <UpdateModal
-              promoCodes={PassPromoCode}
+              promoCodes={dataPromo}
               affData={currentCampaign}
               countries={props.countries}
               affCloseModal={() => setModal(false)}

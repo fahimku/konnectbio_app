@@ -86,6 +86,7 @@ function AffiliateCampaign(
   if (loader == true) {
     dataPromo = props.promoRequest.message;
     const promo = dataPromo;
+    console.log("dataPromo",dataPromo)
 
     if (dataPromo != undefined) {
       const selectState = [];
@@ -422,7 +423,7 @@ function AffiliateCampaign(
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "commission", label: "COMMISSION" },
+    { value: "commission", label: "INFLUENCER COMMISSION" },
   ];
 
   // const sortOrderOptions = [
@@ -608,7 +609,7 @@ function AffiliateCampaign(
           <Modal.Body className="bg-white affiliate-model image-edit-box p-3">
             <UpdateModal
               affData={currentCampaign}
-              promoCodes={PassPromoCode}
+              promoCodes={dataPromo}
               countries={props.countries}
               affCloseModal={() => setModal(false)}
               reload={() => {

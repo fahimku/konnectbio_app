@@ -244,7 +244,7 @@ function ActiveMarketPlace({
 
   const sortByOptions = [
     { value: "date", label: "DATE" },
-    { value: "commission", label: "COMMISSION" },
+    { value: "commission", label: "INFLUENCER COMMISSION" },
   ];
 
   const sortOrderOptions = [

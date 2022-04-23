@@ -30,6 +30,7 @@ let dataPromo;
 let PassPromoCode;
 var subPromo ;
 var subDiscount;
+var tst ;
   
 function ShopRightBar(
   props,
@@ -53,15 +54,9 @@ function ShopRightBar(
   const [promoCode, setPromoCode] = useState("");
   const [loader, setLoader] = useState(true);
   const [Kbfee, setKbfee] = useState();
-  const [promoCodeDsc, setPromoCodeDsc] = useState({value: "KB0",
-  label: "KB0",
-  discount: "0%",})
-  
-  const [promoCodeVal, setPromoCodeVal] = useState({
-    value: "KB0",
-    label: "KB0",
-    discount: "0%",
-  });
+  const [promoCodeDscs, setDsc] = useState("0%");
+  const [promoCodePromo, setPromo] = useState("KB0");
+ 
 
 
 useEffect(() => {
@@ -106,29 +101,15 @@ if(typeof props.promo == 'object' && props.promo !== null){
 }
  else{ 
 if(props.promo){
-  setPromoCodeVal({
-    value: props.promo, 
-    label: props.promo,
-    discount:props.discount 
-  })
-  setPromoCodeDsc({
-    value: props.promo,
-    label: props.promo,
-    discount:props.discount
-  })
+
+  setDsc (props.discount);
+  setPromo(props.promo);
+  
 }
 else{
-  
-  setPromoCodeVal({
-    value: "KB0", 
-    label: "KB0",
-    discount:"0%" 
-  })
-  setPromoCodeDsc({
-    value: "KB0",
-    label: "KB0",
-    discount:"0%"
-  })
+    
+  setDsc ('0%' );
+  setPromo('KB0');
 }
 }
 
@@ -137,51 +118,18 @@ else{
 
 if (loader == true) {
   dataPromo = props.promoRequest.message;
-  
+ 
   const promo = dataPromo;
 
   if (dataPromo != undefined) {
-    const selectState = [];
-    promo.map((x) => {
-      return selectState.push({
-        value: x.promo,
-        label: x.promo,
-        discount: x.promo_percent,
-      });
-    });
-    PassPromoCode = selectState;
-    
+    tst = dataPromo;
+       
   } else {
+    tst = [];
   }
 }
 
-const renderConValuePromoList = (x) => {
-  const filterPromo = this.state.promoList.filter((item) => {
-    if (item.label == x) {
-      return item;
-    }
-  });
-  if (filterPromo.length === 0) {
-    return {
-      value: "",
-      label: "Select Promo",
-      discount: "",
-    };
-  } else {
-    return {
-      value: filterPromo[0]?.value,
-      label: filterPromo[0]?.label,
-      discount: filterPromo[0]?.discount,
-    };
-  }
-};
-const renderConValue = (x) => {
-  const exit = this.props.countries.filter(
-    (item) => item.value === x.country
-  );
-
-  return exit[0] ? exit[0] : { value: "", label: "Select Country" };
-};
+;
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -190,12 +138,21 @@ const renderConValue = (x) => {
   }
 
 
-
-  const changePromoCode = (e, options,item) => {
-    setPromoCodeVal(options);
-    setPromoCodeDsc(e)
+ const  changePromoCode = (e, options, name, index) => {
     
-  }
+    if(e === undefined ){
+      setDsc ('0%' );
+      setPromo('KB0');
+    }
+    else{
+      var values = e.value.split(" ");
+      var discount = values[0];
+      
+      setDsc ( discount );
+      setPromo(e.children);
+    }
+  };
+
   // };
   return (
     <>
@@ -205,7 +162,7 @@ const renderConValue = (x) => {
             if (props.updatePage) {
               props.updatePost();
             } else {
-              props.savePost && props.savePost(this,promoCodeVal,promoCodeDsc);
+              props.savePost && props.savePost(this,promoCodePromo,promoCodeDscs);
             }
           }}
           ref={formRef}
@@ -479,31 +436,48 @@ const renderConValue = (x) => {
 
                 {userInfo?.account_type == "influencer" ?
                 <></>:
-                <div className="mt-3 row">
-                  <div className="col-md-3">
-                    <label>PromoCode For Customers</label>
-                    <Select
-                    
-                      name="promoCode"
-                      
-                      value={promoCodeVal}
-                      onChange={(options, e) => changePromoCode(e, options,PassPromoCode)}
-                      placeholder="Select PromoCode"
-                      style={{ width: "100%" }}
-                      //formatOptionLabel={promoCode}
-                      // formatOptionLabel={formatOptionLabel}
-                      options={PassPromoCode}
-                      
-                    />
-                  </div>
-                  <div className="col-md-3">
+                <div className="row">
+             
+             <div className="col-md-3 mt-3">
+                        <label>PromoCode</label>
+                        <Select
+                                    size="small"
+                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    value= {promoCodePromo}
+                                    //disabled={!(formState === "add" || formState === "edit")}
+                                    placeholder="KB0"
+                                    
+                                    //loading={this.state.promoCond}
+                                    optionFilterProp="children"
+                                    className="w-100"
+                                   // onSearch={onSearch}
+                                    onChange={(options, e) =>
+                                    changePromoCode(e, options)
+                                    }
+                                    showSearch
+                                    allowClear
+                                  >
+                                    {tst.map(
+                                      (customer,key) => {
+                                        return (
+                                          <Option key = {customer.promo_percent+' '+key} >
+                                            {customer.promo}
+                                          </Option>
+                                        );
+                                      }
+                                    )}
+                                  </Select>
+                      </div>
+
+                
+                  <div className="col-md-3 mt-3">
                     <label>Discount</label>
                     <div className="promo_discount form-control">
                     {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                    {promoCodeDsc.discount}
+                    {promoCodeDscs}
                     </div>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-6 mt-3">
                     <label>KB Fee</label>
                     <div className="promo_discount form-control">{numeral(Kbfee).format("0,0'")}%</div>
                   </div>
@@ -523,7 +497,7 @@ const renderConValue = (x) => {
                             className="custom_btns_ift"
                             color="primary"
                             onClick={(ev) =>
-                              props.updatePost(media_id, props.redirectedUrl,promoCodeDsc)
+                              props.updatePost(media_id, props.redirectedUrl,promoCodePromo,promoCodeDscs)
                             }
                           >
                             &nbsp;Update&nbsp;

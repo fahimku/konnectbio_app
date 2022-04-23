@@ -183,7 +183,7 @@ function AffiliateSalesInf({
                   <th>Qty</th>
                   <th>Gross Sales</th>
                   <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Commission Earn</th>
                 </tr>
               </thead>
               <tbody>
@@ -238,7 +238,7 @@ function AffiliateSalesInf({
                   <th>Total Qty</th>
                   <th>Gross Sales</th>
                   <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Commission Earn</th>
                 </tr>
               </thead>
               <tbody>
@@ -290,7 +290,7 @@ function AffiliateSalesInf({
                   <th>Total Qty</th>
                   <th>Gross Sales</th>
                   <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Commission Earn</th>
                 </tr>
               </thead>
               <tbody>
@@ -338,7 +338,7 @@ function AffiliateSalesInf({
                   <th>Total Qty</th>
                   <th>Gross Sales</th>
                   <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Commission Earn</th>
                 </tr>
               </thead>
               <tbody>
@@ -384,7 +384,7 @@ function AffiliateSalesInf({
                   <th>Influencer Name</th>
                   <th>Gross Sales</th>
                   <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Commission Earn</th>
                 </tr>
               </thead>
               <tbody>

@@ -20,9 +20,11 @@ import { textAlign } from "@mui/system";
 import Connection from "../../../connectToShopify/connShopify"
 import numeral from "numeral";
 const { Option } = Select;
+
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
 
+var tst ;
 class AffiliateForm extends React.Component {
   constructor(props) {
     super(props);
@@ -34,11 +36,9 @@ class AffiliateForm extends React.Component {
       pay_per_hundred: "",
       budget: "",
       promoCode: "",
-      promoCodeVal: {
-        value: "KB0",
-        label: "KB0",
-        discount: "0%",
-      },
+      promoCodeDsc: "",
+      promoCodePromo: "",
+    
       discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
@@ -169,8 +169,16 @@ class AffiliateForm extends React.Component {
 
   changePromoCode = (e, options, name, index) => {
     // let data = String(options.value);
-    console.log("----", options);
-    this.setState({ promoCodeVal: options });
+    var values = e.value.split(" ");
+    var discount = values[0];
+    if(e === undefined ){
+    this.setState({ promoCodeDsc: '0%' });
+    this.setState({ promoCodePromo: 'KB0'});
+    }
+    else{
+      this.setState({ promoCodeDsc: discount });
+      this.setState({ promoCodePromo: e.children});
+    }
   };
 
   changeState = (e, options, name, index) => {
@@ -209,19 +217,13 @@ class AffiliateForm extends React.Component {
       } else {
         const promo = data;
         if (data.length > 0) {
+         
           this.setState({ promoCond: false });
         } else {
           this.setState({ promoCond: true });
         }
-        const selectState = [];
-        promo.map((x) => {
-          return selectState.push({
-            value: x.promo,
-            label: x.promo,
-            discount: x.promo_percent,
-          });
-        });
-        this.setState({ promoCode: selectState });
+        tst = data;
+     
       }
     }
   };
@@ -297,7 +299,8 @@ class AffiliateForm extends React.Component {
       campaign_name,
       // budget,
       // pay_per_hundred,
-      promoCodeVal,
+      promoCodeDsc,
+      promoCodePromo,
       commission,
       startDate,
       endDate,
@@ -307,8 +310,7 @@ class AffiliateForm extends React.Component {
       (campaign_name &&
         // budget &&
         // pay_per_hundred &&
-        promoCodeVal,
-      commission && startDate && endDate && campaign_type && place)
+        promoCodePromo,commission && promoCodeDsc && startDate && endDate && campaign_type && place)
     ) {
       this.setState({ loading: true });
       await axios
@@ -319,8 +321,8 @@ class AffiliateForm extends React.Component {
           redirected_url: this.props.affData.redirected_url,
           media_url: this.props.affData.media_url,
           discount_type: "shopify",
-          promo: this.state.promoCodeVal.value,
-          discount: this.state.promoCodeVal.discount,
+          promo: this.state.promoCodePromo,
+          discount: this.state.promoCodeDsc,
           category_id:
             this.props.affData.categories.length !== 0
               ? this.props.affData.categories[0].category_id
@@ -408,11 +410,8 @@ class AffiliateForm extends React.Component {
       // budget: "",
       //discount: "",
       // promoCodeVal: "",
-      promoCodeVal: {
-        value: "KB0",
-        label: "KB0",
-        discount: "0%",
-      },
+      promoCodeDsc: "",
+      promoCodePromo: "",
       commission: "10",
       inputList: [{ country: "", state: "", city: "", zip: "" }],
       startDate: moment(),
@@ -449,6 +448,10 @@ class AffiliateForm extends React.Component {
       );
 
       return exit[0] ? exit[0] : { value: "", label: "Select Country" };
+    };
+
+    const onSearch = (val) => {
+      console.log("search:", val);
     };
 
     const formatOptionLabel = ({ value, label, discount }) => (
@@ -768,11 +771,43 @@ class AffiliateForm extends React.Component {
                     ) : (
                       <>
                         <div className="row">
-                          <div className="col-md-3 mt-3">
+                        <div className="col-md-3 mt-3">
+                        <label>PromoCode</label>
+                        <Select
+                                    size="small"
+                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                                    //defaultValue={formState === "edit" ? form.getFieldValue().customerType : null}
+                                    //disabled={!(formState === "add" || formState === "edit")}
+                                    placeholder="KB0"
+                                    loading={this.state.promoCond}
+                                    optionFilterProp="children"
+                                    className="w-100 campaign-promo-select"
+                                    onSearch={onSearch}
+                                    onChange={(options, e) =>
+                                      this.changePromoCode(e, options)
+                                    }
+                                    showSearch
+                                    allowClear
+                                  >
+                                    {tst.map(
+                                      (customer,key) => {
+                                        return (
+                                          
+                                          <Option key = {customer.promo_percent+' '+key} >
+                                            {customer.promo}
+                                          </Option>
+                                        );
+                                      }
+                                    )}
+                                  </Select>
+                      </div>
+                      
+                          {/* <div className="col-md-3 mt-3">
                             <label>PromoCode For Customers</label>
                             <Select2
                               name="promoCode"
                               // value={renderConValue(x)}
+                              
                               value={this.state.promoCodeVal}
                               onChange={(options, e) =>
                                 this.changePromoCode(e, options)
@@ -783,11 +818,11 @@ class AffiliateForm extends React.Component {
                               // formatOptionLabel={formatOptionLabel}
                               options={this.state.promoCode}
                             />
-                          </div>
+                          </div> */}
                           <div className="col-md-3 mt-3">
                             <label>Discount</label>
                             <div className="promo_discount form-control">
-                              {this.state.promoCodeVal.discount}
+                              {this.state.promoCodeDsc}
                             </div>
                           </div>
                           <div className="col-md-6 mt-3">
@@ -896,7 +931,10 @@ class AffiliateForm extends React.Component {
                                 }
                                 placeholder="Select Country"
                                 style={{ width: "100%" }}
-                                options={this.props.countries}
+                                options={this.props.countries.filter((item)=>{
+                                 console.log(item,"ff")
+                                  return item.value === "US"
+                                })}
                                 isDisabled={
                                   this.state.inputList.length - 1 !== i
                                     ? true

@@ -133,7 +133,7 @@ function ExpiredMarketPlace({
     };
 
     const sortByOptions = [
-        { value: "commission", label: "COMMISSION" },
+        { value: "commission", label: "INFLUENCER COMMISSION" },
         { value: "date", label: "DATE" },
     ];
 
