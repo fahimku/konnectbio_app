@@ -86,7 +86,7 @@ function AffiliateCampaign(
   if (loader == true) {
     dataPromo = props.promoRequest.message;
     const promo = dataPromo;
-    console.log("dataPromo",dataPromo)
+    console.log("dataPromo", dataPromo);
 
     if (dataPromo != undefined) {
       const selectState = [];
@@ -247,11 +247,34 @@ function AffiliateCampaign(
                 <div className="any-post-image">
                   <div className="any-image-box">
                     <div className="any-image-box-iner">
-                      <img
+                      {record.media_type === "VIDEO" ? (
+                        <video
+                          id={`post-video-${record.campaign_id}`}
+                          //autoPlay
+                          controls
+                          controlsList="nodownload"
+                          className="img-fluid"
+                          style={{
+                            height: "100%",
+                          }}
+                        >
+                          <source
+                            src={record.media_url + "#t=0.001"}
+                            type="video/mp4"
+                          ></source>
+                        </video>
+                      ) : (
+                        <img
+                          src={record.media_url}
+                          alt="media_url"
+                          className="img-fluid media-image"
+                        />
+                      )}
+                      {/* <img
                         src={record.media_url}
                         className="img-fluid media-image"
                         alt={record.media_type}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
