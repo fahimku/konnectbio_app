@@ -228,9 +228,22 @@ class MyCategory extends React.Component {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.setState({
-            saveCategories: options,
-          });
+          axios
+            .post(`/usercategory/verify`, {
+              category_id: e.removedValue.category_id,
+            })
+            .then((response) => {
+              console.log(response.data, "success");
+              if (response.data.success) {
+                this.setState({
+                  saveCategories: options,
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err.response.data, "error");
+              toast.error(err.response.data.message);
+            });
         } else {
           this.setState({
             saveCategories: this.state.saveCategories,
