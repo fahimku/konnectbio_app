@@ -233,7 +233,6 @@ class MyCategory extends React.Component {
               category_id: e.removedValue.category_id,
             })
             .then((response) => {
-              console.log(response.data, "success");
               if (response.data.success) {
                 this.setState({
                   saveCategories: options,
@@ -241,7 +240,6 @@ class MyCategory extends React.Component {
               }
             })
             .catch((err) => {
-              console.log(err.response.data, "error");
               toast.error(err.response.data.message);
             });
         } else {

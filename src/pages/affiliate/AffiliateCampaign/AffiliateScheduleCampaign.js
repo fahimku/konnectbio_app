@@ -86,7 +86,6 @@ function AffiliateCampaign(
   if (loader == true) {
     dataPromo = props.promoRequest.message;
     const promo = dataPromo;
-    console.log("dataPromo", dataPromo);
 
     if (dataPromo != undefined) {
       const selectState = [];

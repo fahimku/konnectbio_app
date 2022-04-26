@@ -7,6 +7,7 @@ import AffiliateBrand from "./AffiliateBrand/AffiliateBrand";
 // import AffiliateBalance from "../affiliate/AffiliateBalance/AffiliateBalance";
 import AffiliatePayment from "./AffiliatePayment/AffiliatePayment";
 import AffiliateBilling from "./AffiliateBilling/billing";
+import AffiliateContractTerm from "./AffiliateContractTerm/AffiliateContractTerm";
 class AffiliateSetup extends React.Component {
   constructor(props) {
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -92,7 +93,7 @@ class AffiliateSetup extends React.Component {
                         <span>Analytics</span>
                       </NavLink>
                     </NavItem> */}
-                    {/* <NavItem>
+                    <NavItem>
                       <NavLink
                         className={classnames({
                           active:
@@ -104,7 +105,20 @@ class AffiliateSetup extends React.Component {
                       >
                         <span>Payment Method</span>
                       </NavLink>
-                    </NavItem> */}
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames({
+                          active:
+                            this.state.activeSecondTab === "contract-term",
+                        })}
+                        onClick={() => {
+                          this.toggleSecondTabs("contract-term");
+                        }}
+                      >
+                        <span>Contract Term</span>
+                      </NavLink>
+                    </NavItem>
                   </Nav>
                   <TabContent
                     className="affiliate_tab_ift"
@@ -130,11 +144,16 @@ class AffiliateSetup extends React.Component {
                         <AffiliateTransaction />
                       ) : null}
                     </TabPane> */}
-                    {/* <TabPane tabId="paymentmethod">
+                    <TabPane tabId="paymentmethod">
                       {this.state.activeSecondTab === "paymentmethod" ? (
                         <AffiliatePayment />
                       ) : null}
-                    </TabPane> */}
+                    </TabPane>
+                    <TabPane tabId="contract-term">
+                      {this.state.activeSecondTab === "contract-term" ? (
+                        <AffiliateContractTerm />
+                      ) : null}
+                    </TabPane>
                   </TabContent>
                 </div>
               </Row>
