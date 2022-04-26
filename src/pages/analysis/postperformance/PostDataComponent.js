@@ -323,10 +323,10 @@ class PostDataComponent extends React.Component {
                     <h5 className="count-title">End Date</h5>
                     <h3 className="count">{record.end_date}</h3>
                   </div>
-                  <div className="col-12 count-box">
+                  {/* <div className="col-12 count-box">
                     <h5 className="count-title">Net Sales</h5>
                     <h3 className="count">{record.revenue}</h3>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
