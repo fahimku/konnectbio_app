@@ -20,7 +20,6 @@ import { connect } from "react-redux";
 import axios from "axios";
 import numeral from "numeral";
 
-
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
@@ -28,23 +27,18 @@ const dateFormat = "YYYY-MM-DD";
 let userInfo;
 let dataPromo;
 let PassPromoCode;
-var subPromo ;
+var subPromo;
 var subDiscount;
-var tst ;
-  
-function ShopRightBar(
-  props,
-  { getPromoRequest, promoRequest, PromoPayload }
-) {
-  if(typeof props.promo == 'object' && props.promo !== null){    
-  }else{
-  subPromo = props.promo;
-  subDiscount = props.discount;
-  
-}
+var tst;
+
+function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
+  if (typeof props.promo == "object" && props.promo !== null) {
+  } else {
+    subPromo = props.promo;
+    subDiscount = props.discount;
+  }
   const media_id = props.singlePost.post_id;
-  
- 
+
   const [startDate, setStartDate] = useState("");
   const [connNotFound, setconnFound] = useState(true);
   const [endDate, setEndDate] = useState("");
@@ -56,18 +50,22 @@ function ShopRightBar(
   const [Kbfee, setKbfee] = useState();
   const [promoCodeDscs, setDsc] = useState("0%");
   const [promoCodePromo, setPromo] = useState("KB0");
- 
 
-
-useEffect(() => {
-  userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  axios.post("/fee").then((res) =>{
-   
-    setKbfee(res.data.message)  
-  }).catch((res) =>{
-    
-})
-},[])
+  useEffect(() => {
+    userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // axios
+    //   .post("/fee")
+    //   .then((res) => {
+    //     setKbfee(res.data.message);
+    //   })
+    //   .catch((res) => {});
+    axios
+      .get("/affiliate/getcontract")
+      .then((res) => {
+        setKbfee(res.data?.message?.fee ? res.data?.message?.fee : "0");
+      })
+      .catch((res) => {});
+  }, []);
 
   useEffect(() => {
     setStartDate(props.startDate);
@@ -83,53 +81,42 @@ useEffect(() => {
     props.closeModel(false);
   }, [props.mobileDropdown]);
 
-  useEffect(() =>{
-    
-  setLoader(false);
-  props.getPromoRequest().then((res) => {
-    setLoader(true);
-   }).catch((res) =>{
-    setconnFound(false);
-  
-  });
-}, []);
+  useEffect(() => {
+    setLoader(false);
+    props
+      .getPromoRequest()
+      .then((res) => {
+        setLoader(true);
+      })
+      .catch((res) => {
+        setconnFound(false);
+      });
+  }, []);
 
+  useEffect(() => {
+    if (typeof props.promo == "object" && props.promo !== null) {
+    } else {
+      if (props.promo) {
+        setDsc(props.discount);
+        setPromo(props.promo);
+      } else {
+        setDsc("0%");
+        setPromo("KB0");
+      }
+    }
+  }, [props]);
 
-useEffect(() =>{
-if(typeof props.promo == 'object' && props.promo !== null){    
-  
-}
- else{ 
-if(props.promo){
+  if (loader == true) {
+    dataPromo = props.promoRequest.message;
 
-  setDsc (props.discount);
-  setPromo(props.promo);
-  
-}
-else{
-    
-  setDsc ('0%' );
-  setPromo('KB0');
-}
-}
+    const promo = dataPromo;
 
- 
-},[props]);
-
-if (loader == true) {
-  dataPromo = props.promoRequest.message;
- 
-  const promo = dataPromo;
-
-  if (dataPromo != undefined) {
-    tst = dataPromo;
-       
-  } else {
-    tst = [];
+    if (dataPromo != undefined) {
+      tst = dataPromo;
+    } else {
+      tst = [];
+    }
   }
-}
-
-;
 
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -137,18 +124,15 @@ if (loader == true) {
     props.dateRange(startDate, endDate);
   }
 
-
- const  changePromoCode = (e, options, name, index) => {
-    
-    if(e === undefined ){
-      setDsc ('0%' );
-      setPromo('KB0');
-    }
-    else{
+  const changePromoCode = (e, options, name, index) => {
+    if (e === undefined) {
+      setDsc("0%");
+      setPromo("KB0");
+    } else {
       var values = e.value.split(" ");
       var discount = values[0];
-      
-      setDsc ( discount );
+
+      setDsc(discount);
       setPromo(e.children);
     }
   };
@@ -162,7 +146,8 @@ if (loader == true) {
             if (props.updatePage) {
               props.updatePost();
             } else {
-              props.savePost && props.savePost(this,promoCodePromo,promoCodeDscs);
+              props.savePost &&
+                props.savePost(this, promoCodePromo, promoCodeDscs);
             }
           }}
           ref={formRef}
@@ -434,55 +419,55 @@ if (loader == true) {
                   />
                 </div>
 
-                {userInfo?.account_type == "influencer" ?
-                <></>:
-                <div className="row">
-             
-             <div className="col-md-3 mt-3">
-                        <label>PromoCode</label>
-                        <Select
-                                    size="small"
-                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    value= {promoCodePromo}
-                                    //disabled={!(formState === "add" || formState === "edit")}
-                                    placeholder="KB0"
-                                    
-                                    //loading={this.state.promoCond}
-                                    optionFilterProp="children"
-                                    className="w-100"
-                                   // onSearch={onSearch}
-                                    onChange={(options, e) =>
-                                    changePromoCode(e, options)
-                                    }
-                                    showSearch
-                                    allowClear
-                                  >
-                                    {tst.map(
-                                      (customer,key) => {
-                                        return (
-                                          <Option key = {customer.promo_percent+' '+key} >
-                                            {customer.promo}
-                                          </Option>
-                                        );
-                                      }
-                                    )}
-                                  </Select>
-                      </div>
+                {userInfo?.account_type == "influencer" ? (
+                  <></>
+                ) : (
+                  <div className="row">
+                    <div className="col-md-3 mt-3">
+                      <label>PromoCode</label>
+                      <Select
+                        size="small"
+                        filterOption={(input, options) =>
+                          options.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        value={promoCodePromo}
+                        //disabled={!(formState === "add" || formState === "edit")}
+                        placeholder="KB0"
+                        //loading={this.state.promoCond}
+                        optionFilterProp="children"
+                        className="w-100"
+                        // onSearch={onSearch}
+                        onChange={(options, e) => changePromoCode(e, options)}
+                        showSearch
+                        allowClear
+                      >
+                        {tst.map((customer, key) => {
+                          return (
+                            <Option key={customer.promo_percent + " " + key}>
+                              {customer.promo}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                    </div>
 
-                
-                  <div className="col-md-3 mt-3">
-                    <label>Discount</label>
-                    <div className="promo_discount form-control">
-                    {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                    {promoCodeDscs}
+                    <div className="col-md-3 mt-3">
+                      <label>Discount</label>
+                      <div className="promo_discount form-control">
+                        {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                        {promoCodeDscs}
+                      </div>
+                    </div>
+                    <div className="col-md-6 mt-3">
+                      <label>KB Fee</label>
+                      <div className="promo_discount form-control">
+                        {numeral(Kbfee).format("0,0'")}%
+                      </div>
                     </div>
                   </div>
-                  <div className="col-md-6 mt-3">
-                    <label>KB Fee</label>
-                    <div className="promo_discount form-control">{numeral(Kbfee).format("0,0'")}%</div>
-                  </div>
-                </div>
-}
+                )}
 
                 <div className="edit_button_main pane-button">
                   {props.singlePost.linked || props.updatePage ? (
@@ -497,7 +482,12 @@ if (loader == true) {
                             className="custom_btns_ift"
                             color="primary"
                             onClick={(ev) =>
-                              props.updatePost(media_id, props.redirectedUrl,promoCodePromo,promoCodeDscs)
+                              props.updatePost(
+                                media_id,
+                                props.redirectedUrl,
+                                promoCodePromo,
+                                promoCodeDscs
+                              )
                             }
                           >
                             &nbsp;Update&nbsp;
@@ -578,16 +568,11 @@ if (loader == true) {
           </div>
         </Formsy.Form>
       )}
-
     </>
   );
-};
+}
 
-function mapStateToProps({
-  getPromoRequest,
-  promoRequest,
-
-}) {
+function mapStateToProps({ getPromoRequest, promoRequest }) {
   return { getPromoRequest, promoRequest };
 }
 export default connect(mapStateToProps, {

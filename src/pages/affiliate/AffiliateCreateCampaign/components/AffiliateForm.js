@@ -24,7 +24,7 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
 
-var tst ;
+var tst;
 class AffiliateForm extends React.Component {
   constructor(props) {
     super(props);
@@ -38,7 +38,7 @@ class AffiliateForm extends React.Component {
       promoCode: "",
       promoCodeDsc: "0%",
       promoCodePromo: "KB0",
-    
+
       discountType: "",
       startDate: moment().format("YYYY-MM-DD"),
       endDate: moment().add(1, "years").format("YYYY-MM-DD"),
@@ -53,7 +53,7 @@ class AffiliateForm extends React.Component {
       reach: "",
       submit: false,
       discount: "",
-      commission: "10",
+      commission: "0",
       promoCond: true,
       connNotFound: true,
       Kbfee: "",
@@ -67,10 +67,15 @@ class AffiliateForm extends React.Component {
 
   componentDidMount() {
     axios
-      .post("/fee")
+      .get("/affiliate/getcontract")
       .then((res) => {
-        console.log(res);
-        this.setState({ Kbfee: res.data.message });
+        this.setState({
+          Kbfee: res.data?.message?.fee,
+          commission: res.data?.message?.min_commission
+            ? res.data?.message?.min_commission
+            : "10",
+          contractData: res.data?.message,
+        });
       })
       .catch((res) => {});
   }
@@ -85,7 +90,6 @@ class AffiliateForm extends React.Component {
     var budget = parseInt(this.state.budget);
     if (pay_per_hundered > budget) {
       this.setState({ budgetCondition: "PPC can not be greater than budget" });
-      console.log(pay_per_hundered, "===", budget);
     } else {
       this.setState({ budgetCondition: "" });
     }
@@ -102,12 +106,12 @@ class AffiliateForm extends React.Component {
     }
   };
   commission = (value) => {
-    if (value <= 50) {
+    if (value <= this.state.contractData.max_commission) {
       this.setState({ commission: value });
       this.setState({ CommissionError: "" });
     } else {
       this.setState({
-        CommissionError: "Commission can not be greater than 50",
+        CommissionError: `Commission can not be greater than ${this.state.contractData.max_commission}%`,
       });
     }
   };
@@ -171,16 +175,15 @@ class AffiliateForm extends React.Component {
 
   changePromoCode = (e, options, name, index) => {
     // let data = String(options.value);
-  
-    if(e === undefined ){
-    this.setState({ promoCodeDsc: '0%' });
-    this.setState({ promoCodePromo: 'KB0'});
-    }
-    else{
+
+    if (e === undefined) {
+      this.setState({ promoCodeDsc: "0%" });
+      this.setState({ promoCodePromo: "KB0" });
+    } else {
       var values = e.value.split(" ");
       var discount = values[0];
       this.setState({ promoCodeDsc: discount });
-      this.setState({ promoCodePromo: e.children});
+      this.setState({ promoCodePromo: e.children });
     }
   };
 
@@ -220,13 +223,11 @@ class AffiliateForm extends React.Component {
       } else {
         const promo = data;
         if (data.length > 0) {
-         
           this.setState({ promoCond: false });
         } else {
           this.setState({ promoCond: true });
         }
         tst = data;
-     
       }
     }
   };
@@ -313,7 +314,13 @@ class AffiliateForm extends React.Component {
       (campaign_name &&
         // budget &&
         // pay_per_hundred &&
-        promoCodePromo,commission && promoCodeDsc && startDate && endDate && campaign_type && place)
+        promoCodePromo,
+      commission &&
+        promoCodeDsc &&
+        startDate &&
+        endDate &&
+        campaign_type &&
+        place)
     ) {
       this.setState({ loading: true });
       await axios
@@ -341,7 +348,8 @@ class AffiliateForm extends React.Component {
           end_date: this.state.endDate,
         })
         .then((response) => {
-          toast.success("Your Campaign is Schedule Successfully");
+          // toast.success("Your Campaign is Schedule Successfully");
+          toast.success("Your Campaign Added Successfully");
           this.setState({ loading: false });
           // this.props.affCloseModal();
           // this.props.getPosts(1, null, this.props.clearPost);
@@ -493,7 +501,7 @@ class AffiliateForm extends React.Component {
     //     return exit[0];
     //   }
     // };
-    // console.log(this.state.commission, "promoCodeVal");
+    // console.log(this.props.Kbfee, "Kbfee");
 
     return (
       <React.Fragment>
@@ -764,43 +772,44 @@ class AffiliateForm extends React.Component {
                 </div> */}
                 <ShopifyPromo PromoPayload={this.handleClick} />
 
-                    {this.state.promoCond ? (
-                      <></>
-                    ) : (
-                      <>
-                        <div className="row">
-                        <div className="col-md-3 mt-3">
+                {this.state.promoCond ? (
+                  <></>
+                ) : (
+                  <>
+                    <div className="row">
+                      <div className="col-md-3 mt-3">
                         <label>PromoCode</label>
                         <Select
-                                    size="small"
-                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    //defaultValue={formState === "edit" ? form.getFieldValue().customerType : null}
-                                    //disabled={!(formState === "add" || formState === "edit")}
-                                    placeholder="KB0"
-                                    loading={this.state.promoCond}
-                                    optionFilterProp="children"
-                                    className="w-100 campaign-promo-select"
-                                    onSearch={onSearch}
-                                    onChange={(options, e) =>
-                                      this.changePromoCode(e, options)
-                                    }
-                                    showSearch
-                                    allowClear
-                                  >
-                                    {tst.map(
-                                      (customer,key) => {
-                                        return (
-                                          
-                                          <Option key = {customer.promo_percent+' '+key} >
-                                            {customer.promo}
-                                          </Option>
-                                        );
-                                      }
-                                    )}
-                                  </Select>
+                          size="small"
+                          filterOption={(input, options) =>
+                            options.children
+                              .toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                          }
+                          //defaultValue={formState === "edit" ? form.getFieldValue().customerType : null}
+                          //disabled={!(formState === "add" || formState === "edit")}
+                          placeholder="KB0"
+                          loading={this.state.promoCond}
+                          optionFilterProp="children"
+                          className="w-100 campaign-promo-select"
+                          onSearch={onSearch}
+                          onChange={(options, e) =>
+                            this.changePromoCode(e, options)
+                          }
+                          showSearch
+                          allowClear
+                        >
+                          {tst.map((customer, key) => {
+                            return (
+                              <Option key={customer.promo_percent + " " + key}>
+                                {customer.promo}
+                              </Option>
+                            );
+                          })}
+                        </Select>
                       </div>
-                      
-                          {/* <div className="col-md-3 mt-3">
+
+                      {/* <div className="col-md-3 mt-3">
                             <label>PromoCode For Customers</label>
                             <Select2
                               name="promoCode"
@@ -817,42 +826,49 @@ class AffiliateForm extends React.Component {
                               options={this.state.promoCode}
                             />
                           </div> */}
-                          <div className="col-md-3 mt-3">
-                            <label>Discount</label>
-                            <div className="promo_discount form-control">
-                              {this.state.promoCodeDsc}
-                            </div>
-                          </div>
-                          <div className="col-md-6 mt-3">
-                            <label>
-                              Influencer Commission{" "}
-                              <span className="small">
-                                (Including {affData?.kb_fee}% KB fees)
-                              </span>
-                            </label>
-                            <InputNumberValidation
-                              type="number"
-                              id="number"
-                              name="commission"
-                              value={this.state.commission}
-                              onChange={(evt) => {
-                                this.commission(evt.target.value);
-                              }}
-                              required
-                              min="10"
-                              max="50"
-                            />
-                            <div className="small">
-                            Note: minimum commission is {numeral(this.state.Kbfee).format("0,0'")}%
-                            </div>
-                            <span className="text-danger">
-                              {this.state.CommissionError}
-                            </span>
-                          </div>
+                      <div className="col-md-3 mt-3">
+                        <label>Discount</label>
+                        <div className="promo_discount form-control">
+                          {this.state.promoCodeDsc}
                         </div>
-                      
-                     
-                   
+                      </div>
+                      <div className="col-md-6 mt-3">
+                        <label>
+                          Influencer Commission{" "}
+                          <span className="small">
+                            (Including{" "}
+                            {this.state.Kbfee ? this.state.Kbfee : "0"}% KB
+                            fees)
+                          </span>
+                        </label>
+                        <InputNumberValidation
+                          type="number"
+                          id="number"
+                          name="commission"
+                          value={this.state.commission}
+                          onChange={(evt) => {
+                            this.commission(evt.target.value);
+                          }}
+                          required
+                          min={this.state.contractData?.min_commission.toString()}
+                          max={this.state.contractData?.max_commission.toString()}
+                        />
+                        <div className="small">
+                          Note: minimum commission is{" "}
+                          {numeral(
+                            this.state.contractData?.min_commission
+                          ).format("0,0'")}
+                          % and maximum commission is{" "}
+                          {numeral(
+                            this.state.contractData?.max_commission
+                          ).format("0,0'")}
+                          %
+                        </div>
+                        <span className="text-danger">
+                          {this.state.CommissionError}
+                        </span>
+                      </div>
+                    </div>
                   </>
                 )}
                 {/* <div className="row">
@@ -917,67 +933,66 @@ class AffiliateForm extends React.Component {
                   </div>
                 </div> */}
 
-                    <div className="country-select">
-                      {this.state.inputList.map((x, i) => {
-                        return (
-                          <div className="c-con-select row">
-                            <div className="col-md-3 mt-3">
-                              <label>Country {i + 1}</label>
-                              <Select2
-                                key={i}
-                                name="country"
-                                value={renderConValue(x)}
-                                onChange={(options, e) =>
-                                  this.changeCountry(e, options, "country", i)
-                                }
-                                placeholder="Select Country"
-                                style={{ width: "100%" }}
-                                options={this.props.countries.filter((item)=>{
-                                 console.log(item,"ff")
-                                  return item.value === "US"
-                                })}
-                                isDisabled={
-                                  this.state.inputList.length - 1 !== i
-                                    ? true
-                                    : false
-                                }
-                              />
-                              {this.state.submit && !x.country ? (
-                                <span className={"help-block text-danger"}>
-                                  This value is required.
-                                </span>
-                              ) : null}
-                            </div>
-                            <div className="col-md-3 mt-3">
-                              <label>State {i + 1}</label>
-                              <VirtualizedSelect
-                                className
-                                key={i}
-                                name="state"
-                                value={renderStateValue(x)}
-                                onChange={(options, e) =>
-                                  this.changeState(e, options, "state", i)
-                                }
-                                placeholder="All States"
-                                style={{ width: "100%" }}
-                                options={this.state.stateList}
-                                disabled={
-                                  // this.state.stateList === ""
-                                  this.state.inputList[i].country === "" ||
-                                  this.state.inputList.length - 1 !== i
-                                    ? true
-                                    : false
-                                }
-                                clearable={false}
-                              />
-                              {this.state.submit && !x.state ? (
-                                <span className={"help-block text-danger"}>
-                                  This value is required.
-                                </span>
-                              ) : null}
-                            </div>
-                            <div className="col-md-3 mt-3">
-                              <label>City {i + 1}</label>
+                <div className="country-select">
+                  {this.state.inputList.map((x, i) => {
+                    return (
+                      <div className="c-con-select row">
+                        <div className="col-md-3 mt-3">
+                          <label>Country {i + 1}</label>
+                          <Select2
+                            key={i}
+                            name="country"
+                            value={renderConValue(x)}
+                            onChange={(options, e) =>
+                              this.changeCountry(e, options, "country", i)
+                            }
+                            placeholder="Select Country"
+                            style={{ width: "100%" }}
+                            options={this.props.countries.filter((item) => {
+                              return item.value === "US";
+                            })}
+                            isDisabled={
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
+                          />
+                          {this.state.submit && !x.country ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-3 mt-3">
+                          <label>State {i + 1}</label>
+                          <VirtualizedSelect
+                            className
+                            key={i}
+                            name="state"
+                            value={renderStateValue(x)}
+                            onChange={(options, e) =>
+                              this.changeState(e, options, "state", i)
+                            }
+                            placeholder="All States"
+                            style={{ width: "100%" }}
+                            options={this.state.stateList}
+                            disabled={
+                              // this.state.stateList === ""
+                              this.state.inputList[i].country === "" ||
+                              this.state.inputList.length - 1 !== i
+                                ? true
+                                : false
+                            }
+                            clearable={false}
+                          />
+                          {this.state.submit && !x.state ? (
+                            <span className={"help-block text-danger"}>
+                              This value is required.
+                            </span>
+                          ) : null}
+                        </div>
+                        <div className="col-md-3 mt-3">
+                          <label>City {i + 1}</label>
 
                           <VirtualizedSelect
                             className

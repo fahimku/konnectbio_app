@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Button, Row, Col } from "react-bootstrap";
-import { toast } from "react-toastify";
-import { Formik } from "formik";
+import { Row, Col } from "react-bootstrap";
 import Loader from "../../../components/Loader/Loader";
-import * as Yup from "yup";
 import * as affiliateBillingActions from "../../../actions/affiliateBilling";
 import { connect } from "react-redux";
+import moment from "moment";
 
 function AffiliateContractTerm({
   getAffiliateContractDetail,
@@ -55,6 +53,26 @@ function AffiliateContractTerm({
                         </Col>
                         <Col xs={8}>
                           {data?.min_commission ? data?.min_commission : "0"}%
+                        </Col>
+                      </Row>
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Date From:</span>
+                        </Col>
+                        <Col xs={8}>
+                          {data?.from_date
+                            ? moment(data?.from_date).format("YYYY-MM-DD")
+                            : "-"}
+                        </Col>
+                      </Row>
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Date To:</span>
+                        </Col>
+                        <Col xs={8}>
+                          {data?.to_date
+                            ? moment(data?.to_date).format("YYYY-MM-DD")
+                            : "-"}
                         </Col>
                       </Row>
                     </>

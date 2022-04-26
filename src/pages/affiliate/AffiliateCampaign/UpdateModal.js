@@ -22,7 +22,7 @@ const { RangePicker } = DatePicker;
 class UpdateModal extends React.Component {
   constructor(props) {
     super(props);
-      console.log("prop",this.props)
+    console.log("prop", this.props);
     this.state = {
       username: this.props.username,
       campaign_name: this.props.affData?.campaign_name,
@@ -61,13 +61,24 @@ class UpdateModal extends React.Component {
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
   async componentDidMount() {
-    console.log("-----", this.props.affData);
+    // axios
+    //   .post("/fee")
+    //   .then((res) => {
+    //     console.log(res);
+    //     this.setState({ Kbfee: res.data.message });
+    //   })
+    //   .catch((res) => {});
 
     axios
-      .post("/fee")
+      .get("/affiliate/getcontract")
       .then((res) => {
-        console.log(res);
-        this.setState({ Kbfee: res.data.message });
+        this.setState({
+          Kbfee: res.data?.message?.fee,
+          // commission: res.data?.message?.min_commission
+          //   ? res.data?.message?.min_commission
+          //   : "10",
+          contractData: res.data?.message,
+        });
       })
       .catch((res) => {});
 
@@ -114,17 +125,15 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-  
-    if(e === undefined ){
-      this.setState({ promoCodesDiscount: '0%' });
-      this.setState({ promoCodes: 'KB0'});
-      }
-      else{
-        var values = e.value.split(" ");
-        var discount = values[0];
-        this.setState({ promoCodesDiscount: discount });
-        this.setState({ promoCodes: e.children});
-      }
+    if (e === undefined) {
+      this.setState({ promoCodesDiscount: "0%" });
+      this.setState({ promoCodes: "KB0" });
+    } else {
+      var values = e.value.split(" ");
+      var discount = values[0];
+      this.setState({ promoCodesDiscount: discount });
+      this.setState({ promoCodes: e.children });
+    }
   };
 
   discount = (value) => {
@@ -136,12 +145,12 @@ class UpdateModal extends React.Component {
     }
   };
   commission = (value) => {
-    if (value <= 50) {
+    if (value <= this.state.contractData.max_commission) {
       this.setState({ commission: value });
       this.setState({ CommissionError: "" });
     } else {
       this.setState({
-        CommissionError: "Commission can not be greater than 50",
+        CommissionError: `Commission can not be greater than ${this.state.contractData.max_commission}`,
       });
     }
   };
@@ -488,7 +497,6 @@ class UpdateModal extends React.Component {
         return { value: "", label: "All Cities" };
       }
     };
-   
 
     return (
       <React.Fragment>
@@ -730,37 +738,38 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                <div className="col-md-3 mt-3">
-                        <label>PromoCode</label>
-                        <Select
-                                    size="small"
-                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    defaultValue={this.state.promoCodes}
-                                    //disabled={!(formState === "add" || formState === "edit")}
-                                    placeholder="KB0"
-                                    //loading={this.state.promoCond}
-                                    optionFilterProp="children"
-                                    className="w-100 campaign-promo-select"
-                                   // onSearch={onSearch}
-                                    onChange={(options, e) =>
-                                      this.changePromoCode(e, options)
-                                    }
-                                    showSearch
-                                    allowClear
-                                  >
-                                    {this.state.promoList.map(
-                                      (customer,key) => {
-                                        return (
-                                          <Option key = {customer.promo_percent+' '+key} >
-                                            {customer.promo}
-                                          </Option>
-                                        );
-                                      }
-                                    )}
-                                  </Select>
-                      </div>
-                
-                
+                  <div className="col-md-3 mt-3">
+                    <label>PromoCode</label>
+                    <Select
+                      size="small"
+                      filterOption={(input, options) =>
+                        options.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      defaultValue={this.state.promoCodes}
+                      //disabled={!(formState === "add" || formState === "edit")}
+                      placeholder="KB0"
+                      //loading={this.state.promoCond}
+                      optionFilterProp="children"
+                      className="w-100 campaign-promo-select"
+                      // onSearch={onSearch}
+                      onChange={(options, e) =>
+                        this.changePromoCode(e, options)
+                      }
+                      showSearch
+                      allowClear
+                    >
+                      {this.state.promoList.map((customer, key) => {
+                        return (
+                          <Option key={customer.promo_percent + " " + key}>
+                            {customer.promo}
+                          </Option>
+                        );
+                      })}
+                    </Select>
+                  </div>
+
                   {/* <div className="col-md-3 mt-3">
                     <label>PromoCode For Customers</label>
                     <Select2
@@ -798,12 +807,31 @@ class UpdateModal extends React.Component {
                         this.commission(evt.target.value);
                       }}
                       required
-                      min="10"
-                      max="50"
+                      min={
+                        this.state.contractData?.min_commission
+                          ? this.state.contractData?.min_commission.toString()
+                          : "10"
+                      }
+                      max={
+                        this.state.contractData?.max_commission
+                          ? this.state.contractData?.max_commission.toString()
+                          : "50"
+                      }
                     />
                     <div className="small">
                       Note: minimum commission is{" "}
-                      {numeral(this.state.Kbfee).format("0,0'")}%
+                      {this.state.contractData?.min_commission
+                        ? numeral(
+                            this.state.contractData?.min_commission
+                          ).format("0,0'")
+                        : "10"}
+                      % and maximun commission is{" "}
+                      {this.state.contractData?.max_commission
+                        ? numeral(
+                            this.state.contractData?.max_commission
+                          ).format("0,0'")
+                        : "50"}
+                      %
                     </div>
                     <span className="text-danger">
                       {this.state.CommissionError}

@@ -1377,11 +1377,15 @@ code.sm-color {
   border-radius: 5px !important;
 }
 
-
-.campaign-promo-select .ant-select-selector .ant-select-selection-item, .campaign-promo-select .ant-select-selector .ant-select-selection-placeholder {
+.campaign-promo-select .ant-select-selector .ant-select-selection-item,
+.campaign-promo-select .ant-select-selector .ant-select-selection-placeholder {
   line-height: 39px !important;
 }
 .table_heading {
   background: #010b40;
   color: #fff;
+}
+.chain-icon {
+  position: relative;
+  top: -1px;
 }
