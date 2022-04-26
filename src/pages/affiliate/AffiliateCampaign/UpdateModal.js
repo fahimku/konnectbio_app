@@ -22,7 +22,7 @@ const { RangePicker } = DatePicker;
 class UpdateModal extends React.Component {
   constructor(props) {
     super(props);
-      console.log("prop",this.props)
+    console.log("prop", this.props);
     this.state = {
       username: this.props.username,
       campaign_name: this.props.affData?.campaign_name,
@@ -61,13 +61,18 @@ class UpdateModal extends React.Component {
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
   async componentDidMount() {
-    console.log("-----", this.props.affData);
+    // axios
+    //   .post("/fee")
+    //   .then((res) => {
+    //     console.log(res);
+    //     this.setState({ Kbfee: res.data.message });
+    //   })
+    //   .catch((res) => {});
 
     axios
-      .post("/fee")
+      .get("/affiliate/getcontract")
       .then((res) => {
-        console.log(res);
-        this.setState({ Kbfee: res.data.message });
+        this.setState({ Kbfee: res.data?.message?.fee });
       })
       .catch((res) => {});
 
@@ -114,17 +119,15 @@ class UpdateModal extends React.Component {
   // };
 
   changePromoCode = (e, options, name, index) => {
-  
-    if(e === undefined ){
-      this.setState({ promoCodesDiscount: '0%' });
-      this.setState({ promoCodes: 'KB0'});
-      }
-      else{
-        var values = e.value.split(" ");
-        var discount = values[0];
-        this.setState({ promoCodesDiscount: discount });
-        this.setState({ promoCodes: e.children});
-      }
+    if (e === undefined) {
+      this.setState({ promoCodesDiscount: "0%" });
+      this.setState({ promoCodes: "KB0" });
+    } else {
+      var values = e.value.split(" ");
+      var discount = values[0];
+      this.setState({ promoCodesDiscount: discount });
+      this.setState({ promoCodes: e.children });
+    }
   };
 
   discount = (value) => {
@@ -488,7 +491,6 @@ class UpdateModal extends React.Component {
         return { value: "", label: "All Cities" };
       }
     };
-   
 
     return (
       <React.Fragment>
@@ -730,37 +732,38 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                <div className="col-md-3 mt-3">
-                        <label>PromoCode</label>
-                        <Select
-                                    size="small"
-                                    filterOption={(input, options) => options.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                    defaultValue={this.state.promoCodes}
-                                    //disabled={!(formState === "add" || formState === "edit")}
-                                    placeholder="KB0"
-                                    //loading={this.state.promoCond}
-                                    optionFilterProp="children"
-                                    className="w-100 campaign-promo-select"
-                                   // onSearch={onSearch}
-                                    onChange={(options, e) =>
-                                      this.changePromoCode(e, options)
-                                    }
-                                    showSearch
-                                    allowClear
-                                  >
-                                    {this.state.promoList.map(
-                                      (customer,key) => {
-                                        return (
-                                          <Option key = {customer.promo_percent+' '+key} >
-                                            {customer.promo}
-                                          </Option>
-                                        );
-                                      }
-                                    )}
-                                  </Select>
-                      </div>
-                
-                
+                  <div className="col-md-3 mt-3">
+                    <label>PromoCode</label>
+                    <Select
+                      size="small"
+                      filterOption={(input, options) =>
+                        options.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                      defaultValue={this.state.promoCodes}
+                      //disabled={!(formState === "add" || formState === "edit")}
+                      placeholder="KB0"
+                      //loading={this.state.promoCond}
+                      optionFilterProp="children"
+                      className="w-100 campaign-promo-select"
+                      // onSearch={onSearch}
+                      onChange={(options, e) =>
+                        this.changePromoCode(e, options)
+                      }
+                      showSearch
+                      allowClear
+                    >
+                      {this.state.promoList.map((customer, key) => {
+                        return (
+                          <Option key={customer.promo_percent + " " + key}>
+                            {customer.promo}
+                          </Option>
+                        );
+                      })}
+                    </Select>
+                  </div>
+
                   {/* <div className="col-md-3 mt-3">
                     <label>PromoCode For Customers</label>
                     <Select2
