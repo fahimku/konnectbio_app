@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import Loader from "../../../components/Loader/Loader";
 
-function AffiliateDeposit({ makePayment, affiliatePayment }) {
+function AffiliateDeposit({ makePayment, affiliatePayment, page }) {
   const [paymentLoading, setPaymentLoading] = useState(false);
 
   useEffect(() => {
@@ -29,13 +29,22 @@ function AffiliateDeposit({ makePayment, affiliatePayment }) {
         </div>
       ) : (
         <div className="affiliate-wallet">
-          <h5>Deposit Amount</h5>
-          <p>Make a deposit amount</p>
+          {page === "setup" ? (
+            <>
+              <h5>Add New Card</h5>
+              {/* <p>Make a deposit amount</p> */}
+            </>
+          ) : (
+            <>
+              <h5>Deposit Amount</h5>
+              <p>Make a deposit amount</p>
+            </>
+          )}
           <button
             className="btn btn-primary btn-block"
             onClick={() => paymentMethod()}
           >
-            Make Deposit
+            {page === "setup" ? "Add New Card" : "Make Payment"}
           </button>
         </div>
       )}

@@ -269,11 +269,29 @@ function AffiliateCampaign(props) {
                 <div className="any-post-image">
                   <div className="any-image-box">
                     <div className="any-image-box-iner">
-                      <img
-                        src={record.media_url}
-                        className="img-fluid media-image"
-                        alt={record.media_type}
-                      />
+                      {record.media_type === "VIDEO" ? (
+                        <video
+                          id={`post-video-${record.campaign_id}`}
+                          //autoPlay
+                          controls
+                          controlsList="nodownload"
+                          className="img-fluid"
+                          style={{
+                            height: "100%",
+                          }}
+                        >
+                          <source
+                            src={record.media_url + "#t=0.001"}
+                            type="video/mp4"
+                          ></source>
+                        </video>
+                      ) : (
+                        <img
+                          src={record.media_url}
+                          alt="media_url"
+                          className="img-fluid media-image"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -312,7 +330,7 @@ function AffiliateCampaign(props) {
                       <div className="col-12 count-box">
                         <h5 className="count-title">Discount</h5>
                         <h3 className="count">
-                          {record?.discount ? record?.discount  : "0%"}
+                          {record?.discount ? record?.discount : "0%"}
                         </h3>
                       </div>
                       <div className="col-12 count-box">

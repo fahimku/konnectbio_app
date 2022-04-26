@@ -14,7 +14,7 @@ export const GET_DASHBOARD_DATA = "getDashboardData";
 export const GET_CAMPAIGN_ANALYTICS = "getCampaignAnalytics";
 export const GET_USER_BRANDS = "getUserBrands";
 export const GET_BRANDS_CATEGORY = "getBrandsCategory";
-export const  GET_CAT_BRAND = "getCategoryId"
+export const GET_CAT_BRAND = "getCategoryId";
 export const ACTIVATE_DEACTIVATE_CAMPAIGN = "activateDeactivateCampaign";
 export const GET_BIO_SHOP = "getBioShop";
 export const GET_SINGLE_BIO_SHOP = "getSingleBioShop";
@@ -97,3 +97,4 @@ export const GET_SHOPIFY_DETAIL = "getShopifyDetail";
 
 /**********Affiliate billing Types******************* */
 export const GET_AFFILIATE_BILLING_DETAIL = "getAffiliateBillingDetail";
+export const GET_AFFILIATE_CONTRACT_DETAIL = "getAffiliateContractDetail";

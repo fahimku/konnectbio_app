@@ -60,6 +60,7 @@ import promoRequest from "./promoRequest/promoCode";
 import shopifyDetail from "./shopifySetup/shopifyDetail";
 
 import affiliateBillingDetail from "./affiliateBilling/affiliateBillingDetail";
+import affiliateContractDetail from "./affiliateBilling/affiliateContractDetail";
 
 export default (history) =>
   combineReducers({
@@ -120,4 +121,5 @@ export default (history) =>
     marketplaceApproval,
     shopifyDetail,
     affiliateBillingDetail,
+    affiliateContractDetail,
   });
