@@ -44,7 +44,7 @@ function AffiliateDeposit({ makePayment, affiliatePayment, page }) {
             className="btn btn-primary btn-block"
             onClick={() => paymentMethod()}
           >
-            {page === "setup" ? "Add Card" : "Make Payment"}
+            {page === "setup" ? "Add New Card" : "Make Payment"}
           </button>
         </div>
       )}

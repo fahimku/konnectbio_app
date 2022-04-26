@@ -40,7 +40,7 @@ function AffiliatePayment({
       return (
         <>
           <div className="amount-box">
-            <h6>Deposit method</h6>
+            <h6>Deposit Method</h6>
             {data.map((item, i) => {
               return (
                 <>
@@ -77,7 +77,7 @@ function AffiliatePayment({
               className=""
               onClick={() => paymentMethod()}
             >
-              Add Card
+              Add New Card
             </Button>
           </div>
         </>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Button, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { Formik } from "formik";
@@ -9,16 +8,18 @@ import * as affiliateBillingActions from "../../../actions/affiliateBilling";
 import { connect } from "react-redux";
 
 function AffiliateContractTerm({
-  getAffiliateBillingDetail,
-  affiliateBillingDetail,
+  getAffiliateContractDetail,
+  affiliateContractDetail,
 }) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // getAffiliateBillingDetail().then(() => {
-    //   setLoading(true);
-    // });
+    getAffiliateContractDetail().then(() => {
+      setLoading(false);
+    });
   }, []);
+
+  let data = affiliateContractDetail?.message;
 
   return (
     <React.Fragment>
@@ -29,25 +30,35 @@ function AffiliateContractTerm({
             <div className="profile_box_main col-md-8">
               <div className="brand-section dash_block_profile">
                 <div className="dash_content_profile">
-                  <h5>Contract Info</h5>
-                  <Row className="brandrow">
-                    <Col xs={4}>
-                      <span>Platform Fee:</span>
-                    </Col>
-                    <Col xs={8}>3%</Col>
-                  </Row>
-                  <Row className="brandrow">
-                    <Col xs={4}>
-                      <span>Commission Maximum:</span>
-                    </Col>
-                    <Col xs={8}>50%</Col>
-                  </Row>
-                  <Row className="brandrow">
-                    <Col xs={4}>
-                      <span>Commission Minimum:</span>
-                    </Col>
-                    <Col xs={8}>10%</Col>
-                  </Row>
+                  {loading ? (
+                    <Loader />
+                  ) : (
+                    <>
+                      <h5>Contract Info</h5>
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Platform Fee:</span>
+                        </Col>
+                        <Col xs={8}>{data?.fee ? data?.fee : "0"}%</Col>
+                      </Row>
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Commission Maximum:</span>
+                        </Col>
+                        <Col xs={8}>
+                          {data?.max_commission ? data?.max_commission : "0"}%
+                        </Col>
+                      </Row>
+                      <Row className="brandrow">
+                        <Col xs={4}>
+                          <span>Commission Minimum:</span>
+                        </Col>
+                        <Col xs={8}>
+                          {data?.min_commission ? data?.min_commission : "0"}%
+                        </Col>
+                      </Row>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -59,8 +70,8 @@ function AffiliateContractTerm({
 }
 // export default AffiliateBilling;
 
-function mapStateToProps({ affiliateBillingDetail }) {
-  return { affiliateBillingDetail };
+function mapStateToProps({ affiliateContractDetail }) {
+  return { affiliateContractDetail };
 }
 export default connect(mapStateToProps, { ...affiliateBillingActions })(
   AffiliateContractTerm
