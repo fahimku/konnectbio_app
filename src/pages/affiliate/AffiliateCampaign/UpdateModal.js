@@ -72,7 +72,13 @@ class UpdateModal extends React.Component {
     axios
       .get("/affiliate/getcontract")
       .then((res) => {
-        this.setState({ Kbfee: res.data?.message?.fee });
+        this.setState({
+          Kbfee: res.data?.message?.fee,
+          // commission: res.data?.message?.min_commission
+          //   ? res.data?.message?.min_commission
+          //   : "10",
+          contractData: res.data?.message,
+        });
       })
       .catch((res) => {});
 
@@ -139,12 +145,12 @@ class UpdateModal extends React.Component {
     }
   };
   commission = (value) => {
-    if (value <= 50) {
+    if (value <= this.state.contractData.max_commission) {
       this.setState({ commission: value });
       this.setState({ CommissionError: "" });
     } else {
       this.setState({
-        CommissionError: "Commission can not be greater than 50",
+        CommissionError: `Commission can not be greater than ${this.state.contractData.max_commission}`,
       });
     }
   };
@@ -801,12 +807,31 @@ class UpdateModal extends React.Component {
                         this.commission(evt.target.value);
                       }}
                       required
-                      min="10"
-                      max="50"
+                      min={
+                        this.state.contractData?.min_commission
+                          ? this.state.contractData?.min_commission.toString()
+                          : "10"
+                      }
+                      max={
+                        this.state.contractData?.max_commission
+                          ? this.state.contractData?.max_commission.toString()
+                          : "50"
+                      }
                     />
                     <div className="small">
                       Note: minimum commission is{" "}
-                      {numeral(this.state.Kbfee).format("0,0'")}%
+                      {this.state.contractData?.min_commission
+                        ? numeral(
+                            this.state.contractData?.min_commission
+                          ).format("0,0'")
+                        : "10"}
+                      % and maximun commission is{" "}
+                      {this.state.contractData?.max_commission
+                        ? numeral(
+                            this.state.contractData?.max_commission
+                          ).format("0,0'")
+                        : "50"}
+                      %
                     </div>
                     <span className="text-danger">
                       {this.state.CommissionError}

@@ -53,7 +53,7 @@ class AffiliateForm extends React.Component {
       reach: "",
       submit: false,
       discount: "",
-      commission: "10",
+      commission: "0",
       promoCond: true,
       connNotFound: true,
       Kbfee: "",
@@ -69,7 +69,13 @@ class AffiliateForm extends React.Component {
     axios
       .get("/affiliate/getcontract")
       .then((res) => {
-        this.setState({ Kbfee: res.data?.message?.fee });
+        this.setState({
+          Kbfee: res.data?.message?.fee,
+          commission: res.data?.message?.min_commission
+            ? res.data?.message?.min_commission
+            : "10",
+          contractData: res.data?.message,
+        });
       })
       .catch((res) => {});
   }
@@ -100,12 +106,12 @@ class AffiliateForm extends React.Component {
     }
   };
   commission = (value) => {
-    if (value <= 50) {
+    if (value <= this.state.contractData.max_commission) {
       this.setState({ commission: value });
       this.setState({ CommissionError: "" });
     } else {
       this.setState({
-        CommissionError: "Commission can not be greater than 50",
+        CommissionError: `Commission can not be greater than ${this.state.contractData.max_commission}%`,
       });
     }
   };
@@ -342,7 +348,8 @@ class AffiliateForm extends React.Component {
           end_date: this.state.endDate,
         })
         .then((response) => {
-          toast.success("Your Campaign is Schedule Successfully");
+          // toast.success("Your Campaign is Schedule Successfully");
+          toast.success("Your Campaign Added Successfully");
           this.setState({ loading: false });
           // this.props.affCloseModal();
           // this.props.getPosts(1, null, this.props.clearPost);
@@ -843,12 +850,19 @@ class AffiliateForm extends React.Component {
                             this.commission(evt.target.value);
                           }}
                           required
-                          min="10"
-                          max="50"
+                          min={this.state.contractData?.min_commission.toString()}
+                          max={this.state.contractData?.max_commission.toString()}
                         />
                         <div className="small">
                           Note: minimum commission is{" "}
-                          {numeral(this.state.Kbfee).format("0,0'")}%
+                          {numeral(
+                            this.state.contractData?.min_commission
+                          ).format("0,0'")}
+                          % and maximum commission is{" "}
+                          {numeral(
+                            this.state.contractData?.max_commission
+                          ).format("0,0'")}
+                          %
                         </div>
                         <span className="text-danger">
                           {this.state.CommissionError}
