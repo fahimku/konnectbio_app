@@ -29,8 +29,8 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
               pageStart={0}
               className="af-rm-mn row"
               loadMore={() =>
-  //            alert('test')
-               getPosts(posts.next?.page, id && id !== "allPost" ? id : null)
+                //            alert('test')
+                getPosts(posts.next?.page, id && id !== "allPost" ? id : null)
               }
               hasMore={posts.next?.page ? true : false}
               loader={
@@ -56,7 +56,10 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                 <div className="image-post-box-aff" key={i}>
                   <div className="image-post-box-aff-inr">
                     {item.linked ? (
-                      <div style={styles.linked}>LINKED</div>
+                      <div style={styles.linked}>
+                        LINKED{" "}
+                        <span class="glyphicon glyphicon-link chain-icon"></span>
+                      </div>
                     ) : null}
 
                     {/* <div style={{...styles.active,backgroundColor:item.active?"green":"red"}}/> */}
@@ -65,7 +68,7 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                         if (!item.linked) selectPost(item.post_id);
                       }}
                       className={`image-post-box-aff-inr-inr ${
-                        item.linked ? "linked-disabled" : ""
+                        item.linked ? "" : ""
                       }`}
                     >
                       {item.media_type === "VIDEO" ? (
@@ -76,7 +79,7 @@ function PostGallery({ getPosts, posts, id, selectPost, clearPost }) {
                           controlsList="nodownload"
                         >
                           <source
-                            src={item.media_url+"#t=0.001"}
+                            src={item.media_url + "#t=0.001"}
                             type="video/mp4"
                           ></source>
                         </video>
