@@ -84,7 +84,12 @@ function BrandFilterComponent({ title }) {
                                 />
                                 {item?.website_discount ? (
                                   <span className="skew_label">
-                                    {item?.website_discount}% OFF
+                                    Upto{" "}
+                                    {item?.discount_type === "%" ||
+                                    item?.discount_type === undefined
+                                      ? item?.website_discount + "%"
+                                      : "$" + item?.website_discount}{" "}
+                                    OFF
                                   </span>
                                 ) : null}
                                 {/* <div className="cat-lable">
