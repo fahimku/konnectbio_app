@@ -59,6 +59,8 @@ class LinkinBio extends React.Component {
       dbCategoryName: "",
       dbSubCategory: "",
       currentPost: "",
+      subdescription:"",
+      subamount:0,
       url: config.visitorURL + "/",
       nextPageUrl: "",
       username: username,
@@ -193,6 +195,9 @@ class LinkinBio extends React.Component {
       .then((response) => {
         if (userInfo?.account_type == "influencer") {
         } else {
+       
+          this.setState({subdescription: response.data.message.description})
+          this.setState({subamount: response.data.message.amount})
           this.setState({ promoCodeDsc: response.data.message.discount });
           this.setState({ promoCodeVal: response.data.message.promo });
         }
@@ -234,7 +239,8 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = (i, Subpromo, SubDsc) => {
+  savePost = (i, Subpromo, SubDsc,description,amount) => {
+   
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -308,6 +314,8 @@ class LinkinBio extends React.Component {
                 source: this.props.mobileDropdown,
                 promo: Subpromo,
                 discount: SubDsc,
+                description: description,
+                amount: amount
               })
               .then((response) => {
                 this.setState({ loading: false });
@@ -337,8 +345,8 @@ class LinkinBio extends React.Component {
     }
   };
 
-  updatePost = async (id, url, promo, dsc) => {
-    console.log("update---", id, url, promo, dsc);
+  updatePost = async (id, url, promo, dsc,description,amount) => {
+    
 
     let newCategory;
     let oldCategory = this.state.category;
@@ -388,6 +396,8 @@ class LinkinBio extends React.Component {
           end_date: this.state.endDate,
           promo: promo,
           discount: dsc,
+          description: description,
+          amount: amount
         })
         .then((response) => {
           this.setState({ loading: false });
@@ -612,6 +622,8 @@ class LinkinBio extends React.Component {
         subCategory={this.state.subCategory}
         promo={this.state.promoCodeVal}
         discount={this.state.promoCodeDsc}
+        description={this.state.subdescription} 
+        amount={this.state.subamount} 
         flag={this.state.flag}
         changeSubCategory={this.changeSubCategory}
         subCategories={this.state.subCategories}
