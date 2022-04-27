@@ -28,6 +28,7 @@ class AffiliateCreateCampaign extends React.Component {
     this.setState({ userInfo: userInfo });
     // this.getAllPost();
     this.fetchAllCategory();
+    
     axios.get("/campaigns/receive/getpromocodes").then((res) =>{
      
     }).catch((res) =>{
