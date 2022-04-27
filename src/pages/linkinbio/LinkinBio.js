@@ -582,6 +582,7 @@ class LinkinBio extends React.Component {
     e.preventDefault();
   };
 
+  
   iframe_clicked(event) {}
 
   shopRightBar = () => {
