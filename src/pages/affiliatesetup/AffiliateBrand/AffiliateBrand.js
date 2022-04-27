@@ -254,8 +254,8 @@ class AffiliateBrand extends React.Component {
       <Dropdown.Item onClick={()=>this.setState({discount_type : "%", checkDisabled: !this.state.checkDisabled})}>%</Dropdown.Item>
       {/* <Dropdown.Divider /> */}
     
-    </DropdownButton>
-  </InputGroup>
+    </DropdownButton><span class="text-align">OFF</span>
+  </InputGroup> 
 
                                    
                                   </div>
