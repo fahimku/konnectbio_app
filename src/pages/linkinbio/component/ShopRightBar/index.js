@@ -73,8 +73,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, [props.startDate, props.endDate]);
 
   useEffect(() => {
+  
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
+
 
   useEffect(() => {
     props.selectPost(false, "");
@@ -95,16 +97,20 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
   useEffect(() => {
     if (typeof props.promo == "object" && props.promo !== null) {
+      
     } else {
       if (props.promo) {
         setDsc(props.discount);
         setPromo(props.promo);
-      } else {
-        setDsc("0%");
-        setPromo("KB0");
+      }
+      if(props.redirectedUrl === ""){
+          setDsc("0%");
+          setPromo("KB0");
       }
     }
-  }, [props]);
+  }, [props,props.redirectedUrl]);
+
+  
 
   if (loader == true) {
     dataPromo = props.promoRequest.message;
@@ -422,9 +428,12 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {userInfo?.account_type == "influencer" ? (
                   <></>
                 ) : (
+
+                 
                   <div className="row">
                     <div className="col-md-3 mt-3">
                       <label>PromoCode</label>
+                     
                       <Select
                         size="small"
                         filterOption={(input, options) =>
