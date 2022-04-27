@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Row, Button } from "react-bootstrap";
+import { Row,Col, Button } from "react-bootstrap";
 import "./payment.scss";
 import * as affiliateDepositActions from "../../../actions/affiliateDeposit";
 import { connect } from "react-redux";
@@ -63,7 +63,12 @@ function AffiliatePayment({
                         ending in {item.card.last4}
                       </div>
                       <div className="text-right">
-                        Expired: {item.card.exp_month}/{item.card.exp_year}
+                      <span className="card-expired"> Expired: {item.card.exp_month}/{item.card.exp_year}</span>
+                      
+                      <span className="fa fa-pencil edit-icon ml-2"></span>
+                      
+                      <span className="fa fa-trash ml-2"></span>
+                      
                       </div>
                     </label>
                   </div>

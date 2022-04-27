@@ -850,8 +850,16 @@ class AffiliateForm extends React.Component {
                             this.commission(evt.target.value);
                           }}
                           required
-                          min={this.state.contractData?.min_commission.toString()}
-                          max={this.state.contractData?.max_commission.toString()}
+                          min={
+                            this.state.contractData?.min_commission
+                              ? this.state.contractData?.min_commission.toString()
+                              : "10"
+                          }
+                          max={
+                            this.state.contractData?.max_commission
+                              ? this.state.contractData?.max_commission.toString()
+                              : "50"
+                          }
                         />
                         <div className="small">
                           Note: minimum commission is{" "}

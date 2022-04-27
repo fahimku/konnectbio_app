@@ -87,13 +87,17 @@ class LinkinBio extends React.Component {
   }
 
   componentDidMount() {
+
     userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    
+      
     axios
       .get("/campaigns/receive/getpromocodes")
       .then((res) => {})
       .catch((res) => {
         this.setState({ ShopifyConnFound: false });
       });
+    
   }
 
   componentWillMount() {
@@ -578,6 +582,7 @@ class LinkinBio extends React.Component {
     e.preventDefault();
   };
 
+  
   iframe_clicked(event) {}
 
   shopRightBar = () => {
