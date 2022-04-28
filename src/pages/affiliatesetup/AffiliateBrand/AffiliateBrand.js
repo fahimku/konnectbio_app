@@ -3,7 +3,12 @@ import axios from "axios";
 import { Button, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
-import { DropdownButton, InputGroup,Dropdown,FormControl } from 'react-bootstrap';
+import {
+  DropdownButton,
+  InputGroup,
+  Dropdown,
+  FormControl,
+} from "react-bootstrap";
 // import { Input } from "reactstrap";
 // import { ClassNames } from "@emotion/react";
 
@@ -19,7 +24,7 @@ class AffiliateBrand extends React.Component {
       brandEdit: false,
       oldBrand: "",
       brandDiscount: "0",
-      discount_type: "%"
+      discount_type: "%",
     };
   }
 
@@ -37,7 +42,7 @@ class AffiliateBrand extends React.Component {
           is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
           affiliateCheck: response?.data?.data?.is_affiliate_enabled,
           brandDiscount: response?.data?.data?.website_discount,
-          discount_type: response?.data?.data?.discount_type
+          discount_type: response?.data?.data?.discount_type,
         });
       })
       .catch(function (error) {
@@ -64,7 +69,7 @@ class AffiliateBrand extends React.Component {
           brand_name: this.state.brand_name,
           is_affiliate_enabled: this.state.affiliateCheck,
           website_discount: this.state.brandDiscount,
-          discount_type: this.state.discount_type
+          discount_type: this.state.discount_type,
         })
         .then((response) => {
           this.setState({
@@ -204,60 +209,78 @@ class AffiliateBrand extends React.Component {
                           </Row>
                           <Row className="brandrow align-items-center">
                             <Col xs={4}>
-                              <span>Website Discount:</span>
+                              <span>Default Discount:</span>
                             </Col>
                             <Col xs={8}>
                               <div className="row brandInput demographic-section">
                                 <Col xs={5}>
                                   <div className="input-group">
-                                    
                                     {/* <span class="input-group-text">%</span> */}
-                                    <InputGroup  size="sm" className="">
-
-    <input
-                                      type="number"
-                                      id="discount"
-                                      name="discount"
-                                      // style={{marginRight:"15px"}}
-                                      className="form-control mrpx-5"
-                                      // placeholder="Enter Discount"
-                                      value={this.state.brandDiscount}
-                                      onChange={(e) => {
-                                        if (e.target.value <= 100) {
-                                          this.setState({
-                                            brandDiscount: e.target.value,
-                                            checkDisabled:
-                                              !this.state.checkDisabled,
-                                          });
-                                        } else {
-                                          this.setState({
-                                            checkDisabled:
-                                              !this.state.checkDisabled,
-                                          });
+                                    <InputGroup size="sm" className="">
+                                      <input
+                                        type="number"
+                                        id="discount"
+                                        name="discount"
+                                        // style={{marginRight:"15px"}}
+                                        className="form-control mrpx-5"
+                                        // placeholder="Enter Discount"
+                                        value={this.state.brandDiscount}
+                                        onChange={(e) => {
+                                          if (e.target.value <= 100) {
+                                            this.setState({
+                                              brandDiscount: e.target.value,
+                                              checkDisabled:
+                                                !this.state.checkDisabled,
+                                            });
+                                          } else {
+                                            this.setState({
+                                              checkDisabled:
+                                                !this.state.checkDisabled,
+                                            });
+                                          }
+                                        }}
+                                        autoComplete="off"
+                                        onKeyDown={(evt) =>
+                                          ["e", "E", "+", "-"].includes(
+                                            evt.key
+                                          ) && evt.preventDefault()
                                         }
-                                      }}
-                                      autoComplete="off"
-                                      onKeyDown={(evt) =>
-                                        ["e", "E", "+", "-"].includes(
-                                          evt.key
-                                        ) && evt.preventDefault()
-                                      }
-                                      min="0"
-                                      max="100"
-                                    />
-                                        <DropdownButton size="sm" className="drop-style-new"
-      variant="outline-secondary"
-      title={this.state.discount_type}
-      id="input-group-dropdown-1"
-    >
-      <Dropdown.Item onClick={()=>this.setState({discount_type : "$", checkDisabled: !this.state.checkDisabled})}>$</Dropdown.Item>
-      <Dropdown.Item onClick={()=>this.setState({discount_type : "%", checkDisabled: !this.state.checkDisabled})}>%</Dropdown.Item>
-      {/* <Dropdown.Divider /> */}
-    
-    </DropdownButton><span class="text-align">OFF</span>
-  </InputGroup> 
-
-                                   
+                                        min="0"
+                                        max="100"
+                                      />
+                                      <DropdownButton
+                                        size="sm"
+                                        className="drop-style-new"
+                                        variant="outline-secondary"
+                                        title={this.state.discount_type}
+                                        id="input-group-dropdown-1"
+                                      >
+                                        <Dropdown.Item
+                                          onClick={() =>
+                                            this.setState({
+                                              discount_type: "$",
+                                              checkDisabled:
+                                                !this.state.checkDisabled,
+                                            })
+                                          }
+                                        >
+                                          $
+                                        </Dropdown.Item>
+                                        <Dropdown.Item
+                                          onClick={() =>
+                                            this.setState({
+                                              discount_type: "%",
+                                              checkDisabled:
+                                                !this.state.checkDisabled,
+                                            })
+                                          }
+                                        >
+                                          %
+                                        </Dropdown.Item>
+                                        {/* <Dropdown.Divider /> */}
+                                      </DropdownButton>
+                                      <span class="text-align">OFF</span>
+                                    </InputGroup>
                                   </div>
                                 </Col>
                               </div>
