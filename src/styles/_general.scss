@@ -1387,7 +1387,7 @@ code.sm-color {
 }
 
 .card-expired {
-font-size: 12px;
+  font-size: 12px;
 }
 .chain-icon {
   position: relative;
@@ -1396,29 +1396,33 @@ font-size: 12px;
 .drop-style-new button {
   border-radius: 0 0.25rem 0.25rem 0;
   border: 1px solid #dce4ec;
-    border-left: 0px;
-    padding: 0.370rem 1rem 0.370rem 1rem;
-    min-width: 5.1rem;
+  border-left: 0px;
+  padding: 0.37rem 1rem 0.37rem 1rem;
+  min-width: 5.1rem;
 }
-.drop-style-new.dropdown.show button+.dropdown-menu {
+.drop-style-new.dropdown.show button + .dropdown-menu {
   transform: translate(0px, 38px);
   min-width: 5.1rem;
 }
 
-
 .drop-style-new .btn-outline-secondary:hover {
-  color: #000!important;
-  background-color: #ffffff!important;
-  border-color: #dce4ec!important;
+  color: #000 !important;
+  background-color: #ffffff !important;
+  border-color: #dce4ec !important;
 }
-.drop-style-new .btn-outline-secondary:not(:disabled):not(.disabled):active, .drop-style-new .btn-outline-secondary:not(:disabled):not(.disabled).active, .show.drop-style-new >  .btn-outline-secondary.dropdown-toggle {
-  color: #000!important;
-  background-color: #ffffff!important;
-  border-color: #dce4ec!important;
+.drop-style-new .btn-outline-secondary:not(:disabled):not(.disabled):active,
+.drop-style-new .btn-outline-secondary:not(:disabled):not(.disabled).active,
+.show.drop-style-new > .btn-outline-secondary.dropdown-toggle {
+  color: #000 !important;
+  background-color: #ffffff !important;
+  border-color: #dce4ec !important;
 }
 
-.text-align{
+.text-align {
   margin-left: 5px;
   margin-top: 8px;
   font-weight: bold;
+}
+.inner-brand-box {
+  position: relative;
 }
