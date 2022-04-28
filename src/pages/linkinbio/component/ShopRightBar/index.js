@@ -48,6 +48,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCode, setPromoCode] = useState("");
   const [loader, setLoader] = useState(true);
   const [Kbfee, setKbfee] = useState();
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState(0);
   const [promoCodeDscs, setDsc] = useState("0%");
   const [promoCodePromo, setPromo] = useState("KB0");
 
@@ -68,13 +70,19 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, []);
 
   useEffect(() => {
+    setDescription(props.description)
+    setAmount(props.amount)
+  
+    
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
   useEffect(() => {
+    
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
+
 
   useEffect(() => {
     props.selectPost(false, "");
@@ -95,16 +103,24 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
   useEffect(() => {
     if (typeof props.promo == "object" && props.promo !== null) {
+      
     } else {
+      
+      
       if (props.promo) {
         setDsc(props.discount);
         setPromo(props.promo);
-      } else {
-        setDsc("0%");
-        setPromo("KB0");
+      }
+      if(props.redirectedUrl === ""){
+          setDsc("0%");
+          setPromo("KB0");
+          setDescription("")
+          setAmount(0)
       }
     }
-  }, [props]);
+  }, [props,props.redirectedUrl]);
+
+  
 
   if (loader == true) {
     dataPromo = props.promoRequest.message;
@@ -124,6 +140,15 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     props.dateRange(startDate, endDate);
   }
 
+  const changeAmount = (e) =>{
+    
+    setAmount(e.target.value)
+
+  }
+  const changeDescription = (e) =>{
+    
+    setDescription(e.target.value)
+  } 
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
       setDsc("0%");
@@ -147,7 +172,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
               props.updatePost();
             } else {
               props.savePost &&
-                props.savePost(this, promoCodePromo, promoCodeDscs);
+                props.savePost(this, promoCodePromo, promoCodeDscs,description,amount);
             }
           }}
           ref={formRef}
@@ -422,9 +447,12 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {userInfo?.account_type == "influencer" ? (
                   <></>
                 ) : (
+
+                 
                   <div className="row">
                     <div className="col-md-3 mt-3">
                       <label>PromoCode</label>
+                     
                       <Select
                         size="small"
                         filterOption={(input, options) =>
@@ -466,7 +494,57 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         {numeral(Kbfee).format("0,0'")}%
                       </div>
                     </div>
+
+                    <div className="col-md-3 mt-3">
+                      <label>Amount</label>
+                     
+                     
+                      <InputValidation
+                  className=""
+                  placeholder="Amount"
+                  // placeholder="Please Enter Website Address"
+                  type="text"
+                  id="website"
+                  required
+                  name="website"
+                  trigger="change"
+                  validations={{
+                    matchRegexp:
+                    /[0-9]{1}/,
+                  }}
+                  validationError={{
+                    isUrl: "This value should be Number.",
+                  }}
+                  value={amount}
+                  onChange={(e) => changeAmount(e)}
+                />
+                    </div>
+                     
+
+                    <div className=" col-md-12 mt-3 image-edit-links">
+                      <label>Description</label>
+                      <InputValidation
+                  className=""
+                  placeholder="Enter Description"
+                  // placeholder="Please Enter Website Address"
+                  type="text"
+                  id="website"
+                  required
+                  name="website"
+                  trigger="change"
+                  
+                  value={description}
+                  onChange={(e) => changeDescription(e)}
+                />
+                    </div>
+                    
                   </div>
+
+
+
+
+
+
                 )}
 
                 <div className="edit_button_main pane-button">
@@ -486,7 +564,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                                 media_id,
                                 props.redirectedUrl,
                                 promoCodePromo,
-                                promoCodeDscs
+                                promoCodeDscs,
+                                description,
+                                amount
                               )
                             }
                           >

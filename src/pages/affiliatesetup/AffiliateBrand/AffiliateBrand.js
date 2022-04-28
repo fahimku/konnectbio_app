@@ -42,7 +42,7 @@ class AffiliateBrand extends React.Component {
           is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
           affiliateCheck: response?.data?.data?.is_affiliate_enabled,
           brandDiscount: response?.data?.data?.website_discount,
-          discount_type: response?.data?.data?.discount_type,
+          discount_type: response?.data?.data?.discount_type || "%",
         });
       })
       .catch(function (error) {
