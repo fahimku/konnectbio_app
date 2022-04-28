@@ -539,12 +539,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     </div>
                     
                   </div>
-
-
-
-
-
-
                 )}
 
                 <div className="edit_button_main pane-button">
