@@ -3,12 +3,14 @@ import axios from "axios";
 import { Button, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import Loader from "../../../components/Loader/Loader";
+import { Select } from "antd";
 import {
   DropdownButton,
   InputGroup,
   Dropdown,
   FormControl,
 } from "react-bootstrap";
+const { Option } = Select;
 // import { Input } from "reactstrap";
 // import { ClassNames } from "@emotion/react";
 
@@ -25,12 +27,33 @@ class AffiliateBrand extends React.Component {
       oldBrand: "",
       brandDiscount: "0",
       discount_type: "%",
+      promoCodes: [],
+      promoCode: "KB0",
+      promoDiscount: "0%",
+      promoLoading: false,
     };
   }
 
   componentDidMount() {
     this.getMyBrands();
+    this.getMyPromo();
   }
+
+  getMyPromo = async () => {
+    this.setState({promoLoading: true})
+    await axios
+      .get(`/campaigns/receive/getpromocodes`)
+      .then((response) => {
+         this.setState({
+          promoCodes: response.data.message
+        });
+        this.setState({promoLoading: false})
+      })
+      .catch(function (error) {
+        console.log(error.response);
+      });
+  };
+
 
   getMyBrands = async () => {
     await axios
@@ -41,13 +64,33 @@ class AffiliateBrand extends React.Component {
           brand_name: response?.data?.data?.brand_name,
           is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
           affiliateCheck: response?.data?.data?.is_affiliate_enabled,
-          brandDiscount: response?.data?.data?.website_discount,
-          discount_type: response?.data?.data?.discount_type || "%",
+          promoDiscount: response?.data?.data?.discount,
+          promoCode: response?.data?.data?.promo
+         // brandDiscount: response?.data?.data?.website_discount,
+         // discount_type: response?.data?.data?.discount_type || "%",
         });
       })
       .catch(function (error) {
         console.log(error.response);
       });
+  };
+
+   changePromoCode = (e, options, name, index) => {
+    this.setState({
+      checkDisabled:
+        !this.state.checkDisabled,
+    });
+
+    if (e === undefined) {
+     this.setState({promoDiscount: "0%"}) 
+       this.setState({promoCode: "KB0"});
+    } else {
+      var values = e.value.split(" ");
+      var discount = values[0];
+
+      this.setState({promoDiscount:discount});
+      this.setState({promoCode: e.children});
+    }
   };
 
   handleChange = (e) => {
@@ -68,8 +111,10 @@ class AffiliateBrand extends React.Component {
         .post(`/affiliate/createAndUpdateBrandName`, {
           brand_name: this.state.brand_name,
           is_affiliate_enabled: this.state.affiliateCheck,
-          website_discount: this.state.brandDiscount,
-          discount_type: this.state.discount_type,
+          //website_discount: this.state.brandDiscount,
+          //discount_type: this.state.discount_type,
+          promo: this.state.promoCode,
+          discount: this.state.promoDiscount
         })
         .then((response) => {
           this.setState({
@@ -214,9 +259,53 @@ class AffiliateBrand extends React.Component {
                             <Col xs={8}>
                               <div className="row brandInput demographic-section">
                                 <Col xs={5}>
-                                  <div className="input-group">
+                                
+                    <div className=" mt-2">
+                      <label>PromoCode</label>
+                      {this.state.promoLoading === false ?
+                      <Select
+                        size="small"
+                        filterOption={(input, options) =>
+                          options.children
+                            .toLowerCase()
+                            .indexOf(input.toLowerCase()) >= 0
+                        }
+                        value={this.state.promoCode}
+                        //disabled={!(formState === "add" || formState === "edit")}
+                        placeholder="KB0"
+                        //loading={this.state.promoCond}
+                        optionFilterProp="children"
+                        className="w-100"
+                        // onSearch={onSearch}
+                        onChange={(options, e) =>  this.changePromoCode(e, options)}
+                        showSearch
+                        allowClear
+                      >
+                        {this.state.promoCodes.map((customer, key) => {
+                          return (
+                            <Option key={customer.promo_percent + " " + key}>
+                              {customer.promo}
+                            </Option>
+                          );
+                        })}
+                      </Select>
+                      :
+                      <Loader />
+  }
+                    </div>
+                    
+                  
+                                </Col>
+                                <Col xs={5}>
+                                <div className="mt-2">
+                      <label>Discount</label>
+                      <div className="promo_discount form-control">
+                        {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                        {this.state.promoDiscount}
+                      </div>
+                      
                                     {/* <span class="input-group-text">%</span> */}
-                                    <InputGroup size="sm" className="">
+                                    {/* <InputGroup size="sm" className="">
                                       <input
                                         type="number"
                                         id="discount"
@@ -278,11 +367,11 @@ class AffiliateBrand extends React.Component {
                                           %
                                         </Dropdown.Item>
                                         {/* <Dropdown.Divider /> */}
-                                      </DropdownButton>
+                                      {/* </DropdownButton>
                                       <span class="text-align">OFF</span>
-                                    </InputGroup>
+                                    </InputGroup> */} 
                                   </div>
-                                </Col>
+                                  </Col>
                               </div>
                             </Col>
                           </Row>
