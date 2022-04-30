@@ -576,9 +576,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         className=""
                         placeholder="Amount"
                         // placeholder="Please Enter Website Address"
-                        type="text"
+                        type="number"
                         id="website"
-                        required
+                       
                         name="website"
                         trigger="change"
                         validations={{
@@ -600,7 +600,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="text"
                         id="website"
-                        required
+                        
                         name="website"
                         trigger="change"
                         value={description}
