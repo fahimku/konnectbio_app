@@ -55,9 +55,9 @@ function Customer() {
                   </a>{" "}
                   <a
                     class="btn btn-dark app-button"
-                    // href="/"
-                    // target="_blank"
-                    // rel="noreferrer"
+                    href="https://play.google.com/store/apps/details?id=com.konnectbio1961"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     <i class="fa fa-play fa-2x"></i>
                     <span class="ml-2">Google store</span>

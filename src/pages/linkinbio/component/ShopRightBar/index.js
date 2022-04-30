@@ -52,21 +52,25 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [amount, setAmount] = useState(0);
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
+  const [promoLoading, setPromoLoading] = useState(false);
 
   useEffect(() => {
     fetchPromo();
   }, []);
 
   const fetchPromo = async (media_id) => {
+    setPromoLoading(true);
     await axios
       .get(`/affiliate/getdefaultpromo`)
       .then((response) => {
         setPromo(response?.data?.promo);
         setDsc(response?.data?.discount);
+        setPromoLoading(false);
       })
 
       .catch((err) => {
         console.log(err);
+        setPromoLoading(false);
       });
   };
 
@@ -112,20 +116,22 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       });
   }, []);
 
-  useEffect(() => {
-    if (props.promo == "" && props.discount == "") {
-    }
-    if (props.redirectedUrl !== "") {
-      setDsc(props.discount);
-      setPromo(props.promo);
-      setDescription(props.description);
-      setAmount(props.amount);
-    } else {
-      fetchPromo();
-      setDescription("");
-      setAmount(0);
-    }
-  }, [props, props.redirectedUrl]);
+  console.log(promoCodePromo, "promoCodePromo");
+
+  // useEffect(() => {
+  //   if (props.promo == "" && props.discount == "") {
+  //   }
+  //   if (props.redirectedUrl !== "") {
+  //     setDsc(props.discount);
+  //     setPromo(props.promo);
+  //     setDescription(props.description);
+  //     setAmount(props.amount);
+  //   } else {
+  //     fetchPromo();
+  //     setDescription("");
+  //     setAmount(0);
+  //   }
+  // }, [props, props.redirectedUrl]);
 
   // useEffect(() => {
   //   if (typeof props.promo == "object" && props.promo !== null) {
@@ -505,6 +511,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         onChange={(options, e) => changePromoCode(e, options)}
                         showSearch
                         allowClear={false}
+                        loading={promoLoading ? true : false}
+                        disabled={promoLoading ? true : false}
                       >
                         {promoList.map((customer, key) => {
                           return (
