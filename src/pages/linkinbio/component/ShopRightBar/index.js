@@ -29,7 +29,7 @@ let dataPromo;
 let PassPromoCode;
 var subPromo;
 var subDiscount;
-var tst;
+var promoList;
 
 function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   if (typeof props.promo == "object" && props.promo !== null) {
@@ -50,8 +50,29 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [Kbfee, setKbfee] = useState();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
-  const [promoCodeDscs, setDsc] = useState("0%");
-  const [promoCodePromo, setPromo] = useState("KB0");
+  const [promoCodeDscs, setDsc] = useState();
+  const [promoCodePromo, setPromo] = useState();
+  const [promoLoading, setPromoLoading] = useState(false);
+
+  useEffect(() => {
+    fetchPromo();
+  }, []);
+
+  const fetchPromo = async (media_id) => {
+    setPromoLoading(true);
+    await axios
+      .get(`/affiliate/getdefaultpromo`)
+      .then((response) => {
+        setPromo(response?.data?.promo);
+        setDsc(response?.data?.discount);
+        setPromoLoading(false);
+      })
+
+      .catch((err) => {
+        console.log(err);
+        setPromoLoading(false);
+      });
+  };
 
   useEffect(() => {
     userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -70,19 +91,13 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, []);
 
   useEffect(() => {
-    setDescription(props.description)
-    setAmount(props.amount)
-  
-    
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
   useEffect(() => {
-    
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
-
 
   useEffect(() => {
     props.selectPost(false, "");
@@ -102,25 +117,48 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, []);
 
   useEffect(() => {
-    if (typeof props.promo == "object" && props.promo !== null) {
-      
-    } else {
-      
-      
-      if (props.promo) {
-        setDsc(props.discount);
-        setPromo(props.promo);
-      }
-      if(props.redirectedUrl === ""){
-          setDsc("0%");
-          setPromo("KB0");
-          setDescription("")
-          setAmount(0)
-      }
+    if (props.promo == "" && props.discount == "") {
     }
-  }, [props,props.redirectedUrl]);
+    if (props.redirectedUrl !== "") {
+      setDsc(props.discount);
+      setPromo(props.promo);
+      setDescription(props.description);
+      setAmount(props.amount);
+    } else {
+      fetchPromo();
+      setDescription("");
+      setAmount(0);
+    }
+  }, [props, props.redirectedUrl]);
 
-  
+  // useEffect(() => {
+  //   if (typeof props.promo == "object" && props.promo !== null) {
+  //   } else {
+  //     if (props.promo) {
+  //       setDsc(props.discount);
+  //       setPromo(props.promo);
+  //     }
+  //     if (props.redirectedUrl === "") {
+  //       setDsc(default_discount);
+  //       setPromo(default_promo);
+  //       setDescription("");
+  //       setAmount(0);
+  //       console.log(default_discount + "-without-" + default_promo);
+  //     } else {
+  //       setDsc(props.discount);
+  //       setPromo(props.promo);
+  //       console.log(promoCode + "-with-" + promoCodeDscs);
+  //     }
+  //   }
+  // }, [props.redirectedUrl]);
+
+  // useEffect(() => {
+  //   if (props.promoData.promo === undefined) {
+  //   } else {
+  //     setPromo(props.promoData.promo);
+  //     setDsc(props.promoData.discount);
+  //   }
+  // }, [props.promoData.promo]);
 
   if (loader == true) {
     dataPromo = props.promoRequest.message;
@@ -128,9 +166,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     const promo = dataPromo;
 
     if (dataPromo != undefined) {
-      tst = dataPromo;
+      promoList = dataPromo;
     } else {
-      tst = [];
+      promoList = [];
     }
   }
 
@@ -140,19 +178,16 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     props.dateRange(startDate, endDate);
   }
 
-  const changeAmount = (e) =>{
-    
-    setAmount(e.target.value)
-
-  }
-  const changeDescription = (e) =>{
-    
-    setDescription(e.target.value)
-  } 
+  const changeAmount = (e) => {
+    setAmount(e.target.value);
+  };
+  const changeDescription = (e) => {
+    setDescription(e.target.value);
+  };
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
-      setDsc("0%");
-      setPromo("KB0");
+      // setDsc("0%");
+      // setPromo("KB0");
     } else {
       var values = e.value.split(" ");
       var discount = values[0];
@@ -172,7 +207,13 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
               props.updatePost();
             } else {
               props.savePost &&
-                props.savePost(this, promoCodePromo, promoCodeDscs,description,amount);
+                props.savePost(
+                  this,
+                  promoCodePromo,
+                  promoCodeDscs,
+                  description,
+                  amount
+                );
             }
           }}
           ref={formRef}
@@ -447,12 +488,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {userInfo?.account_type == "influencer" ? (
                   <></>
                 ) : (
-
-                 
                   <div className="row">
                     <div className="col-md-3 mt-3">
                       <label>PromoCode</label>
-                     
+
                       <Select
                         size="small"
                         filterOption={(input, options) =>
@@ -469,9 +508,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // onSearch={onSearch}
                         onChange={(options, e) => changePromoCode(e, options)}
                         showSearch
-                        allowClear
+                        allowClear={false}
+                        loading={promoLoading ? true : false}
+                        disabled={promoLoading ? true : false}
                       >
-                        {tst.map((customer, key) => {
+                        {promoList.map((customer, key) => {
                           return (
                             <Option key={customer.promo_percent + " " + key}>
                               {customer.promo}
@@ -497,47 +538,42 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
                     <div className="col-md-3 mt-3">
                       <label>Amount</label>
-                     
-                     
+
                       <InputValidation
-                  className=""
-                  placeholder="Amount"
-                  // placeholder="Please Enter Website Address"
-                  type="text"
-                  id="website"
-                  required
-                  name="website"
-                  trigger="change"
-                  validations={{
-                    matchRegexp:
-                    /[0-9]{1}/,
-                  }}
-                  validationError={{
-                    isUrl: "This value should be Number.",
-                  }}
-                  value={amount}
-                  onChange={(e) => changeAmount(e)}
-                />
+                        className=""
+                        placeholder="Amount"
+                        // placeholder="Please Enter Website Address"
+                        type="text"
+                        id="website"
+                        required
+                        name="website"
+                        trigger="change"
+                        validations={{
+                          matchRegexp: /[0-9]{1}/,
+                        }}
+                        validationError={{
+                          isUrl: "This value should be Number.",
+                        }}
+                        value={amount}
+                        onChange={(e) => changeAmount(e)}
+                      />
                     </div>
-                     
 
                     <div className=" col-md-12 mt-3 image-edit-links">
                       <label>Description</label>
                       <InputValidation
-                  className=""
-                  placeholder="Enter Description"
-                  // placeholder="Please Enter Website Address"
-                  type="text"
-                  id="website"
-                  required
-                  name="website"
-                  trigger="change"
-                  
-                  value={description}
-                  onChange={(e) => changeDescription(e)}
-                />
+                        className=""
+                        placeholder="Enter Description"
+                        // placeholder="Please Enter Website Address"
+                        type="text"
+                        id="website"
+                        required
+                        name="website"
+                        trigger="change"
+                        value={description}
+                        onChange={(e) => changeDescription(e)}
+                      />
                     </div>
-                    
                   </div>
                 )}
 

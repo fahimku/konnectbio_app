@@ -40,20 +40,19 @@ class AffiliateBrand extends React.Component {
   }
 
   getMyPromo = async () => {
-    this.setState({promoLoading: true})
+    this.setState({ promoLoading: true });
     await axios
       .get(`/campaigns/receive/getpromocodes`)
       .then((response) => {
-         this.setState({
-          promoCodes: response.data.message
+        this.setState({
+          promoCodes: response.data.message,
         });
-        this.setState({promoLoading: false})
+        this.setState({ promoLoading: false });
       })
       .catch(function (error) {
         console.log(error.response);
       });
   };
-
 
   getMyBrands = async () => {
     await axios
@@ -65,9 +64,9 @@ class AffiliateBrand extends React.Component {
           is_affiliate_enabled: response?.data?.data?.is_affiliate_enabled,
           affiliateCheck: response?.data?.data?.is_affiliate_enabled,
           promoDiscount: response?.data?.data?.discount,
-          promoCode: response?.data?.data?.promo
-         // brandDiscount: response?.data?.data?.website_discount,
-         // discount_type: response?.data?.data?.discount_type || "%",
+          promoCode: response?.data?.data?.promo,
+          // brandDiscount: response?.data?.data?.website_discount,
+          // discount_type: response?.data?.data?.discount_type || "%",
         });
       })
       .catch(function (error) {
@@ -75,21 +74,20 @@ class AffiliateBrand extends React.Component {
       });
   };
 
-   changePromoCode = (e, options, name, index) => {
+  changePromoCode = (e, options, name, index) => {
     this.setState({
-      checkDisabled:
-        !this.state.checkDisabled,
+      checkDisabled: !this.state.checkDisabled,
     });
 
     if (e === undefined) {
-     this.setState({promoDiscount: "0%"}) 
-       this.setState({promoCode: "KB0"});
+      this.setState({ promoDiscount: "0%" });
+      this.setState({ promoCode: "KB0" });
     } else {
       var values = e.value.split(" ");
       var discount = values[0];
 
-      this.setState({promoDiscount:discount});
-      this.setState({promoCode: e.children});
+      this.setState({ promoDiscount: discount });
+      this.setState({ promoCode: e.children });
     }
   };
 
@@ -114,7 +112,7 @@ class AffiliateBrand extends React.Component {
           //website_discount: this.state.brandDiscount,
           //discount_type: this.state.discount_type,
           promo: this.state.promoCode,
-          discount: this.state.promoDiscount
+          discount: this.state.promoDiscount,
         })
         .then((response) => {
           this.setState({
@@ -258,52 +256,59 @@ class AffiliateBrand extends React.Component {
                             </Col>
                             <Col xs={8}>
                               <div className="row brandInput demographic-section">
-                                <Col xs={5}>
-                                
-                    <div className=" mt-2">
-                      <label>PromoCode</label>
-                      {this.state.promoLoading === false ?
-                      <Select
-                        size="small"
-                        filterOption={(input, options) =>
-                          options.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        value={this.state.promoCode}
-                        //disabled={!(formState === "add" || formState === "edit")}
-                        placeholder="KB0"
-                        //loading={this.state.promoCond}
-                        optionFilterProp="children"
-                        className="w-100"
-                        // onSearch={onSearch}
-                        onChange={(options, e) =>  this.changePromoCode(e, options)}
-                        showSearch
-                        allowClear
-                      >
-                        {this.state.promoCodes.map((customer, key) => {
-                          return (
-                            <Option key={customer.promo_percent + " " + key}>
-                              {customer.promo}
-                            </Option>
-                          );
-                        })}
-                      </Select>
-                      :
-                      <Loader />
-  }
-                    </div>
-                    
-                  
+                                <Col xs={8} lg={5}>
+                                  <div className=" mt-2">
+                                    <label>PromoCode</label>
+                                    {this.state.promoLoading === false ? (
+                                      <Select
+                                        size="small"
+                                        filterOption={(input, options) =>
+                                          options.children
+                                            .toLowerCase()
+                                            .indexOf(input.toLowerCase()) >= 0
+                                        }
+                                        value={this.state.promoCode}
+                                        //disabled={!(formState === "add" || formState === "edit")}
+                                        placeholder="KB0"
+                                        //loading={this.state.promoCond}
+                                        optionFilterProp="children"
+                                        className="w-100"
+                                        // onSearch={onSearch}
+                                        onChange={(options, e) =>
+                                          this.changePromoCode(e, options)
+                                        }
+                                        showSearch
+                                        allowClear
+                                      >
+                                        {this.state.promoCodes.map(
+                                          (customer, key) => {
+                                            return (
+                                              <Option
+                                                key={
+                                                  customer.promo_percent +
+                                                  " " +
+                                                  key
+                                                }
+                                              >
+                                                {customer.promo}
+                                              </Option>
+                                            );
+                                          }
+                                        )}
+                                      </Select>
+                                    ) : (
+                                      <Loader />
+                                    )}
+                                  </div>
                                 </Col>
-                                <Col xs={5}>
-                                <div className="mt-2">
-                      <label>Discount</label>
-                      <div className="promo_discount form-control">
-                        {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                        {this.state.promoDiscount}
-                      </div>
-                      
+                                <Col xs={4} lg={2} className="pl-0">
+                                  <div className="mt-2">
+                                    <label>Discount</label>
+                                    <div className="promo_discount form-control">
+                                      {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                                      {this.state.promoDiscount}
+                                    </div>
+
                                     {/* <span class="input-group-text">%</span> */}
                                     {/* <InputGroup size="sm" className="">
                                       <input
@@ -367,11 +372,11 @@ class AffiliateBrand extends React.Component {
                                           %
                                         </Dropdown.Item>
                                         {/* <Dropdown.Divider /> */}
-                                      {/* </DropdownButton>
+                                    {/* </DropdownButton>
                                       <span class="text-align">OFF</span>
-                                    </InputGroup> */} 
+                                    </InputGroup> */}
                                   </div>
-                                  </Col>
+                                </Col>
                               </div>
                             </Col>
                           </Row>

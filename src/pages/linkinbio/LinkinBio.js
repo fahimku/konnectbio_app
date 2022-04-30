@@ -59,8 +59,8 @@ class LinkinBio extends React.Component {
       dbCategoryName: "",
       dbSubCategory: "",
       currentPost: "",
-      subdescription:"",
-      subamount:0,
+      subdescription: "",
+      subamount: 0,
       url: config.visitorURL + "/",
       nextPageUrl: "",
       username: username,
@@ -75,13 +75,10 @@ class LinkinBio extends React.Component {
       updatedAt: "",
       fetchUserPost: [],
       dropdown: "instagram",
-      promoCodeDsc: { value: "KB0", label: "KB0", discount: "0%" },
+      promoCodeDsc: "",
 
-      promoCodeVal: {
-        value: "KB0",
-        label: "KB0",
-        discount: "0%",
-      },
+      promoCodeVal: "",
+      promoData: "",
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -89,17 +86,14 @@ class LinkinBio extends React.Component {
   }
 
   componentDidMount() {
-
     userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    
-      
+
     axios
       .get("/campaigns/receive/getpromocodes")
       .then((res) => {})
       .catch((res) => {
         this.setState({ ShopifyConnFound: false });
       });
-    
   }
 
   componentWillMount() {
@@ -195,9 +189,8 @@ class LinkinBio extends React.Component {
       .then((response) => {
         if (userInfo?.account_type == "influencer") {
         } else {
-       
-          this.setState({subdescription: response.data.message.description})
-          this.setState({subamount: response.data.message.amount})
+          this.setState({ subdescription: response.data.message.description });
+          this.setState({ subamount: response.data.message.amount });
           this.setState({ promoCodeDsc: response.data.message.discount });
           this.setState({ promoCodeVal: response.data.message.promo });
         }
@@ -239,8 +232,7 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = (i, Subpromo, SubDsc,description,amount) => {
-   
+  savePost = (i, Subpromo, SubDsc, description, amount) => {
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -315,7 +307,7 @@ class LinkinBio extends React.Component {
                 promo: Subpromo,
                 discount: SubDsc,
                 description: description,
-                amount: amount
+                amount: amount,
               })
               .then((response) => {
                 this.setState({ loading: false });
@@ -345,9 +337,7 @@ class LinkinBio extends React.Component {
     }
   };
 
-  updatePost = async (id, url, promo, dsc,description,amount) => {
-    
-
+  updatePost = async (id, url, promo, dsc, description, amount) => {
     let newCategory;
     let oldCategory = this.state.category;
     if (
@@ -397,7 +387,7 @@ class LinkinBio extends React.Component {
           promo: promo,
           discount: dsc,
           description: description,
-          amount: amount
+          amount: amount,
         })
         .then((response) => {
           this.setState({ loading: false });
@@ -592,7 +582,6 @@ class LinkinBio extends React.Component {
     e.preventDefault();
   };
 
-  
   iframe_clicked(event) {}
 
   shopRightBar = () => {
@@ -622,8 +611,8 @@ class LinkinBio extends React.Component {
         subCategory={this.state.subCategory}
         promo={this.state.promoCodeVal}
         discount={this.state.promoCodeDsc}
-        description={this.state.subdescription} 
-        amount={this.state.subamount} 
+        description={this.state.subdescription}
+        amount={this.state.subamount}
         flag={this.state.flag}
         changeSubCategory={this.changeSubCategory}
         subCategories={this.state.subCategories}
@@ -643,6 +632,7 @@ class LinkinBio extends React.Component {
           this.setState({ redirectedUrl: e.target.value });
         }}
         updatedDate={this.state.updatedAt}
+        promoData={this.state.promoData}
       ></ShopRightBar>
     );
   };

@@ -82,13 +82,13 @@ function BrandFilterComponent({ title }) {
                                   }
                                   style={{ width: "100px", height: "100px" }}
                                 />
-                                {item?.website_discount ? (
+                                {item?.promo !== "KB0" && item?.promo ? (
                                   <span className="skew_label">
-                                    Upto{" "}
-                                    {item?.discount_type === "%" ||
+                                    Upto {item?.discount}{" "}
+                                    {/* {item?.discount_type === "%" ||
                                     item?.discount_type === undefined
                                       ? item?.website_discount + "%"
-                                      : "$" + item?.website_discount}{" "}
+                                      : "$" + item?.website_discount}{" "} */}
                                     OFF
                                   </span>
                                 ) : null}
