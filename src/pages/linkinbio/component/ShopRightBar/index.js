@@ -88,10 +88,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
   useEffect(() => {
     setStartDate(props.startDate);
+    setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
   useEffect(() => {
-    setRedirectedUrl(props.redirectedUrl);
     setRedirectedUrl(props.redirectedUrl);
   }, [props.redirectedUrl]);
 
