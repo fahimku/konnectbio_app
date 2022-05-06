@@ -44,6 +44,12 @@ const TopBar = ({
         >
           Active Media Gallery
         </Dropdown.Item>
+        <Dropdown.Item
+          active={dropdown == "shopify" ? true : false}
+          // onClick={() => changeDropdown("shopify")}
+        >
+          Shopify
+        </Dropdown.Item>
       </DropdownButton>
 
       {/* <div className="your-copy-link">

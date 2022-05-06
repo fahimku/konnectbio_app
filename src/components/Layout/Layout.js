@@ -48,7 +48,7 @@ import SchedulePost from "../../pages/schedulePost/index";
 import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
 import SubcriptionSetup from "../../pages/subcriptionsetup/SubcriptionSetup";
 import MediaGallery from "../../pages/mediaGallery";
-import ShopifySetup from "../../pages/shopifysetup/ShopifySetup";
+import EcommerceSetup from "../../pages/ecommercesetup/EcommerceSetup";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -283,9 +283,9 @@ class Layout extends React.Component {
                         permissions={["dashboard_access"]}
                       />
                       <PrivateRoute
-                        path="/app/account/shopify"
+                        path="/app/account/ecommerce"
                         exact
-                        component={ShopifySetup}
+                        component={EcommerceSetup}
                         dispatch={this.props.dispatch}
                         permissions={["dashboard_access"]}
                       />

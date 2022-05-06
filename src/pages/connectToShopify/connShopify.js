@@ -5,7 +5,6 @@ export const history = createBrowserHistory({
 });
 
 function connectShopify() {
- 
   return (
     <div className="container-fluid">
       <div class="coming_iner">
@@ -17,7 +16,7 @@ function connectShopify() {
         </p> */}
         <button
           class="btn btn-primary"
-          onClick={() => history.push("/app/account/shopify")}
+          onClick={() => history.push("/app/account/ecommerce")}
         >
           Shopify Setup
         </button>
@@ -26,4 +25,4 @@ function connectShopify() {
   );
 }
 
-export default connectShopify
+export default connectShopify;

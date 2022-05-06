@@ -84,7 +84,7 @@ function BrandFilterComponent({ title }) {
                                 />
                                 {item?.promo !== "KB0" && item?.promo ? (
                                   <span className="skew_label">
-                                    Upto {item?.discount}{" "}
+                                    GET {item?.discount}{" "}
                                     {/* {item?.discount_type === "%" ||
                                     item?.discount_type === undefined
                                       ? item?.website_discount + "%"

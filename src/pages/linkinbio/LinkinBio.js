@@ -714,7 +714,7 @@ class LinkinBio extends React.Component {
             </p> */}
                       <button
                         class="btn btn-primary"
-                        onClick={() => history.push("/app/account/shopify")}
+                        onClick={() => history.push("/app/account/ecommerce")}
                       >
                         Shopify Setup
                       </button>

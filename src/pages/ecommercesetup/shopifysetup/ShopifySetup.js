@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Row, Button } from "react-bootstrap";
 // import Swal from "sweetalert2";
 import { connect } from "react-redux";
-import * as shopifyActions from "../../actions/shopifySetup";
-import Loader from "../../components/Loader/Loader";
+import * as shopifyActions from "../../../actions/shopifySetup";
+import Loader from "../../../components/Loader/Loader";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -68,7 +68,7 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
 
   return (
     <React.Fragment>
-      <div className="container-fluid mt-4">
+      <div className="container-fluid">
         <h4 className="page-title">Shopify Setup</h4>
         <div className="brand_container_main container">
           <Row>

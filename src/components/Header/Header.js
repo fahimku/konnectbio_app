@@ -529,8 +529,8 @@ class Header extends React.Component {
                               link: "/app/account/affiliate",
                             },
                             {
-                              header: "Shopify Setup",
-                              link: "/app/account/shopify",
+                              header: "Ecommerce Setup",
+                              link: "/app/account/ecommerce",
                             },
                             {
                               header: "Connection Setup",
