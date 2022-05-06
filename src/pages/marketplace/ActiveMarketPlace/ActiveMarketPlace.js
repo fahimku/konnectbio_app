@@ -372,6 +372,7 @@ function ActiveMarketPlace({
                       variant="primary"
                       className="fltr-hpr"
                       id="fltr-camp"
+                      disabled={marketPlace?.message?.length > 0 ? false : true}
                     >
                       Search
                     </Button>
@@ -386,6 +387,7 @@ function ActiveMarketPlace({
                       variant="gray"
                       className="fltr-hpr btn-primary"
                       id="fltr-reset"
+                      disabled={marketPlace?.message?.length > 0 ? false : true}
                     >
                       Reset
                     </Button>
