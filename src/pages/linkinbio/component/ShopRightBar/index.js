@@ -54,11 +54,15 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
 
+
   useEffect(() => {
+
     fetchPromo();
+
   }, []);
 
   const fetchPromo = async (media_id) => {
+
     setPromoLoading(true);
     await axios
       .get(`/affiliate/getdefaultpromo`)
@@ -87,13 +91,38 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       .then((res) => {
         setKbfee(res.data?.message?.fee ? res.data?.message?.fee : "0");
       })
-      .catch((res) => {});
+      .catch((res) => { });
   }, []);
 
   useEffect(() => {
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
+
+
+  useEffect(() => {
+    setDsc(props.discount);
+  }, [props.discount]);
+
+  useEffect(() => {
+
+    setPromo(props.promo);
+  }, [props.promo]);
+
+
+  useEffect(() => {
+
+    setAmount(props.amount);
+  }, [props.amount]);
+
+
+
+  useEffect(() => {
+
+    setDescription(props.description);
+  }, [props.description]);
+
+
 
   useEffect(() => {
     setRedirectedUrl(props.redirectedUrl);
@@ -119,17 +148,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   useEffect(() => {
     if (props.promo == "" && props.discount == "") {
     }
-    if (props.redirectedUrl !== "") {
-      setDsc(props.discount);
-      setPromo(props.promo);
-      setDescription(props.description);
-      setAmount(props.amount);
+    if (props.redirectedUrl !== "" && props.singlePost.linked) {
+      // setDsc(props.discount);
+      // setPromo(props.promo);
+      // setDescription(props.description);
+      // setAmount(props.amount);
+
     } else {
-      fetchPromo();
-      setDescription("");
-      setAmount(0);
+      if (props.autoFocus === true) {
+        console.log("----")
+        fetchPromo();
+        setDescription("");
+        setAmount(0);
+      }
     }
-  }, [props, props.redirectedUrl]);
+  }, [props.autoFocus ]);
 
   // useEffect(() => {
   //   if (typeof props.promo == "object" && props.promo !== null) {
@@ -189,6 +222,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       // setDsc("0%");
       // setPromo("KB0");
     } else {
+
       var values = e.value.split(" ");
       var discount = values[0];
 
@@ -219,9 +253,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
           ref={formRef}
         >
           <div
-            className={`image-edit-box ${
-              props.isSelectPost ? "show" : "hidden"
-            }`}
+            className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"
+              }`}
           >
             <span
               onClick={() => props.selectPost(false, "")}
@@ -238,11 +271,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 <p>
                   {props.singlePost.linked || props.updatePage
                     ? "Updated on " +
-                      moment.utc(props.updatedDate).format("MMM Do YYYY")
+                    moment.utc(props.updatedDate).format("MMM Do YYYY")
                     : "Posted on " +
-                      moment
-                        .utc(props.singlePost.timestamp)
-                        .format("MMM Do YYYY")}
+                    moment
+                      .utc(props.singlePost.timestamp)
+                      .format("MMM Do YYYY")}
 
                   {/* {props.media_id ? (
                     props.singlePost.linked || props.updatePage ? (
@@ -543,9 +576,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         className=""
                         placeholder="Amount"
                         // placeholder="Please Enter Website Address"
-                        type="text"
+                        type="number"
                         id="website"
-                        required
+                       
                         name="website"
                         trigger="change"
                         validations={{
@@ -567,7 +600,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="text"
                         id="website"
-                        required
+                        
                         name="website"
                         trigger="change"
                         value={description}
@@ -643,9 +676,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                           <Button
                             className="custom_btns_ift"
                             color="primary"
-                            // onClick={(ev) =>
-                            //   props.savePost && props.savePost(this)
-                            // }
+                          // onClick={(ev) =>
+                          //   props.savePost && props.savePost(this)
+                          // }
                           >
                             &nbsp;Save&nbsp;
                           </Button>
