@@ -55,6 +55,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoLoading, setPromoLoading] = useState(false);
 
 
+  console.log(props,"======================")
+
   useEffect(() => {
 
     fetchPromo();
@@ -95,12 +97,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, []);
 
   useEffect(() => {
+    if(props.singlePost.linked == false){
+      fetchPromo();
+    
+    }
+  }, [props.singlePost.linked]);
+
+
+  useEffect(() => {
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
 
   useEffect(() => {
+    
     setDsc(props.discount);
   }, [props.discount]);
 
@@ -147,6 +158,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
   useEffect(() => {
     if (props.promo == "" && props.discount == "") {
+        
     }
     if (props.redirectedUrl !== "" && props.singlePost.linked) {
       // setDsc(props.discount);
@@ -155,8 +167,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       // setAmount(props.amount);
 
     } else {
-      if (props.autoFocus === true) {
+      if (props.redirectedUrl == "" ) {
         console.log("----")
+        
         fetchPromo();
         setDescription("");
         setAmount(0);
@@ -532,7 +545,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                             .toLowerCase()
                             .indexOf(input.toLowerCase()) >= 0
                         }
-                        value={promoCodePromo}
+                        value={promoCodePromo ? promoCodePromo : "KB0"}
                         //disabled={!(formState === "add" || formState === "edit")}
                         placeholder="KB0"
                         //loading={this.state.promoCond}
@@ -559,7 +572,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       <label>Discount</label>
                       <div className="promo_discount form-control">
                         {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                        {promoCodeDscs}
+                        {promoCodeDscs ? promoCodeDscs : 0 }
                       </div>
                     </div>
                     <div className="col-md-6 mt-3">

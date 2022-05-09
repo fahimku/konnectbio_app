@@ -75,7 +75,7 @@ class LinkinBio extends React.Component {
       updatedAt: "",
       fetchUserPost: [],
       dropdown: "instagram",
-      promoCodeDsc: "",
+      promoCodeDsc:"",
 
       promoCodeVal: "",
       promoData: "",
@@ -187,6 +187,7 @@ class LinkinBio extends React.Component {
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+       
         if (userInfo?.account_type == "influencer") {
         } else {
           this.setState({ subdescription: response.data.message.description });
@@ -701,34 +702,8 @@ class LinkinBio extends React.Component {
                 </Col>
               </Row>
             ) : (
-              <>
-                {this.state.ShopifyConnFound == false &&
-                this.state.selectPost ? (
-                  <div className="container-fluid">
-                    <div class="coming_iner">
-                      <h2>Connect To Shopify</h2>
-                      {/* <p className="text-muted">
-              {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
-                ? "This option is only available for Influencer Plus."
-                : "This option is only available for Brand."}
-            </p> */}
-                      <button
-                        class="btn btn-primary"
-                        onClick={() => history.push("/app/account/ecommerce")}
-                      >
-                        Shopify Setup
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <Row className="linked_edit_box">
-                      <Col xs="12" className="p-5">
-                        {this.shopRightBar()}
-                      </Col>
-                    </Row>
-                  </>
-                )}
+              <> {this.shopRightBar()}
+               
               </>
             )}
           </Col>
