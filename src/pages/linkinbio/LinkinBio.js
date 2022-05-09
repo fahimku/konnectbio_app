@@ -234,6 +234,7 @@ class LinkinBio extends React.Component {
   };
 
   savePost = (i, Subpromo, SubDsc, description, amount) => {
+   
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -290,6 +291,11 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
+            if(SubDsc =='' && Subpromo ==''){
+              SubDsc = 0;
+              Subpromo = "KB0";
+            
+            }
             await axios
               .post(`/posts/reserve`, {
                 id: this.state.currentPost.id,
