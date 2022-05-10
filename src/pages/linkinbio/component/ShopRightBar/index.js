@@ -366,6 +366,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {props.singlePost.media_type !== "VIDEO" && (
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
                   <ImageShop
+                    Obj={props}
                     mediaUrl={props.singlePost.media_url}
                     selectPost={props.singlePost.media_url}
                     categoryList={props.categories}

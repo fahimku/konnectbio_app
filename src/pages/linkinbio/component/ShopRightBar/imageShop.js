@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Col, Button, Modal } from "react-bootstrap";
 import Loader from "../../../../components/Loader/Loader";
+import ShopRightBar from "../ShopRightBar/index";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { Select } from "antd";
 import numeral from "numeral";
+// import $, { event } from "jquery";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 function ImageShop({
+  Obj,
   mediaUrl,
   selectPost,
   categoryList,
@@ -22,6 +25,7 @@ function ImageShop({
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
+  const [flag, setFlag] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [multiImage, setMultiImage] = useState([]);
   const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
@@ -36,13 +40,73 @@ function ImageShop({
   const [productCategory, setProductCategory] = useState([]);
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
   const [productPromoCodePromo, setproductPromoCodePromo] = useState();
+  const [windowX, setWindowX] = useState();
+  const [windowY, setWindowY] = useState();
+  const [dmLeft, setDmleft] = useState();
+  const [dmtop, setDmtop] = useState();
+  const [submitData, setSubmitData] = useState([]);
+
+  var clientX = 710;
+  var clientY = 332;
+
+  var left = 613.5;
+  var top = 178.6875;
+
+  //     useEffect(() => {
+  //   setCircles([]);
+  //   setImageFiles([]);
+  //   setMultiImage([]);
+  // }, [selectPost]);
 
   useEffect(() => {
-    setCircles([]);
-    setImageFiles([]);
-    setMultiImage([]);
-  }, [selectPost]);
+    if (circles?.lenght) {
+    } else {
+      // UpdateaddCircle();
+    }
+  }, [flag]);
 
+  /////////For Update
+  const UpdategetClickCoords = () => {
+    var x = clientX - left;
+    var y = clientY - top;
+    return [x, y];
+  };
+
+  const UpdateaddCircle = () => {
+    let [x, y] = UpdategetClickCoords();
+    let newCircle = (
+      <>
+        <circle
+          key={circles.length + 1}
+          cx={x}
+          cy={y}
+          r="14"
+          // stroke="black"
+          // strokeWidth="1"
+          fill="white"
+        />
+        <text
+          x={x}
+          y={y}
+          text-anchor="middle"
+          stroke="black"
+          // stroke-width="1px"
+          alignment-baseline="middle"
+        >
+          {circles.length + 1}
+        </text>
+      </>
+    );
+    let selectedCircle = { x: x, y: y };
+
+    let allCircles = [newCircle];
+    // update 'circles'
+    setCircles(allCircles);
+  };
+
+  // console.log(circles, "plot value");
+
+  ///////////////// For Add
   const getClickCoords = (event) => {
     var e = event.target;
     var dim = e.getBoundingClientRect();
@@ -56,7 +120,6 @@ function ImageShop({
     setAddImageModal(true);
 
     let [x, y] = getClickCoords(event);
-
     let newCircle = (
       <>
         <circle
@@ -128,36 +191,19 @@ function ImageShop({
       files.push({
         file: file,
         imagePreviewUrl: reader.result,
-        startDate,
-        endDate,
-        ProductSku,
-        ProductName,
-        productAmount,
-        productDesc,
-        ProductUrl,
-        productCategory,
-        productPromoCodePromo,
-        productPromoCodeDscs,
       });
       setMultiImage(files);
       setImageFiles(files.reverse());
     };
 
-    // reader.onloadend = () => {
-    //   setMultiImage({ file: file, imagePreviewUrl: reader.result });
-    //   // this.setState({
-    //   //   file: file,
-    //   //   imagePreviewUrl: reader.result
-    //   // });
-    // };
-
     reader.readAsDataURL(file);
   };
-  console.log(multiImage, "multiImage");
-  console.log(imageFiles, "imageFiles");
+  // console.log(multiImage, "multiImage");
+  // console.log(imageFiles, "imageFiles");
 
   const onSubmitting = (e) => {
     e.preventDefault();
+    shopRightBar();
     setAddImageModal(false);
     // setImageFiles([]);
     // setProductName("");
@@ -165,40 +211,44 @@ function ImageShop({
     // setProductDesc("");
     // setProductAmount("");
     // let newData = [];
-    // let data = {
-    //   multiImage: imageFiles[0].file,
-    //   startDate,
-    //   endDate,
-    //   ProductSku,
-    //   ProductName,
-    //   productAmount,
-    //   productDesc,
-    //   ProductUrl,
-    //   productCategory,
-    //   productPromoCodePromo,
-    //   productPromoCodeDscs,
-    // };
+    let data = {
+      multiImage: imageFiles[0].file,
+      startDate,
+      endDate,
+      ProductSku,
+      ProductName,
+      productAmount,
+      productDesc,
+      ProductUrl,
+      productCategory,
+      productPromoCodePromo,
+      productPromoCodeDscs,
+    };
 
-    // newData.push(data);
+    let allData = [...submitData, data];
+    setSubmitData(allData);
+    console.log(allData, "submit");
 
-    // console.log(newData, "newData");
+    // let allData = submitData;
+    // allData.push({
+    //   data,
+    // });
+  };
 
-    // console.log(
-    //   {
-    //     multiImage: multiImage[0].file,
-    //     startDate,
-    //     endDate,
-    //     ProductSku,
-    //     ProductName,
-    //     productAmount,
-    //     productDesc,
-    //     ProductUrl,
-    //     productCategory,
-    //     productPromoCodePromo,
-    //     productPromoCodeDscs,
-    //   },
-    //   "submit"
-    // );
+  const shopRightBar = () => {
+    return (
+      <ShopRightBar
+        modalSartdate={startDate}
+        modelEnddate={endDate}
+        modalProductname={ProductName}
+        modalProducturl={ProductUrl}
+        modalProductdsc={productDesc}
+        modalProductamount={productAmount}
+        modalProductcatg={productCategory}
+        modalDsc={productPromoCodeDscs}
+        modalPromo={productPromoCodePromo}
+      ></ShopRightBar>
+    );
   };
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -502,15 +552,6 @@ function ImageShop({
             />
           </Col>
         ))}
-        {/* <Col md={4}>
-          <img src={mediaUrl} />
-        </Col>
-        <Col md={4}>
-          <img src={mediaUrl} />
-        </Col>
-        <Col md={4}>
-          <img src={mediaUrl} />
-        </Col> */}
       </div>
 
       {ImageModal()}
@@ -519,72 +560,3 @@ function ImageShop({
 }
 
 export default ImageShop;
-
-// import React, { useEffect, useState } from "react";
-// // import ImageMapper from "react-img-mapper";
-
-// function ImageShop({ mediaUrl }) {
-//   const getCoord = (event) => {
-//     let posX = 0,
-//       posY = 0;
-//     const element = document.getElementById("myDIV");
-//     // console.log(element.offsetTop, "element");
-//     // var x = event.pageX - element.offsetLeft;
-//     // var y = event.pageY - element.offsetTop;
-//     // alert("X Coordinate: " + x + " Y Coordinate: " + y);
-//     // console.log(event.pageX, "x");
-//     // console.log(event.pageY, "y");
-//     console.log(element.offsetLeft, "x");
-//   };
-
-//   return (
-//     <>
-//       <img
-//         src={`${mediaUrl}`}
-//         alt="media_url"
-//         usemap="#gfg_map"
-//         onMouseDown={(event) => getCoord(event)}
-//         id="myDIV"
-//       />
-//     </>
-//   );
-// }
-
-// export default ImageShop;
-// import React from "react";
-
-// class ImageShop extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.img = React.createRef();
-//   }
-
-//   oldx = 0;
-//   oldy = 0;
-
-//   imageClick = (e) => {
-//     var offset = this.img.current.getBoundingClientRect();
-//     var x = Math.floor(((e.pageX - offset.left) / offset.width) * 10000) / 100;
-//     var y = Math.floor(((e.pageY - offset.top) / offset.height) * 10000) / 100;
-//     console.log(x, "x");
-//     console.log(y, "y");
-//     console.log(x - this.oldx, "oldx");
-//     console.log(y - this.oldy, "oldy");
-//     // console.log(x, y, x - this.oldx, y - this.oldy);
-//     this.oldx = x;
-//     this.oldy = y;
-//   };
-
-//   render() {
-//     return (
-//       <img
-//         onClick={this.imageClick}
-//         ref={this.img}
-//         src={this.props.mediaUrl}
-//         // style={{ margin: 0, height: "100vh", width: "auto" }}
-//       ></img>
-//     );
-//   }
-// }
-
-// export default ImageShop;
