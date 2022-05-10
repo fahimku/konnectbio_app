@@ -1432,10 +1432,10 @@ code.sm-color {
 
 .maparea {
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: top center;
   width: 100%;
-  height: 100%;
+  height: 338px;
   border-radius: 4px;
 }
 .maparea circle {

@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Col, Button, Modal } from "react-bootstrap";
 import Loader from "../../../../components/Loader/Loader";
+import ShopRightBar from "../ShopRightBar/index";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { Select } from "antd";
 import numeral from "numeral";
+import $, { event } from 'jquery';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 function ImageShop({
+  Obj,
   mediaUrl,
   selectPost,
   categoryList,
@@ -22,6 +25,7 @@ function ImageShop({
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
+  const [flag, setFlag] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add(1, "years"));
@@ -32,24 +36,97 @@ function ImageShop({
   const [productCategory, setProductCategory] = useState([]);
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
   const [productPromoCodePromo, setproductPromoCodePromo] = useState();
-  useEffect(() => {
-    setCircles([]);
-  }, [selectPost]);
+  const [windowX, setWindowX] = useState();
+  const [windowY, setWindowY] = useState();
+  const [dmLeft, setDmleft] = useState();
+  const [dmtop, setDmtop] = useState();
 
+  var clientX = 710;
+  var clientY = 332;
+
+  var left = 613.5;
+  var top = 178.6875;
+
+ 
+    // useEffect(() => {
+      
+    //   setCircles([]);
+    // }, [selectPost]);
+
+useEffect(() =>{
+  if(circles?.lenght){
+
+}
+else{
+  UpdateaddCircle()
+  console.log("aya")
+}
+},[flag])
+
+
+
+/////////For Update 
+const UpdategetClickCoords = () => {
+  var x = clientX - left;
+  var y = clientY - top;
+  return [x, y];
+};
+
+const UpdateaddCircle = () => {
+  let [x, y] = UpdategetClickCoords();
+  console.log(x,y,"talha")
+  let newCircle = (
+    <>
+      <circle
+        key={circles.length + 1}
+        cx={x}
+        cy={y}
+        r="14"
+        // stroke="black"
+        // strokeWidth="1"
+        fill="white"
+      />
+      <text
+        x={x}
+        y={y}
+        text-anchor="middle"
+        stroke="black"
+        // stroke-width="1px"
+        alignment-baseline="middle"
+      >
+        {circles.length + 1}
+      </text>
+    </>
+  );
+  console.log(imageFiles, "imageFiles");
+  let selectedCircle = { x: x, y: y };
+
+  let allCircles = [newCircle];
+  // update 'circles'
+  setCircles(allCircles);
+
+};
+
+console.log(circles,"plot value")
+
+
+///////////////// For Add
   const getClickCoords = (event) => {
     var e = event.target;
     var dim = e.getBoundingClientRect();
     var x = event.clientX - dim.left;
     var y = event.clientY - dim.top;
+    console.log("before",event.clientX,event.clientY)
     return [x, y];
   };
 
   const addCircle = (event) => {
+   
     // get click coordinates
     setAddImageModal(true);
+   
 
     let [x, y] = getClickCoords(event);
-
     let newCircle = (
       <>
         <circle
@@ -86,13 +163,13 @@ function ImageShop({
     setCircles([]);
   };
 
-  // let data = [];
-  // circles.map(({ props }) => {
-  //   return data.push(props.children);
-  // });
+  let data = [];
+  circles.map(({ props }) => {
+    return data.push(props.children);
+  });
 
-  console.log(circles, "circles");
-
+  
+  
   const ClickableSVG = styled.svg`
     background-image: url(${mediaUrl});
     cursor: pointer;
@@ -101,7 +178,7 @@ function ImageShop({
     }
   `;
   const changeCategory = (category) => {
-    console.log(category, "category");
+   
     setProductCategory(category.split());
   };
   const changePromoCode = (e, options, name, index) => {
@@ -129,13 +206,34 @@ function ImageShop({
 
   const onSubmitting = (e) => {
     e.preventDefault();
+    shopRightBar();
     setAddImageModal(false);
     setImageFiles([]);
     setProductName("");
     setProductUrl("");
     setProductDesc("");
     setProductAmount("");
+   
   };
+
+  const  shopRightBar = () =>  {
+    console.log("ayass")
+    return (
+  <ShopRightBar
+  modalSartdate ={startDate}
+  modelEnddate = {endDate}
+  modalProductname = {ProductName}
+  modalProducturl = {ProductUrl} 
+  modalProductdsc = {productDesc}
+  modalProductamount = {productAmount}
+  modalProductcatg = {productCategory} 
+  modalDsc = {productPromoCodeDscs} 
+  modalPromo = {productPromoCodePromo}
+
+  >
+  </ShopRightBar>
+    )  
+}
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
     let endDate = dataString[1];
@@ -414,7 +512,8 @@ function ImageShop({
 
   return (
     <>
-      <ClickableSVG onClick={addCircle} className="maparea">
+      <ClickableSVG onClick={addCircle}  className="maparea">
+        
         {circles}
       </ClickableSVG>
       {circles.length !== 0 && (
