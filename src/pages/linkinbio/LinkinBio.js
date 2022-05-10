@@ -160,7 +160,7 @@ class LinkinBio extends React.Component {
           this.setState({ nextPageUrl: "" });
         }
         instagramPosts.push(PreviousInstagramPosts);
-        for (let i = 0; i < nextPageInstagramPosts.data.length; i++) {
+        for (let i = 0; i < nextPageInstagramPosts.data.length; i++) { 
           instagramPosts[0].data.push(nextPageInstagramPosts.data[i]);
         }
         this.setState({ instagramPost: instagramPosts });
@@ -321,6 +321,8 @@ class LinkinBio extends React.Component {
                 let singlePostIndex = this.state.instagramPosts.data.findIndex(
                   (item) => item.id === this.state.currentPost.id
                 );
+
+    
                 let currentPost = this.state.currentPost;
                 currentPost.redirected_url = this.state.redirectedUrl;
                 currentPost.linked = true;
