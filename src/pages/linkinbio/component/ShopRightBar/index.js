@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import axios from "axios";
 import numeral from "numeral";
+import ImageShop from "./imageShop";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -54,15 +55,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
 
-
   useEffect(() => {
-
     fetchPromo();
-
   }, []);
 
   const fetchPromo = async (media_id) => {
-
     setPromoLoading(true);
     await axios
       .get(`/affiliate/getdefaultpromo`)
@@ -91,7 +88,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       .then((res) => {
         setKbfee(res.data?.message?.fee ? res.data?.message?.fee : "0");
       })
-      .catch((res) => { });
+      .catch((res) => {});
   }, []);
 
   useEffect(() => {
@@ -99,30 +96,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
-
   useEffect(() => {
     setDsc(props.discount);
   }, [props.discount]);
 
   useEffect(() => {
-
     setPromo(props.promo);
   }, [props.promo]);
 
-
   useEffect(() => {
-
     setAmount(props.amount);
   }, [props.amount]);
 
-
-
   useEffect(() => {
-
     setDescription(props.description);
   }, [props.description]);
-
-
 
   useEffect(() => {
     setRedirectedUrl(props.redirectedUrl);
@@ -153,16 +141,15 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       // setPromo(props.promo);
       // setDescription(props.description);
       // setAmount(props.amount);
-
     } else {
       if (props.autoFocus === true) {
-        console.log("----")
+        // console.log("----");
         fetchPromo();
         setDescription("");
         setAmount(0);
       }
     }
-  }, [props.autoFocus ]);
+  }, [props.autoFocus]);
 
   // useEffect(() => {
   //   if (typeof props.promo == "object" && props.promo !== null) {
@@ -222,7 +209,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       // setDsc("0%");
       // setPromo("KB0");
     } else {
-
       var values = e.value.split(" ");
       var discount = values[0];
 
@@ -253,8 +239,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
           ref={formRef}
         >
           <div
-            className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"
-              }`}
+            className={`image-edit-box ${
+              props.isSelectPost ? "show" : "hidden"
+            }`}
           >
             <span
               onClick={() => props.selectPost(false, "")}
@@ -271,11 +258,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 <p>
                   {props.singlePost.linked || props.updatePage
                     ? "Updated on " +
-                    moment.utc(props.updatedDate).format("MMM Do YYYY")
+                      moment.utc(props.updatedDate).format("MMM Do YYYY")
                     : "Posted on " +
-                    moment
-                      .utc(props.singlePost.timestamp)
-                      .format("MMM Do YYYY")}
+                      moment
+                        .utc(props.singlePost.timestamp)
+                        .format("MMM Do YYYY")}
 
                   {/* {props.media_id ? (
                     props.singlePost.linked || props.updatePage ? (
@@ -377,7 +364,15 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
             <div className="image-wrapper">
               <div className="image-box">
                 {props.singlePost.media_type !== "VIDEO" && (
-                  <img src={`${props.singlePost.media_url}`} alt="media_url" />
+                  // <img src={`${props.singlePost.media_url}`} alt="media_url" />
+                  <ImageShop
+                    mediaUrl={props.singlePost.media_url}
+                    selectPost={props.singlePost.media_url}
+                    categoryList={props.categories}
+                    promoList={promoList}
+                    promoLoading={promoLoading}
+                    Kbfee={Kbfee}
+                  />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
@@ -578,7 +573,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="number"
                         id="website"
-                       
                         name="website"
                         trigger="change"
                         validations={{
@@ -600,7 +594,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="text"
                         id="website"
-                        
                         name="website"
                         trigger="change"
                         value={description}
@@ -676,9 +669,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                           <Button
                             className="custom_btns_ift"
                             color="primary"
-                          // onClick={(ev) =>
-                          //   props.savePost && props.savePost(this)
-                          // }
+                            // onClick={(ev) =>
+                            //   props.savePost && props.savePost(this)
+                            // }
                           >
                             &nbsp;Save&nbsp;
                           </Button>
