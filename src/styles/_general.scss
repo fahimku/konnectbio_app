@@ -1432,14 +1432,18 @@ code.sm-color {
 
 .maparea {
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: top center;
   width: 100%;
-  height: 100%;
+  height: 338px;
   border-radius: 4px;
 }
 .maparea circle {
   color: #000;
+}
+.maparea circle,
+.maparea text {
+  pointer-events: none;
 }
 .add-image-modal .modal-dialog {
   max-width: 50%;
@@ -1470,6 +1474,21 @@ code.sm-color {
 .image-box {
   position: relative;
 }
+.related-images {
+  margin-top: 20px;
+}
+.related-images img {
+  height: 100% !important;
+}
+// .related-images .col-md-4:first-child {
+//   padding-left: 20px;
+// }
+// .related-images .col-md-4:last-child {
+//   padding-right: 20px;
+// }
+.related-images .col-md-4 {
+  // min-height: 80px;
+}
 .clear_circle {
   position: absolute;
   right: 4px;
@@ -1478,7 +1497,6 @@ code.sm-color {
   animation: expand 0.1s ease;
   cursor: pointer;
 }
-
 @-webkit-keyframes expand {
   0% {
     top: 0px;

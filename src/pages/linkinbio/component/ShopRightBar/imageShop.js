@@ -23,17 +23,24 @@ function ImageShop({
   const [addImageModal, setAddImageModal] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
-  const [startDate, setStartDate] = useState(moment());
-  const [endDate, setEndDate] = useState(moment().add(1, "years"));
+  const [multiImage, setMultiImage] = useState([]);
+  const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
+  const [endDate, setEndDate] = useState(
+    moment().add(1, "years").format("YYYY-MM-DD")
+  );
   const [ProductName, setProductName] = useState("");
+  const [ProductSku, setProductSku] = useState("");
   const [ProductUrl, setProductUrl] = useState("");
   const [productDesc, setProductDesc] = useState("");
   const [productAmount, setProductAmount] = useState("");
   const [productCategory, setProductCategory] = useState([]);
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
   const [productPromoCodePromo, setproductPromoCodePromo] = useState();
+
   useEffect(() => {
     setCircles([]);
+    setImageFiles([]);
+    setMultiImage([]);
   }, [selectPost]);
 
   const getClickCoords = (event) => {
@@ -84,14 +91,14 @@ function ImageShop({
 
   const clearCircle = () => {
     setCircles([]);
+    setImageFiles([]);
+    setMultiImage([]);
   };
 
   // let data = [];
   // circles.map(({ props }) => {
   //   return data.push(props.children);
   // });
-
-  console.log(circles, "circles");
 
   const ClickableSVG = styled.svg`
     background-image: url(${mediaUrl});
@@ -100,10 +107,6 @@ function ImageShop({
       pointer-events: none;
     }
   `;
-  const changeCategory = (category) => {
-    console.log(category, "category");
-    setProductCategory(category.split());
-  };
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
     } else {
@@ -116,25 +119,86 @@ function ImageShop({
   };
 
   const onChangeInputImage = (e) => {
-    const files = [];
-    const reader = new FileReader();
-    files.push(e.target.files[0]);
+    e.preventDefault();
+    const files = multiImage;
+    let reader = new FileReader();
+    let file = e.target.files[0];
+
     reader.onloadend = () => {
-      files[0].preview = reader.result;
-      files[0].toUpload = true;
-      setImageFiles(files);
+      files.push({
+        file: file,
+        imagePreviewUrl: reader.result,
+        startDate,
+        endDate,
+        ProductSku,
+        ProductName,
+        productAmount,
+        productDesc,
+        ProductUrl,
+        productCategory,
+        productPromoCodePromo,
+        productPromoCodeDscs,
+      });
+      setMultiImage(files);
+      setImageFiles(files.reverse());
     };
-    reader.readAsDataURL(e.target.files[0]);
+
+    // reader.onloadend = () => {
+    //   setMultiImage({ file: file, imagePreviewUrl: reader.result });
+    //   // this.setState({
+    //   //   file: file,
+    //   //   imagePreviewUrl: reader.result
+    //   // });
+    // };
+
+    reader.readAsDataURL(file);
   };
+  console.log(multiImage, "multiImage");
+  console.log(imageFiles, "imageFiles");
 
   const onSubmitting = (e) => {
     e.preventDefault();
     setAddImageModal(false);
-    setImageFiles([]);
-    setProductName("");
-    setProductUrl("");
-    setProductDesc("");
-    setProductAmount("");
+    // setImageFiles([]);
+    // setProductName("");
+    // setProductUrl("");
+    // setProductDesc("");
+    // setProductAmount("");
+    // let newData = [];
+    // let data = {
+    //   multiImage: imageFiles[0].file,
+    //   startDate,
+    //   endDate,
+    //   ProductSku,
+    //   ProductName,
+    //   productAmount,
+    //   productDesc,
+    //   ProductUrl,
+    //   productCategory,
+    //   productPromoCodePromo,
+    //   productPromoCodeDscs,
+    // };
+
+    // newData.push(data);
+
+    // console.log(newData, "newData");
+
+    // console.log(
+    //   {
+    //     multiImage: multiImage[0].file,
+    //     startDate,
+    //     endDate,
+    //     ProductSku,
+    //     ProductName,
+    //     productAmount,
+    //     productDesc,
+    //     ProductUrl,
+    //     productCategory,
+    //     productPromoCodePromo,
+    //     productPromoCodeDscs,
+    //   },
+    //   "submit"
+    // );
   };
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -185,15 +249,15 @@ function ImageShop({
                   <div className="fileinput-new mb-2">
                     {imageFiles.length > 0 ? (
                       <div className="">
-                        {imageFiles.map((file, idx) => (
-                          <img
-                            alt="sku-image"
-                            src={file.preview}
-                            key={`img-id-${idx.toString()}`}
-                            // style={{ width: "100px", height: "100px" }}
-                            className="sku-image"
-                          />
-                        ))}
+                        {/* {imageFiles.map((item) => ( */}
+                        <img
+                          alt="sku-image"
+                          src={imageFiles[0].imagePreviewUrl}
+                          // key={`img-id-${idx.toString()}`}
+                          // style={{ width: "100px", height: "100px" }}
+                          className="sku-image"
+                        />
+                        {/* ))} */}
                       </div>
                     ) : (
                       ""
@@ -254,8 +318,8 @@ function ImageShop({
                     type="text"
                     name="sku"
                     placeholder="Enter SKU"
-                    // onInput={(e) => setProductName(e.target.value)}
-                    // value={ProductName}
+                    onInput={(e) => setProductSku(e.target.value)}
+                    value={ProductSku}
                     className="form-control"
                     required
                     autoComplete="off"
@@ -325,7 +389,9 @@ function ImageShop({
                     clearable={false}
                     searchable={false}
                     required
-                    onChange={changeCategory}
+                    onChange={(category) =>
+                      setProductCategory(category.split())
+                    }
                     // onFocus={onFocus}
                     // onBlur={onBlur}
                     // onSearch={onSearch}
@@ -424,6 +490,29 @@ function ImageShop({
           title="Clear Images"
         ></span>
       )}
+      <div className="row related-images">
+        {multiImage.map((item, index) => (
+          <Col md={4}>
+            <img
+              alt="profile-icon"
+              src={item.imagePreviewUrl}
+              key={`img-id-${index.toString()}`}
+              // style={{ width: "100px", height: "100px" }}
+              className="circle profile-icon"
+            />
+          </Col>
+        ))}
+        {/* <Col md={4}>
+          <img src={mediaUrl} />
+        </Col>
+        <Col md={4}>
+          <img src={mediaUrl} />
+        </Col>
+        <Col md={4}>
+          <img src={mediaUrl} />
+        </Col> */}
+      </div>
+
       {ImageModal()}
     </>
   );
