@@ -54,6 +54,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
+  const [source, setSource] = useState("");
 
   useEffect(() => {
     fetchPromo();
@@ -376,6 +377,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     promoList={promoList}
                     promoLoading={promoLoading}
                     Kbfee={Kbfee}
+                    source={source}
+                    setSource={setSource}
                   />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
@@ -383,43 +386,58 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 )}
               </div>
               <div className="image-edit-links">
-                <label>
-                  URL/AFFILIATE LINK -{" "}
-                  <a
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Note",
-                        text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
-                        confirmButtonColor: "#010b40",
-                      });
-                    }}
-                    href="javascript:void(0);"
+                <div className="">
+                  <label>Select Source</label>
+                  <Select
+                    key={Date.now()}
+                    value={source ? source : []}
+                    style={{ width: "100%" }}
+                    placeholder="Select Source"
+                    onChange={(value) => setSource(value)}
                   >
-                    {" "}
-                    Copy/Paste Link
-                  </a>{" "}
-                </label>
-                <InputValidation
-                  className=""
-                  placeholder="Enter URL"
-                  // placeholder="Please Enter Website Address"
-                  type="text"
-                  id="website"
-                  required
-                  name="website"
-                  trigger="change"
-                  validations={{
-                    matchRegexp:
-                      /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
-                  }}
-                  validationError={{
-                    isUrl: "This value should be a valid url.",
-                  }}
-                  value={props.redirectedUrl}
-                  onChange={(evt) => {
-                    props.callBack(evt);
-                  }}
-                />
+                    <Option value="ecommerce">Ecommerce</Option>
+                    <Option value="other">Others</Option>
+                  </Select>
+                </div>
+                <div className="mt-3">
+                  <label>
+                    URL/AFFILIATE LINK -{" "}
+                    <a
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Note",
+                          text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
+                          confirmButtonColor: "#010b40",
+                        });
+                      }}
+                      href="javascript:void(0);"
+                    >
+                      {" "}
+                      Copy/Paste Link
+                    </a>{" "}
+                  </label>
+                  <InputValidation
+                    className=""
+                    placeholder="Enter URL"
+                    // placeholder="Please Enter Website Address"
+                    type="text"
+                    id="website"
+                    required
+                    name="website"
+                    trigger="change"
+                    validations={{
+                      matchRegexp:
+                        /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
+                    }}
+                    validationError={{
+                      isUrl: "This value should be a valid url.",
+                    }}
+                    value={props.redirectedUrl}
+                    onChange={(evt) => {
+                      props.callBack(evt);
+                    }}
+                  />
+                </div>
 
                 <div className="select-categories mt-3">
                   <label>Select Category</label>
