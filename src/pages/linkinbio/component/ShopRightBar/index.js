@@ -31,6 +31,7 @@ let PassPromoCode;
 var subPromo;
 var subDiscount;
 var promoList;
+var imgDataSet;
 
 function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   if (typeof props.promo == "object" && props.promo !== null) {
@@ -51,6 +52,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [Kbfee, setKbfee] = useState();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
+  const [imgShop, setImgshop] = useState();
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
@@ -217,7 +219,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     }
   };
   const imgData = (data) => {
-    console.log(data, "data");
+   
+     imgDataSet = data;
+    
+    console.log(imgDataSet, "imageShop Daaaataaa");
   };
 
   // };
@@ -235,7 +240,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   promoCodePromo,
                   promoCodeDscs,
                   description,
-                  amount
+                  amount,
+                  imgDataSet
                 );
             }
           }}
@@ -370,6 +376,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
                   <ImageShop
                     imgData={imgData}
+                    children={props.children}
                     mediaUrl={props.singlePost.media_url}
                     selectPost={props.singlePost.media_url}
                     categoryList={props.categories}

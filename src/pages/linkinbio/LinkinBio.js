@@ -76,7 +76,7 @@ class LinkinBio extends React.Component {
       fetchUserPost: [],
       dropdown: "instagram",
       promoCodeDsc: "",
-
+      childrens: [],
       promoCodeVal: "",
       promoData: "",
     };
@@ -194,6 +194,8 @@ class LinkinBio extends React.Component {
           this.setState({ promoCodeDsc: response.data.message.discount });
           this.setState({ promoCodeVal: response.data.message.promo });
         }
+      
+        this.setState({ childrens: response.data.message.children});
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -232,7 +234,7 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = (i, Subpromo, SubDsc, description, amount) => {
+  savePost = (i, Subpromo, SubDsc, description, amount,imgData) => {
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -289,6 +291,7 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
+          
             await axios
               .post(`/posts/reserve`, {
                 id: this.state.currentPost.id,
@@ -304,10 +307,12 @@ class LinkinBio extends React.Component {
                 start_date: this.state.startDate,
                 end_date: this.state.endDate,
                 source: this.props.mobileDropdown,
+                source_type: "other",
                 promo: Subpromo,
                 discount: SubDsc,
                 description: description,
                 amount: amount,
+                children: imgData
               })
               .then((response) => {
                 this.setState({ loading: false });
@@ -598,6 +603,7 @@ class LinkinBio extends React.Component {
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
+        children={this.state.childrens}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
         selectPost={this.selectPost}

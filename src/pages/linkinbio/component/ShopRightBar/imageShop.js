@@ -22,6 +22,7 @@ function ImageShop({
   promoLoading,
   Kbfee,
   imgData,
+  children
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
@@ -41,18 +42,14 @@ function ImageShop({
   const [productCategory, setProductCategory] = useState([]);
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
   const [productPromoCodePromo, setproductPromoCodePromo] = useState();
-  const [windowX, setWindowX] = useState();
-  const [windowY, setWindowY] = useState();
-  const [dmLeft, setDmleft] = useState();
-  const [dmtop, setDmtop] = useState();
+  const [windowX, setWindowX] = useState(0);
+  const [windowY, setWindowY] = useState(0);
+  const [dmLeft, setDmleft] = useState(0);
+  const [dmtop, setDmtop] = useState(0);
   const [submitData, setSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState("");
+  const [source, setSource] = useState("other")
 
-  var clientX = 973;
-  var clientY = 427;
-
-  var left = 757.5;
-  var top = 178.6875;
 
   useEffect(() => {
     setImageFiles([]);
@@ -61,19 +58,38 @@ function ImageShop({
   useEffect(() => {
     if (circles?.length) {
     } else {
-      // UpdateaddCircle();
+      //   UpdateaddCircle();
     }
   }, [flag]);
 
+
+  useEffect(() => {
+    if (children?.length) {
+      childrenAttr();
+    }
+  }, [children]);
+ 
+  const childrenAttr = () =>{
+    children.map(function(val, index){
+   
+      UpdateaddCircle(val.coordinates.clientX,val.coordinates.clientY,val.coordinates.dimLeft,val.coordinates.dimTop);
+      
+  })
+    setMultiImage(children)
+
+  }
   /////////For Update
-  const UpdategetClickCoords = () => {
-    var x = clientX - left;
-    var y = clientY - top;
+  const UpdategetClickCoords = (wx,wy,left,top) => {
+    var x = wx - left;
+    var y = wy - top;
+    console.log(x,y,"check r")
+    
     return [x, y];
+    
   };
 
-  const UpdateaddCircle = () => {
-    let [x, y] = UpdategetClickCoords();
+  const UpdateaddCircle = (wx,wy,left,top) => {
+    let [x, y] = UpdategetClickCoords(wx,wy,left,top);
     let newCircle = (
       <>
         <circle
@@ -99,9 +115,11 @@ function ImageShop({
     );
     let selectedCircle = { x: x, y: y };
 
-    let allCircles = [newCircle];
+    let allCircles = [...circles,newCircle];
+    console.log(allCircles,"_+_+_+_+_+_+_+_+_")
     // update 'circles'
     setCircles(allCircles);
+   
   };
 
   // console.log(circles, "plot value");
@@ -120,7 +138,7 @@ function ImageShop({
     });
     return [x, y];
   };
-  console.log(coordinates, "coordinates");
+
 
   const addCircle = (event) => {
     if (multiImage.length < 3) {
@@ -202,7 +220,7 @@ function ImageShop({
     reader.onloadend = () => {
       files.push({
         file: file,
-        imagePreviewUrl: reader.result,
+        media_url: reader.result,
       });
       setMultiImage(files);
       setImageFiles(files.reverse());
@@ -210,10 +228,21 @@ function ImageShop({
 
     reader.readAsDataURL(file);
   };
-  console.log(multiImage, "multiImage");
-  console.log(imageFiles, "imageFiles");
 
-  const onSubmitting = (e) => {
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file)
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
+
+  const onSubmitting = async(e) => {
     e.preventDefault();
 
     setAddImageModal(false);
@@ -223,8 +252,24 @@ function ImageShop({
     // setProductDesc("");
     // setProductAmount("");
     // let newData = [];
+      // const formImage =  new Promise((resolve, reject) => {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(imageFiles[0]?.file);
+      //   reader.onload = () => resolve(reader.result?.toString().substr(reader.result?.toString().indexOf(',') + 1));
+      //   reader.onerror = error => reject(error);
+      // });
+
+    
+    var get_type = imageFiles[0]?.file.type;
+    var split = get_type.split("/")
+    var file_type = split[1]
+    const formImage = await convertBase64(imageFiles[0]?.file)
+     
+     console.log(formImage,"check 64")
+
+    
     let data = {
-      multiImage: imageFiles[0]?.file,
+      file: formImage,
       startDate,
       endDate,
       ProductSku,
@@ -236,18 +281,27 @@ function ImageShop({
       productPromoCodePromo,
       productPromoCodeDscs,
       coordinates,
+      file_type
     };
+
+    console.log(imageFiles,"iiiii");
 
     let allData = [...submitData, data];
     setSubmitData(allData);
     console.log(allData, "submit");
     imgData(allData);
     setImageFiles([]);
+    setProductSku("");
+    setProductName("");
+    setProductCategory([]);
+    setproductPromoCodePromo("");
+    setProductPromoCodeDscs("");
+    setProductUrl("");
+    setProductAmount();
+    setProductDesc("");
+    setStartDate(moment().format("YYYY-MM-DD"))
+    setEndDate(moment().format("YYYY-MM-DD"));
 
-    // let allData = submitData;
-    // allData.push({
-    //   data,
-    // });
   };
 
   const shopRightBar = (allData) => {
@@ -310,7 +364,7 @@ function ImageShop({
                         {/* {imageFiles.map((item) => ( */}
                         <img
                           alt="sku-image"
-                          src={imageFiles[0].imagePreviewUrl}
+                          src={imageFiles[0].media_url}
                           // key={`img-id-${idx.toString()}`}
                           // style={{ width: "100px", height: "100px" }}
                           className="sku-image"
@@ -559,11 +613,12 @@ function ImageShop({
         ></span>
       )} */}
       <div className="row related-images">
-        {multiImage.map((item, index) => (
+        {multiImage.map((item, index) =>(
+          
           <Col md={4}>
             <img
               alt="profile-icon"
-              src={item.imagePreviewUrl}
+              src={item.media_url}
               key={`img-id-${index.toString()}`}
               // style={{ width: "100px", height: "100px" }}
               className="profile-icon"
