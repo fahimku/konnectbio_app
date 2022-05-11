@@ -21,6 +21,7 @@ function ImageShop({
   promoList,
   promoLoading,
   Kbfee,
+  imgData,
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
@@ -240,7 +241,7 @@ function ImageShop({
     let allData = [...submitData, data];
     setSubmitData(allData);
     console.log(allData, "submit");
-    shopRightBar(allData);
+    imgData(allData);
     setImageFiles([]);
 
     // let allData = submitData;
