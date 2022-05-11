@@ -7,6 +7,7 @@ import { DatePicker } from "antd";
 import moment from "moment";
 import { Select } from "antd";
 import numeral from "numeral";
+import { toast } from "react-toastify";
 // import $, { event } from "jquery";
 
 const { Option } = Select;
@@ -14,7 +15,6 @@ const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
 function ImageShop({
-  Obj,
   mediaUrl,
   selectPost,
   categoryList,
@@ -45,21 +45,20 @@ function ImageShop({
   const [dmLeft, setDmleft] = useState();
   const [dmtop, setDmtop] = useState();
   const [submitData, setSubmitData] = useState([]);
+  const [coordinates, setCoordinates] = useState("");
 
-  var clientX = 710;
-  var clientY = 332;
+  var clientX = 973;
+  var clientY = 427;
 
-  var left = 613.5;
+  var left = 757.5;
   var top = 178.6875;
 
-  //     useEffect(() => {
-  //   setCircles([]);
-  //   setImageFiles([]);
-  //   setMultiImage([]);
-  // }, [selectPost]);
+  useEffect(() => {
+    setImageFiles([]);
+  }, [selectPost]);
 
   useEffect(() => {
-    if (circles?.lenght) {
+    if (circles?.length) {
     } else {
       // UpdateaddCircle();
     }
@@ -112,50 +111,62 @@ function ImageShop({
     var dim = e.getBoundingClientRect();
     var x = event.clientX - dim.left;
     var y = event.clientY - dim.top;
+    setCoordinates({
+      clientX: event.clientX,
+      clientY: event.clientY,
+      dimLeft: dim.left,
+      dimTop: dim.top,
+    });
     return [x, y];
   };
+  console.log(coordinates, "coordinates");
 
   const addCircle = (event) => {
-    // get click coordinates
-    setAddImageModal(true);
+    if (multiImage.length < 3) {
+      // get click coordinates
+      setAddImageModal(true);
 
-    let [x, y] = getClickCoords(event);
-    let newCircle = (
-      <>
-        <circle
-          key={circles.length + 1}
-          cx={x}
-          cy={y}
-          r="14"
-          // stroke="black"
-          // strokeWidth="1"
-          fill="white"
-        />
-        <text
-          x={x}
-          y={y}
-          text-anchor="middle"
-          stroke="black"
-          // stroke-width="1px"
-          alignment-baseline="middle"
-        >
-          {circles.length + 1}
-        </text>
-      </>
-    );
-    console.log(imageFiles, "imageFiles");
-    let selectedCircle = { x: x, y: y };
+      let [x, y] = getClickCoords(event);
+      let newCircle = (
+        <>
+          <circle
+            key={circles.length + 1}
+            cx={x}
+            cy={y}
+            r="14"
+            // stroke="black"
+            // strokeWidth="1"
+            fill="white"
+          />
+          <text
+            x={x}
+            y={y}
+            text-anchor="middle"
+            stroke="black"
+            // stroke-width="1px"
+            alignment-baseline="middle"
+          >
+            {circles.length + 1}
+          </text>
+        </>
+      );
+      let selectedCircle = { x: x, y: y };
 
-    let allCircles = [...circles, newCircle];
+      let allCircles = [...circles, newCircle];
 
-    // update 'circles'
-    setCircles(allCircles);
+      // update 'circles'
+      setCircles(allCircles);
+    } else {
+      // setImageError("Only 3 image tag allowed")
+      toast.error("Only 3 image tag allowed");
+    }
   };
 
   const clearCircle = () => {
     setCircles([]);
     setImageFiles([]);
     setMultiImage([]);
+    setCoordinates("");
   };
 
   // let data = [];
@@ -198,21 +209,21 @@ function ImageShop({
 
     reader.readAsDataURL(file);
   };
-  // console.log(multiImage, "multiImage");
-  // console.log(imageFiles, "imageFiles");
+  console.log(multiImage, "multiImage");
+  console.log(imageFiles, "imageFiles");
 
   const onSubmitting = (e) => {
     e.preventDefault();
-    shopRightBar();
+
     setAddImageModal(false);
-    // setImageFiles([]);
+
     // setProductName("");
     // setProductUrl("");
     // setProductDesc("");
     // setProductAmount("");
     // let newData = [];
     let data = {
-      multiImage: imageFiles[0].file,
+      multiImage: imageFiles[0]?.file,
       startDate,
       endDate,
       ProductSku,
@@ -223,11 +234,14 @@ function ImageShop({
       productCategory,
       productPromoCodePromo,
       productPromoCodeDscs,
+      coordinates,
     };
 
     let allData = [...submitData, data];
     setSubmitData(allData);
     console.log(allData, "submit");
+    shopRightBar(allData);
+    setImageFiles([]);
 
     // let allData = submitData;
     // allData.push({
@@ -235,20 +249,8 @@ function ImageShop({
     // });
   };
 
-  const shopRightBar = () => {
-    return (
-      <ShopRightBar
-        modalSartdate={startDate}
-        modelEnddate={endDate}
-        modalProductname={ProductName}
-        modalProducturl={ProductUrl}
-        modalProductdsc={productDesc}
-        modalProductamount={productAmount}
-        modalProductcatg={productCategory}
-        modalDsc={productPromoCodeDscs}
-        modalPromo={productPromoCodePromo}
-      ></ShopRightBar>
-    );
+  const shopRightBar = (allData) => {
+    return <ShopRightBar imgData={allData}></ShopRightBar>;
   };
   function dateRangePickerChanger(value, dataString) {
     let startDate = dataString[0];
@@ -256,6 +258,10 @@ function ImageShop({
     setStartDate(startDate);
     setEndDate(endDate);
   }
+  const clearImage = () => {
+    setImageFiles([]);
+    setMultiImage(multiImage.slice(1));
+  };
 
   const ImageModal = () => {
     return (
@@ -276,6 +282,7 @@ function ImageShop({
             onClick={() => {
               setAddImageModal(false);
               setImageFiles([]);
+              setCoordinates("");
               setCircles(circles.slice(0, -1));
             }}
           >
@@ -313,14 +320,24 @@ function ImageShop({
                       ""
                     )}
                   </div>
-                  <Button
-                    type="button"
-                    className={`select-image ${
-                      imageFiles.length > 0 ? "" : "image-space"
-                    }`}
-                  >
-                    <label for="fileupload2">Choose Image</label>
-                  </Button>
+                  {imageFiles.length > 0 ? (
+                    <Button
+                      onClick={clearImage}
+                      // className="fa fa-trash clear_circle"
+                      title="Clear Images"
+                    >
+                      Clear Images
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      className={`select-image ${
+                        imageFiles.length > 0 ? "" : "image-space"
+                      }`}
+                    >
+                      <label for="fileupload2">Choose Image</label>
+                    </Button>
+                  )}
                 </div>
               </Col>
               <Col md={8}>
@@ -533,13 +550,13 @@ function ImageShop({
       <ClickableSVG onClick={addCircle} className="maparea">
         {circles}
       </ClickableSVG>
-      {circles.length !== 0 && (
+      {/* {circles.length !== 0 && (
         <span
           onClick={clearCircle}
           className="fa fa-trash clear_circle"
           title="Clear Images"
         ></span>
-      )}
+      )} */}
       <div className="row related-images">
         {multiImage.map((item, index) => (
           <Col md={4}>
@@ -548,7 +565,7 @@ function ImageShop({
               src={item.imagePreviewUrl}
               key={`img-id-${index.toString()}`}
               // style={{ width: "100px", height: "100px" }}
-              className="circle profile-icon"
+              className="profile-icon"
             />
           </Col>
         ))}

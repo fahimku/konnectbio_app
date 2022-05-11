@@ -1471,6 +1471,10 @@ code.sm-color {
   text-align: center;
   background: #000;
 }
+.svg-circle {
+  pointer-events: none;
+  cursor: pointer;
+}
 .image-box {
   position: relative;
 }
