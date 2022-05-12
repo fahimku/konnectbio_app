@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Button, Table, Modal } from "react-bootstrap";
-import * as affiliateTransactionsActions from "../../../actions/affiliateSales";
+import * as shopifyTracker from "../../../actions/shopifyTracker";
 import { connect } from "react-redux";
 import ReactPaginate from "react-paginate";
 import Loader from "../../../components/Loader/Loader";
@@ -14,7 +14,7 @@ import numeral from "numeral";
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
 
-function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
+function Shopifytracker({ getShopifyTracker, shopifyTracker }) {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const fromDate = moment().startOf("month").format("YYYY-MM-DD");
@@ -70,95 +70,21 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
     const accountType = currentUser.account_type;
 
     if (accountType === "brand") {
-      getAffiliateSalesByBrand(
-        groupBy.value,
-        1,
-        limit,
-        startDate,
-        endDate
-      ).then(() => {
+      getShopifyTracker(
+      
+      ).then((res) => {
+        console.log(res,"fhh")
         setLoading(false);
       });
     }
   }, []);
 
-  const dateRangePickerChanger = (value, dataString) => {
-    const startDate = dataString[0];
-    const endDate = dataString[1];
-    setStartDate(startDate);
-    setEndDate(endDate);
-  };
 
-  const handleSubmit = (e) => {
-    setLoading(true);
-    e.preventDefault();
-    setCurrentPage(0);
-    getAffiliateSalesByBrand(groupBy.value, 1, limit, startDate, endDate).then(
-      (data) => {
-        setLoading(false);
-        setSubmit(groupBy.value);
-      }
-    );
-  };
-
-  const handlePageClick = (e) => {
-    const page = e.selected;
-    setCurrentPage(page);
-    setLoading(true);
-    getAffiliateSalesByBrand(
-      groupBy.value,
-      page + 1,
-      limit,
-      startDate,
-      endDate
-    ).then(() => {
-      if (affiliateSales?.message?.data?.length > 0) {
-        setLoading(false);
-      }
-    });
-  };
-
-  const changegroupBy = (e) => {
-    setGroupBy(e);
-  };
-  const refreshPage = (e) => {
-    setCurrentPage(0);
-    setLoading(true);
-    setFilterDisable("");
-    setStartDate(moment().startOf("month").format("YYYY-MM-DD"));
-    setEndDate(moment(new Date()).format("YYYY-MM-DD"));
-    getAffiliateSalesByBrand(
-      "brand",
-      1,
-      limit,
-      moment().startOf("month").format("YYYY-MM-DD"),
-      moment(new Date()).format("YYYY-MM-DD")
-    ).then(() => {
-      setLoading(false);
-    });
-    setGroupBy({
-      label: "Summary",
-      value: "brand",
-    });
-    setSubmit("brand");
-  };
-  const filterDate = (sDate, eDate, filterType) => {
-    setLoading(true);
-    setFilterDisable(filterType);
-    setStartDate(sDate);
-    setEndDate(eDate);
-    // setGroupBy({
-    //   label: "Summary",
-    //   value: "brand",
-    // });
-    getAffiliateSalesByBrand(groupBy.value, 1, limit, sDate, eDate).then(() => {
-      setLoading(false);
-    });
-  };
 
   
   function allTable() {
-    let data = affiliateSales?.message?.data;
+    let data = shopifyTracker?.message;
+    console.log(data,"ciao")
     if (data) {
       return (
         <>
@@ -169,60 +95,36 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
               <thead className="table_heading">
                 <tr>
                   <th>S.#</th>
-                  <th>Date</th>
-                  <th>Campaign Name</th>
-                  <th>Influencer Instagram</th>
-                  <th>Order#</th>
-                  <th>Qty</th>
-                  <th>Gross Sales</th>
-                  <th>Promo</th>
-                  <th>Discount</th>
-                  <th>Net Sales</th>
-                  <th>Commission Paid</th>
+                  <th>Pixel ID</th>
+                  <th>Publisher ID</th>
+                  <th>Page Title</th>
+                  <th>Roi Event</th>
+                  <th>Canonical Url</th>
+                  
                 </tr>
               </thead>
               <tbody>
                 {data.map((item, i) => {
                   return (
                     <tr key={i}>
-                      <td>{lowerLimit + i}</td>
-                      <td>
-                        {!item?.created_date
-                          ? "-"
-                          : moment(item?.created_date).format("YYYY-MM-DD")}
-                      </td>
-                      {item?.sale_type === "brandBioshop" ? (
-                        <td>BioShop</td>
-                      ) : (
-                        <td>{item?.campaign_name}</td>
-                      )}
-                      {item?.sale_type === "brandBioshop" ? (
-                        <td>{item?.influencer_name}</td>
-                      ) : (
+                      <td>{i++}</td>
+                     
+               
+                     
+                      <td>{item?.data.pixel_id}</td>
+                      <td>{item?.data.publisher_id}</td>
+                      <td>{item?.data.pageTitle}</td>
+                      <td>{item?.data.roiEvent}</td>
+                     
                         <td>
-                          <a
-                            target="_blank"
-                            href={`https://www.instagram.com/${item?.influencer_name}`}
-                          >
-                            {item?.influencer_name}
-                          </a>
+                          
+                            {item?.data.canonical_url}
+                          
                         </td>
-                      )}
-                      <td>{item?.order_id}</td>
-                      <td>{item?.total_qty}</td>
-                      <td>{numeral(item?.total_sale).format("$0,0.0'")}</td>
-
-                      <td>{item?.promo}</td>
-
-                      <td>{numeral(item?.discount).format("$0,0.0'")}</td>
-                      <td>
-                        {numeral(item?.order_totalprice).format("$0,0.0'")}
-                      </td>
-                      <td>
-                        {item?.total_commission
-                          ? numeral(item?.total_commission).format("$0,0.0'")
-                          : "$0.00"}
-                      </td>
+                     
+                     
+                   
+                     
                     </tr>
                   );
                 })}
@@ -242,7 +144,7 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
       
           <Row>
             <div className="col-md-12">
-              <form className="mb-3" onSubmit={handleSubmit}>
+              <form className="mb-3">
        
               </form>
 
@@ -250,22 +152,23 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
                 <Loader size="30" />
               ) : (
                 <>
-                  {affiliateSales?.message?.data?.length === 0 ? (
+                  {shopifyTracker?.message?.data?.length === 0 ? (
                     <>
                       <NoDataFound />
                     </>
                   ) : (
                     <>
                    
-                      {submit === "influencer" || submit === undefined
-                        ? allTable()
-                        : null}
+                      { allTable()}
+                        
                     </>
-                  )}
-                </>
+                  
+                
+              )}
+              </>
               )}
 
-              {affiliateSales?.message?.data?.length > 0 && !loading && (
+              {shopifyTracker?.message?.data?.length > 0 && !loading && (
                 <Row>
                   <ReactPaginate
                     previousLabel=""
@@ -281,11 +184,11 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
                     breakLinkClassName="page-link"
                     forcePage={currentPage}
                     pageCount={Math.ceil(
-                      affiliateSales?.message?.total_records / limit
+                      shopifyTracker?.message?.total_records / limit
                     )}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={window.innerWidth <= 760 ? 1 : 7}
-                    onPageChange={handlePageClick}
+                    // onPageChange={handlePageClick}
                     containerClassName={
                       "pagination justify-content-center mt-2 custom-paginate"
                     }
@@ -302,12 +205,12 @@ function Shopifytracker({ getAffiliateSalesByBrand, affiliateSales }) {
   );
 }
 
-function mapStateToProps({ affiliateSales, getAffiliateSalesByBrand }) {
+function mapStateToProps({ shopifyTracker, getShopifyTracker }) {
   return {
-    affiliateSales,
-    getAffiliateSalesByBrand,
+    shopifyTracker,
+    getShopifyTracker,
   };
 }
-export default connect(mapStateToProps, { ...affiliateTransactionsActions })(
+export default connect(mapStateToProps, { ...shopifyTracker })(
   Shopifytracker
 );

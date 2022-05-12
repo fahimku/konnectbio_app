@@ -98,3 +98,6 @@ export const GET_SHOPIFY_DETAIL = "getShopifyDetail";
 /**********Affiliate billing Types******************* */
 export const GET_AFFILIATE_BILLING_DETAIL = "getAffiliateBillingDetail";
 export const GET_AFFILIATE_CONTRACT_DETAIL = "getAffiliateContractDetail";
+
+/**********Shopify Tracker******************* */
+export const GET_SHOPIFY_TRACKER = "getShopifyTracker";
