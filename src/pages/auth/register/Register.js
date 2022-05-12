@@ -11,6 +11,7 @@ import { registerUser, authError, authSuccess } from "../../../actions/auth";
 import logo from "../../../images/konnectbiologo.svg";
 import Loader from "../../../components/Loader";
 import { toast } from "react-toastify";
+import queryString from "query-string";
 
 const Select = (props) => (
   <FixRequiredSelect {...props} SelectComponent={BaseSelect} />
@@ -22,12 +23,19 @@ class Register extends React.Component {
   };
 
   constructor(props) {
+    const params = queryString.parse(window.location.search);
+    console.log(params?.type, "params");
     super(props);
     this.state = {
       step1: true,
       step2: false,
       step3: false,
-      showRegister: true,
+      showRegister:
+        params?.type === "brand"
+          ? false
+          : params?.type === "influencer"
+          ? false
+          : true,
       countryLoading: false,
       stateLoading: false,
       cityLoading: false,
@@ -51,7 +59,12 @@ class Register extends React.Component {
         { value: "Influencer", label: "Influencer" },
         { value: "Brand", label: "Brand" },
       ],
-      accountType: "",
+      accountType:
+        params?.type === "brand"
+          ? "brand"
+          : params?.type === "influencer"
+          ? "influencer"
+          : "",
       country: "United States of America",
       city: "",
       password: "",
@@ -370,6 +383,7 @@ class Register extends React.Component {
   };
 
   render() {
+    console.log(this.state.accountType, "type");
     const styles = {
       menuList: (base) => ({
         ...base,
