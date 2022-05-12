@@ -49,6 +49,7 @@ import AffiliateSetup from "../../pages/affiliatesetup/AffiliateSetup";
 import SubcriptionSetup from "../../pages/subcriptionsetup/SubcriptionSetup";
 import MediaGallery from "../../pages/mediaGallery";
 import EcommerceSetup from "../../pages/ecommercesetup/EcommerceSetup";
+import Shopifytracker from "../../pages/affiliate/shopifyTracker/tracker";
 
 export const history = createBrowserHistory({
   forceRefresh: false,
@@ -280,6 +281,12 @@ class Layout extends React.Component {
                         path="/app/gallery"
                         exact
                         component={MediaGallery}
+                        permissions={["dashboard_access"]}
+                      />
+                      <PrivateRoute
+                        path="/app/shopifytracker"
+                        exact
+                        component={Shopifytracker}
                         permissions={["dashboard_access"]}
                       />
                       <PrivateRoute
