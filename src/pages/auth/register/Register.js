@@ -24,7 +24,6 @@ class Register extends React.Component {
 
   constructor(props) {
     const params = queryString.parse(window.location.search);
-    console.log(params?.type, "params");
     super(props);
     this.state = {
       step1: true,
@@ -383,7 +382,6 @@ class Register extends React.Component {
   };
 
   render() {
-    console.log(this.state.accountType, "type");
     const styles = {
       menuList: (base) => ({
         ...base,
