@@ -194,8 +194,8 @@ class LinkinBio extends React.Component {
           this.setState({ promoCodeDsc: response.data.message.discount });
           this.setState({ promoCodeVal: response.data.message.promo });
         }
-      
-        this.setState({ childrens: response.data.message.children});
+
+        this.setState({ childrens: response.data.message.children });
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -234,7 +234,7 @@ class LinkinBio extends React.Component {
       });
   };
 
-  savePost = (i, Subpromo, SubDsc, description, amount,imgData) => {
+  savePost = (i, Subpromo, SubDsc, description, amount, imgData, source) => {
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -291,7 +291,6 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
-          
             await axios
               .post(`/posts/reserve`, {
                 id: this.state.currentPost.id,
@@ -307,12 +306,12 @@ class LinkinBio extends React.Component {
                 start_date: this.state.startDate,
                 end_date: this.state.endDate,
                 source: this.props.mobileDropdown,
-                source_type: "other",
+                product_type: source,
                 promo: Subpromo,
                 discount: SubDsc,
                 description: description,
                 amount: amount,
-                children: imgData
+                children: imgData,
               })
               .then((response) => {
                 this.setState({ loading: false });

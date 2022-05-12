@@ -1,6 +1,7 @@
 import React from "react";
 import AsyncSelect from "react-select/async";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 class AsyncSkuField extends React.Component {
   state = {
@@ -31,6 +32,10 @@ class AsyncSkuField extends React.Component {
           .then((response) => {
             const loadSku = [];
             const sku = response.data.message;
+            if (sku.length === 0) {
+              toast.error("No Product Found");
+            }
+
             this.setState({ allSku: sku });
             sku.map(({ _source }) => {
               return loadSku.push({
@@ -39,10 +44,6 @@ class AsyncSkuField extends React.Component {
               });
             });
             this.setState({ sku: loadSku });
-
-            // const myLinks = response.data.message.filter(function (item) {
-            //   return item.post_id !== id;
-            // });
           })
           .catch(function (error) {
             console.log(error);

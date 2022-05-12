@@ -8,6 +8,7 @@ import { Select } from "antd";
 import numeral from "numeral";
 import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
+import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
 
 const { Option } = Select;
@@ -55,6 +56,12 @@ function ImageShop({
 
   useEffect(() => {
     setImageFiles([]);
+    setMultiImage([]);
+    setCircles([]);
+    setSkuData("");
+    setCoordinates("");
+    setProductSku("");
+    setSource("");
   }, [selectPost]);
 
   useEffect(() => {
@@ -242,10 +249,19 @@ function ImageShop({
     e.preventDefault();
     setAddImageModal(false);
 
-    var get_type = imageFiles[0]?.file.type;
-    var split = get_type.split("/");
-    var file_type = split[1];
-    const formImage = await convertBase64(imageFiles[0]?.file);
+    if (source === "other") {
+      var get_type = imageFiles[0]?.file.type;
+      var split = get_type.split("/");
+      var file_type = split[1];
+      var formImage = await convertBase64(imageFiles[0]?.file);
+    } else {
+      var media_url = imageFiles;
+      let files = multiImage;
+      files.push({
+        media_url: skuData?.image?.src,
+      });
+      setMultiImage(files);
+    }
 
     let data = {
       file: formImage,
@@ -259,6 +275,7 @@ function ImageShop({
       productPromoCodeDscs,
       coordinates,
       file_type,
+      media_url,
     };
 
     let allData = [...submitData, data];
@@ -274,8 +291,9 @@ function ImageShop({
     setProductUrl("");
     setProductAmount();
     setProductDesc("");
+    setSkuData("");
   };
-  // console.log(ProductSku, "ProductSku");
+  console.log(multiImage, "multiImage");
 
   // function dateRangePickerChanger(value, dataString) {
   //   let startDate = dataString[0];
@@ -291,7 +309,7 @@ function ImageShop({
     setProductSku(sku);
     setSkuData(skuData[0]._source);
     const productUrl =
-      "http://" +
+      "https://" +
       skuData[0]._source?.domain +
       "/products/" +
       skuData[0]._source?.handle;
@@ -299,7 +317,18 @@ function ImageShop({
     setProductAmount(skuData[0]._source?.variants[0]?.price);
     setProductUrl(productUrl);
     setProductDesc(skuData[0]._source?.body_html);
+    setImageFiles(skuData[0]._source?.image?.src);
   };
+  const copyToClipboard = (url) => {
+    let textField = document.createElement("textarea");
+    textField.innerText = url;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+    toast.success("Copied to Clipboard!");
+  };
+
   const ImageModal = () => {
     return (
       <Modal
@@ -320,13 +349,15 @@ function ImageShop({
               setAddImageModal(false);
               setImageFiles([]);
               setCoordinates("");
-              setSource("");
+              // setSource("");
 
               setCircles(circles.slice(0, -1));
               setProductName("");
               setProductAmount("");
               setProductUrl("");
               setProductDesc("");
+              setProductSku("");
+              setSkuData("");
             }}
           >
             <span aria-hidden="true">×</span>
@@ -389,13 +420,15 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        <img
-                          alt="sku-image"
-                          src={skuData?.image?.src}
-                          // key={`img-id-${idx.toString()}`}
-                          // style={{ width: "100px", height: "100px" }}
-                          className="sku-image"
-                        />
+                        {skuData?.image?.src && (
+                          <img
+                            alt="sku-image"
+                            src={skuData?.image?.src}
+                            // key={`img-id-${idx.toString()}`}
+                            // style={{ width: "100px", height: "100px" }}
+                            className="sku-image"
+                          />
+                        )}
                       </div>
                     </div>
                   </Col>
@@ -479,15 +512,20 @@ function ImageShop({
                         <div className="row mb-3">
                           <div className="col-md-6 ">
                             <label>Amount</label>
-                            <input
-                              type="number"
-                              name="amount"
-                              placeholder="Enter Amount"
-                              onInput={(e) => setProductAmount(e.target.value)}
-                              value={productAmount}
-                              className="form-control"
-                              autoComplete="off"
-                            />
+                            <div className="d-flex flex-row hashtag-box">
+                              <span className="input-group-text">$</span>
+                              <input
+                                type="number"
+                                name="amount"
+                                placeholder="Enter Amount"
+                                onInput={(e) =>
+                                  setProductAmount(e.target.value)
+                                }
+                                value={productAmount}
+                                className="form-control"
+                                autoComplete="off"
+                              />
+                            </div>
                           </div>
                           <div className="col-md-6">
                             <label>Enter Description</label>
@@ -624,8 +662,8 @@ function ImageShop({
                                 />
                               </div>
                               <div className="col-md-6 ">
-                                <label>Enter Product Url</label>
-                                <input
+                                <label>Product Url</label>
+                                {/* <input
                                   type="text"
                                   name="url"
                                   placeholder="Enter Product Url"
@@ -635,13 +673,34 @@ function ImageShop({
                                   required
                                   autoComplete="off"
                                   disabled
-                                />
+                                /> */}
+                                <div className="url-copy sku-copy">
+                                  <div className="your-copy-link">
+                                    <div className="item-a">
+                                      <a
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        href={ProductUrl}
+                                      >
+                                        {ProductUrl}
+                                      </a>
+                                    </div>
+                                    <div
+                                      onClick={() =>
+                                        copyToClipboard(ProductUrl)
+                                      }
+                                      className="item-b"
+                                    >
+                                      Copy
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                             <div className="row mb-3">
-                              <div className="col-md-6 ">
+                              <div className="col-md-6">
                                 <label>Amount</label>
-                                <input
+                                {/* <input
                                   type="number"
                                   name="amount"
                                   placeholder="Enter Amount"
@@ -650,7 +709,19 @@ function ImageShop({
                                   className="form-control"
                                   autoComplete="off"
                                   disabled
-                                />
+                                /> */}
+                                <div className="d-flex flex-row hashtag-box">
+                                  <span className="input-group-text">$</span>
+                                  <input
+                                    type="text"
+                                    name="amount"
+                                    placeholder="Enter Amount"
+                                    className="form-control comment-field"
+                                    required=""
+                                    value={productAmount}
+                                    disabled
+                                  />
+                                </div>
                               </div>
                               <div className="col-md-6">
                                 <label>Enter Description</label>
