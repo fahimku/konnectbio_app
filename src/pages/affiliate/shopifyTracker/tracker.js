@@ -109,22 +109,15 @@ function Shopifytracker({ getShopifyTracker, shopifyTracker }) {
                     <tr key={i}>
                       <td>{i++}</td>
                      
-               
-                     
                       <td>{item?.data.pixel_id}</td>
                       <td>{item?.data.publisher_id}</td>
                       <td>{item?.data.pageTitle}</td>
                       <td>{item?.data.roiEvent}</td>
-                     
                         <td>
                           
                             {item?.data.canonical_url}
                           
                         </td>
-                     
-                     
-                   
-                     
                     </tr>
                   );
                 })}
