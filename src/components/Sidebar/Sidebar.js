@@ -140,6 +140,7 @@ class Sidebar extends React.Component {
                 />
               ) : null}
 
+            
               {PermissionHelper.validate(["affiliate_access"]) ? (
                 <LinksGroup
                   id="affiliate"
@@ -155,7 +156,6 @@ class Sidebar extends React.Component {
                   labelColor="info"
                 />
               ) : null}
-
               <LinksGroup
                 id="manage-links"
                 className="sidebar-nav-links"
@@ -312,6 +312,7 @@ class Sidebar extends React.Component {
                   link="/admin"
                   index="admin"
                   // exact={false}
+                  
                   childrenLinks={
                     userInfo?.package?.package_id === "61d695e9bccdaf69f46efc66"
                       ? [
@@ -327,6 +328,7 @@ class Sidebar extends React.Component {
                             header: "Brand Setup",
                             link: "/app/account/affiliate",
                           },
+                          
                           {
                             header: "Ecommerce Setup",
                             link: "/app/account/ecommerce",

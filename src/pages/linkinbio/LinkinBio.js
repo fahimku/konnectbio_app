@@ -79,6 +79,7 @@ class LinkinBio extends React.Component {
       childrens: [],
       promoCodeVal: "",
       promoData: "",
+      product_source: ""
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -196,6 +197,7 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
+        this.setState({ product_source: response.data.message.product_source})
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -291,6 +293,7 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
+            console.log(imgData,"check imageData")
             await axios
               .post(`/posts/reserve`, {
                 id: this.state.currentPost.id,
@@ -306,7 +309,7 @@ class LinkinBio extends React.Component {
                 start_date: this.state.startDate,
                 end_date: this.state.endDate,
                 source: this.props.mobileDropdown,
-                product_type: source,
+                product_source: source,
                 promo: Subpromo,
                 discount: SubDsc,
                 description: description,
@@ -602,6 +605,7 @@ class LinkinBio extends React.Component {
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
+        product_source={this.state.product_source}
         children={this.state.childrens}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}

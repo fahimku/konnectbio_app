@@ -108,6 +108,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, [props.promo]);
 
   useEffect(() => {
+    setSource(props.product_source);
+  }, [props.product_source]);
+
+
+  useEffect(() => {
     setAmount(props.amount);
   }, [props.amount]);
 

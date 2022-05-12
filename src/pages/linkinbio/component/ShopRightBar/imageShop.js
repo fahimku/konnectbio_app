@@ -92,13 +92,13 @@ function ImageShop({
   const UpdategetClickCoords = (wx, wy, left, top) => {
     var x = wx - left;
     var y = wy - top;
-    console.log(x, y, "check r");
+   
 
     return [x, y];
   };
-
   const UpdateaddCircle = (wx, wy, left, top) => {
     let [x, y] = UpdategetClickCoords(wx, wy, left, top);
+    
     let newCircle = (
       <>
         <circle
@@ -123,10 +123,14 @@ function ImageShop({
       </>
     );
     let selectedCircle = { x: x, y: y };
-
+   
     let allCircles = [...circles, newCircle];
     // update 'circles'
-    setCircles(allCircles);
+    allCircles.map(function (val,index){
+      console.log(circles,"AJH")
+      setCircles(val);
+  })
+ 
   };
 
   ///////////////// For Add
@@ -177,7 +181,7 @@ function ImageShop({
         let selectedCircle = { x: x, y: y };
 
         let allCircles = [...circles, newCircle];
-
+      
         // update 'circles'
         setCircles(allCircles);
       } else {
@@ -293,7 +297,7 @@ function ImageShop({
     setProductDesc("");
     setSkuData("");
   };
-  console.log(multiImage, "multiImage");
+  
 
   // function dateRangePickerChanger(value, dataString) {
   //   let startDate = dataString[0];
