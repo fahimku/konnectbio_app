@@ -57,10 +57,16 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
   const [source, setSource] = useState("");
-
   useEffect(() => {
     fetchPromo();
   }, []);
+  useEffect(() => {
+    if (props?.userInfo?.account_type === "brand") {
+      setSource("ecommerce");
+    } else {
+      setSource("other");
+    }
+  }, [props.userInfo]);
 
   const fetchPromo = async (media_id) => {
     setPromoLoading(true);
@@ -107,10 +113,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     setPromo(props.promo);
   }, [props.promo]);
 
-  useEffect(() => {
-    setSource(props.product_source);
-  }, [props.product_source]);
-
+  // useEffect(() => {
+  //   setSource(props.product_source);
+  // }, [props.product_source]);
 
   useEffect(() => {
     setAmount(props.amount);
@@ -230,6 +235,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     console.log(imgDataSet, "index data");
     console.log(source, "source");
   };
+
+  console.log(source, "source");
 
   // };
   return (
@@ -391,7 +398,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     promoLoading={promoLoading}
                     Kbfee={Kbfee}
                     source={source}
-                    setSource={setSource}
+                    // setSource={setSource}
                   />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
@@ -403,13 +410,16 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   <label>Select Source</label>
                   <Select
                     key={Date.now()}
-                    value={source ? source : []}
+                    value={source}
                     style={{ width: "100%" }}
                     placeholder="Select Source"
-                    onChange={(value) => setSource(value)}
+                    // onChange={(value) => setSource(value)}
+                    className="source_cap"
                   >
-                    <Option value="ecommerce">Ecommerce</Option>
-                    <Option value="other">Others</Option>
+                    <Option className="source_cap" value={source}>
+                      {source}
+                    </Option>
+                    {/* <Option value="other">Others</Option> */}
                   </Select>
                 </div>
                 <div className="mt-3">

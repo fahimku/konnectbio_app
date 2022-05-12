@@ -104,8 +104,6 @@ class Header extends React.Component {
   }
 
   componentDidMount() {
-  
-    
     window.addEventListener("scroll", this.handleScroll);
     this.toggleSidebar();
     if (window.location.href.includes("main")) {
@@ -284,9 +282,8 @@ class Header extends React.Component {
       { value: "schedule_post", label: "Schedule Post" },
       { value: "monitor_mention", label: "Monitor Mention" },
     ];
-    console.log(userInfo?.email,"userInfo")
+
     return (
-      
       <>
         <div className="mobile-header-responsive">
           <div

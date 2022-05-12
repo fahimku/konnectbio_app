@@ -1510,6 +1510,31 @@ code.sm-color {
   background: #010b40;
   color: #fff;
 }
+.inner-image-box {
+  position: relative;
+}
+
+.inner-image-box .close {
+  position: absolute;
+  background: #798892;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  right: -12px;
+  top: -11px;
+  text-align: center;
+  cursor: pointer;
+}
+.inner-image-box .close span {
+  color: #fff;
+  font-family: auto;
+  font-size: 18px;
+  position: relative;
+  top: -3px;
+}
+.source_cap {
+  text-transform: capitalize;
+}
 .clear_circle {
   position: absolute;
   right: 4px;

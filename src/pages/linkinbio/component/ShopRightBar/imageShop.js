@@ -24,7 +24,7 @@ function ImageShop({
   Kbfee,
   imgData,
   children,
-  setSource,
+  // setSource,
   source,
 }) {
   const [circles, setCircles] = useState([]);
@@ -61,7 +61,6 @@ function ImageShop({
     setSkuData("");
     setCoordinates("");
     setProductSku("");
-    setSource("");
   }, [selectPost]);
 
   useEffect(() => {
@@ -86,19 +85,19 @@ function ImageShop({
         val.coordinates.dimTop
       );
     });
+
     setMultiImage(children);
   };
   /////////For Update
   const UpdategetClickCoords = (wx, wy, left, top) => {
     var x = wx - left;
     var y = wy - top;
-   
 
     return [x, y];
   };
   const UpdateaddCircle = (wx, wy, left, top) => {
     let [x, y] = UpdategetClickCoords(wx, wy, left, top);
-    
+
     let newCircle = (
       <>
         <circle
@@ -122,15 +121,17 @@ function ImageShop({
         </text>
       </>
     );
-    let selectedCircle = { x: x, y: y };
-   
+    console.log(circles, "circles");
+
+    // let allCircles = [...circles, newCircle];
+    // // update 'circles'
+    // allCircles.map(function (val, index) {
+    //   console.log(circles, "AJH");
+    //   setCircles(val);
+    // });
     let allCircles = [...circles, newCircle];
-    // update 'circles'
-    allCircles.map(function (val,index){
-      console.log(circles,"AJH")
-      setCircles(val);
-  })
- 
+    // // update 'circles'
+    setCircles(allCircles);
   };
 
   ///////////////// For Add
@@ -155,6 +156,7 @@ function ImageShop({
         setAddImageModal(true);
 
         let [x, y] = getClickCoords(event);
+
         let newCircle = (
           <>
             <circle
@@ -178,10 +180,10 @@ function ImageShop({
             </text>
           </>
         );
-        let selectedCircle = { x: x, y: y };
+        // let selectedCircle = { x: x, y: y };
 
         let allCircles = [...circles, newCircle];
-      
+
         // update 'circles'
         setCircles(allCircles);
       } else {
@@ -199,6 +201,7 @@ function ImageShop({
   //   setMultiImage([]);
   //   setCoordinates("");
   // };
+  console.log(multiImage, "multiImage");
 
   const ClickableSVG = styled.svg`
     background-image: url(${mediaUrl});
@@ -297,7 +300,6 @@ function ImageShop({
     setProductDesc("");
     setSkuData("");
   };
-  
 
   // function dateRangePickerChanger(value, dataString) {
   //   let startDate = dataString[0];
@@ -868,12 +870,17 @@ function ImageShop({
       <div className="row related-images">
         {multiImage.map((item, index) => (
           <Col md={4}>
-            <img
-              alt="profile-icon"
-              src={item.media_url}
-              key={`img-id-${index.toString()}`}
-              className="profile-icon"
-            />
+            <div className="inner-image-box">
+              <img
+                alt="profile-icon"
+                src={item.media_url}
+                key={index}
+                className="profile-icon"
+              />
+              {/* <span className="close">
+                <span aria-hidden="true">×</span>
+              </span> */}
+            </div>
           </Col>
         ))}
       </div>
