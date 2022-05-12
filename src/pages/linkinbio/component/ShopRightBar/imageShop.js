@@ -53,7 +53,6 @@ function ImageShop({
   const [coordinates, setCoordinates] = useState("");
   const [skuData, setSkuData] = useState("");
 
-
   useEffect(() => {
     setImageFiles([]);
   }, [selectPost]);
@@ -65,34 +64,34 @@ function ImageShop({
     }
   }, [flag]);
 
-
   useEffect(() => {
     if (children?.length) {
       childrenAttr();
     }
   }, [children]);
- 
-  const childrenAttr = () =>{
-    children.map(function(val, index){
-   
-      UpdateaddCircle(val.coordinates.clientX,val.coordinates.clientY,val.coordinates.dimLeft,val.coordinates.dimTop);
-      
-  })
-    setMultiImage(children)
 
-  }
+  const childrenAttr = () => {
+    children.map(function (val, index) {
+      UpdateaddCircle(
+        val.coordinates.clientX,
+        val.coordinates.clientY,
+        val.coordinates.dimLeft,
+        val.coordinates.dimTop
+      );
+    });
+    setMultiImage(children);
+  };
   /////////For Update
-  const UpdategetClickCoords = (wx,wy,left,top) => {
+  const UpdategetClickCoords = (wx, wy, left, top) => {
     var x = wx - left;
     var y = wy - top;
-    console.log(x,y,"check r")
-    
+    console.log(x, y, "check r");
+
     return [x, y];
-    
   };
 
-  const UpdateaddCircle = (wx,wy,left,top) => {
-    let [x, y] = UpdategetClickCoords(wx,wy,left,top);
+  const UpdateaddCircle = (wx, wy, left, top) => {
+    let [x, y] = UpdategetClickCoords(wx, wy, left, top);
     let newCircle = (
       <>
         <circle
@@ -118,11 +117,9 @@ function ImageShop({
     );
     let selectedCircle = { x: x, y: y };
 
-    let allCircles = [...circles,newCircle];
-    console.log(allCircles,"_+_+_+_+_+_+_+_+_")
+    let allCircles = [...circles, newCircle];
     // update 'circles'
     setCircles(allCircles);
-   
   };
 
   ///////////////// For Add
@@ -231,29 +228,25 @@ function ImageShop({
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
-      fileReader.readAsDataURL(file)
+      fileReader.readAsDataURL(file);
       fileReader.onload = () => {
         resolve(fileReader.result);
-      }
+      };
       fileReader.onerror = (error) => {
         reject(error);
-      }
-    })
-  }
+      };
+    });
+  };
 
-  const onSubmitting = async(e) => {
+  const onSubmitting = async (e) => {
     e.preventDefault();
     setAddImageModal(false);
 
-    
-    
     var get_type = imageFiles[0]?.file.type;
-    var split = get_type.split("/")
-    var file_type = split[1]
-    const formImage = await convertBase64(imageFiles[0]?.file)
-     
+    var split = get_type.split("/");
+    var file_type = split[1];
+    const formImage = await convertBase64(imageFiles[0]?.file);
 
-    
     let data = {
       file: formImage,
       ProductSku,
@@ -265,9 +258,8 @@ function ImageShop({
       productPromoCodePromo,
       productPromoCodeDscs,
       coordinates,
-      file_type
+      file_type,
     };
-
 
     let allData = [...submitData, data];
     setSubmitData(allData);
@@ -282,8 +274,6 @@ function ImageShop({
     setProductUrl("");
     setProductAmount();
     setProductDesc("");
-    
-
   };
   // console.log(ProductSku, "ProductSku");
 
@@ -801,8 +791,7 @@ function ImageShop({
         ></span>
       )} */}
       <div className="row related-images">
-        {multiImage.map((item, index) =>(
-          
+        {multiImage.map((item, index) => (
           <Col md={4}>
             <img
               alt="profile-icon"
