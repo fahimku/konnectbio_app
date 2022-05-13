@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import styled from "styled-components";
 import { Col, Button, Modal } from "react-bootstrap";
 import Loader from "../../../../components/Loader/Loader";
@@ -53,6 +53,9 @@ function ImageShop({
   const [submitData, setSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState("");
   const [skuData, setSkuData] = useState("");
+  const parentRef = useRef(null);
+  const imgRef = useRef(null);
+  const [arrData, setArrData] = useState([]);
 
   useEffect(() => {
     setImageFiles([]);
