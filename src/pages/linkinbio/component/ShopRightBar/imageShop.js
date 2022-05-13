@@ -83,13 +83,13 @@ function ImageShop({
   const childrenAttr = () => {
     let circles = [];
     children.map((item) => {
-      let obj = item.coordinates[0];
+      let obj = item?.coordinates[0];
 
       circles.push(obj);
     });
     setCircles(circles);
-
     setMultiImage(children);
+    setSubmitData(children);
   };
   /////////For Update
   // const UpdategetClickCoords = (wx, wy, left, top) => {
@@ -872,12 +872,12 @@ function ImageShop({
         // get click coordinates
         setAddImageModal(true);
 
-        var pos_x = e.offsetX
-          ? e.offsetX
-          : e.pageX - imgRef.current.offsetLeft - 770;
-        var pos_y = e.offsetY
-          ? e.offsetY
-          : e.pageY - imgRef.current.offsetTop - 190;
+        var pos_x = e.nativeEvent.offsetX;
+        // ? e.offsetX
+        // : e.pageX - imgRef.current.offsetLeft - 770;
+        var pos_y = e.nativeEvent.offsetY;
+        // ? e.offsetY
+        // : e.pageY - imgRef.current.offsetTop - 190;
 
         let pos_x_percent =
           (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
@@ -903,14 +903,18 @@ function ImageShop({
     }
   };
 
+  console.log(multiImage, "multiImage");
+  console.log(submitData, "submitData");
+
   const imgDelete = (id) => {
-    let imgFilter = multiImage.filter(function (el) {
+    let imgFilter = submitData.filter(function (el) {
       return el.imgid !== id;
     });
     imgData(imgFilter);
-    console.log("_image_", imgFilter);
+
     setMultiImage(imgFilter);
-    console.log("_imgData_", imgData);
+    setSubmitData(imgFilter);
+
     let circles = [];
     imgFilter.map((item) => {
       let obj = item.coordinates[0];
@@ -918,15 +922,6 @@ function ImageShop({
       circles.push(obj);
     });
     setCircles(circles);
-
-    // if (imgFilter?.length) {
-    //   imgFilter.map((item) => {
-    //     console.log(item.coordinates, "item");
-    //     setCircles(item.coordinates);
-    //   });
-    // } else {
-    //   setCircles([]);
-    // }
   };
 
   return (
@@ -961,7 +956,7 @@ function ImageShop({
       </div>
 
       <div className="row related-images">
-        {multiImage.map((item, index) => (
+        {submitData.map((item, index) => (
           <Col md={4}>
             <div className="inner-image-box">
               <img
