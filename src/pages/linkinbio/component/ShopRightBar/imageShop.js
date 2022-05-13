@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
 // import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 // const { RangePicker } = DatePicker;
@@ -907,21 +908,33 @@ function ImageShop({
   console.log(submitData, "submitData");
 
   const imgDelete = (id) => {
-    let imgFilter = submitData.filter(function (el) {
-      return el.imgid !== id;
+    Swal.fire({
+      title: `Are you sure you want to remove this image?`,
+      icon: "warning",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let imgFilter = submitData.filter(function (el) {
+          return el.imgid !== id;
+        });
+        imgData(imgFilter);
+
+        setMultiImage(imgFilter);
+        setSubmitData(imgFilter);
+
+        let circles = [];
+        imgFilter.map((item) => {
+          let obj = item.coordinates[0];
+
+          circles.push(obj);
+        });
+        setCircles(circles);
+      }
     });
-    imgData(imgFilter);
-
-    setMultiImage(imgFilter);
-    setSubmitData(imgFilter);
-
-    let circles = [];
-    imgFilter.map((item) => {
-      let obj = item.coordinates[0];
-
-      circles.push(obj);
-    });
-    setCircles(circles);
   };
 
   return (
