@@ -231,11 +231,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   };
   const imgData = (data) => {
     imgDataSet = data;
-
-    
   };
-
-  
 
   // };
   return (
@@ -666,7 +662,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                                 promoCodePromo,
                                 promoCodeDscs,
                                 description,
-                                amount
+                                amount,
+                                imgDataSet,
+                                source
                               )
                             }
                           >
