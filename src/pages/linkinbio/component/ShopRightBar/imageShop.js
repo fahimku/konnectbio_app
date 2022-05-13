@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
 // import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
+import Swal from "sweetalert2";
 
 const { Option } = Select;
 // const { RangePicker } = DatePicker;
@@ -83,13 +84,13 @@ function ImageShop({
   const childrenAttr = () => {
     let circles = [];
     children.map((item) => {
-      let obj = item.coordinates[0];
+      let obj = item?.coordinates[0];
 
       circles.push(obj);
     });
     setCircles(circles);
-
     setMultiImage(children);
+    setSubmitData(children);
   };
   /////////For Update
   // const UpdategetClickCoords = (wx, wy, left, top) => {
@@ -872,12 +873,12 @@ function ImageShop({
         // get click coordinates
         setAddImageModal(true);
 
-        var pos_x = e.offsetX
-          ? e.offsetX
-          : e.pageX - imgRef.current.offsetLeft - 770;
-        var pos_y = e.offsetY
-          ? e.offsetY
-          : e.pageY - imgRef.current.offsetTop - 190;
+        var pos_x = e.nativeEvent.offsetX;
+        // ? e.offsetX
+        // : e.pageX - imgRef.current.offsetLeft - 770;
+        var pos_y = e.nativeEvent.offsetY;
+        // ? e.offsetY
+        // : e.pageY - imgRef.current.offsetTop - 190;
 
         let pos_x_percent =
           (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
@@ -903,30 +904,37 @@ function ImageShop({
     }
   };
 
+  console.log(multiImage, "multiImage");
+  console.log(submitData, "submitData");
+
   const imgDelete = (id) => {
-    let imgFilter = multiImage.filter(function (el) {
-      return el.imgid !== id;
-    });
-    imgData(imgFilter);
-    console.log("_image_", imgFilter);
-    setMultiImage(imgFilter);
-    console.log("_imgData_", imgData);
-    let circles = [];
-    imgFilter.map((item) => {
-      let obj = item.coordinates[0];
+    Swal.fire({
+      title: `Are you sure you want to remove this image?`,
+      icon: "warning",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let imgFilter = submitData.filter(function (el) {
+          return el.imgid !== id;
+        });
+        imgData(imgFilter);
 
-      circles.push(obj);
-    });
-    setCircles(circles);
+        setMultiImage(imgFilter);
+        setSubmitData(imgFilter);
 
-    // if (imgFilter?.length) {
-    //   imgFilter.map((item) => {
-    //     console.log(item.coordinates, "item");
-    //     setCircles(item.coordinates);
-    //   });
-    // } else {
-    //   setCircles([]);
-    // }
+        let circles = [];
+        imgFilter.map((item) => {
+          let obj = item.coordinates[0];
+
+          circles.push(obj);
+        });
+        setCircles(circles);
+      }
+    });
   };
 
   return (
@@ -961,7 +969,7 @@ function ImageShop({
       </div>
 
       <div className="row related-images">
-        {multiImage.map((item, index) => (
+        {submitData.map((item, index) => (
           <Col md={4}>
             <div className="inner-image-box">
               <img

@@ -1516,14 +1516,22 @@ code.sm-color {
 
 .inner-image-box .close {
   position: absolute;
-  background: #798892;
+  background: #000;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  right: -12px;
-  top: -11px;
+  width: 16px;
+  height: 16px;
+  right: -1px;
+  top: 0px;
   text-align: center;
   cursor: pointer;
+}
+
+.inner-image-box .close span {
+  color: #fff;
+  font-family: auto;
+  font-size: 18px;
+  position: relative;
+  top: -6px;
 }
 .tag-div-main {
   background-color: white;
@@ -1538,13 +1546,6 @@ code.sm-color {
   cursor: pointer;
   text-align: center;
   font-family: "SegoeUIBold";
-}
-.inner-image-box .close span {
-  color: #fff;
-  font-family: auto;
-  font-size: 18px;
-  position: relative;
-  top: -3px;
 }
 .source_cap {
   text-transform: capitalize;
