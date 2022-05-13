@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { Col, Button, Modal } from "react-bootstrap";
 import Loader from "../../../../components/Loader/Loader";
@@ -8,7 +8,7 @@ import { Select } from "antd";
 import numeral from "numeral";
 import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
-import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
+// import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
 
 const { Option } = Select;
@@ -53,6 +53,10 @@ function ImageShop({
   const [submitData, setSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState("");
   const [skuData, setSkuData] = useState("");
+
+  const parentRef = useRef();
+  const imgRef = useRef();
+  const [arrData, setArrData] = useState([]);
 
   useEffect(() => {
     setImageFiles([]);
@@ -149,51 +153,51 @@ function ImageShop({
     return [x, y];
   };
 
-  const addCircle = (event) => {
-    if (multiImage.length < 3) {
-      if (source) {
-        // get click coordinates
-        setAddImageModal(true);
+  // const addCircle = (event) => {
+  //   if (multiImage.length < 3) {
+  //     if (source) {
+  //       // get click coordinates
+  //       setAddImageModal(true);
 
-        let [x, y] = getClickCoords(event);
+  //       let [x, y] = getClickCoords(event);
 
-        let newCircle = (
-          <>
-            <circle
-              key={circles.length + 1}
-              cx={x}
-              cy={y}
-              r="14"
-              // stroke="black"
-              // strokeWidth="1"
-              fill="white"
-            />
-            <text
-              x={x}
-              y={y}
-              text-anchor="middle"
-              stroke="black"
-              // stroke-width="1px"
-              alignment-baseline="middle"
-            >
-              {circles.length + 1}
-            </text>
-          </>
-        );
-        // let selectedCircle = { x: x, y: y };
+  //       let newCircle = (
+  //         <>
+  //           <circle
+  //             key={circles.length + 1}
+  //             cx={x}
+  //             cy={y}
+  //             r="14"
+  //             // stroke="black"
+  //             // strokeWidth="1"
+  //             fill="white"
+  //           />
+  //           <text
+  //             x={x}
+  //             y={y}
+  //             text-anchor="middle"
+  //             stroke="black"
+  //             // stroke-width="1px"
+  //             alignment-baseline="middle"
+  //           >
+  //             {circles.length + 1}
+  //           </text>
+  //         </>
+  //       );
+  //       // let selectedCircle = { x: x, y: y };
 
-        let allCircles = [...circles, newCircle];
+  //       let allCircles = [...circles, newCircle];
 
-        // update 'circles'
-        setCircles(allCircles);
-      } else {
-        toast.error("Please select source to add image");
-      }
-    } else {
-      // setImageError("Only 3 image tag allowed")
-      toast.error("Only 3 images allowed");
-    }
-  };
+  //       // update 'circles'
+  //       setCircles(allCircles);
+  //     } else {
+  //       toast.error("Please select source to add image");
+  //     }
+  //   } else {
+  //     // setImageError("Only 3 image tag allowed")
+  //     toast.error("Only 3 images allowed");
+  //   }
+  // };
 
   // const clearCircle = () => {
   //   setCircles([]);
@@ -576,7 +580,7 @@ function ImageShop({
                             ))}
                           </Select>
                         </div>
-                        <div className="row mb-3">
+                        {/* <div className="row mb-3">
                           <div className="col-md-4">
                             <label>PromoCode</label>
 
@@ -629,7 +633,7 @@ function ImageShop({
                               {numeral(Kbfee).format("0,0'")}%
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="mb-3">
                           {imageLoading ? (
                             <Button>
@@ -854,12 +858,83 @@ function ImageShop({
       </Modal>
     );
   };
+  const style = {
+    tagAreaMain: {
+      width: "290px",
+      height: "338px",
+      position: "relative",
+      maxWidth: "100%",
+      // backgroundColor: "lightblue",
+    },
+  };
+  const addCircle = (e) => {
+    if (multiImage.length < 3) {
+      if (source) {
+        // get click coordinates
+        setAddImageModal(true);
+
+        var pos_x = e.offsetX
+          ? e.offsetX
+          : e.pageX - imgRef.current.offsetLeft - 770;
+        var pos_y = e.offsetY
+          ? e.offsetY
+          : e.pageY - imgRef.current.offsetTop - 190;
+
+        let pos_x_percent =
+          (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
+        let pos_y_percent =
+          (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
+
+        setCircles([
+          ...circles,
+          { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
+        ]);
+      } else {
+        toast.error("Please select source to add image");
+      }
+    } else {
+      // setImageError("Only 3 image tag allowed")
+      toast.error("Only 3 images allowed");
+    }
+  };
+
+  // const myTag = (event) => {
+  //   var e = event.target;
+  //   var dim = e.getBoundingClientRect();
+  //   console.log(imgRef.offsetWidth, "imgRef");
+  // };
 
   return (
     <>
-      <ClickableSVG onClick={addCircle} className="maparea">
+      {/* <ClickableSVG onClick={addCircle} className="maparea">
         {circles}
-      </ClickableSVG>
+      </ClickableSVG> */}
+
+      <div
+        className="tag-area-main"
+        style={style.tagAreaMain}
+        ref={parentRef}
+        id="tagImg"
+      >
+        <img
+          onClick={(e) => addCircle(e)}
+          ref={imgRef}
+          src={mediaUrl}
+          alt="media-image"
+          style={{ width: "100%", height: "100%" }}
+        />
+        {circles.map((item, i) => (
+          // <Tag key={i} pixels={item} />
+          <div
+            key={i}
+            className="tag-div-main"
+            style={{ top: item.y, left: item.x, backgroundColor: "white" }}
+          >
+            {i + 1}
+          </div>
+        ))}
+      </div>
+
       {/* {circles.length !== 0 && (
         <span
           onClick={clearCircle}

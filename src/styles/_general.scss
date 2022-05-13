@@ -1525,6 +1525,20 @@ code.sm-color {
   text-align: center;
   cursor: pointer;
 }
+.tag-div-main {
+  background: white;
+  border-radius: 100px;
+  color: #000;
+  font-size: 11px;
+  height: 25px;
+  left: 45%;
+  line-height: 25px;
+  position: absolute;
+  width: 25px;
+  z-index: 999;
+  cursor: pointer;
+  text-align: center;
+}
 .inner-image-box .close span {
   color: #fff;
   font-family: auto;
