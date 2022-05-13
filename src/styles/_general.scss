@@ -1526,18 +1526,18 @@ code.sm-color {
   cursor: pointer;
 }
 .tag-div-main {
-  background: white;
-  border-radius: 100px;
+  background-color: white;
+  border-radius: 50%;
   color: #000;
   font-size: 11px;
-  height: 25px;
+  height: 20px;
   left: 45%;
-  line-height: 25px;
+  line-height: 20px;
   position: absolute;
-  width: 25px;
-  z-index: 999;
+  width: 20px;
   cursor: pointer;
   text-align: center;
+  font-family: "SegoeUIBold";
 }
 .inner-image-box .close span {
   color: #fff;

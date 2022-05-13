@@ -56,7 +56,6 @@ function ImageShop({
 
   const parentRef = useRef();
   const imgRef = useRef();
-  const [arrData, setArrData] = useState([]);
 
   useEffect(() => {
     setImageFiles([]);
@@ -139,19 +138,19 @@ function ImageShop({
   };
 
   ///////////////// For Add
-  const getClickCoords = (event) => {
-    var e = event.target;
-    var dim = e.getBoundingClientRect();
-    var x = event.clientX - dim.left;
-    var y = event.clientY - dim.top;
-    setCoordinates({
-      clientX: event.clientX,
-      clientY: event.clientY,
-      dimLeft: dim.left,
-      dimTop: dim.top,
-    });
-    return [x, y];
-  };
+  // const getClickCoords = (event) => {
+  //   var e = event.target;
+  //   var dim = e.getBoundingClientRect();
+  //   var x = event.clientX - dim.left;
+  //   var y = event.clientY - dim.top;
+  //   setCoordinates({
+  //     clientX: event.clientX,
+  //     clientY: event.clientY,
+  //     dimLeft: dim.left,
+  //     dimTop: dim.top,
+  //   });
+  //   return [x, y];
+  // };
 
   // const addCircle = (event) => {
   //   if (multiImage.length < 3) {
@@ -207,13 +206,13 @@ function ImageShop({
   // };
   console.log(multiImage, "multiImage");
 
-  const ClickableSVG = styled.svg`
-    background-image: url(${mediaUrl});
-    cursor: pointer;
-    & * {
-      pointer-events: none;
-    }
-  `;
+  // const ClickableSVG = styled.svg`
+  //   background-image: url(${mediaUrl});
+  //   cursor: pointer;
+  //   & * {
+  //     pointer-events: none;
+  //   }
+  // `;
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
     } else {
@@ -928,7 +927,7 @@ function ImageShop({
           <div
             key={i}
             className="tag-div-main"
-            style={{ top: item.y, left: item.x, backgroundColor: "white" }}
+            style={{ top: item.y, left: item.x }}
           >
             {i + 1}
           </div>
