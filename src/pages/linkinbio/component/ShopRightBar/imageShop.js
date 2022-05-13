@@ -51,8 +51,9 @@ function ImageShop({
   const [dmLeft, setDmleft] = useState(0);
   const [dmtop, setDmtop] = useState(0);
   const [submitData, setSubmitData] = useState([]);
-  const [coordinates, setCoordinates] = useState("");
+  const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
+
 
   const parentRef = useRef();
   const imgRef = useRef();
@@ -80,62 +81,57 @@ function ImageShop({
   }, [children]);
 
   const childrenAttr = () => {
-    children.map(function (val, index) {
-      UpdateaddCircle(
-        val.coordinates.clientX,
-        val.coordinates.clientY,
-        val.coordinates.dimLeft,
-        val.coordinates.dimTop
-      );
-    });
-
+    children.map((item) =>{
+        setCircles(item.coordinates)
+    })
+  
     setMultiImage(children);
   };
   /////////For Update
-  const UpdategetClickCoords = (wx, wy, left, top) => {
-    var x = wx - left;
-    var y = wy - top;
+  // const UpdategetClickCoords = (wx, wy, left, top) => {
+  //   var x = wx - left;
+  //   var y = wy - top;
 
-    return [x, y];
-  };
-  const UpdateaddCircle = (wx, wy, left, top) => {
-    let [x, y] = UpdategetClickCoords(wx, wy, left, top);
+  //   return [x, y];
+  // };
+  // const UpdateaddCircle = (wx, wy, left, top) => {
+  //   let [x, y] = UpdategetClickCoords(wx, wy, left, top);
 
-    let newCircle = (
-      <>
-        <circle
-          key={circles.length + 1}
-          cx={x}
-          cy={y}
-          r="14"
-          // stroke="black"
-          // strokeWidth="1"
-          fill="white"
-        />
-        <text
-          x={x}
-          y={y}
-          text-anchor="middle"
-          stroke="black"
-          // stroke-width="1px"
-          alignment-baseline="middle"
-        >
-          {circles.length + 1}
-        </text>
-      </>
-    );
-    console.log(circles, "circles");
+  //   let newCircle = (
+  //     <>
+  //       <circle
+  //         key={circles.length + 1}
+  //         cx={x}
+  //         cy={y}
+  //         r="14"
+  //         // stroke="black"
+  //         // strokeWidth="1"
+  //         fill="white"
+  //       />
+  //       <text
+  //         x={x}
+  //         y={y}
+  //         text-anchor="middle"
+  //         stroke="black"
+  //         // stroke-width="1px"
+  //         alignment-baseline="middle"
+  //       >
+  //         {circles.length + 1}
+  //       </text>
+  //     </>
+  //   );
 
-    // let allCircles = [...circles, newCircle];
-    // // update 'circles'
-    // allCircles.map(function (val, index) {
-    //   console.log(circles, "AJH");
-    //   setCircles(val);
-    // });
-    let allCircles = [...circles, newCircle];
-    // // update 'circles'
-    setCircles(allCircles);
-  };
+
+  //   // let allCircles = [...circles, newCircle];
+  //   // // update 'circles'
+  //   // allCircles.map(function (val, index) {
+  //   //   console.log(circles, "AJH");
+  //   //   setCircles(val);
+  //   // });
+  //   let allCircles = [...circles, newCircle];
+  //   // // update 'circles'
+  //   setCircles(allCircles);
+  // };
 
   ///////////////// For Add
   // const getClickCoords = (event) => {
@@ -204,7 +200,7 @@ function ImageShop({
   //   setMultiImage([]);
   //   setCoordinates("");
   // };
-  console.log(multiImage, "multiImage");
+
 
   // const ClickableSVG = styled.svg`
   //   background-image: url(${mediaUrl});
@@ -290,7 +286,7 @@ function ImageShop({
 
     let allData = [...submitData, data];
     setSubmitData(allData);
-    console.log(allData, "submit");
+
     imgData(allData);
     setImageFiles([]);
     setProductSku("");
@@ -883,11 +879,17 @@ function ImageShop({
           (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         let pos_y_percent =
           (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
-
+         
+          setCoordinates([
+            ...coordinates,
+            { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
+          ]);
+  
         setCircles([
           ...circles,
           { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
         ]);
+
       } else {
         toast.error("Please select source to add image");
       }
@@ -915,14 +917,15 @@ function ImageShop({
         ref={parentRef}
         id="tagImg"
       >
+       
         <img
           onClick={(e) => addCircle(e)}
           ref={imgRef}
           src={mediaUrl}
           alt="media-image"
           style={{ width: "100%", height: "100%" }}
-        />
-        {circles.map((item, i) => (
+       />
+        {circles && circles.map((item, i) => (
           // <Tag key={i} pixels={item} />
           <div
             key={i}
