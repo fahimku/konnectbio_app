@@ -662,7 +662,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                                 promoCodePromo,
                                 promoCodeDscs,
                                 description,
-                                amount
+                                amount,
+                                imgDataSet,
+                                source
                               )
                             }
                           >

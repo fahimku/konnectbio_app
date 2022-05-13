@@ -197,7 +197,9 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
-        this.setState({ product_source: response?.data?.message?.product_source });
+        this.setState({
+          product_source: response?.data?.message?.product_source,
+        });
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
@@ -349,7 +351,16 @@ class LinkinBio extends React.Component {
     }
   };
 
-  updatePost = async (id, url, promo, dsc, description, amount) => {
+  updatePost = async (
+    id,
+    url,
+    promo,
+    dsc,
+    description,
+    amount,
+    imgData,
+    source
+  ) => {
     let newCategory;
     let oldCategory = this.state.category;
     if (
@@ -388,34 +399,45 @@ class LinkinBio extends React.Component {
           this.selectPost(false, "");
         });
     } else {
-      await axios
-        .put(`/posts/revise/${id}`, {
-          redirected_url: url,
-          categories: newCategory,
-          sub_categories: this.state.subCategory,
-          post_type: this.state.postType,
-          start_date: this.state.startDate,
-          end_date: this.state.endDate,
-          promo: promo,
-          discount: dsc,
-          description: description,
-          amount: amount,
-        })
-        .then((response) => {
-          this.setState({ loading: false });
-          let singlePostIndex = this.state.instagramPosts.data.findIndex(
-            (item) => item.id === id
-          );
-          let currentPost = this.state.singlePost;
-          currentPost.redirected_url = url;
-          let instagramPosts = JSON.parse(
-            JSON.stringify(this.state.instagramPosts)
-          );
-          instagramPosts.data[singlePostIndex] = currentPost;
-          this.setState({ instagramPosts: instagramPosts });
-          toast.success("Your Post Link is Updated");
-          this.selectPost(false, "");
-        });
+      if (imgData?.length) {
+        await axios
+          .put(`/posts/revise/${id}`, {
+            redirected_url: url,
+            categories: newCategory,
+            sub_categories: this.state.subCategory,
+            post_type: this.state.postType,
+            start_date: this.state.startDate,
+            end_date: this.state.endDate,
+            promo: promo,
+            discount: dsc,
+            description: description,
+            amount: amount,
+            product_source: source,
+            children: imgData,
+          })
+          .then((response) => {
+            this.setState({ loading: false });
+            let singlePostIndex = this.state.instagramPosts.data.findIndex(
+              (item) => item.id === id
+            );
+            let currentPost = this.state.singlePost;
+            currentPost.redirected_url = url;
+            let instagramPosts = JSON.parse(
+              JSON.stringify(this.state.instagramPosts)
+            );
+            instagramPosts.data[singlePostIndex] = currentPost;
+            this.setState({ instagramPosts: instagramPosts });
+            toast.success("Your Post Link is Updated");
+            this.selectPost(false, "");
+          })
+          .catch((err) => {
+            this.setState({ loading: false });
+            //  toast.error(err);
+          });
+      } else {
+        toast.error("please add atleast 1 tag image");
+        this.setState({ loading: false });
+      }
     }
   };
   reload = () => {

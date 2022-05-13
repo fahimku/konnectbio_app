@@ -76,13 +76,18 @@ function ImageShop({
   useEffect(() => {
     if (children?.length) {
       childrenAttr();
+      imgData(children);
     }
   }, [children]);
 
   const childrenAttr = () => {
+    let circles = [];
     children.map((item) => {
-      setCircles(item.coordinates);
+      let obj = item.coordinates[0];
+
+      circles.push(obj);
     });
+    setCircles(circles);
 
     setMultiImage(children);
   };
@@ -879,10 +884,11 @@ function ImageShop({
         let pos_y_percent =
           (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
 
-        setCoordinates([
-          ...coordinates,
-          { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
-        ]);
+        // setCoordinates([
+        //   ...coordinates,
+        //   { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
+        // ]);
+        setCoordinates([{ x: `${pos_x_percent}%`, y: `${pos_y_percent}%` }]);
 
         setCircles([
           ...circles,
@@ -896,19 +902,31 @@ function ImageShop({
       toast.error("Only 3 images allowed");
     }
   };
-  console.log(multiImage, "multiImage");
-  console.log(circles, "circles");
 
   const imgDelete = (id) => {
     let imgFilter = multiImage.filter(function (el) {
       return el.imgid !== id;
     });
-
+    imgData(imgFilter);
+    console.log("_image_", imgFilter);
     setMultiImage(imgFilter);
+    console.log("_imgData_", imgData);
+    let circles = [];
     imgFilter.map((item) => {
-      console.log(item.coordinates, "item");
-      setCircles(item.coordinates);
+      let obj = item.coordinates[0];
+
+      circles.push(obj);
     });
+    setCircles(circles);
+
+    // if (imgFilter?.length) {
+    //   imgFilter.map((item) => {
+    //     console.log(item.coordinates, "item");
+    //     setCircles(item.coordinates);
+    //   });
+    // } else {
+    //   setCircles([]);
+    // }
   };
 
   return (
