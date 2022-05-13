@@ -54,10 +54,9 @@ function ImageShop({
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
 
-
   const parentRef = useRef();
   const imgRef = useRef();
-
+  let arr = [];
   useEffect(() => {
     setImageFiles([]);
     setMultiImage([]);
@@ -81,10 +80,10 @@ function ImageShop({
   }, [children]);
 
   const childrenAttr = () => {
-    children.map((item) =>{
-        setCircles(item.coordinates)
-    })
-  
+    children.map((item) => {
+      setCircles(item.coordinates);
+    });
+
     setMultiImage(children);
   };
   /////////For Update
@@ -120,7 +119,6 @@ function ImageShop({
   //       </text>
   //     </>
   //   );
-
 
   //   // let allCircles = [...circles, newCircle];
   //   // // update 'circles'
@@ -201,7 +199,6 @@ function ImageShop({
   //   setCoordinates("");
   // };
 
-
   // const ClickableSVG = styled.svg`
   //   background-image: url(${mediaUrl});
   //   cursor: pointer;
@@ -268,6 +265,7 @@ function ImageShop({
       });
       setMultiImage(files);
     }
+    var imgid = Math.floor(Math.random() * 100000);
 
     let data = {
       file: formImage,
@@ -282,6 +280,7 @@ function ImageShop({
       coordinates,
       file_type,
       media_url,
+      imgid,
     };
 
     let allData = [...submitData, data];
@@ -879,17 +878,16 @@ function ImageShop({
           (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         let pos_y_percent =
           (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
-         
-          setCoordinates([
-            ...coordinates,
-            { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
-          ]);
-  
+
+        setCoordinates([
+          ...coordinates,
+          { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
+        ]);
+
         setCircles([
           ...circles,
           { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
         ]);
-
       } else {
         toast.error("Please select source to add image");
       }
@@ -898,12 +896,20 @@ function ImageShop({
       toast.error("Only 3 images allowed");
     }
   };
+  console.log(multiImage, "multiImage");
+  console.log(circles, "circles");
 
-  // const myTag = (event) => {
-  //   var e = event.target;
-  //   var dim = e.getBoundingClientRect();
-  //   console.log(imgRef.offsetWidth, "imgRef");
-  // };
+  const imgDelete = (id) => {
+    let imgFilter = multiImage.filter(function (el) {
+      return el.imgid !== id;
+    });
+
+    setMultiImage(imgFilter);
+    imgFilter.map((item) => {
+      console.log(item.coordinates, "item");
+      setCircles(item.coordinates);
+    });
+  };
 
   return (
     <>
@@ -917,33 +923,25 @@ function ImageShop({
         ref={parentRef}
         id="tagImg"
       >
-       
         <img
           onClick={(e) => addCircle(e)}
           ref={imgRef}
           src={mediaUrl}
           alt="media-image"
           style={{ width: "100%", height: "100%" }}
-       />
-        {circles && circles.map((item, i) => (
-          // <Tag key={i} pixels={item} />
-          <div
-            key={i}
-            className="tag-div-main"
-            style={{ top: item.y, left: item.x }}
-          >
-            {i + 1}
-          </div>
-        ))}
+        />
+        {circles &&
+          circles.map((item, i) => (
+            <div
+              key={i}
+              className="tag-div-main"
+              style={{ top: item.y, left: item.x }}
+            >
+              {i + 1}
+            </div>
+          ))}
       </div>
 
-      {/* {circles.length !== 0 && (
-        <span
-          onClick={clearCircle}
-          className="fa fa-trash clear_circle"
-          title="Clear Images"
-        ></span>
-      )} */}
       <div className="row related-images">
         {multiImage.map((item, index) => (
           <Col md={4}>
@@ -954,9 +952,9 @@ function ImageShop({
                 key={index}
                 className="profile-icon"
               />
-              {/* <span className="close">
+              <span className="close" onClick={() => imgDelete(item.imgid)}>
                 <span aria-hidden="true">×</span>
-              </span> */}
+              </span>
             </div>
           </Col>
         ))}
