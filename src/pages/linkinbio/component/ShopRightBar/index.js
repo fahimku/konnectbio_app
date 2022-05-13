@@ -232,11 +232,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const imgData = (data) => {
     imgDataSet = data;
 
-    console.log(imgDataSet, "index data");
-    console.log(source, "source");
+    
   };
 
-  console.log(source, "source");
+  
 
   // };
   return (
