@@ -197,7 +197,7 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
-        this.setState({ product_source: response.data.message.product_source });
+        this.setState({ product_source: response?.data?.message?.product_source });
         this.setState({ fetchUserPost: response.data.message });
         this.setState({ postType: response.data.message.post_type });
         this.setState({ updatedAt: response.data.message.updated_at });
