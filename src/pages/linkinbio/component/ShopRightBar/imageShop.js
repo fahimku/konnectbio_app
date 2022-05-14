@@ -23,7 +23,6 @@ function ImageShop({
   imgData,
   children,
   // setSource,
-  category,
   source,
 }) {
   const [circles, setCircles] = useState([]);
@@ -44,7 +43,7 @@ function ImageShop({
   const [ProductUrl, setProductUrl] = useState("");
   const [productDesc, setProductDesc] = useState("");
   const [productAmount, setProductAmount] = useState("");
-  const [productCategory, setProductCategory] = useState([category]);
+  const [productCategory, setProductCategory] = useState([]);
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
   const [productPromoCodePromo, setproductPromoCodePromo] = useState();
   const [windowX, setWindowX] = useState(0);
@@ -67,8 +66,6 @@ function ImageShop({
     setCoordinates("");
     setProductSku("");
   }, [selectPost]);
-
-
 
   useEffect(() => {
     if (circles?.length) {
@@ -744,10 +741,10 @@ function ImageShop({
   };
   const style = {
     tagAreaMain: {
-      // width: "290px",
-      // height: "338px",
-      // position: "relative",
-      // maxWidth: "100%",
+      width: "290px",
+      height: "338px",
+      position: "relative",
+      maxWidth: "100%",
       // backgroundColor: "lightblue",
     },
   };

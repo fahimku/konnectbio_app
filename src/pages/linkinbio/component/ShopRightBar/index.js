@@ -19,6 +19,7 @@ import Swal from "sweetalert2";
 import { connect } from "react-redux";
 import axios from "axios";
 import numeral from "numeral";
+import ImageShop from "./imageShop";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
@@ -30,6 +31,7 @@ let PassPromoCode;
 var subPromo;
 var subDiscount;
 var promoList;
+var imgDataSet;
 
 function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   if (typeof props.promo == "object" && props.promo !== null) {
@@ -50,21 +52,23 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [Kbfee, setKbfee] = useState();
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(0);
+  const [imgShop, setImgshop] = useState();
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
-
-
-  console.log(props,"======================")
-
+  const [source, setSource] = useState("");
   useEffect(() => {
-
     fetchPromo();
-
   }, []);
+  useEffect(() => {
+    if (props?.userInfo?.account_type === "brand") {
+      setSource("ecommerce");
+    } else {
+      setSource("other");
+    }
+  }, [props.userInfo]);
 
   const fetchPromo = async (media_id) => {
-
     setPromoLoading(true);
     await axios
       .get(`/affiliate/getdefaultpromo`)
@@ -93,47 +97,39 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       .then((res) => {
         setKbfee(res.data?.message?.fee ? res.data?.message?.fee : "0");
       })
-      .catch((res) => { });
+      .catch((res) => {});
   }, []);
 
   useEffect(() => {
-    if(props.singlePost.linked == false){
+    if (props.singlePost.linked == false) {
       fetchPromo();
-    
     }
   }, [props.singlePost.linked]);
-
 
   useEffect(() => {
     setStartDate(props.startDate);
     setEndDate(props.endDate);
   }, [props.startDate, props.endDate]);
 
-
   useEffect(() => {
-    
     setDsc(props.discount);
   }, [props.discount]);
 
   useEffect(() => {
-
     setPromo(props.promo);
   }, [props.promo]);
 
+  // useEffect(() => {
+  //   setSource(props.product_source);
+  // }, [props.product_source]);
 
   useEffect(() => {
-
     setAmount(props.amount);
   }, [props.amount]);
 
-
-
   useEffect(() => {
-
     setDescription(props.description);
   }, [props.description]);
-
-
 
   useEffect(() => {
     setRedirectedUrl(props.redirectedUrl);
@@ -158,24 +154,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
   useEffect(() => {
     if (props.promo == "" && props.discount == "") {
-        
     }
     if (props.redirectedUrl !== "" && props.singlePost.linked) {
       // setDsc(props.discount);
       // setPromo(props.promo);
       // setDescription(props.description);
       // setAmount(props.amount);
-
     } else {
-      if (props.redirectedUrl == "" ) {
-        console.log("----")
-        
+      if (props.autoFocus === true) {
+        // console.log("----");
         fetchPromo();
         setDescription("");
         setAmount(0);
       }
     }
-  }, [props.autoFocus ]);
+  }, [props.autoFocus]);
 
   // useEffect(() => {
   //   if (typeof props.promo == "object" && props.promo !== null) {
@@ -235,13 +228,16 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       // setDsc("0%");
       // setPromo("KB0");
     } else {
-
       var values = e.value.split(" ");
       var discount = values[0];
 
       setDsc(discount);
       setPromo(e.children);
     }
+  };
+  const imgData = (data) => {
+    imgDataSet = data;
+    // console.log(imgDataSet, "dataindex");
   };
 
   // };
@@ -259,15 +255,18 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   promoCodePromo,
                   promoCodeDscs,
                   description,
-                  amount
+                  amount,
+                  imgDataSet,
+                  source
                 );
             }
           }}
           ref={formRef}
         >
           <div
-            className={`image-edit-box ${props.isSelectPost ? "show" : "hidden"
-              }`}
+            className={`image-edit-box ${
+              props.isSelectPost ? "show" : "hidden"
+            }`}
           >
             <span
               onClick={() => props.selectPost(false, "")}
@@ -284,11 +283,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 <p>
                   {props.singlePost.linked || props.updatePage
                     ? "Updated on " +
-                    moment.utc(props.updatedDate).format("MMM Do YYYY")
+                      moment.utc(props.updatedDate).format("MMM Do YYYY")
                     : "Posted on " +
-                    moment
-                      .utc(props.singlePost.timestamp)
-                      .format("MMM Do YYYY")}
+                      moment
+                        .utc(props.singlePost.timestamp)
+                        .format("MMM Do YYYY")}
 
                   {/* {props.media_id ? (
                     props.singlePost.linked || props.updatePage ? (
@@ -390,50 +389,80 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
             <div className="image-wrapper">
               <div className="image-box">
                 {props.singlePost.media_type !== "VIDEO" && (
-                  <img src={`${props.singlePost.media_url}`} alt="media_url" />
+                  // <img src={`${props.singlePost.media_url}`} alt="media_url" />
+                  <ImageShop
+                    imgData={imgData}
+                    children={props.children}
+                    mediaUrl={props.singlePost.media_url}
+                    selectPost={props.singlePost.media_url}
+                    categoryList={props.categories}
+                    promoList={promoList}
+                    promoLoading={promoLoading}
+                    Kbfee={Kbfee}
+                    source={source}
+                    // setSource={setSource}
+                  />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
               </div>
               <div className="image-edit-links">
-                <label>
-                  URL/AFFILIATE LINK -{" "}
-                  <a
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Note",
-                        text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
-                        confirmButtonColor: "#010b40",
-                      });
-                    }}
-                    href="javascript:void(0);"
+                <div className="">
+                  <label>Select Source</label>
+                  <Select
+                    key={Date.now()}
+                    value={source}
+                    style={{ width: "100%" }}
+                    placeholder="Select Source"
+                    // onChange={(value) => setSource(value)}
+                    className="source_cap"
                   >
-                    {" "}
-                    Copy/Paste Link
-                  </a>{" "}
-                </label>
-                <InputValidation
-                  className=""
-                  placeholder="Enter URL"
-                  // placeholder="Please Enter Website Address"
-                  type="text"
-                  id="website"
-                  required
-                  name="website"
-                  trigger="change"
-                  validations={{
-                    matchRegexp:
-                      /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
-                  }}
-                  validationError={{
-                    isUrl: "This value should be a valid url.",
-                  }}
-                  value={props.redirectedUrl}
-                  onChange={(evt) => {
-                    props.callBack(evt);
-                  }}
-                />
+                    <Option className="source_cap" value={source}>
+                      {source}
+                    </Option>
+                    {/* <Option value="other">Others</Option> */}
+                  </Select>
+                </div>
+                <div className="mt-3">
+                  <label>
+                    URL/AFFILIATE LINK -{" "}
+                    <a
+                      onClick={() => {
+                        Swal.fire({
+                          title: "Note",
+                          text: "You can add link of a website or affiliate link provided by an affiliate network, example: CJ, Rakuten, Amazon, etc",
+                          confirmButtonColor: "#010b40",
+                        });
+                      }}
+                      href="javascript:void(0);"
+                    >
+                      {" "}
+                      Copy/Paste Link
+                    </a>{" "}
+                  </label>
+                  <InputValidation
+                    className=""
+                    placeholder="Enter URL"
+                    // placeholder="Please Enter Website Address"
+                    type="text"
+                    id="website"
+                    required
+                    name="website"
+                    trigger="change"
+                    validations={{
+                      matchRegexp:
+                        /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
+                    }}
+                    validationError={{
+                      isUrl: "This value should be a valid url.",
+                    }}
+                    value={props.redirectedUrl}
+                    onChange={(evt) => {
+                      props.callBack(evt);
+                    }}
+                  />
+                </div>
 
                 <div className="select-categories mt-3">
                   <label>Select Category</label>
@@ -572,7 +601,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       <label>Discount</label>
                       <div className="promo_discount form-control">
                         {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                        {promoCodeDscs ? promoCodeDscs : 0 }
+                        {promoCodeDscs ? promoCodeDscs : 0}
                       </div>
                     </div>
                     <div className="col-md-6 mt-3">
@@ -591,7 +620,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="number"
                         id="website"
-                       
                         name="website"
                         trigger="change"
                         validations={{
@@ -613,7 +641,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         // placeholder="Please Enter Website Address"
                         type="text"
                         id="website"
-                        
                         name="website"
                         trigger="change"
                         value={description}
@@ -642,7 +669,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                                 promoCodePromo,
                                 promoCodeDscs,
                                 description,
-                                amount
+                                amount,
+                                imgDataSet,
+                                source
                               )
                             }
                           >
@@ -689,9 +718,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                           <Button
                             className="custom_btns_ift"
                             color="primary"
-                          // onClick={(ev) =>
-                          //   props.savePost && props.savePost(this)
-                          // }
+                            // onClick={(ev) =>
+                            //   props.savePost && props.savePost(this)
+                            // }
                           >
                             &nbsp;Save&nbsp;
                           </Button>
