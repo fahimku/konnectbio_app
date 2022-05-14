@@ -748,10 +748,10 @@ function ImageShop({
   };
   const style = {
     tagAreaMain: {
-      width: "290px",
-      height: "338px",
+      // width: "290px",
+      // height: "338px",
       position: "relative",
-      maxWidth: "100%",
+      // maxWidth: "100%",
       // backgroundColor: "lightblue",
     },
   };
@@ -958,7 +958,7 @@ function ImageShop({
           ref={imgRef}
           src={mediaUrl}
           alt="media-image"
-          style={{ width: "100%", height: "100%" }}
+          // style={{ width: "100%", height: "100%" }}
         />
   }
         {
@@ -980,7 +980,9 @@ function ImageShop({
         {submitData.map((item, index) => (
           <Col md={4}>
             <div className="inner-image-box">
-              <span className="image_num">{index + 1}</span>
+              <span onClick={() => clickModal(item)} className="image_num">
+                {index + 1}
+              </span>
               <img
                 alt="product-image"
                 src={item.media_url}

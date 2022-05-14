@@ -388,44 +388,56 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type !== "VIDEO" && (
+                {props.singlePost.media_type !== "VIDEO" &&
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
-                  <ImageShop
-                    imgData={imgData}
-                    children={props.children}
-                    mediaUrl={props.singlePost.media_url}
-                    selectPost={props.singlePost.media_url}
-                    categoryList={props.categories}
-                    promoList={promoList}
-                    promoLoading={promoLoading}
-                    Kbfee={Kbfee}
-                    source={source}
-                    category = {props.category}
-                    // setSource={setSource}
-                  />
-                )}
+                  (userInfo?.account_type !== "influencer" ? (
+                    <ImageShop
+                      imgData={imgData}
+                      children={props.children}
+                      mediaUrl={props.singlePost.media_url}
+                      selectPost={props.singlePost.media_url}
+                      categoryList={props.categories}
+                      promoList={promoList}
+                      promoLoading={promoLoading}
+                      Kbfee={Kbfee}
+                      category = {props.category}
+                      source={source}
+                      // setSource={setSource}
+                    />
+                  ) : (
+                    <img
+                      src={`${props.singlePost.media_url}`}
+                      alt="media_url"
+                    />
+                  ))}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
               </div>
               <div className="image-edit-links">
-                <div className="">
-                  <label>Select Source</label>
-                  <Select
-                    key={Date.now()}
-                    value={source}
-                    style={{ width: "100%" }}
-                    placeholder="Select Source"
-                    // onChange={(value) => setSource(value)}
-                    className="source_cap"
-                  >
-                    <Option className="source_cap" value={source}>
-                      {source}
-                    </Option>
-                    {/* <Option value="other">Others</Option> */}
-                  </Select>
-                </div>
-                <div className="mt-3">
+                {userInfo?.account_type !== "influencer" ? (
+                  <div className="">
+                    <label>Select Source</label>
+                    <Select
+                      key={Date.now()}
+                      value={source}
+                      style={{ width: "100%" }}
+                      placeholder="Select Source"
+                      // onChange={(value) => setSource(value)}
+                      className="source_cap"
+                    >
+                      <Option className="source_cap" value={source}>
+                        {source}
+                      </Option>
+                      {/* <Option value="other">Others</Option> */}
+                    </Select>
+                  </div>
+                ) : null}
+                <div
+                  className={
+                    userInfo?.account_type === "influencer" ? "" : "mt-3"
+                  }
+                >
                   <label>
                     URL/AFFILIATE LINK -{" "}
                     <a
@@ -591,109 +603,97 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {userInfo?.account_type == "influencer" ? (
                   <></>
                 ) : (
-                  <div className="row">
-                   
-                   
-                 
-                    <div className="col-md-3 mt-3">
-                      <label>PromoCode</label>
+                  <>
+                    <div className="row">
+                      <div className="col-md-3 mt-3">
+                        <label>PromoCode</label>
 
-                      <Select
-                        size="small"
-                        filterOption={(input, options) =>
-                          options.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        value={promoCodePromo ? promoCodePromo : "KB0"}
-                        //disabled={!(formState === "add" || formState === "edit")}
-                        placeholder="KB0"
-                        //loading={this.state.promoCond}
-                        optionFilterProp="children"
-                        className="w-100"
-                        // onSearch={onSearch}
-                        onChange={(options, e) => changePromoCode(e, options)}
-                        showSearch
-                        allowClear={false}
-                        loading={promoLoading ? true : false}
-                        disabled={source ? true : false}
-                      >
-                        {promoList.map((customer, key) => {
-                          return (
-                            <Option key={customer.promo_percent + " " + key}>
-                              {customer.promo}
-                            </Option>
-                          );
-                        })}
-                      </Select>
-                    </div>
-                     
-
-                    
-
-                    <div className="col-md-3 mt-3">
-                      <label>Discount</label>
-                      <div className="promo_discount form-control">
-                        {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                        {promoCodeDscs ? promoCodeDscs : 0}
-                        
+                        <Select
+                          size="small"
+                          filterOption={(input, options) =>
+                            options.children
+                              .toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                          }
+                          value={promoCodePromo ? promoCodePromo : "KB0"}
+                          //disabled={!(formState === "add" || formState === "edit")}
+                          placeholder="KB0"
+                          //loading={this.state.promoCond}
+                          optionFilterProp="children"
+                          className="w-100"
+                          // onSearch={onSearch}
+                          onChange={(options, e) => changePromoCode(e, options)}
+                          showSearch
+                          allowClear={false}
+                          loading={promoLoading ? true : false}
+                          disabled={source ? true : false}
+                        >
+                          {promoList.map((customer, key) => {
+                            return (
+                              <Option key={customer.promo_percent + " " + key}>
+                                {customer.promo}
+                              </Option>
+                            );
+                          })}
+                        </Select>
                       </div>
-                    </div>
-                    <div className="col-md-6 mt-3">
-                      <label>KB Fee</label>
-                      <div className="promo_discount form-control">
-                        {numeral(Kbfee).format("0,0'")}%
+
+                      <div className="col-md-3 mt-3">
+                        <label>Discount</label>
+                        <div className="promo_discount form-control">
+                          {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                          {promoCodeDscs ? promoCodeDscs : 0}
+                        </div>
+                      </div>
+                      <div className="col-md-6 mt-3">
+                        <label>KB Fee</label>
+                        <div className="promo_discount form-control">
+                          {numeral(Kbfee).format("0,0'")}%
+                        </div>
                       </div>
                     </div>
 
-                    <div className="col-md-3 mt-3">
-                      <label>Amount</label>
+                    <div className="row">
+                      <div className="col-md-3 mt-3">
+                        <label>Amount</label>
 
-                      <InputValidation
-                        className=""
-                        placeholder="Amount"
-                        disabled={source ? true : false}
-                        // placeholder="Please Enter Website Address"
-                        type="number"
-                        id="website"
-                        name="website"
-                        trigger="change"
-                        validations={{
-                          matchRegexp: /[0-9]{1}/,
-                        }}
-                        validationError={{
-                          isUrl: "This value should be Number.",
-                        }}
-                        value={amount}
-                        onChange={(e) => changeAmount(e)}
-                      />
+                        <InputValidation
+                          className=""
+                          placeholder="Amount"
+                          // placeholder="Please Enter Website Address"
+                          type="number"
+                          id="website"
+                          name="website"
+                          trigger="change"
+                          disabled={source ? true : false}
+                          validations={{
+                            matchRegexp: /[0-9]{1}/,
+                          }}
+                          validationError={{
+                            isUrl: "This value should be Number.",
+                          }}
+                          value={amount}
+                          onChange={(e) => changeAmount(e)}
+                        />
+                      </div>
+
+                      <div className=" col-md-9 mt-3">
+                        <label>Description</label>
+                        <InputValidation
+                          className=""
+                          placeholder="Enter Description"
+                          // placeholder="Please Enter Website Address"
+                          type="text"
+                          id="website"
+                          name="website"
+                          trigger="change"
+                          disabled={source ? true : false}
+                          value={description}
+                          onChange={(e) => changeDescription(e)}
+                        />
+                      </div>
                     </div>
-
-                    <div className=" col-md-12 mt-3 image-edit-links">
-                      <label>Description</label>
-                      <InputValidation
-                        className=""
-                        placeholder="Enter Description"
-                        // placeholder="Please Enter Website Address"
-                        type="text"
-                        id="website"
-                        name="website"
-                        trigger="change"
-                        disabled={source ? true : false}
-                        value={description}
-                        onChange={(e) => changeDescription(e)}
-                      />
-                    </div>
-                  </div>
-
-
-
-
-
-
-
-
-
+                  </>
                 )}
 
                 <div className="edit_button_main pane-button">
