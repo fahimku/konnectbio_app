@@ -8,9 +8,9 @@ import { Select } from "antd";
 import numeral from "numeral";
 import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
+import Swal from "sweetalert2"
 // import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
-import Swal from "sweetalert2";
 
 const { Option } = Select;
 // const { RangePicker } = DatePicker;
@@ -60,6 +60,7 @@ function ImageShop({
   let arr = [];
   useEffect(() => {
     setImageFiles([]);
+    setSubmitData([])
     setMultiImage([]);
     setCircles([]);
     setSkuData("");
@@ -78,140 +79,23 @@ function ImageShop({
     if (children?.length) {
       childrenAttr();
       imgData(children);
+      console.log("challaaaa")
     }
   }, [children]);
 
   const childrenAttr = () => {
     let circles = [];
     children.map((item) => {
-      let obj = item?.coordinates[0];
+      let obj = item.coordinates[0];
 
       circles.push(obj);
     });
     setCircles(circles);
-    setMultiImage(children);
-    setSubmitData(children);
+    setSubmitData(children)
+
+  
   };
-  /////////For Update
-  // const UpdategetClickCoords = (wx, wy, left, top) => {
-  //   var x = wx - left;
-  //   var y = wy - top;
-
-  //   return [x, y];
-  // };
-  // const UpdateaddCircle = (wx, wy, left, top) => {
-  //   let [x, y] = UpdategetClickCoords(wx, wy, left, top);
-
-  //   let newCircle = (
-  //     <>
-  //       <circle
-  //         key={circles.length + 1}
-  //         cx={x}
-  //         cy={y}
-  //         r="14"
-  //         // stroke="black"
-  //         // strokeWidth="1"
-  //         fill="white"
-  //       />
-  //       <text
-  //         x={x}
-  //         y={y}
-  //         text-anchor="middle"
-  //         stroke="black"
-  //         // stroke-width="1px"
-  //         alignment-baseline="middle"
-  //       >
-  //         {circles.length + 1}
-  //       </text>
-  //     </>
-  //   );
-
-  //   // let allCircles = [...circles, newCircle];
-  //   // // update 'circles'
-  //   // allCircles.map(function (val, index) {
-  //   //   console.log(circles, "AJH");
-  //   //   setCircles(val);
-  //   // });
-  //   let allCircles = [...circles, newCircle];
-  //   // // update 'circles'
-  //   setCircles(allCircles);
-  // };
-
-  ///////////////// For Add
-  // const getClickCoords = (event) => {
-  //   var e = event.target;
-  //   var dim = e.getBoundingClientRect();
-  //   var x = event.clientX - dim.left;
-  //   var y = event.clientY - dim.top;
-  //   setCoordinates({
-  //     clientX: event.clientX,
-  //     clientY: event.clientY,
-  //     dimLeft: dim.left,
-  //     dimTop: dim.top,
-  //   });
-  //   return [x, y];
-  // };
-
-  // const addCircle = (event) => {
-  //   if (multiImage.length < 3) {
-  //     if (source) {
-  //       // get click coordinates
-  //       setAddImageModal(true);
-
-  //       let [x, y] = getClickCoords(event);
-
-  //       let newCircle = (
-  //         <>
-  //           <circle
-  //             key={circles.length + 1}
-  //             cx={x}
-  //             cy={y}
-  //             r="14"
-  //             // stroke="black"
-  //             // strokeWidth="1"
-  //             fill="white"
-  //           />
-  //           <text
-  //             x={x}
-  //             y={y}
-  //             text-anchor="middle"
-  //             stroke="black"
-  //             // stroke-width="1px"
-  //             alignment-baseline="middle"
-  //           >
-  //             {circles.length + 1}
-  //           </text>
-  //         </>
-  //       );
-  //       // let selectedCircle = { x: x, y: y };
-
-  //       let allCircles = [...circles, newCircle];
-
-  //       // update 'circles'
-  //       setCircles(allCircles);
-  //     } else {
-  //       toast.error("Please select source to add image");
-  //     }
-  //   } else {
-  //     // setImageError("Only 3 image tag allowed")
-  //     toast.error("Only 3 images allowed");
-  //   }
-  // };
-
-  // const clearCircle = () => {
-  //   setCircles([]);
-  //   setImageFiles([]);
-  //   setMultiImage([]);
-  //   setCoordinates("");
-  // };
-
-  // const ClickableSVG = styled.svg`
-  //   background-image: url(${mediaUrl});
-  //   cursor: pointer;
-  //   & * {
-  //     pointer-events: none;
-  //   }
-  // `;
+ 
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
     } else {
@@ -224,6 +108,7 @@ function ImageShop({
   };
 
   const onChangeInputImage = (e) => {
+   
     e.preventDefault();
     const files = multiImage;
     let reader = new FileReader();
@@ -234,8 +119,10 @@ function ImageShop({
         file: file,
         media_url: reader.result,
       });
-      setMultiImage(files);
+     
+   
       setImageFiles(files.reverse());
+    
     };
 
     reader.readAsDataURL(file);
@@ -254,6 +141,7 @@ function ImageShop({
     });
   };
 
+  
   const onSubmitting = async (e) => {
     e.preventDefault();
     setAddImageModal(false);
@@ -265,11 +153,13 @@ function ImageShop({
       var formImage = await convertBase64(imageFiles[0]?.file);
     } else {
       var media_url = imageFiles;
-      let files = multiImage;
-      files.push({
-        media_url: skuData?.image?.src,
-      });
-      setMultiImage(files);
+      
+     // let files = multiImage;
+      // files.push({
+      //   media_url: skuData?.image?.src,
+      // });
+      console.log(imageFiles)
+       //setMultiImage(files);
     }
     var imgid = Math.floor(Math.random() * 100000);
 
@@ -288,9 +178,10 @@ function ImageShop({
       media_url,
       imgid,
     };
-
+    
     let allData = [...submitData, data];
     setSubmitData(allData);
+
 
     imgData(allData);
     setImageFiles([]);
@@ -303,6 +194,7 @@ function ImageShop({
     setProductAmount();
     setProductDesc("");
     setSkuData("");
+
   };
 
   // function dateRangePickerChanger(value, dataString) {
@@ -313,7 +205,7 @@ function ImageShop({
   // }
   const clearImage = () => {
     setImageFiles([]);
-    setMultiImage(multiImage.slice(1));
+   // setMultiImage(multiImage.slice(1));
   };
   const getSku = (sku, skuData) => {
     setProductSku(sku);
@@ -328,6 +220,7 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(skuData[0]._source?.body_html);
     setImageFiles(skuData[0]._source?.image?.src);
+    
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -868,17 +761,17 @@ function ImageShop({
     },
   };
   const addCircle = (e) => {
-    if (multiImage.length < 3) {
+    if (submitData.length < 3) {
       if (source) {
         // get click coordinates
         setAddImageModal(true);
 
-        var pos_x = e.nativeEvent.offsetX;
-        // ? e.offsetX
-        // : e.pageX - imgRef.current.offsetLeft - 770;
-        var pos_y = e.nativeEvent.offsetY;
-        // ? e.offsetY
-        // : e.pageY - imgRef.current.offsetTop - 190;
+        var pos_x = e.offsetX
+          ? e.offsetX
+          : e.pageX - imgRef.current.offsetLeft - 770;
+        var pos_y = e.offsetY
+          ? e.offsetY
+          : e.pageY - imgRef.current.offsetTop - 190;
 
         let pos_x_percent =
           (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
@@ -891,6 +784,7 @@ function ImageShop({
         // ]);
         setCoordinates([{ x: `${pos_x_percent}%`, y: `${pos_y_percent}%` }]);
 
+        
         setCircles([
           ...circles,
           { x: `${pos_x_percent}%`, y: `${pos_y_percent}%` },
@@ -903,9 +797,6 @@ function ImageShop({
       toast.error("Only 3 images allowed");
     }
   };
-
-  console.log(multiImage, "multiImage");
-  console.log(submitData, "submitData");
 
   const imgDelete = (id) => {
     Swal.fire({
@@ -923,7 +814,7 @@ function ImageShop({
         });
         imgData(imgFilter);
 
-        setMultiImage(imgFilter);
+      
         setSubmitData(imgFilter);
 
         let circles = [];
