@@ -197,6 +197,7 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
+
         this.setState({
           product_source: response?.data?.message?.product_source,
         });
@@ -632,7 +633,7 @@ class LinkinBio extends React.Component {
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
-        product_source={this.state.product_source}
+        product_source={this.state?.product_source}
         children={this.state.childrens}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}

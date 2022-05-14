@@ -8,14 +8,14 @@ import { Select } from "antd";
 import numeral from "numeral";
 import { toast } from "react-toastify";
 import AsyncSkuField from "./AsyncSkuField";
+import Swal from "sweetalert2";
 // import InputNumberValidation from "../../../../components/InputValidation/InputNumberValidation";
 // import $, { event } from "jquery";
-import Swal from "sweetalert2";
 
 const { Option } = Select;
 // const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
-
+let gb = [];
 function ImageShop({
   mediaUrl,
   selectPost,
@@ -30,10 +30,12 @@ function ImageShop({
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
+  const [detailImageModal, setDetailImageModal] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
   const [flag, setFlag] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [multiImage, setMultiImage] = useState([]);
+  const [singleDetail, setSingleDetail] = useState();
   // const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   // const [endDate, setEndDate] = useState(
   //   moment().add(1, "years").format("YYYY-MM-DD")
@@ -84,13 +86,14 @@ function ImageShop({
   const childrenAttr = () => {
     let circles = [];
     children.map((item) => {
-      let obj = item?.coordinates[0];
+      let obj = item.coordinates[0];
 
       circles.push(obj);
     });
     setCircles(circles);
-    setMultiImage(children);
     setSubmitData(children);
+
+    setMultiImage(children);
   };
   /////////For Update
   // const UpdategetClickCoords = (wx, wy, left, top) => {
@@ -873,17 +876,19 @@ function ImageShop({
         // get click coordinates
         setAddImageModal(true);
 
-        var pos_x = e.nativeEvent.offsetX;
-        // ? e.offsetX
-        // : e.pageX - imgRef.current.offsetLeft - 770;
-        var pos_y = e.nativeEvent.offsetY;
-        // ? e.offsetY
-        // : e.pageY - imgRef.current.offsetTop - 190;
+        var pos_x = e.offsetX
+          ? e.offsetX
+          : e.pageX - imgRef.current.offsetLeft - 770;
+        var pos_y = e.offsetY
+          ? e.offsetY
+          : e.pageY - imgRef.current.offsetTop - 190;
 
-        let pos_x_percent =
-          (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
-        let pos_y_percent =
-          (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
+        // let pos_x_percent =
+        //   (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
+        // let pos_y_percent =
+        //   (pos_y / parseInt(parentRef.current.style.height, 10)) * 100;
+        let pos_x_percent = (pos_x / parentRef.current.clientWidth) * 100;
+        let pos_y_percent = (pos_y / parentRef.current.clientHeight) * 100;
 
         // setCoordinates([
         //   ...coordinates,
@@ -903,9 +908,6 @@ function ImageShop({
       toast.error("Only 3 images allowed");
     }
   };
-
-  console.log(multiImage, "multiImage");
-  console.log(submitData, "submitData");
 
   const imgDelete = (id) => {
     Swal.fire({
@@ -937,12 +939,108 @@ function ImageShop({
     });
   };
 
+  const ImageDetailModal = (data) => {
+    return (
+      <Modal
+        show={detailImageModal}
+        centered
+        className="add-image-modal"
+        animation={false}
+        backdrop={true}
+        keyboard={false}
+      >
+        <Modal.Header>
+          <Modal.Title>Product Detail</Modal.Title>
+          <button
+            type="button"
+            class="close"
+            onClick={() => {
+              setDetailImageModal(false);
+            }}
+          >
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Close</span>
+          </button>
+        </Modal.Header>
+
+        <div className="mt-3 ml-4 mr-4">
+          <div className=" row">
+            <Col md={4} className="sku-image-box">
+              <div className="fileinput file-profile">
+                <div className="fileinput-new mb-2">
+                  {data?.media_url && (
+                    <img
+                      alt="sku-image"
+                      src={data?.media_url}
+                      className="sku-image"
+                    />
+                  )}
+                </div>
+              </div>
+            </Col>
+
+            <Col md={8}>
+              <div class="row analytic-box">
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product SKU</h5>
+                  <h3 class="count">{data?.ProductSku} </h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product Name </h5>
+                  <h3 class="count">{data?.ProductName} </h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product Url</h5>
+                  <h3 class="count">
+                    {
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={data?.ProductUrl}
+                        class="prod-link"
+                        title={data?.ProductUrl}
+                      >
+                        {data?.ProductUrl}
+                      </a>
+                    }{" "}
+                  </h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product Amount</h5>
+                  <h3 class="count">${data?.productAmount} </h3>
+                </div>
+
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product PromoCode</h5>
+                  <h3 class="count prod-desc">{data?.productPromoCodePromo}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product Discount</h5>
+                  <h3 class="count prod-desc">{data?.productPromoCodeDscs}</h3>
+                </div>
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product Description</h5>
+                  <h3 class="count prod-desc">
+                    {data?.productDesc
+                      ? data?.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+                      : ""}
+                  </h3>
+                </div>
+              </div>
+            </Col>
+          </div>
+        </div>
+      </Modal>
+    );
+  };
+
+  const clickModal = (data) => {
+    setDetailImageModal(true);
+    gb = data;
+  };
+  console.log(multiImage, "multiImage");
   return (
     <>
-      {/* <ClickableSVG onClick={addCircle} className="maparea">
-        {circles}
-      </ClickableSVG> */}
-
       <div
         className="tag-area-main"
         style={style.tagAreaMain}
@@ -969,14 +1067,16 @@ function ImageShop({
       </div>
 
       <div className="row related-images">
-        {submitData.map((item, index) => (
+        {multiImage.map((item, index) => (
           <Col md={4}>
             <div className="inner-image-box">
+              <span className="image_num">{index + 1}</span>
               <img
-                alt="profile-icon"
+                alt="product-image"
                 src={item.media_url}
                 key={index}
-                className="profile-icon"
+                className="img1"
+                onClick={() => clickModal(item)}
               />
               <span className="close" onClick={() => imgDelete(item.imgid)}>
                 <span aria-hidden="true">×</span>
@@ -987,6 +1087,7 @@ function ImageShop({
       </div>
 
       {ImageModal()}
+      {ImageDetailModal(gb)}
     </>
   );
 }
