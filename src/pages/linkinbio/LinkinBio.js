@@ -296,7 +296,8 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
-            if (imgData) {
+            if (imgData?.length) {
+              console.log(imgData,"previousssss")
               await axios
                 .post(`/posts/reserve`, {
                   id: this.state.currentPost.id,

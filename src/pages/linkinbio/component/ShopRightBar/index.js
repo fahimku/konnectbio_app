@@ -231,7 +231,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   };
   const imgData = (data) => {
     imgDataSet = data;
-    console.log(imgDataSet, "dataindex");
+    // console.log(imgDataSet, "dataindex");
   };
 
   // };
