@@ -44,8 +44,8 @@ function ImageShop({
   const [productDesc, setProductDesc] = useState("");
   const [productAmount, setProductAmount] = useState("");
   const [productCategory, setProductCategory] = useState([]);
-  const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
-  const [productPromoCodePromo, setproductPromoCodePromo] = useState();
+  const [productPromoCodeDscs, setProductPromoCodeDscs] = useState("0%");
+  const [productPromoCodePromo, setproductPromoCodePromo] = useState("KB0");
   const [windowX, setWindowX] = useState(0);
   const [windowY, setWindowY] = useState(0);
   const [dmLeft, setDmleft] = useState(0);
@@ -789,7 +789,7 @@ function ImageShop({
 
   const imgDelete = (id) => {
     Swal.fire({
-      title: `Are you sure you want to remove this image?`,
+      title: `Are you sure you want to remove this product?`,
       icon: "warning",
       cancelButtonText: "No",
       showCancelButton: true,
