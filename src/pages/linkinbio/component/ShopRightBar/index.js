@@ -400,6 +400,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     promoLoading={promoLoading}
                     Kbfee={Kbfee}
                     source={source}
+                    category = {props.category}
                     // setSource={setSource}
                   />
                 )}
@@ -441,12 +442,38 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       Copy/Paste Link
                     </a>{" "}
                   </label>
+                 {source == "ecommerce" ?
+                 
                   <InputValidation
                     className=""
                     placeholder="Enter URL"
                     // placeholder="Please Enter Website Address"
                     type="text"
                     id="website"
+                    disabled={source ? true : false}
+                      
+                    name="website"
+                    trigger="change"
+                   
+                    // validationError={{
+                    //   isUrl: "This value should be a valid url.",
+                    // }}
+                    value={props.redirectedUrl}
+                    onChange={(evt) => {
+                      props.callBack(evt);
+                    }}
+                  />
+
+                  :
+
+                  
+                  <InputValidation
+                    className=""
+                    placeholder="Enter URL"
+                    // placeholder="Please Enter Website Address"
+                    type="text"
+                    id="website"
+                    
                     required
                     name="website"
                     trigger="change"
@@ -454,14 +481,15 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       matchRegexp:
                         /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
                     }}
-                    validationError={{
-                      isUrl: "This value should be a valid url.",
-                    }}
+                    // validationError={{
+                    //   isUrl: "This value should be a valid url.",
+                    // }}
                     value={props.redirectedUrl}
                     onChange={(evt) => {
                       props.callBack(evt);
                     }}
                   />
+}
                 </div>
 
                 <div className="select-categories mt-3">
@@ -564,6 +592,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   <></>
                 ) : (
                   <div className="row">
+                   
+                   
+                 
                     <div className="col-md-3 mt-3">
                       <label>PromoCode</label>
 
@@ -585,7 +616,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         showSearch
                         allowClear={false}
                         loading={promoLoading ? true : false}
-                        disabled={promoLoading ? true : false}
+                        disabled={source ? true : false}
                       >
                         {promoList.map((customer, key) => {
                           return (
@@ -596,12 +627,16 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         })}
                       </Select>
                     </div>
+                     
+
+                    
 
                     <div className="col-md-3 mt-3">
                       <label>Discount</label>
                       <div className="promo_discount form-control">
                         {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
                         {promoCodeDscs ? promoCodeDscs : 0}
+                        
                       </div>
                     </div>
                     <div className="col-md-6 mt-3">
@@ -617,6 +652,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       <InputValidation
                         className=""
                         placeholder="Amount"
+                        disabled={source ? true : false}
                         // placeholder="Please Enter Website Address"
                         type="number"
                         id="website"
@@ -643,11 +679,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         id="website"
                         name="website"
                         trigger="change"
+                        disabled={source ? true : false}
                         value={description}
                         onChange={(e) => changeDescription(e)}
                       />
                     </div>
                   </div>
+
+
+
+
+
+
+
+
+
                 )}
 
                 <div className="edit_button_main pane-button">
