@@ -22,6 +22,7 @@ function ImageShop({
   Kbfee,
   imgData,
   children,
+  category,
   // setSource,
   source,
 }) {
@@ -67,12 +68,15 @@ function ImageShop({
     setProductSku("");
   }, [selectPost]);
 
+
+  console.log(category,"category");
+  
   useEffect(() => {
-    if (circles?.length) {
-    } else {
-      //   UpdateaddCircle();
+    
+    if (category?.length >= 0) {
+      setProductCategory(category)
     }
-  }, [flag]);
+  }, [category]);
 
   useEffect(() => {
     if (children?.length) {
@@ -709,6 +713,9 @@ function ImageShop({
                                 </div>
                               </div>
                             </div>
+
+
+                            
                             <div className="mb-3">
                               {imageLoading ? (
                                 <Button>
@@ -748,6 +755,18 @@ function ImageShop({
       // backgroundColor: "lightblue",
     },
   };
+
+  const alertImg = () => {
+
+    Swal.fire({
+      title: `Please Select Category `,
+      icon: "warning",
+      
+      confirmButtonColor: "#010b40",
+     
+      confirmButtonText: `Ok`,
+    })
+  }
   const addCircle = (e) => {
     if (submitData.length < 3) {
       if (source) {
@@ -923,13 +942,28 @@ function ImageShop({
         ref={parentRef}
         id="tagImg"
       >
+        {category?.length ===0 ?
         <img
+        
+          onClick={(e) => alertImg(e)}
+          ref={imgRef}
+          src={mediaUrl}
+          alt="media-image"
+          style={{ width: "100%", height: "100%" }}
+        />
+        : 
+        <img
+        
           onClick={(e) => addCircle(e)}
           ref={imgRef}
           src={mediaUrl}
           alt="media-image"
           // style={{ width: "100%", height: "100%" }}
         />
+  }
+        {
+          
+        }
         {circles &&
           circles.map((item, i) => (
             <div

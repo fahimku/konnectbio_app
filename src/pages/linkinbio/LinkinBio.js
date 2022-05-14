@@ -197,7 +197,6 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
-
         this.setState({
           product_source: response?.data?.message?.product_source,
         });
@@ -240,6 +239,8 @@ class LinkinBio extends React.Component {
   };
 
   savePost = (i, Subpromo, SubDsc, description, amount, imgData, source) => {
+  
+
     let newRedirectedUrl;
     if (this.state.redirectedUrl.includes("http://")) {
       newRedirectedUrl = this.state.redirectedUrl;
@@ -249,7 +250,7 @@ class LinkinBio extends React.Component {
       newRedirectedUrl = "http://" + this.state.redirectedUrl;
     }
 
-    if (this.state.redirectedUrl) {
+    
       this.setState(
         (previousState) => ({
           currentPost: previousState.singlePost,
@@ -296,8 +297,9 @@ class LinkinBio extends React.Component {
                 toast.error(err);
               });
           } else {
+            if (this.state.category.length) {
             if (imgData?.length) {
-              console.log(imgData, "previousssss");
+              console.log(imgData,"previousssss")
               await axios
                 .post(`/posts/reserve`, {
                   id: this.state.currentPost.id,
@@ -347,10 +349,15 @@ class LinkinBio extends React.Component {
               toast.error("please add atleast 1 tag image");
               this.setState({ loading: false });
             }
-          }
+          
+        } else {
+          toast.error("please Select Category");
+          this.setState({ loading: false });
+        }
+      }
         }
       );
-    }
+   
   };
 
   updatePost = async (
@@ -634,7 +641,7 @@ class LinkinBio extends React.Component {
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
-        product_source={this.state?.product_source}
+        product_source={this.state.product_source}
         children={this.state.childrens}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
@@ -684,6 +691,7 @@ class LinkinBio extends React.Component {
   };
 
   render() {
+   
     return (
       <div className="linkin-bio">
         <Row className="app_main_cont_ift main-container">
@@ -740,7 +748,35 @@ class LinkinBio extends React.Component {
                 </Col>
               </Row>
             ) : (
-              <> {this.shopRightBar()}</>
+              <>
+                {this.state.ShopifyConnFound == false &&
+                this.state.selectPost ? (
+                  <div className="container-fluid">
+                    <div class="coming_iner">
+                      <h2>Connect To Shopify</h2>
+                      {/* <p className="text-muted">
+              {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
+                ? "This option is only available for Influencer Plus."
+                : "This option is only available for Brand."}
+            </p> */}
+                      <button
+                        class="btn btn-primary"
+                        onClick={() => history.push("/app/account/ecommerce")}
+                      >
+                        Shopify Setup
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Row className="linked_edit_box">
+                      <Col xs="12" className="p-5">
+                        {this.shopRightBar()}
+                      </Col>
+                    </Row>
+                  </>
+                )}
+              </>
             )}
           </Col>
         </Row>
