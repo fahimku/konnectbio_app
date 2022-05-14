@@ -388,43 +388,55 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type !== "VIDEO" && (
+                {props.singlePost.media_type !== "VIDEO" &&
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
-                  <ImageShop
-                    imgData={imgData}
-                    children={props.children}
-                    mediaUrl={props.singlePost.media_url}
-                    selectPost={props.singlePost.media_url}
-                    categoryList={props.categories}
-                    promoList={promoList}
-                    promoLoading={promoLoading}
-                    Kbfee={Kbfee}
-                    source={source}
-                    // setSource={setSource}
-                  />
-                )}
+                  (userInfo?.account_type !== "influencer" ? (
+                    <ImageShop
+                      imgData={imgData}
+                      children={props.children}
+                      mediaUrl={props.singlePost.media_url}
+                      selectPost={props.singlePost.media_url}
+                      categoryList={props.categories}
+                      promoList={promoList}
+                      promoLoading={promoLoading}
+                      Kbfee={Kbfee}
+                      source={source}
+                      // setSource={setSource}
+                    />
+                  ) : (
+                    <img
+                      src={`${props.singlePost.media_url}`}
+                      alt="media_url"
+                    />
+                  ))}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
               </div>
               <div className="image-edit-links">
-                <div className="">
-                  <label>Select Source</label>
-                  <Select
-                    key={Date.now()}
-                    value={source}
-                    style={{ width: "100%" }}
-                    placeholder="Select Source"
-                    // onChange={(value) => setSource(value)}
-                    className="source_cap"
-                  >
-                    <Option className="source_cap" value={source}>
-                      {source}
-                    </Option>
-                    {/* <Option value="other">Others</Option> */}
-                  </Select>
-                </div>
-                <div className="mt-3">
+                {userInfo?.account_type !== "influencer" ? (
+                  <div className="">
+                    <label>Select Source</label>
+                    <Select
+                      key={Date.now()}
+                      value={source}
+                      style={{ width: "100%" }}
+                      placeholder="Select Source"
+                      // onChange={(value) => setSource(value)}
+                      className="source_cap"
+                    >
+                      <Option className="source_cap" value={source}>
+                        {source}
+                      </Option>
+                      {/* <Option value="other">Others</Option> */}
+                    </Select>
+                  </div>
+                ) : null}
+                <div
+                  className={
+                    userInfo?.account_type === "influencer" ? "" : "mt-3"
+                  }
+                >
                   <label>
                     URL/AFFILIATE LINK -{" "}
                     <a
