@@ -741,10 +741,10 @@ function ImageShop({
   };
   const style = {
     tagAreaMain: {
-      width: "290px",
-      height: "338px",
+      // width: "290px",
+      // height: "338px",
       position: "relative",
-      maxWidth: "100%",
+      // maxWidth: "100%",
       // backgroundColor: "lightblue",
     },
   };
@@ -928,7 +928,7 @@ function ImageShop({
           ref={imgRef}
           src={mediaUrl}
           alt="media-image"
-          style={{ width: "100%", height: "100%" }}
+          // style={{ width: "100%", height: "100%" }}
         />
         {circles &&
           circles.map((item, i) => (
