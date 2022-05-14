@@ -140,46 +140,46 @@ class Sidebar extends React.Component {
                 />
               ) : null}
 
-              {userInfo?.email === "smasadadm@gmail.com" ?
-              <></>
-              :
-              <> 
-              {PermissionHelper.validate(["affiliate_access"]) ? (
-                <LinksGroup
-                  id="affiliate"
-                  className="sidebar-nav-links"
-                  header="Campaigns"
-                  link="/app/campaign"
-                  isHeader
-                  iconElement={
-                    <span className="glyphicon glyphicon-bullhorn"></span>
-                  }
-                  // label="Awesome"
-                  iconName="flaticon-users"
-                  labelColor="info"
-                />
-              ) : null}
-              </>
-             }
-                {userInfo?.email === "smasadadm@gmail.com" ?
-                
+              {userInfo?.email === "smasadadm@gmail.com" ? (
+                <></>
+              ) : (
                 <>
-                <LinksGroup
-                id="shopify-tracker"
-                className="sidebar-nav-links"
-                header="Shopify Tracker"
-                link="/app/shopifytracker"
-                isHeader
-                iconElement={ <span className="glyphicon glyphicon-th-list"></span>}
-                // label="Awesome"
-                iconName="flaticon-users"
-                labelColor="info"
-              />
-             </>
-             : 
-             <></>
-            }
-
+                  {PermissionHelper.validate(["affiliate_access"]) ? (
+                    <LinksGroup
+                      id="affiliate"
+                      className="sidebar-nav-links"
+                      header="Campaigns"
+                      link="/app/campaign"
+                      isHeader
+                      iconElement={
+                        <span className="glyphicon glyphicon-bullhorn"></span>
+                      }
+                      // label="Awesome"
+                      iconName="flaticon-users"
+                      labelColor="info"
+                    />
+                  ) : null}
+                </>
+              )}
+              {userInfo?.email === "smasadadm@gmail.com" ? (
+                <>
+                  <LinksGroup
+                    id="shopify-tracker"
+                    className="sidebar-nav-links"
+                    header="Shopify Tracker"
+                    link="/app/shopifytracker"
+                    isHeader
+                    iconElement={
+                      <span className="glyphicon glyphicon-th-list"></span>
+                    }
+                    // label="Awesome"
+                    iconName="flaticon-users"
+                    labelColor="info"
+                  />
+                </>
+              ) : (
+                <></>
+              )}
 
               <LinksGroup
                 id="manage-links"
@@ -337,71 +337,68 @@ class Sidebar extends React.Component {
                   link="/admin"
                   index="admin"
                   // exact={false}
-                  
+
                   childrenLinks={
                     userInfo?.package?.package_id === "61d695e9bccdaf69f46efc66"
-                      ? 
-                      userInfo?.email === "smasadadm@gmail.com"
-                      ?
-                      [
-                        {
-                          header: "Basic Setup",
-                          link: "/app/account/profile",
-                        },
-                        {
-                          header: "Category Setup",
-                          link: "/app/account/categories",
-                        },
-                        {
-                          header: "Brand Setup",
-                          link: "/app/account/affiliate",
-                        },
-                        
-                        {
-                          header: "Connection Setup",
-                          link: "/app/account/setup",
-                        },
-                        {
-                          header: "Subscription Setup",
-                          link: "/app/subcription/setup",
-                        },
-                        {
-                          header: "Delete Account",
-                          link: "/app/account/delete",
-                        },
-                      ]
-                      :
-                      [
-                          {
-                            header: "Basic Setup",
-                            link: "/app/account/profile",
-                          },
-                          {
-                            header: "Category Setup",
-                            link: "/app/account/categories",
-                          },
-                          {
-                            header: "Brand Setup",
-                            link: "/app/account/affiliate",
-                          },
-                          
-                          {
-                            header: "Ecommerce Setup",
-                            link: "/app/account/ecommerce",
-                          },
-                          {
-                            header: "Connection Setup",
-                            link: "/app/account/setup",
-                          },
-                          {
-                            header: "Subscription Setup",
-                            link: "/app/subcription/setup",
-                          },
-                          {
-                            header: "Delete Account",
-                            link: "/app/account/delete",
-                          },
-                        ]
+                      ? userInfo?.email === "smasadadm@gmail.com"
+                        ? [
+                            {
+                              header: "Basic Setup",
+                              link: "/app/account/profile",
+                            },
+                            {
+                              header: "Category Setup",
+                              link: "/app/account/categories",
+                            },
+                            {
+                              header: "Brand Setup",
+                              link: "/app/account/affiliate",
+                            },
+
+                            {
+                              header: "Connection Setup",
+                              link: "/app/account/setup",
+                            },
+                            {
+                              header: "Subscription Setup",
+                              link: "/app/subcription/setup",
+                            },
+                            {
+                              header: "Delete Account",
+                              link: "/app/account/delete",
+                            },
+                          ]
+                        : [
+                            {
+                              header: "Basic Setup",
+                              link: "/app/account/profile",
+                            },
+                            {
+                              header: "Category Setup",
+                              link: "/app/account/categories",
+                            },
+                            {
+                              header: "Brand Setup",
+                              link: "/app/account/affiliate",
+                            },
+
+                            {
+                              header: "Ecommerce Setup",
+                              link: "/app/account/ecommerce",
+                            },
+                            {
+                              header: "Connection Setup",
+                              link: "/app/account/setup",
+                            },
+                            {
+                              header: "Subscription Setup",
+                              link: "/app/subcription/setup",
+                            },
+                            {
+                              header: "Delete Account",
+                              link: "/app/account/delete",
+                            },
+                          ]
                       : [
                           {
                             header: "Basic Setup",
