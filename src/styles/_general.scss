@@ -1597,6 +1597,11 @@ code.sm-color {
   animation: expand 0.1s ease;
   cursor: pointer;
 }
+.img-error {
+  color: #fd5f00;
+  position: relative;
+  top: 22px;
+}
 @-webkit-keyframes expand {
   0% {
     top: 0px;

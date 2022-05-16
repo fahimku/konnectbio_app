@@ -56,7 +56,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState(props.product_source);
   useEffect(() => {
     fetchPromo();
   }, []);
@@ -119,9 +119,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     setPromo(props.promo);
   }, [props.promo]);
 
-  // useEffect(() => {
-  //   setSource(props.product_source);
-  // }, [props.product_source]);
+  useEffect(() => {
+    setSource(props.product_source);
+  }, [props.product_source]);
 
   useEffect(() => {
     setAmount(props.amount);
@@ -400,7 +400,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       promoList={promoList}
                       promoLoading={promoLoading}
                       Kbfee={Kbfee}
-                      category = {props.category}
+                      category={props.category}
                       source={source}
                       // setSource={setSource}
                     />
@@ -423,12 +423,14 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       value={source}
                       style={{ width: "100%" }}
                       placeholder="Select Source"
-                      // onChange={(value) => setSource(value)}
+                      onChange={(value) => setSource(value)}
                       className="source_cap"
                     >
-                      <Option className="source_cap" value={source}>
+                      {/* <Option className="source_cap" value={source}>
                         {source}
-                      </Option>
+                      </Option> */}
+                      <Option value="ecommerce">Ecommerce</Option>
+                      <Option value="other">Other</Option>
                       {/* <Option value="other">Others</Option> */}
                     </Select>
                   </div>
@@ -454,8 +456,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       Copy/Paste Link
                     </a>{" "}
                   </label>
-                 {source == "ecommerce" ?
-                 
                   <InputValidation
                     className=""
                     placeholder="Enter URL"
@@ -463,10 +463,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     type="text"
                     id="website"
                     disabled={source ? true : false}
-                      
                     name="website"
                     trigger="change"
-                   
                     // validationError={{
                     //   isUrl: "This value should be a valid url.",
                     // }}
@@ -475,33 +473,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       props.callBack(evt);
                     }}
                   />
-
-                  :
-
-                  
-                  <InputValidation
-                    className=""
-                    placeholder="Enter URL"
-                    // placeholder="Please Enter Website Address"
-                    type="text"
-                    id="website"
-                    
-                    required
-                    name="website"
-                    trigger="change"
-                    validations={{
-                      matchRegexp:
-                        /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
-                    }}
-                    // validationError={{
-                    //   isUrl: "This value should be a valid url.",
-                    // }}
-                    value={props.redirectedUrl}
-                    onChange={(evt) => {
-                      props.callBack(evt);
-                    }}
-                  />
-}
                 </div>
 
                 <div className="select-categories mt-3">

@@ -239,14 +239,14 @@ class LinkinBio extends React.Component {
   };
 
   savePost = (i, Subpromo, SubDsc, description, amount, imgData, source) => {
-    // let newRedirectedUrl;
-    // if (this.state.redirectedUrl.includes("http://")) {
-    //   newRedirectedUrl = this.state.redirectedUrl;
-    // } else if (this.state.redirectedUrl.includes("https://")) {
-    //   newRedirectedUrl = this.state.redirectedUrl;
-    // } else {
-    //   newRedirectedUrl = "http://" + this.state.redirectedUrl;
-    // }
+    let newRedirectedUrl;
+    if (this.state.redirectedUrl.includes("http://")) {
+      newRedirectedUrl = this.state.redirectedUrl;
+    } else if (this.state.redirectedUrl.includes("https://")) {
+      newRedirectedUrl = this.state.redirectedUrl;
+    } else {
+      newRedirectedUrl = "http://" + this.state.redirectedUrl;
+    }
 
     this.setState(
       (previousState) => ({
@@ -262,7 +262,7 @@ class LinkinBio extends React.Component {
               media_url: this.state.currentPost.media_url,
               media_type: this.state.currentPost.media_type,
               timestamp: this.state.currentPost.timestamp,
-              redirected_url: this.state.redirectedUrl,
+              redirected_url: newRedirectedUrl,
               username: this.state.currentPost.username,
               categories: this.state.category,
               sub_categories: this.state.subCategory,
@@ -296,7 +296,6 @@ class LinkinBio extends React.Component {
         } else {
           if (this.state.category.length) {
             if (imgData?.length) {
-              console.log(imgData, "previousssss");
               await axios
                 .post(`/posts/reserve`, {
                   id: this.state.currentPost.id,
@@ -304,7 +303,7 @@ class LinkinBio extends React.Component {
                   media_url: this.state.currentPost.media_url,
                   media_type: this.state.currentPost.media_type,
                   timestamp: this.state.currentPost.timestamp,
-                  redirected_url: this.state.redirectedUrl,
+                  redirected_url: newRedirectedUrl,
                   username: this.state.currentPost.username,
                   categories: this.state.category,
                   sub_categories: this.state.subCategory,
