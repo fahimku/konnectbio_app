@@ -57,6 +57,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
   const [source, setSource] = useState(props.product_source);
+
+
   useEffect(() => {
     fetchPromo();
   }, []);
@@ -115,13 +117,24 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     setDsc(props.discount);
   }, [props.discount]);
 
+
+  useEffect(() => {
+    if(props.category.length ==0){
+      setSource("ecommerce")
+    }
+    
+  }, [props.category]);
+
+
   useEffect(() => {
     setPromo(props.promo);
   }, [props.promo]);
 
+
   useEffect(() => {
     setSource(props.product_source);
   }, [props.product_source]);
+
 
   useEffect(() => {
     setAmount(props.amount);
