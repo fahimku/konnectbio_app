@@ -68,13 +68,11 @@ function ImageShop({
     setProductSku("");
   }, [selectPost]);
 
+  console.log(category, "category");
 
-  console.log(category,"category");
-  
   useEffect(() => {
-    
     if (category?.length >= 0) {
-      setProductCategory(category)
+      setProductCategory(category);
     }
   }, [category]);
 
@@ -181,9 +179,9 @@ function ImageShop({
     setImageFiles([]);
     setProductSku("");
     setProductName("");
-    setProductCategory([]);
-    setproductPromoCodePromo("");
-    setProductPromoCodeDscs("");
+    // setProductCategory([]);
+    // setproductPromoCodePromo("");
+    // setProductPromoCodeDscs("");
     setProductUrl("");
     setProductAmount();
     setProductDesc("");
@@ -208,10 +206,13 @@ function ImageShop({
       skuData[0]._source?.domain +
       "/products/" +
       skuData[0]._source?.handle;
+    const description = skuData[0]._source?.body_html
+      ? skuData[0]._source?.body_html.replace(/<\/?[^>]+(>|$)/g, "")
+      : "";
     setProductName(skuData[0]._source?.title);
     setProductAmount(skuData[0]._source?.variants[0]?.price);
     setProductUrl(productUrl);
-    setProductDesc(skuData[0]._source?.body_html);
+    setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
   };
   const copyToClipboard = (url) => {
@@ -714,8 +715,6 @@ function ImageShop({
                               </div>
                             </div>
 
-
-                            
                             <div className="mb-3">
                               {imageLoading ? (
                                 <Button>
@@ -757,16 +756,15 @@ function ImageShop({
   };
 
   const alertImg = () => {
-
     Swal.fire({
       title: `Please Select Category `,
       icon: "warning",
-      
+
       confirmButtonColor: "#010b40",
-     
+
       confirmButtonText: `Ok`,
-    })
-  }
+    });
+  };
   const addCircle = (e) => {
     if (submitData.length < 3) {
       if (source) {
@@ -942,28 +940,24 @@ function ImageShop({
         ref={parentRef}
         id="tagImg"
       >
-        {category?.length ===0 ?
-        <img
-        
-          onClick={(e) => alertImg(e)}
-          ref={imgRef}
-          src={mediaUrl}
-          alt="media-image"
-          style={{ width: "100%", height: "100%" }}
-        />
-        : 
-        <img
-        
-          onClick={(e) => addCircle(e)}
-          ref={imgRef}
-          src={mediaUrl}
-          alt="media-image"
-          // style={{ width: "100%", height: "100%" }}
-        />
-  }
-        {
-          
-        }
+        {category?.length === 0 ? (
+          <img
+            onClick={(e) => alertImg(e)}
+            ref={imgRef}
+            src={mediaUrl}
+            alt="media-image"
+            style={{ width: "100%", height: "100%" }}
+          />
+        ) : (
+          <img
+            onClick={(e) => addCircle(e)}
+            ref={imgRef}
+            src={mediaUrl}
+            alt="media-image"
+            // style={{ width: "100%", height: "100%" }}
+          />
+        )}
+        {}
         {circles &&
           circles.map((item, i) => (
             <div
@@ -990,7 +984,11 @@ function ImageShop({
                 className="img1"
                 onClick={() => clickModal(item)}
               />
-              <span className="close" onClick={() => imgDelete(item.imgid)}>
+              <span
+                className="close"
+                title="Remove"
+                onClick={() => imgDelete(item.imgid)}
+              >
                 <span aria-hidden="true">×</span>
               </span>
             </div>
