@@ -237,7 +237,7 @@ function ImageShop({
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>Add Image</Modal.Title>
+          <Modal.Title>Add Product</Modal.Title>
           <button
             type="button"
             class="close"
