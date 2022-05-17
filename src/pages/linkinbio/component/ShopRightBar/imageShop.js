@@ -178,8 +178,8 @@ function ImageShop({
       setProductSku("");
       setProductName("");
       // setProductCategory([]);
-      // setproductPromoCodePromo("");
-      // setProductPromoCodeDscs("");
+      setproductPromoCodePromo("KB0");
+      setProductPromoCodeDscs("0%");
       setProductUrl("");
       setProductAmount();
       setProductDesc("");
@@ -963,6 +963,7 @@ function ImageShop({
     setDetailImageModal(true);
     gb = data;
   };
+  console.log(submitData, "submitData");
 
   return (
     <>
