@@ -321,6 +321,7 @@ class LinkinBio extends React.Component {
                   description: description,
                   amount: amount,
                   children: imgData,
+                  
                 })
                 .then((response) => {
                   this.setState({ loading: false });
@@ -366,7 +367,8 @@ class LinkinBio extends React.Component {
     description,
     amount,
     imgData,
-    source
+    source,
+    
   ) => {
     let newCategory;
     let oldCategory = this.state.category;
@@ -421,6 +423,7 @@ class LinkinBio extends React.Component {
             amount: amount,
             product_source: source,
             children: imgData,
+            
           })
           .then((response) => {
             this.setState({ loading: false });

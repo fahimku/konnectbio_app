@@ -23,6 +23,7 @@ function ImageShop({
   imgData,
   children,
   category,
+  skuOther,
   // setSource,
   source,
 }) {
@@ -48,6 +49,7 @@ function ImageShop({
   const [submitData, setSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
+  const [skuDataOther, setOtherSku] = useState("");
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
 
@@ -157,6 +159,7 @@ function ImageShop({
       let data = {
         file: formImage,
         ProductSku,
+        skuDataOther,
         ProductName,
         productAmount,
         productDesc,
@@ -177,6 +180,7 @@ function ImageShop({
       setImageFiles([]);
       setProductSku("");
       setProductName("");
+      setOtherSku("");
       // setProductCategory([]);
       // setproductPromoCodePromo("");
       // setProductPromoCodeDscs("");
@@ -250,6 +254,9 @@ function ImageShop({
 
               setCircles(circles.slice(0, -1));
               setProductName("");
+              setOtherSku("");
+              setproductPromoCodePromo("KB0");
+              setProductPromoCodeDscs("0%");
               setProductAmount("");
               setProductUrl("");
               setProductDesc("");
@@ -401,11 +408,26 @@ function ImageShop({
                     {source === "other" ? (
                       <>
                         <div className="row mb-3">
+                         
+                        <div className="col-md-12 ">
+                            <label>Enter SKU</label>
+                            <input
+                              type="number"
+                              name="product_name"
+                              placeholder="Enter Sku"
+                              onInput={(e) => setOtherSku(e.target.value)}
+                              value={skuDataOther}
+                              className="form-control"
+                              required
+                              autoComplete="off"
+                            />
+                          </div>
+                        
                           <div className="col-md-12 ">
                             <label>Enter Product Name</label>
                             <input
                               type="text"
-                              name="product_name"
+                              name="sku"
                               placeholder="Enter Product Name"
                               onInput={(e) => setProductName(e.target.value)}
                               value={ProductName}
@@ -933,6 +955,11 @@ function ImageShop({
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Amount</h5>
                   <h3 class="count">${data?.productAmount} </h3>
+                </div>
+
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product SKU</h5>
+                  <h3 class="count">{data?.skuDataOther} </h3>
                 </div>
 
                 <div class="col-12 count-box">
