@@ -80,6 +80,7 @@ class LinkinBio extends React.Component {
       promoCodeVal: "",
       promoData: "",
       product_source: "",
+      singleLoading: false,
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -185,9 +186,11 @@ class LinkinBio extends React.Component {
   }
   // Fetch Single Post
   fetchSinglePost = async (media_id) => {
+    this.setState({ singleLoading: true });
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+        this.setState({ singleLoading: false });
         if (userInfo?.account_type == "influencer") {
         } else {
           this.setState({ subdescription: response.data.message.description });
@@ -212,6 +215,7 @@ class LinkinBio extends React.Component {
         );
       })
       .catch((err) => {
+        this.setState({ singleLoading: false });
         this.setState({
           category: [],
         });
@@ -673,6 +677,7 @@ class LinkinBio extends React.Component {
         updatedDate={this.state.updatedAt}
         promoData={this.state.promoData}
         userInfo={userInfo}
+        singleLoading={this.state.singleLoading}
       ></ShopRightBar>
     );
   };

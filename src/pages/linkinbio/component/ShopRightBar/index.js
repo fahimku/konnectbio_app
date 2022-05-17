@@ -237,7 +237,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   };
   const imgData = (data) => {
     imgDataSet = data;
-    // console.log(imgDataSet, "dataindex");
   };
 
   // };
@@ -388,7 +387,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type !== "VIDEO" &&
+                {!props.singleLoading ? (
+                  props.singlePost.media_type !== "VIDEO" &&
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
                   (userInfo?.account_type !== "influencer" ? (
                     <ImageShop
@@ -409,7 +409,10 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       src={`${props.singlePost.media_url}`}
                       alt="media_url"
                     />
-                  ))}
+                  ))
+                ) : (
+                  <Loader />
+                )}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
@@ -425,12 +428,25 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       placeholder="Select Source"
                       onChange={(value) => setSource(value)}
                       className="source_cap"
+                      disabled={
+                        props.singlePost.linked || props.updatePage
+                          ? true
+                          : false
+                      }
                     >
                       {/* <Option className="source_cap" value={source}>
                         {source}
                       </Option> */}
-                      <Option value="ecommerce">Ecommerce</Option>
-                      <Option value="other">Other</Option>
+                      {props.singlePost.linked || props.updatePage ? (
+                        <Option className="source_cap" value={source}>
+                          {source}
+                        </Option>
+                      ) : (
+                        <>
+                          <Option value="ecommerce">Ecommerce</Option>
+                          <Option value="other">Other</Option>
+                        </>
+                      )}
                       {/* <Option value="other">Others</Option> */}
                     </Select>
                   </div>
@@ -462,7 +478,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     // placeholder="Please Enter Website Address"
                     type="text"
                     id="website"
-                    disabled={source ? true : false}
+                    disabled={
+                      props.singlePost.linked || props.updatePage ? true : false
+                    }
                     name="website"
                     trigger="change"
                     // validationError={{
@@ -496,7 +514,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         .toLowerCase()
                         .indexOf(input.toLowerCase()) >= 0
                     }
-                    disabled={PermissionHelper.categoryCheck() ? true : false}
+                    disabled={
+                      PermissionHelper.categoryCheck() || props.singleLoading
+                        ? true
+                        : false
+                    }
                   >
                     {props.categories.map(({ value, label }, i) => (
                       <Option value={value}>{label}</Option>

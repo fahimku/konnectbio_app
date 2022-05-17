@@ -1602,6 +1602,10 @@ code.sm-color {
   position: relative;
   top: 22px;
 }
+.source_cap.ant-select-disabled.ant-select:not(.ant-select-customize-input)
+  .ant-select-selector {
+  color: initial;
+}
 @-webkit-keyframes expand {
   0% {
     top: 0px;

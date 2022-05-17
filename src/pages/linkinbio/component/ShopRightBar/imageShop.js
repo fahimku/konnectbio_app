@@ -388,7 +388,7 @@ function ImageShop({
                         <input
                           type="text"
                           name="url"
-                          placeholder="Enter Url"
+                          placeholder="Enter URL"
                           onInput={(e) => setProductUrl(e.target.value)}
                           value={ProductUrl}
                           className="form-control"
