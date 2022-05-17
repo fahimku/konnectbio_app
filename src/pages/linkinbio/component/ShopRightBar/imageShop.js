@@ -960,7 +960,8 @@ function ImageShop({
   };
 
   const clickModal = (data) => {
-    setDetailImageModal(true);
+    // setDetailImageModal(true);
+    setAddImageModal(true);
     gb = data;
   };
 
@@ -1038,7 +1039,7 @@ function ImageShop({
         ))}
       </div>
 
-      {ImageModal()}
+      {ImageModal(gb)}
       {ImageDetailModal(gb)}
     </>
   );
