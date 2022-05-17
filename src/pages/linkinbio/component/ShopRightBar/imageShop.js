@@ -339,7 +339,7 @@ function ImageShop({
                 ))}
 
               <Col md={source ? 8 : 12}>
-                <div className="row mb-3">
+                {/* <div className="row mb-3">
                   <div className="col-md-12">
                     <label>Source</label>
                     <Select
@@ -354,10 +354,10 @@ function ImageShop({
                       <Option className="source_cap" value={source}>
                         {source}
                       </Option>
-                      {/* <Option value="other">Others</Option> */}
+                      {/* <Option value="other">Others</Option> 
                     </Select>
                   </div>
-                </div>
+                </div> */}
                 {source && (
                   <>
                     {source === "ecommerce" ? (
@@ -556,7 +556,7 @@ function ImageShop({
                               // onClick={onSubmitting}
                               // disabled={this.state.imageFiles[0] === undefined ? true : false}
                             >
-                              Add Image
+                              Save
                             </Button>
                           )}
                         </div>
