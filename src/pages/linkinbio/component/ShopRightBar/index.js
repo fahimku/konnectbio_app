@@ -58,7 +58,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoLoading, setPromoLoading] = useState(false);
   const [source, setSource] = useState(props.product_source);
 
-
   useEffect(() => {
     fetchPromo();
   }, []);
@@ -117,24 +116,23 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
     setDsc(props.discount);
   }, [props.discount]);
 
-
   useEffect(() => {
-    if(props.category.length ==0){
-      setSource("ecommerce")
+    if (props.category.length == 0) {
+      setSource("ecommerce");
     }
-    
   }, [props.category]);
-
 
   useEffect(() => {
     setPromo(props.promo);
   }, [props.promo]);
 
-
   useEffect(() => {
-    setSource(props.product_source);
-  }, [props.product_source]);
-
+    if (props.singlePost.linked) {
+      setSource(props.product_source);
+    } else {
+      setSource("ecommerce");
+    }
+  }, [props.product_source, props.singlePost]);
 
   useEffect(() => {
     setAmount(props.amount);
@@ -464,7 +462,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     </Select>
                   </div>
                 ) : null}
-                <div
+                {/* <div
                   className={
                     userInfo?.account_type === "influencer" ? "" : "mt-3"
                   }
@@ -504,7 +502,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       props.callBack(evt);
                     }}
                   />
-                </div>
+                </div> */}
 
                 <div className="select-categories mt-3">
                   <label>Select Category</label>
