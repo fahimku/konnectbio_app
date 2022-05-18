@@ -357,7 +357,11 @@ function ImageShop({
               setSkuData("");
               // setProductSource("ecommerce");
               setImageError(false);
-              //setCircles(circles.slice(0, -1));
+              {updateProduct === true ?
+                setSkuData("")
+                :
+              setCircles(circles.slice(0, -1));
+              }
             }}
           >
             <span aria-hidden="true">×</span>
@@ -425,7 +429,8 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {skuData?.image?.src && (
+                        {updateProduct === true ?
+                        
                         <img
                           alt="sku-image"
                           src={
@@ -437,7 +442,24 @@ function ImageShop({
                           // style={{ width: "100px", height: "100px" }}
                           className="sku-image"
                         />
-                        )}
+                        :
+                        <>
+                        {skuData?.image?.src && ( 
+                        
+                        <img
+                          alt="sku-image"
+                          src={
+                            skuData?.image?.src
+                              ? skuData?.image?.src
+                              : skuData.media_url
+                          }
+                          // key={`img-id-${idx.toString()}`}
+                          // style={{ width: "100px", height: "100px" }}
+                          className="sku-image"
+                        />
+                         )}
+                         </> 
+                        }
                       </div>
                     </div>
                   </Col>
@@ -1089,6 +1111,7 @@ function ImageShop({
 
   const clickModal = (data) => {
     // setDetailImageModal(true);
+    console.log(data,"uzairrrr")
     if(source === "other"){
       setDetailImageModal(true);
       gb = data;
@@ -1113,6 +1136,8 @@ function ImageShop({
     setProductUrl(gb.ProductUrl);
     setProductDesc(description);
     setImageFiles(gb.media_url);
+    setProductPromoCodeDscs(gb.productPromoCodeDscs);
+    setproductPromoCodePromo(gb.productPromoCodePromo);
     }
   };
   return (
