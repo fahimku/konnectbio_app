@@ -183,8 +183,8 @@ function ImageShop({
       setProductName("");
       setOtherSku("");
       // setProductCategory([]);
-      // setproductPromoCodePromo("");
-      // setProductPromoCodeDscs("");
+      setproductPromoCodePromo("KB0");
+      setProductPromoCodeDscs("0%");
       setProductUrl("");
       setProductAmount();
       setProductDesc("");
@@ -996,8 +996,6 @@ function ImageShop({
     // setDetailImageModal(true);
     setAddImageModal(true);
     gb = data;
-
-    console.log(gb, "gb");
     setProductSku(gb.ProductSku);
     setSkuData(gb);
     // const productUrl =
