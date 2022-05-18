@@ -408,8 +408,7 @@ function ImageShop({
                     {source === "other" ? (
                       <>
                         <div className="row mb-3">
-                         
-                        <div className="col-md-12 ">
+                          <div className="col-md-12 ">
                             <label>Enter SKU</label>
                             <input
                               type="number"
@@ -422,7 +421,7 @@ function ImageShop({
                               autoComplete="off"
                             />
                           </div>
-                        
+
                           <div className="col-md-12 ">
                             <label>Enter Product Name</label>
                             <input

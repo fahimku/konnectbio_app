@@ -90,12 +90,12 @@ class LinkinBio extends React.Component {
   componentDidMount() {
     userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    axios
-      .get("/campaigns/receive/getpromocodes")
-      .then((res) => {})
-      .catch((res) => {
-        this.setState({ ShopifyConnFound: false });
-      });
+    // axios
+    //   .get("/campaigns/receive/getpromocodes")
+    //   .then((res) => {})
+    //   .catch((res) => {
+    //     this.setState({ ShopifyConnFound: false });
+    //   });
   }
 
   componentWillMount() {
@@ -321,7 +321,6 @@ class LinkinBio extends React.Component {
                   description: description,
                   amount: amount,
                   children: imgData,
-                  
                 })
                 .then((response) => {
                   this.setState({ loading: false });
@@ -367,8 +366,7 @@ class LinkinBio extends React.Component {
     description,
     amount,
     imgData,
-    source,
-    
+    source
   ) => {
     let newCategory;
     let oldCategory = this.state.category;
@@ -423,7 +421,6 @@ class LinkinBio extends React.Component {
             amount: amount,
             product_source: source,
             children: imgData,
-            
           })
           .then((response) => {
             this.setState({ loading: false });
@@ -750,7 +747,12 @@ class LinkinBio extends React.Component {
               </Row>
             ) : (
               <>
-                {this.state.ShopifyConnFound == false &&
+                <Row className="linked_edit_box">
+                  <Col xs="12" className="p-5">
+                    {this.shopRightBar()}
+                  </Col>
+                </Row>
+                {/* {this.state.ShopifyConnFound == false &&
                 this.state.selectPost ? (
                   <div className="container-fluid">
                     <div class="coming_iner">
@@ -759,7 +761,7 @@ class LinkinBio extends React.Component {
               {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
                 ? "This option is only available for Influencer Plus."
                 : "This option is only available for Brand."}
-            </p> */}
+            </p> 
                       <button
                         class="btn btn-primary"
                         onClick={() => history.push("/app/account/ecommerce")}
@@ -776,7 +778,7 @@ class LinkinBio extends React.Component {
                       </Col>
                     </Row>
                   </>
-                )}
+                )} */}
               </>
             )}
           </Col>
