@@ -136,6 +136,7 @@ function ImageShop({
   const onSubmitting = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     if (source === "other" && imageFiles.length === 0) {
       setImageError(true);
     } else {
@@ -155,7 +156,8 @@ function ImageShop({
         // });
         //setMultiImage(files);
       }
-      var imgid = Math.floor(Math.random() * 100000);
+
+      // var imgid = Math.floor(Math.random() * 100000);
 
       let data = {
         file: formImage,
@@ -171,13 +173,14 @@ function ImageShop({
         coordinates,
         file_type,
         media_url,
-        imgid,
+       
       };
 
-      let allData = [...submitData, data];
-      setSubmitData(allData);
+       let allData = [...submitData, data];
+       setSubmitData(allData);
 
-      imgData(allData);
+       imgData(allData);
+    
       setImageFiles([]);
       setProductSku("");
       setProductName("");
@@ -194,18 +197,13 @@ function ImageShop({
     }
   };
 
-  // function dateRangePickerChanger(value, dataString) {
-  //   let startDate = dataString[0];
-  //   let endDate = dataString[1];
-  //   setStartDate(startDate);
-  //   setEndDate(endDate);
-  // }
+
   const clearImage = () => {
     setImageFiles([]);
     // setMultiImage(multiImage.slice(1));
   };
   const getSku = (sku, skuData) => {
-    console.log(skuData, "skuData");
+  
     setProductSku(sku);
     setSkuData(skuData[0]._source);
     const productUrl =

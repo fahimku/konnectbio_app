@@ -60,7 +60,7 @@ class AsyncSkuField extends React.Component {
       return item._source?.variants[0]?.sku === e.value;
     });
     this.props.getSku(e.value, skuData);
-
+    
     this.setState({
       sku: e,
     });
