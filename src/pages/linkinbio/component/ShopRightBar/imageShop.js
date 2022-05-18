@@ -77,7 +77,6 @@ function ImageShop({
   }, [category]);
 
   useEffect(() => {
-    console.log(children?.length, "leng");
     if (children?.length !== 0) {
       childrenAttr();
       imgData(children);
@@ -103,7 +102,6 @@ function ImageShop({
     setCircles(circles);
     setSubmitData(children);
   };
-  console.log(submitData, "submit");
 
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
