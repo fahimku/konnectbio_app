@@ -414,7 +414,6 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       Kbfee={Kbfee}
                       category={props.category}
                       source={source}
-                      
                       // setSource={setSource}
                       updateProduct={props.singlePost.linked}
                     />
@@ -611,7 +610,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                   <></>
                 ) : (
                   <>
-                    <div className="row">
+                    {/* <div className="row">
                       <div className="col-md-3 mt-3">
                         <label>PromoCode</label>
 
@@ -648,7 +647,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       <div className="col-md-3 mt-3">
                         <label>Discount</label>
                         <div className="promo_discount form-control">
-                          {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
+                          {/* {renderConValuePromoList(this.state.promoCodeVal)} 
                           {promoCodeDscs ? promoCodeDscs : 0}
                         </div>
                       </div>
@@ -658,9 +657,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                           {numeral(Kbfee).format("0,0'")}%
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="row">
+                    {/* <div className="row">
                       <div className="col-md-3 mt-3">
                         <label>Amount</label>
 
@@ -699,7 +698,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                           onChange={(e) => changeDescription(e)}
                         />
                       </div>
-                    </div>
+                    </div> */}
                   </>
                 )}
 
