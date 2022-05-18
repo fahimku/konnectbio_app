@@ -91,13 +91,6 @@ function ImageShop({
     }
   }, [category]);
 
-  useEffect(() => {
-    
-    setProductPromoCodeDscs(children.productPromoCodeDscs)
-    setproductPromoCodePromo(children.productPromoCodePromo)
-  console.log(children,"llllll")
-  }, [children.productPromoCodePromo]);
-
 
   const childrenAttr = () => {
     let circles = [];
@@ -442,7 +435,7 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {/* {skuData?.image?.src && ( */}
+                        {skuData?.image?.src && (
                         <img
                           alt="sku-image"
                           src={
@@ -454,7 +447,7 @@ function ImageShop({
                           // style={{ width: "100px", height: "100px" }}
                           className="sku-image"
                         />
-                        {/* )} */}
+                        )}
                       </div>
                     </div>
                   </Col>
@@ -1107,6 +1100,11 @@ function ImageShop({
 
   const clickModal = (data) => {
     // setDetailImageModal(true);
+    if(source === "other"){
+      setDetailImageModal(true);
+      gb = data;
+    }
+    else{
     setAddImageModal(true);
     gb = data;
     setImgId(gb.imgid);
@@ -1126,6 +1124,7 @@ function ImageShop({
     setProductUrl(gb.ProductUrl);
     setProductDesc(description);
     setImageFiles(gb.media_url);
+    }
   };
   return (
     <>
