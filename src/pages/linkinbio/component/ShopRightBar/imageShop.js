@@ -232,6 +232,7 @@ function ImageShop({
         setImageError(false);
       }
     } else {
+      setFlag(false)
       console.log("linked False");
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
@@ -357,9 +358,10 @@ function ImageShop({
               setSkuData("");
               // setProductSource("ecommerce");
               setImageError(false);
-              {updateProduct === true ?
+              {updateProduct === true || flag == false ?
                 setSkuData("")
                 :
+                
               setCircles(circles.slice(0, -1));
               }
             }}
