@@ -23,6 +23,7 @@ function ImageShop({
   imgData,
   children,
   category,
+  skuOther,
   // setSource,
   source,
   updateProduct,
@@ -49,6 +50,7 @@ function ImageShop({
   const [submitData, setSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
+  const [skuDataOther, setOtherSku] = useState("");
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
 
@@ -158,6 +160,7 @@ function ImageShop({
       let data = {
         file: formImage,
         ProductSku,
+        skuDataOther,
         ProductName,
         productAmount,
         productDesc,
@@ -178,6 +181,7 @@ function ImageShop({
       setImageFiles([]);
       setProductSku("");
       setProductName("");
+      setOtherSku("");
       // setProductCategory([]);
       // setproductPromoCodePromo("");
       // setProductPromoCodeDscs("");
@@ -201,6 +205,7 @@ function ImageShop({
     // setMultiImage(multiImage.slice(1));
   };
   const getSku = (sku, skuData) => {
+    console.log(skuData, "skuData");
     setProductSku(sku);
     setSkuData(skuData[0]._source);
     const productUrl =
@@ -251,6 +256,9 @@ function ImageShop({
 
               setCircles(circles.slice(0, -1));
               setProductName("");
+              setOtherSku("");
+              setproductPromoCodePromo("KB0");
+              setProductPromoCodeDscs("0%");
               setProductAmount("");
               setProductUrl("");
               setProductDesc("");
@@ -329,9 +337,9 @@ function ImageShop({
                         <img
                           alt="sku-image"
                           src={
-                            updateProduct
-                              ? skuData.media_url
-                              : skuData?.image?.src
+                            skuData?.image?.src
+                              ? skuData?.image?.src
+                              : skuData.media_url
                           }
                           // key={`img-id-${idx.toString()}`}
                           // style={{ width: "100px", height: "100px" }}
@@ -372,6 +380,7 @@ function ImageShop({
                           name="sku"
                           placeholder="Enter Product SKU"
                           getSku={getSku}
+                          defaultValue={ProductSku}
                         />
                       </div>
                     ) : (
@@ -407,10 +416,24 @@ function ImageShop({
                       <>
                         <div className="row mb-3">
                           <div className="col-md-12 ">
+                            <label>Enter SKU</label>
+                            <input
+                              type="number"
+                              name="product_name"
+                              placeholder="Enter Sku"
+                              onInput={(e) => setOtherSku(e.target.value)}
+                              value={skuDataOther}
+                              className="form-control"
+                              required
+                              autoComplete="off"
+                            />
+                          </div>
+
+                          <div className="col-md-12 ">
                             <label>Enter Product Name</label>
                             <input
                               type="text"
-                              name="product_name"
+                              name="sku"
                               placeholder="Enter Product Name"
                               onInput={(e) => setProductName(e.target.value)}
                               value={ProductName}
@@ -756,7 +779,7 @@ function ImageShop({
                                   // onClick={onSubmitting}
                                   // disabled={this.state.imageFiles[0] === undefined ? true : false}
                                 >
-                                  Add Image
+                                  {updateProduct ? "Update" : "Save"}
                                 </Button>
                               )}
                             </div>
@@ -941,6 +964,11 @@ function ImageShop({
                 </div>
 
                 <div class="col-12 count-box">
+                  <h5 class="count-title">Product SKU</h5>
+                  <h3 class="count">{data?.skuDataOther} </h3>
+                </div>
+
+                <div class="col-12 count-box">
                   <h5 class="count-title">Product PromoCode</h5>
                   <h3 class="count prod-desc">{data?.productPromoCodePromo}</h3>
                 </div>
@@ -986,7 +1014,6 @@ function ImageShop({
     setProductDesc(description);
     setImageFiles(gb.media_url);
   };
-  console.log(ProductSku, "ProductSku");
   return (
     <>
       <div

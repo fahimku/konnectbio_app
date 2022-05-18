@@ -5,9 +5,12 @@ import { toast } from "react-toastify";
 
 class AsyncSkuField extends React.Component {
   state = {
-    sku: "",
+    sku: {
+      label: this.props.defaultValue ? this.props.defaultValue : "",
+      value: this.props.defaultValue ? this.props.defaultValue : "",
+    },
     allSku: "",
-    default_value: this.props.defaultValue,
+    // default_value: this.props.defaultValue,
   };
 
   loadOptions = async (input, callback) => {
@@ -82,7 +85,7 @@ class AsyncSkuField extends React.Component {
             loadOptions={this.loadOptions}
             placeholder={this.props.placeholder}
             name={this.props.name}
-            // defaultValue={this.state.sku}
+            defaultValue={this.state.sku}
             onChange={(e) => {
               this.handleMultiSelect(e);
             }}
