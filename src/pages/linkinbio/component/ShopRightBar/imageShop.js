@@ -80,10 +80,8 @@ function ImageShop({
     if (children?.length) {
       childrenAttr();
       imgData(children);
-     
     }
   }, [children]);
-
 
   useEffect(() => {
     if (category?.length >= 0) {
@@ -92,12 +90,10 @@ function ImageShop({
   }, [category]);
 
   useEffect(() => {
-    
-    setProductPromoCodeDscs(children.productPromoCodeDscs)
-    setproductPromoCodePromo(children.productPromoCodePromo)
-  console.log(children,"llllll")
+    setProductPromoCodeDscs(children.productPromoCodeDscs);
+    setproductPromoCodePromo(children.productPromoCodePromo);
+    console.log(children, "llllll");
   }, [children.productPromoCodePromo]);
-
 
   const childrenAttr = () => {
     let circles = [];
@@ -160,14 +156,13 @@ function ImageShop({
     let updateMatched = {};
     let newAdd = {};
 
-    if(updateProduct == true){
-
-      console.log("linked True")
+    if (updateProduct == true) {
+      console.log("linked True");
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
         setAddImageModal(false);
-  
+
         if (source === "other") {
           var get_type = imageFiles[0]?.file.type;
           var split = get_type.split("/");
@@ -177,11 +172,37 @@ function ImageShop({
           var media_url = imageFiles;
         }
         submitData.map((item) => {
-          if(item.imgid === imgId){
+          if (item.imgid === imgId) {
             let coordinates = item.coordinates;
             let imgid = item.imgid;
-           updateMatched = {
-            
+            updateMatched = {
+              ProductSku,
+              skuDataOther,
+              ProductName,
+              productAmount,
+              productDesc,
+              ProductUrl,
+              productCategory,
+              productPromoCodePromo,
+              productPromoCodeDscs,
+              file_type,
+              media_url,
+              coordinates,
+              imgid,
+            };
+            updateData.push(updateMatched);
+          } else {
+            updateData.push(item);
+            setUpdateSubmitData(item);
+          }
+          setUpdateSubmitData(updateData);
+        });
+
+        if (flag == true) {
+          var imgid = Math.floor(Math.random() * 100000);
+
+          newAdd = {
+            file: formImage,
             ProductSku,
             skuDataOther,
             ProductName,
@@ -191,48 +212,18 @@ function ImageShop({
             productCategory,
             productPromoCodePromo,
             productPromoCodeDscs,
+            coordinates,
             file_type,
             media_url,
-            coordinates,
-            imgid
-           }
-           updateData.push(updateMatched)
-          }
-          else{
-            updateData.push(item);
-           setUpdateSubmitData(item);
-          }
+            imgid,
+          };
+
+          updateData.push(newAdd);
           setUpdateSubmitData(updateData);
-        })
-         
-          if(flag == true){
-  
-            var imgid = Math.floor(Math.random() * 100000);
-     
-            newAdd = {
-             file: formImage,
-             ProductSku,
-             skuDataOther,
-             ProductName,
-             productAmount,
-             productDesc,
-             ProductUrl,
-             productCategory,
-             productPromoCodePromo,
-             productPromoCodeDscs,
-             coordinates,
-             file_type,
-             media_url,
-             imgid
-            
-           };
-         
-           updateData.push(newAdd)
-           setUpdateSubmitData(updateData);
-          }
-          console.log(updateData,"Updateeee");
+        }
+        console.log(updateData, "Updateeee");
         setSubmitData(updateData);
-         imgData(updateData);
+        imgData(updateData);
         setImageFiles([]);
         setProductSku("");
         setProductName("");
@@ -245,14 +236,13 @@ function ImageShop({
         setSkuData("");
         setImageError(false);
       }
-    }
-    else{
-      console.log("linked False")
+    } else {
+      console.log("linked False");
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
         setAddImageModal(false);
-  
+
         if (source === "other") {
           var get_type = imageFiles[0]?.file.type;
           var split = get_type.split("/");
@@ -260,7 +250,7 @@ function ImageShop({
           var formImage = await convertBase64(imageFiles[0]?.file);
         } else {
           var media_url = imageFiles;
-  
+
           // let files = multiImage;
           // files.push({
           //   media_url: skuData?.image?.src,
@@ -268,7 +258,7 @@ function ImageShop({
           //setMultiImage(files);
         }
         var imgid = Math.floor(Math.random() * 100000);
-  
+
         let data = {
           file: formImage,
           ProductSku,
@@ -285,10 +275,10 @@ function ImageShop({
           media_url,
           imgid,
         };
-  
+
         let allData = [...submitData, data];
         setSubmitData(allData);
-  
+
         imgData(allData);
         setImageFiles([]);
         setProductSku("");
@@ -304,16 +294,14 @@ function ImageShop({
         // setProductSource("ecommerce");
         setImageError(false);
       }
-  }
+    }
   };
-
 
   const clearImage = () => {
     setImageFiles([]);
     // setMultiImage(multiImage.slice(1));
   };
   const getSku = (sku, skuData) => {
-  
     setProductSku(sku);
     setSkuData(skuData[0]._source);
     const productUrl =
@@ -442,19 +430,19 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {/* {skuData?.image?.src && ( */}
-                        <img
-                          alt="sku-image"
-                          src={
-                            skuData?.image?.src
-                              ? skuData?.image?.src
-                              : skuData.media_url
-                          }
-                          // key={`img-id-${idx.toString()}`}
-                          // style={{ width: "100px", height: "100px" }}
-                          className="sku-image"
-                        />
-                        {/* )} */}
+                        {skuData?.image?.src && (
+                          <img
+                            alt="sku-image"
+                            src={
+                              skuData?.image?.src
+                                ? skuData?.image?.src
+                                : skuData.media_url
+                            }
+                            // key={`img-id-${idx.toString()}`}
+                            // style={{ width: "100px", height: "100px" }}
+                            className="sku-image"
+                          />
+                        )}
                       </div>
                     </div>
                   </Col>
@@ -928,7 +916,6 @@ function ImageShop({
     });
   };
   const addCircle = (e) => {
-
     setFlag(true);
     if (submitData.length < 3) {
       if (source) {
@@ -1110,7 +1097,7 @@ function ImageShop({
     setAddImageModal(true);
     gb = data;
     setImgId(gb.imgid);
-    console.log(gb.imgid,"_____________________________________________")
+    console.log(gb.imgid, "_____________________________________________");
     setProductSku(gb.ProductSku);
     setSkuData(gb);
     // const productUrl =
