@@ -5,10 +5,14 @@ import { toast } from "react-toastify";
 
 class AsyncSkuField extends React.Component {
   state = {
-    sku: {
-      label: this.props.defaultValue ? this.props.defaultValue : "",
-      value: this.props.defaultValue ? this.props.defaultValue : "",
-    },
+    sku: this.props.defaultValue
+      ? {
+          label: this.props.defaultValue,
+          value: this.props.defaultValue,
+          price: this.props.productAmount,
+          title: this.props.ProductName,
+        }
+      : "",
     allSku: "",
     // default_value: this.props.defaultValue,
   };
@@ -19,6 +23,8 @@ class AsyncSkuField extends React.Component {
       return {
         value: `${item.value}`,
         label: `${item.label}`,
+        price: `${item.price}`,
+        title: `${item.title}`,
       };
     });
 
@@ -44,6 +50,8 @@ class AsyncSkuField extends React.Component {
               return loadSku.push({
                 value: _source?.variants[0]?.sku,
                 label: _source?.variants[0]?.sku,
+                price: _source?.variants[0]?.price,
+                title: _source?.title,
               });
             });
             this.setState({ sku: loadSku });
@@ -70,6 +78,13 @@ class AsyncSkuField extends React.Component {
     const getData = e.clipboardData.getData("text");
     await this.smartSearchFilter(getData);
   };
+  formatOptionLabel = ({ label, title, price }) => (
+    <div style={{ display: "flex" }}>
+      <div>{label}</div>&nbsp;-&nbsp;
+      <div style={{ marginLeft: "10px" }}>{title}</div>&nbsp;-&nbsp;
+      <div style={{ marginLeft: "10px" }}>${price}</div>
+    </div>
+  );
 
   render() {
     return (
@@ -89,6 +104,7 @@ class AsyncSkuField extends React.Component {
             onChange={(e) => {
               this.handleMultiSelect(e);
             }}
+            formatOptionLabel={this.formatOptionLabel}
             // value={this.props.defaultValue}
           />
         </div>

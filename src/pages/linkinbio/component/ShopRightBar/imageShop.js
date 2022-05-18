@@ -244,7 +244,9 @@ function ImageShop({
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>{updateProduct ? "Edit Link" : "Add Link"}</Modal.Title>
+          <Modal.Title>
+            {updateProduct && ProductSku ? "Edit Link" : "Add Link"}
+          </Modal.Title>
           <button
             type="button"
             class="close"
@@ -253,8 +255,6 @@ function ImageShop({
               setImageFiles([]);
               setCoordinates("");
               // setSource("");
-
-              setCircles(circles.slice(0, -1));
               setProductName("");
               setOtherSku("");
               setproductPromoCodePromo("KB0");
@@ -266,6 +266,7 @@ function ImageShop({
               setSkuData("");
               // setProductSource("ecommerce");
               setImageError(false);
+              setCircles(circles.slice(0, -1));
             }}
           >
             <span aria-hidden="true">×</span>
@@ -381,6 +382,8 @@ function ImageShop({
                           placeholder="Enter Product SKU"
                           getSku={getSku}
                           defaultValue={ProductSku}
+                          productAmount={productAmount}
+                          ProductName={ProductName}
                         />
                       </div>
                     ) : (
