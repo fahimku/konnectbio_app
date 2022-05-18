@@ -415,6 +415,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       category={props.category}
                       source={source}
                       // setSource={setSource}
+                      updateProduct={props.singlePost.linked}
                     />
                   ) : (
                     <img

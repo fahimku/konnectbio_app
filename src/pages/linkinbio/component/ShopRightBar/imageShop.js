@@ -25,6 +25,7 @@ function ImageShop({
   category,
   // setSource,
   source,
+  updateProduct,
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
@@ -238,7 +239,7 @@ function ImageShop({
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>Add Link</Modal.Title>
+          <Modal.Title>{updateProduct ? "Edit Link" : "Add Link"}</Modal.Title>
           <button
             type="button"
             class="close"
@@ -324,15 +325,19 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {skuData?.image?.src && (
-                          <img
-                            alt="sku-image"
-                            src={skuData?.image?.src}
-                            // key={`img-id-${idx.toString()}`}
-                            // style={{ width: "100px", height: "100px" }}
-                            className="sku-image"
-                          />
-                        )}
+                        {/* {skuData?.image?.src && ( */}
+                        <img
+                          alt="sku-image"
+                          src={
+                            updateProduct
+                              ? skuData.media_url
+                              : skuData?.image?.src
+                          }
+                          // key={`img-id-${idx.toString()}`}
+                          // style={{ width: "100px", height: "100px" }}
+                          className="sku-image"
+                        />
+                        {/* )} */}
                       </div>
                     </div>
                   </Col>
@@ -963,8 +968,25 @@ function ImageShop({
     // setDetailImageModal(true);
     setAddImageModal(true);
     gb = data;
-  };
 
+    console.log(gb, "gb");
+    setProductSku(gb.ProductSku);
+    setSkuData(gb);
+    // const productUrl =
+    //   "https://" +
+    //   skuData[0]._source?.domain +
+    //   "/products/" +
+    //   skuData[0]._source?.handle;
+    const description = gb.productDesc
+      ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+      : "";
+    setProductName(gb.ProductName);
+    setProductAmount(gb.productAmount);
+    setProductUrl(gb.ProductUrl);
+    setProductDesc(description);
+    setImageFiles(gb.media_url);
+  };
+  console.log(ProductSku, "ProductSku");
   return (
     <>
       <div
@@ -1039,7 +1061,7 @@ function ImageShop({
         ))}
       </div>
 
-      {ImageModal(gb)}
+      {ImageModal()}
       {ImageDetailModal(gb)}
     </>
   );
