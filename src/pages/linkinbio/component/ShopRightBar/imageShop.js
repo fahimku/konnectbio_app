@@ -77,9 +77,13 @@ function ImageShop({
   }, [category]);
 
   useEffect(() => {
-    if (children?.length) {
+    console.log(children?.length, "leng");
+    if (children?.length !== 0) {
       childrenAttr();
       imgData(children);
+    } else {
+      setSubmitData([]);
+      setCircles([]);
     }
   }, [children]);
 
@@ -88,7 +92,6 @@ function ImageShop({
       setProductCategory(category);
     }
   }, [category]);
-
 
   const childrenAttr = () => {
     let circles = [];
@@ -100,6 +103,7 @@ function ImageShop({
     setCircles(circles);
     setSubmitData(children);
   };
+  console.log(submitData, "submit");
 
   const changePromoCode = (e, options, name, index) => {
     if (e === undefined) {
@@ -232,7 +236,7 @@ function ImageShop({
         setImageError(false);
       }
     } else {
-      setFlag(false)
+      setFlag(false);
       console.log("linked False");
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
@@ -358,11 +362,10 @@ function ImageShop({
               setSkuData("");
               // setProductSource("ecommerce");
               setImageError(false);
-              {updateProduct === true || flag == false ?
-                setSkuData("")
-                :
-                
-              setCircles(circles.slice(0, -1));
+              {
+                updateProduct === true || flag == false
+                  ? setSkuData("")
+                  : setCircles(circles.slice(0, -1));
               }
             }}
           >
@@ -431,37 +434,35 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {updateProduct === true ?
-                        
-                        <img
-                          alt="sku-image"
-                          src={
-                            skuData?.image?.src
-                              ? skuData?.image?.src
-                              : skuData.media_url
-                          }
-                          // key={`img-id-${idx.toString()}`}
-                          // style={{ width: "100px", height: "100px" }}
-                          className="sku-image"
-                        />
-                        :
-                        <>
-                        {skuData?.image?.src && ( 
-                        
-                        <img
-                          alt="sku-image"
-                          src={
-                            skuData?.image?.src
-                              ? skuData?.image?.src
-                              : skuData.media_url
-                          }
-                          // key={`img-id-${idx.toString()}`}
-                          // style={{ width: "100px", height: "100px" }}
-                          className="sku-image"
-                        />
-                         )}
-                         </> 
-                        }
+                        {updateProduct === true ? (
+                          <img
+                            alt="sku-image"
+                            src={
+                              skuData?.image?.src
+                                ? skuData?.image?.src
+                                : skuData.media_url
+                            }
+                            // key={`img-id-${idx.toString()}`}
+                            // style={{ width: "100px", height: "100px" }}
+                            className="sku-image"
+                          />
+                        ) : (
+                          <>
+                            {skuData?.image?.src && (
+                              <img
+                                alt="sku-image"
+                                src={
+                                  skuData?.image?.src
+                                    ? skuData?.image?.src
+                                    : skuData.media_url
+                                }
+                                // key={`img-id-${idx.toString()}`}
+                                // style={{ width: "100px", height: "100px" }}
+                                className="sku-image"
+                              />
+                            )}
+                          </>
+                        )}
                       </div>
                     </div>
                   </Col>
@@ -1113,33 +1114,32 @@ function ImageShop({
 
   const clickModal = (data) => {
     // setDetailImageModal(true);
-    console.log(data,"uzairrrr")
-    if(source === "other"){
+    console.log(data, "uzairrrr");
+    if (source === "other") {
       setDetailImageModal(true);
       gb = data;
-    }
-    else{
-    setAddImageModal(true);
-    gb = data;
-    setImgId(gb.imgid);
-    console.log(gb.imgid, "_____________________________________________");
-    setProductSku(gb.ProductSku);
-    setSkuData(gb);
-    // const productUrl =
-    //   "https://" +
-    //   skuData[0]._source?.domain +
-    //   "/products/" +
-    //   skuData[0]._source?.handle;
-    const description = gb.productDesc
-      ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
-      : "";
-    setProductName(gb.ProductName);
-    setProductAmount(gb.productAmount);
-    setProductUrl(gb.ProductUrl);
-    setProductDesc(description);
-    setImageFiles(gb.media_url);
-    setProductPromoCodeDscs(gb.productPromoCodeDscs);
-    setproductPromoCodePromo(gb.productPromoCodePromo);
+    } else {
+      setAddImageModal(true);
+      gb = data;
+      setImgId(gb.imgid);
+      console.log(gb.imgid, "_____________________________________________");
+      setProductSku(gb.ProductSku);
+      setSkuData(gb);
+      // const productUrl =
+      //   "https://" +
+      //   skuData[0]._source?.domain +
+      //   "/products/" +
+      //   skuData[0]._source?.handle;
+      const description = gb.productDesc
+        ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+        : "";
+      setProductName(gb.ProductName);
+      setProductAmount(gb.productAmount);
+      setProductUrl(gb.ProductUrl);
+      setProductDesc(description);
+      setImageFiles(gb.media_url);
+      setProductPromoCodeDscs(gb.productPromoCodeDscs);
+      setproductPromoCodePromo(gb.productPromoCodePromo);
     }
   };
   return (
