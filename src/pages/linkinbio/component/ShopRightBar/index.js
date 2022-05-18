@@ -127,10 +127,17 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, [props.promo]);
 
   useEffect(() => {
-    if (props.singlePost.linked) {
-      setSource(props.product_source);
+    // if (props.singlePost.linked) {
+    //   setSource(props.product_source);
+    // } else {
+    //   setSource("ecommerce");
+    // }
+    if (connNotFound) {
+      props.singlePost.linked
+        ? setSource(props.product_source)
+        : setSource("ecommerce");
     } else {
-      setSource("ecommerce");
+      setSource("other");
     }
   }, [props.product_source, props.singlePost]);
 
@@ -160,6 +167,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       })
       .catch((res) => {
         setconnFound(false);
+        setSource("other");
       });
   }, []);
 
@@ -442,7 +450,9 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       onChange={(value) => setSource(value)}
                       className="source_cap"
                       disabled={
-                        props.singlePost.linked || props.updatePage
+                        props.singlePost.linked ||
+                        props.updatePage ||
+                        !connNotFound
                           ? true
                           : false
                       }
@@ -450,15 +460,21 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                       {/* <Option className="source_cap" value={source}>
                         {source}
                       </Option> */}
-                      {props.singlePost.linked || props.updatePage ? (
+                      {connNotFound ? (
+                        props.singlePost.linked || props.updatePage ? (
+                          <Option className="source_cap" value={source}>
+                            {source}
+                          </Option>
+                        ) : (
+                          <>
+                            <Option value="ecommerce">Ecommerce</Option>
+                            <Option value="other">Other</Option>
+                          </>
+                        )
+                      ) : (
                         <Option className="source_cap" value={source}>
                           {source}
                         </Option>
-                      ) : (
-                        <>
-                          <Option value="ecommerce">Ecommerce</Option>
-                          <Option value="other">Other</Option>
-                        </>
                       )}
                       {/* <Option value="other">Others</Option> */}
                     </Select>
