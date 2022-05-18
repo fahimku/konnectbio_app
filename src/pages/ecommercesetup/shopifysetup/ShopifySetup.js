@@ -8,12 +8,14 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
   const [saveloading, setSaveLoading] = useState(false);
   // const [data, setData] = useState("");
   // const [ShopifyLoading, setShopifyLoading] = useState(true);
   const [type, setType] = useState("password");
+  const [syncLoading, setSyncLoading] = useState(false);
 
   useEffect(() => {
     getShopifyDetail();
@@ -66,6 +68,33 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
     setType(type === "input" ? "password" : "input");
   };
 
+  const syncData = () => {
+    Swal.fire({
+      title: `Are You Sure You Want To Sync Products?`,
+      icon: "warning",
+      cancelButtonText: "No",
+      showCancelButton: true,
+      confirmButtonColor: "#010b40",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setSyncLoading(true);
+        axios
+          .get(`/campaigns/receive/getproducts`)
+          .then(() => {
+            setSyncLoading(false);
+            toast.success("Product Sync Successfully");
+          })
+          .catch((err) => {
+            setSyncLoading(false);
+            // toast.error(err.response.data.message);
+            console.log(err.response, "err");
+          });
+      }
+    });
+  };
+
   return (
     <React.Fragment>
       <div className="container-fluid">
@@ -82,9 +111,22 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                       </div>
                       <div className="col-md-4 col-5">
                         {shopifyDetail?.message?.shopify ? (
-                          <span class="connection-status-badge-green connection">
-                            Connected
-                          </span>
+                          <>
+                            <span class="connection-status-badge-green connection">
+                              Connected
+                            </span>
+                            <span
+                              className="fa fa-refresh ecommerce-sync"
+                              onClick={() => syncData()}
+                              title="Sync"
+                            ></span>
+                            {!syncLoading && (
+                              <div class="sync_loading">
+                                <span className="loading_text">Loading</span>
+                                &#8230;
+                              </div>
+                            )}
+                          </>
                         ) : (
                           <span class="connection-status-badge-red connection">
                             Not Connected
