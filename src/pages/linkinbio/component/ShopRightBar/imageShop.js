@@ -48,18 +48,21 @@ function ImageShop({
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState("0%");
   const [productPromoCodePromo, setproductPromoCodePromo] = useState("KB0");
   const [submitData, setSubmitData] = useState([]);
-  const [updateSubmitData, setUpdateSubmitData] = useState([]);
+  const [updateSubmitData, setUpdateSubmitData] = useState([  ]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
   const [skuDataOther, setOtherSku] = useState("");
   const [imgId, setImgId] = useState();
   const [flag, setFlag] = useState(false);
+  const [flagsb, setFlagSb] = useState(false);
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
 
   const parentRef = useRef();
   const imgRef = useRef();
   let arr = [];
+
+ 
   useEffect(() => {
     setImageFiles([]);
     setSubmitData([]);
@@ -68,7 +71,10 @@ function ImageShop({
     setSkuData("");
     setCoordinates("");
     setProductSku("");
+    setUpdateSubmitData([])
   }, [selectPost]);
+
+
 
   useEffect(() => {
     if (category?.length >= 0) {
@@ -147,12 +153,14 @@ function ImageShop({
     e.preventDefault();
     e.stopPropagation();
 
+    let allData= [];
     let updateData = [];
     let updateMatched = {};
     let newAdd = {};
+    let data = {};
 
     if (updateProduct == true) {
-      console.log("linked True");
+     
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
@@ -216,7 +224,7 @@ function ImageShop({
           updateData.push(newAdd);
           setUpdateSubmitData(updateData);
         }
-        console.log(updateData, "Updateeee");
+   
         setSubmitData(updateData);
         imgData(updateData);
         setImageFiles([]);
@@ -233,7 +241,7 @@ function ImageShop({
       }
     } else {
       setFlag(false)
-      console.log("linked False");
+      
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
@@ -253,29 +261,68 @@ function ImageShop({
           // });
           //setMultiImage(files);
         }
+       
+        submitData.map((item,indx) => {
+          if (item.imgid === imgId) {
+            submitData.splice(indx, 1);
+            
+            //setSubmitData(item)
+            
+            let coordinates = item.coordinates;
+            let imgid = item.imgid;
+            updateMatched = {
+              ProductSku,
+              skuDataOther,
+              ProductName,
+              productAmount,
+              productDesc,
+              ProductUrl,
+              productCategory,
+              productPromoCodePromo,
+              productPromoCodeDscs,
+              file_type,
+              media_url,
+              coordinates,
+              imgid,
+            };
+           
+            submitData.push(updateMatched);
+       
+         
+          }
+         
+        
+        });
+        
+        if (flagsb == true) {
+        
         var imgid = Math.floor(Math.random() * 100000);
 
-        let data = {
-          file: formImage,
-          ProductSku,
-          skuDataOther,
-          ProductName,
-          productAmount,
-          productDesc,
-          ProductUrl,
-          productCategory,
-          productPromoCodePromo,
-          productPromoCodeDscs,
-          coordinates,
-          file_type,
-          media_url,
-          imgid,
-        };
+        data = {
+         file: formImage,
+         ProductSku,
+         skuDataOther,
+         ProductName,
+         productAmount,
+         productDesc,
+         ProductUrl,
+         productCategory,
+         productPromoCodePromo,
+         productPromoCodeDscs,
+         coordinates,
+         file_type,
+         media_url,
+         imgid,
+       };
+       submitData.push(data);
+      }
+      
+      
 
-        let allData = [...submitData, data];
-        setSubmitData(allData);
-
-        imgData(allData);
+       
+       imgData(submitData);
+       // setSubmitData(updateData);
+        
         setImageFiles([]);
         setProductSku("");
         setProductName("");
@@ -287,11 +334,15 @@ function ImageShop({
         setProductAmount();
         setProductDesc("");
         setSkuData("");
+        setFlag(false)
+        setFlagSb(false);
         // setProductSource("ecommerce");
         setImageError(false);
       }
     }
+  
   };
+
 
   const clearImage = () => {
     setImageFiles([]);
@@ -934,9 +985,12 @@ function ImageShop({
       confirmButtonText: `Ok`,
     });
   };
+  
   const addCircle = (e) => {
-    setFlag(true);
     if (submitData.length < 3) {
+    setFlag(true);
+    setFlagSb(true)
+   
       if (source) {
         // get click coordinates
         setAddImageModal(true);
@@ -972,8 +1026,9 @@ function ImageShop({
       // setImageError("Only 3 image tag allowed")
       toast.error("Only 3 images allowed");
     }
+  
   };
-
+  
   const imgDelete = (id) => {
     Swal.fire({
       title: `Are you sure you want to remove this product?`,
@@ -1113,7 +1168,7 @@ function ImageShop({
 
   const clickModal = (data) => {
     // setDetailImageModal(true);
-    console.log(data,"uzairrrr")
+
     if(source === "other"){
       setDetailImageModal(true);
       gb = data;
@@ -1122,7 +1177,7 @@ function ImageShop({
     setAddImageModal(true);
     gb = data;
     setImgId(gb.imgid);
-    console.log(gb.imgid, "_____________________________________________");
+
     setProductSku(gb.ProductSku);
     setSkuData(gb);
     // const productUrl =
