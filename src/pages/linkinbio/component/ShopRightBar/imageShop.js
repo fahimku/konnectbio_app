@@ -366,6 +366,8 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
+    
+ 
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -973,6 +975,7 @@ function ImageShop({
       // backgroundColor: "lightblue",
     },
   };
+
 
   const alertImg = () => {
     Swal.fire({
