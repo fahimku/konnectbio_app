@@ -56,7 +56,8 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   const [promoCodeDscs, setDsc] = useState();
   const [promoCodePromo, setPromo] = useState();
   const [promoLoading, setPromoLoading] = useState(false);
-  const [source, setSource] = useState("");
+  const [source, setSource] = useState(props.product_source);
+
   useEffect(() => {
     fetchPromo();
   }, []);
@@ -116,12 +117,29 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   }, [props.discount]);
 
   useEffect(() => {
+    if (props.category.length == 0) {
+      setSource("ecommerce");
+    }
+  }, [props.category]);
+
+  useEffect(() => {
     setPromo(props.promo);
   }, [props.promo]);
 
-  // useEffect(() => {
-  //   setSource(props.product_source);
-  // }, [props.product_source]);
+  useEffect(() => {
+    // if (props.singlePost.linked) {
+    //   setSource(props.product_source);
+    // } else {
+    //   setSource("ecommerce");
+    // }
+    if (connNotFound) {
+      props.singlePost.linked
+        ? setSource(props.product_source)
+        : setSource("ecommerce");
+    } else {
+      setSource("other");
+    }
+  }, [props.product_source, props.singlePost]);
 
   useEffect(() => {
     setAmount(props.amount);
@@ -149,6 +167,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
       })
       .catch((res) => {
         setconnFound(false);
+        setSource("other");
       });
   }, []);
 
@@ -237,7 +256,7 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
   };
   const imgData = (data) => {
     imgDataSet = data;
-    // console.log(imgDataSet, "dataindex");
+
   };
 
   // };
@@ -388,43 +407,84 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
 
             <div className="image-wrapper">
               <div className="image-box">
-                {props.singlePost.media_type !== "VIDEO" && (
+                {!props.singleLoading ? (
+                  props.singlePost.media_type !== "VIDEO" &&
                   // <img src={`${props.singlePost.media_url}`} alt="media_url" />
-                  <ImageShop
-                    imgData={imgData}
-                    children={props.children}
-                    mediaUrl={props.singlePost.media_url}
-                    selectPost={props.singlePost.media_url}
-                    categoryList={props.categories}
-                    promoList={promoList}
-                    promoLoading={promoLoading}
-                    Kbfee={Kbfee}
-                    source={source}
-                    // setSource={setSource}
-                  />
+                  (userInfo?.account_type !== "influencer" ? (
+                    <ImageShop
+                      imgData={imgData}
+                      children={props.children}
+                      mediaUrl={props.singlePost.media_url}
+                      selectPost={props.singlePost.media_url}
+                      categoryList={props.categories}
+                      promoList={promoList}
+                      promoLoading={promoLoading}
+                      Kbfee={Kbfee}
+                      category={props.category}
+                      source={source}
+                      // setSource={setSource}
+                      updateProduct={props.singlePost.linked}
+                    />
+                  ) : (
+                    <img
+                      src={`${props.singlePost.media_url}`}
+                      alt="media_url"
+                    />
+                  ))
+                ) : (
+                  <Loader />
                 )}
                 {props.singlePost.media_type === "VIDEO" && (
                   <Video src={props.singlePost.media_url} />
                 )}
               </div>
               <div className="image-edit-links">
-                <div className="">
-                  <label>Select Source</label>
-                  <Select
-                    key={Date.now()}
-                    value={source}
-                    style={{ width: "100%" }}
-                    placeholder="Select Source"
-                    // onChange={(value) => setSource(value)}
-                    className="source_cap"
-                  >
-                    <Option className="source_cap" value={source}>
-                      {source}
-                    </Option>
-                    {/* <Option value="other">Others</Option> */}
-                  </Select>
-                </div>
-                <div className="mt-3">
+                {userInfo?.account_type !== "influencer" ? (
+                  <div className="">
+                    <label>Select Source</label>
+                    <Select
+                      key={Date.now()}
+                      value={source}
+                      style={{ width: "100%" }}
+                      placeholder="Select Source"
+                      onChange={(value) => setSource(value)}
+                      className="source_cap"
+                      disabled={
+                        props.singlePost.linked ||
+                        props.updatePage ||
+                        !connNotFound
+                          ? true
+                          : false
+                      }
+                    >
+                      {/* <Option className="source_cap" value={source}>
+                        {source}
+                      </Option> */}
+                      {connNotFound ? (
+                        props.singlePost.linked || props.updatePage ? (
+                          <Option className="source_cap" value={source}>
+                            {source}
+                          </Option>
+                        ) : (
+                          <>
+                            <Option value="ecommerce">Ecommerce</Option>
+                            <Option value="other">Other</Option>
+                          </>
+                        )
+                      ) : (
+                        <Option className="source_cap" value={source}>
+                          {source}
+                        </Option>
+                      )}
+                      {/* <Option value="other">Others</Option> */}
+                    </Select>
+                  </div>
+                ) : null}
+                {/* <div
+                  className={
+                    userInfo?.account_type === "influencer" ? "" : "mt-3"
+                  }
+                >
                   <label>
                     URL/AFFILIATE LINK -{" "}
                     <a
@@ -447,22 +507,20 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                     // placeholder="Please Enter Website Address"
                     type="text"
                     id="website"
-                    required
+                    disabled={
+                      props.singlePost.linked || props.updatePage ? true : false
+                    }
                     name="website"
                     trigger="change"
-                    validations={{
-                      matchRegexp:
-                        /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/,
-                    }}
-                    validationError={{
-                      isUrl: "This value should be a valid url.",
-                    }}
+                    // validationError={{
+                    //   isUrl: "This value should be a valid url.",
+                    // }}
                     value={props.redirectedUrl}
                     onChange={(evt) => {
                       props.callBack(evt);
                     }}
                   />
-                </div>
+                </div> */}
 
                 <div className="select-categories mt-3">
                   <label>Select Category</label>
@@ -485,7 +543,11 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                         .toLowerCase()
                         .indexOf(input.toLowerCase()) >= 0
                     }
-                    disabled={PermissionHelper.categoryCheck() ? true : false}
+                    disabled={
+                      PermissionHelper.categoryCheck() || props.singleLoading
+                        ? true
+                        : false
+                    }
                   >
                     {props.categories.map(({ value, label }, i) => (
                       <Option value={value}>{label}</Option>
@@ -563,91 +625,97 @@ function ShopRightBar(props, { getPromoRequest, promoRequest, PromoPayload }) {
                 {userInfo?.account_type == "influencer" ? (
                   <></>
                 ) : (
-                  <div className="row">
-                    <div className="col-md-3 mt-3">
-                      <label>PromoCode</label>
+                  <>
+                    {/* <div className="row">
+                      <div className="col-md-3 mt-3">
+                        <label>PromoCode</label>
 
-                      <Select
-                        size="small"
-                        filterOption={(input, options) =>
-                          options.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                        value={promoCodePromo ? promoCodePromo : "KB0"}
-                        //disabled={!(formState === "add" || formState === "edit")}
-                        placeholder="KB0"
-                        //loading={this.state.promoCond}
-                        optionFilterProp="children"
-                        className="w-100"
-                        // onSearch={onSearch}
-                        onChange={(options, e) => changePromoCode(e, options)}
-                        showSearch
-                        allowClear={false}
-                        loading={promoLoading ? true : false}
-                        disabled={promoLoading ? true : false}
-                      >
-                        {promoList.map((customer, key) => {
-                          return (
-                            <Option key={customer.promo_percent + " " + key}>
-                              {customer.promo}
-                            </Option>
-                          );
-                        })}
-                      </Select>
-                    </div>
-
-                    <div className="col-md-3 mt-3">
-                      <label>Discount</label>
-                      <div className="promo_discount form-control">
-                        {/* {renderConValuePromoList(this.state.promoCodeVal)} */}
-                        {promoCodeDscs ? promoCodeDscs : 0}
+                        <Select
+                          size="small"
+                          filterOption={(input, options) =>
+                            options.children
+                              .toLowerCase()
+                              .indexOf(input.toLowerCase()) >= 0
+                          }
+                          value={promoCodePromo ? promoCodePromo : "KB0"}
+                          //disabled={!(formState === "add" || formState === "edit")}
+                          placeholder="KB0"
+                          //loading={this.state.promoCond}
+                          optionFilterProp="children"
+                          className="w-100"
+                          // onSearch={onSearch}
+                          onChange={(options, e) => changePromoCode(e, options)}
+                          showSearch
+                          allowClear={false}
+                          loading={promoLoading ? true : false}
+                          disabled={source ? true : false}
+                        >
+                          {promoList.map((customer, key) => {
+                            return (
+                              <Option key={customer.promo_percent + " " + key}>
+                                {customer.promo}
+                              </Option>
+                            );
+                          })}
+                        </Select>
                       </div>
-                    </div>
-                    <div className="col-md-6 mt-3">
-                      <label>KB Fee</label>
-                      <div className="promo_discount form-control">
-                        {numeral(Kbfee).format("0,0'")}%
+
+                      <div className="col-md-3 mt-3">
+                        <label>Discount</label>
+                        <div className="promo_discount form-control">
+                          {/* {renderConValuePromoList(this.state.promoCodeVal)} 
+                          {promoCodeDscs ? promoCodeDscs : 0}
+                        </div>
                       </div>
-                    </div>
+                      <div className="col-md-6 mt-3">
+                        <label>KB Fee</label>
+                        <div className="promo_discount form-control">
+                          {numeral(Kbfee).format("0,0'")}%
+                        </div>
+                      </div>
+                    </div> */}
 
-                    <div className="col-md-3 mt-3">
-                      <label>Amount</label>
+                    {/* <div className="row">
+                      <div className="col-md-3 mt-3">
+                        <label>Amount</label>
 
-                      <InputValidation
-                        className=""
-                        placeholder="Amount"
-                        // placeholder="Please Enter Website Address"
-                        type="number"
-                        id="website"
-                        name="website"
-                        trigger="change"
-                        validations={{
-                          matchRegexp: /[0-9]{1}/,
-                        }}
-                        validationError={{
-                          isUrl: "This value should be Number.",
-                        }}
-                        value={amount}
-                        onChange={(e) => changeAmount(e)}
-                      />
-                    </div>
+                        <InputValidation
+                          className=""
+                          placeholder="Amount"
+                          // placeholder="Please Enter Website Address"
+                          type="number"
+                          id="website"
+                          name="website"
+                          trigger="change"
+                          disabled={source ? true : false}
+                          validations={{
+                            matchRegexp: /[0-9]{1}/,
+                          }}
+                          validationError={{
+                            isUrl: "This value should be Number.",
+                          }}
+                          value={amount}
+                          onChange={(e) => changeAmount(e)}
+                        />
+                      </div>
 
-                    <div className=" col-md-12 mt-3 image-edit-links">
-                      <label>Description</label>
-                      <InputValidation
-                        className=""
-                        placeholder="Enter Description"
-                        // placeholder="Please Enter Website Address"
-                        type="text"
-                        id="website"
-                        name="website"
-                        trigger="change"
-                        value={description}
-                        onChange={(e) => changeDescription(e)}
-                      />
-                    </div>
-                  </div>
+                      <div className=" col-md-9 mt-3">
+                        <label>Description</label>
+                        <InputValidation
+                          className=""
+                          placeholder="Enter Description"
+                          // placeholder="Please Enter Website Address"
+                          type="text"
+                          id="website"
+                          name="website"
+                          trigger="change"
+                          disabled={source ? true : false}
+                          value={description}
+                          onChange={(e) => changeDescription(e)}
+                        />
+                      </div>
+                    </div> */}
+                  </>
                 )}
 
                 <div className="edit_button_main pane-button">

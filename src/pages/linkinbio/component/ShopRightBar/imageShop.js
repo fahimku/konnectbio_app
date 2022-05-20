@@ -22,17 +22,18 @@ function ImageShop({
   Kbfee,
   imgData,
   children,
+  category,
+  skuOther,
   // setSource,
   source,
+  updateProduct,
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
   const [detailImageModal, setDetailImageModal] = useState(false);
   const [imageLoading, setImageLoading] = useState(false);
-  const [flag, setFlag] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
   const [multiImage, setMultiImage] = useState([]);
-  const [singleDetail, setSingleDetail] = useState();
   // const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
   // const [endDate, setEndDate] = useState(
   //   moment().add(1, "years").format("YYYY-MM-DD")
@@ -44,15 +45,17 @@ function ImageShop({
   const [productDesc, setProductDesc] = useState("");
   const [productAmount, setProductAmount] = useState("");
   const [productCategory, setProductCategory] = useState([]);
-  const [productPromoCodeDscs, setProductPromoCodeDscs] = useState();
-  const [productPromoCodePromo, setproductPromoCodePromo] = useState();
-  const [windowX, setWindowX] = useState(0);
-  const [windowY, setWindowY] = useState(0);
-  const [dmLeft, setDmleft] = useState(0);
-  const [dmtop, setDmtop] = useState(0);
+  const [productPromoCodeDscs, setProductPromoCodeDscs] = useState("0%");
+  const [productPromoCodePromo, setproductPromoCodePromo] = useState("KB0");
   const [submitData, setSubmitData] = useState([]);
+  const [updateSubmitData, setUpdateSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
+  const [skuDataOther, setOtherSku] = useState("");
+  const [imgId, setImgId] = useState();
+  const [flag, setFlag] = useState(false);
+  // const [productSource, setProductSource] = useState("ecommerce");
+  const [imageError, setImageError] = useState(false);
 
   const parentRef = useRef();
   const imgRef = useRef();
@@ -68,18 +71,26 @@ function ImageShop({
   }, [selectPost]);
 
   useEffect(() => {
-    if (circles?.length) {
-    } else {
-      //   UpdateaddCircle();
+    if (category?.length >= 0) {
+      setProductCategory(category);
     }
-  }, [flag]);
+  }, [category]);
 
   useEffect(() => {
-    if (children?.length) {
+    if (children?.length !== 0) {
       childrenAttr();
       imgData(children);
+    } else {
+      setSubmitData([]);
+      setCircles([]);
     }
   }, [children]);
+
+  useEffect(() => {
+    if (category?.length >= 0) {
+      setProductCategory(category);
+    }
+  }, [category]);
 
   const childrenAttr = () => {
     let circles = [];
@@ -136,62 +147,154 @@ function ImageShop({
 
   const onSubmitting = async (e) => {
     e.preventDefault();
-    setAddImageModal(false);
+    e.stopPropagation();
 
-    if (source === "other") {
-      var get_type = imageFiles[0]?.file.type;
-      var split = get_type.split("/");
-      var file_type = split[1];
-      var formImage = await convertBase64(imageFiles[0]?.file);
+    let updateData = [];
+    let updateMatched = {};
+    let newAdd = {};
+
+    if (updateProduct == true) {
+      console.log("linked True");
+      if (source === "other" && imageFiles.length === 0) {
+        setImageError(true);
+      } else {
+        setAddImageModal(false);
+
+        if (source === "other") {
+          var get_type = imageFiles[0]?.file.type;
+          var split = get_type.split("/");
+          var file_type = split[1];
+          var formImage = await convertBase64(imageFiles[0]?.file);
+        } else {
+          var media_url = imageFiles;
+        }
+        submitData.map((item) => {
+          if (item.imgid === imgId) {
+            let coordinates = item.coordinates;
+            let imgid = item.imgid;
+            updateMatched = {
+              ProductSku,
+              skuDataOther,
+              ProductName,
+              productAmount,
+              productDesc,
+              ProductUrl,
+              productCategory,
+              productPromoCodePromo,
+              productPromoCodeDscs,
+              file_type,
+              media_url,
+              coordinates,
+              imgid,
+            };
+            updateData.push(updateMatched);
+          } else {
+            updateData.push(item);
+            setUpdateSubmitData(item);
+          }
+          setUpdateSubmitData(updateData);
+        });
+
+        if (flag == true) {
+          var imgid = Math.floor(Math.random() * 100000);
+
+          newAdd = {
+            file: formImage,
+            ProductSku,
+            skuDataOther,
+            ProductName,
+            productAmount,
+            productDesc,
+            ProductUrl,
+            productCategory,
+            productPromoCodePromo,
+            productPromoCodeDscs,
+            coordinates,
+            file_type,
+            media_url,
+            imgid,
+          };
+
+          updateData.push(newAdd);
+          setUpdateSubmitData(updateData);
+        }
+        console.log(updateData, "Updateeee");
+        setSubmitData(updateData);
+        imgData(updateData);
+        setImageFiles([]);
+        setProductSku("");
+        setProductName("");
+        setOtherSku("");
+        setproductPromoCodePromo("KB0");
+        setProductPromoCodeDscs("0%");
+        setProductUrl("");
+        setProductAmount();
+        setProductDesc("");
+        setSkuData("");
+        setImageError(false);
+      }
     } else {
-      var media_url = imageFiles;
+      setFlag(false);
+      console.log("linked False");
+      if (source === "other" && imageFiles.length === 0) {
+        setImageError(true);
+      } else {
+        setAddImageModal(false);
 
-      // let files = multiImage;
-      // files.push({
-      //   media_url: skuData?.image?.src,
-      // });
-      //setMultiImage(files);
+        if (source === "other") {
+          var get_type = imageFiles[0]?.file.type;
+          var split = get_type.split("/");
+          var file_type = split[1];
+          var formImage = await convertBase64(imageFiles[0]?.file);
+        } else {
+          var media_url = imageFiles;
+
+          // let files = multiImage;
+          // files.push({
+          //   media_url: skuData?.image?.src,
+          // });
+          //setMultiImage(files);
+        }
+        var imgid = Math.floor(Math.random() * 100000);
+
+        let data = {
+          file: formImage,
+          ProductSku,
+          skuDataOther,
+          ProductName,
+          productAmount,
+          productDesc,
+          ProductUrl,
+          productCategory,
+          productPromoCodePromo,
+          productPromoCodeDscs,
+          coordinates,
+          file_type,
+          media_url,
+          imgid,
+        };
+
+        let allData = [...submitData, data];
+        setSubmitData(allData);
+
+        imgData(allData);
+        setImageFiles([]);
+        setProductSku("");
+        setProductName("");
+        setOtherSku("");
+        // setProductCategory([]);
+        setproductPromoCodePromo("KB0");
+        setProductPromoCodeDscs("0%");
+        setProductUrl("");
+        setProductAmount();
+        setProductDesc("");
+        setSkuData("");
+        // setProductSource("ecommerce");
+        setImageError(false);
+      }
     }
-    var imgid = Math.floor(Math.random() * 100000);
-
-    let data = {
-      file: formImage,
-      ProductSku,
-      ProductName,
-      productAmount,
-      productDesc,
-      ProductUrl,
-      productCategory,
-      productPromoCodePromo,
-      productPromoCodeDscs,
-      coordinates,
-      file_type,
-      media_url,
-      imgid,
-    };
-
-    let allData = [...submitData, data];
-    setSubmitData(allData);
-
-    imgData(allData);
-    setImageFiles([]);
-    setProductSku("");
-    setProductName("");
-    setProductCategory([]);
-    setproductPromoCodePromo("");
-    setProductPromoCodeDscs("");
-    setProductUrl("");
-    setProductAmount();
-    setProductDesc("");
-    setSkuData("");
   };
 
-  // function dateRangePickerChanger(value, dataString) {
-  //   let startDate = dataString[0];
-  //   let endDate = dataString[1];
-  //   setStartDate(startDate);
-  //   setEndDate(endDate);
-  // }
   const clearImage = () => {
     setImageFiles([]);
     // setMultiImage(multiImage.slice(1));
@@ -204,10 +307,13 @@ function ImageShop({
       skuData[0]._source?.domain +
       "/products/" +
       skuData[0]._source?.handle;
+    const description = skuData[0]._source?.body_html
+      ? skuData[0]._source?.body_html.replace(/<\/?[^>]+(>|$)/g, "")
+      : "";
     setProductName(skuData[0]._source?.title);
     setProductAmount(skuData[0]._source?.variants[0]?.price);
     setProductUrl(productUrl);
-    setProductDesc(skuData[0]._source?.body_html);
+    setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
   };
   const copyToClipboard = (url) => {
@@ -232,7 +338,9 @@ function ImageShop({
         keyboard={false}
       >
         <Modal.Header>
-          <Modal.Title>Add Image</Modal.Title>
+          <Modal.Title>
+            {updateProduct && ProductSku ? "Edit Link" : "Add Link"}
+          </Modal.Title>
           <button
             type="button"
             class="close"
@@ -241,14 +349,22 @@ function ImageShop({
               setImageFiles([]);
               setCoordinates("");
               // setSource("");
-
-              setCircles(circles.slice(0, -1));
               setProductName("");
+              setOtherSku("");
+              setproductPromoCodePromo("KB0");
+              setProductPromoCodeDscs("0%");
               setProductAmount("");
               setProductUrl("");
               setProductDesc("");
               setProductSku("");
               setSkuData("");
+              // setProductSource("ecommerce");
+              setImageError(false);
+              {
+                updateProduct === true || flag == false
+                  ? setSkuData("")
+                  : setCircles(circles.slice(0, -1));
+              }
             }}
           >
             <span aria-hidden="true">×</span>
@@ -296,14 +412,19 @@ function ImageShop({
                           Clear Images
                         </Button>
                       ) : (
-                        <Button
-                          type="button"
-                          className={`select-image ${
-                            imageFiles.length > 0 ? "" : "image-space"
-                          }`}
-                        >
-                          <label for="fileupload2">Choose Image</label>
-                        </Button>
+                        <>
+                          <Button
+                            type="button"
+                            className={`select-image ${
+                              imageFiles.length > 0 ? "" : "image-space"
+                            }`}
+                          >
+                            <label for="fileupload2">Choose Image</label>
+                          </Button>
+                          {imageError && (
+                            <div className="img-error">Image required</div>
+                          )}
+                        </>
                       )}
                     </div>
                   </Col>
@@ -311,14 +432,34 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {skuData?.image?.src && (
+                        {updateProduct === true ? (
                           <img
                             alt="sku-image"
-                            src={skuData?.image?.src}
+                            src={
+                              skuData?.image?.src
+                                ? skuData?.image?.src
+                                : skuData.media_url
+                            }
                             // key={`img-id-${idx.toString()}`}
                             // style={{ width: "100px", height: "100px" }}
                             className="sku-image"
                           />
+                        ) : (
+                          <>
+                            {skuData?.image?.src && (
+                              <img
+                                alt="sku-image"
+                                src={
+                                  skuData?.image?.src
+                                    ? skuData?.image?.src
+                                    : skuData.media_url
+                                }
+                                // key={`img-id-${idx.toString()}`}
+                                // style={{ width: "100px", height: "100px" }}
+                                className="sku-image"
+                              />
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
@@ -326,7 +467,7 @@ function ImageShop({
                 ))}
 
               <Col md={source ? 8 : 12}>
-                <div className="row mb-3">
+                {/* <div className="row mb-3">
                   <div className="col-md-12">
                     <label>Source</label>
                     <Select
@@ -335,14 +476,16 @@ function ImageShop({
                       style={{ width: "100%" }}
                       placeholder="Select Source"
                       className="product_source"
-                      dropdownClassName={"product_source_dropdown"}
-                      // onChange={(value) => setSource(value)}
+                      // dropdownClassName={"product_source_dropdown"}
+                      // onChange={(value) => setProductSource(value)}
                     >
-                      {/* <Option value="ecommerce">Ecommerce</Option>
-                      <Option value="other">Others</Option> */}
+                      <Option className="source_cap" value={source}>
+                        {source}
+                      </Option>
+                      {/* <Option value="other">Others</Option> 
                     </Select>
                   </div>
-                </div>
+                </div> */}
                 {source && (
                   <>
                     {source === "ecommerce" ? (
@@ -352,17 +495,33 @@ function ImageShop({
                           name="sku"
                           placeholder="Enter Product SKU"
                           getSku={getSku}
+                          defaultValue={ProductSku}
+                          productAmount={productAmount}
+                          ProductName={ProductName}
                         />
                       </div>
                     ) : (
+                      // <div className="mb-3">
+                      //   <label>Enter Product SKU</label>
+                      //   <input
+                      //     type="text"
+                      //     name="sku"
+                      //     placeholder="Enter Product SKU"
+                      //     onInput={(e) => setProductSku(e.target.value)}
+                      //     value={ProductSku}
+                      //     className="form-control"
+                      //     required
+                      //     autoComplete="off"
+                      //   />
+                      // </div>
                       <div className="mb-3">
-                        <label>Enter Product SKU</label>
+                        <label>Enter URL</label>
                         <input
                           type="text"
-                          name="sku"
-                          placeholder="Enter Product SKU"
-                          onInput={(e) => setProductSku(e.target.value)}
-                          value={ProductSku}
+                          name="url"
+                          placeholder="Enter URL"
+                          onInput={(e) => setProductUrl(e.target.value)}
+                          value={ProductUrl}
                           className="form-control"
                           required
                           autoComplete="off"
@@ -373,11 +532,25 @@ function ImageShop({
                     {source === "other" ? (
                       <>
                         <div className="row mb-3">
-                          <div className="col-md-6 ">
+                          <div className="col-md-12 ">
+                            <label>Enter SKU</label>
+                            <input
+                              type="number"
+                              name="product_name"
+                              placeholder="Enter Sku"
+                              onInput={(e) => setOtherSku(e.target.value)}
+                              value={skuDataOther}
+                              className="form-control"
+                              required
+                              autoComplete="off"
+                            />
+                          </div>
+
+                          <div className="col-md-12 ">
                             <label>Enter Product Name</label>
                             <input
                               type="text"
-                              name="product_name"
+                              name="sku"
                               placeholder="Enter Product Name"
                               onInput={(e) => setProductName(e.target.value)}
                               value={ProductName}
@@ -386,7 +559,7 @@ function ImageShop({
                               autoComplete="off"
                             />
                           </div>
-                          <div className="col-md-6 ">
+                          {/* <div className="col-md-6 ">
                             <label>Enter Product Url</label>
                             <input
                               type="text"
@@ -398,7 +571,7 @@ function ImageShop({
                               required
                               autoComplete="off"
                             />
-                          </div>
+                          </div> */}
                         </div>
                         <div className="row mb-3">
                           <div className="col-md-6 ">
@@ -461,7 +634,7 @@ function ImageShop({
                             ))}
                           </Select>
                         </div>
-                        {/* <div className="row mb-3">
+                        <div className="row mb-3">
                           <div className="col-md-4">
                             <label>PromoCode</label>
 
@@ -514,7 +687,7 @@ function ImageShop({
                               {numeral(Kbfee).format("0,0'")}%
                             </div>
                           </div>
-                        </div> */}
+                        </div>
                         <div className="mb-3">
                           {imageLoading ? (
                             <Button>
@@ -525,10 +698,10 @@ function ImageShop({
                               variant="primary"
                               type="submit"
                               className="btn-block"
-                              onClick={onSubmitting}
+                              // onClick={onSubmitting}
                               // disabled={this.state.imageFiles[0] === undefined ? true : false}
                             >
-                              Add Image
+                              Save
                             </Button>
                           )}
                         </div>
@@ -709,6 +882,7 @@ function ImageShop({
                                 </div>
                               </div>
                             </div>
+
                             <div className="mb-3">
                               {imageLoading ? (
                                 <Button>
@@ -719,10 +893,10 @@ function ImageShop({
                                   variant="primary"
                                   type="submit"
                                   className="btn-block"
-                                  onClick={onSubmitting}
+                                  // onClick={onSubmitting}
                                   // disabled={this.state.imageFiles[0] === undefined ? true : false}
                                 >
-                                  Add Image
+                                  {updateProduct ? "Update" : "Save"}
                                 </Button>
                               )}
                             </div>
@@ -741,14 +915,26 @@ function ImageShop({
   };
   const style = {
     tagAreaMain: {
-      width: "290px",
-      height: "338px",
+      // width: "290px",
+      // height: "338px",
       position: "relative",
-      maxWidth: "100%",
+      // maxWidth: "100%",
       // backgroundColor: "lightblue",
     },
   };
+
+  const alertImg = () => {
+    Swal.fire({
+      title: `Please Select Category `,
+      icon: "warning",
+
+      confirmButtonColor: "#010b40",
+
+      confirmButtonText: `Ok`,
+    });
+  };
   const addCircle = (e) => {
+    setFlag(true);
     if (submitData.length < 3) {
       if (source) {
         // get click coordinates
@@ -788,7 +974,7 @@ function ImageShop({
 
   const imgDelete = (id) => {
     Swal.fire({
-      title: `Are you sure you want to remove this image?`,
+      title: `Are you sure you want to remove this product?`,
       icon: "warning",
       cancelButtonText: "No",
       showCancelButton: true,
@@ -844,7 +1030,13 @@ function ImageShop({
             <Col md={4} className="sku-image-box">
               <div className="fileinput file-profile">
                 <div className="fileinput-new mb-2">
-                  {data?.media_url && (
+                  {source === "other" ? (
+                    <img
+                      alt="sku-image"
+                      src={data?.file}
+                      className="sku-image"
+                    />
+                  ) : (
                     <img
                       alt="sku-image"
                       src={data?.media_url}
@@ -857,10 +1049,12 @@ function ImageShop({
 
             <Col md={8}>
               <div class="row analytic-box">
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Product SKU</h5>
-                  <h3 class="count">{data?.ProductSku} </h3>
-                </div>
+                {source !== "other" ? (
+                  <div class="col-12 count-box">
+                    <h5 class="count-title">Product SKU</h5>
+                    <h3 class="count">{data?.ProductSku} </h3>
+                  </div>
+                ) : null}
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Name </h5>
                   <h3 class="count">{data?.ProductName} </h3>
@@ -884,6 +1078,11 @@ function ImageShop({
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Amount</h5>
                   <h3 class="count">${data?.productAmount} </h3>
+                </div>
+
+                <div class="col-12 count-box">
+                  <h5 class="count-title">Product SKU</h5>
+                  <h3 class="count">{data?.skuDataOther} </h3>
                 </div>
 
                 <div class="col-12 count-box">
@@ -911,8 +1110,34 @@ function ImageShop({
   };
 
   const clickModal = (data) => {
-    setDetailImageModal(true);
-    gb = data;
+    // setDetailImageModal(true);
+    console.log(data, "uzairrrr");
+    if (source === "other") {
+      setDetailImageModal(true);
+      gb = data;
+    } else {
+      setAddImageModal(true);
+      gb = data;
+      setImgId(gb.imgid);
+      console.log(gb.imgid, "_____________________________________________");
+      setProductSku(gb.ProductSku);
+      setSkuData(gb);
+      // const productUrl =
+      //   "https://" +
+      //   skuData[0]._source?.domain +
+      //   "/products/" +
+      //   skuData[0]._source?.handle;
+      const description = gb.productDesc
+        ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+        : "";
+      setProductName(gb.ProductName);
+      setProductAmount(gb.productAmount);
+      setProductUrl(gb.ProductUrl);
+      setProductDesc(description);
+      setImageFiles(gb.media_url);
+      setProductPromoCodeDscs(gb.productPromoCodeDscs);
+      setproductPromoCodePromo(gb.productPromoCodePromo);
+    }
   };
   return (
     <>
@@ -922,13 +1147,24 @@ function ImageShop({
         ref={parentRef}
         id="tagImg"
       >
-        <img
-          onClick={(e) => addCircle(e)}
-          ref={imgRef}
-          src={mediaUrl}
-          alt="media-image"
-          style={{ width: "100%", height: "100%" }}
-        />
+        {category?.length === 0 ? (
+          <img
+            onClick={(e) => alertImg(e)}
+            ref={imgRef}
+            src={mediaUrl}
+            alt="media-image"
+            style={{ width: "100%", height: "100%" }}
+          />
+        ) : (
+          <img
+            onClick={(e) => addCircle(e)}
+            ref={imgRef}
+            src={mediaUrl}
+            alt="media-image"
+            // style={{ width: "100%", height: "100%" }}
+          />
+        )}
+        {}
         {circles &&
           circles.map((item, i) => (
             <div
@@ -945,15 +1181,31 @@ function ImageShop({
         {submitData.map((item, index) => (
           <Col md={4}>
             <div className="inner-image-box">
-              <span className="image_num">{index + 1}</span>
-              <img
-                alt="product-image"
-                src={item.media_url}
-                key={index}
-                className="img1"
-                onClick={() => clickModal(item)}
-              />
-              <span className="close" onClick={() => imgDelete(item.imgid)}>
+              <span onClick={() => clickModal(item)} className="image_num">
+                {index + 1}
+              </span>
+              {source === "other" ? (
+                <img
+                  alt="product-image"
+                  src={`${item?.file}`}
+                  key={index}
+                  className="img1"
+                  onClick={() => clickModal(item)}
+                />
+              ) : (
+                <img
+                  alt="product-image"
+                  src={item.media_url}
+                  key={index}
+                  className="img1"
+                  onClick={() => clickModal(item)}
+                />
+              )}
+              <span
+                className="close"
+                title="Remove"
+                onClick={() => imgDelete(item.imgid)}
+              >
                 <span aria-hidden="true">×</span>
               </span>
             </div>

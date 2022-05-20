@@ -80,6 +80,7 @@ class LinkinBio extends React.Component {
       promoCodeVal: "",
       promoData: "",
       product_source: "",
+      singleLoading: false,
     };
     this.changeCategory = this.changeCategory.bind(this);
     this.changeSubCategory = this.changeSubCategory.bind(this);
@@ -89,12 +90,12 @@ class LinkinBio extends React.Component {
   componentDidMount() {
     userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-    axios
-      .get("/campaigns/receive/getpromocodes")
-      .then((res) => {})
-      .catch((res) => {
-        this.setState({ ShopifyConnFound: false });
-      });
+    // axios
+    //   .get("/campaigns/receive/getpromocodes")
+    //   .then((res) => {})
+    //   .catch((res) => {
+    //     this.setState({ ShopifyConnFound: false });
+    //   });
   }
 
   componentWillMount() {
@@ -185,9 +186,11 @@ class LinkinBio extends React.Component {
   }
   // Fetch Single Post
   fetchSinglePost = async (media_id) => {
+    this.setState({ singleLoading: true });
     await axios
       .get(`/posts/retrieve/${media_id}`)
       .then((response) => {
+        this.setState({ singleLoading: false });
         if (userInfo?.account_type == "influencer") {
         } else {
           this.setState({ subdescription: response.data.message.description });
@@ -197,7 +200,6 @@ class LinkinBio extends React.Component {
         }
 
         this.setState({ childrens: response.data.message.children });
-
         this.setState({
           product_source: response?.data?.message?.product_source,
         });
@@ -213,6 +215,7 @@ class LinkinBio extends React.Component {
         );
       })
       .catch((err) => {
+        this.setState({ singleLoading: false });
         this.setState({
           category: [],
         });
@@ -249,55 +252,54 @@ class LinkinBio extends React.Component {
       newRedirectedUrl = "http://" + this.state.redirectedUrl;
     }
 
-    if (this.state.redirectedUrl) {
-      this.setState(
-        (previousState) => ({
-          currentPost: previousState.singlePost,
-        }),
-        async () => {
-          this.setState({ loading: true });
-          if (userInfo?.account_type == "influencer") {
-            await axios
-              .post(`/posts/reserve`, {
-                id: this.state.currentPost.id,
-                caption: this.state.currentPost.caption,
-                media_url: this.state.currentPost.media_url,
-                media_type: this.state.currentPost.media_type,
-                timestamp: this.state.currentPost.timestamp,
-                redirected_url: newRedirectedUrl,
-                username: this.state.currentPost.username,
-                categories: this.state.category,
-                sub_categories: this.state.subCategory,
-                post_type: this.state.postType,
-                start_date: this.state.startDate,
-                end_date: this.state.endDate,
-                source: this.props.mobileDropdown,
-              })
-              .then((response) => {
-                this.setState({ loading: false });
-                let singlePostIndex = this.state.instagramPosts.data.findIndex(
-                  (item) => item.id === this.state.currentPost.id
-                );
-                let currentPost = this.state.currentPost;
-                currentPost.redirected_url = this.state.redirectedUrl;
-                currentPost.linked = true;
-                let instagramPosts = JSON.parse(
-                  JSON.stringify(this.state.instagramPosts)
-                );
-                instagramPosts.data[singlePostIndex] = currentPost;
-                this.setState({ instagramPosts: instagramPosts }, () => {});
-                toast.success("Your Post is Linked Successfully");
-                this.selectPost(false, "");
-                this.reload();
-              })
+    this.setState(
+      (previousState) => ({
+        currentPost: previousState.singlePost,
+      }),
+      async () => {
+        this.setState({ loading: true });
+        if (userInfo?.account_type == "influencer") {
+          await axios
+            .post(`/posts/reserve`, {
+              id: this.state.currentPost.id,
+              caption: this.state.currentPost.caption,
+              media_url: this.state.currentPost.media_url,
+              media_type: this.state.currentPost.media_type,
+              timestamp: this.state.currentPost.timestamp,
+              redirected_url: newRedirectedUrl,
+              username: this.state.currentPost.username,
+              categories: this.state.category,
+              sub_categories: this.state.subCategory,
+              post_type: this.state.postType,
+              start_date: this.state.startDate,
+              end_date: this.state.endDate,
+              source: this.props.mobileDropdown,
+            })
+            .then((response) => {
+              this.setState({ loading: false });
+              let singlePostIndex = this.state.instagramPosts.data.findIndex(
+                (item) => item.id === this.state.currentPost.id
+              );
+              let currentPost = this.state.currentPost;
+              currentPost.redirected_url = this.state.redirectedUrl;
+              currentPost.linked = true;
+              let instagramPosts = JSON.parse(
+                JSON.stringify(this.state.instagramPosts)
+              );
+              instagramPosts.data[singlePostIndex] = currentPost;
+              this.setState({ instagramPosts: instagramPosts }, () => {});
+              toast.success("Your Post is Linked Successfully");
+              this.selectPost(false, "");
+              this.reload();
+            })
 
-              .catch((err) => {
-                this.setState({ loading: false });
-                toast.error(err);
-              });
-          } else {
+            .catch((err) => {
+              this.setState({ loading: false });
+              toast.error(err);
+            });
+        } else {
+          if (this.state.category.length) {
             if (imgData?.length) {
-              console.log(imgData, "previousssss");
               await axios
                 .post(`/posts/reserve`, {
                   id: this.state.currentPost.id,
@@ -347,10 +349,13 @@ class LinkinBio extends React.Component {
               toast.error("please add atleast 1 tag image");
               this.setState({ loading: false });
             }
+          } else {
+            toast.error("please Select Category");
+            this.setState({ loading: false });
           }
         }
-      );
-    }
+      }
+    );
   };
 
   updatePost = async (
@@ -634,7 +639,7 @@ class LinkinBio extends React.Component {
         dateRange={(startDate, endDate) => {
           this.changeDateRange(startDate, endDate);
         }}
-        product_source={this.state?.product_source}
+        product_source={this.state.product_source}
         children={this.state.childrens}
         autoFocus={this.state.autoFocus}
         isSelectPost={this.state.selectPost}
@@ -672,6 +677,7 @@ class LinkinBio extends React.Component {
         updatedDate={this.state.updatedAt}
         promoData={this.state.promoData}
         userInfo={userInfo}
+        singleLoading={this.state.singleLoading}
       ></ShopRightBar>
     );
   };
@@ -740,7 +746,40 @@ class LinkinBio extends React.Component {
                 </Col>
               </Row>
             ) : (
-              <> {this.shopRightBar()}</>
+              <>
+                <Row className="linked_edit_box">
+                  <Col xs="12" className="p-5">
+                    {this.shopRightBar()}
+                  </Col>
+                </Row>
+                {/* {this.state.ShopifyConnFound == false &&
+                this.state.selectPost ? (
+                  <div className="container-fluid">
+                    <div class="coming_iner">
+                      <h2>Connect To Shopify</h2>
+                      {/* <p className="text-muted">
+              {userInfo?.package?.package_id === "61c02d43f40bec74fac2c9a0"
+                ? "This option is only available for Influencer Plus."
+                : "This option is only available for Brand."}
+            </p> 
+                      <button
+                        class="btn btn-primary"
+                        onClick={() => history.push("/app/account/ecommerce")}
+                      >
+                        Shopify Setup
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Row className="linked_edit_box">
+                      <Col xs="12" className="p-5">
+                        {this.shopRightBar()}
+                      </Col>
+                    </Row>
+                  </>
+                )} */}
+              </>
             )}
           </Col>
         </Row>
