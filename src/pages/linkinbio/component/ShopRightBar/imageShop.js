@@ -178,6 +178,8 @@ function ImageShop({
         }
         submitData.map((item) => {
           if (item.imgid === imgId) {
+
+            let id = item.id;
             let coordinates = item.coordinates;
             let imgid = item.imgid;
             updateMatched = {
@@ -194,6 +196,7 @@ function ImageShop({
               media_url,
               coordinates,
               imgid,
+              id
             };
             updateData.push(updateMatched);
           } else {
@@ -1199,6 +1202,8 @@ function ImageShop({
     setproductPromoCodePromo(gb.productPromoCodePromo);
     }
   };
+
+  console.log(submitData,"submitData");
   return (
     <>
       <div

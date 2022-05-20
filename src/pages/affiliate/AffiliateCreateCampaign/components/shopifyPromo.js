@@ -57,7 +57,7 @@ function ShopifyPromo({
                   </div> */}
 
 
-                  <div className="col-md-6 mt-3">
+                  {/* <div className="col-md-6 mt-3">
                     <div class="form-check">
                                  
                       
@@ -66,7 +66,7 @@ function ShopifyPromo({
                         Shopify
                       </label>
                     </div>
-                  </div>
+                  </div> */}
                
                 </div>
   }

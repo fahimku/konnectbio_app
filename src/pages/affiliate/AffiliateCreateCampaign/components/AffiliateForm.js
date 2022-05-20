@@ -19,6 +19,9 @@ import ShopifyPromo from "./shopifyPromo";
 import { textAlign } from "@mui/system";
 import Connection from "../../../connectToShopify/connShopify";
 import numeral from "numeral";
+import ImageShop from "./AffiliateImageShop";
+
+
 const { Option } = Select;
 
 const { RangePicker } = DatePicker;
@@ -214,23 +217,37 @@ class AffiliateForm extends React.Component {
     this.reachCampaign();
   };
 
+  // handleClick = (data, status) => {
+  //   if (status === false) {
+  //     this.setState({ connNotFound: false });
+  //   } else {
+  //     if (data == undefined) {
+  //       this.setState({ promoCond: true });
+  //     } else {
+  //       const promo = data;
+  //       if (data.length > 0) {
+  //         this.setState({ promoCond: false });
+  //       } else {
+  //         this.setState({ promoCond: true });
+  //       }
+  //       tst = data;
+  //     }
+  //   }
+  // };
+
+
   handleClick = (data, status) => {
+    tst = data;
+    console.log(data,"IIIIII")
     if (status === false) {
       this.setState({ connNotFound: false });
     } else {
-      if (data == undefined) {
-        this.setState({ promoCond: true });
-      } else {
-        const promo = data;
-        if (data.length > 0) {
-          this.setState({ promoCond: false });
-        } else {
-          this.setState({ promoCond: true });
-        }
         tst = data;
       }
-    }
+    
   };
+
+
   getState = async (countryCode) => {
     await axios
       .post(`/common/receive/states`, { country_code: countryCode })
@@ -525,11 +542,21 @@ class AffiliateForm extends React.Component {
                   ></source>
                 </video>
               ) : (
-                <img
-                  src={affData.media_url}
-                  alt="media_url"
-                  className="post-image"
-                />
+                
+                // <img
+                //   src={affData.media_url}
+                //   alt="media_url"
+                //   className="post-image"
+                // />
+                <ImageShop
+                mediaUrl={affData.media_url}
+                selectPost={affData.media_url}
+                children={affData.children}
+                obj={affData}
+                source={affData.product_source}
+                
+                
+              />
               )}
               {/* <img src={`${affData.media_url}`} alt="media_url" /> */}
             </div>
@@ -551,18 +578,9 @@ class AffiliateForm extends React.Component {
                     autoFocus
                   />
                 </div>
-                <div className="campaign-url col-md-6">
+                {/* <div className="campaign-url col-md-6">
                   <label>URL</label>
-                  {/* <InputValidation
-                    className=""
-                    placeholder="Please Enter Website Address"
-                    type="text"
-                    id="website"
-                    required
-                    name="website"
-                    value={affData.redirected_url}
-                    disabled
-                  /> */}
+               
                   <div className="url-copy">
                     <div className="your-copy-link">
                       <div className="item-a">
@@ -584,27 +602,7 @@ class AffiliateForm extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div className="row  mt-3">
-                <div className="select-categories col-md-6">
-                  <label>Category</label>
-                  <Select
-                    key={Date.now()}
-                    value={category}
-                    style={{ width: "100%" }}
-                    placeholder="Category"
-                    disabled={true}
-                  >
-                    {affData.categories
-                      ? affData.categories.map(
-                          ({ category_id, category_name }, i) => (
-                            <Option value={category_id}>{category_name}</Option>
-                          )
-                        )
-                      : []}
-                  </Select>
-                </div>
+                </div> */}
 
                 <div className="date-range-aff col-md-6">
                   <label>Select Start Date / End Date</label>
@@ -641,6 +639,29 @@ class AffiliateForm extends React.Component {
                     disabledDate={this.disabledDate}
                   />
                 </div>
+
+              </div>
+              <div className="row  mt-3">
+                <div className="select-categories col-md-6">
+                  <label>Category</label>
+                  <Select
+                    key={Date.now()}
+                    value={category}
+                    style={{ width: "100%" }}
+                    placeholder="Category"
+                    disabled={true}
+                  >
+                    {affData.categories
+                      ? affData.categories.map(
+                          ({ category_id, category_name }, i) => (
+                            <Option value={category_id}>{category_name}</Option>
+                          )
+                        )
+                      : []}
+                  </Select>
+                </div>
+
+               
               </div>
 
               <div className="row mt-4">
@@ -770,7 +791,7 @@ class AffiliateForm extends React.Component {
                     </span>
                   </div>
                 </div> */}
-                <ShopifyPromo PromoPayload={this.handleClick} />
+                {/* <ShopifyPromo PromoPayload={this.handleClick} /> */}
 
                 {this.state.promoCond ? (
                   <></>
