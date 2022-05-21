@@ -73,7 +73,7 @@ function ImageShop({
   const imgRef = useRef();
   let arr = [];
   let promoRequestCode =[];
-  let second;
+  
  
   useEffect(() => {
     setImageFiles([]);

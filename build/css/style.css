@@ -244,6 +244,8 @@ span.icon {
     width: 100%;
   }
 }
+
+
 /**************analytic-box******************/
 .analytic-box {
   margin-bottom: 20px;
@@ -361,6 +363,16 @@ span.icon {
 .auth-logo .logo {
   width: 180px;
   height: 90px;
+}
+
+.analytic-box.prod-box {
+  margin-bottom: 0px;
+  padding:5px 20px 0px 20px;
+}
+.product-url-link {
+  width: 76%;
+    word-break: break-all;
+    text-align: right;
 }
 
 @media screen and (min-width: 280px) and (max-width: 767px) {
@@ -500,6 +512,19 @@ span.icon {
   height: 45px !important;
   padding: 0 10px !important;
 }
+.campaign-promo-select.height-45:not(.ant-select-customize-input) .ant-select-selector {
+  height: 45px !important;
+}
+
+.popup-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: solid 1px #ccc;
+  padding: 4px;
+  border-radius: 4px;
+}
+
 .ant-select-single:not(.ant-select-customize-input)
   .ant-select-selector
   .ant-select-selection-search-input {
