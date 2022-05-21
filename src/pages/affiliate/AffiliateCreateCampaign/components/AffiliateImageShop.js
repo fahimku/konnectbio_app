@@ -102,6 +102,11 @@ function ImageShop({
 }, []);
 
 
+useEffect(() =>{
+imgData(submitData)
+},[imgData])
+
+
 if(loader == true){  
     promoRequestCode = promoRequest.message ? promoRequest.message : [];        
     
