@@ -999,14 +999,13 @@ function ImageShop({
       if (source) {
         // get click coordinates
         setAddImageModal(true);
-
         var pos_x = e.nativeEvent.offsetX;
         // ? e.offsetX
         // : e.pageX - imgRef.current.offsetLeft - 770;
         var pos_y = e.nativeEvent.offsetY;
         // ? e.offsetY
         // : e.pageY - imgRef.current.offsetTop - 190;
-
+        console.log({ pos_x, pos_y,w:parentRef.current.clientWidth,h:parentRef.current.clientHeight },"---------===");
         // let pos_x_percent =
         //   (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         // let pos_y_percent =
