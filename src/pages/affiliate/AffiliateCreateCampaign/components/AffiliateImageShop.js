@@ -32,6 +32,7 @@ function ImageShop({
   // setSource,
   source,
   updateProduct,
+  obj,
   shopifyPromo
 }) {
   const [circles, setCircles] = useState([]);
@@ -59,11 +60,12 @@ function ImageShop({
   const [updateSubmitData, setUpdateSubmitData] = useState([  ]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
-  const [skuDataOther, setOtherSku] = useState("");
+  const [skuDataOther, setOtherSku] = useState();
   const [imgId, setImgId] = useState();
   const [flag, setFlag] = useState(false);
   const [flagsb, setFlagSb] = useState(false);
   const [GetPromo, setgetPromo] = useState()
+ 
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
 
@@ -100,12 +102,8 @@ function ImageShop({
 }, []);
 
 
-
-
 if(loader == true){  
     promoRequestCode = promoRequest.message ? promoRequest.message : [];        
-   
-    console.log(promoRequestCode,"Gooooli")
     
     } 
 
@@ -196,24 +194,21 @@ if(loader == true){
     let newAdd = {};
     let data = {};
 
-    if (updateProduct == true) {
+    
      
-      if (source === "other" && imageFiles.length === 0) {
-        setImageError(true);
-      } else {
-        setAddImageModal(false);
+   
+        setDetailImageModal(false);
 
         if (source === "other") {
-          var get_type = imageFiles[0]?.file.type;
-          var split = get_type.split("/");
-          var file_type = split[1];
-          var formImage = await convertBase64(imageFiles[0]?.file);
+       
         } else {
           var media_url = imageFiles;
         }
         submitData.map((item) => {
           if (item.imgid === imgId) {
 
+            let file = item.file ? item.file : '';
+            let file_type = item.file_type ? item.file_type : '';
             let id = item.id;
             let coordinates = item.coordinates;
             let imgid = item.imgid;
@@ -227,9 +222,10 @@ if(loader == true){
               productCategory,
               productPromoCodePromo,
               productPromoCodeDscs,
-              file_type,
               media_url,
               coordinates,
+              file,
+              file_type,
               imgid,
               id
             };
@@ -241,29 +237,7 @@ if(loader == true){
           setUpdateSubmitData(updateData);
         });
 
-        if (flag == true) {
-          var imgid = Math.floor(Math.random() * 100000);
-
-          newAdd = {
-            file: formImage,
-            ProductSku,
-            skuDataOther,
-            ProductName,
-            productAmount,
-            productDesc,
-            ProductUrl,
-            productCategory,
-            productPromoCodePromo,
-            productPromoCodeDscs,
-            coordinates,
-            file_type,
-            media_url,
-            imgid,
-          };
-
-          updateData.push(newAdd);
-          setUpdateSubmitData(updateData);
-        }
+      
    
         setSubmitData(updateData);
         imgData(updateData);
@@ -278,111 +252,12 @@ if(loader == true){
         setProductDesc("");
         setSkuData("");
         setImageError(false);
-      }
-    } else {
-      setFlag(false)
       
-      if (source === "other" && imageFiles.length === 0) {
-        setImageError(true);
-      } else {
-        setAddImageModal(false);
-
-        if (source === "other") {
-          var get_type = imageFiles[0]?.file.type;
-          var split = get_type.split("/");
-          var file_type = split[1];
-          var formImage = await convertBase64(imageFiles[0]?.file);
-        } else {
-          var media_url = imageFiles;
-
-          // let files = multiImage;
-          // files.push({
-          //   media_url: skuData?.image?.src,
-          // });
-          //setMultiImage(files);
-        }
-       
-        submitData.map((item,indx) => {
-          if (item.imgid === imgId) {
-            submitData.splice(indx, 1);
-            
-            //setSubmitData(item)
-            
-            let coordinates = item.coordinates;
-            let imgid = item.imgid;
-            updateMatched = {
-              ProductSku,
-              skuDataOther,
-              ProductName,
-              productAmount,
-              productDesc,
-              ProductUrl,
-              productCategory,
-              productPromoCodePromo,
-              productPromoCodeDscs,
-              file_type,
-              media_url,
-              coordinates,
-              imgid,
-            };
-           
-            submitData.push(updateMatched);
-       
-         
-          }
-         
-        
-        });
-        
-        if (flagsb == true) {
-        
-        var imgid = Math.floor(Math.random() * 100000);
-
-        data = {
-         file: formImage,
-         ProductSku,
-         skuDataOther,
-         ProductName,
-         productAmount,
-         productDesc,
-         ProductUrl,
-         productCategory,
-         productPromoCodePromo,
-         productPromoCodeDscs,
-         coordinates,
-         file_type,
-         media_url,
-         imgid,
-       };
-       submitData.push(data);
-      }
-      
-      
-
-       
-       imgData(submitData);
-       // setSubmitData(updateData);
-        
-        setImageFiles([]);
-        setProductSku("");
-        setProductName("");
-        setOtherSku("");
-        // setProductCategory([]);
-        setproductPromoCodePromo("KB0");
-        setProductPromoCodeDscs("0%");
-        setProductUrl("");
-        setProductAmount();
-        setProductDesc("");
-        setSkuData("");
-        setFlag(false)
-        setFlagSb(false);
-        // setProductSource("ecommerce");
-        setImageError(false);
-      }
-    }
+    
   
   };
 
+  console.log(submitData,"Final -------  Data")
 
   const clearImage = () => {
     setImageFiles([]);
@@ -417,593 +292,6 @@ if(loader == true){
     toast.success("Copied to Clipboard!");
   };
 
-//   const ImageModal = () => {
-//     return (
-//       <Modal
-//         show={addImageModal}
-//         // onHide={() => setAddImageModal(false)}
-//         centered
-//         className="add-image-modal"
-//         animation={false}
-//         backdrop={true}
-//         keyboard={false}
-//       >
-//         <Modal.Header>
-//           <Modal.Title>
-//             {updateProduct && ProductSku ? "Edit Link" : "Add Link"}
-//           </Modal.Title>
-//           <button
-//             type="button"
-//             class="close"
-//             onClick={() => {
-//               setAddImageModal(false);
-//               setImageFiles([]);
-//               setCoordinates("");
-//               // setSource("");
-//               setProductName("");
-//               setOtherSku("");
-//               setproductPromoCodePromo("KB0");
-//               setProductPromoCodeDscs("0%");
-//               setProductAmount("");
-//               setProductUrl("");
-//               setProductDesc("");
-//               setProductSku("");
-//               setSkuData("");
-//               // setProductSource("ecommerce");
-//               setImageError(false);
-//               {
-//                 updateProduct === true || flag == false
-//                   ? setSkuData("")
-//                   : setCircles(circles.slice(0, -1));
-//               }
-//             }}
-//           >
-//             <span aria-hidden="true">×</span>
-//             <span class="sr-only">Close</span>
-//           </button>
-//         </Modal.Header>
-//         <form onSubmit={onSubmitting}>
-//           <div className="mt-3 ml-4 mr-4">
-//             <div className=" row">
-//               {source &&
-//                 (source === "other" ? (
-//                   <Col md={4} className="sku-image-box">
-//                     <div className="fileinput file-profile">
-//                       <input
-//                         accept=".jpg, .jpeg, .png, .webp, .svg"
-//                         onChange={(e) => onChangeInputImage(e)}
-//                         id="fileupload2"
-//                         type="file"
-//                         name="file"
-//                         className="d-none"
-//                       />
-//                       <div className="fileinput-new mb-2">
-//                         {imageFiles.length > 0 ? (
-//                           <div className="">
-//                             {/* {imageFiles.map((item) => ( */}
-//                             <img
-//                               alt="sku-image"
-//                               src={imageFiles[0].media_url}
-//                               // key={`img-id-${idx.toString()}`}
-//                               // style={{ width: "100px", height: "100px" }}
-//                               className="sku-image"
-//                             />
-//                             {/* ))} */}
-//                           </div>
-//                         ) : (
-//                           ""
-//                         )}
-//                       </div>
-//                       {imageFiles.length > 0 ? (
-//                         <Button
-//                           onClick={clearImage}
-//                           // className="fa fa-trash clear_circle"
-//                           title="Clear Images"
-//                         >
-//                           Clear Images
-//                         </Button>
-//                       ) : (
-//                         <>
-//                           <Button
-//                             type="button"
-//                             className={`select-image ${
-//                               imageFiles.length > 0 ? "" : "image-space"
-//                             }`}
-//                           >
-//                             <label for="fileupload2">Choose Image</label>
-//                           </Button>
-//                           {imageError && (
-//                             <div className="img-error">Image required</div>
-//                           )}
-//                         </>
-//                       )}
-//                     </div>
-//                   </Col>
-//                 ) : (
-//                   <Col md={4} className="sku-image-box">
-//                     <div className="fileinput file-profile">
-//                       <div className="fileinput-new mb-2">
-//                         {updateProduct === true ? (
-//                           <img
-//                             alt="sku-image"
-//                             src={
-//                               skuData?.image?.src
-//                                 ? skuData?.image?.src
-//                                 : skuData.media_url
-//                             }
-//                             // key={`img-id-${idx.toString()}`}
-//                             // style={{ width: "100px", height: "100px" }}
-//                             className="sku-image"
-//                           />
-//                         ) : (
-//                           <>
-//                             {skuData?.image?.src && (
-//                               <img
-//                                 alt="sku-image"
-//                                 src={
-//                                   skuData?.image?.src
-//                                     ? skuData?.image?.src
-//                                     : skuData.media_url
-//                                 }
-//                                 // key={`img-id-${idx.toString()}`}
-//                                 // style={{ width: "100px", height: "100px" }}
-//                                 className="sku-image"
-//                               />
-//                             )}
-//                           </>
-//                         )}
-//                       </div>
-//                     </div>
-//                   </Col>
-//                 ))}
-
-//               <Col md={source ? 8 : 12}>
-//                 {/* <div className="row mb-3">
-//                   <div className="col-md-12">
-//                     <label>Source</label>
-//                     <Select
-//                       key={Date.now()}
-//                       value={source}
-//                       style={{ width: "100%" }}
-//                       placeholder="Select Source"
-//                       className="product_source"
-//                       // dropdownClassName={"product_source_dropdown"}
-//                       // onChange={(value) => setProductSource(value)}
-//                     >
-//                       <Option className="source_cap" value={source}>
-//                         {source}
-//                       </Option>
-//                       {/* <Option value="other">Others</Option> 
-//                     </Select>
-//                   </div>
-//                 </div> */}
-//                 {source && (
-//                   <>
-//                     {source === "ecommerce" ? (
-//                       <div className="mb-3">
-//                         <label>Enter Product SKU</label>
-//                         <AsyncSkuField
-//                           name="sku"
-//                           placeholder="Enter Product SKU"
-//                           getSku={getSku}
-//                           defaultValue={ProductSku}
-//                           productAmount={productAmount}
-//                           ProductName={ProductName}
-//                         />
-//                       </div>
-//                     ) : (
-//                       // <div className="mb-3">
-//                       //   <label>Enter Product SKU</label>
-//                       //   <input
-//                       //     type="text"
-//                       //     name="sku"
-//                       //     placeholder="Enter Product SKU"
-//                       //     onInput={(e) => setProductSku(e.target.value)}
-//                       //     value={ProductSku}
-//                       //     className="form-control"
-//                       //     required
-//                       //     autoComplete="off"
-//                       //   />
-//                       // </div>
-//                       <div className="mb-3">
-//                         <label>Enter URL</label>
-//                         <input
-//                           type="text"
-//                           name="url"
-//                           placeholder="Enter URL"
-//                           onInput={(e) => setProductUrl(e.target.value)}
-//                           value={ProductUrl}
-//                           className="form-control"
-//                           required
-//                           autoComplete="off"
-//                         />
-//                       </div>
-//                     )}
-
-//                     {source === "other" ? (
-//                       <>
-//                         <div className="row mb-3">
-//                           <div className="col-md-12 ">
-//                             <label>Enter SKU</label>
-//                             <input
-//                               type="number"
-//                               name="product_name"
-//                               placeholder="Enter Sku"
-//                               onInput={(e) => setOtherSku(e.target.value)}
-//                               value={skuDataOther}
-//                               className="form-control"
-//                               required
-//                               autoComplete="off"
-//                             />
-//                           </div>
-
-//                           <div className="col-md-12 ">
-//                             <label>Enter Product Name</label>
-//                             <input
-//                               type="text"
-//                               name="sku"
-//                               placeholder="Enter Product Name"
-//                               onInput={(e) => setProductName(e.target.value)}
-//                               value={ProductName}
-//                               className="form-control"
-//                               required
-//                               autoComplete="off"
-//                             />
-//                           </div>
-//                           {/* <div className="col-md-6 ">
-//                             <label>Enter Product Url</label>
-//                             <input
-//                               type="text"
-//                               name="url"
-//                               placeholder="Enter Product Url"
-//                               onInput={(e) => setProductUrl(e.target.value)}
-//                               value={ProductUrl}
-//                               className="form-control"
-//                               required
-//                               autoComplete="off"
-//                             />
-//                           </div> */}
-//                         </div>
-//                         <div className="row mb-3">
-//                           <div className="col-md-6 ">
-//                             <label>Amount</label>
-//                             <div className="d-flex flex-row hashtag-box">
-//                               <span className="input-group-text">$</span>
-//                               <input
-//                                 type="number"
-//                                 name="amount"
-//                                 placeholder="Enter Amount"
-//                                 onInput={(e) =>
-//                                   setProductAmount(e.target.value)
-//                                 }
-//                                 value={productAmount}
-//                                 className="form-control"
-//                                 autoComplete="off"
-//                               />
-//                             </div>
-//                           </div>
-//                           <div className="col-md-6">
-//                             <label>Enter Description</label>
-//                             <input
-//                               type="text"
-//                               name="description"
-//                               placeholder="Enter Description"
-//                               onInput={(e) => setProductDesc(e.target.value)}
-//                               value={productDesc}
-//                               className="form-control"
-//                               autoComplete="off"
-//                             />
-//                           </div>
-//                         </div>
-
-//                         <div className="mb-3">
-//                           <label>Select Category</label>
-//                           <Select
-//                             key={Date.now()}
-//                             value={productCategory}
-//                             showSearch
-//                             style={{ width: "100%" }}
-//                             placeholder="Select Category"
-//                             optionFilterProp="children"
-//                             clearable={false}
-//                             searchable={false}
-//                             required
-//                             onChange={(category) =>
-//                               setProductCategory(category.split())
-//                             }
-//                             // onFocus={onFocus}
-//                             // onBlur={onBlur}
-//                             // onSearch={onSearch}
-//                             filterOption={(input, option) =>
-//                               option.children
-//                                 .toLowerCase()
-//                                 .indexOf(input.toLowerCase()) >= 0
-//                             }
-//                           >
-//                             {categoryList.map(({ value, label }, i) => (
-//                               <Option value={value}>{label}</Option>
-//                             ))}
-//                           </Select>
-//                         </div>
-//                         <div className="row mb-3">
-//                           <div className="col-md-4">
-//                             <label>PromoCode</label>
-
-//                             <Select
-//                               size="small"
-//                               filterOption={(input, options) =>
-//                                 options.children
-//                                   .toLowerCase()
-//                                   .indexOf(input.toLowerCase()) >= 0
-//                               }
-//                               value={
-//                                 productPromoCodePromo
-//                                   ? productPromoCodePromo
-//                                   : "Select PromoCode"
-//                               }
-//                               //disabled={!(formState === "add" || formState === "edit")}
-//                               placeholder="Select PromoCode"
-//                               //loading={this.state.promoCond}
-//                               optionFilterProp="children"
-//                               className="w-100"
-//                               // onSearch={onSearch}
-//                               onChange={(options, e) =>
-//                                 changePromoCode(e, options)
-//                               }
-//                               showSearch
-//                               allowClear={false}
-//                               loading={promoLoading ? true : false}
-//                               disabled={promoLoading ? true : false}
-//                             >
-//                               {promoList.map((customer, key) => {
-//                                 return (
-//                                   <Option
-//                                     key={customer.promo_percent + " " + key}
-//                                   >
-//                                     {customer.promo}
-//                                   </Option>
-//                                 );
-//                               })}
-//                             </Select>
-//                           </div>
-//                           <div className="col-md-4">
-//                             <label>Discount</label>
-//                             <div className="promo_discount form-control">
-//                               {productPromoCodeDscs}
-//                             </div>
-//                           </div>
-//                           <div className="col-md-4">
-//                             <label>KB Fee</label>
-//                             <div className="promo_discount form-control">
-//                               {numeral(Kbfee).format("0,0'")}%
-//                             </div>
-//                           </div>
-//                         </div>
-//                         <div className="mb-3">
-//                           {imageLoading ? (
-//                             <Button>
-//                               <Loader />
-//                             </Button>
-//                           ) : (
-//                             <Button
-//                               variant="primary"
-//                               type="submit"
-//                               className="btn-block"
-//                               // onClick={onSubmitting}
-//                               // disabled={this.state.imageFiles[0] === undefined ? true : false}
-//                             >
-//                               Save
-//                             </Button>
-//                           )}
-//                         </div>
-//                       </>
-//                     ) : (
-//                       <>
-//                         {ProductSku && (
-//                           <>
-//                             <div className="row mb-3">
-//                               <div className="col-md-6 ">
-//                                 <label>Enter Product Name</label>
-//                                 <input
-//                                   type="text"
-//                                   name="product_name"
-//                                   placeholder="Enter Product Name"
-//                                   // onInput={(e) => setProductName(e.target.value)}
-//                                   value={ProductName}
-//                                   className="form-control"
-//                                   required
-//                                   autoComplete="off"
-//                                   disabled
-//                                 />
-//                               </div>
-//                               <div className="col-md-6 ">
-//                                 <label>Product Url</label>
-//                                 {/* <input
-//                                   type="text"
-//                                   name="url"
-//                                   placeholder="Enter Product Url"
-//                                   // onInput={(e) => setProductUrl(e.target.value)}
-//                                   value={ProductUrl}
-//                                   className="form-control"
-//                                   required
-//                                   autoComplete="off"
-//                                   disabled
-//                                 /> */}
-//                                 <div className="url-copy sku-copy">
-//                                   <div className="your-copy-link">
-//                                     <div className="item-a">
-//                                       <a
-//                                         target="_blank"
-//                                         rel="noreferrer"
-//                                         href={ProductUrl}
-//                                       >
-//                                         {ProductUrl}
-//                                       </a>
-//                                     </div>
-//                                     <div
-//                                       onClick={() =>
-//                                         copyToClipboard(ProductUrl)
-//                                       }
-//                                       className="item-b"
-//                                     >
-//                                       Copy
-//                                     </div>
-//                                   </div>
-//                                 </div>
-//                               </div>
-//                             </div>
-//                             <div className="row mb-3">
-//                               <div className="col-md-6">
-//                                 <label>Amount</label>
-//                                 {/* <input
-//                                   type="number"
-//                                   name="amount"
-//                                   placeholder="Enter Amount"
-//                                   // onInput={(e) => setProductAmount(e.target.value)}
-//                                   value={productAmount}
-//                                   className="form-control"
-//                                   autoComplete="off"
-//                                   disabled
-//                                 /> */}
-//                                 <div className="d-flex flex-row hashtag-box">
-//                                   <span className="input-group-text">$</span>
-//                                   <input
-//                                     type="text"
-//                                     name="amount"
-//                                     placeholder="Enter Amount"
-//                                     className="form-control comment-field"
-//                                     required=""
-//                                     value={productAmount}
-//                                     disabled
-//                                   />
-//                                 </div>
-//                               </div>
-//                               <div className="col-md-6">
-//                                 <label>Enter Description</label>
-//                                 <textarea
-//                                   rows="1"
-//                                   cols="50"
-//                                   className="form-control"
-//                                   value={productDesc}
-//                                   disabled
-//                                 ></textarea>
-//                               </div>
-//                             </div>
-
-//                             <div className="mb-3">
-//                               <label>Select Category</label>
-//                               <Select
-//                                 key={Date.now()}
-//                                 value={productCategory}
-//                                 showSearch
-//                                 style={{ width: "100%" }}
-//                                 placeholder="Select Category"
-//                                 optionFilterProp="children"
-//                                 clearable={false}
-//                                 searchable={false}
-//                                 required
-//                                 onChange={(category) =>
-//                                   setProductCategory(category.split())
-//                                 }
-//                                 // onFocus={onFocus}
-//                                 // onBlur={onBlur}
-//                                 // onSearch={onSearch}
-//                                 filterOption={(input, option) =>
-//                                   option.children
-//                                     .toLowerCase()
-//                                     .indexOf(input.toLowerCase()) >= 0
-//                                 }
-//                               >
-//                                 {categoryList.map(({ value, label }, i) => (
-//                                   <Option value={value}>{label}</Option>
-//                                 ))}
-//                               </Select>
-//                             </div>
-//                             <div className="row mb-3">
-//                               <div className="col-md-4">
-//                                 <label>PromoCode</label>
-
-//                                 <Select
-//                                   size="small"
-//                                   filterOption={(input, options) =>
-//                                     options.children
-//                                       .toLowerCase()
-//                                       .indexOf(input.toLowerCase()) >= 0
-//                                   }
-//                                   value={
-//                                     productPromoCodePromo
-//                                       ? productPromoCodePromo
-//                                       : "Select PromoCode"
-//                                   }
-//                                   //disabled={!(formState === "add" || formState === "edit")}
-//                                   placeholder="Select PromoCode"
-//                                   //loading={this.state.promoCond}
-//                                   optionFilterProp="children"
-//                                   className="w-100"
-//                                   // onSearch={onSearch}
-//                                   onChange={(options, e) =>
-//                                     changePromoCode(e, options)
-//                                   }
-//                                   showSearch
-//                                   allowClear={false}
-//                                   loading={promoLoading ? true : false}
-//                                   disabled={promoLoading ? true : false}
-//                                 >
-//                                   {promoList.map((customer, key) => {
-//                                     return (
-//                                       <Option
-//                                         key={customer.promo_percent + " " + key}
-//                                       >
-//                                         {customer.promo}
-//                                       </Option>
-//                                     );
-//                                   })}
-//                                 </Select>
-//                               </div>
-//                               <div className="col-md-4">
-//                                 <label>Discount</label>
-//                                 <div className="promo_discount form-control">
-//                                   {productPromoCodeDscs}
-//                                 </div>
-//                               </div>
-//                               <div className="col-md-4">
-//                                 <label>KB Fee</label>
-//                                 <div className="promo_discount form-control">
-//                                   {numeral(Kbfee).format("0,0'")}%
-//                                 </div>
-//                               </div>
-//                             </div>
-
-//                             <div className="mb-3">
-//                               {imageLoading ? (
-//                                 <Button>
-//                                   <Loader />
-//                                 </Button>
-//                               ) : (
-//                                 <Button
-//                                   variant="primary"
-//                                   type="submit"
-//                                   className="btn-block"
-//                                   // onClick={onSubmitting}
-//                                   // disabled={this.state.imageFiles[0] === undefined ? true : false}
-//                                 >
-//                                   {updateProduct ? "Update" : "Save"}
-//                                 </Button>
-//                               )}
-//                             </div>
-//                           </>
-//                         )}
-//                       </>
-//                     )}
-//                   </>
-//                 )}
-//               </Col>
-//             </div>
-//           </div>
-//         </form>
-//       </Modal>
-//     );
-//   };
   const style = {
     tagAreaMain: {
       // width: "290px",
@@ -1124,34 +412,38 @@ if(loader == true){
 
         <div className="mt-3 ml-4 mr-4">
           <div className=" row">
-            <Col md={4} className="sku-image-box">
+            <Col className="sku-image-box col-4">
               <div className="fileinput file-profile">
                 <div className="fileinput-new mb-2">
                   {source === "other" ? (
                     <img
                       alt="sku-image"
                       src={data?.file}
-                      className="sku-image"
+                      className="sku-image popup-image"
                     />
                   ) : (
                     <img
                       alt="sku-image"
                       src={data?.media_url}
-                      className="sku-image"
+                      className="sku-image popup-image"
                     />
                   )}
                 </div>
               </div>
             </Col>
 
-            <Col md={8}>
-              <div class="row analytic-box">
+            <Col className="col-8">
+              <div class="row analytic-box mb-0 prod-box">
                 {source !== "other" ? (
                   <div class="col-12 count-box">
                     <h5 class="count-title">SKU</h5>
                     <h3 class="count">{ProductSku} </h3>
                   </div>
-                ) : null}
+                ) :  <div class="col-12 count-box">
+                <h5 class="count-title">SKU</h5>
+                <h3 class="count">{skuDataOther} </h3>
+              </div>
+              }
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Name </h5>
                   <h3 class="count">{ProductName} </h3>
@@ -1167,17 +459,11 @@ if(loader == true){
                   <h3 class="count">{data?.skuDataOther} </h3>
                 </div> */}
 
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Product PromoCode</h5>
-                  <h3 class="count prod-desc">{data?.productPromoCodePromo}</h3>
-                </div>
-                <div class="col-12 count-box">
-                  <h5 class="count-title">Product Discount</h5>
-                  <h3 class="count prod-desc">{data?.productPromoCodeDscs}</h3>
-                </div>
                
-                <div className="row">
-                <div className="col-md-3 mt-3">
+
+              </div>
+              <div className="row">
+                <div className="col-6 mt-3  mb-3">
                         <label>PromoCode</label>
                         <Select
                           size="small"
@@ -1196,7 +482,7 @@ if(loader == true){
                           placeholder="KB0"
                           
                           optionFilterProp="children"
-                          className="w-100 campaign-promo-select"
+                          className="w-100 campaign-promo-select height-45"
                          
                           onChange={(options, e) =>
                             changePromoCode(e, options)
@@ -1209,7 +495,7 @@ if(loader == true){
                          {
                               
                               promoRequestCode.map((customer, key) =>  {
-                                console.log(customer)
+                               
                                 return (
                                 
                               <Option key={customer.promo_percent + " " + key}>
@@ -1223,7 +509,7 @@ if(loader == true){
                       </div>
                       
                       
-                      <div className="col-md-3 mt-3">
+                      <div className="col-6 mt-3 mb-3">
                         <label>Discount</label>
                         <div className="promo_discount form-control">
                         {productPromoCodeDscs}
@@ -1241,7 +527,7 @@ if(loader == true){
                   </h3>
                 </div> */}
                  <div class="row">
-                 <div className="mb-3">
+                 <div className="col-12 mb-3">
                               {imageLoading ? (
                                  <Button>
                                    <Loader />
@@ -1250,8 +536,8 @@ if(loader == true){
                                  <Button
                                    variant="primary"
                                    type="submit"
-                                   className="btn-block"
-                                   // onClick={onSubmitting}
+                                //    className="btn-block"
+                                    onClick={onSubmitting}
                                    // disabled={this.state.imageFiles[0] === undefined ? true : false}
                                  >
                                   Update
@@ -1259,7 +545,6 @@ if(loader == true){
                                )}
                              </div>
                              </div>
-              </div>
             </Col>
           </div>
         </div>
@@ -1270,12 +555,8 @@ if(loader == true){
   const clickModal = (data) => {
     // setDetailImageModal(true);
     gb = data;
-    console.log({data},"sss");
-    if(source === "other"){
-      setDetailImageModal(true);
-      gb = data;
-    }
-    else{
+   
+  
     //setAddImageModal(true);
     setDetailImageModal(true);
      gb = data;
@@ -1294,14 +575,15 @@ if(loader == true){
      setProductName(gb.ProductName);
      setProductAmount(gb.productAmount);
      setProductUrl(gb.ProductUrl);
+     setOtherSku(gb.skuDataOther)
      setProductDesc(description);
+     console.log(gb.skuDataOther,"_______");
      setImageFiles(gb.media_url);
+     setProductCategory(gb.productCategory);
      setProductPromoCodeDscs(gb.productPromoCodeDscs);
      setproductPromoCodePromo(gb.productPromoCodePromo);
-    }
+    
   };
-
-  console.log(submitData,"submitData");
   return (
     <>
       <div

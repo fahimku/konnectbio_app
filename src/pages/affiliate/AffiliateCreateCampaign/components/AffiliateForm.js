@@ -28,6 +28,7 @@ const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
 
 var tst;
+var imgDataSet;
 class AffiliateForm extends React.Component {
   constructor(props) {
     super(props);
@@ -350,6 +351,7 @@ class AffiliateForm extends React.Component {
           discount_type: "shopify",
           promo: this.state.promoCodePromo,
           discount: this.state.promoCodeDsc,
+          children: imgDataSet,
           category_id:
             this.props.affData.categories.length !== 0
               ? this.props.affData.categories[0].category_id
@@ -498,6 +500,12 @@ class AffiliateForm extends React.Component {
       </div>
     );
 
+    const imgData = (data) => {
+      imgDataSet = data;
+      console.log({imgDataSet},"___________s")
+  
+    };
+
     const renderStateValue = (x) => {
       const exit =
         this.state.stateList === ""
@@ -549,6 +557,7 @@ class AffiliateForm extends React.Component {
                 //   className="post-image"
                 // />
                 <ImageShop
+                imgData={imgData}
                 mediaUrl={affData.media_url}
                 selectPost={affData.media_url}
                 children={affData.children}
@@ -662,6 +671,24 @@ class AffiliateForm extends React.Component {
                 </div>
 
                
+                <div className="col-md-6">
+                    <label>Commission</label>
+                    <InputNumberValidation
+                      type="number"
+                      id="number"
+                      name="commission"
+                      value={this.state.commission}
+                      onChange={(evt) => {
+                        this.commission(evt.target.value);
+                      }}
+                      required
+                      min="0"
+                      max="50"
+                    />
+                    <span className="text-danger">
+                      {this.state.CommissionError}
+                    </span>
+                  </div>
               </div>
 
               <div className="row mt-4">
@@ -900,6 +927,8 @@ class AffiliateForm extends React.Component {
                     </div>
                   </>
                 )}
+                
+            
                 {/* <div className="row">
                   <div className="col-md-6 mt-3">
 

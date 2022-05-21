@@ -1123,7 +1123,7 @@ function ImageShop({
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Url</h5>
-                  <h3 class="count">
+                  <h3 class="count product-url-link">
                     {
                       <a
                         target="_blank"
