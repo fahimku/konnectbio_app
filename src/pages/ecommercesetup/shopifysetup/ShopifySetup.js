@@ -120,7 +120,7 @@ function ShopifySetup({ getShopifyDetail, shopifyDetail }) {
                               onClick={() => syncData()}
                               title="Sync"
                             ></span>
-                            {!syncLoading && (
+                            {syncLoading && (
                               <div class="sync_loading">
                                 <span className="loading_text">Loading</span>
                                 &#8230;
