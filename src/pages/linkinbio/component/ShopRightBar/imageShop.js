@@ -352,7 +352,7 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
-    setProductCategory(category);
+    setProductCategory(category.length ? category.split() : []);
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -1166,6 +1166,7 @@ function ImageShop({
       gb = data;
     } else {
       setAddImageModal(true);
+      console.log(data, "data");
       gb = data;
       setImgId(gb.imgid);
 
@@ -1186,7 +1187,7 @@ function ImageShop({
       setImageFiles(gb.media_url);
       setProductPromoCodeDscs(gb.productPromoCodeDscs);
       setproductPromoCodePromo(gb.productPromoCodePromo);
-      setProductCategory(gb.productCategory[0]);
+      setProductCategory(gb.productCategory);
     }
   };
 
