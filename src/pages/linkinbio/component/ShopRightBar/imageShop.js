@@ -363,6 +363,7 @@ function ImageShop({
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
+  console.log(imageFiles, "imageFiles");
 
   const ImageModal = () => {
     return (
@@ -986,15 +987,7 @@ function ImageShop({
         var pos_y = e.nativeEvent.offsetY;
         // ? e.offsetY
         // : e.pageY - imgRef.current.offsetTop - 190;
-        console.log(
-          {
-            pos_x,
-            pos_y,
-            w: parentRef.current.clientWidth,
-            h: parentRef.current.clientHeight,
-          },
-          "---------==="
-        );
+
         // let pos_x_percent =
         //   (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         // let pos_y_percent =
@@ -1166,7 +1159,6 @@ function ImageShop({
       gb = data;
     } else {
       setAddImageModal(true);
-      console.log(data, "data");
       gb = data;
       setImgId(gb.imgid);
 
