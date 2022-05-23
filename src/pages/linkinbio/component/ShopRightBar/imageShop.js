@@ -266,8 +266,6 @@ function ImageShop({
           if (item.imgid === imgId) {
             submitData.splice(indx, 1);
 
-            //setSubmitData(item)
-            console.log(item, "item");
             let coordinates = item.coordinates;
             let imgid = item.imgid;
             updateMatched = {
@@ -354,6 +352,7 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
+    setProductCategory(category);
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -1187,10 +1186,10 @@ function ImageShop({
       setImageFiles(gb.media_url);
       setProductPromoCodeDscs(gb.productPromoCodeDscs);
       setproductPromoCodePromo(gb.productPromoCodePromo);
+      setProductCategory(gb.productCategory[0]);
     }
   };
 
-  console.log(submitData, "submitData");
   return (
     <>
       <div
