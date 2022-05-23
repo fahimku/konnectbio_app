@@ -48,7 +48,7 @@ function ImageShop({
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState("0%");
   const [productPromoCodePromo, setproductPromoCodePromo] = useState("KB0");
   const [submitData, setSubmitData] = useState([]);
-  const [updateSubmitData, setUpdateSubmitData] = useState([  ]);
+  const [updateSubmitData, setUpdateSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
   const [skuDataOther, setOtherSku] = useState("");
@@ -62,7 +62,6 @@ function ImageShop({
   const imgRef = useRef();
   let arr = [];
 
- 
   useEffect(() => {
     setImageFiles([]);
     setSubmitData([]);
@@ -71,10 +70,8 @@ function ImageShop({
     setSkuData("");
     setCoordinates("");
     setProductSku("");
-    setUpdateSubmitData([])
+    setUpdateSubmitData([]);
   }, [selectPost]);
-
-
 
   useEffect(() => {
     if (category?.length >= 0) {
@@ -155,14 +152,13 @@ function ImageShop({
     e.preventDefault();
     e.stopPropagation();
 
-    let allData= [];
+    let allData = [];
     let updateData = [];
     let updateMatched = {};
     let newAdd = {};
     let data = {};
 
     if (updateProduct == true) {
-     
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
@@ -178,7 +174,6 @@ function ImageShop({
         }
         submitData.map((item) => {
           if (item.imgid === imgId) {
-
             let id = item.id;
             let coordinates = item.coordinates;
             let imgid = item.imgid;
@@ -196,7 +191,7 @@ function ImageShop({
               media_url,
               coordinates,
               imgid,
-              id
+              id,
             };
             updateData.push(updateMatched);
           } else {
@@ -229,7 +224,7 @@ function ImageShop({
           updateData.push(newAdd);
           setUpdateSubmitData(updateData);
         }
-   
+
         setSubmitData(updateData);
         imgData(updateData);
         setImageFiles([]);
@@ -245,8 +240,8 @@ function ImageShop({
         setImageError(false);
       }
     } else {
-      setFlag(false)
-      
+      setFlag(false);
+
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
       } else {
@@ -266,13 +261,11 @@ function ImageShop({
           // });
           //setMultiImage(files);
         }
-       
-        submitData.map((item,indx) => {
+
+        submitData.map((item, indx) => {
           if (item.imgid === imgId) {
             submitData.splice(indx, 1);
-            
-            //setSubmitData(item)
-            
+
             let coordinates = item.coordinates;
             let imgid = item.imgid;
             updateMatched = {
@@ -290,44 +283,36 @@ function ImageShop({
               coordinates,
               imgid,
             };
-           
+
             submitData.push(updateMatched);
-       
-         
           }
-         
-        
         });
-        
+
         if (flagsb == true) {
-        
-        var imgid = Math.floor(Math.random() * 100000);
+          var imgid = Math.floor(Math.random() * 100000);
 
-        data = {
-         file: formImage,
-         ProductSku,
-         skuDataOther,
-         ProductName,
-         productAmount,
-         productDesc,
-         ProductUrl,
-         productCategory,
-         productPromoCodePromo,
-         productPromoCodeDscs,
-         coordinates,
-         file_type,
-         media_url,
-         imgid,
-       };
-       submitData.push(data);
-      }
-      
-      
+          data = {
+            file: formImage,
+            ProductSku,
+            skuDataOther,
+            ProductName,
+            productAmount,
+            productDesc,
+            ProductUrl,
+            productCategory,
+            productPromoCodePromo,
+            productPromoCodeDscs,
+            coordinates,
+            file_type,
+            media_url,
+            imgid,
+          };
+          submitData.push(data);
+        }
 
-       
-       imgData(submitData);
-       // setSubmitData(updateData);
-        
+        imgData(submitData);
+        // setSubmitData(updateData);
+
         setImageFiles([]);
         setProductSku("");
         setProductName("");
@@ -339,15 +324,13 @@ function ImageShop({
         setProductAmount();
         setProductDesc("");
         setSkuData("");
-        setFlag(false)
+        setFlag(false);
         setFlagSb(false);
         // setProductSource("ecommerce");
         setImageError(false);
       }
     }
-  
   };
-
 
   const clearImage = () => {
     setImageFiles([]);
@@ -369,8 +352,7 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
-    
- 
+    setProductCategory(category);
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -979,7 +961,6 @@ function ImageShop({
     },
   };
 
-
   const alertImg = () => {
     Swal.fire({
       title: `Please Select Category `,
@@ -990,12 +971,12 @@ function ImageShop({
       confirmButtonText: `Ok`,
     });
   };
-  
+
   const addCircle = (e) => {
     if (submitData.length < 3) {
-    setFlag(true);
-    setFlagSb(true)
-   
+      setFlag(true);
+      setFlagSb(true);
+
       if (source) {
         // get click coordinates
         setAddImageModal(true);
@@ -1005,7 +986,15 @@ function ImageShop({
         var pos_y = e.nativeEvent.offsetY;
         // ? e.offsetY
         // : e.pageY - imgRef.current.offsetTop - 190;
-        console.log({ pos_x, pos_y,w:parentRef.current.clientWidth,h:parentRef.current.clientHeight },"---------===");
+        console.log(
+          {
+            pos_x,
+            pos_y,
+            w: parentRef.current.clientWidth,
+            h: parentRef.current.clientHeight,
+          },
+          "---------==="
+        );
         // let pos_x_percent =
         //   (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         // let pos_y_percent =
@@ -1030,9 +1019,8 @@ function ImageShop({
       // setImageError("Only 3 image tag allowed")
       toast.error("Only 3 images allowed");
     }
-  
   };
-  
+
   const imgDelete = (id) => {
     Swal.fire({
       title: `Are you sure you want to remove this product?`,
@@ -1173,36 +1161,35 @@ function ImageShop({
   const clickModal = (data) => {
     // setDetailImageModal(true);
 
-    if(source === "other"){
+    if (source === "other") {
       setDetailImageModal(true);
       gb = data;
-    }
-    else{
-    setAddImageModal(true);
-    gb = data;
-    setImgId(gb.imgid);
+    } else {
+      setAddImageModal(true);
+      gb = data;
+      setImgId(gb.imgid);
 
-    setProductSku(gb.ProductSku);
-    setSkuData(gb);
-    // const productUrl =
-    //   "https://" +
-    //   skuData[0]._source?.domain +
-    //   "/products/" +
-    //   skuData[0]._source?.handle;
-    const description = gb.productDesc
-      ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
-      : "";
-    setProductName(gb.ProductName);
-    setProductAmount(gb.productAmount);
-    setProductUrl(gb.ProductUrl);
-    setProductDesc(description);
-    setImageFiles(gb.media_url);
-    setProductPromoCodeDscs(gb.productPromoCodeDscs);
-    setproductPromoCodePromo(gb.productPromoCodePromo);
+      setProductSku(gb.ProductSku);
+      setSkuData(gb);
+      // const productUrl =
+      //   "https://" +
+      //   skuData[0]._source?.domain +
+      //   "/products/" +
+      //   skuData[0]._source?.handle;
+      const description = gb.productDesc
+        ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+        : "";
+      setProductName(gb.ProductName);
+      setProductAmount(gb.productAmount);
+      setProductUrl(gb.ProductUrl);
+      setProductDesc(description);
+      setImageFiles(gb.media_url);
+      setProductPromoCodeDscs(gb.productPromoCodeDscs);
+      setproductPromoCodePromo(gb.productPromoCodePromo);
+      setProductCategory(gb.productCategory[0]);
     }
   };
 
-  console.log(submitData,"submitData");
   return (
     <>
       <div

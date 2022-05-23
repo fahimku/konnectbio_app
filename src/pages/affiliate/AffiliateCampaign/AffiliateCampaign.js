@@ -64,7 +64,7 @@ function AffiliateCampaign(props) {
     props.getCountries();
     fetchPostPerformance();
     setLoader(false);
-    
+
     props.getPromoRequest().then((res) => {
       setLoader(true);
     });
