@@ -987,7 +987,15 @@ function ImageShop({
         var pos_y = e.nativeEvent.offsetY;
         // ? e.offsetY
         // : e.pageY - imgRef.current.offsetTop - 190;
-        console.log({ pos_x, pos_y,w:parentRef.current.clientWidth,h:parentRef.current.clientHeight },"---------===");
+        console.log(
+          {
+            pos_x,
+            pos_y,
+            w: parentRef.current.clientWidth,
+            h: parentRef.current.clientHeight,
+          },
+          "---------==="
+        );
         // let pos_x_percent =
         //   (pos_x / parseInt(parentRef.current.style.width, 10)) * 100;
         // let pos_y_percent =
@@ -1103,7 +1111,7 @@ function ImageShop({
                 </div>
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Url</h5>
-                  <h3 class="count">
+                  <h3 class="count product-url-link">
                     {
                       <a
                         target="_blank"
@@ -1181,6 +1189,8 @@ function ImageShop({
       setproductPromoCodePromo(gb.productPromoCodePromo);
     }
   };
+
+  console.log(submitData, "submitData");
   return (
     <>
       <div
