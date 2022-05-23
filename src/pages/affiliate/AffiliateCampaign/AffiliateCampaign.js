@@ -64,7 +64,7 @@ function AffiliateCampaign(props) {
     props.getCountries();
     fetchPostPerformance();
     setLoader(false);
-    
+
     props.getPromoRequest().then((res) => {
       setLoader(true);
     });
@@ -187,6 +187,7 @@ function AffiliateCampaign(props) {
       )
       .then((response) => {
         setData(response.data.message);
+        console.log(response.data.message,"checkkkkkkk")
         setLoading(false);
         setPageCount(Math.ceil(response.data.totalCount / perPage));
         /// postData();
@@ -323,7 +324,7 @@ function AffiliateCampaign(props) {
                     </>
                   ) : (
                     <>
-                      <div className="col-12 count-box">
+                      {/* <div className="col-12 count-box">
                         <h5 className="count-title">Promo Code For Customer</h5>
                         <h3 className="count">{record.promo}</h3>
                       </div>
@@ -332,7 +333,7 @@ function AffiliateCampaign(props) {
                         <h3 className="count">
                           {record?.discount ? record?.discount : "0%"}
                         </h3>
-                      </div>
+                      </div> */}
                       <div className="col-12 count-box">
                         <h5 className="count-title">Influencer Commission</h5>
                         <h3 className="count">{record.commission}%</h3>

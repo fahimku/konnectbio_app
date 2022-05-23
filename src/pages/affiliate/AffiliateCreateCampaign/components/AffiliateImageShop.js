@@ -74,6 +74,8 @@ function ImageShop({
   let arr = [];
   let promoRequestCode =[];
   
+
+
  
   useEffect(() => {
     setImageFiles([]);
@@ -103,7 +105,9 @@ function ImageShop({
 
 
 useEffect(() =>{
+  
 imgData(submitData)
+  
 },[imgData])
 
 
@@ -607,7 +611,7 @@ if(loader == true){
           />
         ) : (
           <img
-            onClick={(e) => addCircle(e)}
+            // onClick={(e) => addCircle(e)}
             ref={imgRef}
             src={mediaUrl}
             alt="media-image"
