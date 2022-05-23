@@ -15,9 +15,13 @@ import InputNumberValidation from "../../../components/InputValidation/InputNumb
 import { connect } from "react-redux";
 import numeral from "numeral";
 import * as postActions from "../../../actions/posts";
+import ImageShop from "../AffiliateCreateCampaign/components/AffiliateImageShop";
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 // const dateFormat = "YYYY-MM-DD";
+
+
+var imgDataSet;
 
 class UpdateModal extends React.Component {
   constructor(props) {
@@ -32,6 +36,7 @@ class UpdateModal extends React.Component {
       promoCodes: this.props.affData?.promo,
       promoCodesDiscount: this.props.affData?.discount,
       promoList: this.props.promoCodes,
+      children: this.props.obj,
 
       // startDate: moment(),
       // endDate: moment().add(30, "days"),
@@ -60,6 +65,7 @@ class UpdateModal extends React.Component {
     };
     this.dateRangePickerChanger = this.dateRangePickerChanger.bind(this);
   }
+  
   async componentDidMount() {
     // axios
     //   .post("/fee")
@@ -308,6 +314,7 @@ class UpdateModal extends React.Component {
             redirected_url: this.props.affData.redirected_url,
             media_url: this.props.affData.media_url,
             category_id: this.props.affData.categories[0].category_id,
+            children: imgDataSet,
             promo: this.state.promoCodes,
             //promo_id: this.state.promoCodes.value,
             discount_type: "shopify",
@@ -361,6 +368,9 @@ class UpdateModal extends React.Component {
     });
     // setInputList(list);
   };
+
+  
+
 
   // handle click event of the Add button
   handleAddClick = () => {
@@ -436,10 +446,20 @@ class UpdateModal extends React.Component {
     </div>
   );
 
+   imgData = (data) => {
+    imgDataSet = data;
+    console.log({imgDataSet},"___________s")
+
+  };
+
   render() {
     const { affData } = this.props;
+    console.log(this.state.affData,"check for children")
     let category =
       affData.categories.length !== 0 ? affData.categories[0].category_id : [];
+
+    
+    
 
     const renderStateValue = (x, i) => {
       if (x.country) {
@@ -507,7 +527,17 @@ class UpdateModal extends React.Component {
         >
           <div className="image-wrapper">
             <div className="image-box">
-              <img src={`${affData.media_url}`} alt="media_url" />
+            <ImageShop
+                imgData={this.imgData}
+                mediaUrl={this.props?.affData?.media_url}
+                selectPost={this.props?.affData?.media_url}
+                children={this.props?.affData?.children}
+                obj={this.props?.affData}
+                source={this.props?.affData?.product_source}
+                
+                
+              />
+              {/* <img src={`${affData.media_url}`} alt="media_url" /> */}
             </div>
             <div className="aff-img-edit-link image-edit-links">
               <div className="row">
@@ -526,18 +556,59 @@ class UpdateModal extends React.Component {
                     }}
                   />
                 </div>
-                <div className="campaign-url col-md-6">
+
+                <div className="col-md-6 mt-3">
+                    <label>
+                      Influencer Commission{" "}
+                      <span className="small">
+                        (Including {numeral(this.state.Kbfee).format("0,0'")}%
+                        KB fees)
+                      </span>
+                    </label>
+                    <InputNumberValidation
+                      type="number"
+                      id="commission"
+                      name="commission"
+                      value={this.state.commission}
+                      onChange={(evt) => {
+                        this.commission(evt.target.value);
+                      }}
+                      required
+                      min={
+                        this.state.contractData?.min_commission
+                          ? this.state.contractData?.min_commission.toString()
+                          : "10"
+                      }
+                      max={
+                        this.state.contractData?.max_commission
+                          ? this.state.contractData?.max_commission.toString()
+                          : "50"
+                      }
+                    />
+                    <div className="small">
+                      Note: minimum commission is{" "}
+                      {this.state.contractData?.min_commission
+                        ? numeral(
+                            this.state.contractData?.min_commission
+                          ).format("0,0'")
+                        : "10"}
+                      % and maximun commission is{" "}
+                      {this.state.contractData?.max_commission
+                        ? numeral(
+                            this.state.contractData?.max_commission
+                          ).format("0,0'")
+                        : "50"}
+                      %
+                    </div>
+                    <span className="text-danger">
+                      {this.state.CommissionError}
+                    </span>
+                  </div>
+
+
+                {/* <div className="campaign-url col-md-6">
                   <label>URL</label>
-                  {/* <InputValidation
-                    className=""
-                    placeholder="Please Enter Website Address"
-                    type="text"
-                    id="website"
-                    required
-                    name="website"
-                    value={affData.redirected_url}
-                    disabled
-                  /> */}
+                 
                   <div className="url-copy">
                     <div className="your-copy-link">
                       <div className="item-a">
@@ -559,7 +630,7 @@ class UpdateModal extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
               <div className="row mt-3">
                 <div className="select-categories col-md-6">
@@ -738,7 +809,7 @@ class UpdateModal extends React.Component {
                 </div> */}
 
                 <div className="row">
-                  <div className="col-md-3 mt-3">
+                  {/* <div className="col-md-3 mt-3">
                     <label>PromoCode</label>
                     <Select
                       size="small"
@@ -768,7 +839,7 @@ class UpdateModal extends React.Component {
                         );
                       })}
                     </Select>
-                  </div>
+                  </div> */}
 
                   {/* <div className="col-md-3 mt-3">
                     <label>PromoCode For Customers</label>
@@ -784,59 +855,13 @@ class UpdateModal extends React.Component {
                       options={this.state.promoList}
                     />
                   </div> */}
-                  <div className="col-md-3 mt-3">
+                  {/* <div className="col-md-3 mt-3">
                     <label>Discount</label>
                     <div className="promo_discount form-control">
                       {this.state.promoCodesDiscount}
                     </div>
-                  </div>
-                  <div className="col-md-6 mt-3">
-                    <label>
-                      Influencer Commission{" "}
-                      <span className="small">
-                        (Including {numeral(this.state.Kbfee).format("0,0'")}%
-                        KB fees)
-                      </span>
-                    </label>
-                    <InputNumberValidation
-                      type="number"
-                      id="commission"
-                      name="commission"
-                      value={this.state.commission}
-                      onChange={(evt) => {
-                        this.commission(evt.target.value);
-                      }}
-                      required
-                      min={
-                        this.state.contractData?.min_commission
-                          ? this.state.contractData?.min_commission.toString()
-                          : "10"
-                      }
-                      max={
-                        this.state.contractData?.max_commission
-                          ? this.state.contractData?.max_commission.toString()
-                          : "50"
-                      }
-                    />
-                    <div className="small">
-                      Note: minimum commission is{" "}
-                      {this.state.contractData?.min_commission
-                        ? numeral(
-                            this.state.contractData?.min_commission
-                          ).format("0,0'")
-                        : "10"}
-                      % and maximun commission is{" "}
-                      {this.state.contractData?.max_commission
-                        ? numeral(
-                            this.state.contractData?.max_commission
-                          ).format("0,0'")
-                        : "50"}
-                      %
-                    </div>
-                    <span className="text-danger">
-                      {this.state.CommissionError}
-                    </span>
-                  </div>
+                  </div> */}
+             
                 </div>
 
                 <div className="country-select">
