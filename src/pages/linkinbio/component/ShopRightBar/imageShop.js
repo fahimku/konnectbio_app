@@ -121,7 +121,6 @@ function ImageShop({
   const onChangeInputImage = (e) => {
     e.preventDefault();
     setImageFormatError(false);
-    console.log(e.target.files[0].type, "type");
     if (
       e.target.files[0].type === "image/png" ||
       e.target.files[0].type === "image/jpg" ||
