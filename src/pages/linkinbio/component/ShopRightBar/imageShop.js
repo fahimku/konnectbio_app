@@ -57,6 +57,7 @@ function ImageShop({
   const [flagsb, setFlagSb] = useState(false);
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
+  const [imageFormatError, setImageFormatError] = useState(false);
 
   const parentRef = useRef();
   const imgRef = useRef();
@@ -119,20 +120,34 @@ function ImageShop({
 
   const onChangeInputImage = (e) => {
     e.preventDefault();
-    const files = multiImage;
-    let reader = new FileReader();
-    let file = e.target.files[0];
+    setImageFormatError(false);
+    console.log(e.target.files[0].type, "type");
+    if (
+      e.target.files[0].type === "image/png" ||
+      e.target.files[0].type === "image/jpg" ||
+      e.target.files[0].type === "image/jpeg" ||
+      e.target.files[0].type === "image/svg+xml" ||
+      e.target.files[0].type === "image/svg"
+    ) {
+      const files = multiImage;
+      let reader = new FileReader();
+      let file = e.target.files[0];
 
-    reader.onloadend = () => {
-      files.push({
-        file: file,
-        media_url: reader.result,
-      });
+      reader.onloadend = () => {
+        files.push({
+          file: file,
+          media_url: reader.result,
+        });
 
-      setImageFiles(files.reverse());
-    };
+        setImageFiles(files.reverse());
+      };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    } else {
+      setImageError(false);
+      toast.error("Invalid Image Format");
+      setImageFormatError(true);
+    }
   };
 
   const convertBase64 = (file) => {
@@ -161,6 +176,7 @@ function ImageShop({
     if (updateProduct == true) {
       if (source === "other" && imageFiles.length === 0) {
         setImageError(true);
+        setImageFormatError(false);
       } else {
         setAddImageModal(false);
 
@@ -238,6 +254,7 @@ function ImageShop({
         setProductDesc("");
         setSkuData("");
         setImageError(false);
+        setImageFormatError(false);
       }
     } else {
       setFlag(false);
@@ -328,6 +345,7 @@ function ImageShop({
         setFlagSb(false);
         // setProductSource("ecommerce");
         setImageError(false);
+        setImageFormatError(false);
       }
     }
   };
@@ -352,7 +370,7 @@ function ImageShop({
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
-    setProductCategory(category.length ? category.split() : []);
+    setProductCategory(category);
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -363,7 +381,6 @@ function ImageShop({
     textField.remove();
     toast.success("Copied to Clipboard!");
   };
-  console.log(imageFiles, "imageFiles");
 
   const ImageModal = () => {
     return (
@@ -399,6 +416,9 @@ function ImageShop({
               setSkuData("");
               // setProductSource("ecommerce");
               setImageError(false);
+              setImageFormatError(false);
+              // setCircles(circles.slice(0, -1));
+              // {
               {
                 updateProduct === true || flag == false
                   ? setSkuData("")
@@ -418,7 +438,7 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <input
-                        accept=".jpg, .jpeg, .png, .webp, .svg"
+                        accept=".jpg, .jpeg, .png, .svg"
                         onChange={(e) => onChangeInputImage(e)}
                         id="fileupload2"
                         type="file"
@@ -463,6 +483,11 @@ function ImageShop({
                           {imageError && (
                             <div className="img-error">Image required</div>
                           )}
+                          {imageFormatError && (
+                            <div className="img-error">
+                              Invalid Image Format
+                            </div>
+                          )}
                         </>
                       )}
                     </div>
@@ -471,9 +496,9 @@ function ImageShop({
                   <Col md={4} className="sku-image-box">
                     <div className="fileinput file-profile">
                       <div className="fileinput-new mb-2">
-                        {updateProduct === true ? (
+                        {updateProduct && ProductSku ? (
                           <img
-                            alt="sku-image"
+                            alt="sku-image2"
                             src={
                               skuData?.image?.src
                                 ? skuData?.image?.src
