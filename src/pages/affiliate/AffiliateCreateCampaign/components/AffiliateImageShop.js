@@ -16,9 +16,9 @@ const { Option } = Select;
 // const dateFormat = "YYYY-MM-DD";
 let gb = [];
 function ImageShop({
-    getPromoRequest,
-    promoRequest,
-    PromoPayload,
+  getPromoRequest,
+  promoRequest,
+  PromoPayload,
   mediaUrl,
   selectPost,
   categoryList,
@@ -33,7 +33,7 @@ function ImageShop({
   source,
   updateProduct,
   obj,
-  shopifyPromo
+  shopifyPromo,
 }) {
   const [circles, setCircles] = useState([]);
   const [addImageModal, setAddImageModal] = useState(false);
@@ -45,7 +45,7 @@ function ImageShop({
   // const [endDate, setEndDate] = useState(
   //   moment().add(1, "years").format("YYYY-MM-DD")
   // );
-  const [loader, setLoader] = useState(true)
+  const [loader, setLoader] = useState(true);
   const [ProductName, setProductName] = useState("");
   const [shopifyErr, setShopifyErr] = useState();
   // const [source, setSource] = useState("");
@@ -57,26 +57,23 @@ function ImageShop({
   const [productPromoCodeDscs, setProductPromoCodeDscs] = useState("0%");
   const [productPromoCodePromo, setproductPromoCodePromo] = useState("KB0");
   const [submitData, setSubmitData] = useState([]);
-  const [updateSubmitData, setUpdateSubmitData] = useState([  ]);
+  const [updateSubmitData, setUpdateSubmitData] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
   const [skuData, setSkuData] = useState("");
   const [skuDataOther, setOtherSku] = useState();
   const [imgId, setImgId] = useState();
   const [flag, setFlag] = useState(false);
   const [flagsb, setFlagSb] = useState(false);
-  const [GetPromo, setgetPromo] = useState()
- 
+  const [GetPromo, setgetPromo] = useState();
+
   // const [productSource, setProductSource] = useState("ecommerce");
   const [imageError, setImageError] = useState(false);
 
   const parentRef = useRef();
   const imgRef = useRef();
   let arr = [];
-  let promoRequestCode =[];
-  
+  let promoRequestCode = [];
 
-
- 
   useEffect(() => {
     setImageFiles([]);
     setSubmitData([]);
@@ -85,36 +82,29 @@ function ImageShop({
     setSkuData("");
     setCoordinates("");
     setProductSku("");
-    setUpdateSubmitData([])
+    setUpdateSubmitData([]);
   }, [selectPost]);
 
+  useEffect(() => {
+    setLoader(false);
+    getPromoRequest()
+      .then((res) => {
+        setLoader(true);
+        setShopifyErr(res);
+      })
+      .catch((res) => {
+        // setShopifyErr(false);
+        // PromoPayload("",false)
+      });
+  }, []);
 
   useEffect(() => {
-    setLoader(false)
-  getPromoRequest().then((res) => {
-     setLoader(true);
-     setShopifyErr(res);
+    imgData(submitData);
+  }, [imgData]);
 
-  }).catch((res) =>{
-   
-   // setShopifyErr(false);
-   // PromoPayload("",false)
-  })
-
-}, []);
-
-
-useEffect(() =>{
-  
-imgData(submitData)
-  
-},[imgData])
-
-
-if(loader == true){  
-    promoRequestCode = promoRequest.message ? promoRequest.message : [];        
-    
-    } 
+  if (loader == true) {
+    promoRequestCode = promoRequest.message ? promoRequest.message : [];
+  }
 
   useEffect(() => {
     if (category?.length >= 0) {
@@ -125,7 +115,7 @@ if(loader == true){
   useEffect(() => {
     if (children?.length !== 0) {
       childrenAttr();
-    //   imgData(children);
+      //   imgData(children);
     } else {
       setSubmitData([]);
       setCircles([]);
@@ -159,8 +149,6 @@ if(loader == true){
       setproductPromoCodePromo(e.children);
     }
   };
-
-  
 
   const onChangeInputImage = (e) => {
     e.preventDefault();
@@ -197,76 +185,66 @@ if(loader == true){
     e.preventDefault();
     e.stopPropagation();
 
-    let allData= [];
+    let allData = [];
     let updateData = [];
     let updateMatched = {};
     let newAdd = {};
     let data = {};
 
-    
-     
-   
-        setDetailImageModal(false);
+    setDetailImageModal(false);
 
-        if (source === "other") {
-       
-        } else {
-          var media_url = imageFiles;
-        }
-        submitData.map((item) => {
-          if (item.imgid === imgId) {
+    if (source === "other") {
+    } else {
+      var media_url = imageFiles;
+    }
+    submitData.map((item) => {
+      if (item.imgid === imgId) {
+        let file = item.file ? item.file : "";
+        let file_type = item.file_type ? item.file_type : "";
+        let id = item.id;
+        let coordinates = item.coordinates;
+        let imgid = item.imgid;
+        updateMatched = {
+          ProductSku,
+          skuDataOther,
+          ProductName,
+          productAmount,
+          productDesc,
+          ProductUrl,
+          productCategory,
+          productPromoCodePromo,
+          productPromoCodeDscs,
+          media_url,
+          coordinates,
+          file,
+          file_type,
+          imgid,
+          id,
+        };
+        updateData.push(updateMatched);
+      } else {
+        updateData.push(item);
+        setUpdateSubmitData(item);
+      }
+      setUpdateSubmitData(updateData);
+    });
 
-            let file = item.file ? item.file : '';
-            let file_type = item.file_type ? item.file_type : '';
-            let id = item.id;
-            let coordinates = item.coordinates;
-            let imgid = item.imgid;
-            updateMatched = {
-              ProductSku,
-              skuDataOther,
-              ProductName,
-              productAmount,
-              productDesc,
-              ProductUrl,
-              productCategory,
-              productPromoCodePromo,
-              productPromoCodeDscs,
-              media_url,
-              coordinates,
-              file,
-              file_type,
-              imgid,
-              id
-            };
-            updateData.push(updateMatched);
-          } else {
-            updateData.push(item);
-            setUpdateSubmitData(item);
-          }
-          setUpdateSubmitData(updateData);
-        });
-
-      
-   
-        setSubmitData(updateData);
-        imgData(updateData);
-        setImageFiles([]);
-        setProductSku("");
-        setProductName("");
-        setOtherSku("");
-        setproductPromoCodePromo("KB0");
-        setProductPromoCodeDscs("0%");
-        setProductUrl("");
-        setProductAmount();
-        setProductDesc("");
-        setSkuData("");
-        setImageError(false);
-      
-    
-  
+    setSubmitData(updateData);
+    imgData(updateData);
+    setImageFiles([]);
+    setProductSku("");
+    setProductName("");
+    setOtherSku("");
+    setproductPromoCodePromo("KB0");
+    setProductPromoCodeDscs("0%");
+    setProductUrl("");
+    setProductAmount();
+    setProductDesc("");
+    setSkuData("");
+    setImageError(false);
   };
 
-  console.log(submitData,"Final -------  Data")
+  console.log(submitData, "Final -------  Data");
 
   const clearImage = () => {
     setImageFiles([]);
@@ -288,8 +266,6 @@ if(loader == true){
     setProductUrl(productUrl);
     setProductDesc(description);
     setImageFiles(skuData[0]._source?.image?.src);
-    
- 
   };
   const copyToClipboard = (url) => {
     let textField = document.createElement("textarea");
@@ -311,7 +287,6 @@ if(loader == true){
     },
   };
 
-
   const alertImg = () => {
     Swal.fire({
       title: `Please Select Category `,
@@ -322,12 +297,12 @@ if(loader == true){
       confirmButtonText: `Ok`,
     });
   };
-  
+
   const addCircle = (e) => {
     if (submitData.length < 3) {
-    setFlag(true);
-    setFlagSb(true)
-   
+      setFlag(true);
+      setFlagSb(true);
+
       if (source) {
         // get click coordinates
         setAddImageModal(true);
@@ -363,9 +338,8 @@ if(loader == true){
       // setImageError("Only 3 image tag allowed")
       toast.error("Only 3 images allowed");
     }
-  
   };
-  
+
   const imgDelete = (id) => {
     Swal.fire({
       title: `Are you sure you want to remove this product?`,
@@ -448,16 +422,17 @@ if(loader == true){
                     <h5 class="count-title">SKU</h5>
                     <h3 class="count">{ProductSku} </h3>
                   </div>
-                ) :  <div class="col-12 count-box">
-                <h5 class="count-title">SKU</h5>
-                <h3 class="count">{skuDataOther} </h3>
-              </div>
-              }
+                ) : (
+                  <div class="col-12 count-box">
+                    <h5 class="count-title">SKU</h5>
+                    <h3 class="count">{skuDataOther} </h3>
+                  </div>
+                )}
                 <div class="col-12 count-box">
                   <h5 class="count-title">Product Name </h5>
                   <h3 class="count">{ProductName} </h3>
                 </div>
-           
+
                 <div class="col-12 count-box">
                   <h5 class="count-title">Price</h5>
                   <h3 class="count">${data?.productAmount} </h3>
@@ -467,67 +442,56 @@ if(loader == true){
                   <h5 class="count-title">Product SKU</h5>
                   <h3 class="count">{data?.skuDataOther} </h3>
                 </div> */}
-
-               
-
               </div>
               <div className="row">
                 <div className="col-6 mt-3  mb-3">
-                        <label>PromoCode</label>
-                        <Select
-                          size="small"
-                          filterOption={(input, options) =>
-                            options.children
-                              .toLowerCase()
-                              .indexOf(input.toLowerCase()) >= 0
-                          }
-                          //defaultValue={formState === "edit" ? form.getFieldValue().customerType : null}
-                          //disabled={!(formState === "add" || formState === "edit")}
-                          value={
-                            productPromoCodePromo
-                              ? productPromoCodePromo
-                              : "Select PromoCode"
-                          }
-                          placeholder="KB0"
-                          
-                          optionFilterProp="children"
-                          className="w-100 campaign-promo-select height-45"
-                         
-                          onChange={(options, e) =>
-                            changePromoCode(e, options)
-                          }
-                          showSearch
-                          allowClear
-                        >
-                         {promoRequestCode?.lenght != 0 ?
-                            <> 
-                         {
-                              
-                              promoRequestCode.map((customer, key) =>  {
-                               
-                                return (
-                                
-                              <Option key={customer.promo_percent + " " + key}>
-                                {customer.promo}
-                              </Option>
-                            );
-                          })}
-                         
-                          </> : <> </>}
-                        </Select>
-                      </div>
-                      
-                      
-                      <div className="col-6 mt-3 mb-3">
-                        <label>Discount</label>
-                        <div className="promo_discount form-control">
-                        {productPromoCodeDscs}
-                        </div>
-                      </div>
-                      </div>
+                  <label>PromoCode</label>
+                  <Select
+                    size="small"
+                    filterOption={(input, options) =>
+                      options.children
+                        .toLowerCase()
+                        .indexOf(input.toLowerCase()) >= 0
+                    }
+                    //defaultValue={formState === "edit" ? form.getFieldValue().customerType : null}
+                    //disabled={!(formState === "add" || formState === "edit")}
+                    value={
+                      productPromoCodePromo
+                        ? productPromoCodePromo
+                        : "Select PromoCode"
+                    }
+                    placeholder="KB0"
+                    optionFilterProp="children"
+                    className="w-100 campaign-promo-select height-45"
+                    onChange={(options, e) => changePromoCode(e, options)}
+                    showSearch
+                    allowClear
+                  >
+                    {promoRequestCode?.lenght != 0 ? (
+                      <>
+                        {promoRequestCode.map((customer, key) => {
+                          return (
+                            <Option key={customer.promo_percent + " " + key}>
+                              {customer.promo}
+                            </Option>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <> </>
+                    )}
+                  </Select>
+                </div>
 
-               
-                {/* <div class="col-12 count-box">
+                <div className="col-6 mt-3 mb-3">
+                  <label>Discount</label>
+                  <div className="promo_discount form-control">
+                    {productPromoCodeDscs}
+                  </div>
+                </div>
+              </div>
+
+              {/* <div class="col-12 count-box">
                   <h5 class="count-title">Product Description</h5>
                   <h3 class="count prod-desc">
                     {data?.productDesc
@@ -535,25 +499,25 @@ if(loader == true){
                       : ""}
                   </h3>
                 </div> */}
-                 <div class="row">
-                 <div className="col-12 mb-3">
-                              {imageLoading ? (
-                                 <Button>
-                                   <Loader />
-                                 </Button>
-                               ) : (
-                                 <Button
-                                   variant="primary"
-                                   type="submit"
-                                //    className="btn-block"
-                                    onClick={onSubmitting}
-                                   // disabled={this.state.imageFiles[0] === undefined ? true : false}
-                                 >
-                                  Update
-                                 </Button>
-                               )}
-                             </div>
-                             </div>
+              <div class="row">
+                <div className="col-12 mb-3">
+                  {imageLoading ? (
+                    <Button>
+                      <Loader />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      //    className="btn-block"
+                      onClick={onSubmitting}
+                      // disabled={this.state.imageFiles[0] === undefined ? true : false}
+                    >
+                      Update
+                    </Button>
+                  )}
+                </div>
+              </div>
             </Col>
           </div>
         </div>
@@ -564,34 +528,32 @@ if(loader == true){
   const clickModal = (data) => {
     // setDetailImageModal(true);
     gb = data;
-   
-  
+
     //setAddImageModal(true);
     setDetailImageModal(true);
-     gb = data;
-     setImgId(gb.imgid);
+    gb = data;
+    setImgId(gb.imgid);
 
-     setProductSku(gb.ProductSku);
-     setSkuData(gb);
+    setProductSku(gb.ProductSku);
+    setSkuData(gb);
     // // const productUrl =
     // //   "https://" +
     // //   skuData[0]._source?.domain +
     // //   "/products/" +
     // //   skuData[0]._source?.handle;
-     const description = gb.productDesc
-       ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
-       : "";
-     setProductName(gb.ProductName);
-     setProductAmount(gb.productAmount);
-     setProductUrl(gb.ProductUrl);
-     setOtherSku(gb.skuDataOther)
-     setProductDesc(description);
-     console.log(gb.skuDataOther,"_______");
-     setImageFiles(gb.media_url);
-     setProductCategory(gb.productCategory);
-     setProductPromoCodeDscs(gb.productPromoCodeDscs);
-     setproductPromoCodePromo(gb.productPromoCodePromo);
-    
+    const description = gb.productDesc
+      ? gb.productDesc.replace(/<\/?[^>]+(>|$)/g, "")
+      : "";
+    setProductName(gb.ProductName);
+    setProductAmount(gb.productAmount);
+    setProductUrl(gb.ProductUrl);
+    setOtherSku(gb.skuDataOther);
+    setProductDesc(description);
+    console.log(gb.skuDataOther, "_______");
+    setImageFiles(gb.media_url);
+    setProductCategory(gb.productCategory);
+    setProductPromoCodeDscs(gb.productPromoCodeDscs);
+    setproductPromoCodePromo(gb.productPromoCodePromo);
   };
   return (
     <>
@@ -655,37 +617,28 @@ if(loader == true){
                   onClick={() => clickModal(item)}
                 />
               )}
-              <span
+              {/* <span
                 className="close"
                 title="Remove"
                 onClick={() => imgDelete(item.imgid)}
               >
                 <span aria-hidden="true">×</span>
-              </span>
+              </span> */}
             </div>
           </Col>
         ))}
       </div>
 
-     
       {ImageDetailModal(gb)}
     </>
   );
 }
 
-
-
-function mapStateToProps({
+function mapStateToProps({ getPromoRequest, promoRequest }) {
+  return {
     getPromoRequest,
     promoRequest,
-   
-  }) {
-    return {
-        getPromoRequest,
-        promoRequest
-    };
-  }
+  };
+}
 
-export default connect(mapStateToProps,{ ...Promo })(ImageShop);
-
-
+export default connect(mapStateToProps, { ...Promo })(ImageShop);
